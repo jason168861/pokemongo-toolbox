@@ -29,7 +29,7 @@ export function initializeResearchApp() {
         let rewardHTML = '';
         if (reward.type === 'encounter') {
             rewardHTML = `
-                <div class="reward-bubble" style="background-image: url('https://assets.leekduck.com/img/research-encounter-bg.png');">
+                <div class="reward-bubble" >
                     <img src="${reward.imageUrl}" alt="${reward.name}">
                     ${reward.isShiny ? `<img class="shiny-icon" src="https://leekduck.com/assets/img/icons/shiny-icon.png">` : ''}
                 </div>

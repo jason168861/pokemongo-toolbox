@@ -5,7 +5,22 @@ body {
     margin: 0;
     padding: 20px;
 }
+.app-nav {
+    /* ▼▼▼ 以下為新增或修改的屬性 ▼▼▼ */
+    position: sticky; /* 讓導覽列可以黏在頂部 */
+    top: 0;
+    z-index: 2000; /* 確保它在最上層 */
+    background-color: var(--background-color, #f0f2f5); /* 加上背景色，才不會透明 */
+    transition: transform 0.3s ease-in-out; /* 加上平滑的動畫效果 */
+    width: 100%; /* 確保寬度充滿 */
 
+    /* ▼▼▼ 以下是您原有的樣式 ▼▼▼ */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; 
+    margin-bottom: 25px;
+    border-bottom: 2px solid #ccd0d5;
+}
 .main-container {
     width: 100%;
     max-width: 1200px;
@@ -78,5 +93,103 @@ body {
     /* 將田野調查的容器改為垂直排列 (單欄) */
     #research-app #research-container {
         flex-direction: column;
+    }
+}
+.app-nav--hidden {
+    transform: translateY(-100%);
+}
+
+/* --- 漢堡選單樣式 --- */
+
+/* 預設隱藏漢堡按鈕 (電腦版) */
+.hamburger-button {
+    display: none;
+}
+
+/* 當螢幕寬度小於 768px 時 (行動裝置) */
+@media (max-width: 768px) {
+    .app-nav {
+        /* 在手機上讓 Logo/標題 和漢堡按鈕分開 */
+        justify-content: flex-end; 
+        padding-right: 20px; /* 給按鈕一點空間 */
+    }
+
+    /* 讓漢堡按鈕顯示出來 */
+    .hamburger-button {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 30px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 10; /* 確保它在連結之上 */
+    }
+
+    .hamburger-button span {
+        width: 30px;
+        height: 3px;
+        background: var(--text-primary, #333);
+        border-radius: 5px;
+        transition: all 0.3s linear;
+        position: relative;
+        transform-origin: 1px;
+    }
+
+    /* 按下漢堡按鈕後的 "X" 動畫 */
+    .hamburger-button.is-active span:nth-child(1) {
+        transform: rotate(45deg);
+    }
+    .hamburger-button.is-active span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    .hamburger-button.is-active span:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+
+    /* 隱藏原本的按鈕列表，並將其改為垂直下拉式選單 */
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--card-background, white);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        
+        /* 關鍵：定位在導覽列正下方 */
+        position: absolute;
+        top: 100%; /* 100% 代表導覽列的高度 */
+        left: 0;
+        width: 100%;
+
+        /* 關鍵：預設用 max-height: 0 隱藏選單 */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+    }
+    
+    /* 當選單被打開時，展開它 */
+    .nav-links.is-open {
+        max-height: 500px; /* 設定一個足夠大的高度讓所有選項都能顯示 */
+    }
+
+    /* 修改下拉選單中每個按鈕的樣式 */
+    .nav-links .tab-button {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        border-bottom: 1px solid var(--border-color, #eee);
+    }
+    
+    .nav-links .tab-button::after {
+        /* 在手機版隱藏底線動畫 */
+        display: none;
+    }
+    
+    .nav-links .tab-button.active {
+        background-color: var(--primary-color, #0075BE);
+        color: white;
     }
 }

@@ -129,10 +129,12 @@
 }
 #id-selector-app .search-container {
     position: sticky;
-    top: 0;
+    /* 使用 JS 設定的 CSS 變數，60px 是備用值 */
+    top: var(--nav-height, 60px); /* <-- 修改這裡 */
     z-index: 1000;
     background-color: #f0f2f5;
     padding: 15px 0;
+    transition: top 0.3s ease-in-out; /* 【新增】讓 top 的變化有動畫效果 */
 }
 #id-selector-app #idSearchInput {
     width: 90%;
@@ -175,4 +177,7 @@
 #id-selector-app #copy-button.copied {
     background-color: #28a745;
     cursor: default;
+}
+body.nav-is-hidden #id-selector-app .search-container {
+    top: 0; /* 當導覽列隱藏時，讓搜尋框黏在最頂部 */
 }

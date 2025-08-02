@@ -17,16 +17,23 @@
 <body>
 
     <div class="main-container">
-        <nav class="app-nav">
-            <button class="tab-button active" data-target="cp-checker-app">IV100 CP 查詢</button>
-            <button class="tab-button" data-target="id-selector-app">寶可夢編號篩選器</button>
-            <button class="tab-button" data-target="research-app">田野調查任務</button>
-            <button class="tab-button" data-target="eggs-app">孵蛋列表</button>
-            <button class="tab-button" data-target="level-up-app">升級條件</button>
-            <button class="tab-button" data-target="search-filters-app">搜尋篩選指令</button>
-            <button class="tab-button" data-target="special-research-app">特殊調查</button> </nav>
-
-        </nav>
+<nav class="app-nav">
+    <button class="hamburger-button" aria-label="開啟選單" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    
+    <div class="nav-links">
+        <button class="tab-button active" data-target="cp-checker-app">IV100 CP 查詢</button>
+        <button class="tab-button" data-target="id-selector-app">寶可夢編號篩選器</button>
+        <button class="tab-button" data-target="research-app">田野調查任務</button>
+        <button class="tab-button" data-target="eggs-app">孵蛋列表</button>
+        <button class="tab-button" data-target="level-up-app">升級條件</button>
+        <button class="tab-button" data-target="search-filters-app">搜尋篩選指令</button>
+        <button class="tab-button" data-target="special-research-app">特殊調查</button>
+    </div>
+</nav>
 
         <div id="cp-checker-app" class="app-content active">
              <div class="container">
@@ -150,7 +157,7 @@
         <div id="level-up-app" class="app-content">
             <header>
                 <h1>Pokémon Go 等級挑戰 & 升級條件</h1>
-                <p style="text-align: center; color: #606770;">點擊圖片可於新分頁開啟大圖。</p>
+                <p style="text-align: center; color: #606770;">點擊圖片可於新分頁開啟大圖。資料來源：<a href="https://x.com/pokemongojiang" target="_blank" rel="noopener noreferrer">Professor Jiang</a></p>
             </header>
             <div class="level-up-grid">
                 <a href="./img/41-46.jpg" target="_blank"><img src="./img/41-46.jpg" alt="等級 41-46 升級條件"></a>
