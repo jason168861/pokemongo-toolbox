@@ -1,0 +1,71 @@
+        /* --- ================================== --- */
+/* --- 6. 搜尋篩選指令 (App 6) 樣式 --- */
+/* --- ================================== --- */
+#search-filters-app .container {
+    width: 100%;
+    max-width: 900px; /* 稍微加寬以容納表格 */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    box-sizing: border-box;
+    margin: 0 auto; /* 置中 */
+}
+#search-filters-app h1 {
+    font-size: 24px;
+    color: #1877f2;
+    text-align: center;
+    margin-bottom: 25px;
+}
+#search-filters-app h2 {
+    font-size: 20px;
+    color: #050505;
+    border-bottom: 2px solid #e9ebee;
+    padding-bottom: 8px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+#search-filters-app h3 {
+    font-size: 18px;
+    color: #1c1e21;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+#search-filters-app table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 16px;
+}
+#search-filters-app th, #search-filters-app td {
+    border: 1px solid #dddfe2;
+    padding: 12px;
+    text-align: left;
+}
+#search-filters-app th {
+    background-color: #f5f6f7;
+    font-weight: bold;
+}
+#search-filters-app td:first-child {
+    font-weight: 600;
+    color: #3b4cca;
+    width: 35%; /* 讓第一欄寬度固定 */
+}
+#search-filters-app p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+#search-filters-app code {
+    background-color: #e9ebee;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: Consolas, "Courier New", monospace;
+    color: #e63946;
+}
+#search-filters-app .note {
+    background-color: #fffbe2;
+    border-left: 4px solid #ffc107;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 4px;
+}

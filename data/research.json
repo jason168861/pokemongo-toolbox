@@ -1,0 +1,2398 @@
+[
+  {
+    "category": "2025冒險週任務",
+    "tasks": [
+      {
+        "description": "捕捉5隻天氣加成下的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "海星星",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm120.icon.png",
+            "isShiny": true,
+            "maxCp": "495",
+            "minCp": "459"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "破破袋",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm568.icon.png",
+            "isShiny": true,
+            "maxCp": "428",
+            "minCp": "395"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "哎呀球菇",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm590.icon.png",
+            "isShiny": true,
+            "maxCp": "419",
+            "minCp": "386"
+          }
+        ]
+      },
+      {
+        "description": "捕捉7種不同種類的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "探索1公里",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "探索3公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "海星星",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm120.icon.png",
+            "isShiny": true,
+            "maxCp": "495",
+            "minCp": "459"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "破破袋",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm568.icon.png",
+            "isShiny": true,
+            "maxCp": "428",
+            "minCp": "395"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "哎呀球菇",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm590.icon.png",
+            "isShiny": true,
+            "maxCp": "419",
+            "minCp": "386"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "捕捉相關任務",
+    "tasks": [
+      {
+        "description": "捕捉7隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鯉魚王",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm129.icon.png",
+            "isShiny": true,
+            "maxCp": "117",
+            "minCp": "99"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "童偶熊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm759.icon.png",
+            "isShiny": true,
+            "maxCp": "579",
+            "minCp": "540"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "膽小蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm767.icon.png",
+            "isShiny": true,
+            "maxCp": "215",
+            "minCp": "191"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×200",
+            "quantity": "×200"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金莓果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          }
+        ]
+      },
+      {
+        "description": "捕捉1隻龍屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm147.icon.png",
+            "isShiny": true,
+            "maxCp": "430",
+            "minCp": "397"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "寶貝龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+            "isShiny": true,
+            "maxCp": "495",
+            "minCp": "459"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "牙牙",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm610.icon.png",
+            "isShiny": true,
+            "maxCp": "586",
+            "minCp": "547"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1500",
+            "quantity": "×1500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金莓果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×10",
+            "quantity": "×10"
+          }
+        ]
+      },
+      {
+        "description": "捕捉1隻百變怪",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1500",
+            "quantity": "×1500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金莓果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×10",
+            "quantity": "×10"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻一般屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm18.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Pidgeot Mega Energy.png",
+            "name": "大比鳥 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻火屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm6.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Charizard Mega Energy.png",
+            "name": "噴火龍 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm257.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Blaziken Mega Energy.png",
+            "name": "火焰雞 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻草屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm3.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Venusaur Mega Energy.png",
+            "name": "妙蛙花 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm254.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Sceptile Mega Energy.png",
+            "name": "蜥蜴王 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻水屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm9.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Blastoise Mega Energy.png",
+            "name": "水箭龜 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm260.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Swampert Mega Energy.png",
+            "name": "巨沼怪 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "捕捉7種不同種類的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥巴魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.icon.png",
+            "isShiny": true,
+            "maxCp": "926",
+            "minCp": "876"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "垃垃藻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm690.icon.png",
+            "isShiny": true,
+            "maxCp": "455",
+            "minCp": "421"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "投擲猴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm766.icon.png",
+            "isShiny": true,
+            "maxCp": "1300",
+            "minCp": "1241"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "沙丘娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm769.icon.png",
+            "isShiny": true,
+            "maxCp": "528",
+            "minCp": "491"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "稚山雀",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm821.icon.png",
+            "isShiny": false,
+            "maxCp": "285",
+            "minCp": "258"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偷兒狐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm827.icon.png",
+            "isShiny": false,
+            "maxCp": "306",
+            "minCp": "278"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷布莉姆",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm856.icon.png",
+            "isShiny": false,
+            "maxCp": "369",
+            "minCp": "338"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你芙",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm928.icon.png",
+            "isShiny": true,
+            "maxCp": "366",
+            "minCp": "335"
+          }
+        ]
+      },
+      {
+        "description": "捕捉5隻天氣加成下的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "蚊香蝌蚪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm60.icon.png",
+            "isShiny": true,
+            "maxCp": "355",
+            "minCp": "324"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "長翅鷗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm278.icon.png",
+            "isShiny": true,
+            "maxCp": "328",
+            "minCp": "298"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "沙河馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm449.icon.png",
+            "isShiny": true,
+            "maxCp": "582",
+            "minCp": "542"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "雪笠怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm459.icon.png",
+            "isShiny": true,
+            "maxCp": "497",
+            "minCp": "460"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "石丸子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm524.icon.png",
+            "isShiny": true,
+            "maxCp": "516",
+            "minCp": "479"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你冰",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm582.icon.png",
+            "isShiny": true,
+            "maxCp": "443",
+            "minCp": "409"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×200",
+            "quantity": "×200"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻天氣加成下的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "使用5個樹果協助捕捉寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "投擲相關任務",
+    "tasks": [
+      {
+        "description": "連續投出5次曲球",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "投出 5 次 Nice",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "地鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm50.icon.png",
+            "isShiny": true,
+            "maxCp": "289",
+            "minCp": "262"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 地鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm50.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "292",
+            "minCp": "264"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "樹才怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm185.icon.png",
+            "isShiny": true,
+            "maxCp": "920",
+            "minCp": "871"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×200",
+            "quantity": "×200"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 3 次 Nice",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 2 次 Nice 曲球",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×200",
+            "quantity": "×200"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "投出 3 次 Great",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "菊石獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm138.icon.png",
+            "isShiny": true,
+            "maxCp": "662",
+            "minCp": "620"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "化石盔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm140.icon.png",
+            "isShiny": true,
+            "maxCp": "587",
+            "minCp": "548"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "珍珠貝",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm366.icon.png",
+            "isShiny": true,
+            "maxCp": "544",
+            "minCp": "507"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小灰怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm605.icon.png",
+            "isShiny": true,
+            "maxCp": "593",
+            "minCp": "554"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "龜腳腳",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm688.icon.png",
+            "isShiny": true,
+            "maxCp": "405",
+            "minCp": "373"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×200",
+            "quantity": "×200"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 3 次 Great",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "觸手百合",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm345.icon.png",
+            "isShiny": true,
+            "maxCp": "553",
+            "minCp": "515"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "太古羽蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm347.icon.png",
+            "isShiny": true,
+            "maxCp": "655",
+            "minCp": "613"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×9",
+            "quantity": "×9"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          }
+        ]
+      },
+      {
+        "description": "投出 3 次 Great 曲球",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×9",
+            "quantity": "×9"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 3 次 Great 曲球",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1500",
+            "quantity": "×1500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金莓果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×10",
+            "quantity": "×10"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 5 次 Great 曲球",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "晃晃斑 2 號",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f01.icon.png",
+            "isShiny": true,
+            "maxCp": "523",
+            "minCp": "486"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "晃晃斑 3 號",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f02.icon.png",
+            "isShiny": true,
+            "maxCp": "523",
+            "minCp": "486"
+          }
+        ]
+      },
+      {
+        "description": "投出 1 次 Excellent",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          }
+        ]
+      },
+      {
+        "description": "投出 2 次 Excellent",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "心鱗寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm782.icon.png",
+            "isShiny": true,
+            "maxCp": "415",
+            "minCp": "382"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 3 次 Excellent",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "幼基拉斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm246.icon.png",
+            "isShiny": true,
+            "maxCp": "445",
+            "minCp": "411"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鐵啞鈴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm374.icon.png",
+            "isShiny": true,
+            "maxCp": "418",
+            "minCp": "385"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "圓陸鯊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm443.icon.png",
+            "isShiny": true,
+            "maxCp": "477",
+            "minCp": "441"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "對戰相關任務",
+    "tasks": [
+      {
+        "description": "在 GO 對戰聯盟中贏得1場訓練家對戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "拉普拉斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm131.icon.png",
+            "isShiny": true,
+            "maxCp": "1131",
+            "minCp": "1076"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "跳跳豬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm325.icon.png",
+            "isShiny": true,
+            "maxCp": "571",
+            "minCp": "533"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "禿鷹丫頭",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm629.icon.png",
+            "isShiny": true,
+            "maxCp": "545",
+            "minCp": "506"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "好啦魷",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm686.icon.png",
+            "isShiny": true,
+            "maxCp": "397",
+            "minCp": "365"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飛天螳螂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
+            "isShiny": true,
+            "maxCp": "1160",
+            "minCp": "1104"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大嘴娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm303.icon.png",
+            "isShiny": true,
+            "maxCp": "700",
+            "minCp": "658"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "妙喵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm677.icon.png",
+            "isShiny": true,
+            "maxCp": "539",
+            "minCp": "502"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "岩狗狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm744.icon.png",
+            "isShiny": true,
+            "maxCp": "407",
+            "minCp": "374"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場3星級以上的團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "原蓋海龜",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm564.icon.png",
+            "isShiny": true,
+            "maxCp": "638",
+            "minCp": "597"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "始祖小鳥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm566.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "741"
+          }
+        ]
+      },
+      {
+        "description": "贏得5場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 椰蛋樹",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm103.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "1292",
+            "minCp": "1233"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 嘎啦嘎啦",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm105.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "786",
+            "minCp": "741"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "化石翼龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm142.icon.png",
+            "isShiny": true,
+            "maxCp": "1193",
+            "minCp": "1136"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1500",
+            "quantity": "×1500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金莓果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×10",
+            "quantity": "×10"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場極限對戰",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "探索相關任務",
+    "tasks": [
+      {
+        "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飛天螳螂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
+            "isShiny": true,
+            "maxCp": "1160",
+            "minCp": "1104"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "樹才怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm185.icon.png",
+            "isShiny": true,
+            "maxCp": "920",
+            "minCp": "871"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "土居忍士",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm290.icon.png",
+            "isShiny": true,
+            "maxCp": "329",
+            "minCp": "299"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "破破袋",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm568.icon.png",
+            "isShiny": true,
+            "maxCp": "428",
+            "minCp": "395"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "風鈴鈴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm358.icon.png",
+            "isShiny": true,
+            "maxCp": "968",
+            "minCp": "918"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "差不多娃娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
+            "isShiny": true,
+            "maxCp": "721",
+            "minCp": "676"
+          }
+        ]
+      },
+      {
+        "description": "孵化2顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "狃拉",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm215.icon.png",
+            "isShiny": true,
+            "maxCp": "879",
+            "minCp": "831"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大嘴娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm303.icon.png",
+            "isShiny": true,
+            "maxCp": "700",
+            "minCp": "658"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "醜醜魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm349.icon.png",
+            "isShiny": true,
+            "maxCp": "117",
+            "minCp": "99"
+          }
+        ]
+      },
+      {
+        "description": "探索2公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "卡蒂狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm58.icon.png",
+            "isShiny": true,
+            "maxCp": "533",
+            "minCp": "495"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 卡蒂狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm58.fHISUIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "566",
+            "minCp": "527"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "狗仔包",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm926.icon.png",
+            "isShiny": false,
+            "maxCp": "422",
+            "minCp": "389"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "墓仔狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm971.icon.png",
+            "isShiny": false,
+            "maxCp": "435",
+            "minCp": "402"
+          }
+        ]
+      },
+      {
+        "description": "旋轉3個寶可補給站或道館的轉盤",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "嘟嘟",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm84.icon.png",
+            "isShiny": true,
+            "maxCp": "514",
+            "minCp": "477"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鐵炮魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm223.icon.png",
+            "isShiny": true,
+            "maxCp": "391",
+            "minCp": "358"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "拉魯拉絲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm280.icon.png",
+            "isShiny": true,
+            "maxCp": "231",
+            "minCp": "206"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "可可多拉",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm304.icon.png",
+            "isShiny": true,
+            "maxCp": "560",
+            "minCp": "522"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "旋轉5個寶可補給站或道館的轉盤",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "卡蒂狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm58.icon.png",
+            "isShiny": true,
+            "maxCp": "533",
+            "minCp": "495"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 卡蒂狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm58.fHISUIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "566",
+            "minCp": "527"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "呆呆獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm79.icon.png",
+            "isShiny": true,
+            "maxCp": "525",
+            "minCp": "487"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伽勒爾 呆呆獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm79.fGALARIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "525",
+            "minCp": "487"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 小拉達",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm19.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "315",
+            "minCp": "286"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伽勒爾 蛇紋熊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm263.fGALARIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "218",
+            "minCp": "193"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "貓鼬少",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm734.icon.png",
+            "isShiny": true,
+            "maxCp": "377",
+            "minCp": "344"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "愛吃豚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm915.icon.png",
+            "isShiny": true,
+            "maxCp": "314",
+            "minCp": "285"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "給野生的寶可夢拍攝1張照片",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大顎蟻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm328.icon.png",
+            "isShiny": true,
+            "maxCp": "546",
+            "minCp": "507"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "不良蛙",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm453.icon.png",
+            "isShiny": true,
+            "maxCp": "408",
+            "minCp": "375"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "木棉球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm546.icon.png",
+            "isShiny": true,
+            "maxCp": "300",
+            "minCp": "271"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "寶可夢訓練任務",
+    "tasks": [
+      {
+        "description": "進化1隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伊布",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm133.icon.png",
+            "isShiny": true,
+            "maxCp": "459",
+            "minCp": "424"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大奶罐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm241.icon.png",
+            "isShiny": true,
+            "maxCp": "1009",
+            "minCp": "957"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿勃梭魯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm359.icon.png",
+            "isShiny": true,
+            "maxCp": "1083",
+            "minCp": "1027"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咚咚鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "743"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "樹枕尾熊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm775.icon.png",
+            "isShiny": true,
+            "maxCp": "1106",
+            "minCp": "1052"
+          }
+        ]
+      },
+      {
+        "description": "強化寶可夢3次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "妙蛙種子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.icon.png",
+            "isShiny": true,
+            "maxCp": "477",
+            "minCp": "442"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小火龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.icon.png",
+            "isShiny": true,
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "傑尼龜",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.icon.png",
+            "isShiny": true,
+            "maxCp": "405",
+            "minCp": "372"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "強化寶可夢5次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "藤藤蛇",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm495.icon.png",
+            "isShiny": true,
+            "maxCp": "364",
+            "minCp": "333"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "暖暖豬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm498.icon.png",
+            "isShiny": true,
+            "maxCp": "464",
+            "minCp": "428"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "水水獺",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm501.icon.png",
+            "isShiny": true,
+            "maxCp": "448",
+            "minCp": "413"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm3.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Venusaur Mega Energy.png",
+            "name": "妙蛙花 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm6.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Charizard Mega Energy.png",
+            "name": "噴火龍 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm9.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Blastoise Mega Energy.png",
+            "name": "水箭龜 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm15.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Beedrill Mega Energy.png",
+            "name": "大針蜂 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm18.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Pidgeot Mega Energy.png",
+            "name": "大比鳥 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm310.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Manectric Mega Energy.png",
+            "name": "雷電獸 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm306.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Aggron Mega Energy.png",
+            "name": "波士可多拉 超級能量",
+            "quantity": "×10"
+          }
+        ]
+      },
+      {
+        "description": "強化寶可夢7次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "木木梟",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm722.icon.png",
+            "isShiny": true,
+            "maxCp": "453",
+            "minCp": "418"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "火斑喵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm725.icon.png",
+            "isShiny": true,
+            "maxCp": "443",
+            "minCp": "409"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "球球海獅",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm728.icon.png",
+            "isShiny": true,
+            "maxCp": "483",
+            "minCp": "448"
+          }
+        ]
+      },
+      {
+        "description": "強化寶可夢15次",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "獲得10000 XP",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金莓果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "獲得10000星星沙子",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
+            "name": "銀色凰梨果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "夥伴與友誼任務",
+    "tasks": [
+      {
+        "description": "與你的夥伴同行並獲得2顆糖果",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "胖丁",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm39.icon.png",
+            "isShiny": true,
+            "maxCp": "310",
+            "minCp": "277"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "捲捲耳",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm427.icon.png",
+            "isShiny": true,
+            "maxCp": "539",
+            "minCp": "501"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "魅力喵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm431.icon.png",
+            "isShiny": true,
+            "maxCp": "400",
+            "minCp": "367"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "掘掘兔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm659.icon.png",
+            "isShiny": true,
+            "maxCp": "237",
+            "minCp": "212"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小獅獅",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm667.icon.png",
+            "isShiny": true,
+            "maxCp": "611",
+            "minCp": "571"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咚咚鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "743"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×6",
+            "quantity": "×6"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "與你的夥伴同行並獲得3顆糖果",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥巴魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.icon.png",
+            "isShiny": true,
+            "maxCp": "926",
+            "minCp": "876"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伽勒爾 泥巴魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.fGALARIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "926",
+            "minCp": "876"
+          }
+        ]
+      },
+      {
+        "description": "送出3個附上貼圖的友情禮物",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "吼吼鯨",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm320.icon.png",
+            "isShiny": true,
+            "maxCp": "629",
+            "minCp": "584"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "青綿鳥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm333.icon.png",
+            "isShiny": true,
+            "maxCp": "353",
+            "minCp": "322"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "童偶熊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm759.icon.png",
+            "isShiny": true,
+            "maxCp": "579",
+            "minCp": "540"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "膽小蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm767.icon.png",
+            "isShiny": true,
+            "maxCp": "215",
+            "minCp": "191"
+          }
+        ]
+      },
+      {
+        "description": "交換1隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鑽角犀獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm112.icon.png",
+            "isShiny": false,
+            "maxCp": "1362",
+            "minCp": "1302"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "醜醜魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm349.icon.png",
+            "isShiny": true,
+            "maxCp": "117",
+            "minCp": "99"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "彷徨夜靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm356.icon.png",
+            "isShiny": false,
+            "maxCp": "682",
+            "minCp": "638"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "GO火箭隊任務",
+    "tasks": [
+      {
+        "description": "擊敗3名 GO 火箭隊手下",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 千針魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm211.fHISUIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "915",
+            "minCp": "866"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "滑滑小子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm559.icon.png",
+            "isShiny": true,
+            "maxCp": "588",
+            "minCp": "549"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "駒刀小兵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm624.icon.png",
+            "isShiny": true,
+            "maxCp": "614",
+            "minCp": "574"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "贊助商任務",
+    "tasks": [
+      {
+        "description": "傳送3個友情禮物給朋友",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          }
+        ]
+      },
+      {
+        "description": "捕捉8隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "AR掃描任務",
+    "tasks": [
+      {
+        "description": "AR掃描",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poffin.png",
+            "name": "寶芬 ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  }
+]

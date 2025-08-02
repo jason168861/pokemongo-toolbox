@@ -1,0 +1,35 @@
+/* --- ================================ --- */
+/* --- 5. 升級條件 (App 5) 樣式 (新增區塊) --- */
+/* --- ================================ --- */
+#level-up-app {
+    text-align: center;
+}
+#level-up-app header {
+    margin-bottom: 25px;
+}
+#level-up-app h1 {
+    color: #1877f2;
+}
+#level-up-app .level-up-grid {
+    display: grid;
+    /* Change 450px to a smaller value like 300px */
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+#level-up-app .level-up-grid a {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+#level-up-app .level-up-grid a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+#level-up-app .level-up-grid img {
+    width: 100%;
+    height: auto;
+    display: block;
+}

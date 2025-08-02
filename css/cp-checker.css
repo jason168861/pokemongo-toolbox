@@ -1,0 +1,99 @@
+#cp-checker-app.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#cp-checker-app .container {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    box-sizing: border-box;
+}
+#cp-checker-app h1 {
+    font-size: 24px;
+    color: #1877f2;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#cp-checker-app .search-area {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#cp-checker-app #cpSearchInput {
+    flex-grow: 1;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+#cp-checker-app #cpSearchInput:focus {
+    border-color: #1877f2;
+}
+#cp-checker-app #statusMessage {
+    text-align: center;
+    color: #606770;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+#cp-checker-app #resultsContainer {
+    margin-top: 20px;
+}
+#cp-checker-app .pokemon-card {
+    display: flex;
+    align-items: center;
+    background-color: #f7f8fa;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+#cp-checker-app .pokemon-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+#cp-checker-app .pokemon-card img {
+    width: 75px;
+    height: 75px;
+    margin-right: 15px;
+    background-color: #e9ebee;
+    border-radius: 50%;
+}
+#cp-checker-app .pokemon-info {
+    flex-grow: 1;
+}
+#cp-checker-app .pokemon-info h2 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    color: #050505;
+}
+#cp-checker-app .pokemon-info .id {
+    color: #606770;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+#cp-checker-app .cp-container {
+    display: flex;
+    justify-content: space-around; /* 改為平均分佈 */
+    width: 100%; /* 確保容器佔滿寬度 */
+    margin-top: 10px; /* 增加頂部間距 */
+}
+#cp-checker-app .pokemon-info .cp {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e63946;
+    text-align: center; /* 文字置中 */
+    line-height: 1.2; /* 調整行高 */
+}
+#cp-checker-app .pokemon-info .cp span {
+    font-size: 12px;
+    font-weight: normal;
+    color: #606770;
+    display: block; /* 讓標籤自成一行 */
+}

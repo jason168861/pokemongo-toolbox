@@ -1,0 +1,80 @@
+
+/* --- ================================ --- */
+/* --- 4. 孵蛋列表 (App 4) 樣式 --- */
+/* --- ================================ --- */
+#eggs-app .page-content {
+    max-width: 960px;
+    margin: 0 auto;
+}
+#eggs-app h1, #eggs-app h2 {
+    font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+#eggs-app hr {
+    border: 0;
+    border-top: 1px solid #dee2e6;
+    margin: 2rem 0;
+}
+#eggs-app .egg-list-flex {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0 -8px;
+}
+#eggs-app .egg-list-item {
+    text-align: center;
+    width: 120px;
+    margin: 0 8px 16px;
+    position: relative;
+}
+#eggs-app .egg-list-img {
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    width: 104px;
+    height: 104px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+}
+#eggs-app .egg2km {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url('https://assets.dittobase.com/go/items/egg-2km.png');
+    background-size: cover;
+}
+#eggs-app .egg5km {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url('https://assets.dittobase.com/go/items/egg-5km.png');
+    background-size: cover;
+}
+#eggs-app .egg7km {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url('https://assets.dittobase.com/go/items/egg-7km.png');
+    background-size: cover;
+}
+#eggs-app .egg10km {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url('https://assets.dittobase.com/go/items/egg-10km.png');
+    background-size: cover;
+}
+#eggs-app .egg12km {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url('https://assets.dittobase.com/go/items/egg-12km.png');
+    background-size: cover;
+}
+#eggs-app .egg-list-img img {
+    width: 150%;
+    height: 150%;
+}
+#eggs-app .shiny-icon {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    width: 28px;
+}
+#eggs-app .hatch-pkmn {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+#eggs-app .font-size-smaller {
+    font-size: 0.9em;
+    color: #555555;
+}
+#eggs-app .font-size-x-small {
+    font-size: 0.8em;
+}

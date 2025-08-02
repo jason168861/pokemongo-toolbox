@@ -1,0 +1,82 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #1c1e21;
+    margin: 0;
+    padding: 20px;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- 頁籤導航列樣式 --- */
+.app-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* 在小螢幕上換行 */
+    margin-bottom: 25px;
+    border-bottom: 2px solid #ccd0d5;
+}
+
+.tab-button {
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #606770;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.tab-button::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #1877f2;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tab-button:hover {
+    color: #1877f2;
+}
+
+.tab-button.active {
+    color: #1877f2;
+}
+
+.tab-button.active::after {
+    transform: scaleX(1);
+}
+
+/* --- App 內容區 --- */
+.app-content {
+    display: none; /* 預設隱藏 */
+}
+
+.app-content.active {
+    display: block; /* 顯示當前啟用的 App */
+}
+
+/* --- 響應式調整 (Responsive Adjustments) --- */
+/* (這裡可以放通用的 RWD，例如 #research-app 的 RWD 調整) */
+#research-app .reward-preview {
+    flex-wrap: wrap;
+    gap: 4px 0; /* 垂直間隔4px，水平間隔由既有樣式控制 */
+    justify-content: flex-end; /* 讓圖示靠右對齊 */
+}
+/* 螢幕寬度小於 768px 時觸發 (適用於多數手機) */
+@media (max-width: 768px) {
+    /* 將田野調查的容器改為垂直排列 (單欄) */
+    #research-app #research-container {
+        flex-direction: column;
+    }
+}

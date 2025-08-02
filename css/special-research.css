@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #0075BE; /* Pokémon 經典藍 */
+    --secondary-color: #FFCC00; /* Pokémon 經典黃 */
+    --background-color: #f7f9fc;
+    --card-background: #ffffff;
+    --text-primary: #333;
+    --text-secondary: #5f6368;
+    --border-color: #e0e0e0;
+    --shadow-color: rgba(0, 117, 190, 0.15);
+    --success-color: #4CAF50;
+}
+
+#special-research-app h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+    font-weight: 700;
+    font-size: 2.8em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+}
+
+#special-research-app #search-wrapper {
+    /* 核心屬性，讓元素可以“黏住” */
+    position: sticky;
+    
+    /* 當滾動到頂部 0px 的位置時，觸發黏住效果 */
+    top: 0;
+
+    /* 非常重要！加上背景色，否則下方滾動的內容會透出來 */
+
+    /* 確保搜尋框永遠在最上層，不會被其他內容蓋住 */
+    z-index: 1000;
+    
+    /* 以下是您原有的樣式 */
+    max-width: 800px;
+    margin: 0 auto; /* 因為上下 padding 會影響，把原有的 margin-bottom 拿掉 */
+}
+#special-research-app #special-search-input {
+    width: 100%;
+    padding: 18px 25px 18px 60px;
+    font-size: 1.1em;
+    border-radius: 50px;
+    border: 2px solid var(--border-color);
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background-color: var(--card-background);
+}
+
+#special-research-app #special-search-input::placeholder {
+    color: #aaa;
+}
+
+#special-research-app #special-search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--shadow-color);
+}
+
+#special-research-app #search-wrapper::before {
+    content: '🔍';
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    color: var(--text-secondary);
+}
+
+#special-research-app #special-search-input {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+#special-research-app .research-card {
+    background: linear-gradient(145deg, #ffffff, #f1f5f8);
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+#special-research-app .research-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px var(--shadow-color);
+}
+
+#special-research-app .research-title {
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.3s ease;
+}
+
+#special-research-app .research-title.active {
+    border-bottom-color: var(--border-color);
+}
+
+#special-research-app .research-title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#special-research-app .research-title-text {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+#special-research-app .research-date {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background-color: #eef1f5;
+    padding: 3px 10px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+#special-research-app .research-title .icon {
+    font-size: 2em;
+    color: var(--primary-color);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-weight: bold;
+}
+
+#special-research-app .research-title.active .icon {
+    transform: rotate(135deg);
+}
+
+#special-research-app .research-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease-in-out, padding 0.5s ease-in-out;
+    background-color: rgba(248, 249, 250, 0.7);
+}
+
+#special-research-app .research-content.show {
+    padding: 15px 0;
+}
+
+#special-research-app .no-results {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.2em;
+    font-weight: 500;
+    padding: 50px 20px;
+    background: linear-gradient(145deg, #f1f5f8, #ffffff);
+    border-radius: 20px;
+    border: 2px dashed var(--border-color);
+}
+
+/* ▼▼▼【緊湊佈局修改 1】減少間距 ▼▼▼ */
+#special-research-app .step {
+    padding: 15px 30px; /* 減少垂直 padding */
+    border-bottom: 1px dashed var(--border-color);
+}
+
+#special-research-app .step:last-child {
+    border-bottom: none;
+}
+
+#special-research-app .step h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 20px; /* 減少下方 margin */
+    font-size: 1.3em;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--secondary-color);
+    display: inline-block;
+}
+
+#special-research-app .task-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+    /* 改為卡片式設計 */
+    background-color: var(--card-background); /* 使用白色背景 */
+    border: 1px solid var(--border-color);    /* 淡淡的邊框 */
+    border-radius: 12px;                      /* 圓角！ */
+    padding: 14px 20px;                       /* 增加內邊距，讓文字呼吸 */
+    margin-bottom: 8px;                       /* 卡片之間的間距 */
+    
+    /* 讓動態效果更流暢 */
+    transition: all 0.3s ease;
+}
+        
+#special-research-app .task-item:hover {
+    /* 向上輕微浮動 */
+    transform: translateY(-3px);
+    
+    /* 邊框變為主題藍色 */
+    border-color: var(--primary-color);
+    
+    /* 加上漂亮的陰影 */
+    box-shadow: 0 6px 15px var(--shadow-color);
+    
+    /* 背景色也可以保留或換成更淡的顏色，您可以自行決定 */
+    background-color: #f7faff; 
+}
+
+#special-research-app .task-item:last-child {
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--border-color); /* 為了與舊版一致，可以保留，也可以像其他卡片一樣拿掉 */
+}
+
+        #special-research-app .task-description {
+            flex-grow: 1;
+            font-size: 1.05em;
+            color: var(--text-primary);
+        }
+
+        #special-research-app .task-reward {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            font-size: 1em;
+            font-weight: 500;
+        }
+        
+        #special-research-app .reward-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            vertical-align: middle;
+            background-color: #fff;
+            border-radius: 50%;
+            padding: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* ▲▲▲ */
+
+        /* ▼▼▼【緊湊佈局修改 2】總獎勵改為網格佈局 ▼▼▼ */
+        #special-research-app .total-rewards-container h4 {
+            color: var(--success-color);
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+
+#special-research-app .total-rewards-grid {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+    display: grid;
+    
+    /* 關鍵修改：將 auto-fill 改成 auto-fit，效果更適合置中 */
+    grid-template-columns: repeat(auto-fit, 100px);
+
+    gap: 12px;
+    text-align: center;
+    
+    /* 確保這一行存在，它會將整組項目置中 */
+    justify-content: center; 
+    
+    /* 為了除錯，暫時加上紅色框線，成功後可刪除 */
+    }
+
+        #special-research-app .total-reward-item {
+            display: flex;
+            flex-direction: column; /* 圖示與文字垂直排列 */
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px; /* 圖示與文字的間距 */
+            padding: 10px 5px;
+            background-color: rgba(0,0,0,0.02);
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        #special-research-app .total-reward-item .reward-icon {
+            width: 48px; /* 在網格中讓圖示稍大一些 */
+            height: 48px;
+        }
+
+        #special-research-app .total-reward-text {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            font-weight: 500;
+            line-height: 1.3;
+        }
