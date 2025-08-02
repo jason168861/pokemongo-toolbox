@@ -141,7 +141,7 @@
 #special-research-app .research-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.6s ease-in-out, padding 0.5s ease-in-out;
+    transition: max-height 0.2s ease-in-out, padding 0.1s ease-in-out;
     background-color: rgba(248, 249, 250, 0.7);
 }
 
@@ -334,3 +334,27 @@ body.nav-is-hidden #special-research-app #search-wrapper {
 }
 
 
+/* ▼▼▼【新增的 CSS】▼▼▼ */
+#special-research-app .search-options {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px; /* 與搜尋框的間距 */
+}
+
+#special-research-app .search-options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: var(--text-secondary);
+}
+
+#special-research-app .search-options input[type="checkbox"] {
+    /* 使用 accent-color 讓核取方塊的顏色與主題色一致，現代瀏覽器支援良好 */
+    accent-color: var(--primary-color);
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+/* ▲▲▲ */

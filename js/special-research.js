@@ -1,10 +1,20 @@
 export function initializeSpecialResearchApp() {
-    let allResearches = []; 
-    // 【修改】使用新的 ID
+    let allResearches = [];
     const container = document.getElementById('special-research-container');
     const searchInput = document.getElementById('special-search-input');
+    // 【修改1】獲取新增的核取方塊元素
+    const includeAllCheckbox = document.getElementById('search-include-all');
 
-    // 這邊的 fetch 和後續所有函式 (generateResearchCards, etc.) 都從您的新檔案複製過來
+    // 重新觸發搜尋的函式，方便重複呼叫
+    const triggerSearch = () => {
+        const event = new Event('input', { bubbles: true, cancelable: true });
+        searchInput.dispatchEvent(event);
+    };
+
+    // 【修改2】為核取方塊加上事件監聽，當它被點擊時，重新觸發一次搜尋
+    includeAllCheckbox.addEventListener('change', triggerSearch);
+
+
     fetch('data/special_research.json')
         .then(response => {
             if (!response.ok) {
@@ -14,21 +24,60 @@ export function initializeSpecialResearchApp() {
         })
         .then(data => {
             allResearches = data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
-            generateResearchCards(allResearches);
-
+            
+            // 【修改3】修改主要的搜尋事件監聽器
             searchInput.addEventListener('input', (event) => {
                 const searchTerm = event.target.value.toLowerCase().trim();
-                const filteredResearches = allResearches.filter(research => 
-                    research.title.toLowerCase().includes(searchTerm)
-                );
+                // 獲取核取方塊當前的狀態
+                const searchInside = includeAllCheckbox.checked;
+
+                const filteredResearches = allResearches.filter(research => {
+                    // 如果搜尋詞是空的，直接顯示所有項目
+                    if (!searchTerm) return true;
+
+                    const lowerCaseTitle = research.title.toLowerCase();
+                    // 預設先搜尋標題
+                    if (lowerCaseTitle.includes(searchTerm)) {
+                        return true;
+                    }
+
+                    // 如果使用者沒有勾選深入搜尋，且標題不符，則直接排除
+                    if (!searchInside) {
+                        return false;
+                    }
+                    
+                    // 如果勾選了深入搜尋，則繼續往下檢查所有步驟 (steps)
+                    // 使用 .some()，只要有一個符合條件就會回傳 true，效能較好
+                    return research.steps.some(step => {
+                        // 檢查步驟中的每一個任務 (tasks)
+                        const taskMatch = step.tasks.some(task => 
+                            task.description.toLowerCase().includes(searchTerm) ||
+                            (task.reward.text && task.reward.text.toLowerCase().includes(searchTerm))
+                        );
+
+                        if (taskMatch) return true;
+
+                        // 檢查完成該步驟的總獎勵 (total_rewards)
+                        if (step.total_rewards) {
+                            return step.total_rewards.some(reward =>
+                                reward.text && reward.text.toLowerCase().includes(searchTerm)
+                            );
+                        }
+
+                        return false;
+                    });
+                });
+                
                 generateResearchCards(filteredResearches);
             });
+            
+            // 頁面載入後先執行一次，顯示所有資料
+            triggerSearch();
         })
         .catch(error => {
             container.innerHTML = `<div class="no-results" style="color:red;">${error.message}</div>`;
             console.error('讀取資料時發生錯誤:', error);
         });
-    
     // ▼▼▼ 您原本的所有 helper functions (generateResearchCards, generateListHtml, addAccordionLogic) 也要一併複製到這裡 ▼▼▼
     function generateResearchCards(researches) {
         // 【修改】使用新的 ID
