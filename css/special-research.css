@@ -220,6 +220,13 @@
             flex-grow: 1;
             font-size: 1.05em;
             color: var(--text-primary);
+            /* 1. 允許在單字內部換行，防止超長文字撐破容器 */
+            overflow-wrap: break-word;
+            word-wrap: break-word; /* 舊版瀏覽器相容性 */
+            
+            /* 2. 這是處理 flex 佈局溢出的關鍵技巧，
+                它允許 flex item 的寬度可以縮小到小於其內容的固有寬度。 */
+            min-width: 0;
         }
 
         #special-research-app .task-reward {
