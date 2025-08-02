@@ -46545,7 +46545,7 @@
           {
             "description": "從10個能量點收集究極能量",
             "reward": {
-              "text": "Max Particle * 100",
+              "text": "極巨粒子 * 100",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticle.png"
               ]
@@ -46587,7 +46587,7 @@
           {
             "description": "贏得 1 場極巨化對戰",
             "reward": {
-              "text": "Max Particle * 100",
+              "text": "極巨粒子 * 100",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticle.png"
               ]
@@ -54385,7 +54385,7 @@
           {
             "description": "與妖精屬性夥伴寶可夢探索獲得2顆糖果",
             "reward": {
-              "text": "Max Particle * 800",
+              "text": "極巨粒子 * 800",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticle.png"
               ]
@@ -54431,7 +54431,7 @@
           {
             "description": "與格鬥屬性夥伴寶可夢探索獲得2顆糖果",
             "reward": {
-              "text": "Max Particle * 800",
+              "text": "極巨粒子 * 800",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticle.png"
               ]
@@ -55435,7 +55435,7 @@
           {
             "description": "與妖精屬性夥伴寶可夢探索獲得2顆糖果",
             "reward": {
-              "text": "Max Particle * 800",
+              "text": "極巨粒子 * 800",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticle.png"
               ]
@@ -55481,7 +55481,7 @@
           {
             "description": "與格鬥屬性夥伴寶可夢探索獲得2顆糖果",
             "reward": {
-              "text": "Max Particle * 800",
+              "text": "極巨粒子 * 800",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticle.png"
               ]
@@ -56485,7 +56485,7 @@
           {
             "description": "與妖精屬性夥伴寶可夢探索獲得2顆糖果",
             "reward": {
-              "text": "Max Particle * 800",
+              "text": "極巨粒子 * 800",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticle.png"
               ]
@@ -56531,7 +56531,7 @@
           {
             "description": "與格鬥屬性夥伴寶可夢探索獲得2顆糖果",
             "reward": {
-              "text": "Max Particle * 800",
+              "text": "極巨粒子 * 800",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticle.png"
               ]
@@ -57370,7 +57370,7 @@
           {
             "description": "改變蒼響的樣子",
             "reward": {
-              "text": "Max Particle Pack * 1",
+              "text": "極巨粒子組合 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticlepack.png"
               ]
@@ -57596,7 +57596,7 @@
           {
             "description": "改變藏瑪然特的樣子",
             "reward": {
-              "text": "Max Particle Pack * 1",
+              "text": "極巨粒子組合 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/maxparticlepack.png"
               ]
