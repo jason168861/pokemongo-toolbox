@@ -84,60 +84,72 @@ export function initializeSpecialResearchApp() {
     }
 
     function generateListHtml(items, type) {
-return items.map(item => {
-                let description, rewardText, imageUrls;
+        const placeholderSrc = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="; // 1x1 透明 GIF
 
-                if (type === 'task') {
-                    description = item.description;
-                    rewardText = item.reward.text;
-                    imageUrls = item.reward.image_urls || [];
-                    const imagesHtml = imageUrls.map(url => `<img src="${url}" alt="reward" class="reward-icon">`).join('');
-                    const rewardTextHtml = rewardText ? `<span>(${rewardText})</span>` : '';
+        return items.map(item => {
+            let description, rewardText, imageUrls;
 
-                    return `
-                        <li class="task-item">
-                            <span class="task-description">${description}</span>
-                            <div class="task-reward">
-                                ${rewardTextHtml}
-                                ${imagesHtml}
-                            </div>
-                        </li>`;
+            if (type === 'task') {
+                description = item.description;
+                rewardText = item.reward.text;
+                imageUrls = item.reward.image_urls || [];
+                // 【修改處】將 src 改為 data-src，並新增 class="lazy-load"
+                const imagesHtml = imageUrls.map(url => `<img src="${placeholderSrc}" data-src="${url}" alt="reward" class="reward-icon lazy-load">`).join('');
+                const rewardTextHtml = rewardText ? `<span>(${rewardText})</span>` : '';
 
-                } else { // type === 'total'
-                    description = item.text;
-                    imageUrls = item.image_url ? [item.image_url] : [];
-                    const imagesHtml = imageUrls.map(url => `<img src="${url}" alt="reward" class="reward-icon">`).join('');
-                    
-                    // 產生給網格佈局使用的 HTML
-                    return `
-                        <li class="total-reward-item">
+                return `
+                    <li class="task-item">
+                        <span class="task-description">${description}</span>
+                        <div class="task-reward">
+                            ${rewardTextHtml}
                             ${imagesHtml}
-                            <span class="total-reward-text">${description}</span>
-                        </li>`;
-                }
-            }).join('');
+                        </div>
+                    </li>`;
+
+            } else { // type === 'total'
+                description = item.text;
+                imageUrls = item.image_url ? [item.image_url] : [];
+                 // 【修改處】將 src 改為 data-src，並新增 class="lazy-load"
+                const imagesHtml = imageUrls.map(url => `<img src="${placeholderSrc}" data-src="${url}" alt="reward" class="reward-icon lazy-load">`).join('');
+
+                return `
+                    <li class="total-reward-item">
+                        ${imagesHtml}
+                        <span class="total-reward-text">${description}</span>
+                    </li>`;
+            }
+        }).join('');
     }
 
     function addAccordionLogic() {
-   const titles = document.querySelectorAll('.research-title');
-            
-            titles.forEach(title => {
-                title.addEventListener('click', () => {
-                    const isActive = title.classList.contains('active');
+        const titles = document.querySelectorAll('.research-title');
 
-           
+        titles.forEach(title => {
+            title.addEventListener('click', () => {
+                const isActive = title.classList.contains('active');
+                title.classList.toggle('active', !isActive);
+                const content = title.nextElementSibling;
 
-                    title.classList.toggle('active', !isActive);
-                    const content = title.nextElementSibling;
-                    
-                    if (!isActive) {
-                        content.classList.add('show');
-                        content.style.maxHeight = content.scrollHeight + 50 + "px"; 
-                    } else {
-                        content.style.maxHeight = null;
-                        content.classList.remove('show');
-                    }
-                });
+                if (!isActive) {
+                    content.classList.add('show');
+                    content.style.maxHeight = content.scrollHeight + 50 + "px";
+
+                    // 【新增邏輯】當卡片展開時，載入內部的圖片
+                    const imagesToLoad = content.querySelectorAll('img.lazy-load');
+                    imagesToLoad.forEach(img => {
+                        img.src = img.dataset.src; // 將 data-src 的值賦給 src
+                        img.classList.remove('lazy-load'); // 移除 class，避免重複處理
+                        // 可以選擇性地加上載入完成的事件處理，例如加上淡入效果
+                        img.onload = () => {
+                            img.style.opacity = '1';
+                        };
+                    });
+
+                } else {
+                    content.style.maxHeight = null;
+                    content.classList.remove('show');
+                }
             });
+        });
     }
 }
