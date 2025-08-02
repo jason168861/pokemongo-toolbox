@@ -125,14 +125,7 @@ return items.map(item => {
                 title.addEventListener('click', () => {
                     const isActive = title.classList.contains('active');
 
-                    document.querySelectorAll('.research-title.active').forEach(activeTitle => {
-                        if (activeTitle !== title) {
-                            activeTitle.classList.remove('active');
-                            const content = activeTitle.nextElementSibling;
-                            content.style.maxHeight = null;
-                            content.classList.remove('show');
-                        }
-                    });
+           
 
                     title.classList.toggle('active', !isActive);
                     const content = title.nextElementSibling;

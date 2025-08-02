@@ -298,3 +298,27 @@
 body.nav-is-hidden #special-research-app #search-wrapper {
     top: 0; /* 當導覽列隱藏時，讓搜尋框黏在最頂部 */
 }
+
+@media (max-width: 768px) {
+
+    /* 1. 縮小綠色區塊 (.step) 左右的內距 */
+    #special-research-app .step {
+        /* 原本是 padding: 15px 30px; */
+        /* 我們只縮小左右，保留上下的距離 */
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* 2. 移除 ul 列表的預設左側內距 */
+    #special-research-app .step ul {
+        padding-left: 0;
+        list-style-type: none; /* 順便移除列表前面的小黑點 */
+    }
+
+    /* (可選) 讓標題 H1 在手機上小一點，避免過大 */
+    #special-research-app h1 {
+        font-size: 2.2em;
+    }
+}
+
+

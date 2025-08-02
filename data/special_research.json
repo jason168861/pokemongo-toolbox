@@ -1448,7 +1448,7 @@
         "step_title": "2 / 4",
         "tasks": [
           {
-            "description": "捕捉 2 隻Shadow",
+            "description": "捕捉 2 隻暗影寶可夢",
             "reward": {
               "text": "阿柏蛇 遭遇",
               "image_urls": [
@@ -1755,7 +1755,7 @@
             }
           },
           {
-            "description": "贏得 5 場raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "3000 XP",
               "image_urls": []
@@ -2011,9 +2011,9 @@
         "step_title": "1 / 4",
         "tasks": [
           {
-            "description": "贏得 3 場Raid",
+            "description": "捕捉 1 隻雷吉艾斯、雷吉洛克或雷吉斯奇魯(已改為贏得3場團體戰)",
             "reward": {
-              "text": "300 XP",
+              "text": "3000 XP",
               "image_urls": []
             }
           },
@@ -2055,9 +2055,9 @@
         "step_title": "2 / 4",
         "tasks": [
           {
-            "description": "贏得 3 場Raid",
+            "description": "捕捉 1 隻雷吉艾斯、雷吉洛克或雷吉斯奇魯(已改為贏得3場團體戰)",
             "reward": {
-              "text": "300 XP",
+              "text": "3000 XP",
               "image_urls": []
             }
           },
@@ -2082,7 +2082,7 @@
         ],
         "total_rewards": [
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           },
           {
@@ -2099,9 +2099,9 @@
         "step_title": "3 / 4",
         "tasks": [
           {
-            "description": "贏得 3 場Raid",
+            "description": "捕捉 1 隻雷吉艾斯、雷吉洛克或雷吉斯奇魯(已改為贏得3場團體戰)",
             "reward": {
-              "text": "300 XP",
+              "text": "3000 XP",
               "image_urls": []
             }
           },
@@ -2143,21 +2143,21 @@
         "step_title": "4 / 4",
         "tasks": [
           {
-            "description": "為Rock拍攝 7 張照片",
+            "description": "為雷吉洛克拍攝 7 張照片",
             "reward": {
               "text": "3000 XP",
               "image_urls": []
             }
           },
           {
-            "description": "為Ice拍攝 7 張照片",
+            "description": "為雷吉艾斯拍攝 7 張照片",
             "reward": {
               "text": "3000 XP",
               "image_urls": []
             }
           },
           {
-            "description": "為Steel拍攝 7 張照片",
+            "description": "為雷吉斯奇魯拍攝 7 張照片",
             "reward": {
               "text": "3000 XP",
               "image_urls": []
@@ -2204,7 +2204,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "500 XP",
               "image_urls": []
@@ -2244,7 +2244,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "750 XP",
               "image_urls": []
@@ -2455,7 +2455,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "500 XP",
               "image_urls": []
@@ -2495,7 +2495,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "750 XP",
               "image_urls": []
@@ -2755,7 +2755,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "500 XP",
               "image_urls": []
@@ -2795,7 +2795,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "750 XP",
               "image_urls": []
@@ -3008,7 +3008,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "500 XP",
               "image_urls": []
@@ -3048,7 +3048,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "750 XP",
               "image_urls": []
@@ -3261,7 +3261,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "500 XP",
               "image_urls": []
@@ -3301,7 +3301,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "750 XP",
               "image_urls": []
@@ -4169,7 +4169,7 @@
             }
           },
           {
-            "description": "贏得 15 場Raid",
+            "description": "贏得 15 場團體戰",
             "reward": {
               "text": "活力塊 * 10",
               "image_urls": [
@@ -4406,7 +4406,7 @@
             }
           },
           {
-            "description": "贏得 15 場Raid",
+            "description": "贏得 15 場團體戰",
             "reward": {
               "text": "活力塊 * 10",
               "image_urls": [
@@ -5393,7 +5393,7 @@
         "step_title": "3 / 4",
         "tasks": [
           {
-            "description": "贏得 1 場Raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "活力碎片 * 6",
               "image_urls": [
@@ -5604,7 +5604,7 @@
           {
             "description": "傳送 10 隻寶可夢",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -6064,7 +6064,7 @@
             }
           },
           {
-            "description": "贏得 3 場Raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "星星沙子 * 1000",
               "image_urls": [
@@ -6207,7 +6207,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "喵喵 遭遇",
               "image_urls": [
@@ -6235,7 +6235,7 @@
         "step_title": "2 / 6",
         "tasks": [
           {
-            "description": "捕捉 5 隻Shadow",
+            "description": "捕捉 5 隻暗影寶可夢",
             "reward": {
               "text": "750 XP",
               "image_urls": []
@@ -6691,7 +6691,7 @@
           {
             "description": "捕捉寶可夢時使用15顆凰梨果",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -6878,7 +6878,7 @@
           {
             "description": "捕捉寶可夢時使用15顆凰梨果",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -7052,7 +7052,7 @@
             }
           },
           {
-            "description": "贏得 14 場Raid",
+            "description": "贏得 14 場團體戰",
             "reward": {
               "text": "神奇糖果 * 3",
               "image_urls": [
@@ -7279,7 +7279,7 @@
             }
           },
           {
-            "description": "贏得 45 場Raid",
+            "description": "贏得 45 場團體戰",
             "reward": {
               "text": "幸運蛋 * 3",
               "image_urls": [
@@ -7462,7 +7462,7 @@
             }
           },
           {
-            "description": "贏得 14 場Raid",
+            "description": "贏得 14 場團體戰",
             "reward": {
               "text": "誘餌模組 * 3",
               "image_urls": [
@@ -7658,7 +7658,7 @@
             }
           },
           {
-            "description": "贏得 50 場Raid",
+            "description": "贏得 50 場團體戰",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -7770,7 +7770,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/pinapberry.png"
           },
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           },
           {
@@ -7838,7 +7838,7 @@
           {
             "description": "捕捉 15 隻多邊獸",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -7875,7 +7875,7 @@
           {
             "description": "捕捉 15 隻電擊獸",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -7884,7 +7884,7 @@
           {
             "description": "捕捉 15 隻鴨嘴火獸",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -8685,7 +8685,7 @@
             }
           },
           {
-            "description": "進化 1 隻Galarian",
+            "description": "進化 1 隻伽勒爾魔牆人偶",
             "reward": {
               "text": "3000 XP",
               "image_urls": []
@@ -9009,7 +9009,7 @@
           {
             "description": "捕捉寶可夢時使用15顆凰梨果",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -9319,7 +9319,7 @@
         "step_title": "1 / 6",
         "tasks": [
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "精靈球 * 15",
               "image_urls": [
@@ -9337,7 +9337,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "活力碎片 * 3",
               "image_urls": [
@@ -9365,7 +9365,7 @@
         "step_title": "2 / 6",
         "tasks": [
           {
-            "description": "捕捉 5 隻Shadow",
+            "description": "捕捉 5 隻暗影寶可夢",
             "reward": {
               "text": "日之石 * 1",
               "image_urls": [
@@ -10443,7 +10443,7 @@
             }
           },
           {
-            "description": "捕捉 5 隻Shadow",
+            "description": "捕捉 5 隻暗影寶可夢",
             "reward": {
               "text": "活力碎片 * 5",
               "image_urls": [
@@ -11095,7 +11095,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "戴魯比 遭遇",
               "image_urls": [
@@ -11587,7 +11587,7 @@
         ]
       },
       {
-        "step_title": "Galarian Ponyta5 / 11",
+        "step_title": "伽勒爾小火馬5 / 11",
         "tasks": [
           {
             "description": "使用 15 個莓果協助捕捉寶可夢",
@@ -11961,7 +11961,7 @@
         "step_title": "2 / 2",
         "tasks": [
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "活力塊 * 5",
               "image_urls": [
@@ -13615,7 +13615,7 @@
           {
             "description": "傳送 10 隻寶可夢",
             "reward": {
-              "text": "神奧地區 Stone * 2",
+              "text": "神奧之石 * 2",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -14172,7 +14172,7 @@
             }
           },
           {
-            "description": "贏得 3 場raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "4000 XP",
               "image_urls": []
@@ -14240,7 +14240,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/pinapberry.png"
           },
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
@@ -14304,7 +14304,7 @@
           {
             "description": "捕捉 15 隻寶可夢",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -15895,7 +15895,7 @@
             }
           },
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "喵喵 遭遇",
               "image_urls": [
@@ -16275,7 +16275,7 @@
             }
           },
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "地鼠 遭遇",
               "image_urls": [
@@ -16453,7 +16453,7 @@
         "step_title": "1 / 6",
         "tasks": [
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "斗笠菇 遭遇",
               "image_urls": [
@@ -16471,7 +16471,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "活力碎片 * 1",
               "image_urls": [
@@ -16499,7 +16499,7 @@
         "step_title": "2 / 6",
         "tasks": [
           {
-            "description": "捕捉 5 隻Shadow",
+            "description": "捕捉 5 隻暗影寶可夢",
             "reward": {
               "text": "凰梨果 * 10",
               "image_urls": [
@@ -16874,7 +16874,7 @@
             }
           },
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "六尾 遭遇",
               "image_urls": [
@@ -16997,7 +16997,7 @@
         "step_title": "3 / 5",
         "tasks": [
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "星星沙子 * 1000",
               "image_urls": [
@@ -17652,7 +17652,7 @@
         "step_title": "Venusaur4 / 4",
         "tasks": [
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "活力碎片 * 6",
               "image_urls": [
@@ -17790,7 +17790,7 @@
         "step_title": "Charizard4 / 4",
         "tasks": [
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "活力碎片 * 6",
               "image_urls": [
@@ -17928,7 +17928,7 @@
         "step_title": "Blastoise4 / 4",
         "tasks": [
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "活力碎片 * 6",
               "image_urls": [
@@ -18137,7 +18137,7 @@
             }
           },
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "椰蛋樹 遭遇",
               "image_urls": [
@@ -19811,7 +19811,7 @@
             }
           },
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "魔牆人偶 遭遇",
               "image_urls": [
@@ -19936,7 +19936,7 @@
         "step_title": "Battle Challenge (Standard)4 / 7",
         "tasks": [
           {
-            "description": "贏得 3 場Raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "特殊招式學習器 * 2",
               "image_urls": [
@@ -20037,7 +20037,7 @@
             }
           },
           {
-            "description": "贏得 3 場Raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "魔牆人偶 遭遇",
               "image_urls": [
@@ -20162,7 +20162,7 @@
         "step_title": "Battle Challenge (Master)4 / 7",
         "tasks": [
           {
-            "description": "贏得 3 場raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "特殊招式學習器 * 2",
               "image_urls": [
@@ -20171,7 +20171,7 @@
             }
           },
           {
-            "description": "贏得 3 場raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "一般招式學習器 * 2",
               "image_urls": [
@@ -20263,7 +20263,7 @@
             }
           },
           {
-            "description": "贏得 3 場raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "魔牆人偶 遭遇",
               "image_urls": [
@@ -21168,7 +21168,7 @@
           {
             "description": "強化地面屬性寶可夢5次",
             "reward": {
-              "text": "神奧地區 Stone * 2",
+              "text": "神奧之石 * 2",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -21320,7 +21320,7 @@
             }
           },
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "金色蔓莓果 * 2",
               "image_urls": [
@@ -21421,7 +21421,7 @@
         ],
         "total_rewards": [
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           },
           {
@@ -21676,7 +21676,7 @@
         "step_title": "1 / 6",
         "tasks": [
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "火紅不倒翁 遭遇",
               "image_urls": [
@@ -21694,7 +21694,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Shadow",
+            "description": "捕捉 1 隻暗影寶可夢",
             "reward": {
               "text": "火紅不倒翁 遭遇",
               "image_urls": [
@@ -21722,7 +21722,7 @@
         "step_title": "2 / 6",
         "tasks": [
           {
-            "description": "捕捉 5 隻Shadow",
+            "description": "捕捉 5 隻暗影寶可夢",
             "reward": {
               "text": "凰梨果 * 10",
               "image_urls": [
@@ -22326,7 +22326,7 @@
             }
           },
           {
-            "description": "贏得 1 場Raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "星星沙子 * 2022",
               "image_urls": [
@@ -22886,7 +22886,7 @@
             }
           },
           {
-            "description": "贏得 1 場Raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "星星沙子 * 2022",
               "image_urls": [
@@ -23145,7 +23145,7 @@
             }
           },
           {
-            "description": "捕捉 15 隻Galarian",
+            "description": "捕捉 15 隻伽勒爾蛇紋熊",
             "reward": {
               "text": "蛇紋熊 遭遇",
               "image_urls": [
@@ -23182,7 +23182,7 @@
         "step_title": "2 / 4",
         "tasks": [
           {
-            "description": "捕捉 15 隻Galarian",
+            "description": "捕捉 15 隻伽勒爾蛇紋熊",
             "reward": {
               "text": "蛇紋熊 的糖果 * 30",
               "image_urls": [
@@ -23200,7 +23200,7 @@
             }
           },
           {
-            "description": "進化 3 隻Galarian",
+            "description": "進化 3 隻伽勒爾蛇紋熊調查筆記",
             "reward": {
               "text": "凰梨果 * 10",
               "image_urls": [
@@ -23237,7 +23237,7 @@
             }
           },
           {
-            "description": "進化1隻伽勒爾蛇紋熊",
+            "description": "進化1隻伽勒爾直衝熊",
             "reward": {
               "text": "幸運蛋 * 1",
               "image_urls": [
@@ -23503,7 +23503,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/794.png"
           },
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
@@ -23883,7 +23883,7 @@
             }
           },
           {
-            "description": "進化 1 隻CosmogEvolve",
+            "description": "進化 1 隻科斯莫古",
             "reward": {
               "text": "星星沙子 * 1000",
               "image_urls": [
@@ -24029,7 +24029,7 @@
         "step_title": "9 / 12",
         "tasks": [
           {
-            "description": "進化 1 隻CosmoemEvolve",
+            "description": "進化 1 隻科斯莫古",
             "reward": {
               "text": "海星星 遭遇",
               "image_urls": [
@@ -25350,7 +25350,7 @@
             }
           },
           {
-            "description": "捕捉 4 隻Shadow",
+            "description": "捕捉 4 隻暗影寶可夢",
             "reward": {
               "text": "精靈球 * 10",
               "image_urls": [
@@ -25838,7 +25838,7 @@
         "step_title": "5 / 7",
         "tasks": [
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "星星沙子 * 1500",
               "image_urls": [
@@ -26027,7 +26027,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/unovastone.png"
           },
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
@@ -26091,7 +26091,7 @@
           {
             "description": "捕捉 15 隻寶可夢",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -26612,7 +26612,7 @@
             }
           },
           {
-            "description": "捕捉 4 隻Shadow",
+            "description": "捕捉 4 隻暗影寶可夢",
             "reward": {
               "text": "精靈球 * 10",
               "image_urls": [
@@ -27017,7 +27017,7 @@
         "step_title": "2 / 6",
         "tasks": [
           {
-            "description": "在炙熱沙灘棲息地為your buddy拍攝 1 張照片",
+            "description": "在炙熱沙灘棲息地為你的夥伴拍攝 1 張照片",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -27026,7 +27026,7 @@
             }
           },
           {
-            "description": "在詭異薄霧棲息地為your buddy拍攝 1 張照片",
+            "description": "在詭異薄霧棲息地為你的夥伴拍攝 1 張照片",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -27035,7 +27035,7 @@
             }
           },
           {
-            "description": "在青翠大地棲息地為your buddy拍攝 1 張照片",
+            "description": "在青翠大地棲息地為你的夥伴拍攝 1 張照片",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -27044,7 +27044,7 @@
             }
           },
           {
-            "description": "在遠古海岸棲息地為your buddy拍攝 1 張照片",
+            "description": "在遠古海岸棲息地為你的夥伴拍攝 1 張照片",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -27459,7 +27459,7 @@
             }
           },
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "電螢蟲 遭遇",
               "image_urls": [
@@ -27514,7 +27514,7 @@
             }
           },
           {
-            "description": "贏得 1 場raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "甜甜螢 遭遇",
               "image_urls": [
@@ -27713,7 +27713,7 @@
             }
           },
           {
-            "description": "捕捉 15 隻呆呆獸或Galarian Slowpoke",
+            "description": "捕捉 15 隻呆呆獸或伽勒爾呆呆獸",
             "reward": {
               "text": "呆呆獸 遭遇",
               "image_urls": [
@@ -27759,7 +27759,7 @@
             }
           },
           {
-            "description": "捕捉 15 隻呆呆獸或Galarian Slowpoke",
+            "description": "捕捉 15 隻呆呆獸或伽勒爾呆呆獸",
             "reward": {
               "text": "呆呆獸 遭遇",
               "image_urls": [
@@ -27805,7 +27805,7 @@
             }
           },
           {
-            "description": "捕捉 15 隻呆呆獸或Galarian Slowpoke",
+            "description": "捕捉 15 隻呆呆獸或伽勒爾呆呆獸",
             "reward": {
               "text": "呆殼獸 遭遇",
               "image_urls": [
@@ -28165,7 +28165,7 @@
             }
           },
           {
-            "description": "捕捉 2 隻Shadow",
+            "description": "捕捉 2 隻暗影寶可夢",
             "reward": {
               "text": "精靈球 * 20",
               "image_urls": [
@@ -28211,7 +28211,7 @@
             }
           },
           {
-            "description": "捕捉 4 隻Shadow",
+            "description": "捕捉 4 隻暗影寶可夢",
             "reward": {
               "text": "超級球 * 15",
               "image_urls": [
@@ -28401,7 +28401,7 @@
           {
             "description": "投出 5 次 Nice",
             "reward": {
-              "text": "Nanab berry * 5",
+              "text": "蕉香果 * 5",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -28606,7 +28606,7 @@
           {
             "description": "領取獎勵",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -30332,7 +30332,7 @@
         "step_title": "Help Research Nighttime Pokémon4 / 4",
         "tasks": [
           {
-            "description": "贏得 5 場raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "銀色凰梨果 * 3",
               "image_urls": [
@@ -32009,7 +32009,7 @@
         "step_title": "4 / 5",
         "tasks": [
           {
-            "description": "贏得 1 場Raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "烈空坐 超級能量 * 100",
               "image_urls": [
@@ -32246,7 +32246,7 @@
         "step_title": "4 / 4",
         "tasks": [
           {
-            "description": "贏得 1 場Raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "烈空坐 超級能量 * 100",
               "image_urls": [
@@ -32952,7 +32952,7 @@
         "step_title": "4 / 5",
         "tasks": [
           {
-            "description": "贏得 1 場Raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "烈空坐 超級能量 * 100",
               "image_urls": [
@@ -33641,7 +33641,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "神奇糖果 * 3",
               "image_urls": [
@@ -36991,7 +36991,7 @@
           {
             "description": "旋轉 10 個寶可補給站或道館",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -37108,7 +37108,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/unovastone.png"
           },
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
@@ -37172,7 +37172,7 @@
           {
             "description": "捕捉 15 隻寶可夢",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -37550,7 +37550,7 @@
           {
             "description": "傳送 10 隻寶可夢",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -37981,7 +37981,7 @@
           {
             "description": "使用 1 個薰香",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -38156,7 +38156,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/eggincubator.png"
           },
           {
-            "text": "神奧地區 Stone * 3",
+            "text": "神奧之石 * 3",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           },
           {
@@ -39550,7 +39550,7 @@
         "step_title": "5 / 5",
         "tasks": [
           {
-            "description": "贏得 3 場Raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "銀色凰梨果 * 2",
               "image_urls": [
@@ -41562,7 +41562,7 @@
             }
           },
           {
-            "description": "捕捉 3 隻Field",
+            "description": "完成3個田野調查任務",
             "reward": {
               "text": "高級球 * 24",
               "image_urls": [
@@ -41608,7 +41608,7 @@
             }
           },
           {
-            "description": "捕捉 3 隻Field",
+            "description": "完成3個田野調查任務",
             "reward": {
               "text": "高級球 * 24",
               "image_urls": [
@@ -41724,11 +41724,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/cosmogcandy.png"
           },
           {
-            "text": "Solar Fusion Energy * 1000索爾迦雷歐 Line",
+            "text": "Solar Fusion Energy * 1000(索爾迦雷歐 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/solarfusionenergy.png"
           },
           {
-            "text": "Lunar Fusion Energy * 1000露奈雅拉 Line",
+            "text": "Lunar Fusion Energy * 1000(露奈雅拉 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/lunarfusionenergy.png"
           }
         ]
@@ -42678,7 +42678,7 @@
             }
           },
           {
-            "description": "捕捉 3 隻Field",
+            "description": "完成3個田野調查任務",
             "reward": {
               "text": "高級球 * 24",
               "image_urls": [
@@ -42724,7 +42724,7 @@
             }
           },
           {
-            "description": "捕捉 3 隻Field",
+            "description": "完成3個田野調查任務",
             "reward": {
               "text": "高級球 * 24",
               "image_urls": [
@@ -42840,11 +42840,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/cosmogcandy.png"
           },
           {
-            "text": "Solar Fusion Energy * 1000索爾迦雷歐 Line",
+            "text": "Solar Fusion Energy * 1000(索爾迦雷歐 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/solarfusionenergy.png"
           },
           {
-            "text": "Lunar Fusion Energy * 1000露奈雅拉 Line",
+            "text": "Lunar Fusion Energy * 1000(露奈雅拉 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/lunarfusionenergy.png"
           }
         ]
@@ -43497,7 +43497,7 @@
             }
           },
           {
-            "description": "捕捉 3 隻Field",
+            "description": "完成3個田野調查任務",
             "reward": {
               "text": "高級球 * 24",
               "image_urls": [
@@ -43543,7 +43543,7 @@
             }
           },
           {
-            "description": "捕捉 3 隻Field",
+            "description": "完成3個田野調查任務",
             "reward": {
               "text": "高級球 * 24",
               "image_urls": [
@@ -43659,11 +43659,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/cosmogcandy.png"
           },
           {
-            "text": "Solar Fusion Energy * 1000索爾迦雷歐 Line",
+            "text": "Solar Fusion Energy * 1000(索爾迦雷歐 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/solarfusionenergy.png"
           },
           {
-            "text": "Lunar Fusion Energy * 1000露奈雅拉 Line",
+            "text": "Lunar Fusion Energy * 1000(露奈雅拉 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/lunarfusionenergy.png"
           }
         ]
@@ -44311,7 +44311,7 @@
             }
           },
           {
-            "description": "贏得 3 場Raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "特級對戰入場券 * 1",
               "image_urls": [
@@ -44403,7 +44403,7 @@
             }
           },
           {
-            "description": "贏得 3 場Raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "特級對戰入場券 * 1",
               "image_urls": [
@@ -44495,7 +44495,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "神奇糖果 * 3",
               "image_urls": [
@@ -46265,7 +46265,7 @@
           {
             "description": "旋轉 10 個寶可補給站或道館",
             "reward": {
-              "text": "神奧地區 Stone * 1",
+              "text": "神奧之石 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/sinnohstone.png"
               ]
@@ -46411,7 +46411,7 @@
             }
           },
           {
-            "description": "為your buddy拍攝 5 張照片",
+            "description": "為你的夥伴拍攝 5 張照片",
             "reward": {
               "text": "超級球 * 15",
               "image_urls": [
@@ -46656,7 +46656,7 @@
             }
           },
           {
-            "description": "捕捉 15 隻小火馬或Galarian Ponyta",
+            "description": "捕捉 15 隻小火馬或伽勒爾小火馬",
             "reward": {
               "text": "小火馬 遭遇",
               "image_urls": [
@@ -46702,7 +46702,7 @@
             }
           },
           {
-            "description": "捕捉 15 隻小火馬或Galarian Ponyta",
+            "description": "捕捉 15 隻小火馬或伽勒爾小火馬",
             "reward": {
               "text": "小火馬 遭遇",
               "image_urls": [
@@ -46748,7 +46748,7 @@
             }
           },
           {
-            "description": "捕捉 15 隻小火馬或Galarian Ponyta",
+            "description": "捕捉 15 隻小火馬或伽勒爾小火馬",
             "reward": {
               "text": "小火馬 遭遇",
               "image_urls": [
@@ -48784,7 +48784,7 @@
             }
           },
           {
-            "description": "為your buddy拍攝 5 張照片",
+            "description": "為你的夥伴拍攝 5 張照片",
             "reward": {
               "text": "2500 XP",
               "image_urls": []
@@ -48874,7 +48874,7 @@
             }
           },
           {
-            "description": "贏得 3 場raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "金色蔓莓果 * 3",
               "image_urls": [
@@ -50290,7 +50290,7 @@
         "step_title": "Choose Snivy3 / 4",
         "tasks": [
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50299,7 +50299,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50308,7 +50308,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50317,7 +50317,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50411,7 +50411,7 @@
         "step_title": "Choose Tepig3 / 4",
         "tasks": [
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50420,7 +50420,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50429,7 +50429,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50438,7 +50438,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50532,7 +50532,7 @@
         "step_title": "Choose Oshawott3 / 4",
         "tasks": [
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50541,7 +50541,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50550,7 +50550,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50559,7 +50559,7 @@
             }
           },
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50908,7 +50908,7 @@
         "step_title": "5 / 5",
         "tasks": [
           {
-            "description": "贏得 5 場raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50917,7 +50917,7 @@
             }
           },
           {
-            "description": "贏得 5 場raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50926,7 +50926,7 @@
             }
           },
           {
-            "description": "贏得 5 場raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -50935,7 +50935,7 @@
             }
           },
           {
-            "description": "贏得 5 場raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "皮卡丘 遭遇",
               "image_urls": [
@@ -51012,7 +51012,7 @@
         "step_title": "2 / 5",
         "tasks": [
           {
-            "description": "贏得 3 場raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "星星沙子 * 3000",
               "image_urls": [
@@ -51114,7 +51114,7 @@
         "step_title": "4 / 5",
         "tasks": [
           {
-            "description": "贏得 5 場Raid",
+            "description": "贏得 5 場團體戰",
             "reward": {
               "text": "甲殼繭 遭遇",
               "image_urls": [
@@ -51328,7 +51328,7 @@
             }
           },
           {
-            "description": "贏得 3 場raid",
+            "description": "贏得 3 場團體戰",
             "reward": {
               "text": "無畏小子 遭遇",
               "image_urls": [
@@ -54291,7 +54291,7 @@
         "step_title": "Crowned Sword Journey4 / 6",
         "tasks": [
           {
-            "description": "贏得 2 場raid",
+            "description": "贏得 2 場團體戰",
             "reward": {
               "text": "薰香 * 1",
               "image_urls": [
@@ -54337,7 +54337,7 @@
         "step_title": "Crowned Shield Journey4 / 6",
         "tasks": [
           {
-            "description": "贏得 2 場raid",
+            "description": "贏得 2 場團體戰",
             "reward": {
               "text": "薰香 * 1",
               "image_urls": [
@@ -55341,7 +55341,7 @@
         "step_title": "Crowned Sword Journey4 / 6",
         "tasks": [
           {
-            "description": "贏得 2 場raid",
+            "description": "贏得 2 場團體戰",
             "reward": {
               "text": "薰香 * 1",
               "image_urls": [
@@ -55387,7 +55387,7 @@
         "step_title": "Crowned Shield Journey4 / 6",
         "tasks": [
           {
-            "description": "贏得 2 場raid",
+            "description": "贏得 2 場團體戰",
             "reward": {
               "text": "薰香 * 1",
               "image_urls": [
@@ -56391,7 +56391,7 @@
         "step_title": "Crowned Sword Journey4 / 6",
         "tasks": [
           {
-            "description": "贏得 2 場raid",
+            "description": "贏得 2 場團體戰",
             "reward": {
               "text": "薰香 * 1",
               "image_urls": [
@@ -56437,7 +56437,7 @@
         "step_title": "Crowned Shield Journey4 / 6",
         "tasks": [
           {
-            "description": "贏得 2 場raid",
+            "description": "贏得 2 場團體戰",
             "reward": {
               "text": "薰香 * 1",
               "image_urls": [
@@ -57313,7 +57313,7 @@
         "step_title": "Crowned Sword4 / 6",
         "tasks": [
           {
-            "description": "贏得 2 場Raid",
+            "description": "贏得 2 場團體戰",
             "reward": {
               "text": "神奇糖果 * 3",
               "image_urls": [
@@ -57539,7 +57539,7 @@
         "step_title": "Crowned Shield4 / 6",
         "tasks": [
           {
-            "description": "贏得 2 場Raid",
+            "description": "贏得 2 場團體戰",
             "reward": {
               "text": "神奇糖果 * 3",
               "image_urls": [
@@ -58640,7 +58640,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/goldenrazzberry.png"
           },
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
@@ -58916,7 +58916,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/goldenrazzberry.png"
           },
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
@@ -59196,7 +59196,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/goldenrazzberry.png"
           },
           {
-            "text": "神奧地區 Stone * 1",
+            "text": "神奧之石 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
@@ -60035,7 +60035,7 @@
             }
           },
           {
-            "description": "贏得 1 場Raid",
+            "description": "贏得 1 場團體戰",
             "reward": {
               "text": "星星沙子 * 2022",
               "image_urls": [
@@ -61039,7 +61039,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/poffin.png"
           },
           {
-            "text": "神奧地區 Stone * 3",
+            "text": "神奧之石 * 3",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
@@ -62321,7 +62321,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/poffin.png"
           },
           {
-            "text": "神奧地區 Stone * 3",
+            "text": "神奧之石 * 3",
             "image_url": "https://www.serebii.net/pokemongo/items/sinnohstone.png"
           }
         ]
