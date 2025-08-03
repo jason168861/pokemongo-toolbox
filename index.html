@@ -25,7 +25,8 @@
     </button>
     
     <div class="nav-links">
-        <button class="tab-button active" data-target="cp-checker-app">IV100 CP 查詢</button>
+        <button class="tab-button active" data-target="docs-app">功能說明</button>
+        <button class="tab-button" data-target="cp-checker-app">IV100 CP 查詢</button>
         <button class="tab-button" data-target="id-selector-app">寶可夢編號篩選器</button>
         <button class="tab-button" data-target="research-app">田野調查任務</button>
         <button class="tab-button" data-target="eggs-app">孵蛋列表</button>
@@ -34,8 +35,103 @@
         <button class="tab-button" data-target="special-research-app">特殊調查</button>
     </div>
 </nav>
-
-        <div id="cp-checker-app" class="app-content active">
+<div id="docs-app" class="app-content active">
+    <div class="container" style="max-width: 900px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 24px 40px; margin: 20px auto;">
+        <style>
+            #docs-app h1, #docs-app h2, #docs-app h3 { color: #1877f2; border-bottom: 2px solid #e9ebee; padding-bottom: 10px; margin-top: 40px; }
+            #docs-app h1 { text-align: center; border-bottom: none; }
+            #docs-app h3 { color: #050505; font-size: 1.4em; border-bottom-style: dashed; }
+            #docs-app code { background-color: #e9ebee; padding: 3px 6px; border-radius: 4px; font-family: Consolas, 'Courier New', monospace; color: #e63946; }
+            #docs-app table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 16px; }
+            #docs-app th, #docs-app td { border: 1px solid #dddfe2; padding: 12px; text-align: left; }
+            #docs-app th { background-color: #f5f6f7; font-weight: bold; }
+            #docs-app p { line-height: 1.7; }
+            #docs-app ul, #docs-app ol { line-height: 1.7; }
+        </style>
+         <h1>Pokémon Go 工具箱：功能使用說明</h1>
+         <p>這是一個包含多種實用工具的網頁應用程式，旨在幫助 Pokémon Go 玩家更方便地查詢資訊和管理遊戲內容。</p>
+ 
+         <h2>各項工具使用說明</h2>
+ 
+         <h3>1. IV100 CP 查詢</h3>
+         <p><strong>功能目的</strong>: 快速查詢一隻寶可夢在等級 15 (田野調查獎勵)、等級 20 (孵蛋/團體戰/小隊合作任務) 和等級 25 (天氣加成) 時的 100% IV 對應 CP 值。</p>
+         <p><strong>如何使用</strong>:</p>
+         <ol>
+             <li>進入頁面後，會自動載入所有寶可夢的 CP 資料。</li>
+             <li>在頂部的搜尋框中，您可以輸入 <strong>寶可夢的中文名稱</strong> 或 <strong>全國圖鑑編號</strong> 來進行篩選。</li>
+             <li>列表會即時更新，顯示符合條件的寶可夢及其 CP 資訊。</li>
+         </ol>
+ 
+         <h3>2. 寶可夢編號篩選器</h3>
+         <p><strong>功能目的</strong>: 讓玩家可以方便地勾選多隻寶可夢，並產生一串以逗號分隔的全國圖鑑編號。這串數字可以直接複製並貼到 Pokémon Go 遊戲內的搜尋框中使用。 </p>
+         <p><strong>如何使用</strong>:</p>
+         <ol>
+             <li><strong>選擇/取消</strong>: 直接點擊寶可夢的圖片即可選取；再次點擊則取消選取。被選中的寶可夢會有亮黃色外框。</li>
+             <li><strong>搜尋寶可夢</strong>: 可在上方的搜尋框輸入 <strong>名稱</strong> 或 <strong>編號</strong> 快速找到特定的寶可夢。</li>
+             <li><strong>快速篩選按鈕</strong>:
+                 <ul>
+                     <li><code>顯示所有御三家</code> / <code>準神</code> / <code>可超級進化</code>: 點擊按鈕可快速篩選出特定分類的寶可夢。</li>
+                     <li><code>包含進化型態</code> (核取方塊): 勾選此選項後，再點擊旁邊的按鈕，可以將該分類的整個進化鏈都顯示出來。</li>
+                 </ul>
+             </li>
+             <li><strong>批次操作按鈕</strong>:
+                 <ul>
+                     <li><code>勾選所有進化型態</code>: 一鍵選擇所有非初階型態的寶可夢。</li>
+                     <li><code>清除所有選擇</code>: 清除目前所有已選中的寶可夢。</li>
+                     <li><code>全選當前顯示</code>: 在使用篩選功能後，點擊此按鈕可以一次選取所有當前顯示在畫面上的寶可夢。</li>
+                 </ul>
+             </li>
+             <li><strong>複製結果</strong>: 在頂部的輸出框會即時顯示已選編號，點擊旁邊的「複製」按鈕即可將字串複製到剪貼簿。</li>
+         </ol>
+ 
+         <h3>3. 田野調查任務</h3>
+         <p><strong>功能目的</strong>: 顯示當前賽季所有可獲得的田野調查任務，以及完成後可能獲得的獎勵。</p>
+         <p><strong>如何使用</strong>:</p>
+         <ol>
+             <li>任務會根據其類型（如：捕捉、投球、夥伴）進行分類，並以雙欄佈局呈現。</li>
+             <li><strong>切換視圖</strong>: 點擊頂部的 <code>精選獎勵</code> / <code>所有獎勵</code> 開關，可以篩選出僅包含異色機會或特殊寶可夢的任務，或是顯示全部任務。</li>
+             <li><strong>查看詳細獎勵</strong>: 點擊任一任務卡牌，即可展開查看所有可能的獎勵。 如果獎勵是寶可夢，還會顯示其 100% IV 的 CP 值範圍。</li>
+         </ol>
+ 
+         <h3>4. 孵蛋列表</h3>
+         <p><strong>功能目的</strong>: 提供當前賽季可以從各種距離的蛋中孵化出的寶可夢列表。</p>
+         <p><strong>如何使用</strong>:</p>
+         <ol>
+             <li>頁面內容根據蛋的公里數（2km, 5km, 7km, 10km, 12km）進行劃分。</li>
+             <li>同時也包含了特殊的蛋池，例如「冒險同步獎勵」和「路線禮物」中獲得的蛋。</li>
+             <li>每隻寶可夢都會顯示其圖片、名稱、CP 範圍，如果該寶可夢有機率是異色，右上角會顯示一個閃爍的異色圖示。</li>
+         </ol>
+ 
+         <h3>5. 升級條件</h3>
+         <p><strong>功能目的</strong>: 以圖片形式提供玩家從 40 級升到 50 級所需的經驗值和各項挑戰任務。</p>
+         <p><strong>如何使用</strong>:</p>
+         <ol>
+             <li>此頁面為一系列的圖片總覽。</li>
+             <li>點擊任何一張圖片，都可以在新的分頁中開啟大圖，方便您查看細節。</li>
+         </ol>
+ 
+         <h3>6. 搜尋篩選指令</h3>
+         <p><strong>功能目的</strong>: 這是一份 Pokémon Go 遊戲內搜尋功能的「小抄」，完整列出了所有可以用來篩選寶可夢和朋友列表的指令。</p>
+         <p><strong>如何使用</strong>:</p>
+         <ol>
+             <li>此頁面為靜態的說明文件，內容以表格呈現。</li>
+             <li><strong>寶可夢篩選</strong>: 包含了從基本屬性 (如 <code>異色</code>、<code>傳說的寶可夢</code>) 到進階語法 (如 <code>4攻擊&4防禦</code>、<code>@天氣</code>) 的各種指令。</li>
+             <li><strong>朋友列表篩選</strong>: 另一區塊則介紹了如何篩選朋友，例如找出「亮晶晶好朋友」或當天尚未互動的朋友。</li>
+             <li><strong>邏輯運算子</strong>: 同時也說明了如何使用 <code>&</code> (和)、<code>,</code> (或)、<code>!</code> (非) 等符號進行組合搜尋。</li>
+         </ol>
+ 
+         <h3>7. 特殊調查</h3>
+         <p><strong>功能目的</strong>: 彙整了遊戲中所有的特殊調查任務，讓玩家可以查詢每個調查的完整流程、關卡任務及獎勵。</p>
+         <p><strong>如何使用</strong>:</p>
+         <ol>
+             <li>所有特殊調查以卡片形式依發布日期排序。</li>
+             <li><strong>展開/收合</strong>: 點擊任一調查的標題，即可展開或收合該調查的詳細步驟。</li>
+             <li><strong>一般搜尋</strong>: 在頂部的搜尋框輸入關鍵字，可以快速篩選出標題包含該關鍵字的特殊調查。</li>
+             <li><strong>進階搜尋</strong>: 勾選搜尋框下方的 <code>包含任務及獎勵內容</code>，可以將搜尋範圍擴大到每關的任務描述和獎勵內容，進行更全面的查找。</li>
+         </ol>
+     </div>
+</div>
+        <div id="cp-checker-app" class="app-content">
              <div class="container">
                 <h1>Pokémon Go</h1>
                 <p style="text-align: center; margin-top: -15px; margin-bottom: 25px; color: #606770;">15等、20等 & 25等 IV100 CP 查詢</p>
@@ -255,10 +351,12 @@
         <div id="special-research-app" class="app-content">
             <h1>Pokémon GO 特殊調查任務列表</h1>
             <div id="search-wrapper">
-                <input type="text" id="special-search-input" placeholder="搜尋特殊調查名稱..."> </div>
+                <input type="text" id="special-search-input" placeholder="搜尋特殊調查名稱...">    <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
+            </div>
+                
                     <div class="search-options">
             <label for="search-include-all">
-                <input type="checkbox" id="search-include-all">
+                <input type="checkbox" id="search-include-all" checked>
                 <span>包含任務及獎勵內容</span>
             </label>
         </div>

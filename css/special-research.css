@@ -141,7 +141,6 @@
 #special-research-app .research-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.2s ease-in-out, padding 0.1s ease-in-out;
     background-color: rgba(248, 249, 250, 0.7);
 }
 
@@ -358,3 +357,33 @@ body.nav-is-hidden #special-research-app #search-wrapper {
     cursor: pointer;
 }
 /* ▲▲▲ */
+
+
+#special-research-app .clear-search-btn {
+    position: absolute; /* 相對於 #search-wrapper 定位 */
+    top: 50%;
+    right: 20px; /* 定位在右側 */
+    transform: translateY(-50%); /* 垂直置中 */
+    
+    /* 外觀設定 */
+    background: transparent;
+    border: none;
+    font-size: 24px; /* 叉叉的大小 */
+    color: #888;
+    cursor: pointer;
+    padding: 0 5px;
+    
+    /* 預設隱藏，由 JS 控制顯示 */
+    display: none; 
+}
+
+#special-research-app .clear-search-btn:hover {
+    color: #333;
+}
+
+/* --- 【修改】為了給叉叉按鈕騰出空間，增加 input 的右邊距 --- */
+#special-research-app #special-search-input {
+    /* 原本 padding 為 18px 25px 18px 60px; */
+    /* 我們將右側的 25px 增加到 50px */
+    padding-right: 50px; 
+}

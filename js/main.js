@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 預設載入第一個 App
-    initializeCpChecker();
-    cpAppInitialized = true;
+    // initializeCpChecker();
+    // cpAppInitialized = true;
    const nav = document.querySelector('.app-nav');
     let lastScrollTop = 0;
 
