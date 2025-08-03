@@ -137,13 +137,17 @@
     transition: top 0.3s ease-in-out; /* 【新增】讓 top 的變化有動畫效果 */
 }
 #id-selector-app #idSearchInput {
-    width: 90%;
-    max-width: 600px;
-    padding: 12px 20px;
+    box-sizing: border-box;  /* 確保 padding 不會撐大寬度 */
+    width: 100%;             /* 填滿 .input-wrapper 的寬度 */
+    max-width: 100%;         /* 覆蓋掉可能存在的 max-width */
+    
+    /* 調整 padding，為按鈕騰出空間 */
+    padding: 12px 45px 12px 20px; /* 右側 padding 加大 */
+
+    /* 其他原有樣式保持不變 */
     font-size: 18px;
     border-radius: 25px;
     border: 2px solid #ddd;
-    box-sizing: border-box;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 #id-selector-app #idSearchInput:focus {
@@ -182,29 +186,45 @@ body.nav-is-hidden #id-selector-app .search-container {
     top: 0; /* 當導覽列隱藏時，讓搜尋框黏在最頂部 */
 }
 
+/* --- 【新增】強制隱藏 search input 內建的清除按鈕 --- */
+#id-selector-app #idSearchInput::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+}
 
-/* --- 【新增】叉叉按鈕樣式 --- */
+
+/* --- 【修正】叉叉按鈕的最終樣式 --- */
 #id-selector-app .clear-search-btn {
-    position: absolute;
+    position: absolute;      /* 相對於 .input-wrapper 定位 */
     top: 50%;
-    /* 根據 input 的 padding-right (20px) 來調整 */
-    right: 10px; 
     transform: translateY(-50%);
+    right: 15px;             /* 定位在 .input-wrapper 的右側內邊緣 */
+    
+    /* 其他原有樣式保持不變 */
+    z-index: 2;
     background: transparent;
     border: none;
-    font-size: 22px;
+    font-size: 24px;
     color: #888;
     cursor: pointer;
     padding: 0 5px;
-    display: none; /* 預設隱藏 */
+    display: none;
 }
 
 #id-selector-app .clear-search-btn:hover {
     color: #333;
 }
 
-/* --- 【修改】讓 input 的文字不會被按鈕蓋住 --- */
+
+/* --- 【修正】讓 input 的文字不會被按鈕蓋住 --- */
 #id-selector-app #idSearchInput {
     /* 原本 padding-right 為 20px，增加到 45px */
     padding-right: 35px; 
+}
+#id-selector-app .input-wrapper {
+    position: relative;      /* 這行最關鍵！建立定位基準 */
+    display: inline-block;   /* 讓容器寬度自適應內容，並能被 text-align: center 影響 */
+    width: 90%;              /* 讓它和 input 有一樣的寬度行為 */
+    max-width: 600px;        /* 和 input 的最大寬度保持一致 */
 }

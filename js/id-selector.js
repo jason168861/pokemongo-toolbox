@@ -115,7 +115,6 @@ export function initializeIdSelector() {
     }
     
     // --- Event Listeners ---
-    searchInput.addEventListener('input', handleSearch);
     searchInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
