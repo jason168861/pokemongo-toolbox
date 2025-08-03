@@ -73,9 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. 定義一個函式來處理滾動事件
     function handleScroll() {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (document.activeElement && document.activeElement.tagName === 'INPUT') {
-            document.activeElement.blur();
-        }
+
         if (scrollTop > lastScrollTop && scrollTop > nav.offsetHeight) {
             // 向下滑動
             nav.classList.add('app-nav--hidden');
@@ -93,6 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. 為視窗加上事件監聽器
     window.addEventListener('resize', setNavHeight); // 當視窗大小改變時，重新計算高度
     window.addEventListener('scroll', handleScroll); // 當滾動時，處理導覽列的顯示/隱藏
+    window.addEventListener('touchstart', () => {
+        // 只有當焦點在輸入框上時，才需要準備監聽後續的滑動
+        if (document.activeElement && (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA")) {
+            
+            // 監聽「一次」touchmove 事件。{ once: true } 能確保它觸發後就自動移除，效能更好。
+            window.addEventListener('touchmove', function hideKeyboard() {
+                document.activeElement.blur(); // 讓輸入框失焦，進而收合鍵盤
+            }, { once: true });
+        }
+    });
     const hamburgerButton = document.querySelector('.hamburger-button');
     const navLinks = document.querySelector('.nav-links');
     const tabButtonsInMenu = navLinks.querySelectorAll('.tab-button');
