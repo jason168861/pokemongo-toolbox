@@ -70,7 +70,12 @@ export function initializeSpecialResearchApp() {
                 
                 generateResearchCards(filteredResearches);
             });
-            
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // 防止任何預設行為
+                    searchInput.blur();     // 讓輸入框失去焦點
+                }
+            });
             // 頁面載入後先執行一次，顯示所有資料
             triggerSearch();
         })

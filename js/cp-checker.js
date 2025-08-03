@@ -52,6 +52,12 @@ export function initializeCpChecker() {
                 statusMessage.textContent = `資料載入成功！共 ${allPokemonData.length} 筆資料。`;
         }
     }
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            searchInput.blur();
+        }
+    });
     searchInput.addEventListener('input', (event) => {
         const query = event.target.value.trim().toLowerCase();
         filterResults(query);

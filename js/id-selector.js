@@ -114,6 +114,12 @@ export function initializeIdSelector() {
     
     // --- Event Listeners ---
     searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            searchInput.blur();
+        }
+    });
     startersButton.addEventListener('click', () => filterAndDisplay(includeStarterEvolutionsCheckbox.checked ? STARTER_FAMILIES_IDS : STARTERS_BASE_IDS));
     pseudosButton.addEventListener('click', () => filterAndDisplay(includePseudoEvolutionsCheckbox.checked ? PSEUDO_FAMILIES_IDS : PSEUDOS_BASE_IDS));
     megaButton.addEventListener('click', () => filterAndDisplay(includeMegaEvolutionsCheckbox.checked ? MEGA_EVO_FAMILY_IDS : MEGA_EVO_BASE_IDS));

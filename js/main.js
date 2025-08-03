@@ -73,7 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. 定義一個函式來處理滾動事件
     function handleScroll() {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
+        if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+            document.activeElement.blur();
+        }
         if (scrollTop > lastScrollTop && scrollTop > nav.offsetHeight) {
             // 向下滑動
             nav.classList.add('app-nav--hidden');
