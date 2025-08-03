@@ -5,6 +5,8 @@ export function initializeIdSelector() {
     const POKEMON_COUNT = 1025;
     const selectedIdsOutput = document.getElementById('selected-ids');
     const searchInput = document.getElementById('idSearchInput');
+    const clearBtn = document.querySelector('#id-selector-app .clear-search-btn');
+
     const startersButton = document.getElementById('select-starters');
     const pseudosButton = document.getElementById('select-pseudos');
     const evolvedButton = document.getElementById('select-evolved');

@@ -188,11 +188,11 @@ body.nav-is-hidden #id-selector-app .search-container {
     position: absolute;
     top: 50%;
     /* 根據 input 的 padding-right (20px) 來調整 */
-    right: 35px; 
+    right: 10px; 
     transform: translateY(-50%);
     background: transparent;
     border: none;
-    font-size: 24px;
+    font-size: 22px;
     color: #888;
     cursor: pointer;
     padding: 0 5px;
@@ -206,5 +206,5 @@ body.nav-is-hidden #id-selector-app .search-container {
 /* --- 【修改】讓 input 的文字不會被按鈕蓋住 --- */
 #id-selector-app #idSearchInput {
     /* 原本 padding-right 為 20px，增加到 45px */
-    padding-right: 45px; 
+    padding-right: 35px; 
 }
