@@ -2,18 +2,72 @@ export function initializeSpecialResearchApp() {
     let allResearches = [];
     const container = document.getElementById('special-research-container');
     const searchInput = document.getElementById('special-search-input');
-    // 【修改1】獲取新增的核取方塊元素
     const includeAllCheckbox = document.getElementById('search-include-all');
 
-    // 重新觸發搜尋的函式，方便重複呼叫
-    const triggerSearch = () => {
-        const event = new Event('input', { bubbles: true, cancelable: true });
-        searchInput.dispatchEvent(event);
-    };
+    // 【優化1：Debounce 函式】
+    // 目的：防止函式被過於頻繁地呼叫。它會確保在使用者停止輸入一段時間後，才執行真正的搜尋函式。
+    function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
 
-    // 【修改2】為核取方塊加上事件監聽，當它被點擊時，重新觸發一次搜尋
-    includeAllCheckbox.addEventListener('change', triggerSearch);
+    // 真正的搜尋與過濾邏輯
+    function filterAndRender() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const searchInside = includeAllCheckbox.checked;
+        let hasResults = false;
 
+        // 【優化2：不再重新生成HTML，而是切換顯示/隱藏】
+        // 我們遍歷所有已存在的卡片元素
+        const allCards = container.querySelectorAll('.research-card');
+
+        allCards.forEach(card => {
+            const research = allResearches[card.dataset.index]; // 從卡片上預存的索引取得原始資料
+            let isMatch = false;
+
+            if (!searchTerm) {
+                isMatch = true; // 如果搜尋框是空的，顯示所有項目
+            } else {
+                const lowerCaseTitle = research.title.toLowerCase();
+                if (lowerCaseTitle.includes(searchTerm)) {
+                    isMatch = true;
+                } else if (searchInside) {
+                    // 深入搜尋的邏輯保持不變
+                    isMatch = research.steps.some(step => {
+                        const taskMatch = step.tasks.some(task =>
+                            task.description.toLowerCase().includes(searchTerm) ||
+                            (task.reward.text && task.reward.text.toLowerCase().includes(searchTerm))
+                        );
+                        if (taskMatch) return true;
+
+                        if (step.total_rewards) {
+                            return step.total_rewards.some(reward =>
+                                reward.text && reward.text.toLowerCase().includes(searchTerm)
+                            );
+                        }
+                        return false;
+                    });
+                }
+            }
+            
+            // 根據是否匹配，切換卡片的顯示狀態
+            if (isMatch) {
+                card.style.display = 'block';
+                hasResults = true;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // 處理「找不到結果」的提示
+        const noResultsMessage = container.querySelector('.no-results');
+        if (noResultsMessage) {
+            noResultsMessage.style.display = hasResults ? 'none' : 'block';
+        }
+    }
 
     fetch('data/special_research.json')
         .then(response => {
@@ -25,120 +79,91 @@ export function initializeSpecialResearchApp() {
         .then(data => {
             allResearches = data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
             
-            // 【修改3】修改主要的搜尋事件監聽器
-            searchInput.addEventListener('input', (event) => {
-                const searchTerm = event.target.value.toLowerCase().trim();
-                // 獲取核取方塊當前的狀態
-                const searchInside = includeAllCheckbox.checked;
+            // 【優化3：頁面載入時，一次性生成所有卡片】
+            // 先將所有卡片渲染到畫面上，但之後只會控制它們的顯示或隱藏
+            generateResearchCards(allResearches);
 
-                const filteredResearches = allResearches.filter(research => {
-                    // 如果搜尋詞是空的，直接顯示所有項目
-                    if (!searchTerm) return true;
+            // 當 checkbox 狀態改變時，也使用 debounce 來觸發搜尋，避免連續點擊造成卡頓
+            includeAllCheckbox.addEventListener('change', debounce(filterAndRender, 200));
 
-                    const lowerCaseTitle = research.title.toLowerCase();
-                    // 預設先搜尋標題
-                    if (lowerCaseTitle.includes(searchTerm)) {
-                        return true;
-                    }
-
-                    // 如果使用者沒有勾選深入搜尋，且標題不符，則直接排除
-                    if (!searchInside) {
-                        return false;
-                    }
-                    
-                    // 如果勾選了深入搜尋，則繼續往下檢查所有步驟 (steps)
-                    // 使用 .some()，只要有一個符合條件就會回傳 true，效能較好
-                    return research.steps.some(step => {
-                        // 檢查步驟中的每一個任務 (tasks)
-                        const taskMatch = step.tasks.some(task => 
-                            task.description.toLowerCase().includes(searchTerm) ||
-                            (task.reward.text && task.reward.text.toLowerCase().includes(searchTerm))
-                        );
-
-                        if (taskMatch) return true;
-
-                        // 檢查完成該步驟的總獎勵 (total_rewards)
-                        if (step.total_rewards) {
-                            return step.total_rewards.some(reward =>
-                                reward.text && reward.text.toLowerCase().includes(searchTerm)
-                            );
-                        }
-
-                        return false;
-                    });
-                });
-                
-                generateResearchCards(filteredResearches);
-            });
-            searchInput.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    event.preventDefault(); // 防止任何預設行為
-                    searchInput.blur();     // 讓輸入框失去焦點
-                }
-            });
-            // 頁面載入後先執行一次，顯示所有資料
-            triggerSearch();
+            // 將 'input' 事件的監聽器，用 debounce 包起來，延遲 300 毫秒執行
+            searchInput.addEventListener('input', debounce(filterAndRender, 300));
+            
+            // 頁面載入後，顯示所有資料
+            filterAndRender();
         })
         .catch(error => {
             container.innerHTML = `<div class="no-results" style="color:red;">${error.message}</div>`;
             console.error('讀取資料時發生錯誤:', error);
         });
+
     // ▼▼▼ 您原本的所有 helper functions (generateResearchCards, generateListHtml, addAccordionLogic) 也要一併複製到這裡 ▼▼▼
+    // 【重要修改】generateResearchCards 現在只在初始時被呼叫一次
     function generateResearchCards(researches) {
-        // 【修改】使用新的 ID
-        const container = document.getElementById('special-research-container');
-            container.innerHTML = ''; 
+        container.innerHTML = ''; // 清空容器，準備生成
 
-            if (researches.length === 0) {
-                container.innerHTML = '<div class="no-results">找不到符合條件的調查 😅 <br>試試看別的關鍵字吧！</div>';
-                return;
-            }
+        if (researches.length === 0) {
+            container.innerHTML = '<div class="no-results">找不到符合條件的調查 😅 <br>試試看別的關鍵字吧！</div>';
+            return;
+        }
 
-            researches.forEach(research => {
-                const card = document.createElement('div');
-                card.className = 'research-card';
-                
-                const stepsHtml = research.steps.map(step => {
-                    const tasksHtml = generateListHtml(step.tasks, 'task');
-                    // ▼▼▼【緊湊佈局修改 3】為總獎勵加上新的 class ▼▼▼
-                    const totalRewardsHtml = step.total_rewards && step.total_rewards.length > 0
-                        ? `<div class="total-rewards-container">
-                               <h4>🎉 完成階段總獎勵</h4>
-                               <ul class="total-rewards-grid">${generateListHtml(step.total_rewards, 'total')}</ul>
-                           </div>`
-                        : '';
-                    // ▲▲▲
+        const fragment = document.createDocumentFragment(); // 使用文檔碎片提高效能
 
-                    return `
-                        <div class="step">
-                            <h3>${step.step_title}</h3>
-                            <ul>${tasksHtml}</ul>
-                            ${totalRewardsHtml}
-                        </div>
-                    `;
-                }).join('');
+        researches.forEach((research, index) => {
+            const card = document.createElement('div');
+            card.className = 'research-card';
+            card.dataset.index = index; // 【關鍵】將原始資料的索引存起來，方便之後回溯
 
-                card.innerHTML = `
-                    <div class="research-title">
-                        <div class="research-title-block">
-                            <span class="research-title-text">${research.title}</span>
-                            <span class="research-date">發布日期: ${research.release_date || 'N/A'}</span>
-                        </div>
-                        <span class="icon">+</span>
-                    </div>
-                    <div class="research-content">
-                        ${stepsHtml}
+            const stepsHtml = research.steps.map(step => {
+                const tasksHtml = generateListHtml(step.tasks, 'task');
+                const totalRewardsHtml = step.total_rewards && step.total_rewards.length > 0
+                    ? `<div class="total-rewards-container">
+                           <h4>🎉 完成階段總獎勵</h4>
+                           <ul class="total-rewards-grid">${generateListHtml(step.total_rewards, 'total')}</ul>
+                       </div>`
+                    : '';
+
+                return `
+                    <div class="step">
+                        <h3>${step.step_title}</h3>
+                        <ul>${tasksHtml}</ul>
+                        ${totalRewardsHtml}
                     </div>
                 `;
-                
-                container.appendChild(card);
-            });
+            }).join('');
+
+            card.innerHTML = `
+                <div class="research-title">
+                    <div class="research-title-block">
+                        <span class="research-title-text">${research.title}</span>
+                        <span class="research-date">發布日期: ${research.release_date || 'N/A'}</span>
+                    </div>
+                    <span class="icon">+</span>
+                </div>
+                <div class="research-content">
+                    ${stepsHtml}
+                </div>
+            `;
             
-            addAccordionLogic();
+            fragment.appendChild(card);
+        });
+
+        // 加上一個固定的「無結果」提示元素，之後用JS控制其顯示/隱藏
+        const noResultsDiv = document.createElement('div');
+        noResultsDiv.className = 'no-results';
+        noResultsDiv.textContent = '找不到符合條件的調查 😅 試試看別的關鍵字吧！';
+        noResultsDiv.style.display = 'none'; // 預設隱藏
+        fragment.appendChild(noResultsDiv);
+        
+        container.appendChild(fragment); // 一次性將所有元素加入DOM
+        
+        addAccordionLogic(); // 手風琴效果的監聽器也只需要設定一次
     }
 
+    // generateListHtml 函式維持不變
     function generateListHtml(items, type) {
-        const placeholderSrc = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="; // 1x1 透明 GIF
+        // ... 此函式內容完全不變，請保留您原本的程式碼 ...
+        const placeholderSrc = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
 
         return items.map(item => {
             let description, rewardText, imageUrls;
@@ -147,7 +172,6 @@ export function initializeSpecialResearchApp() {
                 description = item.description;
                 rewardText = item.reward.text;
                 imageUrls = item.reward.image_urls || [];
-                // 【修改處】將 src 改為 data-src，並新增 class="lazy-load"
                 const imagesHtml = imageUrls.map(url => `<img src="${placeholderSrc}" data-src="${url}" alt="reward" class="reward-icon lazy-load">`).join('');
                 const rewardTextHtml = rewardText ? `<span>(${rewardText})</span>` : '';
 
@@ -160,10 +184,9 @@ export function initializeSpecialResearchApp() {
                         </div>
                     </li>`;
 
-            } else { // type === 'total'
+            } else { 
                 description = item.text;
                 imageUrls = item.image_url ? [item.image_url] : [];
-                 // 【修改處】將 src 改為 data-src，並新增 class="lazy-load"
                 const imagesHtml = imageUrls.map(url => `<img src="${placeholderSrc}" data-src="${url}" alt="reward" class="reward-icon lazy-load">`).join('');
 
                 return `
@@ -175,7 +198,9 @@ export function initializeSpecialResearchApp() {
         }).join('');
     }
 
+    // addAccordionLogic 函式維持不變
     function addAccordionLogic() {
+        // ... 此函式內容完全不變，請保留您原本的程式碼 ...
         const titles = document.querySelectorAll('.research-title');
 
         titles.forEach(title => {
@@ -188,12 +213,10 @@ export function initializeSpecialResearchApp() {
                     content.classList.add('show');
                     content.style.maxHeight = content.scrollHeight + 50 + "px";
 
-                    // 【新增邏輯】當卡片展開時，載入內部的圖片
                     const imagesToLoad = content.querySelectorAll('img.lazy-load');
                     imagesToLoad.forEach(img => {
-                        img.src = img.dataset.src; // 將 data-src 的值賦給 src
-                        img.classList.remove('lazy-load'); // 移除 class，避免重複處理
-                        // 可以選擇性地加上載入完成的事件處理，例如加上淡入效果
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy-load');
                         img.onload = () => {
                             img.style.opacity = '1';
                         };
