@@ -181,3 +181,30 @@
 body.nav-is-hidden #id-selector-app .search-container {
     top: 0; /* 當導覽列隱藏時，讓搜尋框黏在最頂部 */
 }
+
+
+/* --- 【新增】叉叉按鈕樣式 --- */
+#id-selector-app .clear-search-btn {
+    position: absolute;
+    top: 50%;
+    /* 根據 input 的 padding-right (20px) 來調整 */
+    right: 35px; 
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+    padding: 0 5px;
+    display: none; /* 預設隱藏 */
+}
+
+#id-selector-app .clear-search-btn:hover {
+    color: #333;
+}
+
+/* --- 【修改】讓 input 的文字不會被按鈕蓋住 --- */
+#id-selector-app #idSearchInput {
+    /* 原本 padding-right 為 20px，增加到 45px */
+    padding-right: 45px; 
+}

@@ -2,6 +2,7 @@ export function initializeCpChecker() {
     const searchInput = document.getElementById('cpSearchInput');
     const resultsContainer = document.getElementById('resultsContainer');
     const statusMessage = document.getElementById('statusMessage');
+    const clearBtn = document.querySelector('#cp-checker-app .clear-search-btn');
     if (!searchInput) return; // 如果元素不存在，直接返回
 
     const allPokemonData = POKEMON_CP_DATA;
@@ -52,6 +53,19 @@ export function initializeCpChecker() {
                 statusMessage.textContent = `資料載入成功！共 ${allPokemonData.length} 筆資料。`;
         }
     }
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim().toLowerCase();
+        filterResults(query);
+        // 根據輸入框是否有值來顯示/隱藏按鈕
+        clearBtn.style.display = searchInput.value ? 'block' : 'none';
+    });
+
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        filterResults(''); // 傳入空字串來顯示所有結果
+        clearBtn.style.display = 'none';
+        searchInput.focus();
+    }); 
     searchInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();

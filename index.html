@@ -58,7 +58,7 @@
          <p><strong>如何使用</strong>:</p>
          <ol>
              <li>進入頁面後，會自動載入所有寶可夢的 CP 資料。</li>
-             <li>在頂部的搜尋框中，您可以輸入 <strong>寶可夢的中文名稱</strong> 或 <strong>全國圖鑑編號</strong> 來進行篩選。</li>
+             <li>在頂部的搜尋框中，您可以輸入 <strong>寶可夢的中文名稱</strong> 或 <strong>全國圖鑑編號(如:1 是妙蛙種子、151 是夢幻)</strong> 來進行篩選。</li>
              <li>列表會即時更新，顯示符合條件的寶可夢及其 CP 資訊。</li>
          </ol>
  
@@ -137,6 +137,7 @@
                 <p style="text-align: center; margin-top: -15px; margin-bottom: 25px; color: #606770;">15等、20等 & 25等 IV100 CP 查詢</p>
                 <div class="search-area">
                     <input type="text" id="cpSearchInput" placeholder="輸入寶可夢名稱、形態或全國圖鑑編號...">
+                    <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
                 </div>
                 <div id="statusMessage">正在初始化...</div>
                 <div id="resultsContainer"></div>
@@ -160,6 +161,7 @@
             <main>
                 <div class="search-container">
                     <input type="search" id="idSearchInput" placeholder="依編號或名稱搜尋寶可夢...">
+                    <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
                 </div>
                 <div class="controls">
                     <div class="control-group">

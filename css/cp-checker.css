@@ -97,3 +97,30 @@
     color: #606770;
     display: block; /* 讓標籤自成一行 */
 }
+/* --- 【新增】叉叉按鈕樣式 --- */
+#cp-checker-app .search-area {
+    position: relative; /* 讓按鈕可以相對於它定位 */
+}
+
+#cp-checker-app .clear-search-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: #888;
+    cursor: pointer;
+    padding: 0 5px;
+    display: none; /* 預設隱藏 */
+}
+
+#cp-checker-app .clear-search-btn:hover {
+    color: #333;
+}
+
+/* --- 【修改】讓 input 的文字不會被按鈕蓋住 --- */
+#cp-checker-app #cpSearchInput {
+    padding-right: 35px; /* 增加右側內距 */
+}

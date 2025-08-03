@@ -130,6 +130,18 @@ export function initializeIdSelector() {
         searchInput.value = '';
         handleSearch();
     });
+    searchInput.addEventListener('input', () => {
+        handleSearch(); // 每次輸入都觸發搜尋
+        // 根據輸入框是否有值來顯示/隱藏按鈕
+        clearBtn.style.display = searchInput.value ? 'block' : 'none';
+    });
+    
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        handleSearch(); // 傳入空字串來顯示所有結果
+        clearBtn.style.display = 'none';
+        searchInput.focus();
+    });
 
     copyButton.addEventListener('click', () => {
         const textToCopy = selectedIdsOutput.textContent;
