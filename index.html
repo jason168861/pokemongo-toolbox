@@ -505,11 +505,29 @@
     counterElement.textContent = 'N/A';
     containerElement.style.display = 'inline-flex';
   });
+  const pokeball = document.querySelector('.pokeball-icon');
+
+  if (pokeball) {
+    let ticking = false;
+
+    document.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          const scrollY = window.scrollY;
+          // 捲動的距離會直接變成旋轉的角度
+          pokeball.style.transform = `rotate(${scrollY}deg)`;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
 </script>
 
 </body>
 
 </html>
+
 
 
 
