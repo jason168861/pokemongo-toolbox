@@ -379,52 +379,81 @@
 
     <script type="module" src="js/main.js"></script>
 <style>
-  /* 這是您喜歡的計數器樣式 */
+  /* 這是計數器的通用樣式，對手機和電腦都有效 */
   .visitor-counter-container {
-    /* 將計數器固定在右下角 */
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    
-    /* 預設隱藏，成功讀取後用JS顯示 */
-    display: none; 
-    
-    align-items: center;
-    background-color: #ffffff;
-    border: 2px solid #dedede;
-    border-radius: 15px;
-    padding: 8px 18px;
-    font-family: 'Helvetica', 'Arial', '微軟正黑體', sans-serif;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     z-index: 999; /* 確保它在最上層 */
-    cursor: pointer;
+    display: none; /* 預設隱藏，成功讀取後用JS顯示 */
+    align-items: center;
+    font-family: 'Helvetica', 'Arial', '微軟正黑體', sans-serif;
   }
   .visitor-counter-container .pokeball-icon {
-    width: 35px;
-    height: 35px;
-    margin-right: 12px;
-    /* 讓圖片跟著滑鼠指標旋轉，增加趣味性 */
-    transition: transform 0.3s ease;
-  }
-  .visitor-counter-container:hover .pokeball-icon {
-    transform: rotate(360deg);
+    transition: transform 0.3s ease; /* 旋轉動畫 */
   }
   .visitor-counter-container .counter-text {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
-  .visitor-counter-container .counter-title {
-    font-size: 12px;
-    color: #666;
-    font-weight: bold;
+
+  /* --- 手機版樣式 (螢幕寬度小於 768px) --- */
+  @media (max-width: 767px) {
+    .visitor-counter-container {
+      bottom: 8px; /* 離底部近一點 */
+      right: 8px;  /* 離右邊近一點 */
+      background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 3px 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .visitor-counter-container .pokeball-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+    }
+    .visitor-counter-container .counter-title {
+      font-size: 9px;
+      color: #555;
+    }
+    .visitor-counter-container #visitor-count-firebase {
+      font-size: 14px;
+      font-weight: bold;
+      color: #d9534f;
+    }
   }
-  /* 注意：這裡的 ID 已修正為 #visitor-count-firebase 來匹配 JS */
-  .visitor-counter-container #visitor-count-firebase {
-    font-size: 22px;
-    font-weight: bold;
-    color: #d9534f; /* 寶可夢紅色 */
-    line-height: 1.2;
+
+  /* --- 桌面版樣式 (螢幕寬度大於等於 768px) --- */
+  @media (min-width: 768px) {
+    .visitor-counter-container {
+      bottom: 20px;
+      right: 20px;
+      background-color: #ffffff;
+      border: 2px solid #dedede;
+      border-radius: 15px;
+      padding: 8px 18px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+    .visitor-counter-container .pokeball-icon {
+      width: 35px;
+      height: 35px;
+      margin-right: 12px;
+    }
+    .visitor-counter-container:hover .pokeball-icon {
+      transform: rotate(360deg); /* 只有桌面版有滑鼠旋轉效果 */
+    }
+    .visitor-counter-container .counter-title {
+      font-size: 12px;
+      color: #666;
+      font-weight: bold;
+    }
+    .visitor-counter-container #visitor-count-firebase {
+      font-size: 22px;
+      font-weight: bold;
+      color: #d9534f;
+      line-height: 1.2;
+    }
   }
 </style>
 
@@ -475,6 +504,7 @@
 </body>
 
 </html>
+
 
 
 
