@@ -385,55 +385,51 @@
     <span id="visitor-count-firebase" style="font-size: 20px; font-weight: bold;">...</span>
   </div>
 </div>
-
 <script type="module">
-  // Part A: 從 Firebase SDK 匯入需要的工具
+  // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-  import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+  import { getDatabase, ref, runTransaction } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
-  // Part B: 貼上您從 Firebase 複製的設定檔
-  // ▼▼▼▼▼ 請將這裡的內容替換成您自己的 firebaseConfig ▼▼▼▼▼
-const firebaseConfig = {
-  apiKey: "AIzaSyBlKt4qqSr3lzXP0FQGSYNW0aa08ww2-A4",
-  authDomain: "pokemongo-toolbox-counter.firebaseapp.com",
-  databaseURL: "https://pokemongo-toolbox-counter-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "pokemongo-toolbox-counter",
-  storageBucket: "pokemongo-toolbox-counter.firebasestorage.app",
-  messagingSenderId: "40329297534",
-  appId: "1:40329297534:web:25de1fd48882d76726222f"
-};
-  // ▲▲▲▲▲ 請將這裡的內容替換成您自己的 firebaseConfig ▲▲▲▲▲
+  // Your web app's Firebase configuration (請確保這是您自己的)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlKt4qqSr3lzXP0FQGSYNW0aa08ww2-A4",
+    authDomain: "pokemongo-toolbox-counter.firebaseapp.com",
+    databaseURL: "https://pokemongo-toolbox-counter-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "pokemongo-toolbox-counter",
+    storageBucket: "pokemongo-toolbox-counter.firebasestorage.app",
+    messagingSenderId: "40329297534",
+    appId: "1:40329297534:web:25de1fd48882d76726222f"
+  };
 
-  // Part C: 初始化 Firebase 並與資料庫互動
-  try {
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const counterRef = ref(db, 'pageviews/total');
-    const counterElement = document.getElementById('visitor-count-firebase');
-    const containerElement = document.querySelector('.visitor-counter-container');
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const counterRef = ref(db, 'pageviews/total');
+  const counterElement = document.getElementById('visitor-count-firebase');
+  const containerElement = document.querySelector('.visitor-counter-container');
 
-    // 當頁面載入時，執行一個「交易」來增加計數
-    runTransaction(counterRef, (currentValue) => {
-      return (currentValue || 0) + 1;
-    });
-
-    // 監聽計數器的變化，並更新到畫面上
-    onValue(counterRef, (snapshot) => {
-      const views = snapshot.val();
-      if (views !== null) {
-        counterElement.textContent = views;
-        containerElement.style.display = 'inline-flex'; // 成功讀取後才顯示
-      }
-    });
-  } catch (error) {
-    console.error("Firebase a 初始化失敗:", error);
-    // 如果 Firebase 連線失敗，計數器將不會顯示
-  }
+  // 執行一個「交易」來增加計數
+  runTransaction(counterRef, (currentValue) => {
+    return (currentValue || 0) + 1;
+  }).then((transactionResult) => {
+    // 只有在交易成功完成後，才用最終的結果來更新畫面
+    if (transactionResult.committed) {
+      const finalValue = transactionResult.snapshot.val();
+      counterElement.textContent = finalValue;
+      containerElement.style.display = 'inline-flex'; // 成功讀取後才顯示
+    }
+  }).catch((error) => {
+    console.error("Firebase Transaction failed: ", error);
+    // 如果失敗，可以選擇顯示一個錯誤訊息或保持隱藏
+    counterElement.textContent = 'N/A';
+    containerElement.style.display = 'inline-flex';
+  });
 </script>
 
 </body>
 
 </html>
+
 
 
 
