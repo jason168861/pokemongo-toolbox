@@ -10,26 +10,118 @@
 #id-selector-app h1 {
     color: #e4000f;
 }
-#id-selector-app .controls button {
+
+/* ▼▼▼【重構】控制項區塊新樣式 ▼▼▼ */
+#id-selector-app .controls-container {
+    display: flex;
+    flex-direction: column; /* 手機上預設垂直堆疊 */
+    gap: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-items: stretch; 
+}
+
+#id-selector-app .control-fieldset {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px 20px;
+    background-color: #fdfdfd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    justify-content: center; /* 內部元件置中 */
+}
+
+#id-selector-app legend {
+    font-size: 1em;
+    font-weight: bold;
+    color: #3B4CCA;
+    padding: 0 10px;
+    margin-left: 10px; 
+}
+
+#id-selector-app .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f0f2f5;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+#id-selector-app .filter-group label {
+    white-space: nowrap; 
+    font-size: 14px;
+    user-select: none;
+    cursor: pointer;
+}
+
+#id-selector-app .control-fieldset button {
     background-color: #3B4CCA;
     color: white;
     border: none;
     padding: 10px 15px;
-    margin: 5px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+    font-size: 15px;
+    transition: background-color 0.3s, transform 0.2s;
+    flex-shrink: 0; 
 }
-#id-selector-app .controls button:hover {
+
+#id-selector-app .control-fieldset button:hover {
     background-color: #000F94;
+    transform: translateY(-2px);
 }
+
+/* 特定按鈕微調 */
+#id-selector-app #show-all {
+    background-color: #4CAF50;
+}
+#id-selector-app #show-all:hover {
+    background-color: #45a049;
+}
+
 #id-selector-app #clear-all {
-    background-color: #666;
+    background-color: #d9534f;
 }
 #id-selector-app #clear-all:hover {
-    background-color: #444;
+    background-color: #c9302c;
 }
+
+#id-selector-app #select-all-shown {
+     background-color: #f0ad4e;
+     color: #fff;
+}
+#id-selector-app #select-all-shown:hover {
+     background-color: #ec971f;
+}
+
+#id-selector-app .action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* --- 電腦版樣式 (寬度 > 768px) --- */
+@media (min-width: 768px) {
+    #id-selector-app .controls-container {
+        flex-direction: row; /* 在大螢幕上改為水平排列 */
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    #id-selector-app .control-fieldset {
+        flex-grow: 1; /* 讓兩個區塊平均分配空間 */
+        max-width: 550px; /* 給個最大寬度避免過度拉伸 */
+    }
+}
+/* ▲▲▲【重構】控制項區塊新樣式 ▲▲▲ */
+
+
 #id-selector-app .pokemon-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -41,7 +133,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-#id-selector-app .pokemon-card { /*Scoped selector*/
+#id-selector-app .pokemon-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -101,8 +193,7 @@
     border-radius: 5px;
     min-height: 20px;
     word-wrap: break-word;
-}
-#id-selector-app .controls {
+}#id-selector-app .controls {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

@@ -176,33 +176,37 @@
             <main>
                 <div class="search-container">
                     <div class="input-wrapper">
-                    <input type="search" id="idSearchInput" placeholder="依編號或名稱搜尋寶可夢...">
-                    <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
+                        <input type="search" id="idSearchInput" placeholder="依編號或名稱搜尋寶可夢...">
+                        <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
+                    </div>
                 </div>
-                </div>
-                <div class="controls">
-                    <div class="control-group">
-                        <button id="select-starters">顯示所有御三家</button>
-                        <label>
-                            <input type="checkbox" id="include-starter-evolutions"> 包含進化型態
-                        </label>
-                    </div>
-                    <div class="control-group">
-                        <button id="select-pseudos">顯示所有準神</button>
-                        <label>
-                            <input type="checkbox" id="include-pseudo-evolutions"> 包含進化型態
-                        </label>
-                    </div>
-                    <div class="control-group">
-                        <button id="select-mega">顯示可超級進化</button>
-                        <label>
-                            <input type="checkbox" id="include-mega-evolutions"> 包含進化型態
-                        </label>
-                    </div>
-                    <button id="select-all-shown" style="display: none; background-color: #FFDE00; color: #333;">全選當前顯示</button>
-                    <button id="select-evolved">勾選所有進化型態</button>
-                    <button id="show-all" style="background-color: #4CAF50;">顯示所有寶可夢</button>
-                    <button id="clear-all">清除所有選擇</button>
+        
+                <div class="controls-container">
+                    <fieldset class="control-fieldset">
+                        <legend>分類篩選</legend>
+                        <div class="filter-group">
+                            <button id="select-starters">御三家</button>
+                            <label><input type="checkbox" id="include-starter-evolutions"> 含進化</label>
+                        </div>
+                        <div class="filter-group">
+                            <button id="select-pseudos">準神</button>
+                            <label><input type="checkbox" id="include-pseudo-evolutions"> 含進化</label>
+                        </div>
+                        <div class="filter-group">
+                            <button id="select-mega">超級進化</button>
+                            <label><input type="checkbox" id="include-mega-evolutions"> 含進化</label>
+                        </div>
+                         <button id="show-all" class="utility-button">顯示全部</button>
+                    </fieldset>
+        
+                    <fieldset class="control-fieldset">
+                        <legend>批次操作</legend>
+                        <div class="action-buttons">
+                            <button id="select-all-shown" style="display: none;">全選當前</button>
+                            <button id="select-evolved">全選進化型</button>
+                            <button id="clear-all" class="danger-button">全部清除</button>
+                        </div>
+                    </fieldset>
                 </div>
                 <div id="pokemon-container" class="pokemon-grid"></div>
             </main>
