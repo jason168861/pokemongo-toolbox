@@ -375,12 +375,56 @@
     <script src="data/pokemon_names_from_api.js"></script>
 
     <script type="module" src="js/main.js"></script>
-<div style="position: fixed; bottom: 20px; right: 20px; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden;">
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=jason168861.pokemongo-toolbox&left_text=訪客總數&left_color=%23555&right_color=%23d9534f&logo=pokemon&logo_color=white" alt="Poké-Toolbox Visitor Count"/>
+<div class="visitor-counter-container">
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokéball" class="pokeball-icon">
+  <div class="counter-text">
+    <span class="counter-title">專案總人氣</span>
+    <span id="visitor-count">{{ site.data.counter.views }}</span>
+  </div>
 </div>
+
+<style>
+  .visitor-counter-container {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  .pokeball-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    transition: transform 0.5s;
+  }
+  .visitor-counter-container:hover .pokeball-icon {
+    transform: rotate(360deg);
+  }
+  .counter-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .counter-title {
+    font-size: 12px;
+    color: #555;
+  }
+  #visitor-count {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+</style>
 </body>
 
 </html>
+
 
 
 
