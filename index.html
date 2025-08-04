@@ -378,55 +378,63 @@
     <script src="data/pokemon_names_from_api.js"></script>
 
     <script type="module" src="js/main.js"></script>
-<div class="visitor-counter-container">
-  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokéball" class="pokeball-icon">
-  <div class="counter-text">
-    <span class="counter-title">觀看次數</span>
-    <span id="visitor-count">{{ site.data.counter.views }}</span>
+<div class="visitor-counter-container" style="position: fixed; bottom: 20px; right: 20px; display: none;">
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokéball" style="width: 30px; height: 30px; margin-right: 10px;">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <span style="font-size: 12px; color: #555;">即時訪客數</span>
+    <span id="visitor-count-firebase" style="font-size: 20px; font-weight: bold;">...</span>
   </div>
 </div>
 
-<style>
-  .visitor-counter-container {
-    display: inline-flex;
-    align-items: center;
-    background-color: #f0f0f0;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    padding: 5px 15px;
-    font-family: 'Arial', sans-serif;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+<script type="module">
+  // Part A: 從 Firebase SDK 匯入需要的工具
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+  import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+  // Part B: 貼上您從 Firebase 複製的設定檔
+  // ▼▼▼▼▼ 請將這裡的內容替換成您自己的 firebaseConfig ▼▼▼▼▼
+const firebaseConfig = {
+  apiKey: "AIzaSyBlKt4qqSr3lzXP0FQGSYNW0aa08ww2-A4",
+  authDomain: "pokemongo-toolbox-counter.firebaseapp.com",
+  databaseURL: "https://pokemongo-toolbox-counter-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "pokemongo-toolbox-counter",
+  storageBucket: "pokemongo-toolbox-counter.firebasestorage.app",
+  messagingSenderId: "40329297534",
+  appId: "1:40329297534:web:25de1fd48882d76726222f"
+};
+  // ▲▲▲▲▲ 請將這裡的內容替換成您自己的 firebaseConfig ▲▲▲▲▲
+
+  // Part C: 初始化 Firebase 並與資料庫互動
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const counterRef = ref(db, 'pageviews/total');
+    const counterElement = document.getElementById('visitor-count-firebase');
+    const containerElement = document.querySelector('.visitor-counter-container');
+
+    // 當頁面載入時，執行一個「交易」來增加計數
+    runTransaction(counterRef, (currentValue) => {
+      return (currentValue || 0) + 1;
+    });
+
+    // 監聽計數器的變化，並更新到畫面上
+    onValue(counterRef, (snapshot) => {
+      const views = snapshot.val();
+      if (views !== null) {
+        counterElement.textContent = views;
+        containerElement.style.display = 'inline-flex'; // 成功讀取後才顯示
+      }
+    });
+  } catch (error) {
+    console.error("Firebase a 初始化失敗:", error);
+    // 如果 Firebase 連線失敗，計數器將不會顯示
   }
-  .pokeball-icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-    transition: transform 0.5s;
-  }
-  .visitor-counter-container:hover .pokeball-icon {
-    transform: rotate(360deg);
-  }
-  .counter-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .counter-title {
-    font-size: 12px;
-    color: #555;
-  }
-  #visitor-count {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-  }
-</style>
+</script>
+
 </body>
 
 </html>
+
 
 
 
