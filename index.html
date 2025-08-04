@@ -375,83 +375,85 @@
     <script src="data/pokemon_names_from_api.js"></script>
 
     <script type="module" src="js/main.js"></script>
-    <div class="visitor-counter-container">
-  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokéball" class="pokeball-icon">
-  <div class="counter-text">
-    <span class="counter-title">訪客總數</span>
-    <span id="visitor-count">載入中...</span>
+<div class="visitor-counter-container-alt">
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png" alt="Great Ball" class="pokeball-icon-alt">
+  <div class="counter-text-alt">
+    <span class="counter-title-alt">網站總瀏覽</span>
+    <span id="visitor-count-alt">載入中...</span>
   </div>
 </div>
 
 <style>
-  /* 計數器樣式 */
-  .visitor-counter-container {
-    /* 將計數器固定在右下角 */
+  .visitor-counter-container-alt {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    
     display: inline-flex;
     align-items: center;
-    background-color: #ffffff;
-    border: 2px solid #dedede;
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
     border-radius: 15px;
     padding: 8px 18px;
     font-family: 'Helvetica', 'Arial', '微軟正黑體', sans-serif;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    z-index: 999; /* 確保它在最上層 */
+    z-index: 999;
   }
-  .pokeball-icon {
+  .pokeball-icon-alt {
     width: 35px;
     height: 35px;
     margin-right: 12px;
-    /* 讓圖片跟著滑鼠指標旋轉，增加趣味性 */
-    transition: transform 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   }
-  .visitor-counter-container:hover .pokeball-icon {
-    transform: rotate(360deg);
+  .visitor-counter-container-alt:hover .pokeball-icon-alt {
+    transform: rotate(360deg) scale(1.1);
   }
-  .counter-text {
+  .counter-text-alt {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
-  .counter-title {
+  .counter-title-alt {
     font-size: 12px;
-    color: #666;
+    color: #495057;
     font-weight: bold;
   }
-  #visitor-count {
+  #visitor-count-alt {
     font-size: 22px;
     font-weight: bold;
-    color: #d9534f; /* 寶可夢紅色 */
+    color: #007bff; /* 寶可夢藍色 */
     line-height: 1.2;
   }
 </style>
 
 <script>
-  const countEl = document.getElementById('visitor-count');
+  const countElAlt = document.getElementById('visitor-count-alt');
 
-  function updateVisitorCount() {
-    // 使用免費的 CountAPI，並為您的網站創建一個唯一的計數器
-    fetch('https://api.countapi.xyz/hit/jason168861.github.io/pokemongo-toolbox')
+  function updateVisitorCountAlt() {
+    // 使用 VisitorBadge 的 API 服務
+    const apiUrl = 'https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fjason168861.github.io%2Fpokemongo-toolbox%2F&countColor=%23007bff';
+
+    fetch(apiUrl)
       .then(res => res.json())
       .then(res => {
-        // 將獲取到的數字更新到畫面上
-        countEl.innerHTML = res.value;
+        // 這個 API 回傳的數字在 res.total 裡面
+        if (typeof res.total !== 'undefined') {
+          countElAlt.innerHTML = res.total;
+        } else {
+          countElAlt.innerHTML = 'Error';
+        }
       })
       .catch(err => {
-        // 如果 API 失敗，則顯示錯誤訊息
-        countEl.innerHTML = 'N/A';
+        countElAlt.innerHTML = 'Error';
       });
   }
 
   // 載入頁面時執行計數
-  updateVisitorCount();
+  updateVisitorCountAlt();
 </script>
 </body>
 
 </html>
+
 
 
 
