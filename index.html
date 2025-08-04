@@ -375,84 +375,13 @@
     <script src="data/pokemon_names_from_api.js"></script>
 
     <script type="module" src="js/main.js"></script>
-<div class="visitor-counter-container-alt">
-  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png" alt="Great Ball" class="pokeball-icon-alt">
-  <div class="counter-text-alt">
-    <span class="counter-title-alt">網站總瀏覽</span>
-    <span id="visitor-count-alt">載入中...</span>
-  </div>
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden;">
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=jason168861.pokemongo-toolbox&left_text=訪客總數&left_color=%23555&right_color=%23d9534f&logo=pokemon&logo_color=white" alt="Poké-Toolbox Visitor Count"/>
 </div>
-
-<style>
-  .visitor-counter-container-alt {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: inline-flex;
-    align-items: center;
-    background-color: #f8f9fa;
-    border: 2px solid #e9ecef;
-    border-radius: 15px;
-    padding: 8px 18px;
-    font-family: 'Helvetica', 'Arial', '微軟正黑體', sans-serif;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    z-index: 999;
-  }
-  .pokeball-icon-alt {
-    width: 35px;
-    height: 35px;
-    margin-right: 12px;
-    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  }
-  .visitor-counter-container-alt:hover .pokeball-icon-alt {
-    transform: rotate(360deg) scale(1.1);
-  }
-  .counter-text-alt {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .counter-title-alt {
-    font-size: 12px;
-    color: #495057;
-    font-weight: bold;
-  }
-  #visitor-count-alt {
-    font-size: 22px;
-    font-weight: bold;
-    color: #007bff; /* 寶可夢藍色 */
-    line-height: 1.2;
-  }
-</style>
-
-<script>
-  const countElAlt = document.getElementById('visitor-count-alt');
-
-  function updateVisitorCountAlt() {
-    // 使用 VisitorBadge 的 API 服務
-    const apiUrl = 'https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fjason168861.github.io%2Fpokemongo-toolbox%2F&countColor=%23007bff';
-
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(res => {
-        // 這個 API 回傳的數字在 res.total 裡面
-        if (typeof res.total !== 'undefined') {
-          countElAlt.innerHTML = res.total;
-        } else {
-          countElAlt.innerHTML = 'Error';
-        }
-      })
-      .catch(err => {
-        countElAlt.innerHTML = 'Error';
-      });
-  }
-
-  // 載入頁面時執行計數
-  updateVisitorCountAlt();
-</script>
 </body>
 
 </html>
+
 
 
 
