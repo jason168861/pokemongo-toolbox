@@ -98,7 +98,7 @@
         /* 設定為兩欄，每欄平均分配可用寬度 */
         grid-template-columns: repeat(3, 1fr);
         /* 適當縮小卡片之間的間距 */
-        gap: 15px;
+        gap: 8px;
     }
 
     /* 也可以微調卡片內的元素，讓視覺更協調 */
@@ -120,7 +120,7 @@
     }
 
     .stardust-card .stardust-amount::before {
-        width: 16px;  /* 調整沙子圖示大小 */
+        width: 8px;  /* 調整沙子圖示大小 */
         height: 16px;
     }
 }
