@@ -1,0 +1,33 @@
+name: Update repository views count
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天午夜執行一次
+  workflow_dispatch: # 允許手動執行
+
+jobs:
+  update-views:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get repository views
+        run: |
+          VIEWS=$(curl -s "https://api.github.com/repos/jason168861/pokemongo-toolbox/traffic/views?per=day" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" | \
+            jq '.views[-1].count')
+          echo "Today's views: $VIEWS"
+          echo "VIEWS_COUNT=$VIEWS" >> $GITHUB_ENV
+
+      - name: Update data file
+        run: |
+          jq --argjson views_count "$VIEWS_COUNT" '.views = .views + $views_count' _data/counter.json > tmp.json && mv tmp.json _data/counter.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add _data/counter.json
+          git commit -m "📈 Update repository views count" || echo "No changes to commit"
+          git push || echo "No changes to commit"
