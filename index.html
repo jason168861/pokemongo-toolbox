@@ -505,38 +505,50 @@
     counterElement.textContent = 'N/A';
     containerElement.style.display = 'inline-flex';
   });
-const pokeball = document.querySelector('.pokeball-icon');
+  const pokeball = document.querySelector('.pokeball-icon');
 
   if (pokeball) {
     const desktopSpeed = 0.4;
-    const mobileSpeed = 0.08;
+    const mobileSpeed = 0.2; // 適度調高手機速度，因為現在是基於變化量
     const rotationSpeed = window.innerWidth >= 1024 ? desktopSpeed : mobileSpeed;
     
     let scrollStopTimer;
     let ticking = false;
     
-    // 從 CSS 取得原始的 transition 設定，以便之後恢復
-    const originalTransition = window.getComputedStyle(pokeball).transition;
+    // 【修改點 1】新增變數來追蹤上一次的位置和目前的角度
+    let lastScrollY = window.scrollY;
+    let currentRotation = 0;
 
     document.addEventListener('scroll', function() {
-      // 【修改點 1】在開始滑動時，確保動畫是啟用的
-      pokeball.style.transition = originalTransition;
+      // 在滑動時，確保動畫效果是啟用的
+      pokeball.style.transition = 'none'; // 滑動時禁用CSS動畫，完全由JS控制
       clearTimeout(scrollStopTimer);
 
       if (!ticking) {
         window.requestAnimationFrame(function() {
-          const scrollY = window.scrollY;
-          pokeball.style.transform = `rotate(${scrollY * rotationSpeed}deg)`;
+          const currentScrollY = window.scrollY;
+          // 【修改點 2】計算捲動的「變化量」，而不是總距離
+          const deltaY = currentScrollY - lastScrollY;
+          
+          // 【修改點 3】將「變化量」加到目前的角度上
+          currentRotation += deltaY * rotationSpeed;
+          
+          pokeball.style.transform = `rotate(${currentRotation}deg)`;
+
+          // 更新上一次的位置，為下一次計算做準備
+          lastScrollY = currentScrollY;
           ticking = false;
         });
         ticking = true;
       }
 
       scrollStopTimer = setTimeout(function() {
-        // 【修改點 2】當捲動停止時，暫時禁用動畫效果
-        pokeball.style.transition = 'none';
-        // 立刻將精靈球歸位
+        // 【修改點 4】停止時，啟用CSS動畫，並平滑地歸位
+        pokeball.style.transition = 'transform 0.3s ease-out';
         pokeball.style.transform = 'rotate(0deg)';
+        // 將角度和位置記錄歸零，為下一次滑動做準備
+        currentRotation = 0;
+        lastScrollY = window.scrollY;
       }, 150);
     });
   }
@@ -545,6 +557,7 @@ const pokeball = document.querySelector('.pokeball-icon');
 </body>
 
 </html>
+
 
 
 
