@@ -399,25 +399,26 @@
   /* --- 手機版樣式 (螢幕寬度小於 768px) --- */
   @media (max-width: 767px) {
     .visitor-counter-container {
-      bottom: 8px; /* 離底部近一點 */
-      right: 8px;  /* 離右邊近一點 */
-      background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+      bottom: 8px;
+      right: 8px;
+      background-color: rgba(255, 255, 255, 0.9);
       border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 3px 8px;
+      border-radius: 12px; /* 稍微調大圓角以匹配新圖示 */
+      padding: 5px 10px; /* 稍微調大內距 */
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .visitor-counter-container .pokeball-icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 5px;
+      /* 【修改點 1】將精靈球放大 */
+      width: 28px; 
+      height: 28px;
+      margin-right: 8px; /* 稍微拉開間距 */
     }
     .visitor-counter-container .counter-title {
-      font-size: 9px;
+      font-size: 10px; /* 標題文字大小不變 */
       color: #555;
     }
     .visitor-counter-container #visitor-count-firebase {
-      font-size: 14px;
+      font-size: 16px; /* 數字大小不變 */
       font-weight: bold;
       color: #d9534f;
     }
@@ -433,7 +434,8 @@
       border-radius: 15px;
       padding: 8px 18px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      cursor: pointer;
+      /* 【修改點 2】將滑鼠指標改回預設箭頭 */
+      cursor: default; 
     }
     .visitor-counter-container .pokeball-icon {
       width: 35px;
@@ -441,7 +443,7 @@
       margin-right: 12px;
     }
     .visitor-counter-container:hover .pokeball-icon {
-      transform: rotate(360deg); /* 只有桌面版有滑鼠旋轉效果 */
+      transform: rotate(360deg);
     }
     .visitor-counter-container .counter-title {
       font-size: 12px;
@@ -504,6 +506,7 @@
 </body>
 
 </html>
+
 
 
 
