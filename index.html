@@ -505,26 +505,27 @@
     counterElement.textContent = 'N/A';
     containerElement.style.display = 'inline-flex';
   });
-  const pokeball = document.querySelector('.pokeball-icon');
+const pokeball = document.querySelector('.pokeball-icon');
 
   if (pokeball) {
-    // 【修改點 1】定義不同裝置的旋轉速度
-    const desktopSpeed = 0.4;  // 電腦版速度 (您可以微調這個數字)
-    const mobileSpeed = 0.08; // 手機版速度 (您可以微調這個數字)
-
-    // 根據螢幕寬度判斷使用哪種速度
+    const desktopSpeed = 0.4;
+    const mobileSpeed = 0.08;
     const rotationSpeed = window.innerWidth >= 1024 ? desktopSpeed : mobileSpeed;
     
     let scrollStopTimer;
     let ticking = false;
+    
+    // 從 CSS 取得原始的 transition 設定，以便之後恢復
+    const originalTransition = window.getComputedStyle(pokeball).transition;
 
     document.addEventListener('scroll', function() {
+      // 【修改點 1】在開始滑動時，確保動畫是啟用的
+      pokeball.style.transition = originalTransition;
       clearTimeout(scrollStopTimer);
 
       if (!ticking) {
         window.requestAnimationFrame(function() {
           const scrollY = window.scrollY;
-          // 【修改點 2】使用我們判斷好的 rotationSpeed
           pokeball.style.transform = `rotate(${scrollY * rotationSpeed}deg)`;
           ticking = false;
         });
@@ -532,6 +533,9 @@
       }
 
       scrollStopTimer = setTimeout(function() {
+        // 【修改點 2】當捲動停止時，暫時禁用動畫效果
+        pokeball.style.transition = 'none';
+        // 立刻將精靈球歸位
         pokeball.style.transform = 'rotate(0deg)';
       }, 150);
     });
@@ -541,6 +545,7 @@
 </body>
 
 </html>
+
 
 
 
