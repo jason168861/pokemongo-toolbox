@@ -6,6 +6,7 @@ import { initializeEggsApp } from './eggs.js';
 import { initializeLevelUpApp } from './level-up.js';
 import { initializeSearchFiltersApp } from './search-filters.js';
 import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
+import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- 全域控制與頁籤切換邏輯 ---
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let levelUpAppInitialized = false; 
     let searchFiltersAppInitialized = false;
     let specialResearchAppInitialized = false;
+    let infoHubAppInitialized = false; // <-- 【新增】
 
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -56,6 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (targetAppId === 'special-research-app' && !specialResearchAppInitialized) { // <-- 【新增】
                 initializeSpecialResearchApp();
                 specialResearchAppInitialized = true;
+            } else if (targetAppId === 'info-hub-app' && !infoHubAppInitialized) { // <-- 【新增】
+                initializeInfoHubApp();
+                infoHubAppInitialized = true;
             }
         });
     });

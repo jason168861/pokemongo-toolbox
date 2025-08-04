@@ -1,0 +1,86 @@
+/* css/info-hub.css */
+
+#info-hub-app .container {
+    max-width: 900px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 24px 40px;
+    margin: 20px auto;
+}
+
+#info-hub-app h1 {
+    text-align: center;
+    color: #1877f2;
+    border-bottom: 2px solid #e9ebee;
+    padding-bottom: 10px;
+}
+
+#info-hub-app .info-section h2 {
+    color: #050505;
+    font-size: 1.5em;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #ccc;
+}
+
+#info-hub-app .info-section p {
+    line-height: 1.7;
+    color: #606770;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.stardust-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stardust-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stardust-card img {
+    width: 96px;
+    height: 96px;
+    margin-bottom: 10px;
+    object-fit: contain;
+}
+
+.stardust-card .pokemon-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.stardust-card .stardust-amount {
+    font-size: 1.2em;
+    color: #e63946;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.stardust-card .stardust-amount::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    background-image: url('https://raw.githubusercontent.com/PokeMiners/pogo_assets/refs/heads/master/Images/Items/stardust_painted.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
