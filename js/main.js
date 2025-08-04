@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }, 800); // 這個時間要比寶貝球打開+閃光的動畫時間稍短
 
-    }, 2600); // 這裡的 2600ms = 2.5秒晃動 + 0.1秒緩衝
+    }, 1200); // 這裡的 2600ms = 2.5秒晃動 + 0.1秒緩衝
     // 當選單中的任何一個頁籤按鈕被點擊時，自動收合選單
     tabButtonsInMenu.forEach(button => {
         button.addEventListener('click', () => {

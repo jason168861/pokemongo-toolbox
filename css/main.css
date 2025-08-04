@@ -227,7 +227,7 @@ body {
     /* 【新增】告知瀏覽器這個容器內的元素要以 3D 方式呈現 */
     transform-style: preserve-3d; 
     /* 【新增】應用下面定義的晃動動畫 */
-    animation: shake-and-pulse 2.5s ease-in-out forwards;
+    animation: shake-and-pulse 1.5s ease-in-out forwards;
 }
 
 /* --- 寶貝球上下半部 (通用樣式) --- */
@@ -324,7 +324,7 @@ body {
 }
 /* 在晃動動畫的特定時間點觸發按鈕發光 */
 .shaking .pokeball-center-inner {
-    animation: button-press-light 0.5s ease-out 2.2s; /* 在 2.2 秒時觸發 */
+    animation: button-press-light 0.5s ease-out 0.8s; /* 在 2.2 秒時觸發 */
 }
 
 
@@ -365,7 +365,7 @@ body {
 
 #loading-overlay.start-animation .pokeball-light-flash {
     /* 【修改】微調動畫時序，讓它在球打開後才出現 */
-    animation: flash-and-fade 1.2s ease-out 0.2s forwards;
+    animation: flash-and-fade 0.8s ease-out 0.2s forwards;
 }
 
 @keyframes flash-and-fade {
