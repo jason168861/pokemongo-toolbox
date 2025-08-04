@@ -9,6 +9,8 @@ import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- 全域控制與頁籤切換邏輯 ---
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
     const tabButtons = document.querySelectorAll('.tab-button');
     const appContents = document.querySelectorAll('.app-content');
     
@@ -146,4 +148,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
 
