@@ -378,19 +378,68 @@
     <script src="data/pokemon_names_from_api.js"></script>
 
     <script type="module" src="js/main.js"></script>
-<div class="visitor-counter-container" style="position: fixed; bottom: 20px; right: 20px; display: none;">
-  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokéball" style="width: 30px; height: 30px; margin-right: 10px;">
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <span style="font-size: 12px; color: #555;">即時訪客數</span>
-    <span id="visitor-count-firebase" style="font-size: 20px; font-weight: bold;">...</span>
+<style>
+  /* 這是您喜歡的計數器樣式 */
+  .visitor-counter-container {
+    /* 將計數器固定在右下角 */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    
+    /* 預設隱藏，成功讀取後用JS顯示 */
+    display: none; 
+    
+    align-items: center;
+    background-color: #ffffff;
+    border: 2px solid #dedede;
+    border-radius: 15px;
+    padding: 8px 18px;
+    font-family: 'Helvetica', 'Arial', '微軟正黑體', sans-serif;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    z-index: 999; /* 確保它在最上層 */
+    cursor: pointer;
+  }
+  .visitor-counter-container .pokeball-icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 12px;
+    /* 讓圖片跟著滑鼠指標旋轉，增加趣味性 */
+    transition: transform 0.3s ease;
+  }
+  .visitor-counter-container:hover .pokeball-icon {
+    transform: rotate(360deg);
+  }
+  .visitor-counter-container .counter-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .visitor-counter-container .counter-title {
+    font-size: 12px;
+    color: #666;
+    font-weight: bold;
+  }
+  /* 注意：這裡的 ID 已修正為 #visitor-count-firebase 來匹配 JS */
+  .visitor-counter-container #visitor-count-firebase {
+    font-size: 22px;
+    font-weight: bold;
+    color: #d9534f; /* 寶可夢紅色 */
+    line-height: 1.2;
+  }
+</style>
+
+<div class="visitor-counter-container">
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokéball" class="pokeball-icon">
+  <div class="counter-text">
+    <span class="counter-title">訪客總數</span>
+    <span id="visitor-count-firebase">...</span>
   </div>
 </div>
+
 <script type="module">
-  // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
   import { getDatabase, ref, runTransaction } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
-  // Your web app's Firebase configuration (請確保這是您自己的)
   const firebaseConfig = {
     apiKey: "AIzaSyBlKt4qqSr3lzXP0FQGSYNW0aa08ww2-A4",
     authDomain: "pokemongo-toolbox-counter.firebaseapp.com",
@@ -401,26 +450,23 @@
     appId: "1:40329297534:web:25de1fd48882d76726222f"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
   const counterRef = ref(db, 'pageviews/total');
+  // 注意：這裡的 ID 維持 visitor-count-firebase 來匹配 HTML 和 CSS
   const counterElement = document.getElementById('visitor-count-firebase');
   const containerElement = document.querySelector('.visitor-counter-container');
 
-  // 執行一個「交易」來增加計數
   runTransaction(counterRef, (currentValue) => {
     return (currentValue || 0) + 1;
   }).then((transactionResult) => {
-    // 只有在交易成功完成後，才用最終的結果來更新畫面
     if (transactionResult.committed) {
       const finalValue = transactionResult.snapshot.val();
       counterElement.textContent = finalValue;
-      containerElement.style.display = 'inline-flex'; // 成功讀取後才顯示
+      containerElement.style.display = 'inline-flex';
     }
   }).catch((error) => {
     console.error("Firebase Transaction failed: ", error);
-    // 如果失敗，可以選擇顯示一個錯誤訊息或保持隱藏
     counterElement.textContent = 'N/A';
     containerElement.style.display = 'inline-flex';
   });
@@ -429,6 +475,7 @@
 </body>
 
 </html>
+
 
 
 
