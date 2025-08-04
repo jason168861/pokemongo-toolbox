@@ -195,14 +195,14 @@ body {
 
 }
 
-
+/* --- 載入動畫 Overlay --- */
 #loading-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #1a1a1a; /* 深色背景更能突顯特效 */
+    background-color: #1a1a1a;
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -210,6 +210,8 @@ body {
     transition: opacity 0.8s ease, visibility 0.8s ease;
     opacity: 1;
     visibility: visible;
+    /* 【新增】建立 3D 舞台，讓子元素有遠近感 */
+    perspective: 800px; 
 }
 
 #loading-overlay.hidden {
@@ -217,47 +219,66 @@ body {
     visibility: hidden;
 }
 
+/* --- 寶貝球本體 --- */
 .pokeball-loader {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 150px; /* 稍微縮小一點讓晃動空間更明顯 */
+    height: 150px;
+    /* 【新增】告知瀏覽器這個容器內的元素要以 3D 方式呈現 */
+    transform-style: preserve-3d; 
+    /* 【新增】應用下面定義的晃動動畫 */
+    animation: shake-and-pulse 2.5s ease-in-out forwards;
 }
 
+/* --- 寶貝球上下半部 (通用樣式) --- */
 .pokeball-top, .pokeball-bottom {
     position: absolute;
     left: 0;
     width: 100%;
     height: 50%;
-    background-color: #f00; /* 紅色 */
-    border: 10px solid #000;
+    border: 8px solid #222; /* 加深邊框顏色 */
     box-sizing: border-box;
     z-index: 1;
-    transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+    /* 【修改】動畫效果更細膩 */
+    transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
+/* --- 寶貝球上半部 (紅色) --- */
 .pokeball-top {
     top: 0;
+    /* 【修改】用放射漸層模擬球體高光，增加立體感 */
+    background: radial-gradient(circle at 50% 30%, #ff5c5c, #f00 70%);
     border-bottom: none;
-    border-top-left-radius: 100px;
-    border-top-right-radius: 100px;
+    border-top-left-radius: 75px;
+    border-top-right-radius: 75px;
+    /* 【新增】設置 3D 旋轉的軸心在底部中央 */
+    transform-origin: bottom center;
+    /* 【新增】用內陰影製造深度感 */
+    box-shadow: inset 0 -8px 15px rgba(0,0,0,0.2);
 }
 
+/* --- 寶貝球下半部 (白色) --- */
 .pokeball-bottom {
     bottom: 0;
-    background-color: #fff; /* 白色 */
+    /* 【修改】同樣用漸層模擬反光 */
+    background: radial-gradient(circle at 50% 70%, #ffffff, #f0f0f0 80%);
     border-top: none;
-    border-bottom-left-radius: 100px;
-    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 75px;
+    border-bottom-right-radius: 75px;
+    /* 【新增】設置 3D 旋轉的軸心在頂部中央 */
+    transform-origin: top center;
+    box-shadow: inset 0 8px 15px rgba(0,0,0,0.15);
 }
 
+/* --- 中間按鈕 --- */
 .pokeball-center-outer {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    background-color: #000;
+    transform: translate(-50%, -50%) translateZ(10px); /* 【修改】在Z軸上稍微突出 */
+    width: 60px;
+    height: 60px;
+    background-color: #222;
     border-radius: 50%;
     z-index: 2;
     transition: transform 0.8s ease;
@@ -268,30 +289,67 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: #fff;
-    border: 5px solid #000;
+    border: 4px solid #222;
     border-radius: 50%;
     z-index: 3;
-    transition: transform 0.8s ease;
+    transition: transform 0.8s ease, box-shadow 0.2s ease;
+}
+/* 按鈕按下時的微光效果 */
+@keyframes button-press-light {
+    from { box-shadow: 0 0 15px 5px #fff; }
+    to { box-shadow: 0 0 0 0 transparent; }
 }
 
-/* 動畫觸發 */
+
+/* --- 【核心】晃動與脈衝動畫定義 --- */
+@keyframes shake-and-pulse {
+    0%, 100% { transform: rotate(0deg) translateX(0) scale(1); }
+    10% { transform: rotate(-5deg) translateX(-10px) scale(1.05); }
+    20% { transform: rotate(5deg) translateX(10px) scale(1.05); }
+    30% { transform: rotate(-5deg) translateX(-10px) scale(1.05); }
+    40% { transform: rotate(5deg) translateX(10px) scale(1.05); }
+    50% { transform: rotate(-3deg) translateX(-5px) scale(1.05); }
+    60% { transform: rotate(3deg) translateX(5px) scale(1.05); }
+    /* 晃動結束，準備"喀噠"一聲 */
+    70% { transform: scale(1.05); }
+    /* "喀噠"的瞬間，按鈕發光 */
+    75% { transform: scale(0.95); }
+    80% { 
+        transform: scale(1.1);
+    }
+    90% { transform: scale(1); }
+}
+/* 在晃動動畫的特定時間點觸發按鈕發光 */
+.shaking .pokeball-center-inner {
+    animation: button-press-light 0.5s ease-out 2.2s; /* 在 2.2 秒時觸發 */
+}
+
+
+/* --- 動畫觸發後的狀態 --- */
+#loading-overlay.start-animation .pokeball-loader {
+    animation: none; /* 停止晃動動畫 */
+}
+
 #loading-overlay.start-animation .pokeball-top {
-    transform: translateY(-150%);
+    /* 【修改】從上下平移改為繞 X 軸翻轉，並往前推，製造打開的效果 */
+    transform: scale(0);
 }
 
 #loading-overlay.start-animation .pokeball-bottom {
-    transform: translateY(150%);
+    /* 【修改】同上，往反方向翻轉 */
+    transform: scale(0);
 }
 
 #loading-overlay.start-animation .pokeball-center-outer,
 #loading-overlay.start-animation .pokeball-center-inner {
+    /* 【修改】讓按鈕也跟著消失 */
     transform: translate(-50%, -50%) scale(0);
 }
 
-/* 中間的閃光 */
+/* --- 中間的閃光 --- */
 .pokeball-light-flash {
     position: absolute;
     top: 50%;
@@ -306,7 +364,8 @@ body {
 }
 
 #loading-overlay.start-animation .pokeball-light-flash {
-    animation: flash-and-fade 1.5s ease-out forwards;
+    /* 【修改】微調動畫時序，讓它在球打開後才出現 */
+    animation: flash-and-fade 1.2s ease-out 0.2s forwards;
 }
 
 @keyframes flash-and-fade {
@@ -323,6 +382,7 @@ body {
         opacity: 0;
     }
 }
+
 .site-footer {
     text-align: center;
     padding: 2rem 1rem;

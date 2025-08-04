@@ -123,24 +123,30 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburgerButton.setAttribute('aria-expanded', isExpanded);
     });
     const loadingOverlay = document.getElementById('loading-overlay');
+    const pokeballLoader = document.querySelector('.pokeball-loader');
 
-    // 確保即使所有內容都已緩存，使用者至少能看到 0.5 秒的動畫
+    // 1. 【新增】頁面載入後，立即為寶貝球加上 .shaking class 來觸發晃動動畫
+    if (pokeballLoader) {
+        pokeballLoader.classList.add('shaking');
+    }
+
+    // 2. 【修改】延遲時間，必須等待晃動動畫 (2.5秒) 結束後才開始打開
     setTimeout(() => {
-        // 1. 觸發 "打開" 動畫
+        // 觸發 "打開" 動畫
         loadingOverlay.classList.add('start-animation');
 
-        // 2. 等待打開動畫和閃光效果快結束時，再讓整個遮罩層淡出
+        // 3. 等待打開動畫和閃光效果快結束時，再讓整個遮罩層淡出
         setTimeout(() => {
             loadingOverlay.classList.add('hidden');
             
-            // 3. 在淡出動畫結束後，將其從 DOM 中移除，避免影響後續操作
+            // 4. 在淡出動畫結束後，將其從 DOM 中移除，避免影響後續操作
             setTimeout(() => {
                 loadingOverlay.remove();
-            }, 400); // 這個時間對應 #loading-overlay 的 transition 時間
+            }, 600); // 這個時間對應 #loading-overlay 的 transition 時間
 
-        }, 600); // 這個時間要比寶貝球打開的動畫時間稍短
+        }, 800); // 這個時間要比寶貝球打開+閃光的動畫時間稍短
 
-    }, 100); // 延遲 0.5 秒開始，讓效果更明顯
+    }, 2600); // 這裡的 2600ms = 2.5秒晃動 + 0.1秒緩衝
     // 當選單中的任何一個頁籤按鈕被點擊時，自動收合選單
     tabButtonsInMenu.forEach(button => {
         button.addEventListener('click', () => {
