@@ -505,21 +505,31 @@
     counterElement.textContent = 'N/A';
     containerElement.style.display = 'inline-flex';
   });
-  const pokeball = document.querySelector('.pokeball-icon');
+const pokeball = document.querySelector('.pokeball-icon');
 
   if (pokeball) {
+    let scrollStopTimer; // 用來偵測捲動是否停止的計時器
     let ticking = false;
 
     document.addEventListener('scroll', function() {
+      // 無論如何，先清除舊的「停止」計時器，因為使用者還在滑動
+      clearTimeout(scrollStopTimer);
+
       if (!ticking) {
         window.requestAnimationFrame(function() {
           const scrollY = window.scrollY;
-          // 捲動的距離會直接變成旋轉的角度
-          pokeball.style.transform = `rotate(${scrollY}deg)`;
+          // 【修改點 1】將旋轉速度變慢 (乘以 0.25)
+          pokeball.style.transform = `rotate(${scrollY * 0.25}deg)`;
           ticking = false;
         });
         ticking = true;
       }
+
+      // 設定一個新的「停止」計時器。如果 150 毫秒內沒有再滑動，就執行歸位
+      scrollStopTimer = setTimeout(function() {
+        // 【修改點 2】將精靈球平滑地轉回 0 度
+        pokeball.style.transform = 'rotate(0deg)';
+      }, 150); // 150毫秒算作停止
     });
   }
 </script>
@@ -527,6 +537,7 @@
 </body>
 
 </html>
+
 
 
 
