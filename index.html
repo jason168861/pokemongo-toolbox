@@ -390,7 +390,7 @@
   .visitor-counter-container .pokeball-icon {
     transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* 旋轉動畫 */
   }
-  /* 【修改點 2】將旋轉效果移到通用區，讓手機也能觸發 */
+  /* 讓手機點擊或電腦滑鼠移上時都能觸發旋轉 */
   .visitor-counter-container:active .pokeball-icon,
   .visitor-counter-container:hover .pokeball-icon {
     transform: rotate(360deg);
@@ -401,13 +401,13 @@
     align-items: flex-start;
   }
 
-  /* --- 手機版樣式 (螢幕寬度小於 768px) --- */
-  @media (max-width: 767px) {
+  /* --- 手機與平板樣式 (螢幕寬度小於 1024px) --- */
+  /* 【修改點 2】將斷點從 767px 擴大到 1023px */
+  @media (max-width: 1023px) {
     .visitor-counter-container {
       bottom: 8px;
       right: 8px;
       padding: 5px 10px;
-      /* 【修改點 1】背景、邊框、陰影都設為透明或無 */
       background-color: transparent;
       border: none;
       box-shadow: none;
@@ -419,21 +419,22 @@
     }
     .visitor-counter-container .counter-title {
       font-size: 10px;
-      color: #fff; /* 改為白色以搭配文字陰影 */
-      /* 【修改點 1】加上文字陰影，確保可讀性 */
-      text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+      /* 【修改點 1】文字顏色改為深灰色，並搭配白色光暈 */
+      color: #333;
+      text-shadow: 0 0 2px #fff, 0 0 4px #fff;
     }
     .visitor-counter-container #visitor-count-firebase {
       font-size: 16px;
       font-weight: bold;
-      color: #fff; /* 改為白色以搭配文字陰影 */
-      /* 【修改點 1】加上文字陰影，確保可讀性 */
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+      /* 【修改點 1】文字顏色改為黑色，並搭配白色光暈 */
+      color: #000;
+      text-shadow: 0 0 2px #fff, 0 0 5px #fff;
     }
   }
 
-  /* --- 桌面版樣式 (螢幕寬度大於等於 768px) --- */
-  @media (min-width: 768px) {
+  /* --- 桌面版樣式 (螢幕寬度大於等於 1024px) --- */
+  /* 【修改點 2】將斷點從 768px 提高到 1024px */
+  @media (min-width: 1024px) {
     .visitor-counter-container {
       bottom: 20px;
       right: 20px;
@@ -462,7 +463,6 @@
     }
   }
 </style>
-
 <div class="visitor-counter-container">
   <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokéball" class="pokeball-icon">
   <div class="counter-text">
@@ -510,6 +510,7 @@
 </body>
 
 </html>
+
 
 
 
