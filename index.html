@@ -382,13 +382,18 @@
   /* 這是計數器的通用樣式，對手機和電腦都有效 */
   .visitor-counter-container {
     position: fixed;
-    z-index: 999; /* 確保它在最上層 */
-    display: none; /* 預設隱藏，成功讀取後用JS顯示 */
+    z-index: 999;
+    display: none;
     align-items: center;
     font-family: 'Helvetica', 'Arial', '微軟正黑體', sans-serif;
   }
   .visitor-counter-container .pokeball-icon {
-    transition: transform 0.3s ease; /* 旋轉動畫 */
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* 旋轉動畫 */
+  }
+  /* 【修改點 2】將旋轉效果移到通用區，讓手機也能觸發 */
+  .visitor-counter-container:active .pokeball-icon,
+  .visitor-counter-container:hover .pokeball-icon {
+    transform: rotate(360deg);
   }
   .visitor-counter-container .counter-text {
     display: flex;
@@ -401,26 +406,29 @@
     .visitor-counter-container {
       bottom: 8px;
       right: 8px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 1px solid #e0e0e0;
-      border-radius: 12px; /* 稍微調大圓角以匹配新圖示 */
-      padding: 5px 10px; /* 稍微調大內距 */
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      padding: 5px 10px;
+      /* 【修改點 1】背景、邊框、陰影都設為透明或無 */
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
     }
     .visitor-counter-container .pokeball-icon {
-      /* 【修改點 1】將精靈球放大 */
-      width: 28px; 
+      width: 28px;
       height: 28px;
-      margin-right: 8px; /* 稍微拉開間距 */
+      margin-right: 8px;
     }
     .visitor-counter-container .counter-title {
-      font-size: 10px; /* 標題文字大小不變 */
-      color: #555;
+      font-size: 10px;
+      color: #fff; /* 改為白色以搭配文字陰影 */
+      /* 【修改點 1】加上文字陰影，確保可讀性 */
+      text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
     }
     .visitor-counter-container #visitor-count-firebase {
-      font-size: 16px; /* 數字大小不變 */
+      font-size: 16px;
       font-weight: bold;
-      color: #d9534f;
+      color: #fff; /* 改為白色以搭配文字陰影 */
+      /* 【修改點 1】加上文字陰影，確保可讀性 */
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
     }
   }
 
@@ -434,16 +442,12 @@
       border-radius: 15px;
       padding: 8px 18px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      /* 【修改點 2】將滑鼠指標改回預設箭頭 */
-      cursor: default; 
+      cursor: default;
     }
     .visitor-counter-container .pokeball-icon {
       width: 35px;
       height: 35px;
       margin-right: 12px;
-    }
-    .visitor-counter-container:hover .pokeball-icon {
-      transform: rotate(360deg);
     }
     .visitor-counter-container .counter-title {
       font-size: 12px;
@@ -506,6 +510,7 @@
 </body>
 
 </html>
+
 
 
 
