@@ -160,10 +160,12 @@
     width: 96px;
     height: 96px;
 }
-#id-selector-app .pokemon-card:hover {
-    transform: scale(1.1);
-    opacity: 1;
-    border-color: #a0a0a0;
+@media (hover: hover) {
+    #id-selector-app .pokemon-card:hover {
+        transform: scale(1.1);
+        opacity: 1;
+        border-color: #a0a0a0;
+    }
 }
 #id-selector-app .pokemon-card.selected {
     opacity: 1;
