@@ -96,7 +96,7 @@
     /* 將 info-grid 的佈局改為固定的兩欄 */
     .info-grid {
         /* 設定為兩欄，每欄平均分配可用寬度 */
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         /* 適當縮小卡片之間的間距 */
         gap: 15px;
     }
