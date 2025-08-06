@@ -20,7 +20,7 @@ import { initializeResearchApp } from './research.js';
 import { initializeEggsApp } from './eggs.js';
 import { initializeLevelUpApp } from './level-up.js';
 import { initializeSearchFiltersApp } from './search-filters.js';
-import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
+import { initializeSpecialResearchApp,applyUserPreferences } from './special-research.js'; // <-- 【新增】
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 console.log("此使用者尚無儲存資料。");
             }
+            applyUserPreferences(userData);
         }).catch((error) => {
             console.error("讀取資料失敗:", error);
         });

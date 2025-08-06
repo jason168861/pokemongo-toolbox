@@ -1,8 +1,32 @@
 // js/special-research.js (優化後版本)
+let allResearches = [];
+let isInitialized = false; // 新增一個旗標，判斷是否已初始化
+const container = document.getElementById('special-research-container');
+
+export function applyUserPreferences(userData) {
+    const pinnedTitles = (userData && userData.pinnedResearches) ? userData.pinnedResearches : [];
+
+    // 更新 allResearches 陣列中的 isPinned 狀態
+    allResearches.forEach(research => {
+        research.isPinned = pinnedTitles.includes(research.title);
+    });
+
+    // 如果 UI 已經初始化，就直接更新畫面
+    if (isInitialized) {
+        const allCards = container.querySelectorAll('.research-card');
+        allCards.forEach(card => {
+            const title = card.dataset.id;
+            const isPinned = pinnedTitles.includes(title);
+            card.classList.toggle('is-pinned', isPinned);
+        });
+        reorderAndRenderCards();
+        console.log("已成功套用使用者置頂偏好設定。");
+    }
+}
+
 
 export function initializeSpecialResearchApp() {
-    let allResearches = [];
-    const container = document.getElementById('special-research-container');
+
     const searchInput = document.getElementById('special-search-input');
     const includeAllCheckbox = document.getElementById('search-include-all');
     const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
