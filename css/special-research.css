@@ -35,7 +35,7 @@
     /* 以下是您原有的樣式 */
     max-width: 800px;
     margin: 0 auto; /* 因為上下 padding 會影響，把原有的 margin-bottom 拿掉 */
-        transition: top 0.3s ease-in-out; /* 【新增】讓 top 的變化有動畫效果 */
+        transition: top 0.1s ease-in-out; /* 【新增】讓 top 的變化有動畫效果 */
 
 }
 #special-research-app #special-search-input {
@@ -45,7 +45,7 @@
     border-radius: 50px;
     border: 2px solid var(--border-color);
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
     background-color: var(--card-background);
 }
 
@@ -82,23 +82,32 @@
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    transition: all 0.4s ease;
+    transition: all 0.1s ease;
     border: 1px solid var(--border-color);
     cursor: pointer;
 }
-
+#special-research-app .research-card:nth-child(even) {
+    /* * 為偶數卡片設定一個稍微不同、但色系和諧的背景漸層。
+     * 這裡我們選擇了一個比原本的 #f1f5f8 稍微偏藍一點的顏色。
+     */
+    background: linear-gradient(145deg, #e9f9fe);
+    
+    /* * (可選) 也可以搭配稍微加深或改變的邊框色，讓區別更完整。
+     */
+    border-color: #d8dde3;
+}
 #special-research-app .research-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 30px var(--shadow-color);
 }
 
 #special-research-app .research-title {
-    padding: 25px 30px;
+    padding: 20px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid transparent;
-    transition: border-bottom 0.3s ease;
+    transition: border-bottom 0.1s ease;
 }
 
 #special-research-app .research-title.active {
@@ -130,7 +139,7 @@
 #special-research-app .research-title .icon {
     font-size: 2em;
     color: var(--primary-color);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     font-weight: bold;
 }
 
@@ -189,11 +198,11 @@
     background-color: var(--card-background); /* 使用白色背景 */
     border: 1px solid var(--border-color);    /* 淡淡的邊框 */
     border-radius: 12px;                      /* 圓角！ */
-    padding: 14px 20px;                       /* 增加內邊距，讓文字呼吸 */
-    margin-bottom: 8px;                       /* 卡片之間的間距 */
+    padding: 12px 18px;                       /* 增加內邊距，讓文字呼吸 */
+    margin-bottom: 6px;                       /* 卡片之間的間距 */
     
     /* 讓動態效果更流暢 */
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
 }
         
 #special-research-app .task-item:hover {
@@ -248,15 +257,15 @@
             padding: 4px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             opacity: 0; /* 初始設為透明 */
-            transition: opacity 0.4s ease-in-out; /* 增加淡入動畫效果 */
+            transition: opacity 0.1s ease-in-out; /* 增加淡入動畫效果 */
         }
         /* ▲▲▲ */
 
         /* ▼▼▼【緊湊佈局修改 2】總獎勵改為網格佈局 ▼▼▼ */
         #special-research-app .total-rewards-container h4 {
             color: var(--success-color);
-            margin-top: 25px;
-            margin-bottom: 15px;
+            margin-top: 20px;
+            margin-bottom: 12px;
             font-size: 1.1em;
             font-weight: 700;
         }
@@ -296,7 +305,7 @@
             height: 48px;
 
             opacity: 0; /* 初始設為透明 */
-            transition: opacity 0.4s ease-in-out; /* 增加淡入動畫效果 */
+            transition: opacity 0.1s ease-in-out; /* 增加淡入動畫效果 */
         }
 
         #special-research-app .total-reward-text {
@@ -314,10 +323,9 @@ body.nav-is-hidden #special-research-app #search-wrapper {
 
     /* 1. 縮小綠色區塊 (.step) 左右的內距 */
     #special-research-app .step {
-        /* 原本是 padding: 15px 30px; */
-        /* 我們只縮小左右，保留上下的距離 */
-        padding-left: 15px;
-        padding-right: 15px;
+        border-bottom: none; /* 移除舊的底線 */
+        margin-bottom: 8px;  /* 新增的卡片間距 */
+        padding: 0;          /* 移除舊的 padding，由內部元素控制 */
     }
 
     /* 2. 移除 ul 列表的預設左側內距 */
@@ -329,6 +337,103 @@ body.nav-is-hidden #special-research-app #search-wrapper {
     /* (可選) 讓標題 H1 在手機上小一點，避免過大 */
     #special-research-app h1 {
         font-size: 2.2em;
+    }
+    #special-research-app .step-header {
+        background-color: #f8f9fa; /* 淡淡的背景色 */
+        border: 1px solid #e9ecef;  /* 更清晰的邊框 */
+        border-radius: 12px;        /* 漂亮的圓角 */
+        padding: 12px 15px;         /* 增加內部空間，讓點擊區域變大 */
+        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.1s ease, border-color 0.1s ease;
+    }
+    #special-research-app .step-header:hover {
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+    #special-research-app .step:last-child .step-header {
+        border-bottom: none;
+    }
+
+    #special-research-app .step-header h3 {
+        margin: 0;
+        font-size: 1.1em;
+    }
+
+    #special-research-app .step-icon {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: var(--primary-color);
+        transition: transform 0.1s ease, color 0.1s ease;
+    }
+    #special-research-app .step-header.active {
+        background-color: var(--primary-color); /* 背景變為主題藍色 */
+        color: #fff;                           /* 文字變為白色 */
+        border-color: var(--primary-color);
+    }
+    #special-research-app .step-header.active .step-icon {
+        transform: rotate(45deg);
+        color: #fff; /* 明確指定為白色 */
+    }
+
+    #special-research-app .step-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.1s ease-in-out;
+        
+        /* 讓內容看起來是從卡片下方「長出來」的 */
+        background-color: #fff;
+        padding: 0 15px; /* 預設沒高度時，先移除上下 padding */
+        border: 1px solid #e9ecef;
+        border-top: none; /* 因為上方與 header 相連 */
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+    #special-research-app .step-header.active + .step-content {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    #special-research-app .toggle-all-steps-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    background-color: rgba(0,0,0,0.02); /* 給予一個淡淡的底色以示區隔 */
+    border-bottom: 1px solid #eee;
+    }
+#special-research-app .step-header.active h3 {
+    color: #fff;
+}
+    #special-research-app .toggle-all-steps-btn {
+        display: inline-flex; /* 讓 icon 和 text 能對齊 */
+        align-items: center;
+        gap: 8px; /* icon 和 text 的間距 */
+        
+        background-color: #fff;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 0.9em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.1s ease;
+    }
+
+    #special-research-app .toggle-all-steps-btn:hover {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+
+    #special-research-app .toggle-all-steps-btn .btn-icon {
+        transition: transform 0.1s ease;
+    }
+
+    /* 當按鈕狀態為 expanded (已展開) 時，讓 icon 旋轉 */
+    #special-research-app .toggle-all-steps-btn[data-state="expanded"] .btn-icon {
+        transform: rotate(180deg);
     }
 }
 
@@ -388,7 +493,7 @@ body.nav-is-hidden #special-research-app #search-wrapper {
     padding-right: 50px; 
 }
 /* --- 桌機版優化：特殊調查內容改為兩兩一組、左右並排 (Flexbox版) --- */
-@media (min-width: 1024px) { /* 只在寬度大於 1024px 的螢幕上生效 */
+@media (min-width: 768px) { /* 只在寬度大於 1024px 的螢幕上生效 */
 
     #special-research-app .research-content.show {
         /* 1. 啟用 Flexbox 佈局 */
@@ -398,7 +503,7 @@ body.nav-is-hidden #special-research-app #search-wrapper {
         flex-wrap: wrap;
         
         /* 3. 定義項目之間的間距，上下 20px，左右 30px */
-        gap: 20px 30px;
+        gap: 15px 30px;
     }
 
     #special-research-app .step {
@@ -411,5 +516,30 @@ body.nav-is-hidden #special-research-app #search-wrapper {
         
         /* (可選) 移除之前加的 margin-bottom，因為現在用 gap 來控制間距 */
         margin-bottom: 0;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+    #special-research-app .step-icon {
+        display: none;
+    }
+
+    /* 2. 重設關卡標題容器的樣式，使其在電腦版上不產生多餘效果 */
+    #special-research-app .step-header {
+        display: block; /* 恢復為普通區塊元素 */
+        padding: 0;
+        border: none;
+        cursor: default; /* 取消手型游標 */
+    }
+
+    /* 3. 恢復關卡標題(h3)原有的下方間距，讓排版更美觀 */
+#special-research-app .step-header h3 {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 700;
+}
+
+    /* 4. 移除手機版為內容區塊增加的左側縮排 */
+    #special-research-app .step-content {
+        padding-left: 0;
     }
 }

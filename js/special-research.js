@@ -73,19 +73,26 @@ export function initializeSpecialResearchApp() {
             card.dataset.index = index; // 儲存資料索引，非常重要！
 
             // 只產生標題和一個空的內容容器
-            card.innerHTML = `
-                <div class="research-title">
-                    <div class="research-title-block">
-                        <span class="research-title-text">${research.title}</span>
-                        <span class="research-date">發布日期: ${research.release_date || 'N/A'}</span>
-                    </div>
-                    <span class="icon">+</span>
+        card.innerHTML = `
+            <div class="research-title">
+                <div class="research-title-block">
+                    <span class="research-title-text">${research.title}</span>
+                    <span class="research-date">發布日期: ${research.release_date || 'N/A'}</span>
                 </div>
-                <div class="research-content">
-                    </div>
-            `;
-            fragment.appendChild(card);
-        });
+                <span class="icon">+</span>
+            </div>
+            
+            <div class="toggle-all-steps-container">
+                <button class="toggle-all-steps-btn" data-state="collapsed" style="display: none;">
+                    <span class="btn-icon">▼</span>
+                    <span class="btn-text">全部展開</span>
+                </button>
+            </div>
+            <div class="research-content">
+                </div>
+        `;
+        fragment.appendChild(card);
+    });
 
         const noResultsDiv = document.createElement('div');
         noResultsDiv.className = 'no-results';
@@ -102,24 +109,32 @@ export function initializeSpecialResearchApp() {
     // 這個函式負責產生「單一」調查的詳細內容 HTML。
     // ================================================================
     function generateDetailsHtml(research) {
+        // 為每個 step 加上一個 header 和一個 content wrapper
         return research.steps.map(step => {
             const tasksHtml = generateListHtml(step.tasks, 'task');
             const totalRewardsHtml = step.total_rewards && step.total_rewards.length > 0
                 ? `<div class="total-rewards-container">
-                       <h4>🎉 完成階段總獎勵</h4>
-                       <ul class="total-rewards-grid">${generateListHtml(step.total_rewards, 'total')}</ul>
-                   </div>`
+                    <h4>🎉 完成階段總獎勵</h4>
+                    <ul class="total-rewards-grid">${generateListHtml(step.total_rewards, 'total')}</ul>
+                </div>`
                 : '';
 
+            // 新增的結構：step-header + step-content
             return `
                 <div class="step">
-                    <h3>${step.step_title}</h3>
-                    <ul>${tasksHtml}</ul>
-                    ${totalRewardsHtml}
+                    <div class="step-header">
+                        <h3>${step.step_title}</h3>
+                        <span class="step-icon">+</span>
+                    </div>
+                    <div class="step-content">
+                        <ul>${tasksHtml}</ul>
+                        ${totalRewardsHtml}
+                    </div>
                 </div>
             `;
         }).join('');
     }
+
 
     // generateListHtml 函式保持不變
     function generateListHtml(items, type) {
@@ -153,6 +168,7 @@ export function initializeSpecialResearchApp() {
             title.addEventListener('click', () => {
                 const card = title.closest('.research-card');
                 const content = card.querySelector('.research-content');
+                const toggleAllBtn = card.querySelector('.toggle-all-steps-btn');
 
                 // 檢查是否為第一次點擊 (如果內容尚未被渲染)
                 if (!card.dataset.detailsRendered) {
@@ -164,6 +180,38 @@ export function initializeSpecialResearchApp() {
                     
                     // 標記為已渲染，避免重複產生
                     card.dataset.detailsRendered = 'true';
+                    addStepAccordionLogic(content); 
+                    toggleAllBtn.addEventListener('click', () => {
+                    const currentState = toggleAllBtn.dataset.state;
+                    const allStepHeaders = content.querySelectorAll('.step-header');
+                    const allStepContents = content.querySelectorAll('.step-content');
+                    const btnText = toggleAllBtn.querySelector('.btn-text');
+
+                    if (currentState === 'collapsed') {
+                        // --- 展開所有 ---
+                        allStepHeaders.forEach(header => header.classList.add('active'));
+                        allStepContents.forEach(stepContent => {
+                            stepContent.style.maxHeight = stepContent.scrollHeight + "px";
+                        });
+                        btnText.textContent = '全部收合';
+                        toggleAllBtn.dataset.state = 'expanded';
+                    } else {
+                        // --- 收合所有 ---
+                        allStepHeaders.forEach(header => header.classList.remove('active'));
+                        allStepContents.forEach(stepContent => {
+                            stepContent.style.maxHeight = null;
+                        });
+                        btnText.textContent = '全部展開';
+                        toggleAllBtn.dataset.state = 'collapsed';
+                    }
+
+                    // 【重要】重新計算父容器的高度
+                    setTimeout(() => {
+                        if (content.classList.contains('show')) {
+                           content.style.maxHeight = content.scrollHeight + 50 + "px";
+                        }
+                    }, 300);
+                });
                 }
 
                 // --- 以下是原本的展開/收合邏輯 ---
@@ -172,6 +220,9 @@ export function initializeSpecialResearchApp() {
                 
                 if (!isActive) {
                     content.classList.add('show');
+                    if (window.innerWidth < 768) {
+                    toggleAllBtn.style.display = 'inline-flex';
+                    }
                     content.style.maxHeight = content.scrollHeight + 50 + "px";
 
                     // 觸發圖片懶加載
@@ -187,11 +238,45 @@ export function initializeSpecialResearchApp() {
                 } else {
                     content.style.maxHeight = null;
                     content.classList.remove('show');
+                    toggleAllBtn.style.display = 'none'; // 【新增】收合時隱藏按鈕
                 }
+                setTimeout(() => {
+               if (content.classList.contains('show')) {
+                  content.style.maxHeight = content.scrollHeight + 50 + "px";
+               }
+            }, 10); // 這裡用一個極短的延遲即可
             });
         });
     }
+function addStepAccordionLogic(container) {
+    // 只在手機寬度下啟用此功能
+    if (window.innerWidth >= 768) return;
 
+    const stepHeaders = container.querySelectorAll('.step-header');
+    
+    stepHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const step = header.closest('.step');
+            const content = step.querySelector('.step-content');
+            const researchContent = container; // 外層的 .research-content
+
+            header.classList.toggle('active');
+            
+            if (header.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = null;
+            }
+
+            // 【重要】每次開合子項目時，重新計算並更新父容器的 maxHeight
+            setTimeout(() => {
+                if (researchContent.classList.contains('show')) {
+                   researchContent.style.maxHeight = researchContent.scrollHeight + 50 + "px";
+                }
+            }, 300); // 300ms 等待子動畫完成
+        });
+    });
+}
     // Fetch 資料的主流程保持不變
     fetch('data/special_research.json')
         .then(response => {
