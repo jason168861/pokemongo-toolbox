@@ -501,20 +501,12 @@
     <span id="visitor-count-firebase">...</span>
   </div>
 </div>
-
+<script src="config.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
   import { getDatabase, ref, runTransaction } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBlKt4qqSr3lzXP0FQGSYNW0aa08ww2-A4",
-    authDomain: "pokemongo-toolbox-counter.firebaseapp.com",
-    databaseURL: "https://pokemongo-toolbox-counter-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "pokemongo-toolbox-counter",
-    storageBucket: "pokemongo-toolbox-counter.firebasestorage.app",
-    messagingSenderId: "40329297534",
-    appId: "1:40329297534:web:25de1fd48882d76726222f"
-  };
+
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
