@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 【關鍵】通知 special-research 模組去應用這些資料
                 // 我們需要一個方法來將資料傳遞給它
                 // 我們假設 specialResearchApp 有一個 applyUserPreferences 的方法
-                window.applyUserPreferences(userData);
+                applyUserPreferences(userData);
                 
             } else {
                 console.log("此使用者尚無儲存資料。");
