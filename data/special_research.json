@@ -4252,7 +4252,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Dragon",
+            "description": "捕捉 1 隻龍屬性寶可夢",
             "reward": {
               "text": "藤藤蛇 遭遇",
               "image_urls": [
@@ -4489,7 +4489,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Dragon",
+            "description": "捕捉 1 隻龍屬性寶可夢",
             "reward": {
               "text": "藤藤蛇 遭遇",
               "image_urls": [
@@ -27450,7 +27450,7 @@
             }
           },
           {
-            "description": "捕捉 10 隻Fire",
+            "description": "捕捉 10 隻火、草或地面屬性寶可夢",
             "reward": {
               "text": "大顎蟻 遭遇",
               "image_urls": [
@@ -27505,7 +27505,7 @@
             }
           },
           {
-            "description": "捕捉 10 隻Water",
+            "description": "捕捉 10 隻水、電或蟲屬性寶可夢",
             "reward": {
               "text": "吼吼鯨 遭遇",
               "image_urls": [
@@ -27609,7 +27609,7 @@
         "step_title": "1 / 2",
         "tasks": [
           {
-            "description": "捕捉 5 隻Water",
+            "description": "捕捉 5 隻水、電或蟲屬性寶可夢",
             "reward": {
               "text": "凰梨果 * 20",
               "image_urls": [
@@ -27618,7 +27618,7 @@
             }
           },
           {
-            "description": "捕捉 5 隻Fire",
+            "description": "捕捉 5 隻火、草或地面屬性寶可夢",
             "reward": {
               "text": "蔓莓果 * 20",
               "image_urls": [
@@ -28980,7 +28980,7 @@
             }
           },
           {
-            "description": "捕捉 2 隻Flying",
+            "description": "捕捉 2 隻飛行屬性寶可夢",
             "reward": {
               "text": "厲害傷藥 * 6",
               "image_urls": [
@@ -33577,7 +33577,7 @@
         "step_title": "4 / 5",
         "tasks": [
           {
-            "description": "捕捉 10 隻Water",
+            "description": "捕捉 10 隻水、電或蟲屬性寶可夢",
             "reward": {
               "text": "蓋歐卡 的糖果 * 10",
               "image_urls": [
@@ -33586,7 +33586,7 @@
             }
           },
           {
-            "description": "捕捉 10 隻Fire",
+            "description": "捕捉 10 隻火、草或地面屬性寶可夢",
             "reward": {
               "text": "固拉多 的糖果 * 10",
               "image_urls": [
@@ -33595,7 +33595,7 @@
             }
           },
           {
-            "description": "捕捉 10 隻Flying",
+            "description": "捕捉 10 隻飛行、超能力或龍屬性寶可夢",
             "reward": {
               "text": "烈空坐 的糖果 * 10",
               "image_urls": [
@@ -46612,7 +46612,7 @@
             }
           },
           {
-            "description": "捕捉 1 隻Max",
+            "description": "捕捉 1 隻極巨寶可夢",
             "reward": {
               "text": "星星沙子 * 2500",
               "image_urls": [
@@ -53892,7 +53892,7 @@
             }
           },
           {
-            "description": "進化 1 隻Water",
+            "description": "進化 1 隻水屬性寶可夢",
             "reward": {
               "text": "神奇糖果 XL * 1",
               "image_urls": [
@@ -53938,7 +53938,7 @@
             }
           },
           {
-            "description": "進化 1 隻Fire",
+            "description": "進化 1 隻火屬性寶可夢",
             "reward": {
               "text": "神奇糖果 XL * 1",
               "image_urls": [
@@ -54942,7 +54942,7 @@
             }
           },
           {
-            "description": "進化 1 隻Water",
+            "description": "進化 1 隻水屬性寶可夢",
             "reward": {
               "text": "神奇糖果 XL * 1",
               "image_urls": [
@@ -54988,7 +54988,7 @@
             }
           },
           {
-            "description": "進化 1 隻Fire",
+            "description": "進化 1 隻火屬性寶可夢",
             "reward": {
               "text": "神奇糖果 XL * 1",
               "image_urls": [
@@ -55992,7 +55992,7 @@
             }
           },
           {
-            "description": "進化 1 隻Water",
+            "description": "進化 1 隻水屬性寶可夢",
             "reward": {
               "text": "神奇糖果 XL * 1",
               "image_urls": [
@@ -56038,7 +56038,7 @@
             }
           },
           {
-            "description": "進化 1 隻Fire",
+            "description": "進化 1 隻火屬性寶可夢",
             "reward": {
               "text": "神奇糖果 XL * 1",
               "image_urls": [
@@ -58585,7 +58585,7 @@
             }
           },
           {
-            "description": "為Fairy拍攝 5 張照片",
+            "description": "在Go Fest棲息地為拉魯拉絲拍照(為妖精屬性寶可夢拍攝 5 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58594,7 +58594,7 @@
             }
           },
           {
-            "description": "為Ghost拍攝 5 張照片",
+            "description": "在Go Fest棲息地為鬼斯拍照(為幽靈屬性寶可夢拍攝 5 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58603,7 +58603,7 @@
             }
           },
           {
-            "description": "為Ground拍攝 5 張照片",
+            "description": "在Go Fest棲息地為沙河馬拍照(為地面屬性寶可夢拍攝 5 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58612,7 +58612,7 @@
             }
           },
           {
-            "description": "為Ice拍攝 5 張照片",
+            "description": "在Go Fest棲息地為雪笠怪拍照(為冰屬性寶可夢拍攝 5 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58621,7 +58621,7 @@
             }
           },
           {
-            "description": "為Water拍攝 5 張照片",
+            "description": "在Go Fest棲息地為墨海馬拍照(為水屬性寶可夢拍攝 5 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58852,7 +58852,7 @@
         "step_title": "3 / 5",
         "tasks": [
           {
-            "description": "捕捉 3 隻UnownHatch",
+            "description": "捕捉 3 隻未知圖騰(孵化3顆蛋)",
             "reward": {
               "text": "星星碎片 * 1",
               "image_urls": [
@@ -58861,7 +58861,7 @@
             }
           },
           {
-            "description": "為Ground拍攝 1 張照片",
+            "description": "在Go Fest棲息地為尼多朗拍照(為地面屬性寶可夢拍攝 1 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58870,7 +58870,7 @@
             }
           },
           {
-            "description": "為Water拍攝 1 張照片",
+            "description": "在Go Fest棲息地為醜醜魚拍照(為水屬性寶可夢拍攝 1 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58879,7 +58879,7 @@
             }
           },
           {
-            "description": "為Grass拍攝 1 張照片",
+            "description": "在Go Fest棲息地為飛天螳螂拍照(為草屬性寶可夢拍攝 1 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58888,7 +58888,7 @@
             }
           },
           {
-            "description": "為Psychic拍攝 1 張照片",
+            "description": "在Go Fest棲息地為瑪沙那拍照(為超能力屬性寶可夢拍攝 1 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
@@ -58897,7 +58897,7 @@
             }
           },
           {
-            "description": "為Steel拍攝 1 張照片",
+            "description": "在Go Fest棲息地為小磁怪拍照(為鋼屬性寶可夢拍攝 1 張照片)",
             "reward": {
               "text": "星星沙子 * 5000",
               "image_urls": [
