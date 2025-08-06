@@ -1,0 +1,64 @@
+# .github/workflows/update_research.yml
+
+name: Update LeekDuck Research Data
+
+# 工作流程的觸發時機
+on:
+  # 允許你手動從 GitHub Actions 頁面觸發此工作流程
+  workflow_dispatch:
+
+  # 設定排程，使用 CRON 語法
+  # 這裡設定為每天 UTC 時間 02:00 執行 (大約是台灣時間早上 10:00)
+  # 你可以根據需求調整時間
+  schedule:
+    - cron: '0 2 * * *'
+
+# 定義工作內容
+jobs:
+  scrape-and-update:
+    # 指定執行的虛擬機環境
+    runs-on: ubuntu-latest
+
+    steps:
+      # 步驟 1: 拉取儲存庫的程式碼
+      # 使用 `actions/checkout` 這個官方的 Action
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # 步驟 2: 設定 Python 環境
+      # 使用 `actions/setup-python` 這個官方的 Action
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' # 你可以指定需要的 Python 版本
+
+      # 步驟 3: 安裝 Python 依賴套件
+      # 執行 pip 指令來安裝 requirements.txt 中定義的套件
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 步驟 4: 執行你的爬蟲腳本
+      # 記得路徑要對應到你的目錄結構
+      - name: Run scraper
+        run: python scripts/scraper.py
+
+      # 步驟 5: 將變更的檔案 commit 並 push 回儲存庫
+      - name: Commit and push if there are changes
+        run: |
+          # 設定 Git 的使用者名稱和 Email
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 將變更加入 git stage
+          # `|| exit 0` 是為了在沒有變更時，讓指令依然成功，避免 workflow 失敗
+          git add data/research.json || exit 0
+          
+          # 檢查是否有檔案變更，如果有的話才執行 commit 和 push
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(data): Update research.json automatically"
+            git push
+          else
+            echo "No changes to commit."
+          fi
