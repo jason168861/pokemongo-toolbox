@@ -1856,7 +1856,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/jirachicandy.png"
           },
           {
-            "text": "基拉祈 的糖果 * 20 (If 基拉祈 obtained from other research)",
+            "text": "基拉祈 的糖果 * 20 (如果已經有 基拉祈)",
             "image_url": "https://www.serebii.net/pokemongo/items/jirachicandy.png"
           },
           {
@@ -6083,7 +6083,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/494.png"
           },
           {
-            "text": "比克提尼 的糖果 * 20If already have 比克提尼",
+            "text": "比克提尼 的糖果 * 20 (如果你已經擁有比克提尼)",
             "image_url": "https://www.serebii.net/pokemongo/items/victinicandy.png"
           },
           {
@@ -11755,11 +11755,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/maxpotion.png"
           },
           {
-            "text": "大顎蟻 的糖果 * 20If 沙漠蜻蜓 Chosen",
+            "text": "大顎蟻 的糖果 * 20 (如果選擇沙漠蜻蜓)",
             "image_url": "https://www.serebii.net/pokemongo/items/trapinchcandy.png"
           },
           {
-            "text": "拉魯拉絲 的糖果 * 20If 沙奈朵 Chosen",
+            "text": "拉魯拉絲 的糖果 * 20 (如果選擇沙奈朵)",
             "image_url": "https://www.serebii.net/pokemongo/items/raltscandy.png"
           },
           {
@@ -11891,11 +11891,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/meloettasticker.png"
           },
           {
-            "text": "Rock Star 姿勢 * 1If 皮卡丘 Rock Star Chosen",
+            "text": "Rock Star 姿勢 * 1 (如果選擇 皮卡丘 Rock Star)",
             "image_url": "https://www.serebii.net/pokemongo/items/rockstarpose.png"
           },
           {
-            "text": "Pop Star 姿勢 * 1If 皮卡丘 Pop Star Chosen",
+            "text": "Pop Star 姿勢 * 1 (如果選擇 皮卡丘 Pop Star)",
             "image_url": "https://www.serebii.net/pokemongo/items/popstarpose.png"
           },
           {
@@ -13162,7 +13162,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/648.png"
           },
           {
-            "text": "美洛耶塔 的糖果 * 20If 美洛耶塔 previously obtained",
+            "text": "美洛耶塔 的糖果 * 20(如果你已經擁有美洛耶塔，則會獲得美洛耶塔糖果)",
             "image_url": "https://www.serebii.net/pokemongo/items/meloettacandy.png"
           },
           {
@@ -15141,11 +15141,11 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/206.png"
           },
           {
-            "text": "芭瓢蟲 的糖果 * 25Gold",
+            "text": "芭瓢蟲 的糖果 * 25 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/ledybacandy.png"
           },
           {
-            "text": "圓絲蛛 的糖果 * 25Silver",
+            "text": "圓絲蛛 的糖果 * 25 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/spinarakcandy.png"
           }
         ]
@@ -15191,11 +15191,11 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/206.png"
           },
           {
-            "text": "芭瓢蟲 的糖果 * 25Gold",
+            "text": "芭瓢蟲 的糖果 * 25 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/ledybacandy.png"
           },
           {
-            "text": "圓絲蛛 的糖果 * 25Silver",
+            "text": "圓絲蛛 的糖果 * 25 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/spinarakcandy.png"
           }
         ]
@@ -15241,11 +15241,11 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/206.png"
           },
           {
-            "text": "芭瓢蟲 的糖果 * 25Gold",
+            "text": "芭瓢蟲 的糖果 * 25 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/ledybacandy.png"
           },
           {
-            "text": "圓絲蛛 的糖果 * 25Silver",
+            "text": "圓絲蛛 的糖果 * 25 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/spinarakcandy.png"
           }
         ]
@@ -15291,11 +15291,11 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/211.png"
           },
           {
-            "text": "巨翅飛魚 的糖果 * 25Gold",
+            "text": "巨翅飛魚 的糖果 * 25 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/mantinecandy.png"
           },
           {
-            "text": "小小象 的糖果 * 25Silver",
+            "text": "小小象 的糖果 * 25 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/phanpycandy.png"
           }
         ]
@@ -15479,11 +15479,11 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/234.png"
           },
           {
-            "text": "芭瓢蟲 的糖果 * 25Gold",
+            "text": "芭瓢蟲 的糖果 * 25 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/ledybacandy.png"
           },
           {
-            "text": "圓絲蛛 的糖果 * 25Silver",
+            "text": "圓絲蛛 的糖果 * 25 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/spinarakcandy.png"
           }
         ]
@@ -15529,11 +15529,11 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/234.png"
           },
           {
-            "text": "芭瓢蟲 的糖果 * 25Gold",
+            "text": "芭瓢蟲 的糖果 * 25 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/ledybacandy.png"
           },
           {
-            "text": "圓絲蛛 的糖果 * 25Silver",
+            "text": "圓絲蛛 的糖果 * 25 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/spinarakcandy.png"
           }
         ]
@@ -15579,11 +15579,11 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/234.png"
           },
           {
-            "text": "芭瓢蟲 的糖果 * 25Gold",
+            "text": "芭瓢蟲 的糖果 * 25 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/ledybacandy.png"
           },
           {
-            "text": "圓絲蛛 的糖果 * 25Silver",
+            "text": "圓絲蛛 的糖果 * 25 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/spinarakcandy.png"
           }
         ]
@@ -15629,11 +15629,11 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/237.png"
           },
           {
-            "text": "巨翅飛魚 的糖果 * 25Gold",
+            "text": "巨翅飛魚 的糖果 * 25 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/mantinecandy.png"
           },
           {
-            "text": "小小象 的糖果 * 25Silver",
+            "text": "小小象 的糖果 * 25 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/phanpycandy.png"
           }
         ]
@@ -15669,11 +15669,11 @@
         ],
         "total_rewards": [
           {
-            "text": "Ho-oh T-Shirt * 1Gold",
+            "text": "Ho-oh T-Shirt * 1 (Gold)",
             "image_url": "https://www.serebii.net/pokemongo/items/ho-oht-shirt.png"
           },
           {
-            "text": "洛奇亞 T-Shirt * 1Silver",
+            "text": "洛奇亞 T-Shirt * 1 (Silver)",
             "image_url": "https://www.serebii.net/pokemongo/items/lugiat-shirt.png"
           },
           {
@@ -27478,7 +27478,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/groudoncandy.png"
           },
           {
-            "text": "固拉多 Primal Energy * 200Ruby Ticket",
+            "text": "固拉多 原始能量 * 200 (Ruby Ticket)",
             "image_url": "https://www.serebii.net/pokemongo/items/groudonprimalenergy.png"
           }
         ]
@@ -27533,7 +27533,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/kyogrecandy.png"
           },
           {
-            "text": "蓋歐卡 Primal Energy * 200Sapphire Ticket",
+            "text": "蓋歐卡 原始能量 * 200 (Sapphire Ticket)",
             "image_url": "https://www.serebii.net/pokemongo/items/kyogreprimalenergy.png"
           }
         ]
@@ -28090,7 +28090,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Master Ball * 1",
+            "text": "大師球 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/masterball.png"
           },
           {
@@ -30988,7 +30988,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/718-10.png"
           },
           {
-            "text": "基格爾德 Cube * 1",
+            "text": "基格爾德多面體 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/zygardecube.png"
           }
         ]
@@ -33226,7 +33226,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/719.png"
           },
           {
-            "text": "蒂安希 的糖果 * 25If 蒂安希 already owned",
+            "text": "蒂安希 的糖果 * 25 (如果已經有蒂安希)",
             "image_url": "https://www.serebii.net/pokemongo/items/dianciecandy.png"
           },
           {
@@ -33280,7 +33280,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/dianciet-shirt.png"
           },
           {
-            "text": "蒂安希 的糖果 * 25If T-shirt already owned",
+            "text": "蒂安希 的糖果 * 25 (如果已經有T-shirt)",
             "image_url": "https://www.serebii.net/pokemongo/items/dianciecandy.png"
           }
         ]
@@ -33318,7 +33318,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/treasurehuntpose.png"
           },
           {
-            "text": "蒂安希 的糖果 * 25If 姿勢 already owned",
+            "text": "蒂安希 的糖果 * 25 (如果已經有姿勢)",
             "image_url": "https://www.serebii.net/pokemongo/items/dianciecandy.png"
           },
           {
@@ -33606,11 +33606,11 @@
         ],
         "total_rewards": [
           {
-            "text": "蓋歐卡 Primal Energy * 100",
+            "text": "蓋歐卡 原始能量 * 100",
             "image_url": "https://www.serebii.net/pokemongo/items/kyogreprimalenergy.png"
           },
           {
-            "text": "固拉多 Primal Energy * 100",
+            "text": "固拉多 原始能量 * 100",
             "image_url": "https://www.serebii.net/pokemongo/items/groudonprimalenergy.png"
           },
           {
@@ -34648,7 +34648,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/736.png"
           },
           {
-            "text": "star Piece * 1",
+            "text": "星星碎片 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/starpiece.png"
           }
         ]
@@ -36093,7 +36093,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/stardust.png"
           },
           {
-            "text": "Master Ball * 1",
+            "text": "大師球 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/masterball.png"
           }
         ]
@@ -37998,11 +37998,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/stardust.png"
           },
           {
-            "text": "帝牙盧卡 的糖果 * 15If selected Diamond",
+            "text": "帝牙盧卡 的糖果 * 15 (如果選擇鑽石)",
             "image_url": "https://www.serebii.net/pokemongo/items/dialgacandy.png"
           },
           {
-            "text": "帕路奇亞 的糖果 * 15If selected Pearl",
+            "text": "帕路奇亞 的糖果 * 15 (如果選擇珍珠)",
             "image_url": "https://www.serebii.net/pokemongo/items/palkiacandy.png"
           }
         ]
@@ -38101,11 +38101,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/stardust.png"
           },
           {
-            "text": "帝牙盧卡 的糖果 * 15If selected Diamond",
+            "text": "帝牙盧卡 的糖果 * 15 (如果選擇鑽石)",
             "image_url": "https://www.serebii.net/pokemongo/items/dialgacandy.png"
           },
           {
-            "text": "帕路奇亞 的糖果 * 15If selected Pearl",
+            "text": "帕路奇亞 的糖果 * 15 (如果選擇珍珠)",
             "image_url": "https://www.serebii.net/pokemongo/items/palkiacandy.png"
           }
         ]
@@ -40598,7 +40598,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/719.png"
           },
           {
-            "text": "蒂安希 的糖果 * 25If 蒂安希 already obtained",
+            "text": "蒂安希 的糖果 * 25 (如果已經有蒂安希)",
             "image_url": "https://www.serebii.net/pokemongo/items/dianciecandy.png"
           },
           {
@@ -41724,11 +41724,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/cosmogcandy.png"
           },
           {
-            "text": "Solar Fusion Energy * 1000(索爾迦雷歐 支線)",
+            "text": "太陽能量 * 1000(索爾迦雷歐 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/solarfusionenergy.png"
           },
           {
-            "text": "Lunar Fusion Energy * 1000(露奈雅拉 支線)",
+            "text": "月亮能量 * 1000(露奈雅拉 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/lunarfusionenergy.png"
           }
         ]
@@ -42423,7 +42423,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/802.png"
           },
           {
-            "text": "瑪夏多 的糖果 * 25If a 瑪夏多 is already caught from an event",
+            "text": "瑪夏多 的糖果 * 25 (如果已經有瑪夏多)",
             "image_url": "https://www.serebii.net/pokemongo/items/marshadowcandy.png"
           },
           {
@@ -42840,11 +42840,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/cosmogcandy.png"
           },
           {
-            "text": "Solar Fusion Energy * 1000(索爾迦雷歐 支線)",
+            "text": "太陽能量 * 1000(索爾迦雷歐 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/solarfusionenergy.png"
           },
           {
-            "text": "Lunar Fusion Energy * 1000(露奈雅拉 支線)",
+            "text": "月亮能量 * 1000(露奈雅拉 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/lunarfusionenergy.png"
           }
         ]
@@ -43242,7 +43242,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/802.png"
           },
           {
-            "text": "瑪夏多 的糖果 * 25If a 瑪夏多 is already caught from an event",
+            "text": "瑪夏多 的糖果 * 25 (如果已經有瑪夏多)",
             "image_url": "https://www.serebii.net/pokemongo/items/marshadowcandy.png"
           },
           {
@@ -43659,11 +43659,11 @@
             "image_url": "https://www.serebii.net/pokemongo/items/cosmogcandy.png"
           },
           {
-            "text": "Solar Fusion Energy * 1000(索爾迦雷歐 支線)",
+            "text": "太陽能量 * 1000(索爾迦雷歐 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/solarfusionenergy.png"
           },
           {
-            "text": "Lunar Fusion Energy * 1000(露奈雅拉 支線)",
+            "text": "月亮能量 * 1000(露奈雅拉 支線)",
             "image_url": "https://www.serebii.net/pokemongo/items/lunarfusionenergy.png"
           }
         ]
@@ -43900,7 +43900,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/802.png"
           },
           {
-            "text": "瑪夏多 的糖果 * 25If 瑪夏多 already obtained",
+            "text": "瑪夏多 的糖果 * 25 (如果已經有瑪夏多)",
             "image_url": "https://www.serebii.net/pokemongo/items/marshadowcandy.png"
           },
           {
@@ -43950,7 +43950,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/alolapose.png"
           },
           {
-            "text": "瑪夏多 的糖果 XL * 10If 阿羅拉地區 姿勢 already obtained",
+            "text": "瑪夏多 的糖果 XL * 10 (如果已經有阿羅拉地區 姿勢)",
             "image_url": "https://www.serebii.net/pokemongo/items/marshadowcandyxl.png"
           }
         ]
@@ -44372,7 +44372,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/necrozmacandy.png"
           },
           {
-            "text": "Solar Fusion Energy * 1000",
+            "text": "太陽能量 * 1000",
             "image_url": "https://www.serebii.net/pokemongo/items/solarfusionenergy.png"
           },
           {
@@ -44464,7 +44464,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/necrozmacandy.png"
           },
           {
-            "text": "Lunar Fusion Energy * 1000",
+            "text": "月亮能量 * 1000",
             "image_url": "https://www.serebii.net/pokemongo/items/lunarfusionenergy.png"
           },
           {
@@ -52541,7 +52541,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/802.png"
           },
           {
-            "text": "瑪夏多 的糖果 * 25 (If 瑪夏多 already obtained)",
+            "text": "瑪夏多 的糖果 * 25 (如果已經有瑪夏多)",
             "image_url": "https://www.serebii.net/pokemongo/items/marshadowcandy.png"
           },
           {
@@ -57113,7 +57113,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/721.png"
           },
           {
-            "text": "波爾凱尼恩 的糖果 * 25If 波爾凱尼恩 already captured",
+            "text": "波爾凱尼恩 的糖果 * 25 (如果已經有波爾凱尼恩)",
             "image_url": "https://www.serebii.net/pokemongo/items/volcanioncandy.png"
           },
           {
@@ -58952,7 +58952,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/385.png"
           },
           {
-            "text": "基拉祈 的糖果 * 20 (If 基拉祈 obtained from other research)",
+            "text": "基拉祈 的糖果 * 20",
             "image_url": "https://www.serebii.net/pokemongo/items/jirachicandy.png"
           },
           {
@@ -59232,7 +59232,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/385.png"
           },
           {
-            "text": "基拉祈 的糖果 * 20(If 基拉祈 obtained from other research)",
+            "text": "基拉祈 的糖果 * 20",
             "image_url": "https://www.serebii.net/pokemongo/items/jirachicandy.png"
           },
           {
@@ -61331,7 +61331,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/stardust.png"
           },
           {
-            "text": "Master Ball * 1",
+            "text": "大師球 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/masterball.png"
           }
         ]
