@@ -1,20 +1,22 @@
 // js/special-research.js (優化後版本)
-let researchDataPromise;
-
-// 【優化第2步】建立並導出一個新的預載入函式
-// 這個函式只會被執行一次，用來在背景提前取得資料。
-export function preloadSpecialResearchData() {
-    if (!researchDataPromise) {
-        researchDataPromise = fetch('data/special_research.json')
-            .then(response => {
-                if (!response.ok) throw new Error('無法載入 JSON 檔案');
-                return response.json();
-            })
-            .then(data => {
-                // 資料拿到後，直接先排序好
-                return data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
-            });
+let researchDataPromise = null;
+let allResearches = [];
+export function prefetchSpecialResearchData() {
+    // 如果已經在載入中或載入完成，就直接返回，避免重複執行
+    if (researchDataPromise) {
+        return;
     }
+    // 開始下載資料，並將這個 fetch 的 Promise 存起來
+    researchDataPromise = fetch('data/special_research.json')
+        .then(response => {
+            if (!response.ok) throw new Error('無法載入 JSON 檔案');
+            return response.json();
+        })
+        .then(data => {
+            // 資料回來後先排序，並存到 allResearches 變數中
+            allResearches = data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+            return allResearches; // 將處理好的資料繼續傳下去
+        });
 }
 export function initializeSpecialResearchApp() {
     let allResearches = [];
@@ -22,7 +24,33 @@ export function initializeSpecialResearchApp() {
     const searchInput = document.getElementById('special-search-input');
     const includeAllCheckbox = document.getElementById('search-include-all');
     const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
-
+    if (!researchDataPromise) {
+        prefetchSpecialResearchData();
+    }
+        researchDataPromise
+        .then(researches => {
+            // 當資料確定回來後，才開始產生卡片和綁定事件
+            // 注意：researches 參數現在直接從 promise 鏈傳入
+            generateResearchCards(researches); 
+            
+            // 以下事件綁定邏輯不變
+            includeAllCheckbox.addEventListener('change', debounce(filterAndRender, 200));
+            searchInput.addEventListener('input', debounce(filterAndRender, 300));
+            searchInput.addEventListener('input', () => {
+                clearBtn.style.display = searchInput.value ? 'block' : 'none';
+            });
+            window.addEventListener('resize', debounce(handleResize, 200));
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.style.display = 'none';
+                filterAndRender();
+                searchInput.focus();
+            });
+        })
+        .catch(error => {
+            container.innerHTML = `<div class="no-results" style="color:red;">${error.message}</div>`;
+            console.error('讀取資料時發生錯誤:', error);
+        });
     // Debounce 函式保持不變
     function debounce(func, delay) {
         let timeout;
@@ -321,30 +349,35 @@ function addStepAccordionLogic(container) {
         });
     });
 }
-    if (!researchDataPromise) {
-        // 如果有意外情況（例如直接載入頁面），確保仍然可以載入
-        preloadSpecialResearchData();
-    }
-
-    researchDataPromise
+    // Fetch 資料的主流程保持不變
+    fetch('data/special_research.json')
+        .then(response => {
+            if (!response.ok) throw new Error('無法載入 JSON 檔案');
+            return response.json();
+        })
         .then(data => {
-            allResearches = data;
+            allResearches = data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
             generateResearchCards(allResearches);
             includeAllCheckbox.addEventListener('change', debounce(filterAndRender, 200));
             searchInput.addEventListener('input', debounce(filterAndRender, 300));
             searchInput.addEventListener('input', () => {
+                // 如果 input 內有值，就顯示按鈕；否則隱藏
                 clearBtn.style.display = searchInput.value ? 'block' : 'none';
             });
             window.addEventListener('resize', debounce(handleResize, 200));
+            // 【新增】叉叉按鈕的點擊事件
             clearBtn.addEventListener('click', () => {
+                // 1. 清空搜尋框
                 searchInput.value = '';
+            
+                // 2. 隱藏叉叉按鈕
                 clearBtn.style.display = 'none';
+            
+                // 3. 觸發一次搜尋，讓列表恢復原狀
                 filterAndRender();
+            
+                // 4. (可選) 讓使用者可以繼續輸入
                 searchInput.focus();
             });
         })
-        .catch(error => {
-            container.innerHTML = `<div class="no-results" style="color:red;">${error.message}</div>`;
-            console.error('讀取資料時發生錯誤:', error);
-        });
 }
