@@ -1,0 +1,58 @@
+# .github/workflows/update_data.yml (新檔名)
+
+# 為了更通用，將 name 修改一下
+name: Update Pokémon GO Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # ==================== ✨ 在這裡加入修改 ✨ ====================
+      - name: Run research scraper
+        # 如果你改了檔名，記得這裡也要改
+        run: python scripts/scrape_research.py 
+
+      - name: Run eggs scraper
+        # 執行我們新的孵蛋資料爬蟲
+        run: python scripts/scrape_eggs.py
+      # ==========================================================
+
+      - name: Commit and push if there are changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # ==================== ✨ 在這裡加入修改 ✨ ====================
+          # 將整個 data 資料夾的變更都加入
+          # 這樣未來如果再增加新的 json 檔，也不用再改這裡
+          git add data/
+          # ==========================================================
+
+          if ! git diff --staged --quiet; then
+            # 可以使用一個更通用的 commit message
+            git commit -m "chore(data): Update Pokémon GO data files"
+            git push
+          else
+            echo "No changes to commit."
+          fi

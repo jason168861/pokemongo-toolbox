@@ -3,7 +3,7 @@ export function initializeEggsApp() {
     const checkContainer = document.getElementById('egg-list-2km');
     if (!checkContainer || checkContainer.innerHTML !== '') return;
 
-    fetch('data/data.json')
+    fetch('data/eggs.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
