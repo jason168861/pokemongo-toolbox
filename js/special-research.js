@@ -15,6 +15,21 @@ export function initializeSpecialResearchApp() {
             timeout = setTimeout(() => func.apply(this, args), delay);
         };
     }
+        function handleResize() {
+        const allOpenCards = container.querySelectorAll('.research-card .research-content.show');
+        allOpenCards.forEach(content => {
+            content.style.maxHeight = content.scrollHeight + 50 + 'px';
+            const card = content.closest('.research-card');
+            const toggleAllBtn = card.querySelector('.toggle-all-steps-btn');
+            if (toggleAllBtn) {
+                 if (window.innerWidth < 768) {
+                    toggleAllBtn.style.display = 'inline-flex';
+                } else {
+                    toggleAllBtn.style.display = 'none';
+                }
+            }
+        });
+    }
 
     // 搜尋與過濾邏輯保持不變
     function filterAndRender() {
@@ -263,17 +278,30 @@ function addStepAccordionLogic(container) {
             header.classList.toggle('active');
             
             if (header.classList.contains('active')) {
-                content.style.maxHeight = content.scrollHeight + "px";
+                // 當要展開時
+                const contentScrollHeight = content.scrollHeight;
+                const researchContentScrollHeight = researchContent.scrollHeight;
+                
+                // 1. 先設定子項目的 maxHeight
+                content.style.maxHeight = contentScrollHeight + "px";
+                
+                // 2.【核心】直接計算並設定父項目的「最終」maxHeight
+                //    等於父項目當前的高度 + 即將展開的子項目的高度
+                researchContent.style.maxHeight = (researchContentScrollHeight + contentScrollHeight + 50) + "px";
+
             } else {
+                // 當要收合時
+                const contentScrollHeight = content.scrollHeight;
+                const researchContentScrollHeight = researchContent.scrollHeight;
+
+                // 1. 先收合子項目
                 content.style.maxHeight = null;
+
+                // 2.【核心】直接計算並設定父項目的「最終」maxHeight
+                //    等於父項目當前的高度 - 即將收合的子項目的高度
+                researchContent.style.maxHeight = (researchContentScrollHeight - contentScrollHeight + 50) + "px";
             }
 
-            // 【重要】每次開合子項目時，重新計算並更新父容器的 maxHeight
-            setTimeout(() => {
-                if (researchContent.classList.contains('show')) {
-                   researchContent.style.maxHeight = researchContent.scrollHeight + 50 + "px";
-                }
-            }, 300); // 300ms 等待子動畫完成
         });
     });
 }
@@ -292,7 +320,7 @@ function addStepAccordionLogic(container) {
                 // 如果 input 內有值，就顯示按鈕；否則隱藏
                 clearBtn.style.display = searchInput.value ? 'block' : 'none';
             });
-            
+            window.addEventListener('resize', debounce(handleResize, 200));
             // 【新增】叉叉按鈕的點擊事件
             clearBtn.addEventListener('click', () => {
                 // 1. 清空搜尋框
