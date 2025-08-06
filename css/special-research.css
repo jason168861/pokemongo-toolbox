@@ -387,3 +387,29 @@ body.nav-is-hidden #special-research-app #search-wrapper {
     /* 我們將右側的 25px 增加到 50px */
     padding-right: 50px; 
 }
+/* --- 桌機版優化：特殊調查內容改為兩兩一組、左右並排 (Flexbox版) --- */
+@media (min-width: 1024px) { /* 只在寬度大於 1024px 的螢幕上生效 */
+
+    #special-research-app .research-content.show {
+        /* 1. 啟用 Flexbox 佈局 */
+        display: flex;
+        
+        /* 2. 允許項目換行，當一行滿了之後，後面的關卡會自動換到下一行 */
+        flex-wrap: wrap;
+        
+        /* 3. 定義項目之間的間距，上下 20px，左右 30px */
+        gap: 20px 30px;
+    }
+
+    #special-research-app .step {
+        /* 4. 核心！讓每個關卡區塊的寬度為「50% 減去一半的間距」 */
+        /* calc() 函數會自動計算，確保兩個區塊加上間距剛好等於 100% */
+        flex-basis: calc(50% - 15px); /* 15px 是上面 gap 左右間距 30px 的一半 */
+        
+        /* 5. 確保寬度計算包含 padding 和 border，避免跑版 */
+        box-sizing: border-box;
+        
+        /* (可選) 移除之前加的 margin-bottom，因為現在用 gap 來控制間距 */
+        margin-bottom: 0;
+    }
+}
