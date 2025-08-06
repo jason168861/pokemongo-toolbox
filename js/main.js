@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 更新 UI
             userInfoDiv.style.display = 'none';
             loginBtn.style.display = 'block';
-
+            applyUserPreferences(null);
             // TODO: 清除或重設 App 狀態 (例如取消所有置頂)
             // 這個部分可以在未來優化，例如詢問使用者是否要清除本機狀態
         }
@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             } else {
                 console.log("此使用者尚無儲存資料。");
+                applyUserPreferences(null);
             }
-            applyUserPreferences(userData);
         }).catch((error) => {
             console.error("讀取資料失敗:", error);
         });
