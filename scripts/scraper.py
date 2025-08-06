@@ -116,7 +116,7 @@ BASE_URL = "https://leekduck.com/"
 HEADERS = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" }
 
 def scrape_research_data_full():
-    pokemon_name_map = load_json_map("data/pokemon_translation_map.json")
+    pokemon_name_map = load_json_map("./data/pokemon_translation_map.json")
     task_translation_map = load_json_map("./scripts/task_translation_map.json") 
     category_translation_map = load_json_map("./scripts/category_translation_map.json") # <-- 新增此行
 
