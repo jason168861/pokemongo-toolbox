@@ -18,7 +18,8 @@ jobs:
   scrape-and-update:
     # 指定執行的虛擬機環境
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       # 步驟 1: 拉取儲存庫的程式碼
       # 使用 `actions/checkout` 這個官方的 Action
