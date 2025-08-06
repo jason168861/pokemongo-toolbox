@@ -23,12 +23,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 步驟 2: 從 Secret 建立 config.js 檔案
+      # 步驟 2: 從 Secret 建立 config.js 檔案 (***這裡是修改過的地方***)
       - name: Create config.js
+        # 我們將 Secret 先存入一個環境變數，這種方法能安全地處理多行文字
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG_JSON }}
         run: |
-          # 建立 config.js 並將 Secret 內容寫入
-          # ${{ secrets.FIREBASE_CONFIG_JSON }} 會被替換成您剛剛設定的 Secret
-          echo "const firebaseConfig = ${{ secrets.FIREBASE_CONFIG_JSON }};" > config.js
+          # 然後再從環境變數中讀取內容並寫入檔案
+          echo "const firebaseConfig = $FIREBASE_CONFIG;" > config.js
 
       # 步驟 3: 設定 GitHub Pages
       - name: Setup Pages
