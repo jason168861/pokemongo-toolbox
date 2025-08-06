@@ -5,10 +5,11 @@ import { initializeResearchApp } from './research.js';
 import { initializeEggsApp } from './eggs.js';
 import { initializeLevelUpApp } from './level-up.js';
 import { initializeSearchFiltersApp } from './search-filters.js';
-import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
+import { initializeSpecialResearchApp, preloadSpecialResearchData } from './special-research.js'; 
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
 
 document.addEventListener('DOMContentLoaded', () => {
+    preloadSpecialResearchData();
     // --- 全域控制與頁籤切換邏輯 ---
     document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
