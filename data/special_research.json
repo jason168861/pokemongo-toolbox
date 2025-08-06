@@ -6430,7 +6430,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/ultraball.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -7847,7 +7847,7 @@
           {
             "description": "捕捉 15 隻小火龍",
             "reward": {
-              "text": "Elite 一般招式學習器 * 1",
+              "text": "厲害一般招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitefasttm.png"
               ]
@@ -7893,7 +7893,7 @@
           {
             "description": "捕捉 15 隻寶可夢",
             "reward": {
-              "text": "Elite 特殊招式學習器 * 1",
+              "text": "厲害特殊招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
               ]
@@ -9352,7 +9352,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/pinapberry.png"
           },
           {
-            "text": "Nanab 莓果 * 10",
+            "text": "蕉香果 * 10",
             "image_url": "https://www.serebii.net/pokemongo/items/nanabberry.png"
           },
           {
@@ -12271,7 +12271,7 @@
           {
             "description": "為野生的超能力屬性寶可夢拍攝 3 張照片",
             "reward": {
-              "text": "Nanab 莓果 * 10",
+              "text": "蕉香果 * 10",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -13305,7 +13305,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/stardust.png"
           },
           {
-            "text": "Nanab 莓果 * 10",
+            "text": "蕉香果 * 10",
             "image_url": "https://www.serebii.net/pokemongo/items/nanabberry.png"
           },
           {
@@ -13729,7 +13729,7 @@
             "image_url": null
           },
           {
-            "text": "Nanab 莓果 * 9",
+            "text": "蕉香果 * 9",
             "image_url": "https://www.serebii.net/pokemongo/items/nanabberry.png"
           }
         ]
@@ -14313,7 +14313,7 @@
           {
             "description": "傳送 15 隻寶可夢",
             "reward": {
-              "text": "Elite 一般招式學習器 * 1",
+              "text": "厲害一般招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitefasttm.png"
               ]
@@ -14357,7 +14357,7 @@
           {
             "description": "領取獎勵",
             "reward": {
-              "text": "Elite 特殊招式學習器 * 1",
+              "text": "厲害特殊招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
               ]
@@ -15078,7 +15078,7 @@
           {
             "description": "捕捉 20 隻寶可夢",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -16231,7 +16231,7 @@
           {
             "description": "為野生的寶可夢拍攝 3 張照片",
             "reward": {
-              "text": "Nanab 莓果 * 10",
+              "text": "蕉香果 * 10",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -16330,7 +16330,7 @@
           {
             "description": "投出 5 次 nice",
             "reward": {
-              "text": "Nanab 莓果 * 5",
+              "text": "蕉香果 * 5",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -16519,7 +16519,7 @@
           {
             "description": "擊敗 5 位GO火箭隊手下",
             "reward": {
-              "text": "Nanab 莓果 * 10",
+              "text": "蕉香果 * 10",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -20406,7 +20406,7 @@
           {
             "description": "獲得 2000 XP",
             "reward": {
-              "text": "Nanab 莓果 * 2",
+              "text": "蕉香果 * 2",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -20630,7 +20630,7 @@
           {
             "description": "獲得 3000 XP",
             "reward": {
-              "text": "Nanab 莓果 * 2",
+              "text": "蕉香果 * 2",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -20854,7 +20854,7 @@
           {
             "description": "獲得 6000 XP",
             "reward": {
-              "text": "Nanab 莓果 * 2",
+              "text": "蕉香果 * 2",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -21094,7 +21094,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Nanab 莓果 * 2",
+            "text": "蕉香果 * 2",
             "image_url": "https://www.serebii.net/pokemongo/items/nanabberry.png"
           },
           {
@@ -21507,7 +21507,7 @@
           {
             "description": "連續投出 3 次 Nice",
             "reward": {
-              "text": "Nanab 莓果 * 10",
+              "text": "蕉香果 * 10",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -21742,7 +21742,7 @@
           {
             "description": "擊敗 5 位GO火箭隊手下",
             "reward": {
-              "text": "Nanab 莓果 * 10",
+              "text": "蕉香果 * 10",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -22560,7 +22560,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/buzzwolecandy.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -23120,7 +23120,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/xurkitreecandy.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -23327,7 +23327,7 @@
           {
             "description": "捕捉 3 隻寶可夢",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -24059,7 +24059,7 @@
           {
             "description": "進化 3 隻寶可夢",
             "reward": {
-              "text": "Nanab 莓果 * 12",
+              "text": "蕉香果 * 12",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -26100,7 +26100,7 @@
           {
             "description": "傳送 15 隻寶可夢",
             "reward": {
-              "text": "Elite 一般招式學習器 * 1",
+              "text": "厲害一般招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitefasttm.png"
               ]
@@ -26144,7 +26144,7 @@
           {
             "description": "領取獎勵",
             "reward": {
-              "text": "Elite 特殊招式學習器 * 1",
+              "text": "厲害特殊招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
               ]
@@ -28844,7 +28844,7 @@
           {
             "description": "為你的寶可夢拍攝 4 張照片",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -30928,7 +30928,7 @@
           {
             "description": "強化寶可夢 5 次",
             "reward": {
-              "text": "Nanab 莓果 * 10",
+              "text": "蕉香果 * 10",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -31891,7 +31891,7 @@
           {
             "description": "給你的夥伴 3 個點心",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -32128,7 +32128,7 @@
           {
             "description": "給你的夥伴 3 個點心",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -32834,7 +32834,7 @@
           {
             "description": "給你的夥伴 3 個點心",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -33071,7 +33071,7 @@
           {
             "description": "捕捉 10 隻寶可夢",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -33353,7 +33353,7 @@
           {
             "description": "捕捉 3 隻寶可夢",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -33652,7 +33652,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -33660,7 +33660,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/rarecandyxl.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -37181,7 +37181,7 @@
           {
             "description": "傳送 15 隻寶可夢",
             "reward": {
-              "text": "Elite 一般招式學習器 * 1",
+              "text": "厲害一般招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitefasttm.png"
               ]
@@ -37225,7 +37225,7 @@
           {
             "description": "領取獎勵",
             "reward": {
-              "text": "Elite 特殊招式學習器 * 1",
+              "text": "厲害特殊招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
               ]
@@ -40299,7 +40299,7 @@
           {
             "description": "與你的夥伴獲得 25 個心心",
             "reward": {
-              "text": "Nanab 莓果 * 10",
+              "text": "蕉香果 * 10",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -43699,7 +43699,7 @@
           {
             "description": "捕捉 10 隻寶可夢",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -43977,7 +43977,7 @@
           {
             "description": "捕捉 10 隻寶可夢",
             "reward": {
-              "text": "Nanab 莓果 * 3",
+              "text": "蕉香果 * 3",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/nanabberry.png"
               ]
@@ -44506,7 +44506,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -44514,7 +44514,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/rarecandyxl.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -47556,7 +47556,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/rarecandy.png"
           },
           {
-            "text": "Nanab 莓果 * 3",
+            "text": "蕉香果 * 3",
             "image_url": "https://www.serebii.net/pokemongo/items/nanabberry.png"
           }
         ]
@@ -47789,7 +47789,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/rarecandy.png"
           },
           {
-            "text": "Nanab 莓果 * 3",
+            "text": "蕉香果 * 3",
             "image_url": "https://www.serebii.net/pokemongo/items/nanabberry.png"
           }
         ]
@@ -47941,7 +47941,7 @@
           {
             "description": "領取獎勵",
             "reward": {
-              "text": "Elite 特殊招式學習器 * 1",
+              "text": "厲害特殊招式學習器 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
               ]
@@ -48128,7 +48128,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/rarecandy.png"
           },
           {
-            "text": "Nanab 莓果 * 3",
+            "text": "蕉香果 * 3",
             "image_url": "https://www.serebii.net/pokemongo/items/nanabberry.png"
           }
         ]
@@ -48361,7 +48361,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/rarecandy.png"
           },
           {
-            "text": "Nanab 莓果 * 3",
+            "text": "蕉香果 * 3",
             "image_url": "https://www.serebii.net/pokemongo/items/nanabberry.png"
           }
         ]
@@ -49373,11 +49373,11 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           },
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -54320,7 +54320,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Crowned Sword Energy * 1000",
+            "text": "劍王能量 * 1000",
             "image_url": "https://www.serebii.net/pokemongo/items/crownedswordenergy.png"
           },
           {
@@ -54366,7 +54366,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Crowned Shield Energy * 1000",
+            "text": "盾王能量 * 1000",
             "image_url": "https://www.serebii.net/pokemongo/items/crownedshieldenergy.png"
           },
           {
@@ -54412,7 +54412,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -54420,7 +54420,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/zaciansticker.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -54458,7 +54458,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -54466,7 +54466,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/zamazentasticker.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -55370,7 +55370,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Crowned Sword Energy * 1000",
+            "text": "劍王能量 * 1000",
             "image_url": "https://www.serebii.net/pokemongo/items/crownedswordenergy.png"
           },
           {
@@ -55416,7 +55416,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Crowned Shield Energy * 1000",
+            "text": "盾王能量 * 1000",
             "image_url": "https://www.serebii.net/pokemongo/items/crownedshieldenergy.png"
           },
           {
@@ -55462,7 +55462,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -55470,7 +55470,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/zaciansticker.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -55508,7 +55508,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -55516,7 +55516,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/zamazentasticker.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -56420,7 +56420,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Crowned Sword Energy * 1000",
+            "text": "劍王能量 * 1000",
             "image_url": "https://www.serebii.net/pokemongo/items/crownedswordenergy.png"
           },
           {
@@ -56466,7 +56466,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Crowned Shield Energy * 1000",
+            "text": "盾王能量 * 1000",
             "image_url": "https://www.serebii.net/pokemongo/items/crownedshieldenergy.png"
           },
           {
@@ -56512,7 +56512,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -56520,7 +56520,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/zaciansticker.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -56558,7 +56558,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Elite 一般招式學習器 * 1",
+            "text": "厲害一般招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitefasttm.png"
           },
           {
@@ -56566,7 +56566,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/zamazentasticker.png"
           },
           {
-            "text": "Elite 特殊招式學習器 * 1",
+            "text": "厲害特殊招式學習器 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/elitechargedtm.png"
           }
         ]
@@ -57342,7 +57342,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Crowned Sword Energy * 500",
+            "text": "劍王能量 * 500",
             "image_url": "https://www.serebii.net/pokemongo/items/crownedswordenergy.png"
           },
           {
@@ -57350,7 +57350,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/672.png"
           },
           {
-            "text": "Max Mushroom * 1",
+            "text": "極巨菇菇 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/maxmushroom.png"
           }
         ]
@@ -57361,7 +57361,7 @@
           {
             "description": "與妖精屬性夥伴寶可夢探索獲得2顆糖果",
             "reward": {
-              "text": "Crowned Sword Energy * 500",
+              "text": "劍王能量 * 500",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/crownedswordenergy.png"
               ]
@@ -57568,7 +57568,7 @@
         ],
         "total_rewards": [
           {
-            "text": "Crowned Shield Energy * 500",
+            "text": "盾王能量 * 500",
             "image_url": "https://www.serebii.net/pokemongo/items/crownedshieldenergy.png"
           },
           {
@@ -57576,7 +57576,7 @@
             "image_url": "https://www.serebii.net/pokemongo/pokemon/672.png"
           },
           {
-            "text": "Max Mushroom * 1",
+            "text": "極巨菇菇 * 1",
             "image_url": "https://www.serebii.net/pokemongo/items/maxmushroom.png"
           }
         ]
@@ -57587,7 +57587,7 @@
           {
             "description": "與格鬥屬性夥伴寶可夢探索獲得2顆糖果",
             "reward": {
-              "text": "Crowned Shield Energy * 500",
+              "text": "盾王能量 * 500",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/crownedshieldenergy.png"
               ]
