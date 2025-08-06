@@ -10959,7 +10959,7 @@
           {
             "description": "使用 10 個莓果協助捕捉寶可夢",
             "reward": {
-              "text": "GreatBall * 10",
+              "text": "超級球 * 10",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/greatball.png"
               ]
@@ -14121,7 +14121,7 @@
           {
             "description": "使用 20 個莓果協助捕捉寶可夢",
             "reward": {
-              "text": "Star piece * 1",
+              "text": "星星碎片 * 1",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/starpiece.png"
               ]
@@ -16365,7 +16365,7 @@
             }
           },
           {
-            "description": "捕捉 3 隻of",
+            "description": "捕捉 3 隻變身寶可夢",
             "reward": {
               "text": "好傷藥 * 5",
               "image_urls": [
@@ -19100,7 +19100,7 @@
             }
           },
           {
-            "description": "捕捉 10 隻species",
+            "description": "捕捉 10 種不同寶可夢",
             "reward": {
               "text": "金色蔓莓果 * 2",
               "image_urls": [
@@ -41140,7 +41140,7 @@
           {
             "description": "投出 10 次 Nice",
             "reward": {
-              "text": "Poke ball * 24",
+              "text": "精靈球 * 24",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/pokeball.png"
               ]
@@ -41507,7 +41507,7 @@
         "step_title": "Radar Tuning: Event Eevee2 / 5",
         "tasks": [
           {
-            "description": "捕捉 6 隻Eevee with a sun crown或moon crown",
+            "description": "捕捉 6 隻戴著太陽或月亮頭冠的伊布",
             "reward": {
               "text": "蔓莓果 * 3",
               "image_urls": [
@@ -41764,7 +41764,7 @@
           {
             "description": "投出 10 次 Nice",
             "reward": {
-              "text": "Poke ball * 24",
+              "text": "精靈球 * 24",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/pokeball.png"
               ]
@@ -42252,7 +42252,7 @@
           {
             "description": "投出 10 次 Nice",
             "reward": {
-              "text": "Poke ball * 24",
+              "text": "精靈球 * 24",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/pokeball.png"
               ]
@@ -42335,7 +42335,7 @@
           {
             "description": "旋轉 5 個寶可補給站或道館",
             "reward": {
-              "text": "Flabébé 遭遇",
+              "text": "花蓓蓓 遭遇",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/pokemon/669-b.png"
               ]
@@ -42623,7 +42623,7 @@
         "step_title": "Radar Tuning: Event Eevee2 / 5",
         "tasks": [
           {
-            "description": "捕捉 6 隻Eevee with a sun crown或moon crown",
+            "description": "捕捉 6 隻戴著太陽或月亮頭冠的伊布",
             "reward": {
               "text": "蔓莓果 * 3",
               "image_urls": [
@@ -43071,7 +43071,7 @@
           {
             "description": "投出 10 次 Nice",
             "reward": {
-              "text": "Poke ball * 24",
+              "text": "精靈球 * 24",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/pokeball.png"
               ]
@@ -43099,7 +43099,7 @@
           {
             "description": "旋轉 5 個寶可補給站或道館",
             "reward": {
-              "text": "Flabébé 遭遇",
+              "text": "花蓓蓓 遭遇",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/pokemon/669-o.png"
               ]
@@ -43442,7 +43442,7 @@
         "step_title": "Radar Tuning: Event Eevee2 / 5",
         "tasks": [
           {
-            "description": "捕捉 6 隻Eevee with a sun crown或moon crown",
+            "description": "捕捉 6 隻戴著太陽或月亮頭冠的伊布",
             "reward": {
               "text": "蔓莓果 * 3",
               "image_urls": [
@@ -50818,7 +50818,7 @@
           {
             "description": "捕捉萊希拉姆或捷克羅姆",
             "reward": {
-              "text": "Blaze Fusion Energy * 25",
+              "text": "火焰能量 * 25",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/blazefusionenergy.png"
               ]
@@ -50827,7 +50827,7 @@
           {
             "description": "捕捉酋雷姆",
             "reward": {
-              "text": "Blaze Fusion Energy * 25",
+              "text": "火焰能量 * 25",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/blazefusionenergy.png"
               ]
@@ -50864,7 +50864,7 @@
           {
             "description": "捕捉捷克羅姆或萊希拉姆",
             "reward": {
-              "text": "Volt Fusion Energy * 25",
+              "text": "電壓能量 * 25",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/voltfusionenergy.png"
               ]
@@ -50873,7 +50873,7 @@
           {
             "description": "捕捉酋雷姆",
             "reward": {
-              "text": "Volt Fusion Energy * 25",
+              "text": "電壓能量 * 25",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/voltfusionenergy.png"
               ]
@@ -55854,7 +55854,7 @@
             }
           },
           {
-            "description": "為 1 隻Jangmo拍攝照片",
+            "description": "為 1 隻心鱗寶拍攝照片",
             "reward": {
               "text": "晃晃斑 遭遇",
               "image_urls": [
@@ -56971,7 +56971,7 @@
             "image_url": "https://www.serebii.net/pokemongo/items/ultraball.png"
           },
           {
-            "text": "Flabébé 遭遇",
+            "text": "花蓓蓓 遭遇",
             "image_url": "https://www.serebii.net/pokemongo/pokemon/669-o.png"
           },
           {
@@ -59132,7 +59132,7 @@
         "step_title": "3 / 5",
         "tasks": [
           {
-            "description": "捕捉 3 隻UnownHatch",
+            "description": "捕捉 3 隻未知圖騰(孵化3顆蛋)",
             "reward": {
               "text": "星星碎片 * 1",
               "image_urls": [
@@ -60958,7 +60958,7 @@
           {
             "description": "投出 40 次 Nice 曲球",
             "reward": {
-              "text": "Origin 帝牙盧卡 貼圖 * 5",
+              "text": "起源帝牙盧卡 貼圖 * 5",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/origindialgasticker.png"
               ]
@@ -60967,7 +60967,7 @@
           {
             "description": "投出 40 次 Great 曲球",
             "reward": {
-              "text": "Origin 帕路奇亞 貼圖 * 5",
+              "text": "起源帕路奇亞 貼圖 * 5",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/originpalkiasticker.png"
               ]
@@ -60976,7 +60976,7 @@
           {
             "description": "投出 40 次 Excellent 曲球",
             "reward": {
-              "text": "Origin 騎拉帝納 貼圖 * 5",
+              "text": "起源騎拉帝納 貼圖 * 5",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/origingiratinasticker.png"
               ]
@@ -62240,7 +62240,7 @@
           {
             "description": "投出 20 次 Nice 曲球",
             "reward": {
-              "text": "Origin 帝牙盧卡 貼圖 * 5",
+              "text": "起源帝牙盧卡 貼圖 * 5",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/origindialgasticker.png"
               ]
@@ -62249,7 +62249,7 @@
           {
             "description": "投出 20 次 Great 曲球",
             "reward": {
-              "text": "Origin 帕路奇亞 貼圖 * 5",
+              "text": "起源帕路奇亞 貼圖 * 5",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/originpalkiasticker.png"
               ]
@@ -62258,7 +62258,7 @@
           {
             "description": "投出 20 次 Excellent 曲球",
             "reward": {
-              "text": "Origin 騎拉帝納 貼圖 * 5",
+              "text": "起源騎拉帝納 貼圖 * 5",
               "image_urls": [
                 "https://www.serebii.net/pokemongo/items/origingiratinasticker.png"
               ]
