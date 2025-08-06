@@ -151,7 +151,6 @@
     max-height: 0;
     overflow: hidden;
     background-color: rgba(248, 249, 250, 0.7);
-    transition: max-height 0.3s ease-in-out; 
 }
 
 #special-research-app .research-content.show {

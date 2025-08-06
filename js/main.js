@@ -5,7 +5,7 @@ import { initializeResearchApp } from './research.js';
 import { initializeEggsApp } from './eggs.js';
 import { initializeLevelUpApp } from './level-up.js';
 import { initializeSearchFiltersApp } from './search-filters.js';
-import { initializeSpecialResearchApp, prefetchSpecialResearchData } from './special-research.js';
+import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -157,9 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    setTimeout(() => {
-        prefetchSpecialResearchData();
-    }, 1000); // 延遲 1 秒，可以根據體感調整
 
 });
 
