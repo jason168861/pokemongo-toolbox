@@ -6,7 +6,30 @@ export function initializeSpecialResearchApp() {
     const searchInput = document.getElementById('special-search-input');
     const includeAllCheckbox = document.getElementById('search-include-all');
     const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
+    function reorderAndRenderCards() {
+        // 核心排序邏輯：
+        // 1. isPinned 為 true 的排在前面
+        // 2. 如果 isPinned 狀態相同，則依照原有的發布日期排序
+        allResearches.sort((a, b) => {
+            if (a.isPinned !== b.isPinned) {
+                return a.isPinned ? -1 : 1;
+            }
+            return new Date(b.release_date) - new Date(a.release_date);
+        });
 
+        const fragment = document.createDocumentFragment();
+        // 根據排序後的新順序，將 DOM 元素重新插入到 fragment 中
+        allResearches.forEach(research => {
+            // 透過 data-id 找到對應的 DOM 元素
+            const cardElement = container.querySelector(`.research-card[data-id="${research.title}"]`);
+            if (cardElement) {
+                fragment.appendChild(cardElement);
+            }
+        });
+
+        // 最後一次性地將排序好的所有卡片重新加回容器，實現畫面上的重新排序
+        container.appendChild(fragment);
+    }
     // Debounce 函式保持不變
     function debounce(func, delay) {
         let timeout;
@@ -32,44 +55,70 @@ export function initializeSpecialResearchApp() {
     }
 
     // 搜尋與過濾邏輯保持不變
-    function filterAndRender() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        const searchInside = includeAllCheckbox.checked;
-        let hasResults = false;
-        const allCards = container.querySelectorAll('.research-card');
+function filterAndRender() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const searchInside = includeAllCheckbox.checked;
+    const allCardElements = container.querySelectorAll('.research-card');
+    const noResultsMessage = container.querySelector('.no-results');
+    let hasResults = false;
 
-        allCards.forEach(card => {
-            const research = allResearches[card.dataset.index];
-            let isMatch = false;
+    // 步驟 1: 先無條件隱藏所有的任務卡片
+    allCardElements.forEach(card => {
+        card.style.display = 'none';
+    });
 
-            if (!searchTerm) {
-                isMatch = true;
-            } else {
-                const lowerCaseTitle = research.title.toLowerCase();
-                if (lowerCaseTitle.includes(searchTerm)) {
-                    isMatch = true;
-                } else if (searchInside) {
-                    isMatch = research.steps.some(step => 
-                        step.tasks.some(task =>
-                            task.description.toLowerCase().includes(searchTerm) ||
-                            (task.reward.text && task.reward.text.toLowerCase().includes(searchTerm))
-                        ) || (step.total_rewards && step.total_rewards.some(reward =>
-                            reward.text && reward.text.toLowerCase().includes(searchTerm)
-                        ))
-                    );
-                }
-            }
-            
-            card.style.display = isMatch ? 'block' : 'none';
-            if (isMatch) hasResults = true;
+    // 如果沒有搜尋關鍵字，則顯示全部並結束函式
+    if (!searchTerm) {
+        allCardElements.forEach(card => {
+            card.style.display = 'block';
         });
-
-        const noResultsMessage = container.querySelector('.no-results');
         if (noResultsMessage) {
-            noResultsMessage.style.display = hasResults ? 'none' : 'block';
+            noResultsMessage.style.display = 'none';
         }
+        return; // 提前結束
     }
-    
+
+    // 步驟 2: 遍歷資料，找出符合條件的項目
+    allResearches.forEach(research => {
+        // 安全檢查：確保 research 和 title 存在
+        if (!research || !research.title) return;
+
+        let isMatch = false;
+        const lowerCaseTitle = research.title.toLowerCase();
+
+        // 檢查標題是否符合
+        if (lowerCaseTitle.includes(searchTerm)) {
+            isMatch = true;
+        } 
+        // 如果勾選了進階搜尋，則檢查任務和獎勵內容
+        else if (searchInside) {
+            isMatch = research.steps.some(step =>
+                (step.tasks && step.tasks.some(task =>
+                    (task.description && task.description.toLowerCase().includes(searchTerm)) ||
+                    (task.reward && task.reward.text && task.reward.text.toLowerCase().includes(searchTerm))
+                )) ||
+                (step.total_rewards && step.total_rewards.some(reward =>
+                    (reward.text && reward.text.toLowerCase().includes(searchTerm))
+                ))
+            );
+        }
+
+        // 步驟 3: 如果符合條件，就去 DOM 中找到對應的卡片並將它顯示出來
+        if (isMatch) {
+            hasResults = true;
+            const safeTitle = CSS.escape(research.title);
+            const cardToShow = container.querySelector(`.research-card[data-id="${safeTitle}"]`);
+            if (cardToShow) {
+                cardToShow.style.display = 'block';
+            }
+        }
+    });
+
+    // 步驟 4: 根據最終是否有結果，來決定是否顯示「找不到結果」的訊息
+    if (noResultsMessage) {
+        noResultsMessage.style.display = hasResults ? 'none' : 'block';
+    }
+}
     // ================================================================
     // 【優化核心】 1. 修改 generateResearchCards
     // 現在只產生卡片的「外殼」和「標題」，內容是空的。
@@ -85,29 +134,31 @@ export function initializeSpecialResearchApp() {
         researches.forEach((research, index) => {
             const card = document.createElement('div');
             card.className = 'research-card';
-            card.dataset.index = index; // 儲存資料索引，非常重要！
+            card.dataset.id = research.title; 
 
             // 只產生標題和一個空的內容容器
-        card.innerHTML = `
-            <div class="research-title">
-                <div class="research-title-block">
-                    <span class="research-title-text">${research.title}</span>
-                    <span class="research-date">發布日期: ${research.release_date || 'N/A'}</span>
+            card.innerHTML = `
+                <div class="research-title">
+                    <div class="research-title-block">
+                        <button class="pin-btn" aria-label="置頂/取消置頂">📌</button>
+                        <span class="research-title-text">${research.title}</span>
+                    </div>
+                    <div class="title-right-controls">
+                        <span class="research-date">發布日期: ${research.release_date || 'N/A'}</span>
+                        <span class="icon">+</span>
+                    </div>
                 </div>
-                <span class="icon">+</span>
-            </div>
             
-            <div class="toggle-all-steps-container">
-                <button class="toggle-all-steps-btn" data-state="collapsed" style="display: none;">
-                    <span class="btn-icon">▼</span>
-                    <span class="btn-text">全部展開</span>
-                </button>
-            </div>
-            <div class="research-content">
+                <div class="toggle-all-steps-container">
+                    <button class="toggle-all-steps-btn" data-state="collapsed" style="display: none;">
+                        <span class="btn-icon">▼</span>
+                        <span class="btn-text">全部展開</span>
+                    </button>
                 </div>
-        `;
-        fragment.appendChild(card);
-    });
+                <div class="research-content"></div>
+            `;
+            fragment.appendChild(card);
+        });
 
         const noResultsDiv = document.createElement('div');
         noResultsDiv.className = 'no-results';
@@ -116,7 +167,7 @@ export function initializeSpecialResearchApp() {
         fragment.appendChild(noResultsDiv);
         
         container.appendChild(fragment);
-        addAccordionLogic(); // 綁定點擊事件
+        addGlobalClickListener();
     }
 
     // ================================================================
@@ -176,71 +227,108 @@ export function initializeSpecialResearchApp() {
     // 【優化核心】 3. 大幅修改 addAccordionLogic
     // 現在它會在第一次點擊時才產生內容。
     // ================================================================
-    function addAccordionLogic() {
-        const titles = document.querySelectorAll('#special-research-app .research-title');
+function addGlobalClickListener() {
+        container.addEventListener('click', (event) => {
+            const target = event.target;
+            
+            // --- 1. 處理【關卡】點擊 (僅在手機版寬度生效) ---
+            const stepHeader = target.closest('.step-header');
+            if (stepHeader && window.innerWidth < 768) {
+                const stepContent = stepHeader.nextElementSibling;
+                const researchContent = stepHeader.closest('.research-content');
 
-        titles.forEach(title => {
-            title.addEventListener('click', () => {
+                stepHeader.classList.toggle('active');
+                
+                if (stepHeader.classList.contains('active')) {
+                    const contentScrollHeight = stepContent.scrollHeight;
+                    stepContent.style.maxHeight = contentScrollHeight + "px";
+                    if (researchContent) {
+                        researchContent.style.maxHeight = (researchContent.scrollHeight + contentScrollHeight + 50) + "px";
+                    }
+                } else {
+                    const contentScrollHeight = stepContent.scrollHeight;
+                    stepContent.style.maxHeight = null;
+                    if (researchContent) {
+                       researchContent.style.maxHeight = (researchContent.scrollHeight - contentScrollHeight + 50) + "px";
+                    }
+                }
+                return;
+            }
+
+            // --- 2. 處理【置頂按鈕】點擊 ---
+            if (target.closest('.pin-btn')) {
+                event.stopPropagation();
+                const card = target.closest('.research-card');
+                const researchId = card.dataset.id;
+                const researchData = allResearches.find(r => r.title === researchId);
+
+                if (researchData) {
+                    researchData.isPinned = !researchData.isPinned;
+                    card.classList.toggle('is-pinned', researchData.isPinned);
+                    reorderAndRenderCards();
+                }
+                return;
+            }
+
+            // --- 3. 處理【卡片標題】點擊 (展開/收合整個調查) ---
+            const title = target.closest('.research-title');
+            if (title) {
                 const card = title.closest('.research-card');
                 const content = card.querySelector('.research-content');
                 const toggleAllBtn = card.querySelector('.toggle-all-steps-btn');
-
-                // 檢查是否為第一次點擊 (如果內容尚未被渲染)
+                
                 if (!card.dataset.detailsRendered) {
-                    const researchIndex = parseInt(card.dataset.index, 10);
-                    const researchData = allResearches[researchIndex];
+                    const researchId = card.dataset.id;
+                    const researchData = allResearches.find(r => r.title === researchId);
                     
-                    // 產生詳細內容的 HTML 並填入
-                    content.innerHTML = generateDetailsHtml(researchData);
-                    
-                    // 標記為已渲染，避免重複產生
-                    card.dataset.detailsRendered = 'true';
-                    addStepAccordionLogic(content); 
-                    toggleAllBtn.addEventListener('click', () => {
-                    const currentState = toggleAllBtn.dataset.state;
-                    const allStepHeaders = content.querySelectorAll('.step-header');
-                    const allStepContents = content.querySelectorAll('.step-content');
-                    const btnText = toggleAllBtn.querySelector('.btn-text');
+                    if (researchData) {
+                        content.innerHTML = generateDetailsHtml(researchData);
+                        card.dataset.detailsRendered = 'true';
+                        
+                        // ▼▼▼【核心修改】修正「全部展開/收合」按鈕的邏輯 ▼▼▼
+                        toggleAllBtn.addEventListener('click', () => {
+                            const currentState = toggleAllBtn.dataset.state;
+                            const allStepHeaders = content.querySelectorAll('.step-header');
+                            const allStepContents = content.querySelectorAll('.step-content');
+                            const btnText = toggleAllBtn.querySelector('.btn-text');
 
-                    if (currentState === 'collapsed') {
-                        // --- 展開所有 ---
-                        allStepHeaders.forEach(header => header.classList.add('active'));
-                        allStepContents.forEach(stepContent => {
-                            stepContent.style.maxHeight = stepContent.scrollHeight + "px";
+                            if (currentState === 'collapsed') {
+                                // 直接操作所有關卡的樣式，而不是模擬點擊
+                                allStepHeaders.forEach(header => header.classList.add('active'));
+                                allStepContents.forEach(stepContent => {
+                                    stepContent.style.maxHeight = stepContent.scrollHeight + "px";
+                                });
+                                btnText.textContent = '全部收合';
+                                toggleAllBtn.dataset.state = 'expanded';
+                            } else {
+                                allStepHeaders.forEach(header => header.classList.remove('active'));
+                                allStepContents.forEach(stepContent => {
+                                    stepContent.style.maxHeight = null;
+                                });
+                                btnText.textContent = '全部展開';
+                                toggleAllBtn.dataset.state = 'collapsed';
+                            }
+                            
+                            // 延遲一小段時間後，再重新計算並設定父容器的總高度
+                            setTimeout(() => {
+                                if (content.classList.contains('show')) {
+                                   content.style.maxHeight = content.scrollHeight + 50 + "px";
+                                }
+                            }, 300); // 300毫秒的延遲足以應對CSS動畫
                         });
-                        btnText.textContent = '全部收合';
-                        toggleAllBtn.dataset.state = 'expanded';
-                    } else {
-                        // --- 收合所有 ---
-                        allStepHeaders.forEach(header => header.classList.remove('active'));
-                        allStepContents.forEach(stepContent => {
-                            stepContent.style.maxHeight = null;
-                        });
-                        btnText.textContent = '全部展開';
-                        toggleAllBtn.dataset.state = 'collapsed';
+                        // ▲▲▲ 修改結束 ▲▲▲
                     }
-
-                    // 【重要】重新計算父容器的高度
-                    setTimeout(() => {
-                        if (content.classList.contains('show')) {
-                           content.style.maxHeight = content.scrollHeight + 50 + "px";
-                        }
-                    }, 300);
-                });
                 }
-
-                // --- 以下是原本的展開/收合邏輯 ---
+                
                 const isActive = title.classList.contains('active');
                 title.classList.toggle('active', !isActive);
                 
                 if (!isActive) {
                     content.classList.add('show');
                     if (window.innerWidth < 768) {
-                    toggleAllBtn.style.display = 'inline-flex';
+                        toggleAllBtn.style.display = 'inline-flex';
                     }
                     content.style.maxHeight = content.scrollHeight + 50 + "px";
-
-                    // 觸發圖片懶加載
                     const imagesToLoad = content.querySelectorAll('img.lazy-load');
                     imagesToLoad.forEach(img => {
                         if (img.dataset.src) {
@@ -249,90 +337,43 @@ export function initializeSpecialResearchApp() {
                            img.onload = () => { img.style.opacity = '1'; };
                         }
                     });
-
                 } else {
                     content.style.maxHeight = null;
                     content.classList.remove('show');
-                    toggleAllBtn.style.display = 'none'; // 【新增】收合時隱藏按鈕
+                    toggleAllBtn.style.display = 'none';
                 }
-                setTimeout(() => {
-               if (content.classList.contains('show')) {
-                  content.style.maxHeight = content.scrollHeight + 50 + "px";
-               }
-            }, 10); // 這裡用一個極短的延遲即可
-            });
+                 setTimeout(() => {
+                   if (content.classList.contains('show')) {
+                      content.style.maxHeight = content.scrollHeight + 50 + "px";
+                   }
+                }, 10);
+            }
         });
     }
-function addStepAccordionLogic(container) {
-    // 只在手機寬度下啟用此功能
-    if (window.innerWidth >= 768) return;
 
-    const stepHeaders = container.querySelectorAll('.step-header');
-    
-    stepHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const step = header.closest('.step');
-            const content = step.querySelector('.step-content');
-            const researchContent = container; // 外層的 .research-content
-
-            header.classList.toggle('active');
-            
-            if (header.classList.contains('active')) {
-                // 當要展開時
-                const contentScrollHeight = content.scrollHeight;
-                const researchContentScrollHeight = researchContent.scrollHeight;
-                
-                // 1. 先設定子項目的 maxHeight
-                content.style.maxHeight = contentScrollHeight + "px";
-                
-                // 2.【核心】直接計算並設定父項目的「最終」maxHeight
-                //    等於父項目當前的高度 + 即將展開的子項目的高度
-                researchContent.style.maxHeight = (researchContentScrollHeight + contentScrollHeight + 50) + "px";
-
-            } else {
-                // 當要收合時
-                const contentScrollHeight = content.scrollHeight;
-                const researchContentScrollHeight = researchContent.scrollHeight;
-
-                // 1. 先收合子項目
-                content.style.maxHeight = null;
-
-                // 2.【核心】直接計算並設定父項目的「最終」maxHeight
-                //    等於父項目當前的高度 - 即將收合的子項目的高度
-                researchContent.style.maxHeight = (researchContentScrollHeight - contentScrollHeight + 50) + "px";
-            }
-
-        });
-    });
-}
     // Fetch 資料的主流程保持不變
-    fetch('data/special_research.json')
+fetch('data/special_research.json')
         .then(response => {
             if (!response.ok) throw new Error('無法載入 JSON 檔案');
             return response.json();
         })
         .then(data => {
-            allResearches = data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+            // 【修改】為每筆資料加上 isPinned 屬性
+            allResearches = data
+                .sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
+                .map(research => ({ ...research, isPinned: false })); // 預設都是未置頂
+
             generateResearchCards(allResearches);
             includeAllCheckbox.addEventListener('change', debounce(filterAndRender, 200));
             searchInput.addEventListener('input', debounce(filterAndRender, 300));
             searchInput.addEventListener('input', () => {
-                // 如果 input 內有值，就顯示按鈕；否則隱藏
                 clearBtn.style.display = searchInput.value ? 'block' : 'none';
             });
             window.addEventListener('resize', debounce(handleResize, 200));
-            // 【新增】叉叉按鈕的點擊事件
             clearBtn.addEventListener('click', () => {
-                // 1. 清空搜尋框
                 searchInput.value = '';
-            
-                // 2. 隱藏叉叉按鈕
                 clearBtn.style.display = 'none';
-            
-                // 3. 觸發一次搜尋，讓列表恢復原狀
                 filterAndRender();
-            
-                // 4. (可選) 讓使用者可以繼續輸入
                 searchInput.focus();
             });
         })
