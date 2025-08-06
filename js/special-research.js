@@ -38,21 +38,82 @@ export function initializeSpecialResearchApp() {
             timeout = setTimeout(() => func.apply(this, args), delay);
         };
     }
-        function handleResize() {
-        const allOpenCards = container.querySelectorAll('.research-card .research-content.show');
-        allOpenCards.forEach(content => {
+    function syncToggleButtonState(card) {
+    if (!card) return; // 安全檢查
+
+    const toggleAllBtn = card.querySelector('.toggle-all-steps-btn');
+    const btnText = card.querySelector('.toggle-all-steps-btn .btn-text');
+
+    // 再次安全檢查，確保按鈕和文字元素都存在
+    if (!toggleAllBtn || !btnText) {
+        return;
+    }
+
+    // 獲取此卡片中所有的關卡標題，以及已展開的關卡標題
+    const allStepHeaders = card.querySelectorAll('.step-header');
+    const activeStepHeaders = card.querySelectorAll('.step-header.active');
+
+    // 如果沒有任何關卡，則不執行任何操作
+    if (allStepHeaders.length === 0) {
+        return;
+    }
+
+    // 核心邏輯：如果展開的數量等於總數，代表全部已展開
+    if (activeStepHeaders.length === allStepHeaders.length) {
+        toggleAllBtn.dataset.state = 'expanded';
+        btnText.textContent = '全部收合';
+    } else {
+        // 否則 (全部收合、或部分展開)，都將按鈕狀態設為可展開
+        toggleAllBtn.dataset.state = 'collapsed';
+        btnText.textContent = '全部展開';
+    }
+}
+function handleResize() {
+    const allOpenCards = container.querySelectorAll('.research-card .research-content.show');
+    allOpenCards.forEach(content => {
+        // 這段是為了確保展開的卡片在視窗大小改變時高度能自適應，需要保留
+        if (content.classList.contains('show')) {
             content.style.maxHeight = content.scrollHeight + 50 + 'px';
-            const card = content.closest('.research-card');
-            const toggleAllBtn = card.querySelector('.toggle-all-steps-btn');
-            if (toggleAllBtn) {
-                 if (window.innerWidth < 768) {
-                    toggleAllBtn.style.display = 'inline-flex';
-                } else {
-                    toggleAllBtn.style.display = 'none';
-                }
+        }
+        
+        const card = content.closest('.research-card');
+        const toggleAllBtn = card.querySelector('.toggle-all-steps-btn');
+        if (toggleAllBtn) {
+             if (window.innerWidth < 768) {
+                toggleAllBtn.style.display = 'inline-flex';
+            } else {
+                toggleAllBtn.style.display = 'none';
+            }
+        }
+    });
+
+    // 當視窗寬度大於等於 768px (進入電腦版)，執行狀態重設
+    if (window.innerWidth >= 768) {
+        // 找到所有在手機上被展開的關卡標題和內容
+        const allActiveStepHeaders = container.querySelectorAll('.step-header.active');
+        const allStepContentsWithStyle = container.querySelectorAll('.step-content[style*="max-height"]');
+
+        // 1. 移除標題的 active 狀態
+        allActiveStepHeaders.forEach(header => {
+            header.classList.remove('active');
+        });
+
+        // 2. 移除內容區塊上殘留的 max-height 行內樣式
+        allStepContentsWithStyle.forEach(content => {
+            content.style.maxHeight = null;
+        });
+
+        // 3. 【新增的關鍵修正】重設「全部展開/收合」按鈕的狀態與文字
+        const allToggleButtons = container.querySelectorAll('.toggle-all-steps-btn');
+        allToggleButtons.forEach(btn => {
+            btn.dataset.state = 'collapsed';
+            const btnText = btn.querySelector('.btn-text');
+            if (btnText) {
+                btnText.textContent = '全部展開';
             }
         });
     }
+}
 
     // 搜尋與過濾邏輯保持不變
 function filterAndRender() {
@@ -252,6 +313,7 @@ function addGlobalClickListener() {
                        researchContent.style.maxHeight = (researchContent.scrollHeight - contentScrollHeight + 50) + "px";
                     }
                 }
+                syncToggleButtonState(stepHeader.closest('.research-card'));
                 return;
             }
 
