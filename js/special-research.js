@@ -6,30 +6,7 @@ export function initializeSpecialResearchApp() {
     const searchInput = document.getElementById('special-search-input');
     const includeAllCheckbox = document.getElementById('search-include-all');
     const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
-    function reorderAndRenderCards() {
-        // 核心排序邏輯：
-        // 1. isPinned 為 true 的排在前面
-        // 2. 如果 isPinned 狀態相同，則依照原有的發布日期排序
-        allResearches.sort((a, b) => {
-            if (a.isPinned !== b.isPinned) {
-                return a.isPinned ? -1 : 1;
-            }
-            return new Date(b.release_date) - new Date(a.release_date);
-        });
 
-        const fragment = document.createDocumentFragment();
-        // 根據排序後的新順序，將 DOM 元素重新插入到 fragment 中
-        allResearches.forEach(research => {
-            // 透過 data-id 找到對應的 DOM 元素
-            const cardElement = container.querySelector(`.research-card[data-id="${research.title}"]`);
-            if (cardElement) {
-                fragment.appendChild(cardElement);
-            }
-        });
-
-        // 最後一次性地將排序好的所有卡片重新加回容器，實現畫面上的重新排序
-        container.appendChild(fragment);
-    }
     // Debounce 函式保持不變
     function debounce(func, delay) {
         let timeout;
@@ -115,71 +92,7 @@ function handleResize() {
     }
 }
 
-    // 搜尋與過濾邏輯保持不變
-function filterAndRender() {
-    const searchTerm = searchInput.value.toLowerCase().trim();
-    const searchInside = includeAllCheckbox.checked;
-    const allCardElements = container.querySelectorAll('.research-card');
-    const noResultsMessage = container.querySelector('.no-results');
-    let hasResults = false;
 
-    // 步驟 1: 先無條件隱藏所有的任務卡片
-    allCardElements.forEach(card => {
-        card.style.display = 'none';
-    });
-
-    // 如果沒有搜尋關鍵字，則顯示全部並結束函式
-    if (!searchTerm) {
-        allCardElements.forEach(card => {
-            card.style.display = 'block';
-        });
-        if (noResultsMessage) {
-            noResultsMessage.style.display = 'none';
-        }
-        return; // 提前結束
-    }
-
-    // 步驟 2: 遍歷資料，找出符合條件的項目
-    allResearches.forEach(research => {
-        // 安全檢查：確保 research 和 title 存在
-        if (!research || !research.title) return;
-
-        let isMatch = false;
-        const lowerCaseTitle = research.title.toLowerCase();
-
-        // 檢查標題是否符合
-        if (lowerCaseTitle.includes(searchTerm)) {
-            isMatch = true;
-        } 
-        // 如果勾選了進階搜尋，則檢查任務和獎勵內容
-        else if (searchInside) {
-            isMatch = research.steps.some(step =>
-                (step.tasks && step.tasks.some(task =>
-                    (task.description && task.description.toLowerCase().includes(searchTerm)) ||
-                    (task.reward && task.reward.text && task.reward.text.toLowerCase().includes(searchTerm))
-                )) ||
-                (step.total_rewards && step.total_rewards.some(reward =>
-                    (reward.text && reward.text.toLowerCase().includes(searchTerm))
-                ))
-            );
-        }
-
-        // 步驟 3: 如果符合條件，就去 DOM 中找到對應的卡片並將它顯示出來
-        if (isMatch) {
-            hasResults = true;
-            const safeTitle = CSS.escape(research.title);
-            const cardToShow = container.querySelector(`.research-card[data-id="${safeTitle}"]`);
-            if (cardToShow) {
-                cardToShow.style.display = 'block';
-            }
-        }
-    });
-
-    // 步驟 4: 根據最終是否有結果，來決定是否顯示「找不到結果」的訊息
-    if (noResultsMessage) {
-        noResultsMessage.style.display = hasResults ? 'none' : 'block';
-    }
-}
     // ================================================================
     // 【優化核心】 1. 修改 generateResearchCards
     // 現在只產生卡片的「外殼」和「標題」，內容是空的。
@@ -261,7 +174,28 @@ function filterAndRender() {
             `;
         }).join('');
     }
+    window.applyUserPreferences = function(userData) {
+        if (userData && userData.pinnedResearches) {
+            const pinnedTitles = userData.pinnedResearches;
+            
+            // 更新 allResearches 陣列中的 isPinned 狀態
+            allResearches.forEach(research => {
+                research.isPinned = pinnedTitles.includes(research.title);
+            });
 
+            // 更新卡片的 class
+            const allCards = container.querySelectorAll('.research-card');
+            allCards.forEach(card => {
+                const title = card.dataset.id;
+                const isPinned = pinnedTitles.includes(title);
+                card.classList.toggle('is-pinned', isPinned);
+            });
+
+            // 重新排序並渲染畫面
+            reorderAndRenderCards();
+            console.log("已成功套用使用者置頂偏好設定。");
+        }
+    }
 
     // generateListHtml 函式保持不變
     function generateListHtml(items, type) {
@@ -327,7 +261,15 @@ function addGlobalClickListener() {
                 if (researchData) {
                     researchData.isPinned = !researchData.isPinned;
                     card.classList.toggle('is-pinned', researchData.isPinned);
-                    reorderAndRenderCards();
+                    reorderAndRenderCards();                    const currentStateToSave = {
+                        pinnedResearches: allResearches
+                            .filter(r => r.isPinned)
+                            .map(r => r.title)
+                    };
+                    // 呼叫 main.js 中定義的全域函式
+                    if (window.saveAppState) {
+                        window.saveAppState(currentStateToSave);
+                    }
                 }
                 return;
             }
@@ -443,4 +385,92 @@ fetch('data/special_research.json')
             container.innerHTML = `<div class="no-results" style="color:red;">${error.message}</div>`;
             console.error('讀取資料時發生錯誤:', error);
         });
+    function reorderAndRenderCards() {
+        // 核心排序邏輯：
+        // 1. isPinned 為 true 的排在前面
+        // 2. 如果 isPinned 狀態相同，則依照原有的發布日期排序
+        allResearches.sort((a, b) => {
+            if (a.isPinned !== b.isPinned) {
+                return a.isPinned ? -1 : 1;
+            }
+            return new Date(b.release_date) - new Date(a.release_date);
+        });
+
+        const fragment = document.createDocumentFragment();
+        // 根據排序後的新順序，將 DOM 元素重新插入到 fragment 中
+        allResearches.forEach(research => {
+            // 透過 data-id 找到對應的 DOM 元素
+            const cardElement = container.querySelector(`.research-card[data-id="${research.title}"]`);
+            if (cardElement) {
+                fragment.appendChild(cardElement);
+            }
+        });
+
+        // 最後一次性地將排序好的所有卡片重新加回容器，實現畫面上的重新排序
+        container.appendChild(fragment);
+    }
+    function filterAndRender() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const searchInside = includeAllCheckbox.checked;
+    const allCardElements = container.querySelectorAll('.research-card');
+    const noResultsMessage = container.querySelector('.no-results');
+    let hasResults = false;
+
+    // 步驟 1: 先無條件隱藏所有的任務卡片
+    allCardElements.forEach(card => {
+        card.style.display = 'none';
+    });
+
+    // 如果沒有搜尋關鍵字，則顯示全部並結束函式
+    if (!searchTerm) {
+        allCardElements.forEach(card => {
+            card.style.display = 'block';
+        });
+        if (noResultsMessage) {
+            noResultsMessage.style.display = 'none';
+        }
+        return; // 提前結束
+    }
+
+    // 步驟 2: 遍歷資料，找出符合條件的項目
+    allResearches.forEach(research => {
+        // 安全檢查：確保 research 和 title 存在
+        if (!research || !research.title) return;
+
+        let isMatch = false;
+        const lowerCaseTitle = research.title.toLowerCase();
+
+        // 檢查標題是否符合
+        if (lowerCaseTitle.includes(searchTerm)) {
+            isMatch = true;
+        } 
+        // 如果勾選了進階搜尋，則檢查任務和獎勵內容
+        else if (searchInside) {
+            isMatch = research.steps.some(step =>
+                (step.tasks && step.tasks.some(task =>
+                    (task.description && task.description.toLowerCase().includes(searchTerm)) ||
+                    (task.reward && task.reward.text && task.reward.text.toLowerCase().includes(searchTerm))
+                )) ||
+                (step.total_rewards && step.total_rewards.some(reward =>
+                    (reward.text && reward.text.toLowerCase().includes(searchTerm))
+                ))
+            );
+        }
+
+        // 步驟 3: 如果符合條件，就去 DOM 中找到對應的卡片並將它顯示出來
+        if (isMatch) {
+            hasResults = true;
+            const safeTitle = CSS.escape(research.title);
+            const cardToShow = container.querySelector(`.research-card[data-id="${safeTitle}"]`);
+            if (cardToShow) {
+                cardToShow.style.display = 'block';
+            }
+        }
+    });
+
+    // 步驟 4: 根據最終是否有結果，來決定是否顯示「找不到結果」的訊息
+    if (noResultsMessage) {
+        noResultsMessage.style.display = hasResults ? 'none' : 'block';
+    }
+}
 }

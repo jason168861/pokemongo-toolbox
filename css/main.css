@@ -397,3 +397,39 @@ body {
 .site-footer p {
     margin: 0.5em 0;
 }
+/* 加到 main.css 的結尾 */
+#auth-container {
+    margin-left: auto; /* 讓它盡量靠右 */
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+
+#login-btn, #logout-btn {
+    border: none;
+    background-color: #0075BE;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+#login-btn:hover, #logout-btn:hover {
+    background-color: #005a9e;
+}
+
+#user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
