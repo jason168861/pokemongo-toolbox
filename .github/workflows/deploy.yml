@@ -1,0 +1,47 @@
+# GitHub Actions 工作流程名稱
+name: Deploy to GitHub Pages
+
+# 觸發條件：當有程式碼推送到 main 分支時執行
+on:
+  push:
+    branches:
+      - main # 如果您的主要分支是 master，請改成 master
+
+# 工作流程執行的任務
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 虛擬機
+    permissions:
+      pages: write      # 給予寫入 GitHub Pages 的權限
+      id-token: write   # 給予身分驗證的權限
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # 步驟 1: 拉取您倉庫的程式碼
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 步驟 2: 從 Secret 建立 config.js 檔案
+      - name: Create config.js
+        run: |
+          # 建立 config.js 並將 Secret 內容寫入
+          # ${{ secrets.FIREBASE_CONFIG_JSON }} 會被替換成您剛剛設定的 Secret
+          echo "const firebaseConfig = ${{ secrets.FIREBASE_CONFIG_JSON }};" > config.js
+
+      # 步驟 3: 設定 GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 步驟 4: 將網站檔案打包成一個 artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 上傳整個資料夾的內容
+          path: '.'
+
+      # 步驟 5: 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
