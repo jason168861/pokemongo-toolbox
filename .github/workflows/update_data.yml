@@ -37,6 +37,10 @@ jobs:
         # 執行我們新的孵蛋資料爬蟲
         run: python scripts/scrape_eggs.py
       # ==========================================================
+      
+      - name: Run raids scraper
+        # 執行團體戰頭目資料爬蟲
+        run: python scripts/scrape_boss.py
 
       - name: Commit and push if there are changes
         run: |
