@@ -411,17 +411,59 @@ body {
 .user-avatar {
     width: 40px;
     height: 40px;
-    border-radius: 50%; /* 圓形頭像 */
-    vertical-align: middle; /* 確保與旁邊的登出按鈕對齊 */
-    border: 2px solid #fff; /* 可選：加上白色邊框增加質感 */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* 可選：加上細微陰影 */
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    cursor: pointer; /* 游標變為手指，提示可點擊 */
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
+.user-avatar:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+}
+
+/* 【修改】使用者資訊區塊改為相對定位，作為下拉選單的基準點 */
 #user-info {
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--text-secondary);
+    position: relative; 
+    line-height: 1;
+}
+
+/* 【新增】下拉式選單的容器樣式 */
+.user-menu-dropdown {
     display: none; /* 預設隱藏 */
-    line-height: 0; /* 【新增】讓 span 本身不佔高度，大小由圖片決定 */
+    position: absolute;
+    top: 120%; /* 定位在頭像正下方，並留出一點空隙 */
+    right: 0; /* 對齊頭像的右側 */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    min-width: 140px; /* 選單的最小寬度 */
+    z-index: 2002; /* 確保在最上層 */
+    overflow: hidden; /* 讓子元素的圓角也生效 */
+    border: 1px solid #ddd;
+    padding: 5px 0; /* 上下留白 */
+}
+
+/* 【新增】下拉選單項目的樣式 */
+.user-menu-dropdown a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background-color 0.1s ease;
+}
+
+/* 【新增】滑鼠移到選單項目上的效果 */
+.user-menu-dropdown a:hover {
+    background-color: #f0f2f5;
+    color: #1877f2;
+}
+
+/* 【新增】用來顯示選單的 class */
+.user-menu-dropdown.show {
+    display: block;
 }
 
 #auth-button {
