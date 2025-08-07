@@ -33,23 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     //【新增 4】: 登入函式
     const handleLogin = () => {
         signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log("登入成功:", result.user.displayName);
-                // 登入成功後 onAuthStateChanged 會自動處理後續
-            }).catch((error) => {
-                console.error("登入失敗:", error);
-                alert(`登入時發生錯誤: ${error.message}`);
-            });
     };
 
     //【新增 5】: 登出函式
     const handleLogout = () => {
-        signOut(auth).then(() => {
-            console.log("已登出");
-            // 登出成功後 onAuthStateChanged 會自動處理後續
-        }).catch((error) => {
-            console.error("登出失敗:", error);
-        });
+        signOut(auth)
     };
     window.addEventListener('click', (event) => {
         const userMenu = document.querySelector('.user-menu-dropdown');
@@ -126,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }   
             }
         } catch (error) {
-            console.error('❌ 讀取 Firebase 資料時發生錯誤:', error);
         }
     }
 
@@ -309,9 +296,6 @@ export async function saveDataForCurrentUser(path, data) {
             // console.log(`✅ 資料成功儲存至 Firebase!`);
         } catch (error) {
             // 【偵錯日誌 5】: 捕捉寫入時的錯誤
-            console.error(`❌ 寫入 Firebase 時發生嚴重錯誤:`, error);
         }
-    } else {
-        console.warn("使用者未登入，資料未儲存。");
-    }
+    } 
 }
