@@ -2,6 +2,7 @@ import requests
 import json
 import re
 import os
+import pytz
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from datetime import datetime
@@ -206,10 +207,13 @@ def scrape_raid_data():
     # --- 寫入檔案 ---
     if bosses:
         print("\n💾 正在將資料寫入檔案...")
+        taipei_tz = pytz.timezone('Asia/Taipei')
+        # ✨ 3. 取得當前 UTC 時間並轉換為台北時間
+        now_taipei = datetime.now(pytz.utc).astimezone(taipei_tz)
         try:
             # 寫入格式化的 JSON
             output_data = {
-            "lastUpdated": datetime.now().strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
+            "lastUpdated": now_taipei.strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
                 "bosses": bosses
             }
         

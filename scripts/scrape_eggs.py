@@ -1,6 +1,7 @@
 import requests
 import json
 import re
+import pytz
 from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -139,9 +140,12 @@ def scrape_egg_data():
                     all_pokemon_data.append(pokemon_info)
                 else:
                     print(f"  > 警告：跳過一筆不完整的資料 (名稱或圖片網址缺失)。")
+        taipei_tz = pytz.timezone('Asia/Taipei')
+        # ✨ 3. 取得當前 UTC 時間並轉換為台北時間
+        now_taipei = datetime.now(pytz.utc).astimezone(taipei_tz)
         output_data = {
             # 格式化日期為 "YYYY年M月D日"
-        "lastUpdated": datetime.now().strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
+        "lastUpdated": now_taipei.strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
             "pokemon": all_pokemon_data
         }
 
