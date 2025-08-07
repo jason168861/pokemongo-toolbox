@@ -188,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // initializeCpChecker();
     // cpAppInitialized = true;
    const nav = document.querySelector('.app-nav');
-    let lastScrollTop = 0;
 
     // 1. 定義一個函式來設定 CSS 變數
     function setNavHeight() {
@@ -196,27 +195,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.style.setProperty('--nav-height', `${navHeight}px`);
     }
 
-    // 2. 定義一個函式來處理滾動事件
-    function handleScroll() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        if (scrollTop > lastScrollTop && scrollTop > nav.offsetHeight) {
-            // 向下滑動
-            nav.classList.add('app-nav--hidden');
-            document.body.classList.add('nav-is-hidden'); // 【新增】告訴 body 導覽列已隱藏
-        } else {
-            // 向上滑動
-            nav.classList.remove('app-nav--hidden');
-            document.body.classList.remove('nav-is-hidden'); // 【新增】告訴 body 導覽列已顯示
-        }
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    }
     // 3. 頁面載入時，立即執行一次高度計算
     setNavHeight();
 
     // 4. 為視窗加上事件監聽器
     window.addEventListener('resize', setNavHeight); // 當視窗大小改變時，重新計算高度
-    window.addEventListener('scroll', handleScroll); // 當滾動時，處理導覽列的顯示/隱藏
     window.addEventListener('touchstart', () => {
         // 只有當焦點在輸入框上時，才需要準備監聽後續的滑動
         if (document.activeElement && (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA")) {
