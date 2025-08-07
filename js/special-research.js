@@ -19,7 +19,7 @@ window.applyPinnedStateToUI = function(pinnedTitles) {
     });
 
     if (needsRender) {
-        console.log("🎨 正在套用釘選狀態並更新畫面...");
+        // console.log("🎨 正在套用釘選狀態並更新畫面...");
         allResearches.forEach(research => {
             const card = container.querySelector(`.research-card[data-id="${research.title}"]`);
             if (card) {
@@ -443,7 +443,7 @@ function saveCurrentPinnedState() {
         .map(r => r.title);
         
     // 【偵錯日誌 6】: 確認此函式被呼叫，並查看準備儲存的內容
-    console.log('📌 偵測到釘選狀態改變，準備呼叫儲存函式。內容:', pinnedTitles);
+    // console.log('📌 偵測到釘選狀態改變，準備呼叫儲存函式。內容:', pinnedTitles);
 
     saveDataForCurrentUser('specialResearch/pinned', pinnedTitles);
 }
@@ -482,7 +482,7 @@ fetch('data/special_research.json')
                 searchInput.focus();
             });            
             if (window.pendingPinnedTitles) {
-                console.log('💎 發現暫存的釘選資料，立即套用！');
+                // console.log('💎 發現暫存的釘選資料，立即套用！');
                 window.applyPinnedStateToUI(window.pendingPinnedTitles);
                 // 用完後清空，避免重複套用
                 delete window.pendingPinnedTitles; 

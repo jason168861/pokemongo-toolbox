@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     //【新增 7】: 讀取和清除資料的中央控制器
     async function loadUserData(userId) {
-        console.log(`正在為使用者 ${userId} 讀取資料...`);
+        // console.log(`正在為使用者 ${userId} 讀取資料...`);
         const pinnedResearchesPath = `users/${userId}/specialResearch/pinned`;
         const db = getDatabase();
 
@@ -86,15 +86,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const snapshot = await get(ref(db, pinnedResearchesPath));
             if (snapshot.exists()) {
                 const pinnedTitles = snapshot.val();
-                console.log('✅ 成功從 Firebase 讀取到資料，將其存入暫存區:', pinnedTitles);
+                // console.log('✅ 成功從 Firebase 讀取到資料，將其存入暫存區:', pinnedTitles);
                 
                 // 【修改】: 不再直接呼叫函式，而是將資料存到全域的暫存區
                 window.pendingPinnedTitles = pinnedTitles;
+                if (typeof window.applyPinnedStateToUI === 'function') {
+                    window.applyPinnedStateToUI(pinnedTitles);
+                }
+
 
             } else {
-                console.log('ℹ️ 在 Firebase 中找不到該使用者的釘選資料。');
+                // console.log('ℹ️ 在 Firebase 中找不到該使用者的釘選資料。');
                 // 【修改】: 同樣設定暫存區，確保是乾淨的狀態
                 window.pendingPinnedTitles = [];
+                if (typeof window.applyPinnedStateToUI === 'function') {
+                    window.applyPinnedStateToUI([]);
+                }   
             }
         } catch (error) {
             console.error('❌ 讀取 Firebase 資料時發生錯誤:', error);
@@ -102,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function clearUserData() {
-        console.log("使用者已登出，清除本地狀態和暫存區...");
+        // console.log("使用者已登出，清除本地狀態和暫存區...");
         // 【修改】: 清除暫存區
         window.pendingPinnedTitles = [];
         // 呼叫函式來更新畫面為登出狀態
@@ -272,12 +279,12 @@ export async function saveDataForCurrentUser(path, data) {
         const fullPath = `users/${userId}/${path}`;
         
         // 【偵錯日誌 3】: 檢查將要寫入的資料
-        console.log(`🔷 準備寫入 Firebase... 路徑: ${fullPath}`, '資料:', data);
+        // console.log(`🔷 準備寫入 Firebase... 路徑: ${fullPath}`, '資料:', data);
 
         try {
             await set(ref(db, fullPath), data);
             // 【偵錯日誌 4】: 確認寫入成功
-            console.log(`✅ 資料成功儲存至 Firebase!`);
+            // console.log(`✅ 資料成功儲存至 Firebase!`);
         } catch (error) {
             // 【偵錯日誌 5】: 捕捉寫入時的錯誤
             console.error(`❌ 寫入 Firebase 時發生嚴重錯誤:`, error);
