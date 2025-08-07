@@ -1,19 +1,29 @@
-# GitHub Actions 工作流程名稱
-name: Deploy to GitHub Pages
+# .github/workflows/deploy.yml
 
-# 觸發條件：當有程式碼推送到 main 分支時執行
+# 工作流程名稱
+name: Build and Deploy Site
+
+# 觸發條件
 on:
+  # 1. 當手動推送到 main 分支時 (例如您自己修改程式碼)
   push:
     branches:
-      - main # 如果您的主要分支是 master，請改成 master
+      - main
+  # 2. 當手動點擊執行時
+  workflow_dispatch:
+  # 3. 每日定時執行 (UTC 時間 2 點，即台北時間早上 10 點)
+  schedule:
+    - cron: '0 2 * * *'
 
 # 工作流程執行的任務
 jobs:
-  deploy:
-    runs-on: ubuntu-latest # 使用最新的 Ubuntu 虛擬機
+  build-and-deploy: # 將 job 名稱改得更貼切
+    runs-on: ubuntu-latest
     permissions:
-      pages: write      # 給予寫入 GitHub Pages 的權限
-      id-token: write   # 給予身分驗證的權限
+      contents: write   # ✨ 需要 "寫入" 權限來 commit 資料
+      pages: write      # 需要權限來部署到 Pages
+      id-token: write   # 需要權限來進行身分驗證
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -23,28 +33,61 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 步驟 2: 從 Secret 建立 config.js 檔案 (***這裡是修改過的地方***)
+      # 步驟 2: 設定 Python 環境
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # 步驟 3: 安裝 Python 套件
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # ==================== ✨ 新增的資料抓取區塊 ✨ ====================
+      - name: Run all scrapers to update data
+        run: |
+          python scripts/scrape_research.py
+          python scripts/scrape_eggs.py
+          python scripts/scrape_boss.py
+      # ================================================================
+
+      # 步驟 4: 從 Secret 建立 config.js 檔案
       - name: Create config.js
-        # 我們將 Secret 先存入一個環境變數，這種方法能安全地處理多行文字
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG_JSON }}
         run: |
-          # 然後再從環境變數中讀取內容並寫入檔案
           echo "const firebaseConfig = $FIREBASE_CONFIG;" > config.js
           echo "window.firebaseConfig = firebaseConfig;" >> config.js
 
-      # 步驟 3: 設定 GitHub Pages
+      # 步驟 5: 設定 GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # 步驟 4: 將網站檔案打包成一個 artifact
+      # 步驟 6: 將網站檔案 (包含剛抓到的新資料) 打包
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 上傳整個資料夾的內容
           path: '.'
 
-      # 步驟 5: 部署到 GitHub Pages
+      # 步驟 7: 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # ==================== ✨ 新增的資料回傳區塊 ✨ ====================
+      # 這是個好習慣：將抓到的新資料也 commit 回你的倉庫，讓原始碼保持最新
+      - name: Commit and push data changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          # 檢查是否有變更，如果有才 commit
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(data): Auto-update Pokémon GO data"
+            git push
+          else
+            echo "No data changes to commit."
+          fi
+      # ================================================================
