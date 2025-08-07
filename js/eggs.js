@@ -10,9 +10,17 @@ export function initializeEggsApp() {
             }
             return response.json();
         })
-        .then(allPokemon => {
+        .then(data => { // ✨ 1. 將變數名稱改為 data
+            // ✨ 2. 讀取更新日期並更新 HTML
+            const lastUpdatedDate = data.lastUpdated;
+            const dateElement = document.querySelector('#eggs-app .page-date');
+            if (dateElement) {
+                dateElement.textContent = `最後更新：${lastUpdatedDate}`;
+            }
+
+            // ✨ 3. 從 data.pokemon 取得寶可夢列表
+            const allPokemon = data.pokemon; 
             allPokemon.forEach(pokemon => {
-                // --- 【修改點】動態決定容器 ID ---
                 let containerId = `egg-list-${pokemon.eggDistance}km`;
                 
                 if (pokemon.source === 'adventure_sync') {
@@ -22,11 +30,10 @@ export function initializeEggsApp() {
                 }
                 
                 const container = document.getElementById(containerId);
-                // --- 修改結束 ---
 
                 if (!container) {
                     console.warn(`找不到 ID 為 ${containerId} 的容器，跳過寶可夢: ${pokemon.name}`);
-                    return; // 如果找不到對應的容器，就跳過此寶可夢
+                    return;
                 }
                 
                 const listItem = document.createElement('li');
@@ -46,5 +53,12 @@ export function initializeEggsApp() {
                 container.appendChild(listItem);
             });
         })
-        .catch(error => console.error('Error loading data.json:', error));
+        .catch(error => {
+            console.error('Error loading eggs.json:', error);
+            // 發生錯誤時，也可以更新 UI 提示使用者
+            const dateElement = document.querySelector('#eggs-app .page-date');
+            if (dateElement) {
+                dateElement.textContent = `資料載入失敗`;
+            }
+        });
 }

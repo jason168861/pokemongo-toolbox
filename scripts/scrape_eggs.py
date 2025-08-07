@@ -1,9 +1,11 @@
 import requests
 import json
 import re
+from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-
+import locale
+locale.setlocale(locale.LC_CTYPE, 'chinese')
 # ==================== 翻譯資料區塊 START ====================
 
 # 定義特殊形態的翻譯字典
@@ -137,10 +139,15 @@ def scrape_egg_data():
                     all_pokemon_data.append(pokemon_info)
                 else:
                     print(f"  > 警告：跳過一筆不完整的資料 (名稱或圖片網址缺失)。")
+        output_data = {
+            # 格式化日期為 "YYYY年M月D日"
+        "lastUpdated": datetime.now().strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
+            "pokemon": all_pokemon_data
+        }
 
         output_filename = "./data/eggs.json"
         with open(output_filename, "w", encoding="utf-8") as f:
-            json.dump(all_pokemon_data, f, indent=2, ensure_ascii=False)
+            json.dump(output_data, f, indent=2, ensure_ascii=False)
         
         print(f"\n✅ 成功！ 資料已儲存至 {output_filename}")
         print(f"共擷取到 {len(all_pokemon_data)} 筆寶可夢資料。")

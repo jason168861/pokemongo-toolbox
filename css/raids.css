@@ -1,0 +1,183 @@
+/* --- ================================ --- */
+/* --- 團體戰 (Raids) 樣式 --- */
+/* --- ================================ --- */
+
+#raids-app .page-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+#raids-app h1, #raids-app h2 {
+    font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+    color: #333;
+    border-bottom: 2px solid #e9ebee;
+    padding-bottom: 10px;
+    margin-top: 40px;
+}
+
+#raids-app h1 {
+    text-align: center;
+    border-bottom: none;
+}
+
+#raids-app hr {
+    border: 0;
+    border-top: 1px solid #dee2e6;
+    margin: 2rem 0;
+}
+
+.raid-tier-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.raid-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+}
+
+.raid-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.raid-card .shiny-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    z-index: 2;
+}
+
+.raid-card-header {
+    position: relative;
+    padding: 20px 20px 0 20px;
+    background: #f0f2f5;
+}
+
+.raid-pokemon-image-wrapper {
+    width: 100%;
+    height: 120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+/* 等級對應背景 */
+.raid-pokemon-image-wrapper.tier-1, .raid-pokemon-image-wrapper.tier-3 {
+    background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+}
+.raid-pokemon-image-wrapper.tier-5 {
+    background: linear-gradient(135deg, #ffc371 0%, #ff5f6d 100%);
+}
+.raid-pokemon-image-wrapper.tier-Mega {
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+}
+
+
+.raid-pokemon-image {
+    max-width: 120%;
+    max-height: 120%;
+    object-fit: contain;
+}
+
+.raid-card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.pokemon-name {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+    color: #1c1e21;
+}
+
+.pokemon-types {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.type-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.combat-power-section {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.cp-info {
+    text-align: center;
+}
+
+.cp-info span {
+    font-size: 0.9em;
+    color: #606770;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.cp-info p {
+    margin: 5px 0 0 0;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #1c1e21;
+}
+
+.cp-info.boosted p {
+    color: #4B96E1;
+}
+
+.weather-boost-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.boosted-weather-section {
+    margin-top: auto; /* 將此區塊推至卡片底部 */
+    font-size: 0.9em;
+    color: #606770;
+}
+
+.boosted-weather-section strong {
+    margin-right: 8px;
+}
+
+.weather-icons-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    vertical-align: middle;
+}
+
+.weather-icon {
+    width: 24px;
+    height: 24px;
+}

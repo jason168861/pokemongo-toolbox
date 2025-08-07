@@ -29,6 +29,7 @@ import { initializeCpChecker } from './cp-checker.js';
 import { initializeIdSelector } from './id-selector.js';
 import { initializeResearchApp } from './research.js';
 import { initializeEggsApp } from './eggs.js';
+import { initializeRaidsApp } from './raids.js'; // <-- 新增此行
 import { initializeLevelUpApp } from './level-up.js';
 import { initializeSearchFiltersApp } from './search-filters.js';
 import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
@@ -174,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let idAppInitialized = false;
     let researchAppInitialized = false;
     let eggsAppInitialized = false;
+    let raidsAppInitialized = false; // <-- 新增此行
     let levelUpAppInitialized = false; 
     let searchFiltersAppInitialized = false;
     let specialResearchAppInitialized = false;
@@ -203,6 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (targetAppId === 'eggs-app' && !eggsAppInitialized) {
                 initializeEggsApp();
                 eggsAppInitialized = true;
+            } else if (targetAppId === 'raids-app' && !raidsAppInitialized) { // <-- 新增此區塊
+                initializeRaidsApp();
+                raidsAppInitialized = true;
             } else if (targetAppId === 'level-up-app' && !levelUpAppInitialized) {
                 initializeLevelUpApp();
                 levelUpAppInitialized = true;
