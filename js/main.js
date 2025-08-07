@@ -1,5 +1,6 @@
 //【修改 1】: 從 firebase SDK 導入更多驗證相關的模組
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import { initializeApp } from "firebase/app";
+const app = initializeApp(firebaseConfig);
 import { getDatabase, ref, runTransaction, set, get } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 import { 
     getAuth, 
