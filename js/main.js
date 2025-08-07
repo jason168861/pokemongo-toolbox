@@ -81,36 +81,39 @@ document.addEventListener('DOMContentLoaded', () => {
     
     //【新增 7】: 讀取和清除資料的中央控制器
     async function loadUserData(userId) {
-        console.log(`正在為使用者 ${userId} 讀取資料...`); // 這是您已看到的一行
+        console.log(`正在為使用者 ${userId} 讀取資料...`);
         const pinnedResearchesPath = `users/${userId}/specialResearch/pinned`;
-        const db = getDatabase(); // 確保 db 變數可用
+        const db = getDatabase();
 
         try {
             const snapshot = await get(ref(db, pinnedResearchesPath));
-            
-            // 【偵錯日誌 1】: 檢查讀取到的快照
             if (snapshot.exists()) {
                 const pinnedTitles = snapshot.val();
-                console.log('✅ 成功從 Firebase 讀取到資料:', pinnedTitles);
-                loadPinnedResearchesForUser(pinnedTitles);
+                console.log('✅ 成功從 Firebase 讀取到資料，將其存入暫存區:', pinnedTitles);
+                
+                // 【修改】: 不再直接呼叫函式，而是將資料存到全域的暫存區
+                window.pendingPinnedTitles = pinnedTitles;
+
             } else {
-                console.log('ℹ️ 在 Firebase 中找不到該使用者的釘選資料，將以預設狀態載入。');
-                loadPinnedResearchesForUser([]); // 確保傳入空陣列來清空畫面
+                console.log('ℹ️ 在 Firebase 中找不到該使用者的釘選資料。');
+                // 【修改】: 同樣設定暫存區，確保是乾淨的狀態
+                window.pendingPinnedTitles = [];
             }
         } catch (error) {
-            // 【偵錯日誌 2】: 檢查讀取時是否出錯
             console.error('❌ 讀取 Firebase 資料時發生錯誤:', error);
         }
     }
 
     function clearUserData() {
-        console.log("使用者已登出，清除本地狀態...");
-        // 清除特殊調查的釘選狀態
-        if (typeof loadPinnedResearchesForUser === 'function') {
-            loadPinnedResearchesForUser([]); // 傳入空陣列來重設
+        console.log("使用者已登出，清除本地狀態和暫存區...");
+        // 【修改】: 清除暫存區
+        window.pendingPinnedTitles = [];
+        // 呼叫函式來更新畫面為登出狀態
+        if (typeof window.applyPinnedStateToUI === 'function') {
+            window.applyPinnedStateToUI([]);
         }
-        // 未來若有其他要記憶的功能，可以繼續加在這裡
     }
+
     
     // --- 全域控制與頁籤切換邏輯 ---
     document.getElementById('copyright-year').textContent = new Date().getFullYear();

@@ -5,32 +5,31 @@ let container = null; // container 也提升，讓所有函式都能存取
 let searchInput = null;
 let includeAllCheckbox = null;
 let clearBtn = null;
-    export function loadPinnedResearchesForUser(pinnedTitles) { 
-        if (!Array.isArray(pinnedTitles)) {
-            console.error("讀取的釘選資料格式不正確。");
-            return;
-        }
+window.applyPinnedStateToUI = function(pinnedTitles) {
+    if (!container || !allResearches) return;
+    if (!Array.isArray(pinnedTitles)) pinnedTitles = [];
 
-        let needsRender = false;
+    let needsRender = false;
+    allResearches.forEach(research => {
+        const shouldBePinned = pinnedTitles.includes(research.title);
+        if (research.isPinned !== shouldBePinned) {
+            research.isPinned = shouldBePinned;
+            needsRender = true;
+        }
+    });
+
+    if (needsRender) {
+        console.log("🎨 正在套用釘選狀態並更新畫面...");
         allResearches.forEach(research => {
-            const shouldBePinned = pinnedTitles.includes(research.title);
-            if (research.isPinned !== shouldBePinned) {
-                research.isPinned = shouldBePinned;
-                needsRender = true;
+            const card = container.querySelector(`.research-card[data-id="${research.title}"]`);
+            if (card) {
+                card.classList.toggle('is-pinned', research.isPinned);
             }
         });
-
-        if (needsRender) {
-            console.log("從雲端同步釘選狀態，正在更新畫面...");
-            allResearches.forEach(research => {
-                const card = container.querySelector(`.research-card[data-id="${research.title}"]`);
-                if (card) {
-                    card.classList.toggle('is-pinned', research.isPinned);
-                }
-            });
-            reorderAndRenderCards();
-        }
+        reorderAndRenderCards();
     }
+}
+
         function reorderAndRenderCards() {
         // 核心排序邏輯：
         // 1. isPinned 為 true 的排在前面
@@ -481,7 +480,13 @@ fetch('data/special_research.json')
                 clearBtn.style.display = 'none';
                 filterAndRender();
                 searchInput.focus();
-            });
+            });            
+            if (window.pendingPinnedTitles) {
+                console.log('💎 發現暫存的釘選資料，立即套用！');
+                window.applyPinnedStateToUI(window.pendingPinnedTitles);
+                // 用完後清空，避免重複套用
+                delete window.pendingPinnedTitles; 
+            }
         })
         .catch(error => {
             container.innerHTML = `<div class="no-results" style="color:red;">${error.message}</div>`;
