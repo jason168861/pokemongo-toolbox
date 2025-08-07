@@ -449,10 +449,10 @@ function addGlobalClickListener() {
         saveDataForCurrentUser('specialResearch/pinned', pinnedTitles);
     }
 export function initializeSpecialResearchApp() {
-    const container = document.getElementById('special-research-container');
-    const searchInput = document.getElementById('special-search-input');
-    const includeAllCheckbox = document.getElementById('search-include-all');
-    const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
+    container = document.getElementById('special-research-container');
+    searchInput = document.getElementById('special-search-input');
+    includeAllCheckbox = document.getElementById('search-include-all');
+    clearBtn = document.querySelector('#special-research-app .clear-search-btn');
 
         //【新增 4】: 匯出一個函式讓 main.js 可以呼叫它來讀取資料
     // 這個函式會接收從 Firebase 讀取到的釘選標題陣列
