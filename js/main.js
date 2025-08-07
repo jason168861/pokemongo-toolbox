@@ -1,3 +1,17 @@
+//【修改 1】: 從 firebase SDK 導入更多驗證相關的模組
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import { getDatabase, ref, runTransaction, set, get } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+import { 
+    getAuth, 
+    GoogleAuthProvider, 
+    signInWithPopup, 
+    signOut, 
+    onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+//【新增】: 為了方便跨檔案操作，匯出一些函式
+import { loadPinnedResearchesForUser, savePinnedResearchesForUser } from './special-research.js';
+
 // 導入所有 App 的初始化函式
 import { initializeCpChecker } from './cp-checker.js';
 import { initializeIdSelector } from './id-selector.js';
@@ -9,6 +23,88 @@ import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
 
 document.addEventListener('DOMContentLoaded', () => {
+        const app = initializeApp(window.firebaseConfig); // 假設您的 config 在 window 上
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+    const provider = new GoogleAuthProvider();
+
+    //【新增 3】: 獲取 DOM 元素
+    const authButton = document.getElementById('auth-button');
+    const userInfoDisplay = document.getElementById('user-info');
+    let currentUser = null; // 用來儲存當前登入的使用者資訊
+
+    //【新增 4】: 登入函式
+    const handleLogin = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log("登入成功:", result.user.displayName);
+                // 登入成功後 onAuthStateChanged 會自動處理後續
+            }).catch((error) => {
+                console.error("登入失敗:", error);
+                alert(`登入時發生錯誤: ${error.message}`);
+            });
+    };
+
+    //【新增 5】: 登出函式
+    const handleLogout = () => {
+        signOut(auth).then(() => {
+            console.log("已登出");
+            // 登出成功後 onAuthStateChanged 會自動處理後續
+        }).catch((error) => {
+            console.error("登出失敗:", error);
+        });
+    };
+
+    //【新增 6】: 監聽使用者登入狀態的變化 (最關鍵的部分)
+    onAuthStateChanged(auth, (user) => {
+        currentUser = user; // 更新當前使用者狀態
+        if (user) {
+            // --- 使用者已登入 ---
+            userInfoDisplay.textContent = `你好, ${user.displayName}`;
+            userInfoDisplay.style.display = 'inline';
+            authButton.textContent = '登出';
+            authButton.onclick = handleLogout;
+
+            // 觸發讀取使用者資料的函式
+            loadUserData(user.uid);
+
+        } else {
+            // --- 使用者已登出或未登入 ---
+            userInfoDisplay.style.display = 'none';
+            authButton.textContent = '使用 Google 登入';
+            authButton.onclick = handleLogin;
+            
+            // 觸發清除使用者資料的函式
+            clearUserData();
+        }
+    });
+    
+    //【新增 7】: 讀取和清除資料的中央控制器
+    async function loadUserData(userId) {
+        console.log(`正在為使用者 ${userId} 讀取資料...`);
+        // 讀取特殊調查的釘選資料
+        const pinnedResearchesPath = `users/${userId}/specialResearch/pinned`;
+        const snapshot = await get(ref(db, pinnedResearchesPath));
+        if (snapshot.exists()) {
+            const pinnedTitles = snapshot.val();
+            // 呼叫 special-research.js 中的函式來更新畫面
+            if (typeof loadPinnedResearchesForUser === 'function') {
+                loadPinnedResearchesForUser(pinnedTitles);
+            }
+        }
+        // 未來若有其他要記憶的功能，可以繼續加在這裡
+        // 例如： loadPokemonSelections(userId);
+    }
+
+    function clearUserData() {
+        console.log("使用者已登出，清除本地狀態...");
+        // 清除特殊調查的釘選狀態
+        if (typeof loadPinnedResearchesForUser === 'function') {
+            loadPinnedResearchesForUser([]); // 傳入空陣列來重設
+        }
+        // 未來若有其他要記憶的功能，可以繼續加在這裡
+    }
+    
     // --- 全域控制與頁籤切換邏輯 ---
     document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
@@ -161,3 +257,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+export async function saveDataForCurrentUser(path, data) {
+    const auth = getAuth();
+    const db = getDatabase();
+    if (auth.currentUser) {
+        const userId = auth.currentUser.uid;
+        const fullPath = `users/${userId}/${path}`;
+        try {
+            await set(ref(db, fullPath), data);
+            console.log(`資料成功儲存至: ${fullPath}`);
+        } catch (error) {
+            console.error("儲存資料失敗:", error);
+        }
+    } else {
+        console.log("使用者未登入，資料未儲存。");
+    }
+}

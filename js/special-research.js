@@ -1,5 +1,5 @@
 // js/special-research.js (優化後版本)
-
+import { saveDataForCurrentUser } from './main.js';
 export function initializeSpecialResearchApp() {
     let allResearches = [];
     const container = document.getElementById('special-research-container');
@@ -328,6 +328,7 @@ function addGlobalClickListener() {
                     researchData.isPinned = !researchData.isPinned;
                     card.classList.toggle('is-pinned', researchData.isPinned);
                     reorderAndRenderCards();
+                    saveCurrentPinnedState();
                 }
                 return;
             }
@@ -412,7 +413,48 @@ function addGlobalClickListener() {
             }
         });
     }
+    function saveCurrentPinnedState() {
+        // 篩選出所有 isPinned 為 true 的調查標題
+        const pinnedTitles = allResearches
+            .filter(r => r.isPinned)
+            .map(r => r.title);
+            
+        // 呼叫從 main.js 導入的函式來執行儲存
+        // 'specialResearch/pinned' 是我們自訂的資料路徑
+        saveDataForCurrentUser('specialResearch/pinned', pinnedTitles);
+    }
+        //【新增 4】: 匯出一個函式讓 main.js 可以呼叫它來讀取資料
+    // 這個函式會接收從 Firebase 讀取到的釘選標題陣列
+    window.loadPinnedResearchesForUser = function(pinnedTitles) {
+        if (!Array.isArray(pinnedTitles)) {
+            console.error("讀取的釘選資料格式不正確。");
+            return;
+        }
+        
+        let needsRender = false;
+        allResearches.forEach(research => {
+            // 檢查當前的釘選狀態是否與遠端資料一致
+            const shouldBePinned = pinnedTitles.includes(research.title);
+            if (research.isPinned !== shouldBePinned) {
+                research.isPinned = shouldBePinned;
+                needsRender = true; // 狀態有變，需要重繪
+            }
+        });
 
+        // 如果資料有變動，才更新畫面
+        if (needsRender) {
+             console.log("從雲端同步釘選狀態，正在更新畫面...");
+             // 更新卡片的 class
+             allResearches.forEach(research => {
+                const card = container.querySelector(`.research-card[data-id="${research.title}"]`);
+                if (card) {
+                    card.classList.toggle('is-pinned', research.isPinned);
+                }
+             });
+             // 重新排序並渲染
+             reorderAndRenderCards();
+        }
+    }
     // Fetch 資料的主流程保持不變
 fetch('data/special_research.json')
         .then(response => {

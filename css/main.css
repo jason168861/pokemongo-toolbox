@@ -397,3 +397,49 @@ body {
 .site-footer p {
     margin: 0.5em 0;
 }
+/* --- 【新增】登入/登出區塊樣式 --- */
+#auth-container {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 2001; /* 確保在導覽列之上 */
+}
+
+#user-info {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-secondary);
+    display: none; /* 預設隱藏 */
+}
+
+#auth-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid var(--primary-color, #0075BE);
+    background-color: transparent;
+    color: var(--primary-color, #0075BE);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#auth-button:hover {
+    background-color: var(--primary-color, #0075BE);
+    color: white;
+}
+
+/* 手機版樣式調整 */
+@media (max-width: 768px) {
+    #auth-container {
+        /* 將按鈕移到漢堡選單的左邊 */
+        right: 60px;
+    }
+    #user-info {
+        display: none !important; /* 手機版空間不足，強制隱藏使用者名稱 */
+    }
+}
