@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const provider = new GoogleAuthProvider();
 
     let currentUserId = null; // 用來存放當前登入者的 UID
-    let userPreferences = null;
+
     const loginBtn = document.getElementById('login-btn');
     const logoutBtn = document.getElementById('logout-btn');
     const authContainer = document.getElementById('auth-container');
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const userRef = ref(db, 'users/' + userId);
         get(userRef).then((snapshot) => {
             if (snapshot.exists()) {
-                userPreferences = snapshot.val();
+                const userData = snapshot.val();
                 console.log("成功從 Firebase 載入資料:", userData);
                 
                 // 【關鍵】通知 special-research 模組去應用這些資料

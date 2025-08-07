@@ -53,13 +53,13 @@ export function initializeSpecialResearchApp() {
             return response.json();
         })
         .then(data => {
-             const pinnedTitles = (initialUserPrefs && initialUserPrefs.pinnedResearches) 
-                ? new Set(initialUserPrefs.pinnedResearches)
-                : new Set();
+            const existingPinnedTitles = new Set(
+                allResearches.filter(r => r.isPinned).map(r => r.title)
+            );
 
             allResearches = data.map(research => ({
                 ...research,
-                isPinned: pinnedTitles.has(research.title) // 直接在這裡設定正確的置頂狀態
+                isPinned: existingPinnedTitles.has(research.title)
             }));
 
             generateResearchCards(allResearches);
