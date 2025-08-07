@@ -2,38 +2,7 @@
 let allResearches = [];
 let isInitialized = false; // 新增一個旗標，判斷是否已初始化
 const container = document.getElementById('special-research-container');
-    function reorderAndRenderCards() {
-        // 核心排序邏輯：
-        // 1. isPinned 為 true 的排在前面
-        // 2. 如果 isPinned 狀態相同，則依照原有的發布日期排序
-        allResearches.sort((a, b) => {
-            if (a.isPinned !== b.isPinned) {
-                return a.isPinned ? -1 : 1;
-            }
-            return new Date(b.release_date) - new Date(a.release_date);
-        });
 
-        const fragment = document.createDocumentFragment();
-        // 根據排序後的新順序，將 DOM 元素重新插入到 fragment 中
-        allResearches.forEach(research => {
-            // 透過 data-id 找到對應的 DOM 元素
-            const cardElement = container.querySelector(`.research-card[data-id="${research.title}"]`);
-            if (cardElement) {
-                fragment.appendChild(cardElement);
-            }
-        });
-
-        // 最後一次性地將排序好的所有卡片重新加回容器，實現畫面上的重新排序
-        container.appendChild(fragment);
-    }
-        // Debounce 函式保持不變
-    function debounce(func, delay) {
-        let timeout;
-        return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), delay);
-        };
-    }
 export function applyUserPreferences(userData) {
     const pinnedTitles = (userData && userData.pinnedResearches) ? userData.pinnedResearches : [];
 
@@ -61,38 +30,15 @@ export function initializeSpecialResearchApp() {
     const searchInput = document.getElementById('special-search-input');
     const includeAllCheckbox = document.getElementById('search-include-all');
     const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
-    // Fetch 資料的主流程保持不變
-fetch('data/special_research.json')
-        .then(response => {
-            if (!response.ok) throw new Error('無法載入 JSON 檔案');
-            return response.json();
-        })
-        .then(data => {
-            // 【修改】為每筆資料加上 isPinned 屬性
-            allResearches = data
-                .sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
-                .map(research => ({ ...research, isPinned: false })); // 預設都是未置頂
 
-            generateResearchCards(allResearches);
-            includeAllCheckbox.addEventListener('change', debounce(filterAndRender, 200));
-            searchInput.addEventListener('input', debounce(filterAndRender, 300));
-            searchInput.addEventListener('input', () => {
-                clearBtn.style.display = searchInput.value ? 'block' : 'none';
-            });
-            window.addEventListener('resize', debounce(handleResize, 200));
-            clearBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                clearBtn.style.display = 'none';
-                filterAndRender();
-                searchInput.focus();
-            });
-        })
-        .catch(error => {
-            container.innerHTML = `<div class="no-results" style="color:red;">${error.message}</div>`;
-            console.error('讀取資料時發生錯誤:', error);
-        });
-}
-
+    // Debounce 函式保持不變
+    function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
     function syncToggleButtonState(card) {
     if (!card) return; // 安全檢查
 
@@ -433,8 +379,60 @@ function addGlobalClickListener() {
         });
     }
 
+    // Fetch 資料的主流程保持不變
+fetch('data/special_research.json')
+        .then(response => {
+            if (!response.ok) throw new Error('無法載入 JSON 檔案');
+            return response.json();
+        })
+        .then(data => {
+            // 【修改】為每筆資料加上 isPinned 屬性
+            allResearches = data
+                .sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
+                .map(research => ({ ...research, isPinned: false })); // 預設都是未置頂
 
+            generateResearchCards(allResearches);
+            includeAllCheckbox.addEventListener('change', debounce(filterAndRender, 200));
+            searchInput.addEventListener('input', debounce(filterAndRender, 300));
+            searchInput.addEventListener('input', () => {
+                clearBtn.style.display = searchInput.value ? 'block' : 'none';
+            });
+            window.addEventListener('resize', debounce(handleResize, 200));
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.style.display = 'none';
+                filterAndRender();
+                searchInput.focus();
+            });
+        })
+        .catch(error => {
+            container.innerHTML = `<div class="no-results" style="color:red;">${error.message}</div>`;
+            console.error('讀取資料時發生錯誤:', error);
+        });
+    function reorderAndRenderCards() {
+        // 核心排序邏輯：
+        // 1. isPinned 為 true 的排在前面
+        // 2. 如果 isPinned 狀態相同，則依照原有的發布日期排序
+        allResearches.sort((a, b) => {
+            if (a.isPinned !== b.isPinned) {
+                return a.isPinned ? -1 : 1;
+            }
+            return new Date(b.release_date) - new Date(a.release_date);
+        });
 
+        const fragment = document.createDocumentFragment();
+        // 根據排序後的新順序，將 DOM 元素重新插入到 fragment 中
+        allResearches.forEach(research => {
+            // 透過 data-id 找到對應的 DOM 元素
+            const cardElement = container.querySelector(`.research-card[data-id="${research.title}"]`);
+            if (cardElement) {
+                fragment.appendChild(cardElement);
+            }
+        });
+
+        // 最後一次性地將排序好的所有卡片重新加回容器，實現畫面上的重新排序
+        container.appendChild(fragment);
+    }
     function filterAndRender() {
     const searchTerm = searchInput.value.toLowerCase().trim();
     const searchInside = includeAllCheckbox.checked;
@@ -498,4 +496,5 @@ function addGlobalClickListener() {
     if (noResultsMessage) {
         noResultsMessage.style.display = hasResults ? 'none' : 'block';
     }
+}
 }
