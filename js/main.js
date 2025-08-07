@@ -51,35 +51,49 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("登出失敗:", error);
         });
     };
-
+    window.addEventListener('click', (event) => {
+        const userMenu = document.querySelector('.user-menu-dropdown');
+        // 如果選單存在，且點擊的目標不是在 user-info 區塊內
+        if (userMenu && !userInfoDisplay.contains(event.target)) {
+            userMenu.classList.remove('show');
+        }
+    });
     //【新增 6】: 監聽使用者登入狀態的變化 (最關鍵的部分)
     onAuthStateChanged(auth, (user) => {
-        currentUser = user; // 更新當前使用者狀態
+        currentUser = user; 
         if (user) {
             // --- 使用者已登入 ---
-            // 【修改】: 將原本顯示文字，改為顯示使用者 Google 頭像
-            if (user.photoURL) {
-                userInfoDisplay.innerHTML = `<img src="${user.photoURL}" alt="${user.displayName}" class="user-avatar">`;
-            } else {
-                // 如果使用者沒有頭像，則顯示名字的第一個字作為備用
-                userInfoDisplay.textContent = user.displayName ? user.displayName.charAt(0) : 'G';
-            }
-            userInfoDisplay.style.display = 'inline-block'; // 改為 inline-block 以正確顯示
-            
-            authButton.textContent = '登出';
-            authButton.onclick = handleLogout;
+            authButton.style.display = 'none'; // 隱藏原本的登入按鈕
+            userInfoDisplay.style.display = 'block'; // 顯示使用者資訊區塊
 
-            // 觸發讀取使用者資料的函式
+            // 動態產生頭像和隱藏的下拉選單 HTML
+            userInfoDisplay.innerHTML = `
+                <img src="${user.photoURL}" alt="使用者頭像" class="user-avatar" id="user-avatar-trigger">
+                <div class="user-menu-dropdown">
+                    <a href="#" id="menu-logout-btn">登出</a>
+                </div>
+            `;
+
+            // 為頭像圖片加上點擊事件，用來開關選單
+            document.getElementById('user-avatar-trigger').addEventListener('click', (event) => {
+                event.stopPropagation(); // 防止觸發 window 的點擊事件而立即關閉
+                document.querySelector('.user-menu-dropdown').classList.toggle('show');
+            });
+
+            // 為選單中的「登出」按鈕加上點擊事件
+            document.getElementById('menu-logout-btn').addEventListener('click', (event) => {
+                event.preventDefault(); // 防止頁面跳轉
+                handleLogout(); // 呼叫登出函式
+            });
+
             loadUserData(user.uid);
 
         } else {
             // --- 使用者已登出或未登入 ---
-            userInfoDisplay.innerHTML = ''; // 【修改】: 清空頭像
-            userInfoDisplay.style.display = 'none';
-            authButton.textContent = '使用 Google 登入';
-            authButton.onclick = handleLogin;
+            authButton.style.display = 'inline-block'; // 顯示登入按鈕
+            userInfoDisplay.style.display = 'none';    // 隱藏使用者資訊區塊
+            userInfoDisplay.innerHTML = '';            // 清空內容
             
-            // 觸發清除使用者資料的函式
             clearUserData();
         }
     });
