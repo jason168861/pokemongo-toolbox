@@ -5,8 +5,8 @@ import os
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from datetime import datetime
-import locale
-locale.setlocale(locale.LC_CTYPE, 'chinese')
+# import locale
+# locale.setlocale(locale.LC_CTYPE, 'chinese')
 # ==================== 常數與設定區塊 START ====================
 
 # 目標網站與備份來源

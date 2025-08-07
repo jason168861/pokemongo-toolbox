@@ -4,8 +4,8 @@ import re
 from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-import locale
-locale.setlocale(locale.LC_CTYPE, 'chinese')
+# import locale
+# locale.setlocale(locale.LC_CTYPE, 'chinese')
 # ==================== 翻譯資料區塊 START ====================
 
 # 定義特殊形態的翻譯字典
