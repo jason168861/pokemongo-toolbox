@@ -9,6 +9,21 @@ import {
     onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
+// 【新增】將此函式移出 DOMContentLoaded，使其可被其他模組引用
+export async function saveDataForCurrentUser(path, data) {
+    const auth = getAuth();
+    const db = getDatabase();
+    if (auth.currentUser) {
+        const userId = auth.currentUser.uid;
+        const fullPath = `users/${userId}/${path}`;
+        try {
+            await set(ref(db, fullPath), data);
+        } catch (error) {
+            console.error(`無法儲存資料到 Firebase: ${error}`);
+        }
+    } 
+}
+
 // 導入所有 App 的初始化函式
 import { initializeCpChecker } from './cp-checker.js';
 import { initializeIdSelector } from './id-selector.js';
@@ -115,15 +130,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
         }
+        const idSelectorPath = `users/${userId}/idSelector/selected`;
+        try {
+            const idSnapshot = await get(ref(db, idSelectorPath));
+            if (idSnapshot.exists()) {
+                const savedIds = idSnapshot.val();
+                // 暫存讀取到的資料
+                window.pendingSelectedIds = savedIds; 
+                // 如果 id-selector 模組已初始化，直接呼叫其讀取函式
+                if (typeof window.loadIdSelectorState === 'function') {
+                    window.loadIdSelectorState(savedIds);
+                }
+            }
+        } catch(error) {
+            console.error("讀取寶可夢編號資料時發生錯誤:", error);
+        }
     }
 
     function clearUserData() {
-        // console.log("使用者已登出，清除本地狀態和暫存區...");
-        // 【修改】: 清除暫存區
+        // --- 清除特殊調查資料 (原有邏輯) ---
         window.pendingPinnedTitles = [];
-        // 呼叫函式來更新畫面為登出狀態
         if (typeof window.applyPinnedStateToUI === 'function') {
             window.applyPinnedStateToUI([]);
+        }
+
+        // --- 【新增】清除編號篩選器資料 ---
+        window.pendingSelectedIds = [];
+        // 如果 id-selector 模組已初始化，直接呼叫其清除函式
+        if (typeof window.clearIdSelectorState === 'function') {
+            window.clearIdSelectorState();
         }
     }
 
@@ -264,22 +299,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-export async function saveDataForCurrentUser(path, data) {
-    const auth = getAuth();
-    const db = getDatabase();
-    if (auth.currentUser) {
-        const userId = auth.currentUser.uid;
-        const fullPath = `users/${userId}/${path}`;
-        
-        // 【偵錯日誌 3】: 檢查將要寫入的資料
-        // console.log(`🔷 準備寫入 Firebase... 路徑: ${fullPath}`, '資料:', data);
-
-        try {
-            await set(ref(db, fullPath), data);
-            // 【偵錯日誌 4】: 確認寫入成功
-            // console.log(`✅ 資料成功儲存至 Firebase!`);
-        } catch (error) {
-            // 【偵錯日誌 5】: 捕捉寫入時的錯誤
-        }
-    } 
-}
