@@ -1,3 +1,5 @@
+import { saveDataForCurrentUser } from './main.js';
+
 export function initializeIdSelector() {
     const pokemonContainer = document.getElementById('pokemon-container');
     if (!pokemonContainer || pokemonContainer.innerHTML !== '') return; // 防止重複初始化
