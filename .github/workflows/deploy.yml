@@ -31,6 +31,7 @@ jobs:
         run: |
           # 然後再從環境變數中讀取內容並寫入檔案
           echo "const firebaseConfig = $FIREBASE_CONFIG;" > config.js
+          echo "window.firebaseConfig = firebaseConfig;" >> config.js
 
       # 步驟 3: 設定 GitHub Pages
       - name: Setup Pages
