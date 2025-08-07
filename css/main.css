@@ -399,14 +399,13 @@ body {
 }
 /* --- 【新增】登入/登出區塊樣式 --- */
 #auth-container {
-    position: absolute;
-    top: 50%;
-    left: 20px; /* 【修改】從 right 改為 left，將其定位到左邊 */
-    transform: translateY(-50%);
+    position: fixed; /* 改為 fixed，使其固定在視窗右上角 */
+    top: 15px;       /* 距離頂部 15px */
+    right: 20px;     /* 距離右側 20px */
     display: flex;
     align-items: center;
     gap: 15px;
-    z-index: 2001; /* 確保在導覽列之上 */
+    z-index: 2001;   /* 確保在導覽列之上 */
 }
 .user-avatar {
     width: 40px;
@@ -470,9 +469,9 @@ body {
     padding: 8px 16px;
     font-size: 14px;
     font-weight: bold;
-    border: 1px solid var(--primary-color, #0075BE);
-    background-color: transparent;
-    color: var(--primary-color, #0075BE);
+    border: none; /* 移除邊框 */
+    background-color: #1877f2; /* 改為實心藍色 */
+    color: white; /* 文字改為白色 */
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
