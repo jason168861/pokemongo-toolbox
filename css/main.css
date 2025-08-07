@@ -9,7 +9,7 @@ body {
     /* ▼▼▼ 以下為新增或修改的屬性 ▼▼▼ */
     position: sticky; /* 讓導覽列可以黏在頂部 */
     top: 0;
-    z-index: 2000; /* 確保它在最上層 */
+    z-index: 2002; /* 確保它在最上層 */
     background-color: var(--background-color, #f0f2f5); /* 加上背景色，才不會透明 */
     transition: transform 0.1s ease-in-out; /* 加上平滑的動畫效果 */
     width: 100%; /* 確保寬度充滿 */
