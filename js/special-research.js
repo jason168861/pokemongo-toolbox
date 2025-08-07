@@ -40,9 +40,9 @@ export function applyUserPreferences(userData) {
 /**
  * 初始化「特殊調查」App 的 UI 和事件
  */
-export function initializeSpecialResearchApp(initialUserPrefs) {
+export function initializeSpecialResearchApp() {
     if (isInitialized) return; // 防止重複初始化
-isInitialized = true; // 立刻標記，防止重複進
+
     const searchInput = document.getElementById('special-search-input');
     const includeAllCheckbox = document.getElementById('search-include-all');
     const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
