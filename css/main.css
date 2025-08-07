@@ -401,19 +401,27 @@ body {
 #auth-container {
     position: absolute;
     top: 50%;
-    right: 20px;
+    right: 20px; /* 【修改】從 right 改為 left，將其定位到左邊 */
     transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 15px;
     z-index: 2001; /* 確保在導覽列之上 */
 }
-
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* 圓形頭像 */
+    vertical-align: middle; /* 確保與旁邊的登出按鈕對齊 */
+    border: 2px solid #fff; /* 可選：加上白色邊框增加質感 */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* 可選：加上細微陰影 */
+}
 #user-info {
     font-size: 14px;
     font-weight: bold;
     color: var(--text-secondary);
     display: none; /* 預設隱藏 */
+    line-height: 0; /* 【新增】讓 span 本身不佔高度，大小由圖片決定 */
 }
 
 #auth-button {
@@ -436,10 +444,11 @@ body {
 /* 手機版樣式調整 */
 @media (max-width: 768px) {
     #auth-container {
-        /* 將按鈕移到漢堡選單的左邊 */
-        right: 60px;
+        /* 【修改】移除 right: 60px，讓左側定位在手機版也生效 */
+        left: 20px;
     }
     #user-info {
-        display: none !important; /* 手機版空間不足，強制隱藏使用者名稱 */
+        /* 在手機版，空間足夠，可以讓圖示顯示出來 */
+        display: inline-block !important; 
     }
 }
