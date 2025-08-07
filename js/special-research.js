@@ -1,12 +1,37 @@
 // js/special-research.js (優化後版本)
 import { saveDataForCurrentUser } from './main.js';
-export function initializeSpecialResearchApp() {
     let allResearches = [];
-    const container = document.getElementById('special-research-container');
-    const searchInput = document.getElementById('special-search-input');
-    const includeAllCheckbox = document.getElementById('search-include-all');
-    const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
-    function reorderAndRenderCards() {
+let container = null; // container 也提升，讓所有函式都能存取
+let searchInput = null;
+let includeAllCheckbox = null;
+let clearBtn = null;
+    export function loadPinnedResearchesForUser(pinnedTitles) { 
+        if (!Array.isArray(pinnedTitles)) {
+            console.error("讀取的釘選資料格式不正確。");
+            return;
+        }
+
+        let needsRender = false;
+        allResearches.forEach(research => {
+            const shouldBePinned = pinnedTitles.includes(research.title);
+            if (research.isPinned !== shouldBePinned) {
+                research.isPinned = shouldBePinned;
+                needsRender = true;
+            }
+        });
+
+        if (needsRender) {
+            console.log("從雲端同步釘選狀態，正在更新畫面...");
+            allResearches.forEach(research => {
+                const card = container.querySelector(`.research-card[data-id="${research.title}"]`);
+                if (card) {
+                    card.classList.toggle('is-pinned', research.isPinned);
+                }
+            });
+            reorderAndRenderCards();
+        }
+    }
+        function reorderAndRenderCards() {
         // 核心排序邏輯：
         // 1. isPinned 為 true 的排在前面
         // 2. 如果 isPinned 狀態相同，則依照原有的發布日期排序
@@ -423,38 +448,15 @@ function addGlobalClickListener() {
         // 'specialResearch/pinned' 是我們自訂的資料路徑
         saveDataForCurrentUser('specialResearch/pinned', pinnedTitles);
     }
+export function initializeSpecialResearchApp() {
+    const container = document.getElementById('special-research-container');
+    const searchInput = document.getElementById('special-search-input');
+    const includeAllCheckbox = document.getElementById('search-include-all');
+    const clearBtn = document.querySelector('#special-research-app .clear-search-btn');
+
         //【新增 4】: 匯出一個函式讓 main.js 可以呼叫它來讀取資料
     // 這個函式會接收從 Firebase 讀取到的釘選標題陣列
-    window.loadPinnedResearchesForUser = function(pinnedTitles) {
-        if (!Array.isArray(pinnedTitles)) {
-            console.error("讀取的釘選資料格式不正確。");
-            return;
-        }
-        
-        let needsRender = false;
-        allResearches.forEach(research => {
-            // 檢查當前的釘選狀態是否與遠端資料一致
-            const shouldBePinned = pinnedTitles.includes(research.title);
-            if (research.isPinned !== shouldBePinned) {
-                research.isPinned = shouldBePinned;
-                needsRender = true; // 狀態有變，需要重繪
-            }
-        });
 
-        // 如果資料有變動，才更新畫面
-        if (needsRender) {
-             console.log("從雲端同步釘選狀態，正在更新畫面...");
-             // 更新卡片的 class
-             allResearches.forEach(research => {
-                const card = container.querySelector(`.research-card[data-id="${research.title}"]`);
-                if (card) {
-                    card.classList.toggle('is-pinned', research.isPinned);
-                }
-             });
-             // 重新排序並渲染
-             reorderAndRenderCards();
-        }
-    }
     // Fetch 資料的主流程保持不變
 fetch('data/special_research.json')
         .then(response => {

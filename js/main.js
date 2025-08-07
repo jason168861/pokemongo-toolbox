@@ -10,7 +10,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
 //【新增】: 為了方便跨檔案操作，匯出一些函式
-import { loadPinnedResearchesForUser, savePinnedResearchesForUser } from './special-research.js';
+import { loadPinnedResearchesForUser } from './special-research.js';
 
 // 導入所有 App 的初始化函式
 import { initializeCpChecker } from './cp-checker.js';
