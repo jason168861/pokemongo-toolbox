@@ -5,6 +5,8 @@ import {
     getAuth, 
     GoogleAuthProvider, 
     signInWithPopup, 
+    signInWithRedirect, // 【新增】
+    getRedirectResult, // 【新增】
     signOut, 
     onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
@@ -32,15 +34,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //【新增 4】: 登入函式
     const handleLogin = () => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log("登入成功:", result.user.displayName);
-                // 登入成功後 onAuthStateChanged 會自動處理後續
-            }).catch((error) => {
-                console.error("登入失敗:", error);
-                alert(`登入時發生錯誤: ${error.message}`);
-            });
+        signInWithRedirect(auth, provider);
     };
+        getRedirectResult(auth)
+        .then((result) => {
+            if (result) {
+                // 如果 result 存在，表示使用者剛完成登入並跳轉回來
+                const user = result.user;
+                console.log("透過重新導向登入成功:", user.displayName);
+            }
+        }).catch((error) => {
+            // 處理可能發生的錯誤
+            console.error("處理重新導向結果時發生錯誤:", error);
+            alert(`登入時發生錯誤: ${error.message}`);
+        });
 
     //【新增 5】: 登出函式
     const handleLogout = () => {
