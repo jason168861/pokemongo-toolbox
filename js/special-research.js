@@ -438,16 +438,16 @@ function addGlobalClickListener() {
             }
         });
     }
-    function saveCurrentPinnedState() {
-        // 篩選出所有 isPinned 為 true 的調查標題
-        const pinnedTitles = allResearches
-            .filter(r => r.isPinned)
-            .map(r => r.title);
-            
-        // 呼叫從 main.js 導入的函式來執行儲存
-        // 'specialResearch/pinned' 是我們自訂的資料路徑
-        saveDataForCurrentUser('specialResearch/pinned', pinnedTitles);
-    }
+function saveCurrentPinnedState() {
+    const pinnedTitles = allResearches
+        .filter(r => r.isPinned)
+        .map(r => r.title);
+        
+    // 【偵錯日誌 6】: 確認此函式被呼叫，並查看準備儲存的內容
+    console.log('📌 偵測到釘選狀態改變，準備呼叫儲存函式。內容:', pinnedTitles);
+
+    saveDataForCurrentUser('specialResearch/pinned', pinnedTitles);
+}
 export function initializeSpecialResearchApp() {
     container = document.getElementById('special-research-container');
     searchInput = document.getElementById('special-search-input');

@@ -1,6 +1,6 @@
 //【修改 1】: 從 firebase SDK 導入更多驗證相關的模組
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getDatabase, ref, runTransaction, set, get } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 import { 
     getAuth, 
     GoogleAuthProvider, 
@@ -81,19 +81,26 @@ document.addEventListener('DOMContentLoaded', () => {
     
     //【新增 7】: 讀取和清除資料的中央控制器
     async function loadUserData(userId) {
-        console.log(`正在為使用者 ${userId} 讀取資料...`);
-        // 讀取特殊調查的釘選資料
+        console.log(`正在為使用者 ${userId} 讀取資料...`); // 這是您已看到的一行
         const pinnedResearchesPath = `users/${userId}/specialResearch/pinned`;
-        const snapshot = await get(ref(db, pinnedResearchesPath));
-        if (snapshot.exists()) {
-            const pinnedTitles = snapshot.val();
-            // 呼叫 special-research.js 中的函式來更新畫面
-            if (typeof loadPinnedResearchesForUser === 'function') {
+        const db = getDatabase(); // 確保 db 變數可用
+
+        try {
+            const snapshot = await get(ref(db, pinnedResearchesPath));
+            
+            // 【偵錯日誌 1】: 檢查讀取到的快照
+            if (snapshot.exists()) {
+                const pinnedTitles = snapshot.val();
+                console.log('✅ 成功從 Firebase 讀取到資料:', pinnedTitles);
                 loadPinnedResearchesForUser(pinnedTitles);
+            } else {
+                console.log('ℹ️ 在 Firebase 中找不到該使用者的釘選資料，將以預設狀態載入。');
+                loadPinnedResearchesForUser([]); // 確保傳入空陣列來清空畫面
             }
+        } catch (error) {
+            // 【偵錯日誌 2】: 檢查讀取時是否出錯
+            console.error('❌ 讀取 Firebase 資料時發生錯誤:', error);
         }
-        // 未來若有其他要記憶的功能，可以繼續加在這裡
-        // 例如： loadPokemonSelections(userId);
     }
 
     function clearUserData() {
@@ -263,13 +270,19 @@ export async function saveDataForCurrentUser(path, data) {
     if (auth.currentUser) {
         const userId = auth.currentUser.uid;
         const fullPath = `users/${userId}/${path}`;
+        
+        // 【偵錯日誌 3】: 檢查將要寫入的資料
+        console.log(`🔷 準備寫入 Firebase... 路徑: ${fullPath}`, '資料:', data);
+
         try {
             await set(ref(db, fullPath), data);
-            console.log(`資料成功儲存至: ${fullPath}`);
+            // 【偵錯日誌 4】: 確認寫入成功
+            console.log(`✅ 資料成功儲存至 Firebase!`);
         } catch (error) {
-            console.error("儲存資料失敗:", error);
+            // 【偵錯日誌 5】: 捕捉寫入時的錯誤
+            console.error(`❌ 寫入 Firebase 時發生嚴重錯誤:`, error);
         }
     } else {
-        console.log("使用者未登入，資料未儲存。");
+        console.warn("使用者未登入，資料未儲存。");
     }
 }
