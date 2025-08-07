@@ -3,37 +3,42 @@ body {
     background-color: #f0f2f5;
     color: #1c1e21;
     margin: 0;
-    padding: 20px;
+    padding: 5px;
 }
-.app-nav {
-    /* ▼▼▼ 以下為新增或修改的屬性 ▼▼▼ */
-    position: sticky; /* 讓導覽列可以黏在頂部 */
-    top: 0;
-    z-index: 2002; /* 確保它在最上層 */
-    background-color: var(--background-color, #f0f2f5); /* 加上背景色，才不會透明 */
-    transition: transform 0.1s ease-in-out; /* 加上平滑的動畫效果 */
-    width: 100%; /* 確保寬度充滿 */
 
-    /* ▼▼▼ 以下是您原有的樣式 ▼▼▼ */
+/* --- [MODIFIED] New Header Wrapper --- */
+.site-header-main {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap; 
-    margin-bottom: 25px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+
+    /* Sticky behavior for the entire bar */
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    background-color: var(--background-color, #f0f2f5);
     border-bottom: 2px solid #ccd0d5;
+    transition: transform 0.1s ease-in-out;
+    width: 100%;
 }
+
+/* --- [MODIFIED] Adjusted App Navigation --- */
+.app-nav {
+    display: flex;
+    justify-content: center; /* This will center the .nav-links within its available space */
+    flex-grow: 1; /* Allows the nav to take up the remaining space */
+    flex-wrap: wrap; 
+    /* Removed properties now handled by the parent .site-header-main */
+    /* position, top, z-index, background-color, border-bottom, width, margin-bottom */
+}
+
 .main-container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-/* --- 頁籤導航列樣式 --- */
-.app-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap; /* 在小螢幕上換行 */
-    margin-bottom: 25px;
-    border-bottom: 2px solid #ccd0d5;
+    padding-top: 25px; /* Added padding to create space below the sticky header */
 }
 
 .tab-button {
@@ -82,15 +87,12 @@ body {
 }
 
 /* --- 響應式調整 (Responsive Adjustments) --- */
-/* (這裡可以放通用的 RWD，例如 #research-app 的 RWD 調整) */
 #research-app .reward-preview {
     flex-wrap: wrap;
     gap: 4px 0; /* 垂直間隔4px，水平間隔由既有樣式控制 */
     justify-content: flex-end; /* 讓圖示靠右對齊 */
 }
-/* 螢幕寬度小於 768px 時觸發 (適用於多數手機) */
 @media (max-width: 768px) {
-    /* 將田野調查的容器改為垂直排列 (單欄) */
     #research-app #research-container {
         flex-direction: column;
     }
@@ -99,22 +101,29 @@ body {
     transform: translateY(-100%);
 }
 
-/* --- 漢堡選單樣式 --- */
-
-/* 預設隱藏漢堡按鈕 (電腦版) */
 .hamburger-button {
     display: none;
 }
 
-/* 當螢幕寬度小於 768px 時 (行動裝置) */
+/* --- [MODIFIED] Mobile Layout Adjustments --- */
 @media (max-width: 768px) {
-    .app-nav {
-        /* 在手機上讓 Logo/標題 和漢堡按鈕分開 */
-        justify-content: flex-end; 
-        padding-right: 20px; /* 給按鈕一點空間 */
+    .site-header-main {
+        min-height: 50px;
+        padding: 0; /* Remove padding to allow full-width elements */
     }
 
-    /* 讓漢堡按鈕顯示出來 */
+    .app-nav {
+        justify-content: flex-end; /* Ensure hamburger is on the right */
+        flex-grow: 0; /* Don't let it grow */
+    }
+
+    #auth-container {
+       position: absolute; /* Position relative to .site-header-main */
+       top: 50%;
+       left: 15px;
+       z-index: 15; /* Make sure it's above the nav links but below the hamburger */
+    }
+
     .hamburger-button {
         display: flex;
         flex-direction: column;
@@ -125,7 +134,8 @@ body {
         border: none;
         cursor: pointer;
         padding: 0;
-        z-index: 10; /* 確保它在連結之上 */
+        z-index: 20;
+        margin-right: 15px;
     }
 
     .hamburger-button span {
@@ -138,44 +148,27 @@ body {
         transform-origin: 1px;
     }
 
-    /* 按下漢堡按鈕後的 "X" 動畫 */
-    .hamburger-button.is-active span:nth-child(1) {
-        transform: rotate(45deg);
-    }
-    .hamburger-button.is-active span:nth-child(2) {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-    .hamburger-button.is-active span:nth-child(3) {
-        transform: rotate(-45deg);
-    }
+    .hamburger-button.is-active span:nth-child(1) { transform: rotate(45deg); }
+    .hamburger-button.is-active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
+    .hamburger-button.is-active span:nth-child(3) { transform: rotate(-45deg); }
 
-    /* 隱藏原本的按鈕列表，並將其改為垂直下拉式選單 */
     .nav-links {
         display: flex;
         flex-direction: column;
         align-items: center;
         background: var(--card-background, white);
         box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        
-        /* 關鍵：定位在導覽列正下方 */
         position: absolute;
-        top: 100%; /* 100% 代表導覽列的高度 */
+        top: 100%;
         left: 0;
         width: 100%;
-
-        /* 關鍵：預設用 max-height: 0 隱藏選單 */
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.1s ease-in-out;
     }
     
-    /* 當選單被打開時，展開它 */
-    .nav-links.is-open {
-        max-height: 500px; /* 設定一個足夠大的高度讓所有選項都能顯示 */
-    }
+    .nav-links.is-open { max-height: 500px; }
 
-    /* 修改下拉選單中每個按鈕的樣式 */
     .nav-links .tab-button {
         width: 100%;
         text-align: center;
@@ -183,19 +176,14 @@ body {
         border-bottom: 1px solid var(--border-color, #eee);
     }
     
-    .nav-links .tab-button::after {
-        /* 在手機版隱藏底線動畫 */
-        display: none;
-    }
+    .nav-links .tab-button::after { display: none; }
     
     .nav-links .tab-button.active {
         background-color: var(--primary-color, #0075BE);
         color: white;
     }
-
 }
 
-/* --- 載入動畫 Overlay --- */
 #loading-overlay {
     position: fixed;
     top: 0;
@@ -210,7 +198,6 @@ body {
     transition: opacity 0.8s ease, visibility 0.8s ease;
     opacity: 1;
     visibility: visible;
-    /* 【新增】建立 3D 舞台，讓子元素有遠近感 */
     perspective: 800px; 
 }
 
@@ -219,63 +206,50 @@ body {
     visibility: hidden;
 }
 
-/* --- 寶貝球本體 --- */
 .pokeball-loader {
     position: relative;
-    width: 150px; /* 稍微縮小一點讓晃動空間更明顯 */
+    width: 150px;
     height: 150px;
-    /* 【新增】告知瀏覽器這個容器內的元素要以 3D 方式呈現 */
     transform-style: preserve-3d; 
-    /* 【新增】應用下面定義的晃動動畫 */
     animation: shake-and-pulse 1.5s ease-in-out forwards;
 }
 
-/* --- 寶貝球上下半部 (通用樣式) --- */
 .pokeball-top, .pokeball-bottom {
     position: absolute;
     left: 0;
     width: 100%;
     height: 50%;
-    border: 8px solid #222; /* 加深邊框顏色 */
+    border: 8px solid #222;
     box-sizing: border-box;
     z-index: 1;
-    /* 【修改】動畫效果更細膩 */
     transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
-/* --- 寶貝球上半部 (紅色) --- */
 .pokeball-top {
     top: 0;
-    /* 【修改】用放射漸層模擬球體高光，增加立體感 */
     background: radial-gradient(circle at 50% 30%, #ff5c5c, #f00 70%);
     border-bottom: none;
     border-top-left-radius: 75px;
     border-top-right-radius: 75px;
-    /* 【新增】設置 3D 旋轉的軸心在底部中央 */
     transform-origin: bottom center;
-    /* 【新增】用內陰影製造深度感 */
     box-shadow: inset 0 -8px 15px rgba(0,0,0,0.2);
 }
 
-/* --- 寶貝球下半部 (白色) --- */
 .pokeball-bottom {
     bottom: 0;
-    /* 【修改】同樣用漸層模擬反光 */
     background: radial-gradient(circle at 50% 70%, #ffffff, #f0f0f0 80%);
     border-top: none;
     border-bottom-left-radius: 75px;
     border-bottom-right-radius: 75px;
-    /* 【新增】設置 3D 旋轉的軸心在頂部中央 */
     transform-origin: top center;
     box-shadow: inset 0 8px 15px rgba(0,0,0,0.15);
 }
 
-/* --- 中間按鈕 --- */
 .pokeball-center-outer {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) translateZ(10px); /* 【修改】在Z軸上稍微突出 */
+    transform: translate(-50%, -50%) translateZ(10px);
     width: 60px;
     height: 60px;
     background-color: #222;
@@ -297,14 +271,12 @@ body {
     z-index: 3;
     transition: transform 0.8s ease, box-shadow 0.2s ease;
 }
-/* 按鈕按下時的微光效果 */
+
 @keyframes button-press-light {
     from { box-shadow: 0 0 15px 5px #fff; }
     to { box-shadow: 0 0 0 0 transparent; }
 }
 
-
-/* --- 【核心】晃動與脈衝動畫定義 --- */
 @keyframes shake-and-pulse {
     0%, 100% { transform: rotate(0deg) translateX(0) scale(1); }
     10% { transform: rotate(-5deg) translateX(-10px) scale(1.05); }
@@ -313,43 +285,24 @@ body {
     40% { transform: rotate(5deg) translateX(10px) scale(1.05); }
     50% { transform: rotate(-3deg) translateX(-5px) scale(1.05); }
     60% { transform: rotate(3deg) translateX(5px) scale(1.05); }
-    /* 晃動結束，準備"喀噠"一聲 */
     70% { transform: scale(1.05); }
-    /* "喀噠"的瞬間，按鈕發光 */
     75% { transform: scale(0.95); }
-    80% { 
-        transform: scale(1.1);
-    }
+    80% { transform: scale(1.1); }
     90% { transform: scale(1); }
 }
-/* 在晃動動畫的特定時間點觸發按鈕發光 */
+
 .shaking .pokeball-center-inner {
-    animation: button-press-light 0.5s ease-out 0.8s; /* 在 2.2 秒時觸發 */
+    animation: button-press-light 0.5s ease-out 0.8s;
 }
 
-
-/* --- 動畫觸發後的狀態 --- */
-#loading-overlay.start-animation .pokeball-loader {
-    animation: none; /* 停止晃動動畫 */
-}
-
-#loading-overlay.start-animation .pokeball-top {
-    /* 【修改】從上下平移改為繞 X 軸翻轉，並往前推，製造打開的效果 */
-    transform: scale(0);
-}
-
-#loading-overlay.start-animation .pokeball-bottom {
-    /* 【修改】同上，往反方向翻轉 */
-    transform: scale(0);
-}
-
+#loading-overlay.start-animation .pokeball-loader { animation: none; }
+#loading-overlay.start-animation .pokeball-top { transform: scale(0); }
+#loading-overlay.start-animation .pokeball-bottom { transform: scale(0); }
 #loading-overlay.start-animation .pokeball-center-outer,
 #loading-overlay.start-animation .pokeball-center-inner {
-    /* 【修改】讓按鈕也跟著消失 */
     transform: translate(-50%, -50%) scale(0);
 }
 
-/* --- 中間的閃光 --- */
 .pokeball-light-flash {
     position: absolute;
     top: 50%;
@@ -364,28 +317,17 @@ body {
 }
 
 #loading-overlay.start-animation .pokeball-light-flash {
-    /* 【修改】微調動畫時序，讓它在球打開後才出現 */
     animation: flash-and-fade 0.8s ease-out 0.2s forwards;
 }
 
 @keyframes flash-and-fade {
-    0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0.8;
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1.5);
-        opacity: 0;
-    }
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
+    50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
 }
 
 .site-footer {
     text-align: center;
-    padding: 2rem 1rem;
     margin-top: 40px;
     border-top: 1px solid #e0e0e0;
     background-color: #f8f9fa;
@@ -397,16 +339,16 @@ body {
 .site-footer p {
     margin: 0.5em 0;
 }
-/* --- 【新增】登入/登出區塊樣式 --- */
+
+/* --- [MODIFIED] Auth Container --- */
 #auth-container {
-    position: fixed; /* 改為 fixed，使其固定在視窗右上角 */
-    top: 15px;       /* 距離頂部 15px */
-    right: 20px;     /* 距離右側 20px */
+    position: static; /* Removed fixed positioning for desktop */
     display: flex;
     align-items: center;
     gap: 15px;
-    z-index: 2001;   /* 確保在導覽列之上 */
+    /* z-index is no longer needed here as it's in the flow */
 }
+
 .user-avatar {
     width: 40px;
     height: 40px;
@@ -414,7 +356,7 @@ body {
     vertical-align: middle;
     border: 2px solid #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    cursor: pointer; /* 游標變為手指，提示可點擊 */
+    cursor: pointer;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 .user-avatar:hover {
@@ -422,29 +364,26 @@ body {
     transform: scale(1.05);
 }
 
-/* 【修改】使用者資訊區塊改為相對定位，作為下拉選單的基準點 */
 #user-info {
     position: relative; 
     line-height: 1;
 }
 
-/* 【新增】下拉式選單的容器樣式 */
 .user-menu-dropdown {
-    display: none; /* 預設隱藏 */
+    display: none;
     position: absolute;
-    top: 120%; /* 定位在頭像正下方，並留出一點空隙 */
-    right: 0; /* 對齊頭像的右側 */
+    top: 120%;
+    right: 0;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    min-width: 140px; /* 選單的最小寬度 */
-    z-index: 2002; /* 確保在最上層 */
-    overflow: hidden; /* 讓子元素的圓角也生效 */
+    min-width: 140px;
+    z-index: 2002;
+    overflow: hidden;
     border: 1px solid #ddd;
-    padding: 5px 0; /* 上下留白 */
+    padding: 5px 0;
 }
 
-/* 【新增】下拉選單項目的樣式 */
 .user-menu-dropdown a {
     display: block;
     padding: 10px 20px;
@@ -454,24 +393,20 @@ body {
     transition: background-color 0.1s ease;
 }
 
-/* 【新增】滑鼠移到選單項目上的效果 */
 .user-menu-dropdown a:hover {
     background-color: #f0f2f5;
     color: #1877f2;
 }
 
-/* 【新增】用來顯示選單的 class */
-.user-menu-dropdown.show {
-    display: block;
-}
+.user-menu-dropdown.show { display: block; }
 
 #auth-button {
     padding: 8px 16px;
     font-size: 14px;
     font-weight: bold;
-    border: none; /* 移除邊框 */
-    background-color: #1877f2; /* 改為實心藍色 */
-    color: white; /* 文字改為白色 */
+    border: none;
+    background-color: #1877f2;
+    color: white;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -480,16 +415,4 @@ body {
 #auth-button:hover {
     background-color: var(--primary-color, #0075BE);
     color: white;
-}
-
-/* 手機版樣式調整 */
-@media (max-width: 768px) {
-    #auth-container {
-        /* 【修改】移除 right: 60px，讓左側定位在手機版也生效 */
-        left: 20px;
-    }
-    #user-info {
-        /* 在手機版，空間足夠，可以讓圖示顯示出來 */
-        display: inline-block !important; 
-    }
 }

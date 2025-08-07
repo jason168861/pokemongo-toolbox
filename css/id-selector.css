@@ -142,7 +142,6 @@
     border: 3px solid transparent;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
     opacity: 0.8;
     background-color: #f8f8f8;
 }
@@ -227,7 +226,7 @@
     z-index: 1000;
     background-color: #f0f2f5;
     padding: 15px 0;
-    transition: top 0.3s ease-in-out; /* 【新增】讓 top 的變化有動畫效果 */
+    transition: top 0.1s ease-in-out; /* 【新增】讓 top 的變化有動畫效果 */
 }
 #id-selector-app #idSearchInput {
     box-sizing: border-box;  /* 確保 padding 不會撐大寬度 */
