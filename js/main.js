@@ -57,8 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUser = user; // 更新當前使用者狀態
         if (user) {
             // --- 使用者已登入 ---
-            userInfoDisplay.textContent = `你好, ${user.displayName}`;
-            userInfoDisplay.style.display = 'inline';
+            // 【修改】: 將原本顯示文字，改為顯示使用者 Google 頭像
+            if (user.photoURL) {
+                userInfoDisplay.innerHTML = `<img src="${user.photoURL}" alt="${user.displayName}" class="user-avatar">`;
+            } else {
+                // 如果使用者沒有頭像，則顯示名字的第一個字作為備用
+                userInfoDisplay.textContent = user.displayName ? user.displayName.charAt(0) : 'G';
+            }
+            userInfoDisplay.style.display = 'inline-block'; // 改為 inline-block 以正確顯示
+            
             authButton.textContent = '登出';
             authButton.onclick = handleLogout;
 
@@ -67,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } else {
             // --- 使用者已登出或未登入 ---
+            userInfoDisplay.innerHTML = ''; // 【修改】: 清空頭像
             userInfoDisplay.style.display = 'none';
             authButton.textContent = '使用 Google 登入';
             authButton.onclick = handleLogin;
