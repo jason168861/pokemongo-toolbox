@@ -401,7 +401,7 @@ body {
 #auth-container {
     position: absolute;
     top: 50%;
-    right: 20px; /* 【修改】從 right 改為 left，將其定位到左邊 */
+    left: 20px; /* 【修改】從 right 改為 left，將其定位到左邊 */
     transform: translateY(-50%);
     display: flex;
     align-items: center;

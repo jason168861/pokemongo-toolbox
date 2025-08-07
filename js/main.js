@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             authButton.style.display = 'inline-block'; // 顯示登入按鈕
             userInfoDisplay.style.display = 'none';    // 隱藏使用者資訊區塊
             userInfoDisplay.innerHTML = '';            // 清空內容
-            
+            authButton.onclick = handleLogin; // 將登入函式賦予給按鈕的點擊事件
             clearUserData();
         }
     });
