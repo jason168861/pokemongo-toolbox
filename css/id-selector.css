@@ -147,7 +147,8 @@
 }
 #id-selector-app .pokemon-name {
     font-size: 13px;
-    color: #333;
+    color: #000; /* 【修改】顏色加深為純黑 */
+    font-weight: 600; /* 【修改】字體加粗 (semi-bold) */
     margin-top: 5px;
     text-align: center;
     white-space: nowrap;
@@ -158,6 +159,8 @@
 #id-selector-app .pokemon-grid img {
     width: 96px;
     height: 96px;
+    user-select: none; /* 【修改】防止圖片被選取反白 */
+    -webkit-user-select: none; /* 兼容舊版 Safari/Chrome */
 }
 @media (hover: hover) {
     #id-selector-app .pokemon-card:hover {
@@ -319,4 +322,31 @@ body.nav-is-hidden #id-selector-app .search-container {
     display: inline-block;   /* 讓容器寬度自適應內容，並能被 text-align: center 影響 */
     width: 90%;              /* 讓它和 input 有一樣的寬度行為 */
     max-width: 600px;        /* 和 input 的最大寬度保持一致 */
+}
+
+/* --- ================================ --- */
+/* --- 手機版響應式調整 (Mobile Responsive) --- */
+/* --- ================================ --- */
+@media (max-width: 768px) {
+    #id-selector-app .pokemon-grid {
+        /* 縮小每欄的最小寬度，讓更多寶可夢能排在一行 */
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px; /* 縮小間距 */
+        padding: 10px; /* 縮小內邊距 */
+    }
+
+    #id-selector-app .pokemon-grid img {
+        width: 64px; /* 縮小圖片寬度 */
+        height: 64px; /* 縮小圖片高度 */
+    }
+
+    #id-selector-app .pokemon-name {
+        font-size: 12px; /* 縮小名稱字體 */
+        margin-top: 4px;
+    }
+
+    #id-selector-app .pokemon-card {
+        padding: 4px 2px; /* 縮小卡片內距 */
+        border-width: 2px; /* 讓邊框細一點 */
+    }
 }

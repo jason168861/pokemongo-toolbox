@@ -181,3 +181,83 @@
     width: 24px;
     height: 24px;
 }
+
+/* --- ================================ --- */
+/* --- 手機版響應式調整 (Mobile Responsive) --- */
+/* --- ================================ --- */
+@media (max-width: 768px) {
+    .raid-tier-container {
+        gap: 12px; /* 縮小卡片間距 */
+    }
+
+    .raid-card {
+        width: 170px; /* 縮小卡片寬度 */
+        border-radius: 10px;
+    }
+
+    .raid-card .shiny-icon {
+        width: 24px; /* 縮小異色圖示 */
+        height: 24px;
+        top: 5px;
+        right: 5px;
+    }
+
+    .raid-card-header {
+        padding: 10px 10px 0 10px; /* 減少頭部內距 */
+    }
+
+    .raid-pokemon-image-wrapper {
+        height: 90px; /* 縮小圖片區域高度 */
+    }
+    
+    .raid-card-body {
+        padding: 10px; /* 減少卡片主體內距 */
+    }
+
+    .pokemon-name {
+        font-size: 1.2em; /* 縮小寶可夢名稱字體 */
+        margin-bottom: 8px;
+    }
+
+    .pokemon-types {
+        gap: 5px; /* 縮小屬性圖示間距 */
+        margin-bottom: 10px;
+    }
+
+    .type-icon {
+        width: 24px; /* 縮小屬性圖示 */
+        height: 24px;
+    }
+
+    .combat-power-section {
+        padding: 8px; /* 減少CP區塊內距 */
+        margin-bottom: 10px;
+        flex-direction: column; /* 改為垂直排列 */
+        gap: 5px; /* 增加垂直間距 */
+    }
+
+    .cp-info p {
+        font-size: 1em; /* 縮小CP值字體 */
+        margin-top: 2px;
+    }
+    
+    .boosted-weather-section strong {
+        display: block; /* 讓標題獨立一行 */
+        margin-bottom: 5px;
+    }
+
+    .weather-icon {
+        width: 22px; /* 縮小天氣圖示 */
+        height: 22px;
+    }
+}
+
+/* 螢幕更小的手機，例如 iPhone SE */
+@media (max-width: 380px) {
+    .raid-card {
+        width: calc(50% - 12px); /* 讓卡片在更小的螢幕上每行顯示兩個 */
+    }
+    .pokemon-name {
+        font-size: 1.1em; /* 再縮小一點字體 */
+    }
+}

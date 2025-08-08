@@ -38,6 +38,8 @@ export function initializeIdSelector() {
     }
 
     const fragment = document.createDocumentFragment();
+    const isHoverDevice = window.matchMedia('(hover: hover)').matches;
+
     for (let i = 1; i <= POKEMON_COUNT; i++) {
         const pokemonId = i;
         const pokemonName = POKEMON_NAMES[pokemonId - 1] || `Pokemon #${pokemonId}`;
@@ -45,8 +47,17 @@ export function initializeIdSelector() {
         card.className = 'pokemon-card';
         card.dataset.id = pokemonId;
         card.dataset.name = pokemonName;
-        card.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png" alt="${pokemonName}" loading="lazy"><span class="pokemon-name">${pokemonName}</span>`;
-        card.addEventListener('click', handlePokemonClick);
+        card.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png" alt="${pokemonName}" draggable="false" loading="lazy"><span class="pokemon-name">${pokemonName}</span>`;
+        
+        // --- 【修改】根據裝置類型綁定不同事件 ---
+        if (isHoverDevice) {
+            // 對於有滑鼠的電腦，使用 mousedown 以防止輕微拖曳導致選取失敗
+            card.addEventListener('mousedown', handlePokemonClick);
+        } else {
+            // 對於觸控裝置，保留標準的 click 事件
+            card.addEventListener('click', handlePokemonClick);
+        }
+        
         fragment.appendChild(card);
     }
     pokemonContainer.appendChild(fragment);
