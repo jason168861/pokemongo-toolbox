@@ -139,7 +139,50 @@ function handleResize() {
     }
 }
 
-    // 搜尋與過濾邏輯保持不變
+// --- 【新增】移除高亮的輔助函式 ---
+function removeHighlights(container) {
+    const marks = container.querySelectorAll('mark');
+    marks.forEach(mark => {
+        const parent = mark.parentNode;
+        parent.replaceChild(document.createTextNode(mark.textContent), mark);
+        parent.normalize(); // 合併相鄰的文字節點
+    });
+}
+
+// --- 【新增】套用高亮的輔助函式 ---
+function highlightMatches(container, searchTerm) {
+    if (!searchTerm) return;
+    const regex = new RegExp(searchTerm, 'gi');
+    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+    const nodesToProcess = [];
+    while (node = walker.nextNode()) {
+        if (node.parentElement.tagName !== 'SCRIPT' && node.parentElement.tagName !== 'STYLE') {
+            nodesToProcess.push(node);
+        }
+    }
+    nodesToProcess.forEach(node => {
+        const text = node.textContent;
+        if (regex.test(text)) {
+            const fragment = document.createDocumentFragment();
+            const parts = text.split(regex);
+            let lastIndex = 0;
+            parts.forEach((part, index) => {
+                fragment.appendChild(document.createTextNode(part));
+                if (index < parts.length - 1) {
+                    const matchText = text.substring(lastIndex + part.length).match(regex)[0];
+                    const mark = document.createElement('mark');
+                    mark.textContent = matchText;
+                    fragment.appendChild(mark);
+                    lastIndex += part.length + matchText.length;
+                }
+            });
+            node.parentNode.replaceChild(fragment, node);
+        }
+    });
+}
+
+// --- 【修改】搜尋與過濾邏輯，加入高亮處理 ---
 function filterAndRender() {
     const searchTerm = searchInput.value.toLowerCase().trim();
     const searchInside = includeAllCheckbox.checked;
@@ -147,9 +190,9 @@ function filterAndRender() {
     const noResultsMessage = container.querySelector('.no-results');
     let hasResults = false;
 
-    // 步驟 1: 先無條件隱藏所有的任務卡片
+    // 步驟 1: 先清除所有舊的高亮
     allCardElements.forEach(card => {
-        card.style.display = 'none';
+        removeHighlights(card);
     });
 
     // 如果沒有搜尋關鍵字，則顯示全部並結束函式
@@ -160,22 +203,23 @@ function filterAndRender() {
         if (noResultsMessage) {
             noResultsMessage.style.display = 'none';
         }
-        return; // 提前結束
+        return; 
     }
 
-    // 步驟 2: 遍歷資料，找出符合條件的項目
-    allResearches.forEach(research => {
-        // 安全檢查：確保 research 和 title 存在
-        if (!research || !research.title) return;
+    // 步驟 2: 先隱藏所有卡片
+    allCardElements.forEach(card => {
+        card.style.display = 'none';
+    });
 
+    // 步驟 3: 遍歷資料，找出符合條件的項目並顯示、套用高亮
+    allResearches.forEach(research => {
+        if (!research || !research.title) return;
         let isMatch = false;
         const lowerCaseTitle = research.title.toLowerCase();
 
-        // 檢查標題是否符合
         if (lowerCaseTitle.includes(searchTerm)) {
             isMatch = true;
         } 
-        // 如果勾選了進階搜尋，則檢查任務和獎勵內容
         else if (searchInside) {
             isMatch = research.steps.some(step =>
                 (step.tasks && step.tasks.some(task =>
@@ -188,18 +232,19 @@ function filterAndRender() {
             );
         }
 
-        // 步驟 3: 如果符合條件，就去 DOM 中找到對應的卡片並將它顯示出來
         if (isMatch) {
             hasResults = true;
             const safeTitle = CSS.escape(research.title);
             const cardToShow = container.querySelector(`.research-card[data-id="${safeTitle}"]`);
             if (cardToShow) {
                 cardToShow.style.display = 'block';
+                // 套用高亮
+                highlightMatches(cardToShow, searchTerm);
             }
         }
     });
 
-    // 步驟 4: 根據最終是否有結果，來決定是否顯示「找不到結果」的訊息
+    // 步驟 4: 根據結果決定是否顯示「找不到結果」的訊息
     if (noResultsMessage) {
         noResultsMessage.style.display = hasResults ? 'none' : 'block';
     }
@@ -371,6 +416,12 @@ function addGlobalClickListener() {
                     if (researchData) {
                         content.innerHTML = generateDetailsHtml(researchData);
                         card.dataset.detailsRendered = 'true';
+                        
+                        // --- 【修改】首次渲染內容後，立即套用高亮 ---
+                        const currentSearchTerm = searchInput.value.toLowerCase().trim();
+                        if (currentSearchTerm) {
+                            highlightMatches(content, currentSearchTerm);
+                        }
                         
                         // ▼▼▼【核心修改】修正「全部展開/收合」按鈕的邏輯 ▼▼▼
                         toggleAllBtn.addEventListener('click', () => {

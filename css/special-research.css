@@ -623,3 +623,13 @@ body.nav-is-hidden #special-research-app #search-wrapper {
         padding-left: 0;
     }
 }
+
+/* --- 【新增】高亮搜尋關鍵字的樣式 --- */
+#special-research-app mark {
+    background-color: var(--secondary-color, #FFCC00);
+    color: var(--text-primary, #333);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 500;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.7);
+}
