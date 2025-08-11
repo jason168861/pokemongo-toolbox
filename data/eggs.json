@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025年8月10日11時",
+  "lastUpdated": "2025年8月11日11時",
   "pokemon": [
     {
       "eggDistance": 2,
@@ -423,7 +423,7 @@
       "name": "夜盜火蜥",
       "cpRange": "593 - 641",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm757.icon.png",
-      "isShiny": false
+      "isShiny": true
     },
     {
       "eggDistance": 12,
