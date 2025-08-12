@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
   # 3. 每日定時執行 (UTC 時間 2 點，即台北時間早上 10 點)
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 */2 * * *'
 
 # 工作流程執行的任務
 jobs:
