@@ -116,6 +116,45 @@
     ]
   },
   {
+    "category": "Delightful Days: Taken Over Tasks",
+    "tasks": [
+      {
+        "description": "Defeat a Team GO Rocket Grunt",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Mysterious Component.png",
+            "name": "Mysterious Component ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Purify 3 Shadow Pokémon",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Fast TM.png",
+            "name": "Fast TM ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Charged TM.png",
+            "name": "Charged TM ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
