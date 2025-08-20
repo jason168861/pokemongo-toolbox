@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/research.css">
     <link rel="stylesheet" href="css/eggs.css">
     <link rel="stylesheet" href="css/raids.css">
+    <link rel="stylesheet" href="css/pvp-ranker.css"> 
     <link rel="stylesheet" href="css/level-up.css">
     <link rel="stylesheet" href="css/search-filters.css">
     <link rel="stylesheet" href="css/special-research.css">
@@ -45,6 +46,7 @@
         <button class="tab-button" data-target="eggs-app">孵蛋列表</button>
         <button class="tab-button" data-target="research-app">田野調查任務</button>
         <button class="tab-button" data-target="cp-checker-app">IV100 CP 查詢</button>
+        <button class="tab-button" data-target="pvp-ranker-app">PvP IV 排名查詢</button>
         <button class="tab-button" data-target="id-selector-app">寶可夢編號篩選器</button>
         <button class="tab-button" data-target="special-research-app">特殊調查</button>
         <button class="tab-button" data-target="level-up-app">升級條件</button>
@@ -161,6 +163,47 @@
                 <div id="statusMessage">正在初始化...</div>
                 <div id="resultsContainer"></div>
              </div>
+        </div>
+
+        <div id="pvp-ranker-app" class="app-content">
+            <div class="container">
+                <h1>Pokémon Go PvP IV 排名查詢器</h1>
+                <div class="controls">
+                    <div class="search-container">
+                        <label for="pokemon-input">輸入寶可夢名稱或編號</label>
+                        <input type="text" id="pokemon-input" placeholder="例如：妙蛙種子 或 1" autocomplete="off">
+                        <span id="clear-btn" class="clear-button hidden">&times;</span>
+                        <div id="search-results"></div>
+                    </div>
+
+                    <div class="iv-inputs">
+                        <div>
+                            <label for="atk-iv">攻擊 (ATK)</label>
+                            <select id="atk-iv"></select>
+                        </div>
+                        <div>
+                            <label for="def-iv">防禦 (DEF)</label>
+                            <select id="def-iv"></select>
+                        </div>
+                        <div>
+                            <label for="hp-iv">體力 (HP)</label>
+                            <select id="hp-iv"></select>
+                        </div>
+                    </div>
+
+                    <div class="current-stats-inputs">
+                        <div>
+                            <label for="current-level">目前等級: <span id="current-level-value">40</span></label>
+                            <input type="range" id="current-level" min="1" max="51" step="0.5" value="40">
+                        </div>
+                        <div>
+                            <label>目前CP</label>
+                            <span id="current-cp-display" class="cp-display">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="results-container" class="hidden"></div>
+            </div>
         </div>
 
         <div id="id-selector-app" class="app-content">
@@ -436,7 +479,9 @@
     <script src="data/precomputed_pokemon_cp.js"></script>
     <script src="data/pokemon_translation_map.js"></script>
     <script src="data/pokemon_names_from_api.js"></script>
-
+    <script src="data/pokemon_data_and_rankings.js" defer></script>
+    <script src="data/pokemon_images.js" defer></script>
+    <script src="js/pvp-logic.js" defer></script>
     <script type="module" src="js/main.js"></script>
 <style>
   /* 這是計數器的通用樣式，對手機和電腦都有效 */

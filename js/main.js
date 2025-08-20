@@ -34,6 +34,7 @@ import { initializeLevelUpApp } from './level-up.js';
 import { initializeSearchFiltersApp } from './search-filters.js';
 import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
+import { initializePvpRanker } from './pvp-ranker.js'; 
 
 document.addEventListener('DOMContentLoaded', () => {
         const app = initializeApp(window.firebaseConfig); // 假設您的 config 在 window 上
@@ -177,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let eggsAppInitialized = false;
     let raidsAppInitialized = false; // <-- 新增此行
     let levelUpAppInitialized = false; 
+    let pvpRankerAppInitialized = false;
     let searchFiltersAppInitialized = false;
     let specialResearchAppInitialized = false;
     let infoHubAppInitialized = false; // <-- 【新增】
@@ -208,6 +210,9 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (targetAppId === 'raids-app' && !raidsAppInitialized) { // <-- 新增此區塊
                 initializeRaidsApp();
                 raidsAppInitialized = true;
+            } else if (targetAppId === 'pvp-ranker-app' && !pvpRankerAppInitialized) {
+                initializePvpRanker();
+                pvpRankerAppInitialized = true;
             } else if (targetAppId === 'level-up-app' && !levelUpAppInitialized) {
                 initializeLevelUpApp();
                 levelUpAppInitialized = true;

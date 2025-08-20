@@ -51,6 +51,7 @@ jobs:
           python scripts/scrape_research.py
           python scripts/scrape_eggs.py
           python scripts/scrape_boss.py
+          python scripts/generate_pokemon_data.py
       # ================================================================
 
       # 步驟 4: 從 Secret 建立 config.js 檔案
