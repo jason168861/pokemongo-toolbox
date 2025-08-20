@@ -58,10 +58,8 @@
     background-size: cover;
 }
 #eggs-app .egg-list-img img {
-    /* 將圖片寬高縮小為容器的 90%，讓背景的蛋可見 */
     width: 80%;
     height: 80%;
-    /* 保持圖片原始比例，防止圖片被拉伸或壓縮變形 */
     object-fit: contain;
 }
 #eggs-app .shiny-icon {
