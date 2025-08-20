@@ -24,6 +24,7 @@ FORM_TRANSLATIONS = {
 def load_translations():
     """載入寶可夢名稱翻譯檔"""
     try:
+        # 假設翻譯檔在 data 資料夾下
         with open("./data/pokemon_translation_map.json", "r", encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
@@ -85,7 +86,7 @@ def scrape_egg_data():
         soup = BeautifulSoup(response.text, "lxml")
         all_pokemon_data = []
         
-        # 【修改點 1】尋找所有的 h2 標籤，讓後續邏輯來判斷類型
+        # 尋找所有的 h2 標籤，讓後續邏輯來判斷類型
         egg_section_headers = soup.find_all("h2", string=re.compile(r'km Eggs'))
 
         for header in egg_section_headers:
@@ -95,7 +96,7 @@ def scrape_egg_data():
             
             egg_distance = int(egg_distance_match.group(1))
             
-            # 【修改點 2】判斷蛋的來源 (source)
+            # 判斷蛋的來源 (source)
             source = "regular" # 預設為一般
             if "Adventure Sync Rewards" in header_text:
                 source = "adventure_sync"
@@ -104,33 +105,40 @@ def scrape_egg_data():
             
             print(f"正在處理 {egg_distance}km 蛋池 (來源: {source})...")
 
-            pokemon_list_ul = header.find_next_sibling("ul", class_="egg-list-flex")
+            # 【修改點 1】從尋找 class 'egg-list-flex' 改為 'egg-grid'
+            pokemon_list_ul = header.find_next_sibling("ul", class_="egg-grid")
             if not pokemon_list_ul: continue
 
-            for item in pokemon_list_ul.find_all("li", class_="egg-list-item"):
-                # 【修改點 3】在 pokemon_info 中加入 eggDistance 和 source
+            # 【修改點 2】從 li 的 class 'egg-list-item' 改為 'pokemon-card'
+            for item in pokemon_list_ul.find_all("li", class_="pokemon-card"):
                 pokemon_info = {
                     "eggDistance": egg_distance,
                     "source": source 
                 }
                 
-                name_tag = item.find("span", class_="hatch-pkmn")
+                # 【修改點 3】名稱 tag 的 class 從 'hatch-pkmn' 改為 'name'
+                name_tag = item.find("span", class_="name")
                 
                 if name_tag:
                     english_name = name_tag.text.strip()
                     chinese_name = translate_name(english_name, name_translation_map, FORM_TRANSLATIONS)
                     pokemon_info["name"] = chinese_name
                 
-                cp_tag = item.find("div", class_="font-size-smaller")
-                img_tag = item.find("div", class_="egg-list-img").find("img")
-                shiny_tag = item.find("img", class_="shiny-icon")
+                # 【修改點 4】CP tag 的 class 改為 'cp-range' 且只抓取單一數值
+                cp_tag = item.find("div", class_="cp-range")
+                # 【修改點 5】圖片 tag 的父層 class 從 'egg-list-img' 改為 'icon'
+                img_tag = item.find("div", class_="icon").find("img")
+                # 【修改點 6】Shiny tag 現在是 svg，但 class 沒變，所以 find(class_="") 依然有效
+                shiny_tag = item.find(class_="shiny-icon")
 
                 if cp_tag:
-                    cp_match = re.search(r'[\d,]+\s*-\s*[\d,]+', cp_tag.text)
+                    # 新版網頁只顯示最大 CP，不再是範圍
+                    cp_match = re.search(r'(\d+)', cp_tag.text)
                     if cp_match:
-                        pokemon_info["cpRange"] = cp_match.group(0).replace(',', '')
+                        pokemon_info["cpRange"] = cp_match.group(1)
 
                 if img_tag and img_tag.has_attr('src'):
+                    # 新版圖片網址已是絕對路徑，但 urljoin 依然能正常處理
                     absolute_url = urljoin(BASE_URL, img_tag['src'])
                     pokemon_info["imageUrl"] = absolute_url
 
@@ -140,12 +148,11 @@ def scrape_egg_data():
                     all_pokemon_data.append(pokemon_info)
                 else:
                     print(f"  > 警告：跳過一筆不完整的資料 (名稱或圖片網址缺失)。")
+        
         taipei_tz = pytz.timezone('Asia/Taipei')
-        # ✨ 3. 取得當前 UTC 時間並轉換為台北時間
         now_taipei = datetime.now(pytz.utc).astimezone(taipei_tz)
         output_data = {
-            # 格式化日期為 "YYYY年M月D日"
-        "lastUpdated": now_taipei.strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
+            "lastUpdated": now_taipei.strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
             "pokemon": all_pokemon_data
         }
 
@@ -160,5 +167,6 @@ def scrape_egg_data():
         print(f"❌ 抓取網頁時發生錯誤: {e}")
     except Exception as e:
         print(f"❌ 處理資料時發生未知錯誤: {e}")
+
 if __name__ == "__main__":
     scrape_egg_data()
