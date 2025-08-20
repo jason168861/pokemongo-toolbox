@@ -38,7 +38,7 @@ FORM_TRANSLATIONS = {
     'Plant': '草木', 'Sandy': '砂土', 'Trash': '垃圾', 'Confined': '懲戒', 'Unbound': '解放',
     'Aria': '歌聲', 'Pirouette': '舞步', 'Fan': '電風扇', 'Frost': '結冰', 'Heat': '加熱', 'Mow': '割草', 'Wash': '清洗',
     'Dusk': '黃昏', 'Midday': '白晝', 'Midnight': '黑夜', 'School': '魚群', 'Solo': '單獨', 'Dawn Wings': '日蝕奈克洛茲瑪', 'Ultra': '究極',
-    'Hero': '百戰勇者', 'White Striped': '白條紋', 'Mega': '超級', 'Primal': '原始'
+    'Hero': '百戰勇者', 'White Striped': '白條紋', 'Mega': '超級', 'Primal': '原始', "Farfetch'd": "大蔥鸭"
 }
 
 def load_translations():
@@ -117,38 +117,42 @@ def scrape_raid_data():
 
         soup = BeautifulSoup(response.text, "lxml")
         
-        # 找到包含所有頭目的 <ul> 標籤
-        raid_list_ul = soup.find(id="raid-list").find("ul")
-        if not raid_list_ul:
-            raise ValueError("在頁面中找不到 'raid-list' 區塊。")
+        # 找到所有 tier 的區塊 (包含一般和暗影頭目)
+        all_tiers = soup.select(".raid-bosses .tier, .shadow-raid-bosses .tier")
+        if not all_tiers:
+            raise ValueError("在頁面中找不到 '.tier' 區塊。")
 
-        current_tier = ""
-        # 使用 recursive=False 只尋找第一層的 <li>，避免抓到巢狀列表的內容
-        for item in raid_list_ul.find_all("li", recursive=False):
-            if 'header-li' in item.get('class', []):
-                current_tier = item.get_text(strip=True)
-                print(f"\n--- 正在處理分類：{current_tier} ---")
-            
-            elif 'boss-item' in item.get('class', []):
-                boss_border = item.find(class_="boss-border")
-                if not boss_border: continue
+        for tier_div in all_tiers:
+            # 取得 tier 名稱
+            header = tier_div.find("h2", class_="header")
+            if not header:
+                continue
+            current_tier = header.get_text(strip=True)
+            print(f"\n--- 正在處理分類：{current_tier} ---")
 
+            # 找到這個 tier 內所有的頭目卡片
+            for card in tier_div.find_all("div", class_="card"):
                 # 抓取英文名稱並翻譯
-                eng_name = boss_border.find(class_="boss-name").get_text(strip=True)
+                name_tag = card.find("p", class_="name")
+                if not name_tag:
+                    continue
+                eng_name = name_tag.get_text(strip=True)
                 translated_boss_name = translate_name(eng_name, name_translation_map, FORM_TRANSLATIONS)
                 print(f"  - 找到頭目: {translated_boss_name} ({eng_name})")
 
                 # 解析CP範圍
-                cp_text = boss_border.find(class_="boss-2").get_text(strip=True).replace("CP ", "")
+                cp_range_tag = card.find("div", class_="cp-range")
+                cp_text = cp_range_tag.get_text(strip=True).replace("CP", "").strip()
                 cp_min, cp_max = [int(p.strip()) for p in cp_text.split(' - ')]
 
                 # 解析天氣加成後的CP範圍與天氣類型
-                boost_section = boss_border.find(class_="boss-3")
-                boosted_cp_text = boost_section.find(class_="boosted-cp").get_text(strip=True).replace("CP ", "")
+                boost_section = card.find("div", class_="weather-boosted")
+                boosted_cp_tag = boost_section.find("span", class_="boosted-cp")
+                boosted_cp_text = boosted_cp_tag.get_text(strip=True).replace("CP", "").strip()
                 boosted_cp_min, boosted_cp_max = [int(p.strip()) for p in boosted_cp_text.split(' - ')]
                 
                 boosted_weathers = []
-                for img in boost_section.find(class_="boss-weather").find_all("img"):
+                for img in boost_section.select(".boss-weather img"):
                     boosted_weathers.append({
                         "name": img['title'].lower(),
                         "image": urljoin(BASE_URL, img['src'])
@@ -156,26 +160,29 @@ def scrape_raid_data():
 
                 # 解析寶可夢屬性
                 types = []
-                for img in boss_border.find(class_="boss-type").find_all("img"):
-                    if "type" in img.get('class', [''])[0]:
-                        types.append({
-                            "name": img['title'].lower(),
-                            "image": urljoin(BASE_URL, img['src'])
-                        })
+                for img in card.select(".boss-type img"):
+                    types.append({
+                        "name": img['title'].lower(),
+                        "image": urljoin(BASE_URL, img['src'])
+                    })
+
+                # 抓取寶可夢圖片
+                boss_img_tag = card.select_one(".boss-img img")
+                image_url = urljoin(BASE_URL, boss_img_tag['src']) if boss_img_tag else ""
 
                 # 組合最終的 JSON 物件
                 boss_data = {
                     "name": translated_boss_name,
-                    "englishName": eng_name, # 額外保留英文名
+                    "englishName": eng_name,
                     "tier": current_tier,
-                    "canBeShiny": boss_border.find(class_="shiny-icon") is not None,
+                    "canBeShiny": card.find("svg", class_="shiny-icon") is not None,
                     "types": types,
                     "combatPower": {
                         "normal": {"min": cp_min, "max": cp_max},
                         "boosted": {"min": boosted_cp_min, "max": boosted_cp_max}
                     },
                     "boostedWeather": boosted_weathers,
-                    "image": urljoin(BASE_URL, boss_border.find(class_="boss-img").find("img")['src'])
+                    "image": image_url
                 }
                 bosses.append(boss_data)
 
@@ -187,14 +194,18 @@ def scrape_raid_data():
             response.raise_for_status()
             fallback_data = response.json()
             print("✅ 成功從備份來源下載資料！")
-            temp_bosses = fallback_data.get('bosses', fallback_data) if isinstance(fallback_data, dict) else fallback_data
-
+            
+            # 確保從 fallback_data 正確提取 bosses 列表
+            boss_list_from_fallback = fallback_data.get('bosses', []) if isinstance(fallback_data, dict) else fallback_data
+            
             # 備份資料也需要翻譯
-            for boss in fallback_data:
+            for boss in boss_list_from_fallback:
                 if 'name' in boss:
-                    boss['englishName'] = boss['name'] # 保留原文
-                    boss['name'] = translate_name(boss['name'], name_translation_map, FORM_TRANSLATIONS)
-            bosses = fallback_data
+                    original_name = boss['name']
+                    boss['englishName'] = original_name
+                    boss['name'] = translate_name(original_name, name_translation_map, FORM_TRANSLATIONS)
+            
+            bosses = boss_list_from_fallback
 
         except requests.exceptions.RequestException as fallback_e:
             print(f"❌ 備份來源也抓取失敗: {fallback_e}")
@@ -208,12 +219,11 @@ def scrape_raid_data():
     if bosses:
         print("\n💾 正在將資料寫入檔案...")
         taipei_tz = pytz.timezone('Asia/Taipei')
-        # ✨ 3. 取得當前 UTC 時間並轉換為台北時間
         now_taipei = datetime.now(pytz.utc).astimezone(taipei_tz)
         try:
             # 寫入格式化的 JSON
             output_data = {
-            "lastUpdated": now_taipei.strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
+                "lastUpdated": now_taipei.strftime('%Y年%m月%d日%H時').replace('年0', '年').replace('月0', '月'),
                 "bosses": bosses
             }
         
