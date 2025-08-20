@@ -18,7 +18,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Revive.png",
-            "name": "Revive ×2",
+            "name": "活力碎片 ×2",
             "quantity": "×2"
           },
           {
@@ -26,7 +26,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Super Potion.png",
-            "name": "Super Potion ×3",
+            "name": "好傷藥 ×3",
             "quantity": "×3"
           }
         ]
@@ -69,7 +69,7 @@
         ]
       },
       {
-        "description": "Battle in the GO Battle League",
+        "description": "在 GO 對戰聯盟對戰",
         "rewards": [
           {
             "isFeatured": true,
@@ -83,7 +83,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Paldean Wooper",
+            "name": "帕底亞 烏波",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm194.fPALDEA.icon.png",
             "isShiny": true,
             "maxCp": "275",
@@ -94,13 +94,13 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Charged TM.png",
-            "name": "Charged TM ×1",
+            "name": "特殊招式學習器 ×1",
             "quantity": "×1"
           }
         ]
       },
       {
-        "description": "Battle in the GO Battle League 5 times",
+        "description": "在 GO 對戰聯盟對戰 5 次",
         "rewards": [
           {
             "isFeatured": true,
@@ -119,27 +119,27 @@
     "category": "Delightful Days: Taken Over Tasks",
     "tasks": [
       {
-        "description": "Defeat a Team GO Rocket Grunt",
+        "description": "擊敗 1 名 GO 火箭隊手下",
         "rewards": [
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Mysterious Component.png",
-            "name": "Mysterious Component ×1",
+            "name": "神秘零件 ×1",
             "quantity": "×1"
           }
         ]
       },
       {
-        "description": "Purify 3 Shadow Pokémon",
+        "description": "淨化 3 隻暗影寶可夢",
         "rewards": [
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Fast TM.png",
-            "name": "Fast TM ×1",
+            "name": "一般招式學習器 ×1",
             "quantity": "×1"
           },
           {
@@ -147,7 +147,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Charged TM.png",
-            "name": "Charged TM ×1",
+            "name": "特殊招式學習器 ×1",
             "quantity": "×1"
           }
         ]
@@ -213,7 +213,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金莓果 ×2",
+            "name": "金色蔓莓果 ×2",
             "quantity": "×2"
           },
           {
@@ -277,7 +277,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金莓果 ×2",
+            "name": "金色蔓莓果 ×2",
             "quantity": "×2"
           },
           {
@@ -314,7 +314,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金莓果 ×2",
+            "name": "金色蔓莓果 ×2",
             "quantity": "×2"
           },
           {
@@ -1192,7 +1192,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金莓果 ×2",
+            "name": "金色蔓莓果 ×2",
             "quantity": "×2"
           },
           {
@@ -1472,7 +1472,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金莓果 ×2",
+            "name": "金色蔓莓果 ×2",
             "quantity": "×2"
           },
           {
@@ -2125,7 +2125,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金莓果 ×1",
+            "name": "金色蔓莓果 ×1",
             "quantity": "×1"
           }
         ]
