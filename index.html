@@ -228,33 +228,53 @@
                     </div>
                 </div>
         
-                <div class="controls-container">
-                    <fieldset class="control-fieldset">
-                        <legend>分類篩選</legend>
-                        <div class="filter-group">
-                            <button id="select-starters">御三家</button>
-                            <label><input type="checkbox" id="include-starter-evolutions"> 含進化</label>
-                        </div>
-                        <div class="filter-group">
-                            <button id="select-pseudos">準神</button>
-                            <label><input type="checkbox" id="include-pseudo-evolutions"> 含進化</label>
-                        </div>
-                        <div class="filter-group">
-                            <button id="select-mega">超級進化</button>
-                            <label><input type="checkbox" id="include-mega-evolutions"> 含進化</label>
-                        </div>
-                         <button id="show-all" class="utility-button">顯示全部</button>
-                    </fieldset>
-        
-                    <fieldset class="control-fieldset">
-                        <legend>批次操作</legend>
-                        <div class="action-buttons">
-                            <button id="select-all-shown" style="display: none;">全選當前</button>
-                            <button id="select-evolved">全選進化型</button>
-                            <button id="clear-all" class="danger-button">全部清除</button>
-                        </div>
-                    </fieldset>
-                </div>
+<div class="controls-container">
+    <fieldset class="control-fieldset">
+        <legend>分類篩選</legend>
+        <div class="filter-group">
+            <button id="select-starters">御三家</button>
+            <label><input type="checkbox" id="include-starter-evolutions"> 包含進化型態</label>
+        </div>
+        <div class="filter-group">
+            <button id="select-pseudos">準神</button>
+            <label><input type="checkbox" id="include-pseudo-evolutions"> 包含進化型態</label>
+        </div>
+        <div class="filter-group">
+            <button id="select-mega">可超級進化</button>
+            <label><input type="checkbox" id="include-mega-evolutions"> 包含進化型態</label>
+        </div>
+    </fieldset>
+
+    <fieldset class="control-fieldset">
+        <legend>PvP 排名篩選</legend>
+        <div class="filter-group pvp-filter-group">
+            <select id="pvp-league-select">
+                <option value="1500">超級聯盟</option>
+                <option value="2500">高級聯盟</option>
+                <option value="10000">大師聯盟</option>
+            </select>
+            <label for="pvp-rank-limit">前</label>
+            <input type="number" id="pvp-rank-limit" value="100" min="1" max="500">
+            <label for="pvp-rank-limit">名</label>
+            <button id="filter-pvp-rank">篩選</button>
+        </div>
+        <div class="filter-group">
+            <label>
+                <input type="checkbox" id="include-pvp-evolutions"> 顯示進化/退化型態
+            </label>
+        </div>
+        </fieldset>
+
+    <fieldset class="control-fieldset">
+        <legend>批次操作</legend>
+        <div class="action-buttons">
+            <button id="select-evolved">勾選所有進化型態</button>
+            <button id="select-all-shown" style="display:none;">全選當前顯示</button>
+            <button id="show-all">顯示全部</button>
+            <button id="clear-all">清除所有選擇</button>
+        </div>
+    </fieldset>
+</div>
                 <div id="pokemon-container" class="pokemon-grid"></div>
             </main>
         </div>
