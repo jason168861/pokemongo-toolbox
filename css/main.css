@@ -259,7 +259,6 @@ body {
        position: absolute; /* Position relative to .site-header-main */
        top: 50%;
        left: 15px;
-       transform: translateY(-50%);
        z-index: 15; /* Make sure it's above the nav links but below the hamburger */
     }
 

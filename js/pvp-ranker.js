@@ -25,6 +25,9 @@ export function initializePvpRanker() {
     const currentLevelValue = document.getElementById('current-level-value');
     const currentCpDisplay = document.getElementById('current-cp-display');
     
+    // 【新增】獲取所有滑桿元素
+    const ivSliders = document.querySelectorAll('.iv-slider');
+
     let selectedIndex = -1;
 
     const RANKINGS_DATA = {
@@ -48,6 +51,15 @@ export function initializePvpRanker() {
         atkSelect.value = '0';
         defSelect.value = '15';
         hpSelect.value = '15';
+    }
+
+    // 【新增】更新滑桿視覺顯示的函式
+    function updateSliderDisplay(ivType, value) {
+        const progressBar = document.getElementById(`${ivType}-progress`);
+        if (progressBar) {
+            const percentage = (parseInt(value, 10) / 15) * 100;
+            progressBar.style.width = `${percentage}%`;
+        }
     }
     
     function updateCurrentCpDisplay() {
@@ -371,10 +383,80 @@ export function initializePvpRanker() {
         }
     });
     
-    atkSelect.addEventListener('change', handleCalculate);
-    defSelect.addEventListener('change', handleCalculate);
-    hpSelect.addEventListener('change', handleCalculate);
+    // 【修改】為下拉選單加上監聽，使其能同步更新滑桿
+    atkSelect.addEventListener('change', () => {
+        handleCalculate();
+        updateSliderDisplay('atk', atkSelect.value);
+    });
+    defSelect.addEventListener('change', () => {
+        handleCalculate();
+        updateSliderDisplay('def', defSelect.value);
+    });
+    hpSelect.addEventListener('change', () => {
+        handleCalculate();
+        updateSliderDisplay('hp', hpSelect.value);
+    });
+
+    // 【新增】為所有滑桿添加互動事件監聽
+    ivSliders.forEach(slider => {
+        const ivType = slider.dataset.iv;
+        const correspondingSelect = document.getElementById(`${ivType}-iv`);
+        let isDragging = false;
+
+        const handleInteraction = (e) => {
+            e.preventDefault();
+            const rect = slider.getBoundingClientRect();
+            // 兼容滑鼠和觸控事件
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            let percentage = x / rect.width;
+            percentage = Math.max(0, Math.min(1, percentage)); // 確保比例在 0 和 1 之間
+            const value = Math.round(percentage * 15);
+
+            if (correspondingSelect.value != value) {
+                correspondingSelect.value = value;
+                // 手動觸發 change 事件，來執行 handleCalculate 和更新滑桿
+                correspondingSelect.dispatchEvent(new Event('change'));
+            }
+        };
+
+        // 滑鼠事件
+        slider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            handleInteraction(e);
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                handleInteraction(e);
+            }
+        });
+
+        // 在整個視窗監聽 mouseup，避免滑鼠移出滑桿範圍時失效
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+         // 觸控事件
+        slider.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            handleInteraction(e);
+        });
+
+        slider.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                handleInteraction(e);
+            }
+        });
+
+        slider.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+    });
     
     // --- 初始設定 ---
     populateIVSelects();
+    // 【新增】初始化滑桿的顯示狀態
+    updateSliderDisplay('atk', atkSelect.value);
+    updateSliderDisplay('def', defSelect.value);
+    updateSliderDisplay('hp', hpSelect.value);
 }

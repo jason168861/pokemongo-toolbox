@@ -32,13 +32,76 @@
 }
 
 #pvp-ranker-app .iv-inputs {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
     margin-bottom: 15px;
+    padding-top: 10px; 
 }
 
-#pvp-ranker-app .iv-inputs div {
+#pvp-ranker-app .iv-control {
+    display: flex;
+    align-items: center; /* 【修改回來】這裡我們仍然使用 center 置中 */
+    gap: 15px;
+    margin-bottom: 25px; /* 增加一點底部間距，因為標籤要移上去了 */
+}
+
+#pvp-ranker-app .iv-label-select {
+    flex: 0 0 130px;
+    position: relative; /* 【新增】設定為相對定位，作為標籤的定位基準 */
+}
+
+#pvp-ranker-app .iv-label-select label {
+    position: absolute; /* 【新增】將標籤設為絕對定位，使其脫離排版流程 */
+    top: -22px;       /* 【新增】將標籤向上移動到選單的上方 */
+    left: 0;
+}
+
+
+#pvp-ranker-app .iv-slider {
+    flex-grow: 1; 
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+#pvp-ranker-app .iv-slider-track {
+    position: relative;
+    width: 100%;
+    height: 18px;
+    background-color: #e0e0e0;
+    border-radius: 9px;
+    overflow: hidden; 
+}
+
+#pvp-ranker-app .iv-slider-track::before,
+#pvp-ranker-app .iv-slider-track::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 2;
+}
+
+#pvp-ranker-app .iv-slider-track::before {
+    left: 33.33%; 
+}
+
+#pvp-ranker-app .iv-slider-track::after {
+    left: 66.67%; 
+}
+
+#pvp-ranker-app .iv-slider-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #f39c12; 
+    border-radius: 9px;
+    z-index: 1;
+    transition: width 0.1s ease-out; 
+}
+
+
+#pvp-ranker-app .iv-inputs div:not(.iv-control):not(.iv-label-select):not(.iv-slider):not(.iv-slider-track):not(.iv-slider-progress) {
     flex: 1;
 }
 
