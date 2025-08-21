@@ -182,52 +182,92 @@ document.addEventListener('DOMContentLoaded', () => {
     let searchFiltersAppInitialized = false;
     let specialResearchAppInitialized = false;
     let infoHubAppInitialized = false; // <-- 【新增】
-
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
-            const targetAppId = button.dataset.target;
-
-            appContents.forEach(content => content.classList.remove('active'));
-            const targetApp = document.getElementById(targetAppId);
-            targetApp.classList.add('active');
-            
-            // --- 延遲載入邏輯：只在第一次點擊時初始化對應的 App ---
-            if (targetAppId === 'cp-checker-app' && !cpAppInitialized) {
-                initializeCpChecker();
-                cpAppInitialized = true;
-            } else if (targetAppId === 'id-selector-app' && !idAppInitialized) {
-                initializeIdSelector();
-                idAppInitialized = true;
-            } else if (targetAppId === 'research-app' && !researchAppInitialized) {
-                initializeResearchApp();
-                researchAppInitialized = true;
-            } else if (targetAppId === 'eggs-app' && !eggsAppInitialized) {
-                initializeEggsApp();
-                eggsAppInitialized = true;
-            } else if (targetAppId === 'raids-app' && !raidsAppInitialized) { // <-- 新增此區塊
-                initializeRaidsApp();
-                raidsAppInitialized = true;
-            } else if (targetAppId === 'pvp-ranker-app' && !pvpRankerAppInitialized) {
-                initializePvpRanker();
-                pvpRankerAppInitialized = true;
-            } else if (targetAppId === 'level-up-app' && !levelUpAppInitialized) {
-                initializeLevelUpApp();
-                levelUpAppInitialized = true;
-            } else if (targetAppId === 'search-filters-app' && !searchFiltersAppInitialized) {
-                initializeSearchFiltersApp();
-                searchFiltersAppInitialized = true;
-            } else if (targetAppId === 'special-research-app' && !specialResearchAppInitialized) { // <-- 【新增】
-                initializeSpecialResearchApp();
-                specialResearchAppInitialized = true;
-            } else if (targetAppId === 'info-hub-app' && !infoHubAppInitialized) { // <-- 【新增】
-                initializeInfoHubApp();
-                infoHubAppInitialized = true;
+    function activateTab(targetAppId) {
+        // 1. 更新內容區塊的顯示狀態
+        appContents.forEach(content => {
+            if (content.id === targetAppId) {
+                content.classList.add('active');
+            } else {
+                content.classList.remove('active');
             }
         });
+
+        // 2. 更新按鈕的 active 狀態
+        tabButtons.forEach(btn => {
+            if (btn.dataset.target === targetAppId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        // 3. 處理 App 的延遲載入 (將原本的邏輯搬移至此)
+        if (targetAppId === 'cp-checker-app' && !cpAppInitialized) {
+            initializeCpChecker();
+            cpAppInitialized = true;
+        } else if (targetAppId === 'id-selector-app' && !idAppInitialized) {
+            initializeIdSelector();
+            idAppInitialized = true;
+        } else if (targetAppId === 'research-app' && !researchAppInitialized) {
+            initializeResearchApp();
+            researchAppInitialized = true;
+        } else if (targetAppId === 'eggs-app' && !eggsAppInitialized) {
+            initializeEggsApp();
+            eggsAppInitialized = true;
+        } else if (targetAppId === 'raids-app' && !raidsAppInitialized) {
+            initializeRaidsApp();
+            raidsAppInitialized = true;
+        } else if (targetAppId === 'pvp-ranker-app' && !pvpRankerAppInitialized) {
+            initializePvpRanker();
+            pvpRankerAppInitialized = true;
+        } else if (targetAppId === 'level-up-app' && !levelUpAppInitialized) {
+            initializeLevelUpApp();
+            levelUpAppInitialized = true;
+        } else if (targetAppId === 'search-filters-app' && !searchFiltersAppInitialized) {
+            initializeSearchFiltersApp();
+            searchFiltersAppInitialized = true;
+        } else if (targetAppId === 'special-research-app' && !specialResearchAppInitialized) {
+            initializeSpecialResearchApp();
+            specialResearchAppInitialized = true;
+        } else if (targetAppId === 'info-hub-app' && !infoHubAppInitialized) {
+            initializeInfoHubApp();
+            infoHubAppInitialized = true;
+        }
+    }
+
+    // 【修改】原本的點擊事件監聽器
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetAppId = button.dataset.target;
+            // 點擊按鈕時，只更新 URL 的 hash
+            window.location.hash = targetAppId;
+        });
     });
+
+    // 【新增】監聽 hash 變化的事件 (處理瀏覽器上一頁/下一頁)
+    window.addEventListener('hashchange', () => {
+        // 取得當前的 hash，並移除 '#'
+        const targetAppId = window.location.hash.substring(1);
+        // 如果 hash 存在，就啟用對應的 tab
+        if (targetAppId) {
+            activateTab(targetAppId);
+        }
+    });
+
+    // 【新增】處理頁面初次載入
+    function handleInitialLoad() {
+        // 檢查載入時 URL 是否已經有 hash
+        const initialTabId = window.location.hash.substring(1);
+        if (initialTabId) {
+            activateTab(initialTabId);
+        } else {
+            // 如果沒有 hash，預設載入第一個分頁 (功能說明頁)
+            // 你也可以修改成你想要的預設頁
+            activateTab('docs-app'); 
+        }
+    }
+
+    handleInitialLoad(); // 立即執行初次載入處理
 
     // 預設載入第一個 App
     // initializeCpChecker();
@@ -270,6 +310,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const isExpanded = navLinks.classList.contains('is-open');
         hamburgerButton.setAttribute('aria-expanded', isExpanded);
     });
+    const groupTitles = document.querySelectorAll('.nav-group .group-title');
+
+    groupTitles.forEach(title => {
+        title.addEventListener('click', () => {
+            const group = title.closest('.nav-group');
+            if (group) {
+                group.classList.toggle('is-expanded');
+            }
+        });
+    });
     const loadingOverlay = document.getElementById('loading-overlay');
     const pokeballLoader = document.querySelector('.pokeball-loader');
 
@@ -305,7 +355,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    const desktopSubmenuButtons = document.querySelectorAll('.nav-group .sub-links .tab-button');
 
+    desktopSubmenuButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const parentSubLinks = button.closest('.sub-links');
+            if (parentSubLinks) {
+                // 暫時將 display 設為 none 來強制隱藏
+                parentSubLinks.style.display = 'none';
+
+                // 短暫延遲後移除 style，讓 CSS 的 :hover 效果能重新接管
+                setTimeout(() => {
+                    parentSubLinks.style.display = '';
+                }, 100);
+            }
+        });
+    });
 });
 
 

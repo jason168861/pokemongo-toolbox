@@ -29,7 +29,7 @@ body {
     display: flex;
     justify-content: center; /* This will center the .nav-links within its available space */
     flex-grow: 1; /* Allows the nav to take up the remaining space */
-    flex-wrap: wrap; 
+    /* REMOVED flex-wrap from here to prevent unwanted wrapping on desktop */
     /* Removed properties now handled by the parent .site-header-main */
     /* position, top, z-index, background-color, border-bottom, width, margin-bottom */
 }
@@ -104,6 +104,144 @@ body {
 .hamburger-button {
     display: none;
 }
+    .nav-group .group-title {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    background-color: #f0f2f5; /* 給標題一個淺灰色底 */
+    cursor: pointer;
+    color: #333; /* 標題文字顏色 */
+    position: relative;
+    border-bottom: 1px solid var(--border-color, #eee);
+    border-top: 1px solid var(--border-color, #eee);
+    margin-top: -1px; /* 避免雙重邊框 */
+}
+
+/* 用 ::after 偽元素製作一個箭頭圖示 */
+.nav-group .group-title::after {
+    content: '▼';
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #888;
+}
+
+/* 當群組展開時，讓箭頭旋轉 */
+.nav-group.is-expanded .group-title::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* 子選單容器的初始狀態 (隱藏) */
+.nav-group .sub-links {
+    max-height: 0;
+    overflow: hidden;
+    /* 子選單內的項目不需要額外背景色，因為 tab-button 已有 */
+}
+
+/* 子選單內的按鈕樣式微調 */
+.nav-group .sub-links .tab-button {
+    font-size: 16px;
+    font-weight: normal;
+    color: #606770;
+    background-color: #fff; /* 確保子項目是白色底 */
+}
+
+/* 當群組被加上 .is-expanded 時，展開子選單 */
+.nav-group.is-expanded .sub-links {
+    max-height: 600px; /* 設定一個足夠大的高度讓所有子項目顯示 */
+}
+
+/* --- [START] DESKTOP NAVIGATION FIX --- */
+@media (min-width: 769px) {
+    /* The main container for nav items */
+    .nav-links {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Convert nav groups into dropdown containers */
+    .nav-group {
+        position: relative;
+    }
+
+    /* Restyle group titles to look like regular nav buttons */
+    .nav-group .group-title {
+        width: auto;
+        border: none;
+        background-color: transparent;
+        margin: 0;
+        padding: 12px 25px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #606770;
+        transition: color 0.3s;
+    }
+
+    /* Add a subtle dropdown arrow */
+    .nav-group .group-title::after {
+        content: ' ▼';
+        font-size: 0.6em;
+        vertical-align: middle;
+        position: static;
+        transform: none;
+        color: inherit;
+    }
+    
+    .nav-group .group-title:hover {
+        color: #1877f2;
+    }
+
+    /* Style the dropdown menu itself */
+    .nav-group .sub-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        min-width: 220px;
+        padding: 8px 0;
+        z-index: 2001;
+        border: 1px solid #ddd;
+        max-height: none; /* Override mobile style */
+        overflow: visible; /* Override mobile style */
+    }
+
+    /* Show dropdown on hover */
+    .nav-group:hover .sub-links,
+    .nav-group:focus-within .sub-links {
+        display: block;
+    }
+
+    /* Style individual items within the dropdown */
+    .nav-group .sub-links .tab-button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        padding: 10px 20px;
+        border-bottom: none;
+        font-size: 16px;
+    }
+
+    .nav-group .sub-links .tab-button:hover {
+        background-color: #f0f2f5;
+        color: #1877f2;
+    }
+    
+    /* Hide the mobile hamburger on desktop */
+    .hamburger-button {
+        display: none;
+    }
+}
+/* --- [END] DESKTOP NAVIGATION FIX --- */
+
 
 /* --- [MODIFIED] Mobile Layout Adjustments --- */
 @media (max-width: 768px) {
@@ -121,6 +259,7 @@ body {
        position: absolute; /* Position relative to .site-header-main */
        top: 50%;
        left: 15px;
+       transform: translateY(-50%);
        z-index: 15; /* Make sure it's above the nav links but below the hamburger */
     }
 
@@ -167,7 +306,14 @@ body {
         transition: max-height 0.1s ease-in-out;
     }
     
-    .nav-links.is-open { max-height: 500px; }
+    .nav-links.is-open { 
+        /* 將固定的 500px 改為動態計算的高度 */
+        /* 100vh 是指螢幕總高度，減去 50px 是為了不遮擋頂部導覽列 */
+        max-height: calc(100vh - 50px); 
+
+        /* 當內容超出時，顯示垂直捲軸 */
+        overflow-y: auto; 
+    }
 
     .nav-links .tab-button {
         width: 100%;
@@ -182,6 +328,7 @@ body {
         background-color: var(--primary-color, #0075BE);
         color: white;
     }
+
 }
 
 #loading-overlay {
