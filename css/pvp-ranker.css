@@ -65,21 +65,25 @@
     border-top: 1px solid #ddd;
 }
 
+/* pvp-ranker.css (Modified) */
+
 #pvp-ranker-app .pokemon-family-result > h2 {
     flex: 0 0 160px;
-    text-align: left;
+    text-align: center; /* 將文字置中 */
     font-size: 1.3em;
     color: #007bff;
     margin: 0;
     padding-top: 5px;
     display: flex;
+    flex-direction: column-reverse; /* 關鍵修改：改為垂直排列並反轉順序 */
     align-items: center;
 }
 
 #pvp-ranker-app .pokemon-result-img {
-    width: 60px;
-    height: 60px;
-    margin-right: 10px;
+    width: 100px;
+    height: 100px;
+    margin-right: 0; /* 移除右邊距 */
+    margin-top: 8px; /* 新增上邊距，在圖片與文字間製造空隙 */
     object-fit: contain;
 }
 
@@ -95,14 +99,12 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 10px;
-    flex: 1; 
-    min-width: 170px;
-    max-width: 200px;
+    flex: 0 0 200px; /* << 關鍵修改：設定固定寬度為 200px，且不可伸缩 */
     box-shadow: none;
     position: relative;
     overflow: hidden;
+    box-sizing: border-box; /* 確保 padding 不會影響最終寬度 */
 }
-
 #pvp-ranker-app .result-card h2 {
     margin: 0 0 8px 0;
     color: #0056b3;
