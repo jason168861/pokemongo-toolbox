@@ -108,6 +108,16 @@ def process_rankings(rankings_data, gm_data):
         cm2_id = moveset_ids[2] if len(moveset_ids) > 2 else None
         cm2_gm = move_lookup.get(cm2_id, {})
 
+        # === 【邏輯修正】從寶可夢資料中檢查 Elite Move ===
+        # 先從 p_gm (該寶可夢的 gamemaster 資料) 中安全地取得 eliteMoves 列表
+        pokemon_elite_moves = p_gm.get('eliteMoves', [])
+
+        # 檢查當前招式 ID 是否存在於該寶可夢的 eliteMoves 列表中
+        is_elite_fast = fast_move_id in pokemon_elite_moves
+        is_elite_cm1 = cm1_id in pokemon_elite_moves
+        is_elite_cm2 = cm2_id in pokemon_elite_moves
+        # === 修正結束 ===
+
         fast_move_energy = fast_move_gm.get('energyGain', 0)
         cm1_energy_cost = cm1_gm.get('energy', 0)
         cm2_energy_cost = cm2_gm.get('energy', 0)
@@ -126,6 +136,10 @@ def process_rankings(rankings_data, gm_data):
             'fastMove': fast_move_gm.get('name', fast_move_id),
             'chargedMove1': cm1_gm.get('name', cm1_id),
             'chargedMove2': cm2_gm.get('name', cm2_id) if cm2_id else '',
+            # 這裡不需要改，因為 is_elite_... 的值已經被正確計算了
+            'isEliteFast': is_elite_fast,
+            'isEliteCharged1': is_elite_cm1,
+            'isEliteCharged2': is_elite_cm2,
             'cm1Turns': math.ceil(cm1_energy_cost / fast_move_energy) if fast_move_energy > 0 else 0,
             'cm2Turns': math.ceil(cm2_energy_cost / fast_move_energy) if fast_move_energy > 0 and cm2_energy_cost > 0 else 0,
             'buddyDistance': p_gm.get('buddyDistance', 0),

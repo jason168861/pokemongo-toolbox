@@ -393,3 +393,10 @@ body.nav-is-hidden #id-selector-app .search-container {
         border-width: 2px; /* 讓邊框細一點 */
     }
 }
+
+/* --- 新增 Elite Move 的樣式 --- */
+.elite-move {
+  color: #D4AF37; /* 使用金色來突顯 */
+  font-weight: bold; /* 讓字體加粗 */
+  font-style: italic; /* 稍微傾斜，更有特殊感 */
+}

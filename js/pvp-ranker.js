@@ -213,24 +213,43 @@ export function initializePvpRanker() {
         });
     }
 
-    function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, warningText, rankingInfoFromDataFile) { 
+function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, warningText, rankingInfoFromDataFile) { 
         let movesetHTML = '';
         if (rankingInfoFromDataFile && !isOverLimit) {
+            // 【修改開始】在這裡加入 Elite Move 的判斷邏輯
+            
+            // 判斷一般招式
+            const fastMoveClass = rankingInfoFromDataFile.isEliteFast ? 'elite-move' : '';
+            const fastMoveSymbol = rankingInfoFromDataFile.isEliteFast ? ' ✨' : '';
+
+            // 判斷第一個特殊招式
+            const cm1Class = rankingInfoFromDataFile.isEliteCharged1 ? 'elite-move' : '';
+            const cm1Symbol = rankingInfoFromDataFile.isEliteCharged1 ? ' ✨' : '';
+
+            // 判斷第二個特殊招式 (如果存在)
+            let cm2HTML = '';
+            if (rankingInfoFromDataFile.chargedMove2) {
+                const cm2Class = rankingInfoFromDataFile.isEliteCharged2 ? 'elite-move' : '';
+                const cm2Symbol = rankingInfoFromDataFile.isEliteCharged2 ? ' ✨' : '';
+                cm2HTML = `<span class="move-name ${cm2Class}">${rankingInfoFromDataFile.chargedMove2}${cm2Symbol}</span>`;
+            }
+
             movesetHTML = `
                 <div class="moveset-details">
                     <div class="moveset-line">
                         <span class="move-type-label">一般</span>
-                        <span class="move-name">${rankingInfoFromDataFile.fastMove}</span>
+                        <span class="move-name ${fastMoveClass}">${rankingInfoFromDataFile.fastMove}${fastMoveSymbol}</span>
                     </div>
                     <div class="moveset-line">
                         <span class="move-type-label">特殊</span>
                         <div class="charged-move-list">
-                            <span class="move-name">${rankingInfoFromDataFile.chargedMove1}</span>
-                            ${rankingInfoFromDataFile.chargedMove2 ? `<span class="move-name">${rankingInfoFromDataFile.chargedMove2}</span>` : ''}
+                            <span class="move-name ${cm1Class}">${rankingInfoFromDataFile.chargedMove1}${cm1Symbol}</span>
+                            ${cm2HTML}
                         </div>
                     </div>
                 </div>
             `;
+            // 【修改結束】
         }
         
         let userResultHTML = '';
@@ -257,7 +276,7 @@ export function initializePvpRanker() {
                 <div class="rank-details your-rank">
                      <p class="no-rank">您的IV組合不在此聯盟排名內。</p>
                 </div>
-             `;
+               `;
         }
 
         const rankOneResultHTML = rankOneInfo ? `
