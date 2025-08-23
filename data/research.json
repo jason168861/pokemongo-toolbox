@@ -1,5 +1,81 @@
 [
   {
+    "category": "Pokémon GO Fest 2025: Max Finale Tasks",
+    "tasks": [
+      {
+        "description": "Power up Pokémon 8 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "化石盔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm140.icon.png",
+            "isShiny": true,
+            "maxCp": "587",
+            "minCp": "548"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "菊石獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm138.icon.png",
+            "isShiny": true,
+            "maxCp": "662",
+            "minCp": "620"
+          }
+        ]
+      },
+      {
+        "description": "Transfer 8 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "破破袋",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm568.icon.png",
+            "isShiny": true,
+            "maxCp": "428",
+            "minCp": "395"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場極限對戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm888.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/888.png",
+            "name": "Zacian Candy ×8",
+            "quantity": "×8"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm889.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/889.png",
+            "name": "Zamazenta Candy ×8",
+            "quantity": "×8"
+          }
+        ]
+      },
+      {
+        "description": "Unlock a Max Move",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm890.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/890.png",
+            "name": "Eternatus Candy ×100",
+            "quantity": "×100"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {

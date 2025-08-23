@@ -1,38 +1,96 @@
 {
-    "lastUpdated": "2025年8月23日12時",
+    "lastUpdated": "2025年8月23日14時",
     "bosses": [
         {
-            "name": "來悲茶",
-            "englishName": "Sinistea",
+            "name": "皮卡丘",
+            "englishName": "Pikachu",
             "tier": "Tier 1",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
-                    "name": "ghost",
-                    "image": "https://leekduck.com/assets/img/types/ghost.png"
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 603,
-                    "max": 650
+                    "min": 493,
+                    "max": 536
                 },
                 "boosted": {
-                    "min": 754,
-                    "max": 813
+                    "min": 616,
+                    "max": 670
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "fog",
-                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm854.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_GOGGLES_BLUE.icon.png"
         },
         {
-            "name": "伽勒爾 大蔥鴨",
-            "englishName": "Galarian Farfetch'd",
+            "name": "皮卡丘",
+            "englishName": "Pikachu",
+            "tier": "Tier 1",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 493,
+                    "max": 536
+                },
+                "boosted": {
+                    "min": 616,
+                    "max": 670
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_GOGGLES_RED.icon.png"
+        },
+        {
+            "name": "皮卡丘",
+            "englishName": "Pikachu",
+            "tier": "Tier 1",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 493,
+                    "max": 536
+                },
+                "boosted": {
+                    "min": 616,
+                    "max": 670
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_GOGGLES_YELLOW.icon.png"
+        },
+        {
+            "name": "列陣兵",
+            "englishName": "Falinks",
             "tier": "Tier 3",
             "canBeShiny": true,
             "types": [
@@ -43,12 +101,12 @@
             ],
             "combatPower": {
                 "normal": {
-                    "min": 898,
-                    "max": 956
+                    "min": 1278,
+                    "max": 1347
                 },
                 "boosted": {
-                    "min": 1123,
-                    "max": 1196
+                    "min": 1598,
+                    "max": 1683
                 }
             },
             "boostedWeather": [
@@ -57,44 +115,11 @@
                     "image": "https://leekduck.com/assets/img/weather/cloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm83.fGALARIAN.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm870.fGOFEST_2025_TRAIN_CONDUCTOR.icon.png"
         },
         {
-            "name": "伽勒爾 雙彈瓦斯",
-            "englishName": "Galarian Weezing",
-            "tier": "Tier 3",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "poison",
-                    "image": "https://leekduck.com/assets/img/types/poison.png"
-                },
-                {
-                    "name": "fairy",
-                    "image": "https://leekduck.com/assets/img/types/fairy.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1242,
-                    "max": 1310
-                },
-                "boosted": {
-                    "min": 1553,
-                    "max": 1637
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm110.fGALARIAN.icon.png"
-        },
-        {
-            "name": "蒼響",
-            "englishName": "Zacian",
+            "name": "Zacian (Crowned Sword)",
+            "englishName": "Zacian (Crowned Sword)",
             "tier": "Tier 5",
             "canBeShiny": true,
             "types": [
@@ -127,11 +152,11 @@
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm888.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm888.fCROWNED_SWORD.icon.png"
         },
         {
-            "name": "藏瑪然特",
-            "englishName": "Zamazenta",
+            "name": "Zamazenta (Crowned Shield)",
+            "englishName": "Zamazenta (Crowned Shield)",
             "tier": "Tier 5",
             "canBeShiny": true,
             "types": [
@@ -164,7 +189,7 @@
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm889.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm889.fCROWNED_SHIELD.icon.png"
         },
         {
             "name": "超級 大比鳥",
