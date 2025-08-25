@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2025年8月25日14時",
+    "lastUpdated": "2025年8月25日16時",
     "bosses": [
         {
             "name": "懶人獺",
@@ -248,7 +248,7 @@
             "name": "奈克洛茲瑪",
             "englishName": "Necrozma",
             "tier": "Tier 5",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
                     "name": "psychic",
