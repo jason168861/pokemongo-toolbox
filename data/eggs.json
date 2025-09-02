@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025年9月3日00時",
+  "lastUpdated": "2025年9月3日02時",
   "pokemon": [
     {
       "eggDistance": 2,
@@ -103,6 +103,14 @@
       "name": "鴨嘴寶寶",
       "cpRange": "756",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm240.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "adventure_sync",
+      "name": "盔甲鳥",
+      "cpRange": "1204",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm227.icon.png",
       "isShiny": true
     },
     {
