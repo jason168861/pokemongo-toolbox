@@ -1316,7 +1316,7 @@
             "type": "encounter",
             "name": "小碎鑽",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm703.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "628",
             "minCp": "585"
           }
