@@ -1,114 +1,120 @@
 [
   {
-    "category": "Sunkissed Shores Tasks",
+    "category": "Kanto Celebration Tasks",
     "tasks": [
       {
-        "description": "捕捉10隻寶可夢",
+        "description": "Catch 5 Bulbasaur, Charmander, or Squirtle",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "向日種子",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm191.icon.png",
+            "name": "妙蛙種子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.icon.png",
             "isShiny": true,
-            "maxCp": "169",
-            "minCp": "148"
+            "maxCp": "477",
+            "minCp": "442"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "櫻花寶",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm420.icon.png",
+            "name": "小火龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.icon.png",
             "isShiny": true,
-            "maxCp": "407",
-            "minCp": "374"
+            "maxCp": "420",
+            "minCp": "387"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "甜竹竹",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm761.icon.png",
+            "name": "傑尼龜",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.icon.png",
             "isShiny": true,
-            "maxCp": "201",
-            "minCp": "178"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "幼棉棉",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm829.icon.png",
-            "isShiny": false,
-            "maxCp": "288",
-            "minCp": "260"
+            "maxCp": "405",
+            "minCp": "372"
           }
         ]
       },
       {
-        "description": "捕捉10隻水屬性的寶可夢",
+        "description": "進化1隻寶可夢",
         "rewards": [
           {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "大鉗蟹",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm98.icon.png",
-            "isShiny": true,
-            "maxCp": "669",
-            "minCp": "626"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "龍蝦小兵",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm341.icon.png",
-            "isShiny": true,
-            "maxCp": "527",
-            "minCp": "490"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "鐵臂槍蝦",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm692.icon.png",
-            "isShiny": true,
-            "maxCp": "466",
-            "minCp": "431"
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
           }
         ]
       },
       {
-        "description": "探索1公里",
+        "description": "Mega Evolve a Venusaur, Charizard, or Blastoise",
         "rewards": [
           {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "伽勒爾 呆呆獸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm79.fGALARIAN.icon.png",
-            "isShiny": true,
-            "maxCp": "525",
-            "minCp": "487"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Slakoth wearing a visor",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm287.cSUMMER_2024.icon.png",
-            "isShiny": true,
-            "maxCp": "429",
-            "minCp": "395"
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/icons/xp.png",
+            "name": "XP ×10000",
+            "quantity": "×10000"
           }
         ]
       },
       {
-        "description": "Win 3 one-star raids",
+        "description": "旋轉5個寶可補給站或道館的轉盤",
         "rewards": [
           {
             "isFeatured": true,
-            "type": "encounter",
-            "name": "吃吼霸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm977.icon.png",
-            "isShiny": true,
-            "maxCp": "1284",
-            "minCp": "1225"
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm3.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Venusaur Mega Energy.png",
+            "name": "妙蛙花 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm6.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Charizard Mega Energy.png",
+            "name": "噴火龍 超級能量",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm9.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Blastoise Mega Energy.png",
+            "name": "水箭龜 超級能量",
+            "quantity": "×10"
+          }
+        ]
+      },
+      {
+        "description": "使用5個樹果協助捕捉寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
           }
         ]
       }
