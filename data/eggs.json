@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025年9月2日09時",
+  "lastUpdated": "2025年9月2日11時",
   "pokemon": [
     {
       "eggDistance": 2,
@@ -44,9 +44,9 @@
     {
       "eggDistance": 5,
       "source": "regular",
-      "name": "臭泥",
+      "name": "阿羅拉 臭泥",
       "cpRange": "785",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm88.icon.png",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm88.fALOLA.icon.png",
       "isShiny": true
     },
     {
@@ -268,9 +268,10 @@
     {
       "eggDistance": 10,
       "source": "adventure_sync",
-      "name": "Aerodactyle",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_000.png",
-      "isShiny": false
+      "name": "化石翼龍",
+      "cpRange": "1590",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm142.icon.png",
+      "isShiny": true
     },
     {
       "eggDistance": 10,
