@@ -1,5 +1,70 @@
 [
   {
+    "category": "Pokémon Concierge Celebration Tasks",
+    "tasks": [
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "龍蝦小兵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm341.icon.png",
+            "isShiny": true,
+            "maxCp": "527",
+            "minCp": "490"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "海魔獅",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm364.icon.png",
+            "isShiny": false,
+            "maxCp": "735",
+            "minCp": "690"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咚咚鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "743"
+          }
+        ]
+      },
+      {
+        "description": "Take 3 snapshots of wild Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Psyduck with a swim ring",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm54.fSWIM_2025.icon.png",
+            "isShiny": true,
+            "maxCp": "474",
+            "minCp": "439"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Psyduck with a swim ring",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm54.fSWIM_2025.icon.png",
+            "isShiny": true,
+            "maxCp": "474",
+            "minCp": "439"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
