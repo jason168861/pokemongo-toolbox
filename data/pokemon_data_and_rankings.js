@@ -7027,6 +7027,24 @@ const POKEDEX = [
     }
   },
   {
+    "id": "sharpedo_mega",
+    "dexNumber": 319,
+    "name": "巨牙鯊 (Mega)",
+    "stats": {
+      "atk": 289,
+      "def": 144,
+      "sta": 172
+    },
+    "types": [
+      "water",
+      "dark"
+    ],
+    "family": {
+      "id": "carvanha",
+      "stage": 2
+    }
+  },
+  {
     "id": "wailmer",
     "dexNumber": 320,
     "name": "吼吼鯨",
@@ -7085,6 +7103,24 @@ const POKEDEX = [
     "stats": {
       "atk": 194,
       "def": 136,
+      "sta": 172
+    },
+    "types": [
+      "fire",
+      "ground"
+    ],
+    "family": {
+      "id": "numel",
+      "stage": 2
+    }
+  },
+  {
+    "id": "camerupt_mega",
+    "dexNumber": 323,
+    "name": "噴火駝 (Mega)",
+    "stats": {
+      "atk": 253,
+      "def": 183,
       "sta": 172
     },
     "types": [
@@ -8167,6 +8203,24 @@ const POKEDEX = [
     "stats": {
       "atk": 257,
       "def": 228,
+      "sta": 190
+    },
+    "types": [
+      "steel",
+      "psychic"
+    ],
+    "family": {
+      "id": "beldum",
+      "stage": 3
+    }
+  },
+  {
+    "id": "metagross_mega",
+    "dexNumber": 376,
+    "name": "巨金怪 (Mega)",
+    "stats": {
+      "atk": 300,
+      "def": 289,
       "sta": 190
     },
     "types": [
