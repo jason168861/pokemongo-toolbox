@@ -1,64 +1,65 @@
 [
   {
-    "category": "Pokémon Concierge Celebration Tasks",
+    "category": "Psychic Spectacular: Taken Over Tasks",
     "tasks": [
       {
-        "description": "捕捉10隻寶可夢",
+        "description": "Catch 3 Solrock or Lunatone",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "龍蝦小兵",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm341.icon.png",
-            "isShiny": true,
-            "maxCp": "527",
-            "minCp": "490"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "海魔獅",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm364.icon.png",
+            "name": "寶石海星",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm121.icon.png",
             "isShiny": false,
-            "maxCp": "735",
-            "minCp": "690"
+            "maxCp": "1107",
+            "minCp": "1053"
+          }
+        ]
+      },
+      {
+        "description": "擊敗 1 名 GO 火箭隊手下",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Mysterious Component.png",
+            "name": "神秘零件 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "進化1隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1200",
+            "quantity": "×1200"
+          }
+        ]
+      },
+      {
+        "description": "淨化 3 隻暗影寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Fast TM.png",
+            "name": "一般招式學習器 ×1",
+            "quantity": "×1"
           },
           {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "咚咚鼠",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
-            "isShiny": true,
-            "maxCp": "789",
-            "minCp": "743"
-          }
-        ]
-      },
-      {
-        "description": "Take 3 snapshots of wild Pokémon",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Psyduck with a swim ring",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm54.fSWIM_2025.icon.png",
-            "isShiny": true,
-            "maxCp": "474",
-            "minCp": "439"
-          }
-        ]
-      },
-      {
-        "description": "贏得1場團體戰",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Psyduck with a swim ring",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm54.fSWIM_2025.icon.png",
-            "isShiny": true,
-            "maxCp": "474",
-            "minCp": "439"
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Charged TM.png",
+            "name": "特殊招式學習器 ×1",
+            "quantity": "×1"
           }
         ]
       }
