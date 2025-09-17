@@ -23249,7 +23249,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "Zweilous (Shadow)",
+    "name": "雙首暴龍 暗影",
     "score": 88.6,
     "dex": 634,
     "type1": "惡",
@@ -23359,7 +23359,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 75000
   },
   {
-    "name": "Hydreigon (Shadow)",
+    "name": "三首惡龍 暗影",
     "score": 88.3,
     "dex": 635,
     "type1": "惡",
@@ -23381,7 +23381,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 75000
   },
   {
-    "name": "Altaria (Shadow)",
+    "name": "七夕青鳥 暗影",
     "score": 88.2,
     "dex": 334,
     "type1": "龍",
@@ -24613,7 +24613,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "Claydol (Shadow)",
+    "name": "念力土偶 暗影",
     "score": 86,
     "dex": 344,
     "type1": "地面",
@@ -26241,7 +26241,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 100000
   },
   {
-    "name": "Qwilfish (Shadow)",
+    "name": "千針魚 暗影",
     "score": 83.5,
     "dex": 211,
     "type1": "水",
@@ -44809,7 +44809,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "Tornadus (Incarnate) (Shadow)",
+    "name": "龍捲雲 化身 暗影",
     "score": 47.6,
     "dex": 641,
     "type1": "飛行",
@@ -47716,7 +47716,7 @@ const POKEMON_RANKINGS_2500 = [
     "thirdMoveCost": 75000
   },
   {
-    "name": "Hydreigon (Shadow)",
+    "name": "三首惡龍 暗影",
     "score": 86.8,
     "dex": 635,
     "type1": "惡",
@@ -51038,7 +51038,7 @@ const POKEMON_RANKINGS_2500 = [
     "thirdMoveCost": 10000
   },
   {
-    "name": "Claydol (Shadow)",
+    "name": "念力土偶 暗影",
     "score": 80.2,
     "dex": 344,
     "type1": "地面",
@@ -51148,7 +51148,7 @@ const POKEMON_RANKINGS_2500 = [
     "thirdMoveCost": 100000
   },
   {
-    "name": "Altaria (Shadow)",
+    "name": "七夕青鳥 暗影",
     "score": 80.1,
     "dex": 334,
     "type1": "龍",
@@ -51808,7 +51808,7 @@ const POKEMON_RANKINGS_2500 = [
     "thirdMoveCost": 75000
   },
   {
-    "name": "Qwilfish (Shadow)",
+    "name": "千針魚 暗影",
     "score": 78.9,
     "dex": 211,
     "type1": "水",
@@ -55812,7 +55812,7 @@ const POKEMON_RANKINGS_2500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "Zweilous (Shadow)",
+    "name": "雙首暴龍 暗影",
     "score": 72.6,
     "dex": 634,
     "type1": "惡",
@@ -62808,7 +62808,7 @@ const POKEMON_RANKINGS_2500 = [
     "thirdMoveCost": 100000
   },
   {
-    "name": "Tornadus (Incarnate) (Shadow)",
+    "name": "龍捲雲 化身 暗影",
     "score": 42.6,
     "dex": 641,
     "type1": "飛行",
@@ -63669,7 +63669,7 @@ const POKEMON_RANKINGS_10000 = [
     "thirdMoveCost": 100000
   },
   {
-    "name": "Hydreigon (Shadow)",
+    "name": "三首惡龍 暗影",
     "score": 86.2,
     "dex": 635,
     "type1": "惡",
@@ -71303,7 +71303,7 @@ const POKEMON_RANKINGS_10000 = [
     "thirdMoveCost": 75000
   },
   {
-    "name": "Tornadus (Incarnate) (Shadow)",
+    "name": "龍捲雲 化身 暗影",
     "score": 34.7,
     "dex": 641,
     "type1": "飛行",
