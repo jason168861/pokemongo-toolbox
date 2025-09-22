@@ -1,31 +1,36 @@
 [
   {
-    "category": "Psychic Spectacular: Taken Over Tasks",
+    "category": "Completely Normal Tasks",
     "tasks": [
       {
-        "description": "Catch 3 Solrock or Lunatone",
+        "description": "Catch 5 Normal-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "寶石海星",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm121.icon.png",
-            "isShiny": false,
-            "maxCp": "1107",
-            "minCp": "1053"
-          }
-        ]
-      },
-      {
-        "description": "擊敗 1 名 GO 火箭隊手下",
-        "rewards": [
+            "name": "大舌頭",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm108.icon.png",
+            "isShiny": true,
+            "maxCp": "604",
+            "minCp": "564"
+          },
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Mysterious Component.png",
-            "name": "神秘零件 ×1",
-            "quantity": "×1"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "土龍弟弟",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm206.icon.png",
+            "isShiny": true,
+            "maxCp": "724",
+            "minCp": "679"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大奶罐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm241.icon.png",
+            "isShiny": true,
+            "maxCp": "1009",
+            "minCp": "957"
           }
         ]
       },
@@ -33,33 +38,74 @@
         "description": "進化1隻寶可夢",
         "rewards": [
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1200",
-            "quantity": "×1200"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "土龍弟弟",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm206.icon.png",
+            "isShiny": true,
+            "maxCp": "724",
+            "minCp": "679"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "差不多娃娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
+            "isShiny": true,
+            "maxCp": "721",
+            "minCp": "676"
           }
         ]
       },
       {
-        "description": "淨化 3 隻暗影寶可夢",
+        "description": "連續投出 5 次 Great 曲球",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "晃晃斑 4 號",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f03.icon.png",
+            "isShiny": true,
+            "maxCp": "523",
+            "minCp": "486"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "晃晃斑 5 號",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f04.icon.png",
+            "isShiny": true,
+            "maxCp": "523",
+            "minCp": "486"
+          }
+        ]
+      },
+      {
+        "description": "Spin 2 PokéStops or Gyms",
         "rewards": [
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Fast TM.png",
-            "name": "一般招式學習器 ×1",
-            "quantity": "×1"
+            "imageUrl": "https://cdn.leekduck.com/assets/img/icons/xp.png",
+            "name": "XP ×1000",
+            "quantity": "×1000"
           },
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Charged TM.png",
-            "name": "特殊招式學習器 ×1",
-            "quantity": "×1"
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×5",
+            "quantity": "×5"
           }
         ]
       }
