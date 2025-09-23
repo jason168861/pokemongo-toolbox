@@ -35,29 +35,6 @@
         ]
       },
       {
-        "description": "進化1隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "土龍弟弟",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm206.icon.png",
-            "isShiny": true,
-            "maxCp": "724",
-            "minCp": "679"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "差不多娃娃",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
-            "isShiny": true,
-            "maxCp": "721",
-            "minCp": "676"
-          }
-        ]
-      },
-      {
         "description": "連續投出 5 次 Great 曲球",
         "rewards": [
           {
@@ -106,6 +83,29 @@
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
             "name": "凰梨果 ×5",
             "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "進化1隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "土龍弟弟",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm206.icon.png",
+            "isShiny": true,
+            "maxCp": "724",
+            "minCp": "679"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "差不多娃娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
+            "isShiny": true,
+            "maxCp": "721",
+            "minCp": "676"
           }
         ]
       }
