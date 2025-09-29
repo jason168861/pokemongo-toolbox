@@ -1,111 +1,92 @@
 [
   {
-    "category": "Completely Normal Tasks",
+    "category": "Steel Skyline Tasks",
     "tasks": [
       {
-        "description": "Catch 5 Normal-type Pokémon",
+        "description": "捕捉5隻寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "大舌頭",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm108.icon.png",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
             "isShiny": true,
-            "maxCp": "604",
-            "minCp": "564"
+            "maxCp": "583",
+            "minCp": "544"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "土龍弟弟",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm206.icon.png",
+            "name": "螺釘地鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm529.icon.png",
             "isShiny": true,
-            "maxCp": "724",
-            "minCp": "679"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "大奶罐",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm241.icon.png",
-            "isShiny": true,
-            "maxCp": "1009",
-            "minCp": "957"
+            "maxCp": "589",
+            "minCp": "549"
           }
         ]
       },
       {
-        "description": "連續投出 5 次 Great 曲球",
+        "description": "Make 3 Excellent Throws",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "晃晃斑 4 號",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f03.icon.png",
+            "name": "盔甲鳥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm227.icon.png",
             "isShiny": true,
-            "maxCp": "523",
-            "minCp": "486"
+            "maxCp": "903",
+            "minCp": "854"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "晃晃斑 5 號",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f04.icon.png",
+            "name": "銅鏡怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm436.icon.png",
             "isShiny": true,
-            "maxCp": "523",
-            "minCp": "486"
+            "maxCp": "258",
+            "minCp": "229"
           }
         ]
       },
       {
-        "description": "Spin 2 PokéStops or Gyms",
+        "description": "投出 5 次 Nice",
         "rewards": [
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/icons/xp.png",
-            "name": "XP ×1000",
-            "quantity": "×1000"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
-            "quantity": "×10"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
-            "name": "凰梨果 ×5",
-            "quantity": "×5"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 臭泥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm88.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "589",
+            "minCp": "548"
           }
         ]
       },
       {
-        "description": "進化1隻寶可夢",
+        "description": "Transfer 10 Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "土龍弟弟",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm206.icon.png",
+            "name": "破破袋",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm568.icon.png",
             "isShiny": true,
-            "maxCp": "724",
-            "minCp": "679"
-          },
+            "maxCp": "428",
+            "minCp": "395"
+          }
+        ]
+      },
+      {
+        "description": "Win 3 Dynamax Battles",
+        "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "差不多娃娃",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
-            "isShiny": true,
-            "maxCp": "721",
-            "minCp": "676"
+            "name": "極巨化 鋁鋼龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm884.icon.png",
+            "isShiny": false,
+            "maxCp": "1314",
+            "minCp": "1255"
           }
         ]
       }
