@@ -26,6 +26,20 @@
         ]
       },
       {
+        "description": "投出 5 次 Nice",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 臭泥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm88.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "589",
+            "minCp": "548"
+          }
+        ]
+      },
+      {
         "description": "Make 3 Excellent Throws",
         "rewards": [
           {
@@ -45,20 +59,6 @@
             "isShiny": true,
             "maxCp": "258",
             "minCp": "229"
-          }
-        ]
-      },
-      {
-        "description": "投出 5 次 Nice",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "阿羅拉 臭泥",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm88.fALOLA.icon.png",
-            "isShiny": true,
-            "maxCp": "589",
-            "minCp": "548"
           }
         ]
       },
