@@ -84,7 +84,7 @@
             "type": "encounter",
             "name": "極巨化 鋁鋼龍",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm884.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "1314",
             "minCp": "1255"
           }
