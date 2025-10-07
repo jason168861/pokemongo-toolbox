@@ -2055,17 +2055,9 @@
           {
             "isFeatured": true,
             "type": "item",
-            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm65.icon.png",
-            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Alakazam Mega Energy.png",
-            "name": "胡地 超級能量",
-            "quantity": "×20"
-          },
-          {
-            "isFeatured": true,
-            "type": "item",
-            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm80.icon.png",
-            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Slowbro Mega Energy.png",
-            "name": "呆殼獸 超級能量",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Audino Mega Energy.png",
+            "name": "差不多娃娃 超級能量",
             "quantity": "×20"
           }
         ]
