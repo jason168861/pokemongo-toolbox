@@ -1,5 +1,120 @@
 [
   {
+    "category": "Harvest Festival Tasks",
+    "tasks": [
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你芙",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm928.icon.png",
+            "isShiny": true,
+            "maxCp": "366",
+            "minCp": "335"
+          }
+        ]
+      },
+      {
+        "description": "Catch 15 Grass-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "啃果蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm840.icon.png",
+            "isShiny": false,
+            "maxCp": "306",
+            "minCp": "277"
+          }
+        ]
+      },
+      {
+        "description": "使用5個樹果協助捕捉寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Small)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSMALL.icon.png",
+            "isShiny": true,
+            "maxCp": "515",
+            "minCp": "478"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Average)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fAVERAGE.icon.png",
+            "isShiny": true,
+            "maxCp": "523",
+            "minCp": "486"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Large)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fLARGE.icon.png",
+            "isShiny": true,
+            "maxCp": "533",
+            "minCp": "496"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Super)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSUPER.icon.png",
+            "isShiny": true,
+            "maxCp": "536",
+            "minCp": "498"
+          }
+        ]
+      },
+      {
+        "description": "Use 10 Berries to help catch Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Small)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSMALL.icon.png",
+            "isShiny": true,
+            "maxCp": "515",
+            "minCp": "478"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Average)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fAVERAGE.icon.png",
+            "isShiny": true,
+            "maxCp": "523",
+            "minCp": "486"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Large)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fLARGE.icon.png",
+            "isShiny": true,
+            "maxCp": "533",
+            "minCp": "496"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Super)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSUPER.icon.png",
+            "isShiny": true,
+            "maxCp": "536",
+            "minCp": "498"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
@@ -40,20 +155,11 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "凱西",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm63.icon.png",
+            "name": "差不多娃娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
             "isShiny": true,
-            "maxCp": "575",
-            "minCp": "534"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "呆呆獸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm79.icon.png",
-            "isShiny": true,
-            "maxCp": "525",
-            "minCp": "487"
+            "maxCp": "721",
+            "minCp": "676"
           },
           {
             "isFeatured": false,
