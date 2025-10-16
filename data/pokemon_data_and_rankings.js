@@ -4027,7 +4027,7 @@ const POKEDEX = [
   {
     "id": "lanturnw",
     "dexNumber": 171,
-    "name": "Lanturn",
+    "name": "電燈怪",
     "stats": {
       "atk": 146,
       "def": 137,
@@ -7558,7 +7558,7 @@ const POKEDEX = [
   {
     "id": "cradily_b",
     "dexNumber": 346,
-    "name": "Cradily",
+    "name": "搖籃百合",
     "stats": {
       "atk": 152,
       "def": 194,
@@ -16668,7 +16668,7 @@ const POKEDEX = [
   {
     "id": "golisopodsh",
     "dexNumber": 768,
-    "name": "Golisopod",
+    "name": "具甲武者",
     "stats": {
       "atk": 218,
       "def": 226,
@@ -21758,7 +21758,7 @@ const POKEDEX = [
   {
     "id": "dipplin",
     "dexNumber": 1011,
-    "name": "Dipplin",
+    "name": "裹蜜蟲",
     "stats": {
       "atk": 173,
       "def": 184,
@@ -21776,7 +21776,7 @@ const POKEDEX = [
   {
     "id": "poltchageist",
     "dexNumber": 1012,
-    "name": "Poltchageist",
+    "name": "斯魔茶",
     "stats": {
       "atk": 134,
       "def": 96,
@@ -21794,7 +21794,7 @@ const POKEDEX = [
   {
     "id": "sinistcha",
     "dexNumber": 1013,
-    "name": "Sinistcha",
+    "name": "來悲粗茶",
     "stats": {
       "atk": 225,
       "def": 191,
@@ -21812,7 +21812,7 @@ const POKEDEX = [
   {
     "id": "okidogi",
     "dexNumber": 1014,
-    "name": "Okidogi",
+    "name": "夠讚狗",
     "stats": {
       "atk": 220,
       "def": 191,
@@ -21830,7 +21830,7 @@ const POKEDEX = [
   {
     "id": "munkidori",
     "dexNumber": 1015,
-    "name": "Munkidori",
+    "name": "願增猿",
     "stats": {
       "atk": 238,
       "def": 157,
@@ -21848,7 +21848,7 @@ const POKEDEX = [
   {
     "id": "fezandipiti",
     "dexNumber": 1016,
-    "name": "Fezandipiti",
+    "name": "吉雉雞",
     "stats": {
       "atk": 169,
       "def": 208,
@@ -21866,7 +21866,7 @@ const POKEDEX = [
   {
     "id": "ogerpon",
     "dexNumber": 1017,
-    "name": "Ogerpon",
+    "name": "厄鬼椪",
     "stats": {
       "atk": 219,
       "def": 178,
@@ -21883,7 +21883,7 @@ const POKEDEX = [
   {
     "id": "archaludon",
     "dexNumber": 1018,
-    "name": "Archaludon",
+    "name": "鋁鋼橋龍",
     "stats": {
       "atk": 250,
       "def": 215,
@@ -21901,7 +21901,7 @@ const POKEDEX = [
   {
     "id": "hydrapple",
     "dexNumber": 1019,
-    "name": "Hydrapple",
+    "name": "蜜集大蛇",
     "stats": {
       "atk": 216,
       "def": 186,
@@ -21919,7 +21919,7 @@ const POKEDEX = [
   {
     "id": "gouging_fire",
     "dexNumber": 1020,
-    "name": "Gouging Fire",
+    "name": "破空焰",
     "stats": {
       "atk": 205,
       "def": 208,
@@ -21937,7 +21937,7 @@ const POKEDEX = [
   {
     "id": "raging_bolt",
     "dexNumber": 1021,
-    "name": "Raging Bolt",
+    "name": "猛雷鼓",
     "stats": {
       "atk": 235,
       "def": 165,
@@ -21955,7 +21955,7 @@ const POKEDEX = [
   {
     "id": "iron_boulder",
     "dexNumber": 1022,
-    "name": "Iron Boulder",
+    "name": "鐵磐岩",
     "stats": {
       "atk": 227,
       "def": 195,
@@ -21973,7 +21973,7 @@ const POKEDEX = [
   {
     "id": "iron_crown",
     "dexNumber": 1023,
-    "name": "Iron Crown",
+    "name": "鐵頭殼",
     "stats": {
       "atk": 221,
       "def": 200,
@@ -21991,7 +21991,7 @@ const POKEDEX = [
   {
     "id": "terapagos",
     "dexNumber": 1024,
-    "name": "Terapagos",
+    "name": "太樂巴戈斯",
     "stats": {
       "atk": 126,
       "def": 165,
@@ -22008,7 +22008,7 @@ const POKEDEX = [
   {
     "id": "pecharunt",
     "dexNumber": 1025,
-    "name": "Pecharunt",
+    "name": "桃歹郎",
     "stats": {
       "atk": 164,
       "def": 248,
@@ -23039,7 +23039,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 75000
   },
   {
-    "name": "Cradily",
+    "name": "搖籃百合",
     "score": 89.8,
     "dex": 346,
     "type1": "岩石",
@@ -26471,7 +26471,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 75000
   },
   {
-    "name": "Golisopod",
+    "name": "具甲武者",
     "score": 84.1,
     "dex": 768,
     "type1": "蟲",
@@ -30541,7 +30541,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "Dipplin",
+    "name": "裹蜜蟲",
     "score": 78.6,
     "dex": 1011,
     "type1": "草",
@@ -32389,7 +32389,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 75000
   },
   {
-    "name": "Hydrapple",
+    "name": "蜜集大蛇",
     "score": 76.7,
     "dex": 1019,
     "type1": "草",
@@ -51774,7 +51774,7 @@ const POKEMON_RANKINGS_2500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "Dipplin",
+    "name": "裹蜜蟲",
     "score": 80.2,
     "dex": 1011,
     "type1": "草",
@@ -53204,7 +53204,7 @@ const POKEMON_RANKINGS_2500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "Hydrapple",
+    "name": "蜜集大蛇",
     "score": 78.1,
     "dex": 1019,
     "type1": "草",
