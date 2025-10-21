@@ -1,114 +1,141 @@
 [
   {
-    "category": "Harvest Festival Tasks",
+    "category": "Pokémon GO Halloween 2025 Part I Tasks",
     "tasks": [
       {
-        "description": "捕捉10隻寶可夢",
+        "description": "Catch 10 Ghost- or Dark-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "迷你芙",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm928.icon.png",
+            "name": "哭哭面具",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm562.icon.png",
             "isShiny": true,
-            "maxCp": "366",
-            "minCp": "335"
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "燭光靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm607.icon.png",
+            "isShiny": true,
+            "maxCp": "431",
+            "minCp": "398"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小木靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "isShiny": true,
+            "maxCp": "481",
+            "minCp": "446"
           }
         ]
       },
       {
-        "description": "Catch 15 Grass-type Pokémon",
+        "description": "Evolve 3 Dark-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "啃果蟲",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm840.icon.png",
+            "name": "索羅亞",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm570.icon.png",
             "isShiny": false,
-            "maxCp": "306",
-            "minCp": "277"
+            "maxCp": "503",
+            "minCp": "466"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "禿鷹丫頭",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm629.icon.png",
+            "isShiny": true,
+            "maxCp": "545",
+            "minCp": "506"
           }
         ]
       },
       {
-        "description": "使用5個樹果協助捕捉寶可夢",
+        "description": "Evolve 3 Ghost-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pumpkaboo (Small)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSMALL.icon.png",
+            "name": "勾魂眼",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm302.icon.png",
             "isShiny": true,
+            "maxCp": "632",
+            "minCp": "592"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 索羅亞",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm570.fHISUIAN.icon.png",
+            "isShiny": false,
             "maxCp": "515",
-            "minCp": "478"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pumpkaboo (Average)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fAVERAGE.icon.png",
-            "isShiny": true,
-            "maxCp": "523",
-            "minCp": "486"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pumpkaboo (Large)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fLARGE.icon.png",
-            "isShiny": true,
-            "maxCp": "533",
-            "minCp": "496"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pumpkaboo (Super)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSUPER.icon.png",
-            "isShiny": true,
-            "maxCp": "536",
-            "minCp": "498"
+            "minCp": "477"
           }
         ]
       },
       {
-        "description": "Use 10 Berries to help catch Pokémon",
+        "description": "Power up Pokémon 10 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm94.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Gengar Mega Energy.png",
+            "name": "耿鬼 超級能量",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm229.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Houndoom Mega Energy.png",
+            "name": "黑魯加 超級能量",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm302.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Sableye Mega Energy.png",
+            "name": "勾魂眼 超級能量",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm354.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Banette Mega Energy.png",
+            "name": "詛咒娃娃 超級能量",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm359.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Absol Mega Energy.png",
+            "name": "阿勃梭魯 超級能量",
+            "quantity": "×25"
+          }
+        ]
+      },
+      {
+        "description": "贏得3場團體戰",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pumpkaboo (Small)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSMALL.icon.png",
+            "name": "花岩怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm442.icon.png",
             "isShiny": true,
-            "maxCp": "515",
-            "minCp": "478"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pumpkaboo (Average)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fAVERAGE.icon.png",
-            "isShiny": true,
-            "maxCp": "523",
-            "minCp": "486"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pumpkaboo (Large)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fLARGE.icon.png",
-            "isShiny": true,
-            "maxCp": "533",
-            "minCp": "496"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pumpkaboo (Super)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSUPER.icon.png",
-            "isShiny": true,
-            "maxCp": "536",
-            "minCp": "498"
+            "maxCp": "888",
+            "minCp": "839"
           }
         ]
       }
