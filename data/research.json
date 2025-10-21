@@ -42,7 +42,7 @@
             "type": "encounter",
             "name": "索羅亞",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm570.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "503",
             "minCp": "466"
           },
