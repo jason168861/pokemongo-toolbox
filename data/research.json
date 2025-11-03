@@ -40,11 +40,20 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "差不多娃娃",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
+            "name": "雪笠怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm459.icon.png",
             "isShiny": true,
-            "maxCp": "721",
-            "minCp": "676"
+            "maxCp": "497",
+            "minCp": "460"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "雪童子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm361.icon.png",
+            "isShiny": true,
+            "maxCp": "380",
+            "minCp": "349"
           },
           {
             "isFeatured": false,
@@ -1966,9 +1975,17 @@
           {
             "isFeatured": true,
             "type": "item",
-            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm719.icon.png",
-            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Diancie Mega Energy.png",
-            "name": "蒂安希 超級能量",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm460.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Abomasnow Mega Energy.png",
+            "name": "暴雪王 超級能量",
+            "quantity": "×20"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm362.icon.png",
+            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Glalie Mega Energy.png",
+            "name": "冰鬼護 超級能量",
             "quantity": "×20"
           }
         ]

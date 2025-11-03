@@ -1,36 +1,36 @@
 {
-  "lastUpdated": "2025年11月3日18時",
+  "lastUpdated": "2025年11月3日20時",
   "pokemon": [
     {
       "eggDistance": 2,
       "source": "regular",
-      "name": "小火龍",
-      "cpRange": "560",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.icon.png",
+      "name": "傑尼龜",
+      "cpRange": "540",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.icon.png",
       "isShiny": true
     },
     {
       "eggDistance": 2,
       "source": "regular",
-      "name": "波克比",
-      "cpRange": "375",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm175.icon.png",
+      "name": "水躍魚",
+      "cpRange": "644",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm258.icon.png",
       "isShiny": true
     },
     {
       "eggDistance": 2,
       "source": "regular",
-      "name": "火稚雞",
-      "cpRange": "624",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm255.icon.png",
+      "name": "盆才怪",
+      "cpRange": "744",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm438.icon.png",
       "isShiny": true
     },
     {
       "eggDistance": 2,
       "source": "regular",
-      "name": "鈴鐺響",
-      "cpRange": "574",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm433.icon.png",
+      "name": "小福蛋",
+      "cpRange": "212",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm440.icon.png",
       "isShiny": true
     },
     {
@@ -44,25 +44,25 @@
     {
       "eggDistance": 5,
       "source": "regular",
-      "name": "阿羅拉 喵喵",
-      "cpRange": "455",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm52.fALOLA.icon.png",
+      "name": "阿羅拉 六尾",
+      "cpRange": "504",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.fALOLA.icon.png",
       "isShiny": true
     },
     {
       "eggDistance": 5,
       "source": "regular",
-      "name": "含羞苞",
-      "cpRange": "489",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm406.icon.png",
+      "name": "無畏小子",
+      "cpRange": "281",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm236.icon.png",
       "isShiny": true
     },
     {
       "eggDistance": 5,
       "source": "regular",
-      "name": "小卡比獸",
-      "cpRange": "1081",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm446.icon.png",
+      "name": "小球飛魚",
+      "cpRange": "713",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm458.icon.png",
       "isShiny": true
     },
     {
@@ -212,26 +212,17 @@
     {
       "eggDistance": 10,
       "source": "regular",
-      "name": "阿勃梭魯",
-      "cpRange": "1443",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm359.icon.png",
+      "name": "幼基拉斯",
+      "cpRange": "594",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm246.icon.png",
       "isShiny": true
     },
     {
       "eggDistance": 10,
       "source": "regular",
-      "name": "寶貝龍",
-      "cpRange": "660",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
-      "isShiny": true
-    },
-    {
-      "eggDistance": 10,
-      "source": "regular",
-      "name": "毒電嬰",
-      "cpRange": "415",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm848.icon.png",
-      "isShiny": true
+      "name": "Sableye Toxel",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_000.png",
+      "isShiny": false
     },
     {
       "eggDistance": 10,
