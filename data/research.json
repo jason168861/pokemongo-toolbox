@@ -1,5 +1,88 @@
 [
   {
+    "category": "Enchanted Hollow Tasks",
+    "tasks": [
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "木棉球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm546.icon.png",
+            "isShiny": true,
+            "maxCp": "300",
+            "minCp": "271"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "百合根娃娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm548.icon.png",
+            "isShiny": false,
+            "maxCp": "441",
+            "minCp": "407"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "蓋蓋蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm588.icon.png",
+            "isShiny": true,
+            "maxCp": "506",
+            "minCp": "469"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小嘴蝸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm616.icon.png",
+            "isShiny": true,
+            "maxCp": "357",
+            "minCp": "325"
+          }
+        ]
+      },
+      {
+        "description": "Catch 15 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "派拉斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm46.icon.png",
+            "isShiny": true,
+            "maxCp": "436",
+            "minCp": "402"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "驚角鹿",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm234.icon.png",
+            "isShiny": true,
+            "maxCp": "927",
+            "minCp": "878"
+          }
+        ]
+      },
+      {
+        "description": "Win 2 raids",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "老翁龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm780.icon.png",
+            "isShiny": true,
+            "maxCp": "1249",
+            "minCp": "1191"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
