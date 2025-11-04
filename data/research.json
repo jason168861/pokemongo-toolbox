@@ -1962,19 +1962,6 @@
           {
             "isFeatured": true,
             "type": "item",
-            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm531.icon.png",
-            "imageUrl": "https://leekduck.com/assets/img/mega_energy/Audino Mega Energy.png",
-            "name": "差不多娃娃 超級能量",
-            "quantity": "×20"
-          }
-        ]
-      },
-      {
-        "description": "Power up Pokémon 20 times",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm460.icon.png",
             "imageUrl": "https://leekduck.com/assets/img/mega_energy/Abomasnow Mega Energy.png",
             "name": "暴雪王 超級能量",
