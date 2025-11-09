@@ -1,9 +1,41 @@
 [
   {
-    "category": "Enchanted Hollow Tasks",
+    "category": "Into the Wild Tasks",
     "tasks": [
       {
-        "description": "捕捉10隻寶可夢",
+        "description": "Catch 5 Dark-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "利牙魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm318.icon.png",
+            "isShiny": true,
+            "maxCp": "437",
+            "minCp": "398"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "扒手貓",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm509.icon.png",
+            "isShiny": true,
+            "maxCp": "330",
+            "minCp": "301"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "滑滑小子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm559.icon.png",
+            "isShiny": true,
+            "maxCp": "588",
+            "minCp": "549"
+          }
+        ]
+      },
+      {
+        "description": "Catch 5 Fairy-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
@@ -17,66 +49,165 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "百合根娃娃",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm548.icon.png",
+            "name": "粉香香",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm682.icon.png",
+            "isShiny": true,
+            "maxCp": "536",
+            "minCp": "498"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "綿綿泡芙",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm684.icon.png",
+            "isShiny": true,
+            "maxCp": "505",
+            "minCp": "468"
+          }
+        ]
+      },
+      {
+        "description": "探索1公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偷兒狐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm827.icon.png",
             "isShiny": false,
-            "maxCp": "441",
-            "minCp": "407"
+            "maxCp": "306",
+            "minCp": "278"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "蓋蓋蟲",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm588.icon.png",
-            "isShiny": true,
-            "maxCp": "506",
-            "minCp": "469"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小嘴蝸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm616.icon.png",
-            "isShiny": true,
-            "maxCp": "357",
-            "minCp": "325"
+            "name": "狗仔包",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm926.icon.png",
+            "isShiny": false,
+            "maxCp": "422",
+            "minCp": "389"
           }
         ]
       },
       {
-        "description": "Catch 15 Pokémon",
+        "description": "Power up Dark-type Pokémon 5 times",
         "rewards": [
           {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "派拉斯",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm46.icon.png",
-            "isShiny": true,
-            "maxCp": "436",
-            "minCp": "402"
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "驚角鹿",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm234.icon.png",
+            "name": "阿羅拉 小拉達",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm19.fALOLA.icon.png",
             "isShiny": true,
-            "maxCp": "927",
-            "minCp": "878"
+            "maxCp": "315",
+            "minCp": "286"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "勾魂眼",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm302.icon.png",
+            "isShiny": true,
+            "maxCp": "632",
+            "minCp": "592"
           }
         ]
       },
       {
-        "description": "Win 2 raids",
+        "description": "Power up Fairy-type Pokémon 5 times",
         "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "老翁龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm780.icon.png",
+            "name": "木棉球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm546.icon.png",
             "isShiny": true,
-            "maxCp": "1249",
-            "minCp": "1191"
+            "maxCp": "300",
+            "minCp": "271"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小碎鑽",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm703.icon.png",
+            "isShiny": true,
+            "maxCp": "628",
+            "minCp": "585"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場極限對戰",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "勾魂眼",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm302.icon.png",
+            "isShiny": true,
+            "maxCp": "632",
+            "minCp": "592"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小碎鑽",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm703.icon.png",
+            "isShiny": true,
+            "maxCp": "628",
+            "minCp": "585"
           }
         ]
       }
