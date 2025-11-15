@@ -511,9 +511,9 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "穿著熊",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm760.icon.png",
-            "isShiny": false,
+            "name": "Bewear wearing a wilderness cape",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm760.fWILDAREA_2025.icon.png",
+            "isShiny": true,
             "maxCp": "1336",
             "minCp": "1275"
           }
