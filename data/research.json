@@ -413,6 +413,36 @@
     "category": "Fanciful Fairy Hour Field Research Tasks",
     "tasks": [
       {
+        "description": "Catch 10 Fairy-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "皮皮",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm35.icon.png",
+            "isShiny": true,
+            "maxCp": "495",
+            "minCp": "458"
+          }
+        ]
+      },
+      {
         "description": "Catch 4 different species of Fairy-type Pokémon",
         "rewards": [
           {
@@ -437,6 +467,104 @@
       },
       {
         "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小碎鑽",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm703.icon.png",
+            "isShiny": true,
+            "maxCp": "628",
+            "minCp": "585"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "搗蛋小妖",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm859.icon.png",
+            "isShiny": true,
+            "maxCp": "346",
+            "minCp": "315"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小鍛匠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm957.icon.png",
+            "isShiny": false,
+            "maxCp": "368",
+            "minCp": "337"
+          }
+        ]
+      },
+      {
+        "description": "Make 1 Excellent Throw",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
+            "name": "銀色凰梨果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "穿著熊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm760.icon.png",
+            "isShiny": false,
+            "maxCp": "1336",
+            "minCp": "1275"
+          }
+        ]
+      },
+      {
+        "description": "Power up Fairy-type Pokémon 5 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咚咚鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "743"
+          }
+        ]
+      },
+      {
+        "description": "Transfer 5 Fairy-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          }
+        ]
+      },
+      {
+        "description": "Use a Fairy-type Charged Attack in a battle",
         "rewards": [
           {
             "isFeatured": true,
