@@ -1,322 +1,111 @@
 [
   {
-    "category": "Lurking Dark Hour Field Research Tasks",
+    "category": "High Voltage Tasks",
     "tasks": [
       {
-        "description": "Catch 10 Dark-type Pokémon",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
-            "name": "高級球 ×3",
-            "quantity": "×3"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1000",
-            "quantity": "×1000"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "黑暗鴉",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm198.icon.png",
-            "isShiny": true,
-            "maxCp": "669",
-            "minCp": "626"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "伽勒爾 蛇紋熊",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm263.fGALARIAN.icon.png",
-            "isShiny": true,
-            "maxCp": "218",
-            "minCp": "193"
-          }
-        ]
-      },
-      {
-        "description": "Catch 4 different species of Dark-type Pokémon",
+        "description": "Catch 10 Electric-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "鉗尾蠍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm451.icon.png",
-            "isShiny": true,
-            "maxCp": "432",
-            "minCp": "398"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "滑滑小子",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm559.icon.png",
-            "isShiny": true,
-            "maxCp": "588",
-            "minCp": "549"
-          }
-        ]
-      },
-      {
-        "description": "孵化1顆蛋",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "黑眼鱷",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm551.icon.png",
-            "isShiny": true,
-            "maxCp": "444",
-            "minCp": "409"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "駒刀小兵",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm624.icon.png",
-            "isShiny": true,
-            "maxCp": "614",
-            "minCp": "574"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "搗蛋小妖",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm859.icon.png",
-            "isShiny": true,
-            "maxCp": "346",
-            "minCp": "315"
-          }
-        ]
-      },
-      {
-        "description": "Make 1 Excellent Throw",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金色蔓莓果 ×1",
-            "quantity": "×1"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
-            "name": "銀色凰梨果 ×1",
-            "quantity": "×1"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Bewear wearing a wilderness cape",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm760.fWILDAREA_2025.icon.png",
-            "isShiny": true,
-            "maxCp": "1336",
-            "minCp": "1275"
-          }
-        ]
-      },
-      {
-        "description": "Power up Dark-type Pokémon 5 times",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "阿羅拉 臭泥",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm88.fALOLA.icon.png",
-            "isShiny": true,
-            "maxCp": "589",
-            "minCp": "548"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "戴魯比",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm228.icon.png",
-            "isShiny": true,
-            "maxCp": "529",
-            "minCp": "491"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "好啦魷",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm686.icon.png",
-            "isShiny": true,
-            "maxCp": "397",
-            "minCp": "365"
-          }
-        ]
-      },
-      {
-        "description": "Transfer 5 Dark-type Pokémon",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
-            "quantity": "×10"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1000",
-            "quantity": "×1000"
-          }
-        ]
-      },
-      {
-        "description": "Use a Dark-type Charged Attack in a battle",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "搗蛋小妖",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm859.icon.png",
-            "isShiny": true,
-            "maxCp": "346",
-            "minCp": "315"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "Fanciful Fairy Hour Field Research Tasks",
-    "tasks": [
-      {
-        "description": "Catch 10 Fairy-type Pokémon",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
-            "name": "高級球 ×3",
-            "quantity": "×3"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1000",
-            "quantity": "×1000"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "皮皮",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm35.icon.png",
-            "isShiny": true,
-            "maxCp": "495",
-            "minCp": "458"
-          }
-        ]
-      },
-      {
-        "description": "Catch 4 different species of Fairy-type Pokémon",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "波克基古",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm176.icon.png",
-            "isShiny": true,
-            "maxCp": "732",
-            "minCp": "688"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "迷布莉姆",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm856.icon.png",
-            "isShiny": true,
-            "maxCp": "369",
-            "minCp": "338"
-          }
-        ]
-      },
-      {
-        "description": "孵化1顆蛋",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小碎鑽",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm703.icon.png",
-            "isShiny": true,
-            "maxCp": "628",
-            "minCp": "585"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "搗蛋小妖",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm859.icon.png",
-            "isShiny": true,
-            "maxCp": "346",
-            "minCp": "315"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小鍛匠",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm957.icon.png",
-            "isShiny": false,
-            "maxCp": "368",
-            "minCp": "337"
-          }
-        ]
-      },
-      {
-        "description": "Make 1 Excellent Throw",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
-            "name": "銀色凰梨果 ×1",
-            "quantity": "×1"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Bewear wearing a wilderness cape",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm760.fWILDAREA_2025.icon.png",
-            "isShiny": true,
-            "maxCp": "1336",
-            "minCp": "1275"
-          }
-        ]
-      },
-      {
-        "description": "Power up Fairy-type Pokémon 5 times",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "阿羅拉 六尾",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.fALOLA.icon.png",
+            "name": "斑斑馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm522.icon.png",
             "isShiny": true,
             "maxCp": "378",
-            "minCp": "347"
+            "minCp": "346"
           },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電電蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm595.icon.png",
+            "isShiny": true,
+            "maxCp": "438",
+            "minCp": "404"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "來電汪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm835.icon.png",
+            "isShiny": false,
+            "maxCp": "337",
+            "minCp": "307"
+          }
+        ]
+      },
+      {
+        "description": "使用5個樹果協助捕捉寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電飛鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm587.icon.png",
+            "isShiny": true,
+            "maxCp": "700",
+            "minCp": "657"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "莫魯貝可",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm877.icon.png",
+            "isShiny": true,
+            "maxCp": "832",
+            "minCp": "785"
+          }
+        ]
+      },
+      {
+        "description": "旋轉5個寶可補給站或道館的轉盤",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
+            "isShiny": true,
+            "maxCp": "583",
+            "minCp": "544"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "霹靂電球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm100.icon.png",
+            "isShiny": true,
+            "maxCp": "432",
+            "minCp": "399"
+          }
+        ]
+      },
+      {
+        "description": "Take a snapshot of an Electric-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "正電拍拍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm311.icon.png",
+            "isShiny": true,
+            "maxCp": "762",
+            "minCp": "717"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "負電拍拍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm312.icon.png",
+            "isShiny": true,
+            "maxCp": "726",
+            "minCp": "682"
+          }
+        ]
+      },
+      {
+        "description": "Power up Electric-type Pokémon 10 times",
+        "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
@@ -325,41 +114,29 @@
             "isShiny": true,
             "maxCp": "789",
             "minCp": "743"
-          }
-        ]
-      },
-      {
-        "description": "Transfer 5 Fairy-type Pokémon",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
-            "quantity": "×10"
           },
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1000",
-            "quantity": "×1000"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "莫魯貝可",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm877.icon.png",
+            "isShiny": true,
+            "maxCp": "832",
+            "minCp": "785"
           }
         ]
       },
       {
-        "description": "Use a Fairy-type Charged Attack in a battle",
+        "description": "Use an Electric-type Charged Attack in a battle",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "搗蛋小妖",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm859.icon.png",
+            "name": "莫魯貝可",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm877.icon.png",
             "isShiny": true,
-            "maxCp": "346",
-            "minCp": "315"
+            "maxCp": "832",
+            "minCp": "785"
           }
         ]
       }
