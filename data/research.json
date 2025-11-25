@@ -1,142 +1,66 @@
 [
   {
-    "category": "High Voltage Tasks",
+    "category": "Final Justice Tasks",
     "tasks": [
       {
-        "description": "Catch 10 Electric-type Pokémon",
+        "description": "Use 5,000 Stardust",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "斑斑馬",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm522.icon.png",
+            "name": "投摔鬼",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm538.icon.png",
             "isShiny": true,
-            "maxCp": "378",
-            "minCp": "346"
+            "maxCp": "1098",
+            "minCp": "1043"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "電電蟲",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm595.icon.png",
+            "name": "打擊鬼",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm539.icon.png",
             "isShiny": true,
-            "maxCp": "438",
-            "minCp": "404"
+            "maxCp": "1194",
+            "minCp": "1138"
           },
           {
             "isFeatured": true,
-            "type": "encounter",
-            "name": "來電汪",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm835.icon.png",
-            "isShiny": false,
-            "maxCp": "337",
-            "minCp": "307"
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm647.fORDINARY.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/647.png",
+            "name": "Keldeo Candy ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/icons/xp.png",
+            "name": "XP ×5000",
+            "quantity": "×5000"
           }
         ]
       },
       {
-        "description": "使用5個樹果協助捕捉寶可夢",
+        "description": "Win 2 raids",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "電飛鼠",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm587.icon.png",
+            "name": "伽勒爾 大蔥鴨",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm83.fGALARIAN.icon.png",
             "isShiny": true,
-            "maxCp": "700",
-            "minCp": "657"
+            "maxCp": "717",
+            "minCp": "673"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "莫魯貝可",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm877.icon.png",
+            "name": "洗翠 裙兒小姐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm549.fHISUIAN.icon.png",
             "isShiny": true,
-            "maxCp": "832",
-            "minCp": "785"
-          }
-        ]
-      },
-      {
-        "description": "旋轉5個寶可補給站或道館的轉盤",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小磁怪",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
-            "isShiny": true,
-            "maxCp": "583",
-            "minCp": "544"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "霹靂電球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm100.icon.png",
-            "isShiny": true,
-            "maxCp": "432",
-            "minCp": "399"
-          }
-        ]
-      },
-      {
-        "description": "Take a snapshot of an Electric-type Pokémon",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "正電拍拍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm311.icon.png",
-            "isShiny": true,
-            "maxCp": "762",
-            "minCp": "717"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "負電拍拍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm312.icon.png",
-            "isShiny": true,
-            "maxCp": "726",
-            "minCp": "682"
-          }
-        ]
-      },
-      {
-        "description": "Power up Electric-type Pokémon 10 times",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "咚咚鼠",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
-            "isShiny": true,
-            "maxCp": "789",
-            "minCp": "743"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "莫魯貝可",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm877.icon.png",
-            "isShiny": true,
-            "maxCp": "832",
-            "minCp": "785"
-          }
-        ]
-      },
-      {
-        "description": "Use an Electric-type Charged Attack in a battle",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "莫魯貝可",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm877.icon.png",
-            "isShiny": true,
-            "maxCp": "832",
-            "minCp": "785"
+            "maxCp": "1076",
+            "minCp": "1023"
           }
         ]
       }
