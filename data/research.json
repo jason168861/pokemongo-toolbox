@@ -1,66 +1,55 @@
 [
   {
-    "category": "Final Justice Tasks",
+    "category": "Journey to Paldea Tasks",
     "tasks": [
       {
-        "description": "Use 5,000 Stardust",
+        "description": "Catch 5 different species of Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "投摔鬼",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm538.icon.png",
-            "isShiny": true,
-            "maxCp": "1098",
-            "minCp": "1043"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "打擊鬼",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm539.icon.png",
-            "isShiny": true,
-            "maxCp": "1194",
-            "minCp": "1138"
-          },
-          {
-            "isFeatured": true,
-            "type": "item",
-            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm647.fORDINARY.icon.png",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/647.png",
-            "name": "Keldeo Candy ×2",
-            "quantity": "×2"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/icons/xp.png",
-            "name": "XP ×5000",
-            "quantity": "×5000"
+            "name": "鹽石寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm932.icon.png",
+            "isShiny": false,
+            "maxCp": "414",
+            "minCp": "381"
           }
         ]
       },
       {
-        "description": "Win 2 raids",
+        "description": "Make 10 Great Throws",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "伽勒爾 大蔥鴨",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm83.fGALARIAN.icon.png",
+            "name": "幼基拉斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm246.icon.png",
             "isShiny": true,
-            "maxCp": "717",
-            "minCp": "673"
+            "maxCp": "445",
+            "minCp": "411"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "洗翠 裙兒小姐",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm549.fHISUIAN.icon.png",
+            "name": "寶貝龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
             "isShiny": true,
-            "maxCp": "1076",
-            "minCp": "1023"
+            "maxCp": "495",
+            "minCp": "459"
+          }
+        ]
+      },
+      {
+        "description": "Power up Pokémon 10 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鹽石寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm932.icon.png",
+            "isShiny": false,
+            "maxCp": "414",
+            "minCp": "381"
           }
         ]
       }
