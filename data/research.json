@@ -1803,11 +1803,29 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "嘟嘟",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm84.icon.png",
+            "isShiny": true,
+            "maxCp": "514",
+            "minCp": "477"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "鐵炮魚",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm223.icon.png",
             "isShiny": true,
             "maxCp": "391",
             "minCp": "358"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "拉魯拉絲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm280.icon.png",
+            "isShiny": true,
+            "maxCp": "231",
+            "minCp": "206"
           },
           {
             "isFeatured": true,
