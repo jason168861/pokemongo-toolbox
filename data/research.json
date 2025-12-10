@@ -1,286 +1,80 @@
 [
   {
-    "category": "Journey to Paldea Tasks",
+    "category": "Well Armed Tasks",
     "tasks": [
       {
-        "description": "Catch 5 different species of Pokémon",
+        "description": "Catch 10 Fighting-type Pokémon",
         "rewards": [
           {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "鹽石寶",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm932.icon.png",
-            "isShiny": false,
-            "maxCp": "414",
-            "minCp": "381"
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Fast TM.png",
+            "name": "一般招式學習器 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Charged TM.png",
+            "name": "特殊招式學習器 ×1",
+            "quantity": "×1"
           }
         ]
       },
       {
-        "description": "Make 10 Great Throws",
+        "description": "強化寶可夢5次",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "幼基拉斯",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm246.icon.png",
+            "name": "拉魯拉絲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm280.icon.png",
             "isShiny": true,
-            "maxCp": "445",
-            "minCp": "411"
+            "maxCp": "231",
+            "minCp": "206"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "寶貝龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+            "name": "暖暖豬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm498.icon.png",
             "isShiny": true,
-            "maxCp": "495",
-            "minCp": "459"
+            "maxCp": "464",
+            "minCp": "428"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "搬運小匠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm532.icon.png",
+            "isShiny": true,
+            "maxCp": "563",
+            "minCp": "524"
           }
         ]
       },
       {
-        "description": "Power up Pokémon 10 times",
+        "description": "Win 3 Max Battles",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "鹽石寶",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm932.icon.png",
-            "isShiny": false,
-            "maxCp": "414",
-            "minCp": "381"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "December Community Day 2025 Tasks",
-    "tasks": [
-      {
-        "description": "Catch 3 Pokémon",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "蓋蓋蟲",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm588.icon.png",
+            "name": "極巨化 飛腿郎",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm106.icon.png",
             "isShiny": true,
-            "maxCp": "506",
-            "minCp": "469"
+            "maxCp": "1104",
+            "minCp": "1049"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "小嘴蝸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm616.icon.png",
+            "name": "極巨化 快拳郎",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm107.icon.png",
             "isShiny": true,
-            "maxCp": "357",
-            "minCp": "325"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "迷你冰",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm582.icon.png",
-            "isShiny": true,
-            "maxCp": "443",
-            "minCp": "409"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "新葉喵",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm906.icon.png",
-            "isShiny": true,
-            "maxCp": "435",
-            "minCp": "401"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "呆火鱷",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm909.icon.png",
-            "isShiny": true,
-            "maxCp": "483",
-            "minCp": "447"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "布撥",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm921.icon.png",
-            "isShiny": true,
-            "maxCp": "272",
-            "minCp": "244"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "單卵細胞球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm577.icon.png",
-            "isShiny": true,
-            "maxCp": "586",
-            "minCp": "545"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Flabébé (Orange)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm669.fORANGE.icon.png",
-            "isShiny": true,
-            "maxCp": "455",
-            "minCp": "421"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小篤兒",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm731.icon.png",
-            "isShiny": true,
-            "maxCp": "390",
-            "minCp": "357"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "心鱗寶",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm782.icon.png",
-            "isShiny": true,
-            "maxCp": "415",
-            "minCp": "382"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "稚山雀",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm821.icon.png",
-            "isShiny": true,
-            "maxCp": "285",
-            "minCp": "258"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "潤水鴨",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm912.icon.png",
-            "isShiny": true,
-            "maxCp": "460",
-            "minCp": "425"
-          }
-        ]
-      },
-      {
-        "description": "進化1隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "蓋蓋蟲",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm588.icon.png",
-            "isShiny": true,
-            "maxCp": "506",
-            "minCp": "469"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小嘴蝸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm616.icon.png",
-            "isShiny": true,
-            "maxCp": "357",
-            "minCp": "325"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "迷你冰",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm582.icon.png",
-            "isShiny": true,
-            "maxCp": "443",
-            "minCp": "409"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "新葉喵",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm906.icon.png",
-            "isShiny": true,
-            "maxCp": "435",
-            "minCp": "401"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "呆火鱷",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm909.icon.png",
-            "isShiny": true,
-            "maxCp": "483",
-            "minCp": "447"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "布撥",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm921.icon.png",
-            "isShiny": true,
-            "maxCp": "272",
-            "minCp": "244"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "單卵細胞球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm577.icon.png",
-            "isShiny": true,
-            "maxCp": "586",
-            "minCp": "545"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Flabébé (White)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm669.fWHITE.icon.png",
-            "isShiny": true,
-            "maxCp": "455",
-            "minCp": "421"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小篤兒",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm731.icon.png",
-            "isShiny": true,
-            "maxCp": "390",
-            "minCp": "357"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "心鱗寶",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm782.icon.png",
-            "isShiny": true,
-            "maxCp": "415",
-            "minCp": "382"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "稚山雀",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm821.icon.png",
-            "isShiny": true,
-            "maxCp": "285",
-            "minCp": "258"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "潤水鴨",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm912.icon.png",
-            "isShiny": true,
-            "maxCp": "460",
-            "minCp": "425"
+            "maxCp": "999",
+            "minCp": "947"
           }
         ]
       }
