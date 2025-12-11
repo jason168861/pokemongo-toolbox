@@ -1488,6 +1488,15 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "破破袋",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm568.icon.png",
+            "isShiny": true,
+            "maxCp": "428",
+            "minCp": "395"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "熔岩蟲",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm218.icon.png",
             "isShiny": true,
