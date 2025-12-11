@@ -77,6 +77,20 @@
             "minCp": "947"
           }
         ]
+      },
+      {
+        "description": "??? (Unlocks with Global Challenge)",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "拳拳蛸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm852.icon.png",
+            "isShiny": false,
+            "maxCp": "487",
+            "minCp": "451"
+          }
+        ]
       }
     ]
   },
