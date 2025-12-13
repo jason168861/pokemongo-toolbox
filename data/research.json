@@ -1279,8 +1279,8 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "輕飄飄",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm592.icon.png",
+            "name": "Frillish (Female)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm592.fFEMALE.icon.png",
             "isShiny": true,
             "maxCp": "539",
             "minCp": "501"
