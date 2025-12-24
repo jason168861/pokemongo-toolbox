@@ -39,20 +39,6 @@
         ]
       },
       {
-        "description": "Send 15 Gifts to friends",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Psyduck wearing holiday attire",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm54.cHOLIDAY_2023.icon.png",
-            "isShiny": true,
-            "maxCp": "474",
-            "minCp": "439"
-          }
-        ]
-      },
-      {
         "description": "Send 5 Gifts to friends",
         "rewards": [
           {
@@ -63,6 +49,20 @@
             "isShiny": true,
             "maxCp": "469",
             "minCp": "433"
+          }
+        ]
+      },
+      {
+        "description": "Send 15 Gifts to friends",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Psyduck wearing holiday attire",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm54.cHOLIDAY_2023.icon.png",
+            "isShiny": true,
+            "maxCp": "474",
+            "minCp": "439"
           }
         ]
       }
@@ -108,20 +108,6 @@
         ]
       },
       {
-        "description": "Send 15 Gifts to friends",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Spheal wearing a holiday scarf",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm363.cHOLIDAY_2021_NOEVOLVE.icon.png",
-            "isShiny": true,
-            "maxCp": "412",
-            "minCp": "379"
-          }
-        ]
-      },
-      {
         "description": "Send 5 Gifts to friends",
         "rewards": [
           {
@@ -132,6 +118,20 @@
             "isShiny": true,
             "maxCp": "469",
             "minCp": "433"
+          }
+        ]
+      },
+      {
+        "description": "Send 15 Gifts to friends",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Spheal wearing a holiday scarf",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm363.cHOLIDAY_2021_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "412",
+            "minCp": "379"
           }
         ]
       }
