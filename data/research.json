@@ -1,5 +1,36 @@
 [
   {
+    "category": "New Year's 2026 Tasks",
+    "tasks": [
+      {
+        "description": "Catch 26 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×2026",
+            "quantity": "×2026"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×2026",
+            "quantity": "×2026"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Winter Holiday Part 2 Tasks",
     "tasks": [
       {
@@ -63,75 +94,6 @@
             "isShiny": true,
             "maxCp": "474",
             "minCp": "439"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "Winter Holiday Part 1 Tasks",
-    "tasks": [
-      {
-        "description": "捕捉10隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1500",
-            "quantity": "×1500"
-          }
-        ]
-      },
-      {
-        "description": "Catch 15 Pokémon",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pikachu with a Holiday Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cHOLIDAY_2016.icon.png",
-            "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pikachu wearing holiday attire",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cHOLIDAY_2023.icon.png",
-            "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
-          }
-        ]
-      },
-      {
-        "description": "Send 5 Gifts to friends",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "信使鳥",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm225.icon.png",
-            "isShiny": true,
-            "maxCp": "469",
-            "minCp": "433"
-          }
-        ]
-      },
-      {
-        "description": "Send 15 Gifts to friends",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Spheal wearing a holiday scarf",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm363.cHOLIDAY_2021_NOEVOLVE.icon.png",
-            "isShiny": true,
-            "maxCp": "412",
-            "minCp": "379"
           }
         ]
       }
