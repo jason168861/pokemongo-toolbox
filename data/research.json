@@ -102,37 +102,6 @@
     ]
   },
   {
-    "category": "New Year's 2026 Tasks",
-    "tasks": [
-      {
-        "description": "Catch 26 Pokémon",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×2026",
-            "quantity": "×2026"
-          }
-        ]
-      },
-      {
-        "description": "贏得1場團體戰",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×2026",
-            "quantity": "×2026"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "category": "捕捉相關任務",
     "tasks": [
       {
