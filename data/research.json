@@ -3,6 +3,35 @@
     "category": "Pinch Perfect Tasks",
     "tasks": [
       {
+        "description": "捕捉5隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
         "description": "捕捉10隻寶可夢",
         "rewards": [
           {
@@ -44,35 +73,6 @@
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
             "name": "星星沙子 ×1500",
             "quantity": "×1500"
-          }
-        ]
-      },
-      {
-        "description": "捕捉5隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
-            "quantity": "×10"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
-            "name": "超級球 ×5",
-            "quantity": "×5"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
-            "name": "高級球 ×3",
-            "quantity": "×3"
           }
         ]
       },
