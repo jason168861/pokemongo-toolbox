@@ -1,5 +1,88 @@
 [
   {
+    "category": "High Zaptitude Tasks",
+    "tasks": [
+      {
+        "description": "捕捉5隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "燈籠魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm170.icon.png",
+            "isShiny": true,
+            "maxCp": "479",
+            "minCp": "443"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "麻麻小魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm602.icon.png",
+            "isShiny": true,
+            "maxCp": "347",
+            "minCp": "317"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "傘電蜥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm694.icon.png",
+            "isShiny": true,
+            "maxCp": "399",
+            "minCp": "367"
+          }
+        ]
+      },
+      {
+        "description": "Catch 15 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電飛鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm587.icon.png",
+            "isShiny": true,
+            "maxCp": "700",
+            "minCp": "657"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "來電汪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm835.icon.png",
+            "isShiny": false,
+            "maxCp": "337",
+            "minCp": "307"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "光蚪仔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm938.icon.png",
+            "isShiny": false,
+            "maxCp": "390",
+            "minCp": "358"
+          }
+        ]
+      },
+      {
+        "description": "??? (Unlocked with Level 2 Challenge)",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電海燕",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm940.icon.png",
+            "isShiny": false,
+            "maxCp": "354",
+            "minCp": "323"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Pinch Perfect Tasks",
     "tasks": [
       {
