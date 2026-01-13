@@ -60,7 +60,7 @@
             "type": "encounter",
             "name": "光蚪仔",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm938.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "390",
             "minCp": "358"
           }
