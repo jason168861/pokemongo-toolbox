@@ -54,7 +54,7 @@
     "category": "Grookey Community Day - Special backgrounds Tasks",
     "tasks": [
       {
-        "description": "Win a five-star or higher raid",
+        "description": "Catch 5 Pokémon while in a Party",
         "rewards": [
           {
             "isFeatured": true,
@@ -68,21 +68,7 @@
         ]
       },
       {
-        "description": "交換1隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "敲音猴",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm810.icon.png",
-            "isShiny": false,
-            "maxCp": "465",
-            "minCp": "430"
-          }
-        ]
-      },
-      {
-        "description": "完成一個小隊任務",
+        "description": "Catch 50 Pokémon",
         "rewards": [
           {
             "isFeatured": true,
