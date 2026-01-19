@@ -1,5 +1,85 @@
 [
   {
+    "category": "Precious Pals Tasks",
+    "tasks": [
+      {
+        "description": "Earn a Candy exploring with your buddy",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "狗仔包",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm926.icon.png",
+            "isShiny": false,
+            "maxCp": "422",
+            "minCp": "389"
+          }
+        ]
+      },
+      {
+        "description": "Give your buddy 1 treats",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Nanab Berry.png",
+            "name": "蕉香果 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×5",
+            "quantity": "×5"
+          }
+        ]
+      },
+      {
+        "description": "Take a snapshot of your buddy",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "角金魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm118.icon.png",
+            "isShiny": true,
+            "maxCp": "493",
+            "minCp": "458"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伊布",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm133.icon.png",
+            "isShiny": true,
+            "maxCp": "459",
+            "minCp": "424"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "布撥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm921.icon.png",
+            "isShiny": true,
+            "maxCp": "272",
+            "minCp": "244"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Grookey Community Day Tasks",
     "tasks": [
       {
