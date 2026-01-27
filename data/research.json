@@ -1,5 +1,47 @@
 [
   {
+    "category": "Into the Depths Tasks",
+    "tasks": [
+      {
+        "description": "探索1公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "地鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm50.icon.png",
+            "isShiny": true,
+            "maxCp": "289",
+            "minCp": "262"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "貓鼬少",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm734.icon.png",
+            "isShiny": true,
+            "maxCp": "377",
+            "minCp": "344"
+          }
+        ]
+      },
+      {
+        "description": "探索3公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "晶光芽",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm969.icon.png",
+            "isShiny": false,
+            "maxCp": "720",
+            "minCp": "675"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Precious Pals: Taken Over Tasks",
     "tasks": [
       {
