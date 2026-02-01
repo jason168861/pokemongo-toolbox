@@ -1,5 +1,116 @@
 [
   {
+    "category": "Vulpix Community Day Tasks",
+    "tasks": [
+      {
+        "description": "Catch 3 Vulpix",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Vulpix Community Day - Special backgrounds Tasks",
+    "tasks": [
+      {
+        "description": "Catch 5 Pokémon while in a Party",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          }
+        ]
+      },
+      {
+        "description": "Catch 50 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Into the Depths Tasks",
     "tasks": [
       {
