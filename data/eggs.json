@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年2月2日22時",
+  "lastUpdated": "2026年2月3日00時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -575,7 +575,7 @@
       "name": "獨劍鞘",
       "cpRange": "794",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm679.icon.png",
-      "isShiny": false
+      "isShiny": true
     },
     {
       "eggDistance": 10,
