@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年2月6日04時",
+  "lastUpdated": "2026年2月6日06時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -191,7 +191,7 @@
       "name": "淚眼蜥",
       "cpRange": "627",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm816.icon.png",
-      "isShiny": true
+      "isShiny": false
     },
     {
       "eggDistance": 1,
