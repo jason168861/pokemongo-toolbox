@@ -1,5 +1,38 @@
 [
   {
+    "category": "Oricorio Catch Mastery Tasks",
+    "tasks": [
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咕咕",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm163.icon.png",
+            "isShiny": true,
+            "maxCp": "290",
+            "minCp": "262"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "姆克兒",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm396.icon.png",
+            "isShiny": true,
+            "maxCp": "308",
+            "minCp": "279"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Carnival of Flamigo Tasks",
     "tasks": [
       {
