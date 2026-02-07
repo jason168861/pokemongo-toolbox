@@ -13,6 +13,83 @@
             "isShiny": true,
             "maxCp": "308",
             "minCp": "279"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Baile Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fBAILE.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Pom-Pom Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fPOMPOM.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Pa'u Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fPAU.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Sensu Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fSENSU.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 3 次 Great",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Baile Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fBAILE.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Pom-Pom Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fPOMPOM.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Pa'u Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fPAU.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Sensu Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fSENSU.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
           }
         ]
       },
@@ -27,6 +104,83 @@
             "isShiny": true,
             "maxCp": "290",
             "minCp": "262"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Baile Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fBAILE.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Pom-Pom Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fPOMPOM.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Pa'u Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fPAU.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Sensu Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fSENSU.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          }
+        ]
+      },
+      {
+        "description": "投出 1 次 Excellent",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Baile Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fBAILE.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Pom-Pom Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fPOMPOM.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Pa'u Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fPAU.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Oricorio (Sensu Style)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm741.fSENSU.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "948"
           }
         ]
       }
