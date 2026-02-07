@@ -3,21 +3,7 @@
     "category": "Oricorio Catch Mastery Tasks",
     "tasks": [
       {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "咕咕",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm163.icon.png",
-            "isShiny": true,
-            "maxCp": "290",
-            "minCp": "262"
-          }
-        ]
-      },
-      {
-        "description": "???",
+        "description": "Make 10 Nice Throws",
         "rewards": [
           {
             "isFeatured": true,
@@ -27,6 +13,20 @@
             "isShiny": true,
             "maxCp": "308",
             "minCp": "279"
+          }
+        ]
+      },
+      {
+        "description": "Make 7 Great Throws",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咕咕",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm163.icon.png",
+            "isShiny": true,
+            "maxCp": "290",
+            "minCp": "262"
           }
         ]
       }
