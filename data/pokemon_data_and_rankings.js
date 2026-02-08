@@ -1745,6 +1745,24 @@ const POKEDEX = [
     }
   },
   {
+    "id": "victreebel_mega",
+    "dexNumber": 71,
+    "name": "大食花 (Mega)",
+    "stats": {
+      "atk": 265,
+      "def": 181,
+      "sta": 190
+    },
+    "types": [
+      "grass",
+      "poison"
+    ],
+    "family": {
+      "id": "bellsprout",
+      "stage": 3
+    }
+  },
+  {
     "id": "tentacool",
     "dexNumber": 72,
     "name": "瑪瑙水母",
@@ -14869,6 +14887,24 @@ const POKEDEX = [
     "stats": {
       "atk": 177,
       "def": 165,
+      "sta": 200
+    },
+    "types": [
+      "dark",
+      "psychic"
+    ],
+    "family": {
+      "id": "inkay",
+      "stage": 2
+    }
+  },
+  {
+    "id": "malamar_mega",
+    "dexNumber": 687,
+    "name": "烏賊王 (Mega)",
+    "stats": {
+      "atk": 208,
+      "def": 222,
       "sta": 200
     },
     "types": [
