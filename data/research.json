@@ -61,165 +61,18 @@
             "minCp": "350"
           }
         ]
-      }
-    ]
-  },
-  {
-    "category": "Carnival of Flamigo Tasks",
-    "tasks": [
-      {
-        "description": "捕捉10隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "新葉喵",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm906.icon.png",
-            "isShiny": true,
-            "maxCp": "435",
-            "minCp": "401"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "呆火鱷",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm909.icon.png",
-            "isShiny": true,
-            "maxCp": "483",
-            "minCp": "447"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "潤水鴨",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm912.icon.png",
-            "isShiny": true,
-            "maxCp": "460",
-            "minCp": "425"
-          }
-        ]
       },
       {
-        "description": "Make 3 Curveball Throws in a row",
+        "description": "連續投出 5 次 Great 曲球",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "蓮葉童子",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm270.icon.png",
+            "name": "Spinda with a heart pattern",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f08.icon.png",
             "isShiny": true,
-            "maxCp": "256",
-            "minCp": "230"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "纏紅鶴",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm973.icon.png",
-            "isShiny": false,
-            "maxCp": "1181",
-            "minCp": "1125"
-          }
-        ]
-      },
-      {
-        "description": "Make 5 Curveball Throws",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "百合根娃娃",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm548.icon.png",
-            "isShiny": true,
-            "maxCp": "441",
-            "minCp": "407"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "輕飄飄",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm592.icon.png",
-            "isShiny": true,
-            "maxCp": "539",
-            "minCp": "501"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小篤兒",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm731.icon.png",
-            "isShiny": true,
-            "maxCp": "390",
-            "minCp": "357"
-          }
-        ]
-      },
-      {
-        "description": "Make a Great Curveball Throw",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "纏紅鶴",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm973.icon.png",
-            "isShiny": false,
-            "maxCp": "1181",
-            "minCp": "1125"
-          }
-        ]
-      },
-      {
-        "description": "旋轉5個寶可補給站或道館的轉盤",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "蓮葉童子",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm270.icon.png",
-            "isShiny": true,
-            "maxCp": "256",
-            "minCp": "230"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "螢光魚",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm456.icon.png",
-            "isShiny": true,
-            "maxCp": "416",
-            "minCp": "383"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "甜竹竹",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm761.icon.png",
-            "isShiny": true,
-            "maxCp": "201",
-            "minCp": "178"
-          }
-        ]
-      },
-      {
-        "description": "探索2公里",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "溜溜糖球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm283.icon.png",
-            "isShiny": true,
-            "maxCp": "339",
-            "minCp": "309"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "粉香香",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm682.icon.png",
-            "isShiny": true,
-            "maxCp": "536",
-            "minCp": "498"
+            "maxCp": "523",
+            "minCp": "486"
           }
         ]
       }

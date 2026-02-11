@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026年2月11日22時",
+    "lastUpdated": "2026年2月12日01時",
     "bosses": [
         {
             "name": "蚊香蝌蚪",
@@ -126,115 +126,152 @@
             "englishName": "Sobble"
         },
         {
-            "name": "迷唇姐",
+            "name": "Crown Nidoqueen",
             "tier": "3-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "ice",
-                    "image": "https://leekduck.com/assets/img/types/ice.png"
+                    "name": "poison",
+                    "image": "https://leekduck.com/assets/img/types/poison.png"
                 },
+                {
+                    "name": "ground",
+                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1351,
+                    "max": 1421
+                },
+                "boosted": {
+                    "min": 1689,
+                    "max": 1777
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                },
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm31.cROYAL_NOEVOLVE.icon.png",
+            "englishName": "Crown Nidoqueen"
+        },
+        {
+            "name": "Crown Nidoking",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "poison",
+                    "image": "https://leekduck.com/assets/img/types/poison.png"
+                },
+                {
+                    "name": "ground",
+                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1395,
+                    "max": 1466
+                },
+                "boosted": {
+                    "min": 1743,
+                    "max": 1833
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                },
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm34.cROYAL_NOEVOLVE.icon.png",
+            "englishName": "Crown Nidoking"
+        },
+        {
+            "name": "沙奈朵",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
                 {
                     "name": "psychic",
                     "image": "https://leekduck.com/assets/img/types/psychic.png"
+                },
+                {
+                    "name": "fairy",
+                    "image": "https://leekduck.com/assets/img/types/fairy.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1387,
-                    "max": 1460
+                    "min": 1688,
+                    "max": 1767
                 },
                 "boosted": {
-                    "min": 1734,
-                    "max": 1825
+                    "min": 2110,
+                    "max": 2209
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                },
-                {
                     "name": "windy",
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
+                },
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm124.icon.png",
-            "englishName": "Jynx"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm282.icon.png",
+            "englishName": "Gardevoir"
         },
         {
-            "name": "大王燕",
+            "name": "艾路雷朵",
             "tier": "3-Star Raids",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
-                    "name": "normal",
-                    "image": "https://leekduck.com/assets/img/types/normal.png"
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
                 },
                 {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
+                    "name": "fighting",
+                    "image": "https://leekduck.com/assets/img/types/fighting.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1034,
-                    "max": 1097
+                    "min": 1688,
+                    "max": 1767
                 },
                 "boosted": {
-                    "min": 1293,
-                    "max": 1371
+                    "min": 2110,
+                    "max": 2209
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "partly cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
-                },
-                {
                     "name": "windy",
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm277.icon.png",
-            "englishName": "Swellow"
-        },
-        {
-            "name": "舞天鵝",
-            "tier": "3-Star Raids",
-            "canBeShiny": false,
-            "types": [
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
                 },
                 {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
                 }
             ],
-            "combatPower": {
-                "normal": {
-                    "min": 1128,
-                    "max": 1193
-                },
-                "boosted": {
-                    "min": 1410,
-                    "max": 1491
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm581.icon.png",
-            "englishName": "Swanna"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm475.icon.png",
+            "englishName": "Gallade"
         },
         {
             "name": "帝牙盧卡",
