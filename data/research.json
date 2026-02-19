@@ -1,5 +1,52 @@
 [
   {
+    "category": "Pokémon GO Tour: Kalos - Tainan 2026 Tasks",
+    "tasks": [
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Calem's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Calem.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Serena's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Serena.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "獨劍鞘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm679.icon.png",
+            "isShiny": true,
+            "maxCp": "595",
+            "minCp": "556"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Lunar New Year 2026 Tasks",
     "tasks": [
       {
