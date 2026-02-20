@@ -133,8 +133,17 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "皮卡丘",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
+            "name": "Pikachu wearing Calem's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Calem.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Serena's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Serena.png",
             "isShiny": true,
             "maxCp": "402",
             "minCp": "369"
@@ -268,8 +277,17 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "皮卡丘",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
+            "name": "Pikachu wearing Calem's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Calem.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Serena's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Serena.png",
             "isShiny": true,
             "maxCp": "402",
             "minCp": "369"
