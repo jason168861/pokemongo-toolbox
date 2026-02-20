@@ -1,5 +1,51 @@
 [
   {
+    "category": "Lunar New Year 2026 Tasks",
+    "tasks": [
+      {
+        "description": "Catch 12 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "火紅不倒翁",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm554.icon.png",
+            "isShiny": true,
+            "maxCp": "618",
+            "minCp": "576"
+          }
+        ]
+      },
+      {
+        "description": "Send 6 Gifts to friends",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×600",
+            "quantity": "×600"
+          }
+        ]
+      },
+      {
+        "description": "探索2公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "斑斑馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm522.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "346"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Pokémon GO Tour: Kalos - Tainan 2026 Tasks",
     "tasks": [
       {
@@ -45,9 +91,9 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Furfrou (Natural)",
+            "name": "多麗米亞",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm676.fNATURAL.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "905",
             "minCp": "856"
           }
@@ -180,9 +226,9 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Furfrou (Natural)",
+            "name": "多麗米亞",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm676.fNATURAL.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "905",
             "minCp": "856"
           }
@@ -264,52 +310,6 @@
             "isShiny": true,
             "maxCp": "595",
             "minCp": "556"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "Lunar New Year 2026 Tasks",
-    "tasks": [
-      {
-        "description": "Catch 12 Pokémon",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "火紅不倒翁",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm554.icon.png",
-            "isShiny": true,
-            "maxCp": "618",
-            "minCp": "576"
-          }
-        ]
-      },
-      {
-        "description": "Send 6 Gifts to friends",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×600",
-            "quantity": "×600"
-          }
-        ]
-      },
-      {
-        "description": "探索2公里",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "斑斑馬",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm522.icon.png",
-            "isShiny": true,
-            "maxCp": "378",
-            "minCp": "346"
           }
         ]
       }
