@@ -3,13 +3,92 @@
     "category": "Pokémon GO Tour: Kalos - Tainan 2026 Tasks",
     "tasks": [
       {
-        "description": "???",
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm282.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Gardevoir Mega Energy.png",
+            "name": "沙奈朵 超級能量",
+            "quantity": "×20"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm359.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Absol Mega Energy.png",
+            "name": "阿勃梭魯 超級能量",
+            "quantity": "×20"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm448.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Lucario Mega Energy.png",
+            "name": "路卡利歐 超級能量",
+            "quantity": "×20"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm130.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Gyarados Mega Energy.png",
+            "name": "暴鯉龍 超級能量",
+            "quantity": "×20"
+          }
+        ]
+      },
+      {
+        "description": "探索1公里",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing Calem's Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Calem.png",
+            "name": "Furfrou (Natural)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm676.fNATURAL.icon.png",
+            "isShiny": false,
+            "maxCp": "905",
+            "minCp": "856"
+          }
+        ]
+      },
+      {
+        "description": "Power up Grass or Poison-type Pokémon 6 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "喇叭芽",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm69.icon.png",
+            "isShiny": true,
+            "maxCp": "443",
+            "minCp": "407"
+          }
+        ]
+      },
+      {
+        "description": "Power up Grass or Poison-type Pokémon 6 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "好啦魷",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm686.icon.png",
+            "isShiny": true,
+            "maxCp": "397",
+            "minCp": "365"
+          }
+        ]
+      },
+      {
+        "description": "Power up Pokémon 6 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
             "isShiny": true,
             "maxCp": "402",
             "minCp": "369"
@@ -17,21 +96,30 @@
         ]
       },
       {
-        "description": "???",
+        "description": "Spin 6 different PokéStops or Gyms",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing Serena's Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Serena.png",
+            "name": "Flabébé (Orange)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm669.fORANGE.icon.png",
             "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
+            "maxCp": "455",
+            "minCp": "421"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Flabébé (White)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm669.fWHITE.icon.png",
+            "isShiny": true,
+            "maxCp": "455",
+            "minCp": "421"
           }
         ]
       },
       {
-        "description": "???",
+        "description": "贏得1場團體戰",
         "rewards": [
           {
             "isFeatured": true,
@@ -50,13 +138,92 @@
     "category": "Pokémon GO Tour: Kalos - Los Angeles 2026 Tasks",
     "tasks": [
       {
-        "description": "???",
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm282.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Gardevoir Mega Energy.png",
+            "name": "沙奈朵 超級能量",
+            "quantity": "×20"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm359.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Absol Mega Energy.png",
+            "name": "阿勃梭魯 超級能量",
+            "quantity": "×20"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm448.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Lucario Mega Energy.png",
+            "name": "路卡利歐 超級能量",
+            "quantity": "×20"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm130.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Gyarados Mega Energy.png",
+            "name": "暴鯉龍 超級能量",
+            "quantity": "×20"
+          }
+        ]
+      },
+      {
+        "description": "探索1公里",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing Calem's Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Calem.png",
+            "name": "Furfrou (Natural)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm676.fNATURAL.icon.png",
+            "isShiny": false,
+            "maxCp": "905",
+            "minCp": "856"
+          }
+        ]
+      },
+      {
+        "description": "Power up Grass or Poison-type Pokémon 6 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "喇叭芽",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm69.icon.png",
+            "isShiny": true,
+            "maxCp": "443",
+            "minCp": "407"
+          }
+        ]
+      },
+      {
+        "description": "Power up Grass or Poison-type Pokémon 6 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "好啦魷",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm686.icon.png",
+            "isShiny": true,
+            "maxCp": "397",
+            "minCp": "365"
+          }
+        ]
+      },
+      {
+        "description": "Power up Pokémon 6 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
             "isShiny": true,
             "maxCp": "402",
             "minCp": "369"
@@ -64,21 +231,30 @@
         ]
       },
       {
-        "description": "???",
+        "description": "Spin 6 different PokéStops or Gyms",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing Serena's Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu Serena.png",
+            "name": "Flabébé (Orange)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm669.fORANGE.icon.png",
             "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
+            "maxCp": "455",
+            "minCp": "421"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Flabébé (White)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm669.fWHITE.icon.png",
+            "isShiny": true,
+            "maxCp": "455",
+            "minCp": "421"
           }
         ]
       },
       {
-        "description": "???",
+        "description": "贏得1場團體戰",
         "rewards": [
           {
             "isFeatured": true,
