@@ -3,6 +3,59 @@
     "category": "Road to Kalos - Monday Tasks",
     "tasks": [
       {
+        "description": "Catch 11 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm144.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/144.png",
+            "name": "Articuno Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm145.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/145.png",
+            "name": "Zapdos Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm146.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/146.png",
+            "name": "Moltres Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm144.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/144.png",
+            "name": "Articuno Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm145.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/145.png",
+            "name": "Zapdos Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm146.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/146.png",
+            "name": "Moltres Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
         "description": "Catch a Pikachu",
         "rewards": [
           {
@@ -32,6 +85,30 @@
             "isFeatured": true,
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm144.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/144.png",
+            "name": "Articuno Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm145.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/145.png",
+            "name": "Zapdos Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm146.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/146.png",
+            "name": "Moltres Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm144.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/144.png",
             "name": "Articuno Candy ×1",
             "quantity": "×1"
@@ -51,6 +128,29 @@
             "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/146.png",
             "name": "Moltres Candy ×1",
             "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Use an Incense",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Red's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_A.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Leaf's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_A_02.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
           }
         ]
       },
@@ -80,6 +180,30 @@
             "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/146.png",
             "name": "Moltres Candy ×10",
             "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm144.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/144.png",
+            "name": "Articuno Candy ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm145.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/145.png",
+            "name": "Zapdos Candy ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm146.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/146.png",
+            "name": "Moltres Candy ×3",
+            "quantity": "×3"
           }
         ]
       }
