@@ -3625,6 +3625,24 @@ const POKEDEX = [
     }
   },
   {
+    "id": "dragonite_mega",
+    "dexNumber": 149,
+    "name": "快龍 (Mega)",
+    "stats": {
+      "atk": 299,
+      "def": 255,
+      "sta": 209
+    },
+    "types": [
+      "dragon",
+      "flying"
+    ],
+    "family": {
+      "id": "dratini",
+      "stage": 3
+    }
+  },
+  {
     "id": "mewtwo",
     "dexNumber": 150,
     "name": "超夢",
