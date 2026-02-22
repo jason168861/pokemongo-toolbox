@@ -53,6 +53,35 @@
             "quantity": "×1"
           }
         ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm144.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/144.png",
+            "name": "Articuno Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm145.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/145.png",
+            "name": "Zapdos Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm146.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/146.png",
+            "name": "Moltres Candy ×10",
+            "quantity": "×10"
+          }
+        ]
       }
     ]
   },
