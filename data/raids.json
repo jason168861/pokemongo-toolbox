@@ -1,8 +1,8 @@
 {
-    "lastUpdated": "2026年2月24日18時",
+    "lastUpdated": "2026年2月24日20時",
     "bosses": [
         {
-            "name": "Pikachu wearing Red's Hat",
+            "name": "Pikachu wearing Ethan's Hat",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -27,11 +27,11 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOTOUR_2026_A.icon.png",
-            "englishName": "Pikachu wearing Red's Hat"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOTOUR_2026_B.icon.png",
+            "englishName": "Pikachu wearing Ethan's Hat"
         },
         {
-            "name": "Pikachu wearing Leaf's Hat",
+            "name": "Pikachu wearing Lyra's Hat",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -56,17 +56,17 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOTOUR_2026_A_02.icon.png",
-            "englishName": "Pikachu wearing Leaf's Hat"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOTOUR_2026_B_02.icon.png",
+            "englishName": "Pikachu wearing Lyra's Hat"
         },
         {
-            "name": "急凍鳥",
+            "name": "洛奇亞",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "ice",
-                    "image": "https://leekduck.com/assets/img/types/ice.png"
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
                 },
                 {
                     "name": "flying",
@@ -75,66 +75,25 @@
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1665,
-                    "max": 1743
+                    "min": 2028,
+                    "max": 2115
                 },
                 "boosted": {
-                    "min": 2082,
-                    "max": 2179
+                    "min": 2535,
+                    "max": 2645
                 }
             },
             "boostedWeather": [
-                {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                },
                 {
                     "name": "windy",
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm144.icon.png",
-            "englishName": "Articuno"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm249.icon.png",
+            "englishName": "Lugia"
         },
         {
-            "name": "閃電鳥",
-            "tier": "5-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                },
-                {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1930,
-                    "max": 2015
-                },
-                "boosted": {
-                    "min": 2413,
-                    "max": 2519
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm145.icon.png",
-            "englishName": "Zapdos"
-        },
-        {
-            "name": "火焰鳥",
+            "name": "鳳王",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -149,12 +108,12 @@
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1896,
-                    "max": 1980
+                    "min": 2119,
+                    "max": 2207
                 },
                 "boosted": {
-                    "min": 2370,
-                    "max": 2475
+                    "min": 2649,
+                    "max": 2759
                 }
             },
             "boostedWeather": [
@@ -167,8 +126,8 @@
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm146.icon.png",
-            "englishName": "Moltres"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm250.icon.png",
+            "englishName": "Ho-Oh"
         },
         {
             "name": "Shadow Dratini",
