@@ -324,6 +324,312 @@
     ]
   },
   {
+    "category": "Road to Kalos - Thursday Tasks",
+    "tasks": [
+      {
+        "description": "Catch 14 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/483.png",
+            "name": "Dialga Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/484.png",
+            "name": "Palkia Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/483.png",
+            "name": "Dialga Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/484.png",
+            "name": "Palkia Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Catch a Bidoof",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Dawn's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_A_02.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "Spin 14 different PokéStops or Gyms",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/483.png",
+            "name": "Dialga Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/484.png",
+            "name": "Palkia Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/483.png",
+            "name": "Dialga Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/484.png",
+            "name": "Palkia Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Use an Incense",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Dawn's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_A_02.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/483.png",
+            "name": "Dialga Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/484.png",
+            "name": "Palkia Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/483.png",
+            "name": "Dialga Candy ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/484.png",
+            "name": "Palkia Candy ×3",
+            "quantity": "×3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Road to Kalos - Space time anomaly Tasks",
+    "tasks": [
+      {
+        "description": "Catch 14 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/483.png",
+            "name": "Dialga Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/484.png",
+            "name": "Palkia Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/483.png",
+            "name": "Dialga Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/484.png",
+            "name": "Palkia Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Catch a Bidoof",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Rei's Cap",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fREI-CAP-temp.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Akari's Kerchief",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fAKARI-KERCHIEF-temp.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "Spin 14 different PokéStops or Gyms",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/483.png",
+            "name": "Dialga Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/484.png",
+            "name": "Palkia Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/483.png",
+            "name": "Dialga Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/484.png",
+            "name": "Palkia Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Use an Incense",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Rei's Cap",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fREI-CAP-temp.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Akari's Kerchief",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fAKARI-KERCHIEF-temp.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/483.png",
+            "name": "Dialga Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/484.png",
+            "name": "Palkia Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm483.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/483.png",
+            "name": "Dialga Candy ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm484.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/484.png",
+            "name": "Palkia Candy ×3",
+            "quantity": "×3"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Road to Kalos - Monday Tasks",
     "tasks": [
       {
