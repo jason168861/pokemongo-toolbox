@@ -369,6 +369,15 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "Pikachu wearing Lucas's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_A.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "Pikachu wearing Dawn's Hat",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_A_02.icon.png",
             "isShiny": true,
@@ -417,6 +426,15 @@
       {
         "description": "Use an Incense",
         "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Lucas's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_A.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -2289,7 +2307,7 @@
             "type": "encounter",
             "name": "燒火蚣",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm850.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "449",
             "minCp": "415"
           }
