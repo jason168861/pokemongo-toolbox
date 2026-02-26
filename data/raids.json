@@ -1,8 +1,8 @@
 {
-    "lastUpdated": "2026年2月26日22時",
+    "lastUpdated": "2026年2月27日00時",
     "bosses": [
         {
-            "name": "Pikachu wearing Brendan's Hat",
+            "name": "Pikachu wearing Lucas's Hat",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -27,11 +27,11 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.cGOTOUR_2023_HAT.icon.png",
-            "englishName": "Pikachu wearing Brendan's Hat"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOTOUR_2024_A.icon.png",
+            "englishName": "Pikachu wearing Lucas's Hat"
         },
         {
-            "name": "Pikachu wearing May's Bandana",
+            "name": "Pikachu wearing Dawn's Hat",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -56,70 +56,214 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.cGOTOUR_2023_BANDANA_NOEVOLVE.icon.png",
-            "englishName": "Pikachu wearing May's Bandana"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOTOUR_2024_A_02.icon.png",
+            "englishName": "Pikachu wearing Dawn's Hat"
         },
         {
-            "name": "原始 蓋歐卡",
-            "tier": "Primal Raids",
+            "name": "Pikachu wearing Rei's Cap",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 493,
+                    "max": 536
+                },
+                "boosted": {
+                    "min": 616,
+                    "max": 670
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fREI-CAP-temp.png",
+            "englishName": "Pikachu wearing Rei's Cap"
+        },
+        {
+            "name": "Pikachu wearing Akari's Kerchief",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 493,
+                    "max": 536
+                },
+                "boosted": {
+                    "min": 616,
+                    "max": 670
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fAKARI-KERCHIEF-temp.png",
+            "englishName": "Pikachu wearing Akari's Kerchief"
+        },
+        {
+            "name": "帝牙盧卡",
+            "tier": "5-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "steel",
+                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                },
+                {
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 2217,
+                    "max": 2307
+                },
+                "boosted": {
+                    "min": 2771,
+                    "max": 2884
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm483.icon.png",
+            "englishName": "Dialga"
+        },
+        {
+            "name": "帕路奇亞",
+            "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
                     "name": "water",
                     "image": "https://leekduck.com/assets/img/types/water.png"
+                },
+                {
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2260,
-                    "max": 2351
+                    "min": 2190,
+                    "max": 2280
                 },
                 "boosted": {
-                    "min": 2825,
-                    "max": 2939
+                    "min": 2737,
+                    "max": 2850
                 }
             },
             "boostedWeather": [
                 {
                     "name": "rainy",
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm382.fPRIMAL.icon.png",
-            "englishName": "Primal Kyogre"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm484.icon.png",
+            "englishName": "Palkia"
         },
         {
-            "name": "原始 固拉多",
-            "tier": "Primal Raids",
+            "name": "帝牙盧卡 (起源)",
+            "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "ground",
-                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                    "name": "steel",
+                    "image": "https://leekduck.com/assets/img/types/steel.png"
                 },
                 {
-                    "name": "fire",
-                    "image": "https://leekduck.com/assets/img/types/fire.png"
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2260,
-                    "max": 2351
+                    "min": 2246,
+                    "max": 2337
                 },
                 "boosted": {
-                    "min": 2825,
-                    "max": 2939
+                    "min": 2807,
+                    "max": 2921
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm383.fPRIMAL.icon.png",
-            "englishName": "Primal Groudon"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm483.fORIGIN.icon.png",
+            "englishName": "Dialga (Origin)"
+        },
+        {
+            "name": "帕路奇亞 (起源)",
+            "tier": "5-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "water",
+                    "image": "https://leekduck.com/assets/img/types/water.png"
+                },
+                {
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 2274,
+                    "max": 2367
+                },
+                "boosted": {
+                    "min": 2843,
+                    "max": 2958
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm484.fORIGIN.icon.png",
+            "englishName": "Palkia (Origin)"
         },
         {
             "name": "Shadow Dratini",

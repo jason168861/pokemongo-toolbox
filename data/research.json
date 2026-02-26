@@ -858,6 +858,426 @@
     ]
   },
   {
+    "category": "Road to Kalos - Friday white Tasks",
+    "tasks": [
+      {
+        "description": "Catch 15 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/643.png",
+            "name": "Reshiram Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/644.png",
+            "name": "Zekrom Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/646.png",
+            "name": "Kyurem Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/643.png",
+            "name": "Reshiram Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/644.png",
+            "name": "Zekrom Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/646.png",
+            "name": "Kyurem Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Catch a Lillipup",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Nate's Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu_Nate.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Rosa's Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu_Rosa.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "Spin 15 different PokéStops or Gyms",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/643.png",
+            "name": "Reshiram Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/644.png",
+            "name": "Zekrom Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/646.png",
+            "name": "Kyurem Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/643.png",
+            "name": "Reshiram Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/644.png",
+            "name": "Zekrom Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/646.png",
+            "name": "Kyurem Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Use an Incense",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Nate's Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu_Nate.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Rosa's Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu_Rosa.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/643.png",
+            "name": "Reshiram Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/644.png",
+            "name": "Zekrom Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/646.png",
+            "name": "Kyurem Candy ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/643.png",
+            "name": "Reshiram Candy ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/644.png",
+            "name": "Zekrom Candy ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/646.png",
+            "name": "Kyurem Candy ×3",
+            "quantity": "×3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Road to Kalos - Friday black Tasks",
+    "tasks": [
+      {
+        "description": "Catch 15 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/643.png",
+            "name": "Reshiram Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/644.png",
+            "name": "Zekrom Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/646.png",
+            "name": "Kyurem Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/643.png",
+            "name": "Reshiram Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/644.png",
+            "name": "Zekrom Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/646.png",
+            "name": "Kyurem Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Catch a Lillipup",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Hilbert's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu_Hilbert.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Hilda's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu_Hilda.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "Spin 15 different PokéStops or Gyms",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/643.png",
+            "name": "Reshiram Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/644.png",
+            "name": "Zekrom Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/646.png",
+            "name": "Kyurem Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/643.png",
+            "name": "Reshiram Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/644.png",
+            "name": "Zekrom Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/646.png",
+            "name": "Kyurem Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Use an Incense",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Hilbert's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu_Hilbert.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Hilda's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Pikachu_Hilda.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/643.png",
+            "name": "Reshiram Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/644.png",
+            "name": "Zekrom Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/646.png",
+            "name": "Kyurem Candy ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm643.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/643.png",
+            "name": "Reshiram Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm644.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/644.png",
+            "name": "Zekrom Candy ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_646_11.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/646.png",
+            "name": "Kyurem Candy ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
