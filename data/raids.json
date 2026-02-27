@@ -1,8 +1,8 @@
 {
-    "lastUpdated": "2026年2月27日16時",
+    "lastUpdated": "2026年2月27日18時",
     "bosses": [
         {
-            "name": "Pikachu wearing Lucas's Hat",
+            "name": "Pikachu wearing Hilbert's Hat",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -27,11 +27,11 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOTOUR_2024_A.icon.png",
-            "englishName": "Pikachu wearing Lucas's Hat"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/Pikachu_Hilbert.png",
+            "englishName": "Pikachu wearing Hilbert's Hat"
         },
         {
-            "name": "Pikachu wearing Dawn's Hat",
+            "name": "Pikachu wearing Hilda's Hat",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -56,11 +56,11 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOTOUR_2024_A_02.icon.png",
-            "englishName": "Pikachu wearing Dawn's Hat"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/Pikachu_Hilda.png",
+            "englishName": "Pikachu wearing Hilda's Hat"
         },
         {
-            "name": "Pikachu wearing Rei's Cap",
+            "name": "Pikachu wearing Nate's Visor",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -85,11 +85,11 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fREI-CAP-temp.png",
-            "englishName": "Pikachu wearing Rei's Cap"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/Pikachu_Nate.png",
+            "englishName": "Pikachu wearing Nate's Visor"
         },
         {
-            "name": "Pikachu wearing Akari's Kerchief",
+            "name": "Pikachu wearing Rosa's Visor",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -114,21 +114,21 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fAKARI-KERCHIEF-temp.png",
-            "englishName": "Pikachu wearing Akari's Kerchief"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/Pikachu_Rosa.png",
+            "englishName": "Pikachu wearing Rosa's Visor"
         },
         {
-            "name": "帝牙盧卡",
+            "name": "萊希拉姆",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
-                },
-                {
                     "name": "dragon",
                     "image": "https://leekduck.com/assets/img/types/dragon.png"
+                },
+                {
+                    "name": "fire",
+                    "image": "https://leekduck.com/assets/img/types/fire.png"
                 }
             ],
             "combatPower": {
@@ -143,127 +143,127 @@
             },
             "boostedWeather": [
                 {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                },
-                {
                     "name": "windy",
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
+                },
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm483.icon.png",
-            "englishName": "Dialga"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm643.icon.png",
+            "englishName": "Reshiram"
         },
         {
-            "name": "帕路奇亞",
+            "name": "捷克羅姆",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                },
-                {
                     "name": "dragon",
                     "image": "https://leekduck.com/assets/img/types/dragon.png"
+                },
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2190,
-                    "max": 2280
+                    "min": 2217,
+                    "max": 2307
                 },
                 "boosted": {
-                    "min": 2737,
-                    "max": 2850
+                    "min": 2771,
+                    "max": 2884
                 }
             },
             "boostedWeather": [
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                },
                 {
                     "name": "rainy",
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm484.icon.png",
-            "englishName": "Palkia"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm644.icon.png",
+            "englishName": "Zekrom"
         },
         {
-            "name": "帝牙盧卡 (起源)",
+            "name": "酋雷姆 (闇黑)",
             "tier": "5-Star Raids",
-            "canBeShiny": true,
+            "canBeShiny": false,
             "types": [
-                {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
-                },
                 {
                     "name": "dragon",
                     "image": "https://leekduck.com/assets/img/types/dragon.png"
+                },
+                {
+                    "name": "ice",
+                    "image": "https://leekduck.com/assets/img/types/ice.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2246,
-                    "max": 2337
+                    "min": 1957,
+                    "max": 2042
                 },
                 "boosted": {
-                    "min": 2807,
-                    "max": 2921
+                    "min": 2446,
+                    "max": 2553
                 }
             },
             "boostedWeather": [
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                },
                 {
                     "name": "snow",
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm483.fORIGIN.icon.png",
-            "englishName": "Dialga (Origin)"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm646.fBLACK.icon.png",
+            "englishName": "Kyurem (Black)"
         },
         {
-            "name": "帕路奇亞 (起源)",
+            "name": "酋雷姆 (焰白)",
             "tier": "5-Star Raids",
-            "canBeShiny": true,
+            "canBeShiny": false,
             "types": [
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                },
                 {
                     "name": "dragon",
                     "image": "https://leekduck.com/assets/img/types/dragon.png"
+                },
+                {
+                    "name": "ice",
+                    "image": "https://leekduck.com/assets/img/types/ice.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2274,
-                    "max": 2367
+                    "min": 1957,
+                    "max": 2042
                 },
                 "boosted": {
-                    "min": 2843,
-                    "max": 2958
+                    "min": 2446,
+                    "max": 2553
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
                     "name": "windy",
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
+                },
+                {
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm484.fORIGIN.icon.png",
-            "englishName": "Palkia (Origin)"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm646.fWHITE.icon.png",
+            "englishName": "Kyurem (White)"
         },
         {
             "name": "Shadow Dratini",
