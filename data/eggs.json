@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年3月3日04時",
+  "lastUpdated": "2026年3月3日06時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -175,7 +175,7 @@
       "name": "敲音猴",
       "cpRange": "620",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm810.icon.png",
-      "isShiny": false
+      "isShiny": true
     },
     {
       "eggDistance": 1,

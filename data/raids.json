@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026年3月3日04時",
+    "lastUpdated": "2026年3月3日06時",
     "bosses": [
         {
             "name": "魅力喵",
@@ -70,7 +70,7 @@
         {
             "name": "敲音猴",
             "tier": "1-Star Raids",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
                     "name": "grass",
@@ -128,7 +128,7 @@
         {
             "name": "風速狗",
             "tier": "3-Star Raids",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
                     "name": "fire",
@@ -157,7 +157,7 @@
         {
             "name": "斗笠菇",
             "tier": "3-Star Raids",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
                     "name": "grass",
@@ -194,7 +194,7 @@
         {
             "name": "優雅貓",
             "tier": "3-Star Raids",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
                     "name": "normal",
@@ -384,7 +384,7 @@
         {
             "name": "Shadow Joltik",
             "tier": "1-Star Raids",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
                     "name": "bug",
@@ -417,7 +417,7 @@
         {
             "name": "Shadow Alolan Marowak",
             "tier": "3-Star Raids",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
                     "name": "fire",

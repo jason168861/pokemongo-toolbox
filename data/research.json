@@ -3,91 +3,7 @@
     "category": "Pokémon 30th Anniversary Tasks",
     "tasks": [
       {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "妙蛙種子",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.icon.png",
-            "isShiny": true,
-            "maxCp": "477",
-            "minCp": "442"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小火龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.icon.png",
-            "isShiny": true,
-            "maxCp": "420",
-            "minCp": "387"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "傑尼龜",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.icon.png",
-            "isShiny": true,
-            "maxCp": "405",
-            "minCp": "372"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "皮卡丘",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
-            "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "鯉魚王",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm129.icon.png",
-            "isShiny": true,
-            "maxCp": "117",
-            "minCp": "99"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "伊布",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm133.icon.png",
-            "isShiny": true,
-            "maxCp": "459",
-            "minCp": "424"
-          }
-        ]
-      },
-      {
-        "description": "???",
+        "description": "Catch 15 Pokémon",
         "rewards": [
           {
             "isFeatured": false,
@@ -100,7 +16,88 @@
         ]
       },
       {
-        "description": "???",
+        "description": "Catch 25 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "Catch 3 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "妙蛙種子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.icon.png",
+            "isShiny": true,
+            "maxCp": "477",
+            "minCp": "442"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小火龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.icon.png",
+            "isShiny": true,
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "傑尼龜",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.icon.png",
+            "isShiny": true,
+            "maxCp": "405",
+            "minCp": "372"
+          }
+        ]
+      },
+      {
+        "description": "捕捉5隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伊布",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm133.icon.png",
+            "isShiny": true,
+            "maxCp": "459",
+            "minCp": "424"
+          }
+        ]
+      },
+      {
+        "description": "捕捉1隻百變怪",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金色蔓莓果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Spin 20 PokéStops or Gyms",
         "rewards": [
           {
             "isFeatured": false,
@@ -113,15 +110,16 @@
         ]
       },
       {
-        "description": "???",
+        "description": "旋轉5個寶可補給站或道館的轉盤",
         "rewards": [
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金色蔓莓果 ×1",
-            "quantity": "×1"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鯉魚王",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm129.icon.png",
+            "isShiny": true,
+            "maxCp": "117",
+            "minCp": "99"
           }
         ]
       }
