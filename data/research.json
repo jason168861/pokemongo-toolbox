@@ -3,32 +3,6 @@
     "category": "Pokémon 30th Anniversary Tasks",
     "tasks": [
       {
-        "description": "Catch 15 Pokémon",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
-            "name": "神奇糖果 ×1",
-            "quantity": "×1"
-          }
-        ]
-      },
-      {
-        "description": "Catch 25 Pokémon",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
-            "name": "神奇糖果 ×3",
-            "quantity": "×3"
-          }
-        ]
-      },
-      {
         "description": "Catch 3 Pokémon",
         "rewards": [
           {
@@ -97,15 +71,28 @@
         ]
       },
       {
-        "description": "Spin 20 PokéStops or Gyms",
+        "description": "Catch 15 Pokémon",
         "rewards": [
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
-            "name": "銀色凰梨果 ×1",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
             "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "Catch 25 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
           }
         ]
       },
@@ -120,6 +107,19 @@
             "isShiny": true,
             "maxCp": "117",
             "minCp": "99"
+          }
+        ]
+      },
+      {
+        "description": "Spin 20 PokéStops or Gyms",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
+            "name": "銀色凰梨果 ×1",
+            "quantity": "×1"
           }
         ]
       }
