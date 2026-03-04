@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年3月4日16時",
+  "lastUpdated": "2026年3月4日18時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -460,7 +460,7 @@
     {
       "eggDistance": 7,
       "source": "route_gift",
-      "name": "Basculin (White-Striped Form)",
+      "name": "Basculin (White-Striped)",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_000.png",
       "isShiny": false
     },
