@@ -1621,7 +1621,7 @@
             "type": "encounter",
             "name": "比比鳥",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm17.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "512",
             "minCp": "475"
           },
@@ -2440,7 +2440,7 @@
             "type": "encounter",
             "name": "阿柏怪",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm24.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "823",
             "minCp": "777"
           },
