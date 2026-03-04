@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年3月4日18時",
+  "lastUpdated": "2026年3月4日20時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -279,7 +279,7 @@
       "name": "燒火蚣",
       "cpRange": "599",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm850.icon.png",
-      "isShiny": true
+      "isShiny": false
     },
     {
       "eggDistance": 5,
@@ -460,9 +460,10 @@
     {
       "eggDistance": 7,
       "source": "route_gift",
-      "name": "Basculin (White-Striped)",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pokemon_icon_000.png",
-      "isShiny": false
+      "name": "野蠻鱸魚 (白條紋)",
+      "cpRange": "1194",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm550.fWHITE_STRIPED.icon.png",
+      "isShiny": true
     },
     {
       "eggDistance": 10,
