@@ -1,5 +1,31 @@
 [
   {
+    "category": "Pokémon Pokopia Celebration Event Tasks",
+    "tasks": [
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Items.png",
+            "name": "Items ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Pokémon 30th Anniversary Tasks",
     "tasks": [
       {
