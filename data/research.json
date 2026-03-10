@@ -3,25 +3,15 @@
     "category": "Pokémon Pokopia Celebration Event Tasks",
     "tasks": [
       {
-        "description": "捕捉10隻寶可夢",
+        "description": "捕捉1隻百變怪",
         "rewards": [
           {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "快拳郎",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm107.icon.png",
-            "isShiny": true,
-            "maxCp": "999",
-            "minCp": "947"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "樹才怪",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm185.icon.png",
-            "isShiny": true,
-            "maxCp": "920",
-            "minCp": "871"
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
           }
         ]
       },
@@ -55,15 +45,25 @@
         ]
       },
       {
-        "description": "捕捉1隻百變怪",
+        "description": "捕捉10隻寶可夢",
         "rewards": [
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
-            "name": "神奇糖果 ×1",
-            "quantity": "×1"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "快拳郎",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm107.icon.png",
+            "isShiny": true,
+            "maxCp": "999",
+            "minCp": "947"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "樹才怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm185.icon.png",
+            "isShiny": true,
+            "maxCp": "920",
+            "minCp": "871"
           }
         ]
       },
