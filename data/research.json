@@ -59,6 +59,15 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "飛天螳螂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
+            "isShiny": true,
+            "maxCp": "1160",
+            "minCp": "1104"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "樹才怪",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm185.icon.png",
             "isShiny": true,
