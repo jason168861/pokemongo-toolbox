@@ -1,35 +1,6 @@
 {
-    "lastUpdated": "2026年3月11日12時",
+    "lastUpdated": "2026年3月11日14時",
     "bosses": [
-        {
-            "name": "皮卡丘",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 493,
-                    "max": 536
-                },
-                "boosted": {
-                    "min": 616,
-                    "max": 670
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.icon.png",
-            "englishName": "Pikachu"
-        },
         {
             "name": "拉普拉斯",
             "tier": "3-Star Raids",
@@ -130,27 +101,56 @@
             "englishName": "Dragonite"
         },
         {
-            "name": "急凍鳥",
+            "name": "蒼響 (百戰勇者)",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "ice",
-                    "image": "https://leekduck.com/assets/img/types/ice.png"
-                },
-                {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
+                    "name": "fairy",
+                    "image": "https://leekduck.com/assets/img/types/fairy.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1665,
-                    "max": 1743
+                    "min": 2100,
+                    "max": 2188
                 },
                 "boosted": {
-                    "min": 2082,
-                    "max": 2179
+                    "min": 2625,
+                    "max": 2735
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm888.fHERO.icon.png",
+            "englishName": "Zacian (Hero)"
+        },
+        {
+            "name": "超級 大鋼蛇",
+            "tier": "Mega Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "steel",
+                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                },
+                {
+                    "name": "ground",
+                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1308,
+                    "max": 1379
+                },
+                "boosted": {
+                    "min": 1635,
+                    "max": 1724
                 }
             },
             "boostedWeather": [
@@ -159,119 +159,12 @@
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 },
                 {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm144.icon.png",
-            "englishName": "Articuno"
-        },
-        {
-            "name": "閃電鳥",
-            "tier": "5-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                },
-                {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1930,
-                    "max": 2015
-                },
-                "boosted": {
-                    "min": 2413,
-                    "max": 2519
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm145.icon.png",
-            "englishName": "Zapdos"
-        },
-        {
-            "name": "火焰鳥",
-            "tier": "5-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "fire",
-                    "image": "https://leekduck.com/assets/img/types/fire.png"
-                },
-                {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1896,
-                    "max": 1980
-                },
-                "boosted": {
-                    "min": 2370,
-                    "max": 2475
-                }
-            },
-            "boostedWeather": [
-                {
                     "name": "sunny",
                     "image": "https://leekduck.com/assets/img/weather/sunny.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm146.icon.png",
-            "englishName": "Moltres"
-        },
-        {
-            "name": "超級 凱羅斯",
-            "tier": "Mega Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "bug",
-                    "image": "https://leekduck.com/assets/img/types/bug.png"
-                },
-                {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1613,
-                    "max": 1690
-                },
-                "boosted": {
-                    "min": 2016,
-                    "max": 2113
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm127.fMEGA.icon.png",
-            "englishName": "Mega Pinsir"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm208.fMEGA.icon.png",
+            "englishName": "Mega Steelix"
         },
         {
             "name": "Shadow Dratini",
