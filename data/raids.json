@@ -1,6 +1,122 @@
 {
-    "lastUpdated": "2026年3月11日16時",
+    "lastUpdated": "2026年3月11日18時",
     "bosses": [
+        {
+            "name": "溶食獸",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "poison",
+                    "image": "https://leekduck.com/assets/img/types/poison.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 452,
+                    "max": 495
+                },
+                "boosted": {
+                    "min": 565,
+                    "max": 618
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm316.icon.png",
+            "englishName": "Gulpin"
+        },
+        {
+            "name": "螺釘地鼠",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "ground",
+                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 732,
+                    "max": 786
+                },
+                "boosted": {
+                    "min": 916,
+                    "max": 983
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm529.icon.png",
+            "englishName": "Drilbur"
+        },
+        {
+            "name": "搬運小匠",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "fighting",
+                    "image": "https://leekduck.com/assets/img/types/fighting.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 699,
+                    "max": 751
+                },
+                "boosted": {
+                    "min": 874,
+                    "max": 939
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm532.icon.png",
+            "englishName": "Timburr"
+        },
+        {
+            "name": "泡沫栗鼠",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "normal",
+                    "image": "https://leekduck.com/assets/img/types/normal.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 456,
+                    "max": 498
+                },
+                "boosted": {
+                    "min": 570,
+                    "max": 623
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm572.icon.png",
+            "englishName": "Minccino"
+        },
         {
             "name": "拉普拉斯",
             "tier": "3-Star Raids",
