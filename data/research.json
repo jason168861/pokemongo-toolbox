@@ -1,5 +1,145 @@
 [
   {
+    "category": "Bug Out 2026 Tasks",
+    "tasks": [
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "土居忍士",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm290.icon.png",
+            "isShiny": true,
+            "maxCp": "329",
+            "minCp": "299"
+          }
+        ]
+      },
+      {
+        "description": "Catch 15 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "結草兒 (草木)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fPLANT.icon.png",
+            "isShiny": true,
+            "maxCp": "209",
+            "minCp": "185"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "結草兒 (砂土)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fSANDY.icon.png",
+            "isShiny": true,
+            "maxCp": "209",
+            "minCp": "185"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "結草兒 (垃圾)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fTRASH.icon.png",
+            "isShiny": true,
+            "maxCp": "209",
+            "minCp": "185"
+          }
+        ]
+      },
+      {
+        "description": "Catch 25 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電螢蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm313.icon.png",
+            "isShiny": true,
+            "maxCp": "759",
+            "minCp": "714"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "甜甜螢",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm314.icon.png",
+            "isShiny": true,
+            "maxCp": "759",
+            "minCp": "714"
+          }
+        ]
+      },
+      {
+        "description": "捕捉5隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "交換1隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "蓋蓋蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm588.icon.png",
+            "isShiny": true,
+            "maxCp": "506",
+            "minCp": "469"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小嘴蝸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm616.icon.png",
+            "isShiny": true,
+            "maxCp": "357",
+            "minCp": "325"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鐵蟻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm632.icon.png",
+            "isShiny": true,
+            "maxCp": "1140",
+            "minCp": "1084"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Pokémon Pokopia Celebration Event Tasks",
     "tasks": [
       {
