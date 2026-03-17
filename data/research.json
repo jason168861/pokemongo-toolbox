@@ -23,7 +23,7 @@
             "isFeatured": true,
             "type": "encounter",
             "name": "結草兒 (草木)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fPLANT.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fBURMY_PLANT.icon.png",
             "isShiny": true,
             "maxCp": "209",
             "minCp": "185"
@@ -32,7 +32,7 @@
             "isFeatured": true,
             "type": "encounter",
             "name": "結草兒 (砂土)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fSANDY.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fBURMY_SANDY.icon.png",
             "isShiny": true,
             "maxCp": "209",
             "minCp": "185"
@@ -41,7 +41,7 @@
             "isFeatured": true,
             "type": "encounter",
             "name": "結草兒 (垃圾)",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fTRASH.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm412.fBURMY_TRASH.icon.png",
             "isShiny": true,
             "maxCp": "209",
             "minCp": "185"
