@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026年3月17日16時",
+    "lastUpdated": "2026年3月17日18時",
     "bosses": [
         {
             "name": "溶食獸",
@@ -118,27 +118,56 @@
             "englishName": "Minccino"
         },
         {
-            "name": "拉普拉斯",
+            "name": "快拳郎",
             "tier": "3-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                },
-                {
-                    "name": "ice",
-                    "image": "https://leekduck.com/assets/img/types/ice.png"
+                    "name": "fighting",
+                    "image": "https://leekduck.com/assets/img/types/fighting.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1435,
-                    "max": 1509
+                    "min": 1263,
+                    "max": 1332
                 },
                 "boosted": {
-                    "min": 1794,
-                    "max": 1886
+                    "min": 1579,
+                    "max": 1665
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm107.icon.png",
+            "englishName": "Hitmonchan"
+        },
+        {
+            "name": "飛天螳螂",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "bug",
+                    "image": "https://leekduck.com/assets/img/types/bug.png"
+                },
+                {
+                    "name": "flying",
+                    "image": "https://leekduck.com/assets/img/types/flying.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1472,
+                    "max": 1546
+                },
+                "boosted": {
+                    "min": 1841,
+                    "max": 1933
                 }
             },
             "boostedWeather": [
@@ -147,12 +176,12 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 },
                 {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm131.icon.png",
-            "englishName": "Lapras"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm123.icon.png",
+            "englishName": "Scyther"
         },
         {
             "name": "卡比獸",
@@ -182,39 +211,6 @@
             ],
             "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm143.icon.png",
             "englishName": "Snorlax"
-        },
-        {
-            "name": "快龍",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                },
-                {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 2079,
-                    "max": 2167
-                },
-                "boosted": {
-                    "min": 2599,
-                    "max": 2709
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm149.icon.png",
-            "englishName": "Dragonite"
         },
         {
             "name": "蒼響 (百戰勇者)",
