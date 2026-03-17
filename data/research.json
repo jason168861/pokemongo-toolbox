@@ -3,6 +3,35 @@
     "category": "Bug Out 2026 Tasks",
     "tasks": [
       {
+        "description": "捕捉5隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
         "description": "捕捉10隻寶可夢",
         "rewards": [
           {
@@ -72,31 +101,16 @@
         ]
       },
       {
-        "description": "捕捉5隻寶可夢",
+        "description": "贏得1場團體戰",
         "rewards": [
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
-            "quantity": "×10"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
-            "name": "超級球 ×5",
-            "quantity": "×5"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
-            "name": "高級球 ×3",
-            "quantity": "×3"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鐵蟻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm632.icon.png",
+            "isShiny": true,
+            "maxCp": "1140",
+            "minCp": "1084"
           }
         ]
       },
@@ -120,20 +134,6 @@
             "isShiny": true,
             "maxCp": "357",
             "minCp": "325"
-          }
-        ]
-      },
-      {
-        "description": "贏得1場團體戰",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "鐵蟻",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm632.icon.png",
-            "isShiny": true,
-            "maxCp": "1140",
-            "minCp": "1084"
           }
         ]
       }
