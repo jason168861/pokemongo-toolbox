@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026年3月19日18時",
+    "lastUpdated": "2026年3月19日20時",
     "bosses": [
         {
             "name": "索偵蟲",
@@ -134,13 +134,13 @@
             "englishName": "Kleavor"
         },
         {
-            "name": "蒼響 (百戰勇者)",
+            "name": "藏瑪然特 (百戰勇者)",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "fairy",
-                    "image": "https://leekduck.com/assets/img/types/fairy.png"
+                    "name": "fighting",
+                    "image": "https://leekduck.com/assets/img/types/fighting.png"
                 }
             ],
             "combatPower": {
@@ -159,45 +159,45 @@
                     "image": "https://leekduck.com/assets/img/weather/cloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm888.fHERO.icon.png",
-            "englishName": "Zacian (Hero)"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm889.fHERO.icon.png",
+            "englishName": "Zamazenta (Hero)"
         },
         {
-            "name": "超級 大鋼蛇",
+            "name": "超級 呆殼獸",
             "tier": "Mega Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                    "name": "water",
+                    "image": "https://leekduck.com/assets/img/types/water.png"
                 },
                 {
-                    "name": "ground",
-                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1308,
-                    "max": 1379
+                    "min": 1382,
+                    "max": 1454
                 },
                 "boosted": {
-                    "min": 1635,
-                    "max": 1724
+                    "min": 1728,
+                    "max": 1817
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 },
                 {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm208.fMEGA.icon.png",
-            "englishName": "Mega Steelix"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm80.fMEGA.icon.png",
+            "englishName": "Mega Slowbro"
         },
         {
             "name": "Shadow Dratini",
