@@ -143,38 +143,6 @@
     "category": "Replay: Water Research Day Tasks",
     "tasks": [
       {
-        "description": "Catch 3 Water-type Pokémon",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "蓮葉童子",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm270.icon.png",
-            "isShiny": true,
-            "maxCp": "256",
-            "minCp": "230"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "醜醜魚",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm349.icon.png",
-            "isShiny": true,
-            "maxCp": "117",
-            "minCp": "99"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "珍珠貝",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm366.icon.png",
-            "isShiny": true,
-            "maxCp": "544",
-            "minCp": "507"
-          }
-        ]
-      },
-      {
         "description": "捕捉5隻寶可夢",
         "rewards": [
           {
@@ -207,7 +175,7 @@
         ]
       },
       {
-        "description": "Use 3 Pinap Berries while catching Pokémon",
+        "description": "Use 3 Pinap Berries to help catch Pokémon",
         "rewards": [
           {
             "isFeatured": true,
