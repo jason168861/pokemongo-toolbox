@@ -4063,7 +4063,7 @@ const POKEDEX = [
   {
     "id": "lanturnw",
     "dexNumber": 171,
-    "name": "Lanturn",
+    "name": "電燈怪",
     "stats": {
       "atk": 146,
       "def": 137,
@@ -7594,7 +7594,7 @@ const POKEDEX = [
   {
     "id": "cradily_b",
     "dexNumber": 346,
-    "name": "Cradily",
+    "name": "搖籃百合",
     "stats": {
       "atk": 152,
       "def": 194,
@@ -16722,7 +16722,7 @@ const POKEDEX = [
   {
     "id": "golisopodsh",
     "dexNumber": 768,
-    "name": "Golisopod",
+    "name": "具甲武者",
     "stats": {
       "atk": 218,
       "def": 226,
@@ -24897,7 +24897,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "Cradily",
+    "name": "搖籃百合",
     "score": 87.2,
     "dex": 346,
     "type1": "岩石",
@@ -27141,7 +27141,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 100000
   },
   {
-    "name": "Golisopod",
+    "name": "具甲武者",
     "score": 84.4,
     "dex": 768,
     "type1": "蟲",
