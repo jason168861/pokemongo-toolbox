@@ -1,5 +1,147 @@
 [
   {
+    "category": "A Shockingly Good Time Tasks",
+    "tasks": [
+      {
+        "description": "Catch 3 Pikachu",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "Catch 5 different species of Electric-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 雷丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm26.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "980",
+            "minCp": "929"
+          }
+        ]
+      },
+      {
+        "description": "Catch 8 Electric-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
+            "isShiny": true,
+            "maxCp": "583",
+            "minCp": "544"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "燈籠魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm170.icon.png",
+            "isShiny": true,
+            "maxCp": "479",
+            "minCp": "443"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咩利羊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm179.icon.png",
+            "isShiny": true,
+            "maxCp": "424",
+            "minCp": "391"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咚咚鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "743"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "布撥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm921.icon.png",
+            "isShiny": true,
+            "maxCp": "272",
+            "minCp": "244"
+          }
+        ]
+      },
+      {
+        "description": "Power up Electric-type Pokémon 5 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
+            "isShiny": true,
+            "maxCp": "583",
+            "minCp": "544"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "燈籠魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm170.icon.png",
+            "isShiny": true,
+            "maxCp": "479",
+            "minCp": "443"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咩利羊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm179.icon.png",
+            "isShiny": true,
+            "maxCp": "424",
+            "minCp": "391"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電電蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm595.icon.png",
+            "isShiny": true,
+            "maxCp": "438",
+            "minCp": "404"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咚咚鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "743"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
