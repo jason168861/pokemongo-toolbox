@@ -36,6 +36,15 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "小磁怪",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
             "isShiny": true,
@@ -59,6 +68,15 @@
             "isShiny": true,
             "maxCp": "424",
             "minCp": "391"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電電蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm595.icon.png",
+            "isShiny": true,
+            "maxCp": "438",
+            "minCp": "404"
           },
           {
             "isFeatured": true,
@@ -136,6 +154,15 @@
             "isShiny": true,
             "maxCp": "789",
             "minCp": "743"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "布撥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm921.icon.png",
+            "isShiny": true,
+            "maxCp": "272",
+            "minCp": "244"
           }
         ]
       }
