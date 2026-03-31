@@ -13,6 +13,15 @@
             "isShiny": true,
             "maxCp": "402",
             "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "謎擬Ｑ",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm778.fDISGUISED.icon.png",
+            "isShiny": false,
+            "maxCp": "954",
+            "minCp": "903"
           }
         ]
       },
@@ -27,6 +36,15 @@
             "isShiny": true,
             "maxCp": "980",
             "minCp": "929"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "謎擬Ｑ",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm778.fDISGUISED.icon.png",
+            "isShiny": false,
+            "maxCp": "954",
+            "minCp": "903"
           }
         ]
       },
