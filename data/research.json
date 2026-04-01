@@ -13,12 +13,7 @@
             "isShiny": true,
             "maxCp": "402",
             "minCp": "369"
-          }
-        ]
-      },
-      {
-        "description": "Catch 3 Pikachu (Starting April 1st)",
-        "rewards": [
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -41,12 +36,7 @@
             "isShiny": true,
             "maxCp": "980",
             "minCp": "929"
-          }
-        ]
-      },
-      {
-        "description": "Catch 5 different species of Electric-type Pokémon (Starting April 1st)",
-        "rewards": [
+          },
           {
             "isFeatured": true,
             "type": "encounter",
