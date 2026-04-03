@@ -17221,6 +17221,24 @@ const POKEDEX = [
     }
   },
   {
+    "id": "mimikyu_busted",
+    "dexNumber": 778,
+    "name": "謎擬Ｑ 現形",
+    "stats": {
+      "atk": 177,
+      "def": 199,
+      "sta": 146
+    },
+    "types": [
+      "ghost",
+      "fairy"
+    ],
+    "family": {
+      "id": "mimikyu",
+      "stage": 1
+    }
+  },
+  {
     "id": "bruxish",
     "dexNumber": 779,
     "name": "磨牙彩皮魚",
