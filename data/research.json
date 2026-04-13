@@ -1,5 +1,68 @@
 [
   {
+    "category": "Sustainability Week 2026 Tasks",
+    "tasks": [
+      {
+        "description": "捕捉5隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "Catch 15 Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "三蜜蜂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm415.icon.png",
+            "isShiny": true,
+            "maxCp": "212",
+            "minCp": "188"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "櫻花寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm420.icon.png",
+            "isShiny": true,
+            "maxCp": "407",
+            "minCp": "374"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飄浮泡泡",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm351.icon.png",
+            "isShiny": true,
+            "maxCp": "699",
+            "minCp": "656"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
