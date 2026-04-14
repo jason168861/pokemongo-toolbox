@@ -17,9 +17,31 @@
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
             "name": "高級球 ×3",
             "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飄浮泡泡",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm351.icon.png",
+            "isShiny": true,
+            "maxCp": "699",
+            "minCp": "656"
           }
         ]
       },
@@ -43,20 +65,61 @@
             "isShiny": true,
             "maxCp": "407",
             "minCp": "374"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "哎呀球菇",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm590.icon.png",
+            "isShiny": true,
+            "maxCp": "419",
+            "minCp": "386"
           }
         ]
       },
       {
-        "description": "捕捉10隻寶可夢",
+        "description": "探索3公里",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "飄浮泡泡",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm351.icon.png",
+            "name": "拉普拉斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm131.icon.png",
             "isShiny": true,
-            "maxCp": "699",
-            "minCp": "656"
+            "maxCp": "1131",
+            "minCp": "1076"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "波克基古",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm176.icon.png",
+            "isShiny": true,
+            "maxCp": "732",
+            "minCp": "688"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "破破袋",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm568.icon.png",
+            "isShiny": true,
+            "maxCp": "428",
+            "minCp": "395"
+          }
+        ]
+      },
+      {
+        "description": "孵化2顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Galarian Corsola wearing pink sunglasses",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm222.fSPRING_2026.icon.png",
+            "isShiny": true,
+            "maxCp": "641",
+            "minCp": "600"
           }
         ]
       }
