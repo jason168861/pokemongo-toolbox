@@ -1,5 +1,122 @@
 [
   {
+    "category": "Steeled Resolve Tasks",
+    "tasks": [
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
+            "isShiny": true,
+            "maxCp": "583",
+            "minCp": "544"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "榛果球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm204.icon.png",
+            "isShiny": true,
+            "maxCp": "475",
+            "minCp": "440"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "朝北鼻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm299.icon.png",
+            "isShiny": true,
+            "maxCp": "425",
+            "minCp": "390"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "銅鏡怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm436.icon.png",
+            "isShiny": true,
+            "maxCp": "258",
+            "minCp": "229"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "螺釘地鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm529.icon.png",
+            "isShiny": true,
+            "maxCp": "589",
+            "minCp": "549"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "種子鐵球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm597.icon.png",
+            "isShiny": true,
+            "maxCp": "403",
+            "minCp": "370"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鐵啞鈴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm374.icon.png",
+            "isShiny": true,
+            "maxCp": "418",
+            "minCp": "385"
+          }
+        ]
+      },
+      {
+        "description": "???",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盾甲龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
+            "isShiny": true,
+            "maxCp": "381",
+            "minCp": "348"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
