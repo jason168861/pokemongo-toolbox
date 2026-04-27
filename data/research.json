@@ -1,37 +1,9 @@
 [
   {
-    "category": "Steeled Resolve Tasks",
+    "category": "Steeled Resolve 2026 Tasks",
     "tasks": [
       {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小磁怪",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
-            "isShiny": true,
-            "maxCp": "583",
-            "minCp": "544"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "榛果球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm204.icon.png",
-            "isShiny": true,
-            "maxCp": "475",
-            "minCp": "440"
-          }
-        ]
-      },
-      {
-        "description": "???",
+        "description": "Catch 5 Steel-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
@@ -41,12 +13,7 @@
             "isShiny": true,
             "maxCp": "425",
             "minCp": "390"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -55,12 +22,7 @@
             "isShiny": true,
             "maxCp": "258",
             "minCp": "229"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -73,21 +35,7 @@
         ]
       },
       {
-        "description": "???",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "種子鐵球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm597.icon.png",
-            "isShiny": true,
-            "maxCp": "403",
-            "minCp": "370"
-          }
-        ]
-      },
-      {
-        "description": "???",
+        "description": "Use a Steel-type Charged Attack in a battle",
         "rewards": [
           {
             "isFeatured": true,
@@ -97,12 +45,7 @@
             "isShiny": true,
             "maxCp": "418",
             "minCp": "385"
-          }
-        ]
-      },
-      {
-        "description": "???",
-        "rewards": [
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -111,6 +54,38 @@
             "isShiny": true,
             "maxCp": "381",
             "minCp": "348"
+          }
+        ]
+      },
+      {
+        "description": "Power up Steel-type Pokémon 5 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
+            "isShiny": true,
+            "maxCp": "583",
+            "minCp": "544"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "榛果球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm204.icon.png",
+            "isShiny": true,
+            "maxCp": "475",
+            "minCp": "440"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "種子鐵球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm597.icon.png",
+            "isShiny": true,
+            "maxCp": "403",
+            "minCp": "370"
           }
         ]
       }
