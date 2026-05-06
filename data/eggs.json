@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年5月6日18時",
+  "lastUpdated": "2026年5月6日21時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -183,7 +183,7 @@
       "name": "炎兔兒",
       "cpRange": "627",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm813.icon.png",
-      "isShiny": false
+      "isShiny": true
     },
     {
       "eggDistance": 1,
@@ -607,7 +607,7 @@
       "name": "噗隆隆",
       "cpRange": "650",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm965.icon.png",
-      "isShiny": false
+      "isShiny": true
     }
   ]
 }
