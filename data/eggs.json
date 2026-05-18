@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年5月19日05時",
+  "lastUpdated": "2026年5月19日06時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -512,6 +512,14 @@
       "cpRange": "491",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm957.icon.png",
       "isShiny": true
+    },
+    {
+      "eggDistance": 10,
+      "source": "regular",
+      "name": "飄飄雛",
+      "cpRange": "401",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm955.icon.png",
+      "isShiny": false
     },
     {
       "eggDistance": 10,
