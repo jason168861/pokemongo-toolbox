@@ -1,5 +1,89 @@
 [
   {
+    "category": "Blanche's Quest for Knowledge Tasks",
+    "tasks": [
+      {
+        "description": "捕捉5隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大鉗蟹",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm98.icon.png",
+            "isShiny": true,
+            "maxCp": "669",
+            "minCp": "626"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "墨海馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm116.icon.png",
+            "isShiny": true,
+            "maxCp": "452",
+            "minCp": "418"
+          }
+        ]
+      },
+      {
+        "description": "探索1公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "海星星",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm120.icon.png",
+            "isShiny": true,
+            "maxCp": "495",
+            "minCp": "459"
+          }
+        ]
+      },
+      {
+        "description": "完成3個田野調查任務",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "來悲茶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm854.icon.png",
+            "isShiny": true,
+            "maxCp": "488",
+            "minCp": "452"
+          }
+        ]
+      },
+      {
+        "description": "Complete 7 Field Research tasks",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "來悲茶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm854.icon.png",
+            "isShiny": true,
+            "maxCp": "488",
+            "minCp": "452"
+          }
+        ]
+      },
+      {
+        "description": "Use an Incense",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "來悲茶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm854.icon.png",
+            "isShiny": true,
+            "maxCp": "488",
+            "minCp": "452"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
