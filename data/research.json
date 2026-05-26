@@ -159,6 +159,24 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "阿羅拉 六尾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "378",
+            "minCp": "347"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "墨海馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm116.icon.png",
+            "isShiny": true,
+            "maxCp": "452",
+            "minCp": "418"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "來悲茶",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm854.icon.png",
             "isShiny": true,
@@ -202,15 +220,6 @@
       {
         "description": "Complete 7 Field Research tasks",
         "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "阿羅拉 六尾",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm37.fALOLA.icon.png",
-            "isShiny": true,
-            "maxCp": "378",
-            "minCp": "347"
-          },
           {
             "isFeatured": true,
             "type": "encounter",
