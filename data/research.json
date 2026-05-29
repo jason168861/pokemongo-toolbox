@@ -248,6 +248,195 @@
     ]
   },
   {
+    "category": "Pokémon GO Fest 2026: Tokyo - Park research Tasks",
+    "tasks": [
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "黑眼鱷",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm551.icon.png",
+            "isShiny": true,
+            "maxCp": "444",
+            "minCp": "409"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×30",
+            "quantity": "×30"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×3000",
+            "quantity": "×3000"
+          }
+        ]
+      },
+      {
+        "description": "Catch 10 different species of Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥驢仔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
+            "isShiny": true,
+            "maxCp": "811",
+            "minCp": "764"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "花療環環",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm764.icon.png",
+            "isShiny": false,
+            "maxCp": "906",
+            "minCp": "857"
+          }
+        ]
+      },
+      {
+        "description": "Catch 5 Ice-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Squirtle wearing a Pikachu Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cSPRING_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "405",
+            "minCp": "372"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "旋轉5個寶可補給站或道館的轉盤",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×2000",
+            "quantity": "×2000"
+          }
+        ]
+      },
+      {
+        "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "綠毛蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm10.icon.png",
+            "isShiny": true,
+            "maxCp": "187",
+            "minCp": "164"
+          }
+        ]
+      },
+      {
+        "description": "Make a new friend",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy XL.png",
+            "name": "神奇糖果XL ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "傳送3個友情禮物給朋友",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy XL.png",
+            "name": "神奇糖果XL ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm150.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/150.png",
+            "name": "Mewtwo Candy ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "Win a Shadow Raid",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Shadow Shard.png",
+            "name": "暗影 Shard ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "Catch 15 different species of Pokémon",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy XL.png",
+            "name": "神奇糖果XL ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
