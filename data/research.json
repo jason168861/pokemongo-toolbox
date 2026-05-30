@@ -248,7 +248,7 @@
     ]
   },
   {
-    "category": "Pokémon GO Fest 2026: Tokyo - Team go rockets hideout Tasks",
+    "category": "Pokémon GO Fest 2026: Tokyo - Team go rocket hideout Tasks",
     "tasks": [
       {
         "description": "捕捉10隻寶可夢",
@@ -274,6 +274,45 @@
             "isShiny": true,
             "maxCp": "444",
             "minCp": "409"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          }
+        ]
+      },
+      {
+        "description": "擊敗 1 名 GO 火箭隊手下",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm150.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/xl/150.png",
+            "name": "Mewtwo Candy ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "Win a Shadow Raid",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Shadow Shard.png",
+            "name": "暗影 Shard ×4",
+            "quantity": "×4"
           }
         ]
       }
