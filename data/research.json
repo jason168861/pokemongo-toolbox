@@ -1,5 +1,116 @@
 [
   {
+    "category": "Spark's Caretaking Quest Tasks",
+    "tasks": [
+      {
+        "description": "探索1公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm147.icon.png",
+            "isShiny": true,
+            "maxCp": "430",
+            "minCp": "397"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "觸手百合",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm345.icon.png",
+            "isShiny": true,
+            "maxCp": "553",
+            "minCp": "515"
+          }
+        ]
+      },
+      {
+        "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伽勒爾 太陽珊瑚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm222.fGALARIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "641",
+            "minCp": "600"
+          }
+        ]
+      },
+      {
+        "description": "孵化2顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 雷丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm26.fALOLA.icon.png",
+            "isShiny": true,
+            "maxCp": "980",
+            "minCp": "929"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "雷伊布",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm135.icon.png",
+            "isShiny": true,
+            "maxCp": "1238",
+            "minCp": "1180"
+          }
+        ]
+      },
+      {
+        "description": "Open 3 Gifts",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "催眠貘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm96.icon.png",
+            "isShiny": true,
+            "maxCp": "446",
+            "minCp": "411"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "戴魯比",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm228.icon.png",
+            "isShiny": true,
+            "maxCp": "529",
+            "minCp": "491"
+          }
+        ]
+      },
+      {
+        "description": "傳送3個友情禮物給朋友",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "妙蛙種子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.icon.png",
+            "isShiny": true,
+            "maxCp": "477",
+            "minCp": "442"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "三蜜蜂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm415.icon.png",
+            "isShiny": true,
+            "maxCp": "212",
+            "minCp": "188"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Blanche's Quest for Knowledge Tasks",
     "tasks": [
       {
