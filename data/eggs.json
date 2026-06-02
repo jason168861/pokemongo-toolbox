@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年6月2日21時",
+  "lastUpdated": "2026年6月3日02時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -332,9 +332,17 @@
     {
       "eggDistance": 5,
       "source": "adventure_sync",
-      "name": "無畏小子",
-      "cpRange": "281",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm236.icon.png",
+      "name": "含羞苞",
+      "cpRange": "489",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm406.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "adventure_sync",
+      "name": "鈴鐺響",
+      "cpRange": "574",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm433.icon.png",
       "isShiny": true
     },
     {
@@ -348,9 +356,17 @@
     {
       "eggDistance": 5,
       "source": "adventure_sync",
-      "name": "含羞苞",
-      "cpRange": "489",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm406.icon.png",
+      "name": "無畏小子",
+      "cpRange": "281",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm236.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "adventure_sync",
+      "name": "小福蛋",
+      "cpRange": "212",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm440.icon.png",
       "isShiny": true
     },
     {
