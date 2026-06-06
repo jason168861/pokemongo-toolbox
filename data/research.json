@@ -1601,8 +1601,8 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "晃晃斑 1 號",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f00.icon.png",
+            "name": "晃晃斑 2 號",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f01.icon.png",
             "isShiny": true,
             "maxCp": "523",
             "minCp": "486"
@@ -1610,8 +1610,8 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "晃晃斑 2 號",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f01.icon.png",
+            "name": "晃晃斑 3 號",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm327.f02.icon.png",
             "isShiny": true,
             "maxCp": "523",
             "minCp": "486"
