@@ -3,38 +3,6 @@
     "category": "Candela's Quest for Victory Tasks",
     "tasks": [
       {
-        "description": "Battle in a raid with your buddy",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "飛天螳螂",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
-            "isShiny": true,
-            "maxCp": "1160",
-            "minCp": "1104"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "滑滑小子",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm559.icon.png",
-            "isShiny": true,
-            "maxCp": "588",
-            "minCp": "549"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "岩狗狗",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm744.icon.png",
-            "isShiny": true,
-            "maxCp": "407",
-            "minCp": "374"
-          }
-        ]
-      },
-      {
         "description": "捕捉10隻寶可夢",
         "rewards": [
           {
@@ -67,16 +35,16 @@
         ]
       },
       {
-        "description": "強化寶可夢5次",
+        "description": "Battle in a raid with your buddy",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "猴怪",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm56.icon.png",
+            "name": "飛天螳螂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
             "isShiny": true,
-            "maxCp": "499",
-            "minCp": "462"
+            "maxCp": "1160",
+            "minCp": "1104"
           },
           {
             "isFeatured": true,
@@ -86,6 +54,15 @@
             "isShiny": true,
             "maxCp": "588",
             "minCp": "549"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "岩狗狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm744.icon.png",
+            "isShiny": true,
+            "maxCp": "407",
+            "minCp": "374"
           }
         ]
       },
@@ -146,6 +123,29 @@
             "isShiny": true,
             "maxCp": "383",
             "minCp": "351"
+          }
+        ]
+      },
+      {
+        "description": "強化寶可夢5次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "猴怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm56.icon.png",
+            "isShiny": true,
+            "maxCp": "499",
+            "minCp": "462"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "滑滑小子",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm559.icon.png",
+            "isShiny": true,
+            "maxCp": "588",
+            "minCp": "549"
           }
         ]
       }
