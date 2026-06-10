@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026年6月11日00時",
+    "lastUpdated": "2026年6月11日04時",
     "bosses": [
         {
             "name": "岩狗狗",
@@ -245,7 +245,7 @@
             "englishName": "Magcargo"
         },
         {
-            "name": "萊希拉姆",
+            "name": "捷克羅姆",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -254,8 +254,8 @@
                     "image": "https://leekduck.com/assets/img/types/dragon.png"
                 },
                 {
-                    "name": "fire",
-                    "image": "https://leekduck.com/assets/img/types/fire.png"
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
                 }
             ],
             "combatPower": {
@@ -274,35 +274,35 @@
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 },
                 {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm643.icon.png",
-            "englishName": "Reshiram"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm644.icon.png",
+            "englishName": "Zekrom"
         },
         {
-            "name": "超級 差不多娃娃",
+            "name": "超級 長耳兔",
             "tier": "Mega Raids",
-            "canBeShiny": false,
+            "canBeShiny": true,
             "types": [
                 {
                     "name": "normal",
                     "image": "https://leekduck.com/assets/img/types/normal.png"
                 },
                 {
-                    "name": "fairy",
-                    "image": "https://leekduck.com/assets/img/types/fairy.png"
+                    "name": "fighting",
+                    "image": "https://leekduck.com/assets/img/types/fighting.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 901,
-                    "max": 961
+                    "min": 1112,
+                    "max": 1177
                 },
                 "boosted": {
-                    "min": 1127,
-                    "max": 1201
+                    "min": 1391,
+                    "max": 1471
                 }
             },
             "boostedWeather": [
@@ -311,8 +311,8 @@
                     "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm531.fMEGA.icon.png",
-            "englishName": "Mega Audino"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm428.fMEGA.icon.png",
+            "englishName": "Mega Lopunny"
         },
         {
             "name": "Shadow Horsea",
