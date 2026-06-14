@@ -3662,7 +3662,7 @@ const POKEDEX = [
   {
     "id": "mewtwo_mega_x",
     "dexNumber": 150,
-    "name": "Mewtwo (Mega)",
+    "name": "超夢 (Mega)",
     "stats": {
       "atk": 399,
       "def": 215,
@@ -3680,7 +3680,7 @@ const POKEDEX = [
   {
     "id": "mewtwo_mega_y",
     "dexNumber": 150,
-    "name": "Mewtwo (Mega)",
+    "name": "超夢 (Mega)",
     "stats": {
       "atk": 413,
       "def": 228,
@@ -4098,7 +4098,7 @@ const POKEDEX = [
   {
     "id": "lanturnw",
     "dexNumber": 171,
-    "name": "電燈怪",
+    "name": "Lanturn",
     "stats": {
       "atk": 146,
       "def": 137,
@@ -7629,7 +7629,7 @@ const POKEDEX = [
   {
     "id": "cradily_b",
     "dexNumber": 346,
-    "name": "搖籃百合",
+    "name": "Cradily",
     "stats": {
       "atk": 152,
       "def": 194,
@@ -16757,7 +16757,7 @@ const POKEDEX = [
   {
     "id": "golisopodsh",
     "dexNumber": 768,
-    "name": "具甲武者",
+    "name": "Golisopod",
     "stats": {
       "atk": 218,
       "def": 226,
@@ -18973,7 +18973,7 @@ const POKEDEX = [
   {
     "id": "falinks_mega",
     "dexNumber": 870,
-    "name": "Falinks (Mega)",
+    "name": "列陣兵 (Mega)",
     "stats": {
       "atk": 267,
       "def": 229,
@@ -22360,7 +22360,7 @@ const POKEMON_RANKINGS_1500 = [
     "statProduct": 2109865,
     "level": 0,
     "fastMove": "妖精之風",
-    "chargedMove1": "Gigaton Hammer",
+    "chargedMove1": "巨力錘",
     "chargedMove2": "重踏",
     "isEliteFast": false,
     "isEliteCharged1": true,
@@ -25055,7 +25055,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "搖籃百合",
+    "name": "Cradily",
     "score": 87.5,
     "dex": 346,
     "type1": "岩石",
@@ -26507,7 +26507,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "具甲武者",
+    "name": "Golisopod",
     "score": 85.5,
     "dex": 768,
     "type1": "蟲",
@@ -47047,7 +47047,7 @@ const POKEMON_RANKINGS_2500 = [
     "statProduct": 4427784,
     "level": 0,
     "fastMove": "妖精之風",
-    "chargedMove1": "Gigaton Hammer",
+    "chargedMove1": "巨力錘",
     "chargedMove2": "重踏",
     "isEliteFast": false,
     "isEliteCharged1": true,
