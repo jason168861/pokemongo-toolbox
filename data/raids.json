@@ -1,15 +1,122 @@
 {
-    "lastUpdated": "2026年6月17日21時",
+    "lastUpdated": "2026年6月18日00時",
     "bosses": [
         {
-            "name": "獨角犀牛",
+            "name": "菊石獸",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "ground",
-                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                    "name": "rock",
+                    "image": "https://leekduck.com/assets/img/types/rock.png"
                 },
+                {
+                    "name": "water",
+                    "image": "https://leekduck.com/assets/img/types/water.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 826,
+                    "max": 882
+                },
+                "boosted": {
+                    "min": 1033,
+                    "max": 1103
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                },
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm138.icon.png",
+            "englishName": "Omanyte"
+        },
+        {
+            "name": "化石盔",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "rock",
+                    "image": "https://leekduck.com/assets/img/types/rock.png"
+                },
+                {
+                    "name": "water",
+                    "image": "https://leekduck.com/assets/img/types/water.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 730,
+                    "max": 783
+                },
+                "boosted": {
+                    "min": 913,
+                    "max": 979
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                },
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm140.icon.png",
+            "englishName": "Kabuto"
+        },
+        {
+            "name": "鐵啞鈴",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "steel",
+                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                },
+                {
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 513,
+                    "max": 558
+                },
+                "boosted": {
+                    "min": 642,
+                    "max": 697
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm374.icon.png",
+            "englishName": "Beldum"
+        },
+        {
+            "name": "岩狗狗",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
                 {
                     "name": "rock",
                     "image": "https://leekduck.com/assets/img/types/rock.png"
@@ -17,270 +124,97 @@
             ],
             "combatPower": {
                 "normal": {
-                    "min": 886,
-                    "max": 943
+                    "min": 499,
+                    "max": 543
                 },
                 "boosted": {
-                    "min": 1107,
-                    "max": 1179
+                    "min": 624,
+                    "max": 679
                 }
             },
             "boostedWeather": [
-                {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
-                },
                 {
                     "name": "partly cloudy",
                     "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm111.icon.png",
-            "englishName": "Rhyhorn"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm744.icon.png",
+            "englishName": "Rockruff"
         },
         {
-            "name": "坐騎小羊",
-            "tier": "1-Star Raids",
+            "name": "化石翼龍",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "rock",
+                    "image": "https://leekduck.com/assets/img/types/rock.png"
+                },
+                {
+                    "name": "flying",
+                    "image": "https://leekduck.com/assets/img/types/flying.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1515,
+                    "max": 1590
+                },
+                "boosted": {
+                    "min": 1894,
+                    "max": 1988
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm142.icon.png",
+            "englishName": "Aerodactyl"
+        },
+        {
+            "name": "赤面龍",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1487,
+                    "max": 1561
+                },
+                "boosted": {
+                    "min": 1859,
+                    "max": 1951
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm621.icon.png",
+            "englishName": "Druddigon"
+        },
+        {
+            "name": "洗翠 狙射樹梟",
+            "tier": "3-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
                     "name": "grass",
                     "image": "https://leekduck.com/assets/img/types/grass.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 664,
-                    "max": 714
-                },
-                "boosted": {
-                    "min": 830,
-                    "max": 893
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm672.icon.png",
-            "englishName": "Skiddo"
-        },
-        {
-            "name": "妙喵",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "psychic",
-                    "image": "https://leekduck.com/assets/img/types/psychic.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 669,
-                    "max": 719
-                },
-                "boosted": {
-                    "min": 837,
-                    "max": 899
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm677.icon.png",
-            "englishName": "Espurr"
-        },
-        {
-            "name": "狗仔包",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "fairy",
-                    "image": "https://leekduck.com/assets/img/types/fairy.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 519,
-                    "max": 563
-                },
-                "boosted": {
-                    "min": 648,
-                    "max": 703
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm926.icon.png",
-            "englishName": "Fidough"
-        },
-        {
-            "name": "阿羅拉 雷丘",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                },
-                {
-                    "name": "psychic",
-                    "image": "https://leekduck.com/assets/img/types/psychic.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1238,
-                    "max": 1306
-                },
-                "boosted": {
-                    "min": 1548,
-                    "max": 1633
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm26.fALOLA.icon.png",
-            "englishName": "Alolan Raichu"
-        },
-        {
-            "name": "熔岩蝸牛",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "fire",
-                    "image": "https://leekduck.com/assets/img/types/fire.png"
-                },
-                {
-                    "name": "rock",
-                    "image": "https://leekduck.com/assets/img/types/rock.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 914,
-                    "max": 972
-                },
-                "boosted": {
-                    "min": 1142,
-                    "max": 1215
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
-                },
-                {
-                    "name": "partly cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm219.icon.png",
-            "englishName": "Magcargo"
-        },
-        {
-            "name": "沙漠蜻蜓",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "ground",
-                    "image": "https://leekduck.com/assets/img/types/ground.png"
-                },
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1447,
-                    "max": 1520
-                },
-                "boosted": {
-                    "min": 1809,
-                    "max": 1901
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm330.icon.png",
-            "englishName": "Flygon"
-        },
-        {
-            "name": "捷克羅姆",
-            "tier": "5-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                },
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 2217,
-                    "max": 2307
-                },
-                "boosted": {
-                    "min": 2771,
-                    "max": 2884
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                },
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm644.icon.png",
-            "englishName": "Zekrom"
-        },
-        {
-            "name": "超級 長耳兔",
-            "tier": "Mega Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "normal",
-                    "image": "https://leekduck.com/assets/img/types/normal.png"
                 },
                 {
                     "name": "fighting",
@@ -289,22 +223,92 @@
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1112,
-                    "max": 1177
+                    "min": 1579,
+                    "max": 1655
                 },
                 "boosted": {
-                    "min": 1391,
-                    "max": 1471
+                    "min": 1974,
+                    "max": 2069
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "partly cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                },
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm428.fMEGA.icon.png",
-            "englishName": "Mega Lopunny"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm724.fHISUIAN.icon.png",
+            "englishName": "Hisuian Decidueye"
+        },
+        {
+            "name": "奈克洛茲瑪",
+            "tier": "5-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 2018,
+                    "max": 2104
+                },
+                "boosted": {
+                    "min": 2522,
+                    "max": 2630
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm800.icon.png",
+            "englishName": "Necrozma"
+        },
+        {
+            "name": "超級 巨鉗螳螂",
+            "tier": "Mega Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "bug",
+                    "image": "https://leekduck.com/assets/img/types/bug.png"
+                },
+                {
+                    "name": "steel",
+                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1636,
+                    "max": 1714
+                },
+                "boosted": {
+                    "min": 2046,
+                    "max": 2143
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                },
+                {
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm212.fMEGA.icon.png",
+            "englishName": "Mega Scizor"
         },
         {
             "name": "Shadow Horsea",
