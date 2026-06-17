@@ -1,5 +1,79 @@
 [
   {
+    "category": "Choose Your Path: Fossil Fun Tasks",
+    "tasks": [
+      {
+        "description": "擊敗 1 名 GO 火箭隊手下",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "頭蓋龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm408.icon.png",
+            "isShiny": true,
+            "maxCp": "780",
+            "minCp": "730"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盾甲龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
+            "isShiny": true,
+            "maxCp": "381",
+            "minCp": "348"
+          }
+        ]
+      },
+      {
+        "description": "投出 5 次 Nice",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "頭蓋龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm408.icon.png",
+            "isShiny": true,
+            "maxCp": "780",
+            "minCp": "730"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盾甲龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
+            "isShiny": true,
+            "maxCp": "381",
+            "minCp": "348"
+          }
+        ]
+      },
+      {
+        "description": "探索1公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "頭蓋龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm408.icon.png",
+            "isShiny": true,
+            "maxCp": "780",
+            "minCp": "730"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盾甲龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
+            "isShiny": true,
+            "maxCp": "381",
+            "minCp": "348"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Candela's Quest for Victory Tasks",
     "tasks": [
       {
