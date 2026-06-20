@@ -1,5 +1,89 @@
 [
   {
+    "category": "Frigibax Community Day Tasks",
+    "tasks": [
+      {
+        "description": "Catch 3 Frigibax",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "涼脊龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
+            "isShiny": true,
+            "maxCp": "534",
+            "minCp": "496"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Frigibax Community Day - Special backgrounds Tasks",
+    "tasks": [
+      {
+        "description": "Catch 5 Pokemon while in a Party",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "涼脊龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
+            "isShiny": true,
+            "maxCp": "534",
+            "minCp": "496"
+          }
+        ]
+      },
+      {
+        "description": "Catch 50 Pokemon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "涼脊龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
+            "isShiny": true,
+            "maxCp": "534",
+            "minCp": "496"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Choose Your Path: Fossil Fun Tasks",
     "tasks": [
       {
