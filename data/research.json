@@ -1,83 +1,87 @@
 [
   {
-    "category": "Frigibax Community Day Tasks",
+    "category": "Flying Taxi Tasks",
     "tasks": [
       {
-        "description": "Catch 3 Frigibax",
+        "description": "Catch 5 Flying-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "涼脊龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
-            "isShiny": true,
-            "maxCp": "534",
-            "minCp": "496"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
-            "name": "超級球 ×5",
-            "quantity": "×5"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
-            "name": "高級球 ×2",
-            "quantity": "×2"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
-            "name": "凰梨果 ×2",
-            "quantity": "×2"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×500",
-            "quantity": "×500"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "Frigibax Community Day - Special backgrounds Tasks",
-    "tasks": [
-      {
-        "description": "Catch 5 Pokemon while in a Party",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "涼脊龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
-            "isShiny": true,
-            "maxCp": "534",
-            "minCp": "496"
+            "name": "Squawkabilly (Yellow)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm931.fYELLOW.icon.png",
+            "isShiny": false,
+            "maxCp": "845",
+            "minCp": "797"
           }
         ]
       },
       {
-        "description": "Catch 50 Pokemon",
+        "description": "Catch 10 Flying-type Pokémon",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "涼脊龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
+            "name": "Squawkabilly (Blue)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm931.fBLUE.icon.png",
+            "isShiny": false,
+            "maxCp": "845",
+            "minCp": "797"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Squawkabilly (Green)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm931.fGREEN.icon.png",
+            "isShiny": false,
+            "maxCp": "845",
+            "minCp": "797"
+          }
+        ]
+      },
+      {
+        "description": "Evolve 3 Flying-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "烈雀",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm21.icon.png",
             "isShiny": true,
-            "maxCp": "534",
-            "minCp": "496"
+            "maxCp": "342",
+            "minCp": "311"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電海燕",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm940.icon.png",
+            "isShiny": false,
+            "maxCp": "354",
+            "minCp": "323"
+          }
+        ]
+      },
+      {
+        "description": "Power up Flying-type Pokémon 5 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咕咕",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm163.icon.png",
+            "isShiny": true,
+            "maxCp": "290",
+            "minCp": "262"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "稚山雀",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm821.icon.png",
+            "isShiny": true,
+            "maxCp": "285",
+            "minCp": "258"
           }
         ]
       }
