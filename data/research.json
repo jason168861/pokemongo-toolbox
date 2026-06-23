@@ -40,6 +40,20 @@
         ]
       },
       {
+        "description": "Catch 15 Flying-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "怒鸚哥 (焰白)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm931.fWHITE.icon.png",
+            "isShiny": false,
+            "maxCp": "845",
+            "minCp": "797"
+          }
+        ]
+      },
+      {
         "description": "Evolve 3 Flying-type Pokémon",
         "rewards": [
           {
