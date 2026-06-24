@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026年6月25日05時",
+    "lastUpdated": "2026年6月25日07時",
     "bosses": [
         {
             "name": "青綿鳥",
@@ -212,42 +212,50 @@
             "englishName": "Bombirdier"
         },
         {
-            "name": "奈克洛茲瑪",
+            "name": "鐵火輝夜",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "psychic",
-                    "image": "https://leekduck.com/assets/img/types/psychic.png"
+                    "name": "steel",
+                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                },
+                {
+                    "name": "flying",
+                    "image": "https://leekduck.com/assets/img/types/flying.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2018,
-                    "max": 2104
+                    "min": 1694,
+                    "max": 1772
                 },
                 "boosted": {
-                    "min": 2522,
-                    "max": 2630
+                    "min": 2117,
+                    "max": 2216
                 }
             },
             "boostedWeather": [
+                {
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                },
                 {
                     "name": "windy",
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm800.icon.png",
-            "englishName": "Necrozma"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm797.icon.png",
+            "englishName": "Celesteela"
         },
         {
-            "name": "超級 巨鉗螳螂",
-            "tier": "Mega Raids",
+            "name": "紙御劍",
+            "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "bug",
-                    "image": "https://leekduck.com/assets/img/types/bug.png"
+                    "name": "grass",
+                    "image": "https://leekduck.com/assets/img/types/grass.png"
                 },
                 {
                     "name": "steel",
@@ -256,26 +264,63 @@
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1636,
-                    "max": 1714
+                    "min": 2010,
+                    "max": 2101
                 },
                 "boosted": {
-                    "min": 2046,
-                    "max": 2143
+                    "min": 2512,
+                    "max": 2626
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
                 },
                 {
                     "name": "snow",
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm212.fMEGA.icon.png",
-            "englishName": "Mega Scizor"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm798.icon.png",
+            "englishName": "Kartana"
+        },
+        {
+            "name": "超級 大比鳥",
+            "tier": "Mega Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "normal",
+                    "image": "https://leekduck.com/assets/img/types/normal.png"
+                },
+                {
+                    "name": "flying",
+                    "image": "https://leekduck.com/assets/img/types/flying.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1151,
+                    "max": 1216
+                },
+                "boosted": {
+                    "min": 1439,
+                    "max": 1521
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm18.fMEGA.icon.png",
+            "englishName": "Mega Pidgeot"
         },
         {
             "name": "Shadow Horsea",
