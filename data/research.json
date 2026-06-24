@@ -1,5 +1,44 @@
 [
   {
+    "category": "Flying Taxi: Taken Over Tasks",
+    "tasks": [
+      {
+        "description": "擊敗 1 名 GO 火箭隊手下",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Mysterious Component.png",
+            "name": "神秘零件 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "淨化 3 隻暗影寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Fast TM.png",
+            "name": "一般招式學習器 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Charged TM.png",
+            "name": "特殊招式學習器 ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Flying Taxi Tasks",
     "tasks": [
       {
