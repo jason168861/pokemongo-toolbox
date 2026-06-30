@@ -1,5 +1,79 @@
 [
   {
+    "category": "Choose Your Path: Charged Embers Tasks",
+    "tasks": [
+      {
+        "description": "擊敗 1 名 GO 火箭隊手下",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電擊獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm125.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "949"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鴨嘴火獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm126.icon.png",
+            "isShiny": true,
+            "maxCp": "1026",
+            "minCp": "973"
+          }
+        ]
+      },
+      {
+        "description": "投出 5 次 Nice",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電擊獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm125.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "949"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鴨嘴火獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm126.icon.png",
+            "isShiny": true,
+            "maxCp": "1026",
+            "minCp": "973"
+          }
+        ]
+      },
+      {
+        "description": "探索1公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "電擊獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm125.icon.png",
+            "isShiny": true,
+            "maxCp": "1000",
+            "minCp": "949"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鴨嘴火獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm126.icon.png",
+            "isShiny": true,
+            "maxCp": "1026",
+            "minCp": "973"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Flying Taxi: Taken Over Tasks",
     "tasks": [
       {
@@ -135,80 +209,6 @@
             "isShiny": true,
             "maxCp": "285",
             "minCp": "258"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "Choose Your Path: Charged Embers Tasks",
-    "tasks": [
-      {
-        "description": "擊敗 1 名 GO 火箭隊手下",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "電擊獸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm125.icon.png",
-            "isShiny": true,
-            "maxCp": "1000",
-            "minCp": "949"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "鴨嘴火獸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm126.icon.png",
-            "isShiny": true,
-            "maxCp": "1026",
-            "minCp": "973"
-          }
-        ]
-      },
-      {
-        "description": "投出 5 次 Nice",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "電擊獸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm125.icon.png",
-            "isShiny": true,
-            "maxCp": "1000",
-            "minCp": "949"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "鴨嘴火獸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm126.icon.png",
-            "isShiny": true,
-            "maxCp": "1026",
-            "minCp": "973"
-          }
-        ]
-      },
-      {
-        "description": "探索1公里",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "電擊獸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm125.icon.png",
-            "isShiny": true,
-            "maxCp": "1000",
-            "minCp": "949"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "鴨嘴火獸",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm126.icon.png",
-            "isShiny": true,
-            "maxCp": "1026",
-            "minCp": "973"
           }
         ]
       }
