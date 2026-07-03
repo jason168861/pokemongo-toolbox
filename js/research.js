@@ -16,7 +16,7 @@ export function initializeResearchApp() {
         bubble.className = `reward-bubble ${reward.isFeatured ? 'featured' : ''}`;
         bubble.innerHTML = `
             <img src="${reward.imageUrl}" alt="${reward.name}">
-            ${reward.isShiny ? `<img class="shiny-icon" src="https://leekduck.com/assets/img/icons/shiny-icon.png">` : ''}
+            ${reward.isShiny ? `<img class="shiny-icon" src="/img/shiny.jpg">` : ''}
             ${reward.quantity ? `<div class="quantity">${reward.quantity}</div>` : ''}
         `;
         return bubble;
@@ -31,7 +31,7 @@ export function initializeResearchApp() {
             rewardHTML = `
                 <div class="reward-bubble" >
                     <img src="${reward.imageUrl}" alt="${reward.name}">
-                    ${reward.isShiny ? `<img class="shiny-icon" src="https://leekduck.com/assets/img/icons/shiny-icon.png">` : ''}
+                    ${reward.isShiny ? `<img class="shiny-icon" src="/img/shiny.jpg">` : ''}
                 </div>
                 <div class="reward-details">
                     <span class="reward-name">${reward.name}</span>

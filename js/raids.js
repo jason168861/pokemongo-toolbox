@@ -39,7 +39,7 @@ export function initializeRaidsApp() {
                     card.className = 'raid-card';
 
                     // 如果可以成為異色，則顯示異色圖示
-                    const shinyIconHtml = boss.canBeShiny ? `<img class="shiny-icon" src="https://leekduck.com/assets/img/icons/shiny-icon.png" alt="可為異色"/>` : '';
+                    const shinyIconHtml = boss.canBeShiny ? `<img class="shiny-icon" src="/img/shiny.jpg" alt="可為異色"/>` : '';
 
                     // 產生屬性圖示的 HTML
                     const typesHtml = boss.types.map(type =>

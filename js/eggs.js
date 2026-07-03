@@ -39,7 +39,7 @@ export function initializeEggsApp() {
                 const listItem = document.createElement('li');
                 listItem.className = 'egg-list-item';
                 
-                const shinyIconHtml = pokemon.isShiny ? `<img class="shiny-icon" src="https://leekduck.com/assets/img/icons/shiny-icon.png" alt="shiny"/>` : '';
+                const shinyIconHtml = pokemon.isShiny ? `<img class="shiny-icon" src="/img/shiny.jpg" alt="shiny"/>` : '';
                 
                 listItem.innerHTML = `
                     <div class="egg-list-img egg${pokemon.eggDistance}km">
