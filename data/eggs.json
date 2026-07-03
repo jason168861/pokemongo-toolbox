@@ -300,7 +300,7 @@
     {
       "eggDistance": 5,
       "source": "regular",
-      "name": "Indeedee (Male)",
+      "name": "愛管侍 (雄性)",
       "cpRange": "1396",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm876.fMALE.icon.png",
       "isShiny": true
@@ -308,7 +308,7 @@
     {
       "eggDistance": 5,
       "source": "regular",
-      "name": "Indeedee (Female)",
+      "name": "愛管侍 (雌性)",
       "cpRange": "1370",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm876.fFEMALE.icon.png",
       "isShiny": true
