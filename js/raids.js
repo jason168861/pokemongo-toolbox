@@ -3,6 +3,13 @@ export function initializeRaidsApp() {
     const checkContainer = document.getElementById('raid-tier-1');
     if (!checkContainer || checkContainer.innerHTML !== '') return;
 
+    const tierContainerIds = {
+        '1-Star Raids': 'raid-tier-1',
+        '3-Star Raids': 'raid-tier-3',
+        '5-Star Raids': 'raid-tier-5',
+        'Mega Raids': 'raid-mega'
+    };
+
     fetch('data/raids.json')
         .then(response => {
             if (!response.ok) {
@@ -23,8 +30,8 @@ export function initializeRaidsApp() {
 
             // 處理每個頭目
             raidBosses.forEach(boss => {
-                // 將 Tier 字串轉換為對應的容器 ID (例如 "Tier 1" -> "raid-tier-1", "Mega" -> "raid-mega")
-                const containerId = `raid-${boss.tier.toLowerCase().replace(' ', '-')}`;
+                // 將資料中的 tier 對應到頁面上的容器 ID
+                const containerId = tierContainerIds[boss.tier];
                 const container = document.getElementById(containerId);
 
                 if (container) {
