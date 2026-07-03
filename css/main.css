@@ -86,6 +86,242 @@ body {
     display: block; /* 顯示當前啟用的 App */
 }
 
+#docs-app .home-container {
+    max-width: 1120px;
+    margin: 20px auto;
+    padding: 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+#docs-app .home-hero {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+    margin-bottom: 28px;
+}
+
+#docs-app .home-hero-copy,
+#docs-app .home-hero-panel,
+#docs-app .home-section,
+#docs-app details {
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    background: #fff;
+}
+
+#docs-app .home-hero-copy {
+    padding: 28px;
+    background: radial-gradient(circle at top left, rgba(24, 119, 242, 0.12), transparent 45%), #fff;
+}
+
+#docs-app .home-eyebrow {
+    margin: 0 0 10px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #1877f2;
+}
+
+#docs-app .home-hero h1,
+#docs-app .home-section h2 {
+    margin: 0;
+    color: #111827;
+    border: none;
+    padding: 0;
+}
+
+#docs-app .home-hero h1 {
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.05;
+    margin-bottom: 14px;
+}
+
+#docs-app .home-lead,
+#docs-app .home-section-header p,
+#docs-app .home-docs-copy {
+    color: #4b5563;
+    line-height: 1.75;
+}
+
+#docs-app .home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+#docs-app .home-primary-action,
+#docs-app .home-secondary-action,
+#docs-app .home-card {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+}
+
+#docs-app .home-primary-action,
+#docs-app .home-secondary-action {
+    padding: 14px 20px;
+    border-radius: 999px;
+    font-size: 1rem;
+}
+
+#docs-app .home-primary-action {
+    background: linear-gradient(135deg, #1877f2, #0f5cc0);
+    color: #fff;
+}
+
+#docs-app .home-secondary-action {
+    background: #e8f1ff;
+    color: #0f5cc0;
+}
+
+#docs-app .home-hero-panel {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    background: linear-gradient(180deg, #0f172a, #1e293b);
+    color: #fff;
+}
+
+#docs-app .home-stat {
+    padding: 18px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#docs-app .home-stat span {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+#docs-app .home-stat p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#docs-app .home-section {
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+#docs-app .home-section-header {
+    margin-bottom: 18px;
+}
+
+#docs-app .home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+#docs-app .home-card {
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 18px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffffff, #f8fafc);
+    border: 1px solid #e5e7eb;
+    text-align: left;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+#docs-app .home-card::after {
+    display: none;
+}
+
+#docs-app .home-card.active {
+    color: inherit;
+}
+
+#docs-app .home-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.10);
+    border-color: #b9d4ff;
+}
+
+#docs-app .home-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    background: #e8f1ff;
+    color: #0f5cc0;
+}
+
+#docs-app .home-card-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #111827;
+}
+
+#docs-app .home-card-text {
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+#docs-app .home-details details {
+    padding: 18px 20px;
+}
+
+#docs-app .home-details summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: #111827;
+}
+
+#docs-app .home-docs-copy {
+    margin-top: 14px;
+}
+
+#docs-app .home-docs-copy ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+@media (max-width: 1024px) {
+    #docs-app .home-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #docs-app .home-hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    #docs-app .home-container {
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    #docs-app .home-hero-copy,
+    #docs-app .home-hero-panel,
+    #docs-app .home-section {
+        padding: 18px;
+    }
+
+    #docs-app .home-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #docs-app .home-card {
+        min-height: 0;
+    }
+}
+
 /* --- 響應式調整 (Responsive Adjustments) --- */
 #research-app .reward-preview {
     flex-wrap: wrap;
