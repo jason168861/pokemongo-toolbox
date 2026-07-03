@@ -11,7 +11,7 @@ from datetime import datetime
 # ==================== 常數與設定區塊 START ====================
 
 # 目標網站與備份來源
-RAID_URL = "https://leekduck.com/boss/"
+RAID_URL = "https://leekduck.com/raid-bosses/"
 BASE_URL = "https://leekduck.com/"
 FALLBACK_URL = "https://raw.githubusercontent.com/bigfoott/ScrapedDuck/data/raids.min.json"
 
