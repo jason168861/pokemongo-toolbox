@@ -3,6 +3,10 @@
 # 工作流程名稱
 name: Build and Deploy Site
 
+concurrency:
+  group: pages-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # 觸發條件
 on:
   # 1. 當手動推送到 main 分支時 (例如您自己修改程式碼)
@@ -70,12 +74,15 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
           path: '.'
 
       # 步驟 7: 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
 
       # ==================== ✨ 新增的資料回傳區塊 ✨ ====================
       # 這是個好習慣：將抓到的新資料也 commit 回你的倉庫，讓原始碼保持最新
