@@ -34,10 +34,10 @@ const CPMs = [
 
 // --- Start of leagues.js content ---
 const LEAGUES = [
-  { key: 'great', cp: 1500, name: '超級聯盟', icon:'https://raw.githubusercontent.com/RetroJohn86/PoGo-Unpacked-DL-Assets/refs/heads/main/Image%20Cache/Battle%20League/d296f502da73fd186835b4949ce0f6.png' },
-  { key: 'ultra', cp: 2500, name: '高級聯盟' , icon:'https://raw.githubusercontent.com/RetroJohn86/PoGo-Unpacked-DL-Assets/refs/heads/main/Image%20Cache/Battle%20League/cc0ac43e0e99d93af3b098fff08751.png'},
-  { key: 'master', cp: 10000, name: '大師聯盟', icon: 'https://raw.githubusercontent.com/RetroJohn86/PoGo-Unpacked-DL-Assets/refs/heads/main/Image%20Cache/Battle%20League/b7c026bb43f0d0bfc9742ee4860580.png'},
-  { key: 'little', cp: 500, name: '小小盃', icon: 'https://raw.githubusercontent.com/RetroJohn86/PoGo-Unpacked-DL-Assets/refs/heads/main/Image%20Cache/Battle%20League/439c56a9910ad2d36ec706ae9e5bd3.png'},
+  { key: 'great', cp: 1500, name: '超級聯盟', icon:'https://raw.githubusercontent.com/PokeMiners/pogo_assets/refs/heads/master/Images/Combat/pogo_great_league.png' },
+  { key: 'ultra', cp: 2500, name: '高級聯盟' , icon:'https://raw.githubusercontent.com/PokeMiners/pogo_assets/refs/heads/master/Images/Combat/pogo_ultra_league.png'},
+  { key: 'master', cp: 10000, name: '大師聯盟', icon: 'https://raw.githubusercontent.com/PokeMiners/pogo_assets/refs/heads/master/Images/Combat/pogo_master_league.png'},
+  { key: 'little', cp: 500, name: '小小盃', icon: 'https://raw.githubusercontent.com/PokeMiners/pogo_assets/refs/heads/master/Images/Combat/pogo_little_league.png'},
 ];
 // --- End of leagues.js content ---
 
