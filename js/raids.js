@@ -35,7 +35,7 @@ export function initializeRaidsApp() {
                 const container = document.getElementById(containerId);
 
                 if (container) {
-                    const card = document.createElement('div');
+                    const card = document.createElement('div'); 
                     card.className = 'raid-card';
 
                     // 如果可以成為異色，則顯示異色圖示
