@@ -18,7 +18,8 @@ FORM_TRANSLATIONS = {
     'Plant': '草木', 'Sandy': '砂土', 'Trash': '垃圾', 'Confined': '懲戒', 'Unbound': '解放',
     'Aria': '歌聲', 'Pirouette': '舞步', 'Fan': '電風扇', 'Frost': '結冰', 'Heat': '加熱', 'Mow': '割草', 'Wash': '清洗',
     'Dusk': '黃昏', 'Midday': '白晝', 'Midnight': '黑夜', 'School': '魚群', 'Solo': '單獨', 'Dawn Wings': '日蝕奈克洛茲瑪', 'Ultra': '究極',
-    'Hero': '百戰勇者', 'White Striped': '白條紋' # 處理像 Basculin (White Striped) 的情況
+    'Hero': '百戰勇者', 'White Striped': '白條紋',
+    'Male': '雄性', 'Female': '雌性' # 處理像 Indeedee (Male/Female) 的情況
 }
 
 def load_translations():

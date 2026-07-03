@@ -151,6 +151,32 @@ def translate_item_resource(eng_name, general_map, pokemon_map):
     # 如果遍歷完字典都找不到匹配的開頭，則返回原始名稱
     return eng_name
 
+def translate_task_description(task_text, task_map):
+    """翻譯田野調查任務，並用規則補上常見但尚未收錄的新句型。"""
+    if task_text in task_map:
+        return task_map[task_text]
+
+    curveball_match = re.match(
+        r'^Make (an? |\d+ )?(Nice|Great|Excellent)? ?(Curveball )?Throws(?: in a row)?$',
+        task_text
+    )
+    if curveball_match:
+        count_part = curveball_match.group(1) or '1 '
+        throw_type = curveball_match.group(2) or ''
+        is_curveball = curveball_match.group(3) is not None
+        in_a_row = 'in a row' in task_text
+
+        count = count_part.replace('an ', '1 ').replace('a ', '1 ').strip()
+        translated_throw_type = throw_type.strip()
+        if is_curveball:
+            translated_throw_type = f"{translated_throw_type} 曲球".strip()
+
+        if in_a_row:
+            return f"連續投出 {count} 次 {translated_throw_type}".replace('  ', ' ').strip()
+        return f"投出 {count} 次 {translated_throw_type}".replace('  ', ' ').strip()
+
+    return task_text
+
 # ==================== 翻譯資料區塊 END ======================
 
 URL = "https://leekduck.com/research/"
@@ -187,7 +213,7 @@ def scrape_research_data_full():
             if not task_text_span: continue
             
             task_description = task_text_span.text.strip()
-            translated_task = task_translation_map.get(task_description, task_description)
+            translated_task = translate_task_description(task_description, task_translation_map)
 
             task_data = {
                 "description": translated_task,
