@@ -1,5 +1,140 @@
 [
   {
+    "category": "10th Anniversary Party Tasks",
+    "tasks": [
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Bulbasaur wearing a Party Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.cJAN_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "477",
+            "minCp": "442"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Charmander wearing a Party Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.cJAN_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Squirtle wearing a Party Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cJAN_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "405",
+            "minCp": "372"
+          }
+        ]
+      },
+      {
+        "description": "Power up Pokémon 10 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a Cake Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cANNIVERSARY_2022_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Sobble Community Day Tasks",
+    "tasks": [
+      {
+        "description": "Catch 3 Sobble",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "淚眼蜥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm816.icon.png",
+            "isShiny": false,
+            "maxCp": "470",
+            "minCp": "434"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Sobble Community Day - Special backgrounds Tasks",
+    "tasks": [
+      {
+        "description": "Catch 5 Pokemon while in a Party",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "淚眼蜥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm816.icon.png",
+            "isShiny": false,
+            "maxCp": "470",
+            "minCp": "434"
+          }
+        ]
+      },
+      {
+        "description": "Catch 50 Pokemon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "淚眼蜥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm816.icon.png",
+            "isShiny": false,
+            "maxCp": "470",
+            "minCp": "434"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Choose Your Path: Charged Embers Tasks",
     "tasks": [
       {
