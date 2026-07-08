@@ -117,14 +117,13 @@
 #map-app .searchbox .results div:hover { background: #ebf8ff; }
 #map-app .searchbox .results .empty { color: #888; cursor: default; }
 
-/* 手機：控制列改成靠左上、滿寬堆疊，避免互相重疊或擋住地圖 */
+/* 手機：控制列避開左上縮放/定位鈕、右上圖層鈕，中間堆疊 */
 @media (max-width: 768px) {
   #map-app .map-topbar {
-    top: 8px; left: 8px; right: 8px; max-width: none;
+    top: 8px; left: 50px; right: 48px; max-width: none;
   }
   #map-app .panel {
     width: 100%; gap: 6px 8px; padding: 6px 8px; font-size: 13px;
   }
-  #map-app .panel .status { flex-basis: 100%; }   /* 狀態文字自己一行 */
   #map-app .searchbox { width: 100%; }
 }

@@ -62,8 +62,12 @@ export function initializeMapApp() {
 
   var statusEl = document.getElementById('mapStatus');
   function setStatus(msg, warn) {
-    statusEl.textContent = msg;
-    statusEl.className = warn ? 'status warn' : 'status';
+    if (statusEl) {
+      statusEl.textContent = msg;
+      statusEl.className = warn ? 'status warn' : 'status';
+    } else if (warn) {
+      console.warn('[map] ' + msg);
+    }
   }
 
   // -------------------------------------------------------------------------
