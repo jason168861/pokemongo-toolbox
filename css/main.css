@@ -574,7 +574,7 @@ body {
     .nav-links .tab-button {
         width: 100%;
         text-align: center;
-        padding: 15px;
+        padding: 10px;
         border-bottom: 1px solid var(--border-color, #eee);
     }
     
