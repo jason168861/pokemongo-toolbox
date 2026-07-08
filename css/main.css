@@ -877,3 +877,34 @@ body {
     color: #777;
     font-size: 12px;
 }
+/* ===== 合併式「功能選單」大選單 ===== */
+/* 桌面：下拉展開成兩欄，各有分類標題 */
+@media (min-width: 769px) {
+    .nav-group .sub-links.mega-menu {
+        left: 0;
+        transform: none;              /* 靠左對齊按鈕，避免 480px 寬置中時溢出畫面 */
+        min-width: 480px;
+        padding: 14px 8px;
+    }
+    .nav-group:hover .sub-links.mega-menu,
+    .nav-group:focus-within .sub-links.mega-menu {
+        display: flex;
+        gap: 8px;
+    }
+    .mega-col { flex: 1; min-width: 0; }
+    .mega-col + .mega-col { border-left: 1px solid #eee; padding-left: 8px; }
+    .mega-heading {
+        font-size: 12px; font-weight: 800; letter-spacing: .1em;
+        color: #98a2b3; padding: 2px 20px 8px;
+    }
+}
+
+/* 手機：分區堆疊，分類標題當小節標 */
+@media (max-width: 768px) {
+    .nav-group.is-expanded .sub-links.mega-menu { max-height: 1600px; }
+    .mega-heading {
+        padding: 12px 15px 6px; font-size: 13px; font-weight: 800;
+        color: #98a2b3; letter-spacing: .06em;
+        background: #fafbfc; border-top: 1px solid var(--border-color, #eee);
+    }
+}
