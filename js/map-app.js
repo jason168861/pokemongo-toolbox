@@ -168,23 +168,17 @@ export function initializeMapApp() {
   // -------------------------------------------------------------------------
   // 定位：用瀏覽器 Geolocation 找目前位置
   // -------------------------------------------------------------------------
-  var locateMarker = null, locateCircle = null, locateEl = null;
+  var locateEl = null;
   function locateMe() {
     if (!navigator.geolocation) { setStatus('此裝置/瀏覽器不支援定位', true); return; }
     setStatus('定位中…');
     if (locateEl) locateEl.classList.add('locating');
     navigator.geolocation.getCurrentPosition(function (pos) {
       var lat = pos.coords.latitude, lng = pos.coords.longitude, acc = pos.coords.accuracy;
-      if (locateMarker) map.removeLayer(locateMarker);
-      if (locateCircle) map.removeLayer(locateCircle);
-      locateCircle = L.circle([lat, lng], {
-        radius: acc, color: '#4285F4', weight: 1, fillColor: '#4285F4', fillOpacity: 0.12
-      }).addTo(map);
-      locateMarker = L.circleMarker([lat, lng], {
-        radius: 8, color: '#fff', weight: 3, fillColor: '#4285F4', fillOpacity: 1
-      }).addTo(map).bindPopup('你的位置<br>誤差約 ' + Math.round(acc) + ' 公尺');
+      // 把定位到的位置直接當成「人物」放上去（含 40 / 80 公尺範圍圈）
+      placePerson(L.latLng(lat, lng));
       map.flyTo([lat, lng], Math.max(map.getZoom(), 17));
-      setStatus('已定位（誤差約 ' + Math.round(acc) + ' 公尺）');
+      setStatus('已定位並放置人物（誤差約 ' + Math.round(acc) + ' 公尺）');
       if (locateEl) locateEl.classList.remove('locating');
     }, function (err) {
       var msg = err.code === 1 ? '你拒絕了定位權限' :
