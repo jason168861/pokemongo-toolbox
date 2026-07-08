@@ -346,7 +346,9 @@ export function initializeMapApp() {
     POKESTOP: { color: '#2b6cb0', fill: '#4299e1', label: '補給站' },
     GYM:      { color: '#c53030', fill: '#fc8181', label: '道館' }
   };
-  var poiCanvas = L.canvas({ padding: 0.5 });
+  // tolerance：在每個點外圍多加 12px 的點擊容錯圈，避免「一點點沒點準」就落到地圖上
+  // 變成放座標點，而不是選到補給站/道館（不影響點的視覺大小）。
+  var poiCanvas = L.canvas({ padding: 0.5, tolerance: 12 });
   var poiLayer = L.layerGroup().addTo(map);
   var poiData = [];
   var POI_MIN_ZOOM = 13;
