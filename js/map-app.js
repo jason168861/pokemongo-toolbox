@@ -166,6 +166,36 @@ export function initializeMapApp() {
   });
 
   // -------------------------------------------------------------------------
+  // 定位：用瀏覽器 Geolocation 找目前位置
+  // -------------------------------------------------------------------------
+  var locateMarker = null, locateCircle = null;
+  var locateBtn = document.getElementById('locateBtn');
+  locateBtn.addEventListener('click', function () {
+    if (!navigator.geolocation) { setStatus('此裝置/瀏覽器不支援定位', true); return; }
+    setStatus('定位中…');
+    locateBtn.disabled = true;
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      var lat = pos.coords.latitude, lng = pos.coords.longitude, acc = pos.coords.accuracy;
+      if (locateMarker) map.removeLayer(locateMarker);
+      if (locateCircle) map.removeLayer(locateCircle);
+      locateCircle = L.circle([lat, lng], {
+        radius: acc, color: '#4285F4', weight: 1, fillColor: '#4285F4', fillOpacity: 0.12
+      }).addTo(map);
+      locateMarker = L.circleMarker([lat, lng], {
+        radius: 8, color: '#fff', weight: 3, fillColor: '#4285F4', fillOpacity: 1
+      }).addTo(map).bindPopup('你的位置<br>誤差約 ' + Math.round(acc) + ' 公尺');
+      map.flyTo([lat, lng], Math.max(map.getZoom(), 17));
+      setStatus('已定位（誤差約 ' + Math.round(acc) + ' 公尺）');
+      locateBtn.disabled = false;
+    }, function (err) {
+      var msg = err.code === 1 ? '你拒絕了定位權限' :
+                err.code === 3 ? '定位逾時，請再試一次' : '定位失敗';
+      setStatus(msg, true);
+      locateBtn.disabled = false;
+    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+  });
+
+  // -------------------------------------------------------------------------
   // 地點搜尋（有 Google key 用 Google Places，否則用 Nominatim）
   // key 由 build 時注入 window.MAPS_API_KEY，不寫在原始碼裡
   // -------------------------------------------------------------------------
