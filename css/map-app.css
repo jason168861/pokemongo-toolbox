@@ -5,7 +5,9 @@
   /* full-bleed：突破 .main-container 的 max-width，佔滿整個視窗寬度 */
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  height: calc(100vh - var(--nav-height, 60px) - 12px);
+  /* 扣掉：導覽列高 + .main-container 的 25px 上內距 + 8px 呼吸空間 */
+  height: calc(100vh - var(--nav-height, 60px) - 33px);
+  height: calc(100dvh - var(--nav-height, 60px) - 33px); /* 手機扣掉網址列，貼合實際可視高 */
   min-height: 420px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
