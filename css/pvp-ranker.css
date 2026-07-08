@@ -428,6 +428,9 @@
     background: #1877f2;
     color: #fff;
     border-radius: 14px 14px 0 0;
+    cursor: move;            /* 提示可拖曳 */
+    touch-action: none;      /* 手機拖曳時不觸發捲動 */
+    user-select: none;
 }
 #pvp-ranker-app .controls-header-title {
     font-weight: bold;
@@ -470,20 +473,13 @@
 /* 面板開著時隱藏開關鈕 */
 #pvp-ranker-app #pvp-controls-toggle.hidden { display: none; }
 
-/* 手機：改成從底部彈出的面板，寬度滿版 */
+/* 手機：一樣放右上角，只把寬度縮小一點以符合小螢幕 */
 @media (max-width: 767px) {
     #pvp-ranker-app #pvp-controls {
-        top: auto;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        max-width: 100%;
-        max-height: 74vh;
-        border-radius: 16px 16px 0 0;
-        padding-bottom: 24px;
-    }
-    #pvp-ranker-app .controls-header {
-        border-radius: 16px 16px 0 0;
+        top: 70px;
+        right: 10px;
+        width: 300px;
+        max-width: calc(100vw - 20px);
+        max-height: calc(100vh - 90px);
     }
 }

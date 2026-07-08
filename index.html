@@ -262,8 +262,8 @@
 
                     <div class="current-stats-inputs">
                         <div>
-                            <label for="current-level">目前等級: <span id="current-level-value">40</span></label>
-                            <input type="range" id="current-level" min="1" max="51" step="0.5" value="40">
+                            <label for="current-level">目前等級: <span id="current-level-value">20</span></label>
+                            <input type="range" id="current-level" min="1" max="51" step="0.5" value="20">
                         </div>
                         <div>
                             <label>目前CP</label>
@@ -763,6 +763,48 @@
 
       // 預設展開，讓搜尋框一進來就看得到；收合後改用右下浮動鈕重新開啟
       openPanel();
+
+      // ---- 拖曳：抓標題列移動面板位置 ----
+      var header = panel.querySelector('.controls-header');
+      if (header) {
+        var dragging = false, startX = 0, startY = 0, startLeft = 0, startTop = 0;
+
+        header.addEventListener('pointerdown', function (e) {
+          // 點在關閉鈕上不啟動拖曳
+          if (e.target.closest('#pvp-controls-close')) return;
+          dragging = true;
+          var rect = panel.getBoundingClientRect();
+          // 改成用 left/top 定位（原本靠 right 錨定）
+          panel.style.left = rect.left + 'px';
+          panel.style.top = rect.top + 'px';
+          panel.style.right = 'auto';
+          startX = e.clientX; startY = e.clientY;
+          startLeft = rect.left; startTop = rect.top;
+          header.setPointerCapture(e.pointerId);
+          e.preventDefault();
+        });
+
+        header.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          var newLeft = startLeft + (e.clientX - startX);
+          var newTop = startTop + (e.clientY - startY);
+          // 限制在畫面內（至少留一點邊，避免整個拖出去抓不回來）
+          var maxLeft = window.innerWidth - panel.offsetWidth - 4;
+          var maxTop = window.innerHeight - header.offsetHeight - 4;
+          newLeft = Math.max(4, Math.min(newLeft, maxLeft));
+          newTop = Math.max(4, Math.min(newTop, maxTop));
+          panel.style.left = newLeft + 'px';
+          panel.style.top = newTop + 'px';
+        });
+
+        function endDrag(e) {
+          if (!dragging) return;
+          dragging = false;
+          try { header.releasePointerCapture(e.pointerId); } catch (err) {}
+        }
+        header.addEventListener('pointerup', endDrag);
+        header.addEventListener('pointercancel', endDrag);
+      }
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
