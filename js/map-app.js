@@ -391,7 +391,7 @@ export function initializeMapApp() {
         personCircle.setLatLng(p);
         personCircle40.setLatLng(p);
       });
-      personMarker.on('dragend', function () { updatePersonPopup(); personMarker.openPopup(); });
+      personMarker.on('dragend', function () { updatePersonPopup(); });
       pegReset.style.display = 'block';
       pegIcon.style.opacity = '0.35';
     } else {
@@ -400,7 +400,6 @@ export function initializeMapApp() {
       personCircle40.setLatLng(latlng);
     }
     updatePersonPopup();
-    personMarker.openPopup();
   }
   function removePerson() {
     if (personMarker) { map.removeLayer(personMarker); personMarker = null; }
