@@ -59,17 +59,30 @@
     <link rel="stylesheet" href="css/map-app.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/s2geometry.js"></script>
+
+    <!-- 入場動畫（放最後以覆蓋舊的 loading 樣式） -->
+    <link rel="stylesheet" href="css/intro.css">
 </head>
 <body>
 <div id="loading-overlay">
-    <div class="pokeball-loader">
-        <div class="pokeball-top"></div>
-        <div class="pokeball-bottom"></div>
-        <div class="pokeball-center-outer">
-            <div class="pokeball-center-inner"></div>
+    <canvas id="intro-fx"></canvas>
+    <div class="iv-stage">
+        <div class="iv-ring"></div>
+        <div class="iv-ring iv-inner"></div>
+        <div class="iv-rays"></div>
+        <div class="iv-core"></div>
+        <div class="iv-ball">
+            <div class="iv-half iv-top"></div>
+            <div class="iv-half iv-bottom"></div>
+            <div class="iv-band"></div>
+            <div class="iv-btn"></div>
         </div>
-        <div class="pokeball-light-flash"></div>
     </div>
+    <div class="iv-title">
+        <div class="iv-eyebrow">POKÉMON GO</div>
+        <div class="iv-main">工具箱</div>
+    </div>
+    <div class="iv-flash"></div>
 </div>
 <header class="site-header-main">
      <div id="auth-container">

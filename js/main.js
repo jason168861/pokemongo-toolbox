@@ -412,39 +412,108 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // ★ 測試開關：false = 跳過開場動畫、立刻進入網站；true = 播放寶貝球動畫
+    // ★ 測試開關：false = 跳過開場動畫、立刻進入網站；true = 播放高級入場動畫
     const SHOW_INTRO_ANIMATION = true;
 
-    const loadingOverlay = document.getElementById('loading-overlay');
-    const pokeballLoader = document.querySelector('.pokeball-loader');
+    (function initIntro() {
+        const overlay = document.getElementById('loading-overlay');
+        if (!overlay) return;
+        if (!SHOW_INTRO_ANIMATION) { overlay.remove(); return; }
 
-    if (!SHOW_INTRO_ANIMATION) {
-        // 跳過動畫：直接把遮罩移除
-        if (loadingOverlay) loadingOverlay.remove();
-    } else {
-        // 1. 【新增】頁面載入後，立即為寶貝球加上 .shaking class 來觸發晃動動畫
-        if (pokeballLoader) {
-            pokeballLoader.classList.add('shaking');
+        const canvas = overlay.querySelector('#intro-fx');
+        const stage = overlay.querySelector('.iv-stage');
+        const ctx = canvas && canvas.getContext('2d');
+        if (!canvas || !stage || !ctx) { overlay.remove(); return; }
+
+        const T = { charge: 850, burst: 420, reveal: 650 };
+        let W, H, dpr, cx, cy, rafId, running = false, phase = 'idle';
+        let stars = [], inward = [], sparks = [], timers = [];
+
+        function resize() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            W = canvas.width = innerWidth * dpr;
+            H = canvas.height = innerHeight * dpr;
+            canvas.style.width = innerWidth + 'px';
+            canvas.style.height = innerHeight + 'px';
+            const r = stage.getBoundingClientRect();
+            cx = (r.left + r.width / 2) * dpr;
+            cy = (r.top + r.height / 2) * dpr;
         }
+        window.addEventListener('resize', resize);
 
-        // 2. 【修改】延遲時間，必須等待晃動動畫 (2.5秒) 結束後才開始打開
-        setTimeout(() => {
-            // 觸發 "打開" 動畫
-            loadingOverlay.classList.add('start-animation');
+        function makeStars() {
+            stars = [];
+            const n = Math.round((innerWidth * innerHeight) / 9000);
+            for (let i = 0; i < n; i++) {
+                stars.push({ x: Math.random() * W, y: Math.random() * H,
+                    r: (Math.random() * 1.4 + .3) * dpr, a: Math.random(), tw: Math.random() * .04 + .008 });
+            }
+        }
+        function spawnInward() {
+            const ang = Math.random() * Math.PI * 2;
+            const dist = (Math.max(W, H) * 0.5) * (0.55 + Math.random() * 0.5);
+            inward.push({ ang, dist, speed: (2.4 + Math.random() * 2.2) * dpr, size: (Math.random() * 1.8 + .6) * dpr });
+        }
+        function explode() {
+            for (let i = 0; i < 140; i++) {
+                const ang = Math.random() * Math.PI * 2, sp = (Math.random() * 8 + 3) * dpr;
+                sparks.push({ x: cx, y: cy, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp,
+                    size: (Math.random() * 2.4 + .8) * dpr, life: 1, decay: Math.random() * .012 + .008,
+                    color: Math.random() < .6 ? [255,207,92] : (Math.random() < .5 ? [255,255,255] : [130,180,255]) });
+            }
+        }
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            for (const s of stars) {
+                s.a += s.tw; ctx.globalAlpha = 0.35 + Math.abs(Math.sin(s.a)) * 0.6;
+                ctx.fillStyle = '#cfe0ff'; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+            if (phase === 'charge') {
+                if (Math.random() < .9) { spawnInward(); spawnInward(); }
+                for (const p of inward) {
+                    p.dist -= p.speed;
+                    const x = cx + Math.cos(p.ang) * p.dist, y = cy + Math.sin(p.ang) * p.dist;
+                    const al = Math.max(0, 1 - p.dist / (Math.max(W, H) * .55));
+                    ctx.globalAlpha = al * .9; ctx.fillStyle = '#ffdd88';
+                    ctx.beginPath(); ctx.arc(x, y, p.size, 0, 7); ctx.fill();
+                    ctx.globalAlpha = al * .35;
+                    const x2 = cx + Math.cos(p.ang) * (p.dist + p.speed * 4), y2 = cy + Math.sin(p.ang) * (p.dist + p.speed * 4);
+                    ctx.strokeStyle = '#ffcf5c'; ctx.lineWidth = p.size;
+                    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x2, y2); ctx.stroke();
+                }
+                inward = inward.filter(p => p.dist > 6);
+            }
+            if (sparks.length) {
+                for (const p of sparks) {
+                    p.x += p.vx; p.y += p.vy; p.vx *= .97; p.vy *= .97; p.life -= p.decay;
+                    if (p.life <= 0) continue;
+                    ctx.globalAlpha = Math.max(0, p.life);
+                    ctx.fillStyle = 'rgb(' + p.color[0] + ',' + p.color[1] + ',' + p.color[2] + ')';
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.size * p.life, 0, 7); ctx.fill();
+                }
+                sparks = sparks.filter(p => p.life > 0);
+            }
+            ctx.globalAlpha = 1;
+            rafId = requestAnimationFrame(draw);
+        }
+        function after(ms, fn) { timers.push(setTimeout(fn, ms)); }
+        function finish() {
+            overlay.classList.add('hidden');
+            after(850, () => { cancelAnimationFrame(rafId); running = false; overlay.remove(); });
+        }
+        function skip() { if (running) { timers.forEach(clearTimeout); timers = []; finish(); } }
 
-            // 3. 等待打開動畫和閃光效果快結束時，再讓整個遮罩層淡出
-            setTimeout(() => {
-                loadingOverlay.classList.add('hidden');
-
-                // 4. 在淡出動畫結束後，將其從 DOM 中移除，避免影響後續操作
-                setTimeout(() => {
-                    loadingOverlay.remove();
-                }, 600); // 這個時間對應 #loading-overlay 的 transition 時間
-
-            }, 800); // 這個時間要比寶貝球打開+閃光的動畫時間稍短
-
-        }, 1200); // 這裡的 2600ms = 2.5秒晃動 + 0.1秒緩衝
-    }
+        resize(); makeStars();
+        phase = 'charge'; running = true;
+        void overlay.offsetWidth;
+        overlay.classList.add('intro-run');
+        draw();
+        after(T.charge, () => { phase = 'burst'; overlay.classList.add('burst'); explode(); });
+        after(T.charge + T.burst, () => { phase = 'idle'; overlay.classList.add('reveal'); });
+        after(T.charge + T.burst + T.reveal, finish);
+        overlay.addEventListener('click', skip);
+    })();
     // 當選單中的任何一個頁籤按鈕被點擊時，自動收合選單
     tabButtonsInMenu.forEach(button => {
         button.addEventListener('click', () => {
