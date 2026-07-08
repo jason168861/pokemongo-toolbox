@@ -908,3 +908,15 @@ body {
         background: #fafbfc; border-top: 1px solid var(--border-color, #eee);
     }
 }
+
+/* --- iOS Safari 聚焦輸入框自動放大整頁的修正 ---
+   Safari 只要輸入框字級 < 16px，聚焦時就會自動放大整個畫面。
+   在手機上把可輸入的表單控件字級提升到 16px 即可避免（不需停用雙指縮放）。
+   用 !important 是因為多數輸入框以 #id 選擇器指定較小字級，需要蓋過其優先度。 */
+@media (max-width: 768px) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
