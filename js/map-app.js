@@ -42,7 +42,9 @@ export function initializeMapApp() {
     })
   };
   baseLayers['街道圖 (OSM)'].addTo(map);
-  L.control.layers(baseLayers, null, { position: 'topright', collapsed: false }).addTo(map);
+  // 手機收合成小圖示（點了才展開），桌面直接攤開清單
+  var isMobile = window.matchMedia('(max-width: 768px)').matches;
+  L.control.layers(baseLayers, null, { position: 'topright', collapsed: isMobile }).addTo(map);
 
   // -------------------------------------------------------------------------
   // Level 選單

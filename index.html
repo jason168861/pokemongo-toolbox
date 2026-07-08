@@ -601,23 +601,25 @@
         </div>
         <div id="map-app" class="app-content">
             <div class="map-app-wrap">
-                <div class="panel">
-                    <label for="lvl">S2 Level</label>
-                    <select id="lvl"></select>
-                    <label style="font-weight:400;"><input type="checkbox" id="gridOn" /> 顯示網格</label>
-                    <span style="border-left:1px solid #ccc; padding-left:10px;">
-                        <label style="font-weight:400;"><input type="checkbox" class="poiFilter" value="POKESTOP" checked /> 🔵補給站</label>
-                        <label style="font-weight:400;"><input type="checkbox" class="poiFilter" value="GYM" checked /> 🔴道館</label>
-                    </span>
-                    <span class="status" id="mapStatus">載入中…</span>
-                </div>
-
-                <div class="searchbox">
-                    <div class="row">
-                        <input id="mapSearchInput" type="text" placeholder="搜尋地點，例如：巨城、台北101" />
-                        <button id="mapSearchBtn">🔍</button>
+                <div class="map-topbar">
+                    <div class="panel">
+                        <label for="lvl">S2 Level</label>
+                        <select id="lvl"></select>
+                        <label style="font-weight:400;"><input type="checkbox" id="gridOn" /> 顯示網格</label>
+                        <span style="border-left:1px solid #ccc; padding-left:10px;">
+                            <label style="font-weight:400;"><input type="checkbox" class="poiFilter" value="POKESTOP" checked /> 🔵補給站</label>
+                            <label style="font-weight:400;"><input type="checkbox" class="poiFilter" value="GYM" checked /> 🔴道館</label>
+                        </span>
+                        <span class="status" id="mapStatus">載入中…</span>
                     </div>
-                    <div class="results" id="mapSearchResults"></div>
+
+                    <div class="searchbox">
+                        <div class="row">
+                            <input id="mapSearchInput" type="text" placeholder="搜尋地點，例如：巨城、台北101" />
+                            <button id="mapSearchBtn">🔍</button>
+                        </div>
+                        <div class="results" id="mapSearchResults"></div>
+                    </div>
                 </div>
 
                 <div class="coordbox" id="coordbox">緯度 --, 經度 --</div>

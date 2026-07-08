@@ -17,12 +17,20 @@
   background: #ddd;
 }
 
+/* 頂部控制容器：面板 + 搜尋框直向堆疊，不再各自固定 top 互相重疊 */
+#map-app .map-topbar {
+  position: absolute; top: 10px; left: 50px; z-index: 1001;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+  max-width: calc(100% - 60px);
+  pointer-events: none;            /* 容器空白處不擋地圖操作 */
+}
+#map-app .map-topbar > * { pointer-events: auto; }
+
 /* 頂部控制列 */
 #map-app .panel {
-  position: absolute; top: 10px; left: 50px; z-index: 1000;
   background: rgba(255, 255, 255, 0.95); padding: 8px 12px; border-radius: 8px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4); font: 14px/1.4 system-ui, sans-serif;
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; max-width: calc(100% - 70px);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; max-width: 100%;
 }
 #map-app .panel select, #map-app .panel input { font-size: 14px; padding: 2px 4px; }
 
@@ -84,7 +92,7 @@
 
 /* 搜尋框 */
 #map-app .searchbox {
-  position: absolute; top: 56px; left: 50px; z-index: 1001; width: 280px; max-width: calc(100% - 70px);
+  width: 280px; max-width: 100%;
   font: 14px system-ui, sans-serif;
 }
 #map-app .searchbox .row {
@@ -108,3 +116,15 @@
 #map-app .searchbox .results div:last-child { border-bottom: none; }
 #map-app .searchbox .results div:hover { background: #ebf8ff; }
 #map-app .searchbox .results .empty { color: #888; cursor: default; }
+
+/* 手機：控制列改成靠左上、滿寬堆疊，避免互相重疊或擋住地圖 */
+@media (max-width: 768px) {
+  #map-app .map-topbar {
+    top: 8px; left: 8px; right: 8px; max-width: none;
+  }
+  #map-app .panel {
+    width: 100%; gap: 6px 8px; padding: 6px 8px; font-size: 13px;
+  }
+  #map-app .panel .status { flex-basis: 100%; }   /* 狀態文字自己一行 */
+  #map-app .searchbox { width: 100%; }
+}
