@@ -38,7 +38,8 @@ FORM_TRANSLATIONS = {
     'Plant': '草木', 'Sandy': '砂土', 'Trash': '垃圾', 'Confined': '懲戒', 'Unbound': '解放',
     'Aria': '歌聲', 'Pirouette': '舞步', 'Fan': '電風扇', 'Frost': '結冰', 'Heat': '加熱', 'Mow': '割草', 'Wash': '清洗',
     'Dusk': '黃昏', 'Midday': '白晝', 'Midnight': '黑夜', 'School': '魚群', 'Solo': '單獨', 'Dawn Wings': '日蝕奈克洛茲瑪', 'Ultra': '究極',
-    'Hero': '百戰勇者', 'White Striped': '白條紋', 'Mega': '超級', 'Primal': '原始', "Farfetch'd": "大蔥鸭"
+    'Hero': '百戰勇者', 'White Striped': '白條紋', 'Mega': '超級', 'Primal': '原始', "Farfetch'd": "大蔥鸭",
+    'Shadow': '暗影'
 }
 
 def load_translations():
@@ -58,6 +59,12 @@ def translate_name(eng_name, name_map, form_map):
     """將英文名稱翻譯成中文，能處理地區形態、超級進化和特殊名稱"""
     if not eng_name:
         return ""
+
+    # 處理暗影，例如 "Shadow Palkia"、"Shadow Necrozma (Dusk Mane)"
+    # 先剝掉 "Shadow " 前綴，把剩下的部分照常翻譯，再冠上「暗影」
+    if eng_name.startswith("Shadow "):
+        rest = eng_name[len("Shadow "):]
+        return f"{form_map.get('Shadow', '暗影')} {translate_name(rest, name_map, form_map)}"
 
     # 處理超級進化，例如 "Mega Charizard X"
     if eng_name.startswith("Mega ") or eng_name.startswith("Primal "):
@@ -140,29 +147,42 @@ def scrape_raid_data():
                 translated_boss_name = translate_name(eng_name, name_translation_map, FORM_TRANSLATIONS)
                 print(f"  - 找到頭目: {translated_boss_name} ({eng_name})")
 
-                # 解析CP範圍
-                cp_range_tag = card.find("div", class_="cp-range")
-                cp_text = cp_range_tag.get_text(strip=True).replace("CP", "").strip()
-                cp_min, cp_max = [int(p.strip()) for p in cp_text.split(' - ')]
+                # 小工具：把 "CP 1957 - 2042" 解析成 (min, max)，失敗回傳 (0, 0)
+                def parse_cp(tag):
+                    if not tag:
+                        return 0, 0
+                    txt = tag.get_text(strip=True).replace("CP", "").strip()
+                    try:
+                        lo, hi = [int(p.strip()) for p in txt.split(' - ')]
+                        return lo, hi
+                    except ValueError:
+                        return 0, 0
 
-                # 解析天氣加成後的CP範圍與天氣類型
-                boost_section = card.find("div", class_="weather-boosted")
-                boosted_cp_tag = boost_section.find("span", class_="boosted-cp")
-                boosted_cp_text = boosted_cp_tag.get_text(strip=True).replace("CP", "").strip()
-                boosted_cp_min, boosted_cp_max = [int(p.strip()) for p in boosted_cp_text.split(' - ')]
-                
+                # 小工具：圖片的名稱優先讀 title，新版改用 alt
+                def img_name(img):
+                    return (img.get('title') or img.get('alt') or '').lower()
+
+                # 解析CP範圍
+                cp_min, cp_max = parse_cp(card.find("div", class_="cp-range"))
+
+                # 解析天氣加成後的CP範圍（改版後 boosted-cp 移到 .boosted-cp-row，不再位於 .weather-boosted 內）
+                boosted_cp_min, boosted_cp_max = parse_cp(card.find("span", class_="boosted-cp"))
+
+                # 解析天氣類型（仍在 .weather-boosted .boss-weather 內；新版 img 用 alt 標名稱）
                 boosted_weathers = []
-                for img in boost_section.select(".boss-weather img"):
-                    boosted_weathers.append({
-                        "name": img['title'].lower(),
-                        "image": urljoin(BASE_URL, img['src'])
-                    })
+                boost_section = card.find("div", class_="weather-boosted")
+                if boost_section:
+                    for img in boost_section.select(".boss-weather img"):
+                        boosted_weathers.append({
+                            "name": img_name(img),
+                            "image": urljoin(BASE_URL, img['src'])
+                        })
 
                 # 解析寶可夢屬性
                 types = []
                 for img in card.select(".boss-type img"):
                     types.append({
-                        "name": img['title'].lower(),
+                        "name": img_name(img),
                         "image": urljoin(BASE_URL, img['src'])
                     })
 
