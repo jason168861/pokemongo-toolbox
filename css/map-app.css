@@ -26,6 +26,26 @@
 }
 #map-app .panel select, #map-app .panel input { font-size: 14px; padding: 2px 4px; }
 
+/* 地圖下方的說明 / FAQ（SEO 文字內容） */
+#map-app .map-seo {
+  max-width: 820px; margin: 28px auto 8px; padding: 0 16px;
+  font: 15px/1.75 system-ui, "Microsoft JhengHei", sans-serif; color: #2d3748;
+}
+#map-app .map-seo h1 { font-size: 1.6rem; font-weight: 800; color: #1a202c; margin-bottom: 12px; }
+#map-app .map-seo h2 { font-size: 1.2rem; font-weight: 700; color: #1a202c; margin: 24px 0 10px; }
+#map-app .map-seo p { margin-bottom: 12px; color: #4a5568; }
+#map-app .map-seo .map-features { list-style: none; padding: 0; margin: 0 0 14px; }
+#map-app .map-seo .map-features li {
+  padding: 8px 12px; margin-bottom: 6px; background: #f5f8fc; border-radius: 8px; color: #2d3748;
+}
+#map-app .map-seo .map-regions { font-size: 14px; color: #718096; }
+#map-app .map-seo details {
+  border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; background: #fff;
+}
+#map-app .map-seo summary { cursor: pointer; font-weight: 600; color: #2b6cb0; }
+#map-app .map-seo details[open] summary { margin-bottom: 8px; }
+#map-app .map-seo details p { margin: 0; font-size: 14px; }
+
 /* 定位控制項（縮放鈕正下方，標準 Leaflet 樣式） */
 #map-app .locate-control a {
   display: flex; align-items: center; justify-content: center;

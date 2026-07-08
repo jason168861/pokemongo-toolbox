@@ -42,6 +42,26 @@
     }
     </script>
 
+    <!-- 補給站/道館地圖頁的 FAQ 結構化資料 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "一個道館需要多少補給站才會生成？",
+          "acceptedAnswer": { "@type": "Answer", "text": "道館由 S2 L14 網格內的 Wayspot 數量決定：該格內 2 個以上會有 1 座道館、6 個以上 2 座、20 個以上 3 座。" } },
+        { "@type": "Question", "name": "為什麼一個 L17 格子只有一個補給站？",
+          "acceptedAnswer": { "@type": "Answer", "text": "每個 S2 L17 網格內最多只會有 1 個補給站（含道館）。過去同一格出現多個是早期靠移動製造的舊機制，現在已無法這樣做。" } },
+        { "@type": "Question", "name": "L14、L17 網格是什麼？",
+          "acceptedAnswer": { "@type": "Answer", "text": "S2 是球面網格系統。Pokémon GO 用 L14 網格決定道館生成、用較小的 L17 網格對應補給站配置，數字越大格子越小。" } },
+        { "@type": "Question", "name": "40 公尺和 80 公尺的範圍圈代表什麼？",
+          "acceptedAnswer": { "@type": "Answer", "text": "40 公尺是寶可夢的出沒範圍、80 公尺是可轉動補給站與參加道館團體戰的互動範圍。" } },
+        { "@type": "Question", "name": "這些資料是即時的嗎？",
+          "acceptedAnswer": { "@type": "Answer", "text": "補給站與道館的位置是靜態整理資料，不是即時遊戲狀態，不含即時野生寶可夢或當下團體戰頭目。" } }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/cp-checker.css">
     <link rel="stylesheet" href="css/id-selector.css">
@@ -603,6 +623,47 @@
                 <div class="coordbox" id="coordbox">緯度 --, 經度 --</div>
                 <div id="s2map" class="s2map"></div>
             </div>
+
+            <section class="map-seo">
+                <h1>台灣寶可夢補給站、道館與 S2 網格地圖</h1>
+                <p>這是一份涵蓋全台灣的 Pokémon GO 補給站（PokéStop）與道館（Gym）位置地圖，資料整理自 Niantic Wayspot。你可以疊上 S2 網格（L14 道館網格／L17 補給站網格）、搜尋地點、一鍵定位，並顯示以自己為中心的 40 公尺（寶可夢出沒範圍）與 80 公尺（補給站／道館互動範圍）兩個範圍圈，方便判斷道館生成、寶可夢出沒與可互動範圍。</p>
+
+                <ul class="map-features">
+                    <li>🔵 補給站、🔴 道館位置一次看，可分別開關顯示</li>
+                    <li>🗺️ S2 網格切換（L8–L20，含 PoGo 常用的 L14／L17）</li>
+                    <li>📍 一鍵定位，並標出 40／80 公尺範圍圈</li>
+                    <li>🔍 地點搜尋：輸入商場、地標、地址快速跳轉</li>
+                    <li>🛰️ 多種底圖：街道、衛星、地形自由切換</li>
+                </ul>
+
+                <p class="map-regions">地圖涵蓋全台 22 縣市：台北市、新北市、基隆市、桃園市、新竹市、新竹縣、苗栗縣、台中市、彰化縣、南投縣、雲林縣、嘉義市、嘉義縣、台南市、高雄市、屏東縣、宜蘭縣、花蓮縣、台東縣、澎湖縣、金門縣、連江縣（馬祖）。</p>
+
+                <h2>常見問題</h2>
+                <details>
+                    <summary>一個道館需要多少補給站才會生成？</summary>
+                    <p>道館由 S2 L14 網格內的 Wayspot 數量決定：該格內 2 個以上會有 1 座道館、6 個以上 2 座、20 個以上 3 座。可切到 L14 網格，搭配格內補給站數量判斷。</p>
+                </details>
+                <details>
+                    <summary>為什麼一個 L17 格子只有一個補給站？</summary>
+                    <p>每個 S2 L17 網格內最多只會有 1 個補給站（含道館）。過去曾看到同一格出現多個，是早期靠移動製造出來的舊機制，現在已經無法這樣做。</p>
+                </details>
+                <details>
+                    <summary>L14、L17 網格是什麼？</summary>
+                    <p>S2 是 Google 的球面網格系統。Pokémon GO 用 L14 網格決定道館生成、用較小的 L17 網格對應補給站配置，數字越大格子越小。地圖上可自由切換要顯示哪一層網格。</p>
+                </details>
+                <details>
+                    <summary>40 公尺和 80 公尺的範圍圈代表什麼？</summary>
+                    <p>定位後會畫出兩個圈：40 公尺是寶可夢的出沒範圍、80 公尺是可以轉動補給站與參加道館團體戰的互動範圍。</p>
+                </details>
+                <details>
+                    <summary>這些資料是即時的嗎？</summary>
+                    <p>補給站與道館的「位置」是靜態整理的資料，不是即時遊戲狀態；不包含即時野生寶可夢，也不含當下各道館的團體戰頭目。</p>
+                </details>
+                <details>
+                    <summary>資料會更新嗎？</summary>
+                    <p>位置資料會不定期補充。若你發現有缺漏或已移除的地點，歡迎回報協助更新。</p>
+                </details>
+            </section>
         </div>
     </div>
             <footer class="site-footer">
