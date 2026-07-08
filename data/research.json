@@ -1,56 +1,5 @@
 [
   {
-    "category": "10th Anniversary Party Tasks",
-    "tasks": [
-      {
-        "description": "捕捉10隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Bulbasaur wearing a Party Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.cJAN_2020_NOEVOLVE.icon.png",
-            "isShiny": true,
-            "maxCp": "477",
-            "minCp": "442"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Charmander wearing a Party Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.cJAN_2020_NOEVOLVE.icon.png",
-            "isShiny": true,
-            "maxCp": "420",
-            "minCp": "387"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Squirtle wearing a Party Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cJAN_2020_NOEVOLVE.icon.png",
-            "isShiny": true,
-            "maxCp": "405",
-            "minCp": "372"
-          }
-        ]
-      },
-      {
-        "description": "Power up Pokémon 10 times",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pikachu wearing a Cake Hat",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cANNIVERSARY_2022_NOEVOLVE.icon.png",
-            "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "category": "捕捉相關任務",
     "tasks": [
       {
