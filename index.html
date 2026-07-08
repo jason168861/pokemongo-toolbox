@@ -69,6 +69,17 @@
      <div id="auth-container">
         <span id="user-info" style="display: none;"></span>
         <button id="auth-button">登入</button>
+        <span class="auth-help" tabindex="0" role="button" aria-label="登入說明">?
+            <span class="auth-help-tip">
+                <b>登入能做什麼？</b>
+                <p>用 Google 帳號登入後，以下設定會存到雲端，換手機或瀏覽器也不會不見、還能跨裝置同步：</p>
+                <ul>
+                    <li><b>編號篩選器</b>：你勾選的寶可夢</li>
+                    <li><b>特殊調查</b>：你釘選的任務</li>
+                </ul>
+                <p class="auth-help-note">不登入也能正常使用所有查詢功能，只是這些設定不會被記住。</p>
+            </span>
+        </span>
     </div>
 <nav class="app-nav">
     <button class="hamburger-button" aria-label="開啟選單" aria-expanded="false">
@@ -201,7 +212,11 @@
         <div id="pvp-ranker-app" class="app-content">
             <div class="container">
                 <h1>Pokémon Go PvP IV 排名查詢器</h1>
-                <div class="controls">
+                <div class="controls" id="pvp-controls">
+                    <div class="controls-header">
+                        <span class="controls-header-title">查詢條件</span>
+                        <button type="button" id="pvp-controls-close" aria-label="收合條件面板">&minus;</button>
+                    </div>
                     <div class="search-container">
                         <label for="pokemon-input">輸入寶可夢名稱或編號</label>
                         <input type="text" id="pokemon-input" placeholder="例如：妙蛙種子 或 1" autocomplete="off">
@@ -256,6 +271,7 @@
                         </div>
                     </div>
                 </div>
+                <button type="button" id="pvp-controls-toggle" aria-label="開啟查詢條件">⚙ 調整條件</button>
                 <div id="results-container" class="hidden"></div>
             </div>
         </div>
@@ -722,6 +738,38 @@
       }, 150);
     });
   }
+</script>
+
+<!-- PvP 查詢條件浮動面板：開關切換 -->
+<script>
+  (function () {
+    function init() {
+      var panel = document.getElementById('pvp-controls');
+      var closeBtn = document.getElementById('pvp-controls-close');
+      var toggleBtn = document.getElementById('pvp-controls-toggle');
+      if (!panel || !closeBtn || !toggleBtn) return;
+
+      function openPanel() {
+        panel.classList.remove('collapsed');
+        toggleBtn.classList.add('hidden');
+      }
+      function closePanel() {
+        panel.classList.add('collapsed');
+        toggleBtn.classList.remove('hidden');
+      }
+
+      closeBtn.addEventListener('click', closePanel);
+      toggleBtn.addEventListener('click', openPanel);
+
+      // 預設展開，讓搜尋框一進來就看得到；收合後改用右下浮動鈕重新開啟
+      openPanel();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
 </script>
 
 </body>

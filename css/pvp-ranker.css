@@ -396,3 +396,94 @@
     height: 24px;
     margin-right: 8px;
 }
+
+/* ==================== 浮動查詢條件面板 ==================== */
+/* 讓條件面板固定浮在畫面上，改條件時結果不會被推走、也不用上下捲動 */
+#pvp-ranker-app #pvp-controls {
+    position: fixed;
+    top: 76px;
+    right: 16px;
+    width: 360px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 96px);
+    margin: 0;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+    padding: 0 16px 16px;
+    z-index: 1900;
+}
+
+/* 面板頂部標題列（含收合鈕），滑動面板內容時固定在上方 */
+#pvp-ranker-app .controls-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 -16px 12px;
+    padding: 10px 16px;
+    background: #1877f2;
+    color: #fff;
+    border-radius: 14px 14px 0 0;
+}
+#pvp-ranker-app .controls-header-title {
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+#pvp-ranker-app #pvp-controls-close {
+    width: 28px;
+    height: 28px;
+    line-height: 1;
+    font-size: 22px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+}
+#pvp-ranker-app #pvp-controls-close:hover { background: rgba(255,255,255,0.35); }
+
+/* 收合狀態：藏起面板 */
+#pvp-ranker-app #pvp-controls.collapsed { display: none; }
+
+/* 浮動開關鈕（收合時顯示，用來重新開啟面板） */
+#pvp-ranker-app #pvp-controls-toggle {
+    position: fixed;
+    right: 16px;
+    bottom: 20px;
+    z-index: 1901;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    background: #1877f2;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 6px 18px rgba(24,119,242,0.45);
+    cursor: pointer;
+}
+#pvp-ranker-app #pvp-controls-toggle:hover { background: #0075BE; }
+/* 面板開著時隱藏開關鈕 */
+#pvp-ranker-app #pvp-controls-toggle.hidden { display: none; }
+
+/* 手機：改成從底部彈出的面板，寬度滿版 */
+@media (max-width: 767px) {
+    #pvp-ranker-app #pvp-controls {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        max-height: 74vh;
+        border-radius: 16px 16px 0 0;
+        padding-bottom: 24px;
+    }
+    #pvp-ranker-app .controls-header {
+        border-radius: 16px 16px 0 0;
+    }
+}
