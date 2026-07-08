@@ -34,7 +34,8 @@ import { initializeLevelUpApp } from './level-up.js';
 import { initializeSearchFiltersApp } from './search-filters.js';
 import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
-import { initializePvpRanker } from './pvp-ranker.js'; 
+import { initializePvpRanker } from './pvp-ranker.js';
+import { initializeMapApp } from './map-app.js';
 
 document.addEventListener('DOMContentLoaded', () => {
         const app = initializeApp(window.firebaseConfig); // 假設您的 config 在 window 上
@@ -182,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let searchFiltersAppInitialized = false;
     let specialResearchAppInitialized = false;
     let infoHubAppInitialized = false; // <-- 【新增】
+    let mapAppInitialized = false;
     // 【SEO】每個分頁的標題與描述，切換時動態套用，讓每個 ?tab= 網址在
     // 搜尋結果有各自明確的標題與摘要（而不是全部顯示同一段主頁文字）。
     const SITE_BASE = 'https://jason168861.github.io/pokemongo-toolbox/';
@@ -225,6 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
         'info-hub-app': {
             title: '特別資訊：多星星沙子寶可夢等補充資料｜Pokémon Go 工具箱',
             desc: 'Pokémon GO 補充型資訊整理，例如捕捉時可獲得較多星星沙子的寶可夢清單。'
+        },
+        'map-app': {
+            title: '補給站／道館地圖 + S2 網格｜Pokémon Go 工具箱',
+            desc: '在地圖上查看 Pokémon GO 補給站與道館位置，支援 S2 網格（L14/L17）切換、地點搜尋與範圍測量，方便判斷道館生成與活動範圍。'
         }
     };
 
@@ -290,6 +296,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (targetAppId === 'info-hub-app' && !infoHubAppInitialized) {
             initializeInfoHubApp();
             infoHubAppInitialized = true;
+        } else if (targetAppId === 'map-app' && !mapAppInitialized) {
+            initializeMapApp();
+            mapAppInitialized = true;
         }
 
         // 4.【SEO】更新此分頁對應的標題與描述
@@ -386,6 +395,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // 更新 aria 屬性，有助於無障礙閱讀
         const isExpanded = navLinks.classList.contains('is-open');
         hamburgerButton.setAttribute('aria-expanded', isExpanded);
+        // 打開選單時，預設把所有群組都展開
+        if (isExpanded) {
+            document.querySelectorAll('.nav-group').forEach(group => {
+                group.classList.add('is-expanded');
+            });
+        }
     });
     const groupTitles = document.querySelectorAll('.nav-group .group-title');
 
@@ -397,31 +412,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    // ★ 測試開關：false = 跳過開場動畫、立刻進入網站；true = 播放寶貝球動畫
+    const SHOW_INTRO_ANIMATION = true;
+
     const loadingOverlay = document.getElementById('loading-overlay');
     const pokeballLoader = document.querySelector('.pokeball-loader');
 
-    // 1. 【新增】頁面載入後，立即為寶貝球加上 .shaking class 來觸發晃動動畫
-    if (pokeballLoader) {
-        pokeballLoader.classList.add('shaking');
-    }
+    if (!SHOW_INTRO_ANIMATION) {
+        // 跳過動畫：直接把遮罩移除
+        if (loadingOverlay) loadingOverlay.remove();
+    } else {
+        // 1. 【新增】頁面載入後，立即為寶貝球加上 .shaking class 來觸發晃動動畫
+        if (pokeballLoader) {
+            pokeballLoader.classList.add('shaking');
+        }
 
-    // 2. 【修改】延遲時間，必須等待晃動動畫 (2.5秒) 結束後才開始打開
-    setTimeout(() => {
-        // 觸發 "打開" 動畫
-        loadingOverlay.classList.add('start-animation');
-
-        // 3. 等待打開動畫和閃光效果快結束時，再讓整個遮罩層淡出
+        // 2. 【修改】延遲時間，必須等待晃動動畫 (2.5秒) 結束後才開始打開
         setTimeout(() => {
-            loadingOverlay.classList.add('hidden');
-            
-            // 4. 在淡出動畫結束後，將其從 DOM 中移除，避免影響後續操作
+            // 觸發 "打開" 動畫
+            loadingOverlay.classList.add('start-animation');
+
+            // 3. 等待打開動畫和閃光效果快結束時，再讓整個遮罩層淡出
             setTimeout(() => {
-                loadingOverlay.remove();
-            }, 600); // 這個時間對應 #loading-overlay 的 transition 時間
+                loadingOverlay.classList.add('hidden');
 
-        }, 800); // 這個時間要比寶貝球打開+閃光的動畫時間稍短
+                // 4. 在淡出動畫結束後，將其從 DOM 中移除，避免影響後續操作
+                setTimeout(() => {
+                    loadingOverlay.remove();
+                }, 600); // 這個時間對應 #loading-overlay 的 transition 時間
 
-    }, 1200); // 這裡的 2600ms = 2.5秒晃動 + 0.1秒緩衝
+            }, 800); // 這個時間要比寶貝球打開+閃光的動畫時間稍短
+
+        }, 1200); // 這裡的 2600ms = 2.5秒晃動 + 0.1秒緩衝
+    }
     // 當選單中的任何一個頁籤按鈕被點擊時，自動收合選單
     tabButtonsInMenu.forEach(button => {
         button.addEventListener('click', () => {

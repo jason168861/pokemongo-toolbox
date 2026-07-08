@@ -53,6 +53,12 @@
     <link rel="stylesheet" href="css/search-filters.css">
     <link rel="stylesheet" href="css/special-research.css">
     <link rel="stylesheet" href="css/info-hub.css">
+
+    <!-- 地圖：Leaflet + S2 幾何（供補給站/道館地圖使用） -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/map-app.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/s2geometry.js"></script>
 </head>
 <body>
 <div id="loading-overlay">
@@ -110,6 +116,7 @@
                 <button class="tab-button" data-target="special-research-app">特殊調查</button>
                 <!-- <button class="tab-button" data-target="level-up-app">升級條件</button> -->
                 <button class="tab-button" data-target="info-hub-app">特別資訊</button>
+                <button class="tab-button" data-target="map-app">補給站/道館地圖</button>
             </div>
         </div>
     </div>
@@ -557,6 +564,31 @@
                     <div id="stardust-bonus-container" class="info-grid">
                         </div>
                 </div>
+            </div>
+        </div>
+        <div id="map-app" class="app-content">
+            <div class="map-app-wrap">
+                <div class="panel">
+                    <label for="lvl">S2 Level</label>
+                    <select id="lvl"></select>
+                    <label style="font-weight:400;"><input type="checkbox" id="gridOn" /> 顯示網格</label>
+                    <span style="border-left:1px solid #ccc; padding-left:10px;">
+                        <label style="font-weight:400;"><input type="checkbox" class="poiFilter" value="POKESTOP" checked /> 🔵補給站</label>
+                        <label style="font-weight:400;"><input type="checkbox" class="poiFilter" value="GYM" checked /> 🔴道館</label>
+                    </span>
+                    <span class="status" id="mapStatus">載入中…</span>
+                </div>
+
+                <div class="searchbox">
+                    <div class="row">
+                        <input id="mapSearchInput" type="text" placeholder="搜尋地點，例如：巨城、台北101" />
+                        <button id="mapSearchBtn">🔍</button>
+                    </div>
+                    <div class="results" id="mapSearchResults"></div>
+                </div>
+
+                <div class="coordbox" id="coordbox">緯度 --, 經度 --</div>
+                <div id="s2map" class="s2map"></div>
             </div>
         </div>
     </div>

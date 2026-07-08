@@ -62,9 +62,11 @@ jobs:
       - name: Create config.js
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG_JSON }}
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
         run: |
           echo "const firebaseConfig = $FIREBASE_CONFIG;" > config.js
           echo "window.firebaseConfig = firebaseConfig;" >> config.js
+          echo "window.MAPS_API_KEY = \"$MAPS_API_KEY\";" >> config.js
 
       # 步驟 5: 設定 GitHub Pages
       - name: Setup Pages
