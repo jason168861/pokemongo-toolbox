@@ -358,8 +358,9 @@ export function initializeMapApp() {
   // -------------------------------------------------------------------------
   // Pegman 小人：拖到地圖才放置
   // -------------------------------------------------------------------------
-  var personMarker = null, personCircle = null;
-  var personRadius = 80;
+  var personMarker = null, personCircle = null, personCircle40 = null;
+  var personRadius = 80;     // 外圈：80 公尺
+  var personRadius40 = 40;   // 內圈：40 公尺
   var personIcon = L.divIcon({
     html: "<div style='font-size:28px; line-height:28px;'>🧍</div>",
     className: 'person-marker-icon', iconSize: [30, 30], iconAnchor: [15, 28]
@@ -370,22 +371,33 @@ export function initializeMapApp() {
     var ll = personMarker.getLatLng();
     personMarker.bindPopup(
       "<div style='font:14px monospace;'><b>人物位置</b><br>緯度: " + ll.lat.toFixed(6) +
-      "<br>經度: " + ll.lng.toFixed(6) + "<br>範圍半徑: " + personRadius + " 公尺</div>"
+      "<br>經度: " + ll.lng.toFixed(6) +
+      "<br>範圍半徑: " + personRadius40 + " / " + personRadius + " 公尺</div>"
     );
   }
   function placePerson(latlng) {
     if (!personMarker) {
       personMarker = L.marker(latlng, { icon: personIcon, draggable: true, title: '拖曳我來移動' }).addTo(map);
+      // 外圈 80m
       personCircle = L.circle(latlng, {
-        radius: personRadius, color: '#2b6cb0', weight: 2, fillColor: '#4299e1', fillOpacity: 0.15
+        radius: personRadius, color: '#2b6cb0', weight: 2, fillColor: '#4299e1', fillOpacity: 0.12
       }).addTo(map);
-      personMarker.on('drag', function (e) { personCircle.setLatLng(e.target.getLatLng()); });
+      // 內圈 40m
+      personCircle40 = L.circle(latlng, {
+        radius: personRadius40, color: '#dd6b20', weight: 2, fillColor: '#f6ad55', fillOpacity: 0.18
+      }).addTo(map);
+      personMarker.on('drag', function (e) {
+        var p = e.target.getLatLng();
+        personCircle.setLatLng(p);
+        personCircle40.setLatLng(p);
+      });
       personMarker.on('dragend', function () { updatePersonPopup(); personMarker.openPopup(); });
       pegReset.style.display = 'block';
       pegIcon.style.opacity = '0.35';
     } else {
       personMarker.setLatLng(latlng);
       personCircle.setLatLng(latlng);
+      personCircle40.setLatLng(latlng);
     }
     updatePersonPopup();
     personMarker.openPopup();
@@ -393,6 +405,7 @@ export function initializeMapApp() {
   function removePerson() {
     if (personMarker) { map.removeLayer(personMarker); personMarker = null; }
     if (personCircle) { map.removeLayer(personCircle); personCircle = null; }
+    if (personCircle40) { map.removeLayer(personCircle40); personCircle40 = null; }
     pegReset.style.display = 'none';
     pegIcon.style.opacity = '1';
   }
