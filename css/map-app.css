@@ -19,11 +19,14 @@
   background: #ddd;
 }
 
-/* 頂部控制容器：面板 + 搜尋框直向堆疊，不再各自固定 top 互相重疊 */
+/* 頂部控制容器：面板 + 搜尋框直向堆疊，不再各自固定 top 互相重疊
+   當作「中間欄」：left/right 由 JS 依左右兩側 Leaflet 控制項的實際寬度動態設定，
+   右側會在「選擇地圖」圖層清單展開後一併算入其展開寬度（見 map-app.js）。 */
 #map-app .map-topbar {
-  position: absolute; top: 10px; left: 50px; z-index: 1001;
+  position: absolute; top: 10px; z-index: 1001;
+  left: var(--topbar-left, 50px);
+  right: var(--topbar-right, 48px);
   display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
-  max-width: calc(100% - 60px);
   pointer-events: none;            /* 容器空白處不擋地圖操作 */
 }
 #map-app .map-topbar > * { pointer-events: auto; }
@@ -119,10 +122,11 @@
 #map-app .searchbox .results div:hover { background: #ebf8ff; }
 #map-app .searchbox .results .empty { color: #888; cursor: default; }
 
-/* 手機：控制列避開左上縮放/定位鈕、右上圖層鈕，中間堆疊 */
+/* 手機：控制列避開左上縮放/定位鈕、右上圖層鈕，中間堆疊
+   left/right 交給 JS 動態計算（見 map-app.js），這裡只調整間距與字級 */
 @media (max-width: 768px) {
   #map-app .map-topbar {
-    top: 8px; left: 50px; right: 48px; max-width: none;
+    top: 8px;
   }
   #map-app .panel {
     width: 100%; gap: 6px 8px; padding: 6px 8px; font-size: 13px;

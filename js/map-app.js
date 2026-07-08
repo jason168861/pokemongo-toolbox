@@ -217,6 +217,38 @@ export function initializeMapApp() {
   map.addControl(new LocateControl());
 
   // -------------------------------------------------------------------------
+  // 讓 .map-topbar 當作「中間欄」：兩側各自避開 Leaflet 控制項
+  //   左：縮放 + 定位鈕；右：「選擇地圖」圖層清單（含滑過/點擊展開後的寬度）
+  // 以 ResizeObserver 監看兩側叢集寬度變化（展開/收合會即時觸發），
+  // 動態寫入 CSS 變數 --topbar-left / --topbar-right，避免搜尋框擋住圖層鈕。
+  // -------------------------------------------------------------------------
+  (function layoutTopbarAsMiddleColumn() {
+    var wrap = map.getContainer().closest('.map-app-wrap');
+    if (!wrap) return;
+    var topbar = wrap.querySelector('.map-topbar');
+    var leftCtl = wrap.querySelector('.leaflet-top.leaflet-left');
+    var rightCtl = wrap.querySelector('.leaflet-top.leaflet-right');
+    if (!topbar || !leftCtl || !rightCtl) return;
+
+    var GAP = 8; // 中間欄與兩側控制項之間的呼吸間距
+    function update() {
+      // offsetWidth 已含 Leaflet 控制項的外邊距（貼齊視窗邊緣的 10px）
+      topbar.style.setProperty('--topbar-left', (leftCtl.offsetWidth + GAP) + 'px');
+      topbar.style.setProperty('--topbar-right', (rightCtl.offsetWidth + GAP) + 'px');
+    }
+
+    update();
+    if (typeof ResizeObserver !== 'undefined') {
+      var ro = new ResizeObserver(update);
+      ro.observe(leftCtl);
+      ro.observe(rightCtl);
+    }
+    window.addEventListener('resize', update);
+    // 分頁由隱藏切為顯示、地圖尺寸重算後，寬度才穩定，再補算一次
+    setTimeout(update, 150);
+  })();
+
+  // -------------------------------------------------------------------------
   // 地點搜尋（有 Google key 用 Google Places，否則用 Nominatim）
   // key 由 build 時注入 window.MAPS_API_KEY，不寫在原始碼裡
   // -------------------------------------------------------------------------
