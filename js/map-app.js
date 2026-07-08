@@ -168,12 +168,11 @@ export function initializeMapApp() {
   // -------------------------------------------------------------------------
   // 定位：用瀏覽器 Geolocation 找目前位置
   // -------------------------------------------------------------------------
-  var locateMarker = null, locateCircle = null;
-  var locateBtn = document.getElementById('locateBtn');
-  locateBtn.addEventListener('click', function () {
+  var locateMarker = null, locateCircle = null, locateEl = null;
+  function locateMe() {
     if (!navigator.geolocation) { setStatus('此裝置/瀏覽器不支援定位', true); return; }
     setStatus('定位中…');
-    locateBtn.disabled = true;
+    if (locateEl) locateEl.classList.add('locating');
     navigator.geolocation.getCurrentPosition(function (pos) {
       var lat = pos.coords.latitude, lng = pos.coords.longitude, acc = pos.coords.accuracy;
       if (locateMarker) map.removeLayer(locateMarker);
@@ -186,14 +185,37 @@ export function initializeMapApp() {
       }).addTo(map).bindPopup('你的位置<br>誤差約 ' + Math.round(acc) + ' 公尺');
       map.flyTo([lat, lng], Math.max(map.getZoom(), 17));
       setStatus('已定位（誤差約 ' + Math.round(acc) + ' 公尺）');
-      locateBtn.disabled = false;
+      if (locateEl) locateEl.classList.remove('locating');
     }, function (err) {
       var msg = err.code === 1 ? '你拒絕了定位權限' :
                 err.code === 3 ? '定位逾時，請再試一次' : '定位失敗';
       setStatus(msg, true);
-      locateBtn.disabled = false;
+      if (locateEl) locateEl.classList.remove('locating');
     }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+  }
+
+  // 定位控制項：放在縮放鈕正下方（topleft），用熟悉的定位圖標
+  var LocateControl = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd: function () {
+      var container = L.DomUtil.create('div', 'leaflet-bar locate-control');
+      var link = L.DomUtil.create('a', '', container);
+      link.href = '#';
+      link.title = '定位到我的位置';
+      link.setAttribute('role', 'button');
+      link.setAttribute('aria-label', '定位到我的位置');
+      link.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">' +
+        '<path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17' +
+        '-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 ' +
+        '7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13' +
+        '-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>';
+      locateEl = container;
+      L.DomEvent.on(link, 'click', function (e) { L.DomEvent.stop(e); locateMe(); });
+      L.DomEvent.disableClickPropagation(container);
+      return container;
+    }
   });
+  map.addControl(new LocateControl());
 
   // -------------------------------------------------------------------------
   // 地點搜尋（有 Google key 用 Google Places，否則用 Nominatim）

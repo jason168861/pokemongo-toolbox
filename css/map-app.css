@@ -25,12 +25,15 @@
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap; max-width: calc(100% - 70px);
 }
 #map-app .panel select, #map-app .panel input { font-size: 14px; padding: 2px 4px; }
-#map-app .panel #locateBtn {
-  border: none; background: #2b6cb0; color: #fff; padding: 5px 12px;
-  border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;
+
+/* 定位控制項（縮放鈕正下方，標準 Leaflet 樣式） */
+#map-app .locate-control a {
+  display: flex; align-items: center; justify-content: center;
 }
-#map-app .panel #locateBtn:hover { background: #2c5282; }
-#map-app .panel #locateBtn:disabled { opacity: .6; cursor: default; }
+#map-app .locate-control svg { fill: #333; transition: fill .15s; }
+#map-app .locate-control a:hover svg { fill: #2b6cb0; }
+#map-app .locate-control.locating svg { fill: #2b6cb0; animation: locateSpin 1s linear infinite; }
+@keyframes locateSpin { to { transform: rotate(360deg); } }
 #map-app .panel label { font-weight: 600; }
 #map-app .panel .status { color: #555; font-size: 13px; }
 #map-app .panel .warn { color: #c0392b; font-weight: 600; }
