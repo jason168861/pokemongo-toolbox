@@ -182,6 +182,64 @@ document.addEventListener('DOMContentLoaded', () => {
     let searchFiltersAppInitialized = false;
     let specialResearchAppInitialized = false;
     let infoHubAppInitialized = false; // <-- 【新增】
+    // 【SEO】每個分頁的標題與描述，切換時動態套用，讓每個 ?tab= 網址在
+    // 搜尋結果有各自明確的標題與摘要（而不是全部顯示同一段主頁文字）。
+    const SITE_BASE = 'https://jason168861.github.io/pokemongo-toolbox/';
+    const TAB_SEO = {
+        'docs-app': {
+            title: 'Pokémon Go 工具箱｜IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢',
+            desc: 'Pokémon GO 玩家的一站式中文工具箱：IV100 CP 查詢、PvP IV 排名、編號篩選器、搜尋篩選指令、團體戰、孵蛋與田野調查，資料每日更新。'
+        },
+        'cp-checker-app': {
+            title: 'IV100 CP 查詢（15／20／25 等）｜Pokémon Go 工具箱',
+            desc: '輸入寶可夢名稱或編號，立即查出 IV 100% 在 15、20、25 等的 CP 數值，快速判斷團體戰捕捉與研究獎勵是否值得。'
+        },
+        'pvp-ranker-app': {
+            title: 'PvP IV 排名查詢器（超級／高級／大師聯盟）｜Pokémon Go 工具箱',
+            desc: '輸入攻擊、防禦、體力 IV，查出你的寶可夢在超級、高級、大師聯盟 GO 對戰聯盟中的 PvP 排名與最佳等級。'
+        },
+        'id-selector-app': {
+            title: '寶可夢編號篩選器｜勾選即產生搜尋編號 - Pokémon Go 工具箱',
+            desc: '點選想要的寶可夢，自動產生逗號分隔的全國圖鑑編號字串，直接貼進 Pokémon GO 遊戲內搜尋框，快速批次整理背包。'
+        },
+        'search-filters-app': {
+            title: 'Pokémon Go 搜尋篩選指令大全（中文對照）｜工具箱',
+            desc: '完整整理 Pokémon GO 遊戲內搜尋列的篩選語法：屬性、CP、IV、天氣、招式、暗影、異色與邏輯運算子，附中文說明與範例。'
+        },
+        'raids-app': {
+            title: '當期團體戰頭目列表（含天氣加成 CP）｜Pokémon Go 工具箱',
+            desc: '查看 Pokémon GO 目前 1 星、3 星、5 星傳說與超級團體戰頭目、屬性、CP 範圍與天氣加成，資料每日更新。'
+        },
+        'eggs-app': {
+            title: '當期孵蛋列表（2／5／7／10／12 公里蛋池）｜Pokémon Go 工具箱',
+            desc: '一覽 Pokémon GO 目前各距離蛋池可孵化的寶可夢，包含冒險同步與路線禮物蛋，資料每日更新。'
+        },
+        'research-app': {
+            title: '田野調查任務與獎勵一覽｜Pokémon Go 工具箱',
+            desc: '查詢 Pokémon GO 當期田野調查任務與對應獎勵寶可夢，可切換精選獎勵或所有任務，資料每日更新。'
+        },
+        'special-research-app': {
+            title: '特殊調查任務流程與獎勵查詢｜Pokémon Go 工具箱',
+            desc: '搜尋 Pokémon GO 特殊調查任務名稱，查看完整關卡流程與獎勵內容，找攻略不再翻來翻去。'
+        },
+        'info-hub-app': {
+            title: '特別資訊：多星星沙子寶可夢等補充資料｜Pokémon Go 工具箱',
+            desc: 'Pokémon GO 補充型資訊整理，例如捕捉時可獲得較多星星沙子的寶可夢清單。'
+        }
+    };
+
+    function applySeo(targetAppId) {
+        const seo = TAB_SEO[targetAppId] || TAB_SEO['docs-app'];
+        document.title = seo.title;
+        let descTag = document.querySelector('meta[name="description"]');
+        if (descTag) descTag.setAttribute('content', seo.desc);
+        let canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) {
+            canonical.setAttribute('href',
+                targetAppId === 'docs-app' ? SITE_BASE : SITE_BASE + '?tab=' + targetAppId);
+        }
+    }
+
     function activateTab(targetAppId) {
         // 1. 更新內容區塊的顯示狀態
         appContents.forEach(content => {
@@ -233,38 +291,57 @@ document.addEventListener('DOMContentLoaded', () => {
             initializeInfoHubApp();
             infoHubAppInitialized = true;
         }
+
+        // 4.【SEO】更新此分頁對應的標題與描述
+        applySeo(targetAppId);
     }
 
-    // 【修改】原本的點擊事件監聽器
+    // 【SEO 改版】改用 ?tab= 查詢參數當網址（Google 會視為不同頁面收錄），
+    // 取代原本的 #hash（hash 不會被當成獨立網址）。
+    function isValidTab(id) {
+        return id && Array.prototype.some.call(appContents, c => c.id === id);
+    }
+
+    function navigateTo(targetAppId, replace) {
+        const url = targetAppId === 'docs-app'
+            ? window.location.pathname
+            : window.location.pathname + '?tab=' + targetAppId;
+        if (replace) {
+            history.replaceState({ tab: targetAppId }, '', url);
+        } else {
+            history.pushState({ tab: targetAppId }, '', url);
+        }
+        activateTab(targetAppId);
+    }
+
+    // 點擊分頁按鈕 → 更新網址 + 切換內容
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const targetAppId = button.dataset.target;
-            // 點擊按鈕時，只更新 URL 的 hash
-            window.location.hash = targetAppId;
+            navigateTo(button.dataset.target, false);
         });
     });
 
-    // 【新增】監聽 hash 變化的事件 (處理瀏覽器上一頁/下一頁)
-    window.addEventListener('hashchange', () => {
-        // 取得當前的 hash，並移除 '#'
-        const targetAppId = window.location.hash.substring(1);
-        // 如果 hash 存在，就啟用對應的 tab
-        if (targetAppId) {
-            activateTab(targetAppId);
-        }
+    // 上一頁/下一頁（pushState）
+    window.addEventListener('popstate', () => {
+        const params = new URLSearchParams(window.location.search);
+        const targetAppId = params.get('tab') || 'docs-app';
+        if (isValidTab(targetAppId)) activateTab(targetAppId);
     });
 
-    // 【新增】處理頁面初次載入
+    // 向後相容：舊的 #hash 書籤仍可運作
+    window.addEventListener('hashchange', () => {
+        const targetAppId = window.location.hash.substring(1);
+        if (isValidTab(targetAppId)) navigateTo(targetAppId, true);
+    });
+
+    // 頁面初次載入：優先讀 ?tab=，其次舊的 #hash，都沒有就進主頁
     function handleInitialLoad() {
-        // 檢查載入時 URL 是否已經有 hash
-        const initialTabId = window.location.hash.substring(1);
-        if (initialTabId) {
-            activateTab(initialTabId);
-        } else {
-            // 如果沒有 hash，預設載入第一個分頁 (功能說明頁)
-            // 你也可以修改成你想要的預設頁
-            activateTab('docs-app'); 
-        }
+        const params = new URLSearchParams(window.location.search);
+        const queryTab = params.get('tab');
+        const hashTab = window.location.hash.substring(1);
+        const initialTabId = isValidTab(queryTab) ? queryTab
+                           : (isValidTab(hashTab) ? hashTab : 'docs-app');
+        navigateTo(initialTabId, true);
     }
 
     handleInitialLoad(); // 立即執行初次載入處理

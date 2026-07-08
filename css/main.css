@@ -95,6 +95,27 @@ body {
     box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
 }
 
+#docs-app .home-intro {
+    margin-bottom: 24px;
+    padding: 4px 4px 0;
+}
+
+#docs-app .home-intro h1 {
+    margin: 0 0 8px;
+    color: #111827;
+    border: none;
+    padding: 0;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1.15;
+}
+
+#docs-app .home-intro p {
+    margin: 0;
+    color: #4b5563;
+    line-height: 1.7;
+    max-width: 60ch;
+}
+
 #docs-app .home-hero {
     display: grid;
     grid-template-columns: 1.6fr 1fr;
