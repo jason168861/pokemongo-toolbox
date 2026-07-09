@@ -159,16 +159,33 @@ export function initializeMapApp() {
     coordbox.textContent = '緯度 ' + e.latlng.lat.toFixed(6) + ', 經度 ' + e.latlng.lng.toFixed(6);
   });
   var clickMarker = null;
-  map.on('click', function (e) {
+  var COORD_MIN_ZOOM = 13;   // 縮太小時（找大範圍位置階段）點地圖不放座標點
+  var clickTimer = null;
+
+  function placeClickMarker(latlng) {
     if (clickMarker) map.removeLayer(clickMarker);
-    clickMarker = L.circleMarker(e.latlng, {
+    clickMarker = L.circleMarker(latlng, {
       radius: 5, color: '#ff0000', weight: 2, fillColor: '#ffff00', fillOpacity: 1
     }).addTo(map);
     clickMarker.bindPopup(
-      "<div style='font:14px monospace;'><b>緯度:</b> " + e.latlng.lat.toFixed(6) +
-      "<br><b>經度:</b> " + e.latlng.lng.toFixed(6) + "</div>"
+      "<div style='font:14px monospace;'><b>緯度:</b> " + latlng.lat.toFixed(6) +
+      "<br><b>經度:</b> " + latlng.lng.toFixed(6) + "</div>"
     ).openPopup();
+  }
+  function cancelPendingClick() {
+    if (clickTimer) { clearTimeout(clickTimer); clickTimer = null; }
+  }
+  // 延遲 330ms 再放座標點：若期間出現第二下點擊（雙擊縮放手勢）或地圖開始
+  // 縮放/平移，就取消本次放點，避免手機「快速點兩下縮放」被第一下攔截。
+  map.on('click', function (e) {
+    if (map.getZoom() < COORD_MIN_ZOOM) return;
+    cancelPendingClick();
+    clickTimer = setTimeout(function () {
+      clickTimer = null;
+      placeClickMarker(e.latlng);
+    }, 330);
   });
+  map.on('dblclick zoomstart movestart', cancelPendingClick);
 
   // -------------------------------------------------------------------------
   // 定位：用瀏覽器 Geolocation 找目前位置
@@ -370,6 +387,11 @@ export function initializeMapApp() {
     var b = map.getBounds().pad(0.2);
     var vLatMin = b.getSouth(), vLatMax = b.getNorth();
     var vLngMin = b.getWest(),  vLngMax = b.getEast();
+    // 遠看時點太密會蓋住地圖、找不到位置：依縮放程度淡化並縮小點。
+    // z13（剛顯示）淡至 40%、點縮小；z16 以上完全不透明、原尺寸。
+    var zt = Math.max(0, Math.min(1, (map.getZoom() - POI_MIN_ZOOM) / (16 - POI_MIN_ZOOM)));
+    var fade = 0.4 + 0.6 * zt;
+    var rScale = 0.7 + 0.3 * zt;
     var shown = 0, hidden = 0;
     poiData.forEach(function (f) {
       var t = f.properties.type;
@@ -379,8 +401,9 @@ export function initializeMapApp() {
       var st = POI_STYLE[t] || { color: '#333', fill: '#999', label: t };
       var inactive = f.properties.status && f.properties.status !== 'ACTIVE';
       var m = L.circleMarker([lat, lng], {
-        renderer: poiCanvas, radius: t === 'GYM' ? 7 : 5,
-        color: st.color, weight: 2, fillColor: st.fill, fillOpacity: inactive ? 0.25 : 0.9
+        renderer: poiCanvas, radius: (t === 'GYM' ? 7 : 5) * rScale,
+        color: st.color, weight: 2, opacity: fade,
+        fillColor: st.fill, fillOpacity: (inactive ? 0.25 : 0.9) * fade
       });
       m.bindPopup(
         "<div style='font:13px system-ui;'><b>" + (f.properties.title || '(無名稱)') + "</b><br>" +
