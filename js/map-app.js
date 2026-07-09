@@ -560,13 +560,15 @@ export function initializeMapApp() {
   function placePerson(latlng) {
     if (!personMarker) {
       personMarker = L.marker(latlng, { icon: personIcon, draggable: true, title: '拖曳我來移動' }).addTo(map);
-      // 外圈 80m
+      // 外圈 80m（interactive:false：純視覺參考，讓點擊穿透到底下的補給站/道館）
       personCircle = L.circle(latlng, {
-        radius: personRadius, color: '#2b6cb0', weight: 2, fillColor: '#4299e1', fillOpacity: 0.12
+        radius: personRadius, color: '#2b6cb0', weight: 2, fillColor: '#4299e1', fillOpacity: 0.12,
+        interactive: false
       }).addTo(map);
       // 內圈 40m
       personCircle40 = L.circle(latlng, {
-        radius: personRadius40, color: '#dd6b20', weight: 2, fillColor: '#f6ad55', fillOpacity: 0.18
+        radius: personRadius40, color: '#dd6b20', weight: 2, fillColor: '#f6ad55', fillOpacity: 0.18,
+        interactive: false
       }).addTo(map);
       personMarker.on('drag', function (e) {
         var p = e.target.getLatLng();
