@@ -19,6 +19,19 @@
   background: #ddd;
 }
 
+/* 手機長按地圖時，不要出現 iOS 的反白選取區塊 / 放大鏡選單 */
+#map-app .s2map,
+#map-app .pegman-control {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* 但彈出視窗內的文字（名稱、座標）仍可選取複製 */
+#map-app .leaflet-popup-content {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 /* 頂部控制容器：面板 + 搜尋框直向堆疊，不再各自固定 top 互相重疊
    當作「中間欄」：left/right 由 JS 依左右兩側 Leaflet 控制項的實際寬度動態設定，
    右側會在「選擇地圖」圖層清單展開後一併算入其展開寬度（見 map-app.js）。 */
@@ -85,7 +98,8 @@
 }
 #map-app .pegman-control .peg {
   font-size: 34px; line-height: 34px; cursor: grab; user-select: none;
-  -webkit-user-drag: element;
+  /* 交給 Pointer Events 處理拖曳：阻止瀏覽器把觸控當成捲動/縮放手勢 */
+  touch-action: none;
 }
 #map-app .pegman-control .peg:active { cursor: grabbing; }
 #map-app .pegman-control .hint { font: 10px/1.2 system-ui, sans-serif; color: #666; margin-top: 2px; }

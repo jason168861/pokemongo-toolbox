@@ -499,7 +499,7 @@ export function initializeMapApp() {
     onAdd: function () {
       var div = L.DomUtil.create('div', 'pegman-control');
       div.innerHTML =
-        '<div class="peg" draggable="true" title="拖到地圖上放置人物">🧍</div>' +
+        '<div class="peg" title="拖到地圖上放置人物">🧍</div>' +
         '<div class="hint">拖到地圖</div>' +
         '<div class="reset">移除人物</div>';
       L.DomEvent.disableClickPropagation(div);
@@ -512,16 +512,42 @@ export function initializeMapApp() {
   var pegReset = document.querySelector('#map-app .pegman-control .reset');
   pegReset.addEventListener('click', removePerson);
 
-  pegIcon.addEventListener('dragstart', function (e) {
-    e.dataTransfer.setData('text/plain', 'peg');
-    e.dataTransfer.effectAllowed = 'copy';
-  });
+  // 自訂拖曳（Pointer Events）：取代 HTML5 drag-and-drop。
+  // iOS 上原生 DnD 要長按才會啟動，改用 pointer 事件即可「一按就拖」，
+  // 滑鼠與觸控都走同一套邏輯。setPointerCapture 讓手指離開圖示後仍持續收到事件。
   var mapEl = document.getElementById('s2map');
-  mapEl.addEventListener('dragover', function (e) { e.preventDefault(); });
-  mapEl.addEventListener('drop', function (e) {
-    e.preventDefault();
-    var rect = mapEl.getBoundingClientRect();
-    var pt = L.point(e.clientX - rect.left, e.clientY - rect.top);
-    placePerson(map.containerPointToLatLng(pt));
+  var pegGhost = null;
+  function movePegGhost(e) {
+    pegGhost.style.left = e.clientX + 'px';
+    pegGhost.style.top = e.clientY + 'px';
+  }
+  function removePegGhost() {
+    if (pegGhost) { pegGhost.remove(); pegGhost = null; }
+  }
+  pegIcon.addEventListener('pointerdown', function (e) {
+    e.preventDefault();   // 避免觸發文字選取/系統手勢
+    pegIcon.setPointerCapture(e.pointerId);
+    pegGhost = document.createElement('div');
+    pegGhost.textContent = '🧍';
+    // 跟著手指走的殘影；translate 讓人物腳底對準指尖上方一點，不被手指遮住
+    pegGhost.style.cssText =
+      'position:fixed; z-index:9999; font-size:34px; line-height:34px;' +
+      'pointer-events:none; transform:translate(-50%, -100%);';
+    movePegGhost(e);
+    document.body.appendChild(pegGhost);
   });
+  pegIcon.addEventListener('pointermove', function (e) {
+    if (pegGhost) movePegGhost(e);
+  });
+  pegIcon.addEventListener('pointerup', function (e) {
+    if (!pegGhost) return;
+    removePegGhost();
+    var rect = mapEl.getBoundingClientRect();
+    var x = e.clientX - rect.left, y = e.clientY - rect.top;
+    // 放開位置在地圖範圍內才放置人物（在控制盒上放開視為取消）
+    if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
+      placePerson(map.containerPointToLatLng(L.point(x, y)));
+    }
+  });
+  pegIcon.addEventListener('pointercancel', removePegGhost);
 }
