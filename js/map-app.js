@@ -460,11 +460,10 @@ export function initializeMapApp() {
     var b = map.getBounds().pad(0.2);
     var vLatMin = b.getSouth(), vLatMax = b.getNorth();
     var vLngMin = b.getWest(),  vLngMax = b.getEast();
-    // 遠看時點太密會蓋住地圖、找不到位置：依縮放程度淡化並縮小點。
-    // z13（剛顯示）淡至 40%、點縮小；z16 以上完全不透明、原尺寸。
-    var zt = Math.max(0, Math.min(1, (map.getZoom() - POI_MIN_ZOOM) / (16 - POI_MIN_ZOOM)));
-    var fade = 0.4 + 0.6 * zt;
-    var rScale = 0.7 + 0.3 * zt;
+    // 遠看時點太密會蓋住地圖、找不到位置：縮小時改畫「空心圈」（只留外框），
+    // 放大到 z16 以上恢復原本的實心樣式。
+    var hollow = map.getZoom() < 16;
+    var rScale = hollow ? 0.8 : 1;
     var shown = 0, hidden = 0;
     poiData.forEach(function (f) {
       var t = f.properties.type;
@@ -475,8 +474,10 @@ export function initializeMapApp() {
       var inactive = f.properties.status && f.properties.status !== 'ACTIVE';
       var m = L.circleMarker([lat, lng], {
         renderer: poiCanvas, radius: (t === 'GYM' ? 7 : 5) * rScale,
-        color: st.color, weight: 2, opacity: fade,
-        fillColor: st.fill, fillOpacity: (inactive ? 0.25 : 0.9) * fade
+        color: st.color, weight: 2,
+        // 空心模式下用外框深淺區分「未啟用」；實心模式維持原本的淡填色
+        opacity: inactive && hollow ? 0.35 : 1,
+        fillColor: st.fill, fillOpacity: hollow ? 0 : (inactive ? 0.25 : 0.9)
       });
       m.bindPopup(
         "<div style='font:13px system-ui;'><b>" + (f.properties.title || '(無名稱)') + "</b><br>" +
