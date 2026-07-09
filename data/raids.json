@@ -1,9 +1,9 @@
 {
-    "lastUpdated": "2026年7月9日05時",
+    "lastUpdated": "2026年7月9日11時",
     "bosses": [
         {
-            "name": "酋雷姆 (焰白)",
-            "englishName": "Kyurem (White)",
+            "name": "酋雷姆 (闇黑)",
+            "englishName": "Kyurem (Black)",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -36,11 +36,11 @@
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm646.fWHITE.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm646.fBLACK.icon.png"
         },
         {
-            "name": "捷克羅姆",
-            "englishName": "Zekrom",
+            "name": "萊希拉姆",
+            "englishName": "Reshiram",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -49,8 +49,8 @@
                     "image": "https://leekduck.com/assets/img/types/dragon.png"
                 },
                 {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                    "name": "fire",
+                    "image": "https://leekduck.com/assets/img/types/fire.png"
                 }
             ],
             "combatPower": {
@@ -69,15 +69,15 @@
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 },
                 {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm644.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm643.icon.png"
         },
         {
-            "name": "奈克洛茲瑪 (日蝕奈克洛茲瑪)",
-            "englishName": "Necrozma (Dawn Wings)",
+            "name": "Necrozma (Dusk Mane)",
+            "englishName": "Necrozma (Dusk Mane)",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -86,8 +86,8 @@
                     "image": "https://leekduck.com/assets/img/types/psychic.png"
                 },
                 {
-                    "name": "ghost",
-                    "image": "https://leekduck.com/assets/img/types/ghost.png"
+                    "name": "steel",
+                    "image": "https://leekduck.com/assets/img/types/steel.png"
                 }
             ],
             "combatPower": {
@@ -106,44 +106,44 @@
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm800.fDAWN_WINGS.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm800.fDUSK_MANE.icon.png"
         },
         {
-            "name": "超級 班基拉斯",
-            "englishName": "Mega Tyranitar",
+            "name": "超級 沙奈朵",
+            "englishName": "Mega Gardevoir",
             "tier": "Mega Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "rock",
-                    "image": "https://leekduck.com/assets/img/types/rock.png"
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
                 },
                 {
-                    "name": "dark",
-                    "image": "https://leekduck.com/assets/img/types/dark.png"
+                    "name": "fairy",
+                    "image": "https://leekduck.com/assets/img/types/fairy.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2103,
-                    "max": 2191
+                    "min": 1688,
+                    "max": 1767
                 },
                 "boosted": {
-                    "min": 2629,
-                    "max": 2739
+                    "min": 2110,
+                    "max": 2209
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "partly cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 },
                 {
-                    "name": "fog",
-                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm248.fMEGA.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm282.fMEGA.icon.png"
         },
         {
             "name": "暗影 小小象",
