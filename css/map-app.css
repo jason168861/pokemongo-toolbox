@@ -136,6 +136,11 @@
 #map-app .searchbox .results div:hover { background: #ebf8ff; }
 #map-app .searchbox .results .empty { color: #888; cursor: default; }
 
+/* 面板開關鈕：桌面版不需要（面板常駐），只在手機出現 */
+#map-app .panel-toggle-control { display: none; }
+#map-app .panel-toggle-control a { font-size: 16px; }
+#map-app .panel-toggle-control.is-open a { background: #ebf8ff; }
+
 /* 手機：控制列避開左上縮放/定位鈕、右上圖層鈕，中間堆疊
    left/right 交給 JS 動態計算（見 map-app.js），這裡只調整間距與字級 */
 @media (max-width: 768px) {
@@ -146,4 +151,9 @@
     width: 100%; gap: 6px 8px; padding: 6px 8px; font-size: 13px;
   }
   #map-app .searchbox { width: 100%; }
+
+  /* 手機上面板預設收合，點 ⚙️ 才展開，讓地圖視野乾淨 */
+  #map-app .panel-toggle-control { display: block; }
+  #map-app .map-topbar .panel { display: none; }
+  #map-app.panel-open .map-topbar .panel { display: flex; }
 }

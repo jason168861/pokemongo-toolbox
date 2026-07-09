@@ -283,6 +283,29 @@ export function initializeMapApp() {
   });
   map.addControl(new LocateControl());
 
+  // 面板開關鈕（只在手機顯示，見 CSS）：手機上控制面板預設收合，點 ⚙️ 展開
+  var PanelToggle = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd: function () {
+      var container = L.DomUtil.create('div', 'leaflet-bar panel-toggle-control');
+      var link = L.DomUtil.create('a', '', container);
+      link.href = '#';
+      link.title = '顯示/隱藏地圖設定';
+      link.setAttribute('role', 'button');
+      link.setAttribute('aria-expanded', 'false');
+      link.textContent = '⚙️';
+      L.DomEvent.on(link, 'click', function (e) {
+        L.DomEvent.stop(e);
+        var open = document.getElementById('map-app').classList.toggle('panel-open');
+        link.setAttribute('aria-expanded', String(open));
+        container.classList.toggle('is-open', open);
+      });
+      L.DomEvent.disableClickPropagation(container);
+      return container;
+    }
+  });
+  map.addControl(new PanelToggle());
+
   // -------------------------------------------------------------------------
   // 讓 .map-topbar 當作「中間欄」：兩側各自避開 Leaflet 控制項
   //   左：縮放 + 定位鈕；右：「選擇地圖」圖層清單（含滑過/點擊展開後的寬度）
