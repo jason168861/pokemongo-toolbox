@@ -757,13 +757,34 @@ export function initializeMapApp() {
     className: 'person-marker-icon', iconSize: [30, 30], iconAnchor: [15, 28]
   });
 
+  // 統計人物位置 40m / 80m 內的補給站與道館數（只計啟用中的）
+  function countAroundPerson(ll) {
+    var M_LAT = 110574, M_LNG = 111320 * Math.cos(ll.lat * Math.PI / 180);
+    var dLat = 80 / M_LAT, dLng = 80 / M_LNG;
+    var s40 = 0, g40 = 0, s80 = 0, g80 = 0;
+    for (var i = 0; i < poiData.length; i++) {
+      var f = poiData[i];
+      if (f.properties.status !== 'ACTIVE') continue;
+      var lat = f.geometry.coordinates[1], lng = f.geometry.coordinates[0];
+      if (Math.abs(lat - ll.lat) > dLat || Math.abs(lng - ll.lng) > dLng) continue; // 快速略過遠處
+      var dx = (lng - ll.lng) * M_LNG, dy = (lat - ll.lat) * M_LAT, d2 = dx * dx + dy * dy;
+      if (d2 > 6400.01) continue;   // 80m²
+      var isGym = f.properties.type === 'GYM';
+      if (isGym) g80++; else s80++;
+      if (d2 <= 1600.01) { if (isGym) g40++; else s40++; }  // 40m²
+    }
+    return { s40: s40, g40: g40, s80: s80, g80: g80 };
+  }
+
   function updatePersonPopup() {
     if (!personMarker) return;
     var ll = personMarker.getLatLng();
+    var c = countAroundPerson(ll);
     personMarker.bindPopup(
       "<div style='font:14px monospace;'><b>人物位置</b><br>緯度: " + ll.lat.toFixed(6) +
       "<br>經度: " + ll.lng.toFixed(6) +
-      "<br>範圍半徑: " + personRadius40 + " / " + personRadius + " 公尺</div>"
+      "<br>40m內: 🔵" + c.s40 + " 🔴" + c.g40 +
+      "<br>80m內: 🔵" + c.s80 + " 🔴" + c.g80 + "</div>"
     );
   }
   function placePerson(latlng) {
