@@ -538,6 +538,215 @@ export function initializeMapApp() {
     });
 
   // -------------------------------------------------------------------------
+  // 🏆 排名統計：找出 80m / 40m 圓能覆蓋最多道館/補給站的位置
+  // 理論：最佳圓心必為「某點本身」或「某兩點 r-圓的交點」（max covering disk）。
+  // 21 萬點的資料量：等距投影成公尺 → 網格索引 → 單點先算一輪取得剪枝門檻 →
+  // 只對「有機會進榜」的點對算交點，並分段讓出主執行緒避免卡住 UI。
+  // -------------------------------------------------------------------------
+  var RANK_MODES = {
+    gym80:  { r: 80, filter: function (f) { return f.properties.type === 'GYM'; } },
+    all80:  { r: 80, filter: function () { return true; } },
+    stop40: { r: 40, filter: function (f) { return f.properties.type === 'POKESTOP'; } }
+  };
+  var RANK_TOP_N = 30;
+  var rankCache = {};
+  var rankBusy = false;
+
+  function yieldToUI() { return new Promise(function (res) { setTimeout(res, 0); }); }
+
+  function computeTopSpots(feats, radius, onProgress) {
+    return (async function () {
+      var n = feats.length;
+      var M_LAT = 110574, M_LNG = 111320;
+      var xs = new Float64Array(n), ys = new Float64Array(n);
+      var latSum = 0, i;
+      for (i = 0; i < n; i++) latSum += feats[i].geometry.coordinates[1];
+      var cosLat = Math.cos((latSum / Math.max(1, n)) * Math.PI / 180);
+      for (i = 0; i < n; i++) {
+        xs[i] = feats[i].geometry.coordinates[0] * M_LNG * cosLat;
+        ys[i] = feats[i].geometry.coordinates[1] * M_LAT;
+      }
+
+      // 網格索引（格邊長 = r）
+      var cell = radius, KEY = 4194304;
+      var grid = new Map();
+      for (i = 0; i < n; i++) {
+        var k = Math.floor(xs[i] / cell) * KEY + Math.floor(ys[i] / cell);
+        var arr = grid.get(k);
+        if (arr) arr.push(i); else grid.set(k, [i]);
+      }
+      var EPS = 1e-6;
+      function countAt(x, y, r) {
+        var r2 = r * r + EPS, kmax = Math.ceil(r / cell) + 1;
+        var cx = Math.floor(x / cell), cy = Math.floor(y / cell), c = 0;
+        for (var gx = cx - kmax; gx <= cx + kmax; gx++)
+          for (var gy = cy - kmax; gy <= cy + kmax; gy++) {
+            var lst = grid.get(gx * KEY + gy);
+            if (!lst) continue;
+            for (var q = 0; q < lst.length; q++) {
+              var dx = xs[lst[q]] - x, dy = ys[lst[q]] - y;
+              if (dx * dx + dy * dy <= r2) c++;
+            }
+          }
+        return c;
+      }
+      function nearestTitle(x, y, r) {
+        var best = '', bd = Infinity, kmax = Math.ceil(r / cell) + 1;
+        var cx = Math.floor(x / cell), cy = Math.floor(y / cell);
+        for (var gx = cx - kmax; gx <= cx + kmax; gx++)
+          for (var gy = cy - kmax; gy <= cy + kmax; gy++) {
+            var lst = grid.get(gx * KEY + gy);
+            if (!lst) continue;
+            for (var q = 0; q < lst.length; q++) {
+              var j = lst[q], dx = xs[j] - x, dy = ys[j] - y, d2 = dx * dx + dy * dy;
+              if (d2 < bd) { bd = d2; best = feats[j].properties.title || ''; }
+            }
+          }
+        return best;
+      }
+
+      // 第一階段：以每個點自身為圓心數覆蓋，並算 2r 內鄰居數（給剪枝上界用）
+      var cntR = new Int32Array(n), cnt2r = new Int32Array(n);
+      for (i = 0; i < n; i++) {
+        cntR[i] = countAt(xs[i], ys[i], radius);
+        cnt2r[i] = countAt(xs[i], ys[i], radius * 2);
+        if ((i & 8191) === 0) { onProgress('1/2 掃描各點', i, n); await yieldToUI(); }
+      }
+
+      // 剪枝門檻：單點候選第 300 名的覆蓋數。交點候選蓋到的點必在其父點 2r 內，
+      // 所以 cnt2r 是上界——低於門檻的點對不可能進榜，直接跳過。
+      var sortedCnt = Array.from(cntR).sort(function (a, b) { return b - a; });
+      var TH = Math.max(2, sortedCnt[Math.min(300, n - 1)] || 2);
+      var cand = [];
+      for (i = 0; i < n; i++) if (cntR[i] >= TH) cand.push({ x: xs[i], y: ys[i], c: cntR[i] });
+
+      // 第二階段：對距離 ≤ 2r 且可能進榜的點對，計算兩個 r-圓交點並數覆蓋
+      var r2x4 = 4 * radius * radius + EPS;
+      for (i = 0; i < n; i++) {
+        if (cnt2r[i] >= TH) {
+          var cx = Math.floor(xs[i] / cell), cy = Math.floor(ys[i] / cell);
+          for (var gx = cx - 3; gx <= cx + 3; gx++)
+            for (var gy = cy - 3; gy <= cy + 3; gy++) {
+              var lst = grid.get(gx * KEY + gy);
+              if (!lst) continue;
+              for (var q = 0; q < lst.length; q++) {
+                var j = lst[q];
+                if (j <= i || cnt2r[j] < TH) continue;
+                var dx = xs[j] - xs[i], dy = ys[j] - ys[i], d2 = dx * dx + dy * dy;
+                if (d2 > r2x4 || d2 < EPS) continue;
+                var d = Math.sqrt(d2);
+                var mx = (xs[i] + xs[j]) / 2, my = (ys[i] + ys[j]) / 2;
+                var h = Math.sqrt(Math.max(0, radius * radius - d2 / 4));
+                var ux = -dy / d * h, uy = dx / d * h;
+                var c1 = countAt(mx + ux, my + uy, radius);
+                if (c1 >= TH) cand.push({ x: mx + ux, y: my + uy, c: c1 });
+                var c2 = countAt(mx - ux, my - uy, radius);
+                if (c2 >= TH) cand.push({ x: mx - ux, y: my - uy, c: c2 });
+              }
+            }
+        }
+        if ((i & 4095) === 0) { onProgress('2/2 計算交點', i, n); await yieldToUI(); }
+      }
+
+      // 由高到低排序，並抑制彼此距離 < r 的重複熱點，取前 N 名
+      cand.sort(function (a, b) { return b.c - a.c; });
+      var picked = [], sep2 = radius * radius;
+      for (i = 0; i < cand.length && picked.length < RANK_TOP_N; i++) {
+        var ok = true;
+        for (var p = 0; p < picked.length; p++) {
+          var ddx = cand[i].x - picked[p].x, ddy = cand[i].y - picked[p].y;
+          if (ddx * ddx + ddy * ddy < sep2) { ok = false; break; }
+        }
+        if (ok) picked.push(cand[i]);
+      }
+      return picked.map(function (s) {
+        return {
+          lat: s.y / M_LAT, lng: s.x / (M_LNG * cosLat),
+          count: s.c, near: nearestTitle(s.x, s.y, radius)
+        };
+      });
+    })();
+  }
+
+  // ---- 排名 UI ----
+  var rankBtn = document.getElementById('rankBtn');
+  var rankbox = document.getElementById('rankbox');
+  var rankListEl = document.getElementById('rankList');
+  var rankMode = 'gym80';
+
+  function rankMsg(text) {
+    rankListEl.innerHTML = '';
+    var div = document.createElement('div');
+    div.className = 'empty';
+    div.textContent = text;
+    rankListEl.appendChild(div);
+  }
+
+  function renderRankList(list) {
+    rankListEl.innerHTML = '';
+    if (!list.length) { rankMsg('沒有結果'); return; }
+    list.forEach(function (s, idx) {
+      var row = document.createElement('div');
+      row.className = 'row';
+      var no = document.createElement('span');
+      no.className = 'rank-no'; no.textContent = idx + 1;
+      var cnt = document.createElement('span');
+      cnt.className = 'rank-cnt'; cnt.textContent = s.count + ' 個';
+      var near = document.createElement('span');
+      near.className = 'rank-near';
+      near.textContent = s.near ? '近 ' + s.near : s.lat.toFixed(5) + ', ' + s.lng.toFixed(5);
+      row.appendChild(no); row.appendChild(cnt); row.appendChild(near);
+      // 一鍵查看：放置人物（自帶 40/80m 範圍圈）並飛過去
+      row.addEventListener('click', function () {
+        placePerson(L.latLng(s.lat, s.lng));
+        map.flyTo([s.lat, s.lng], 17);
+      });
+      rankListEl.appendChild(row);
+    });
+  }
+
+  function setRankTab(mode) {
+    rankbox.querySelectorAll('.rank-tabs [data-mode]').forEach(function (b) {
+      b.classList.toggle('active', b.dataset.mode === mode);
+    });
+  }
+
+  async function showRank(mode) {
+    rankMode = mode;
+    setRankTab(mode);
+    if (rankCache[mode]) { renderRankList(rankCache[mode]); return; }
+    if (!poiData.length) { rankMsg('地點資料尚未載入，請稍候'); return; }
+    if (rankBusy) { rankMsg('另一項排名計算中，請稍候…'); return; }
+    rankBusy = true;
+    rankMsg('計算中…');
+    var cfg = RANK_MODES[mode];
+    var feats = poiData.filter(function (f) {
+      return f.properties.status === 'ACTIVE' && cfg.filter(f);
+    });
+    try {
+      var res = await computeTopSpots(feats, cfg.r, function (stage, done, total) {
+        rankMsg('計算中（' + stage + ' ' + Math.round(done / total * 100) + '%）…');
+      });
+      rankCache[mode] = res;
+      if (rankMode === mode) renderRankList(res);
+    } finally {
+      rankBusy = false;
+    }
+  }
+
+  rankBtn.addEventListener('click', function () {
+    var show = rankbox.style.display === 'none';
+    rankbox.style.display = show ? 'block' : 'none';
+    if (show) showRank(rankMode);
+  });
+  rankbox.querySelector('.rank-close').addEventListener('click', function () {
+    rankbox.style.display = 'none';
+  });
+  rankbox.querySelectorAll('.rank-tabs [data-mode]').forEach(function (b) {
+    b.addEventListener('click', function () { showRank(b.dataset.mode); });
+  });
+
+  // -------------------------------------------------------------------------
   // Pegman 小人：拖到地圖才放置
   // -------------------------------------------------------------------------
   var personMarker = null, personCircle = null, personCircle40 = null;

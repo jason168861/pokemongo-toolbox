@@ -610,6 +610,17 @@
                             <label style="font-weight:400;"><input type="checkbox" class="poiFilter" value="POKESTOP" checked /> 🔵補給站</label>
                             <label style="font-weight:400;"><input type="checkbox" class="poiFilter" value="GYM" checked /> 🔴道館</label>
                         </span>
+                        <button id="rankBtn" type="button" title="計算最佳站位排名">🏆 排名</button>
+                    </div>
+
+                    <div class="rankbox" id="rankbox" style="display:none;">
+                        <div class="rank-tabs">
+                            <button type="button" data-mode="gym80" class="active">80m道館</button>
+                            <button type="button" data-mode="all80">80m全部</button>
+                            <button type="button" data-mode="stop40">40m補給站</button>
+                            <button type="button" class="rank-close" title="關閉">✕</button>
+                        </div>
+                        <div class="rank-list" id="rankList"></div>
                     </div>
 
                     <div class="searchbox">
