@@ -13,7 +13,57 @@ export function initializeMapApp() {
   // -------------------------------------------------------------------------
   // 基本地圖
   // -------------------------------------------------------------------------
-  const map = L.map('s2map', { worldCopyJump: true }).setView([25.0, 121.5], 12);
+  // zoomSnap 0.25：讓「雙擊後滑動縮放」手勢能有平滑的中間縮放級距
+  const map = L.map('s2map', { worldCopyJump: true, zoomSnap: 0.25 }).setView([25.0, 121.5], 12);
+
+  // ---------------------------------------------------------------------------
+  // 「快速點兩下，第二下按住上下滑動」單指縮放手勢（Google Maps 慣例）。
+  // Leaflet 沒有內建這個手勢，這裡自行實作：
+  //   第二下按住 → 下滑放大、上滑縮小；若沒有滑動就當作一般雙擊放大一級。
+  // ---------------------------------------------------------------------------
+  (function enableDoubleTapDragZoom() {
+    var container = map.getContainer();
+    var lastTapTime = 0, lastTapX = 0, lastTapY = 0;
+    var active = false, moved = false, startY = 0, startZoom = 0, tapPoint = null;
+
+    container.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { active = false; return; }
+      var t = e.touches[0], now = Date.now();
+      var isDoubleTap = (now - lastTapTime) < 300 &&
+        Math.abs(t.clientX - lastTapX) < 40 && Math.abs(t.clientY - lastTapY) < 40;
+      lastTapTime = now; lastTapX = t.clientX; lastTapY = t.clientY;
+      if (!isDoubleTap) return;
+
+      // 進入拖曳縮放模式：接管觸控（也擋掉瀏覽器合成的 dblclick，避免原生雙擊縮放重複觸發）
+      e.preventDefault();
+      cancelPendingClick();   // 第一下排入的「延遲放座標點」也一併取消
+      active = true; moved = false;
+      startY = t.clientY;
+      startZoom = map.getZoom();
+      var rect = container.getBoundingClientRect();
+      tapPoint = L.point(t.clientX - rect.left, t.clientY - rect.top);
+      map.dragging.disable();          // 滑動期間不要平移地圖
+    }, { passive: false });
+
+    container.addEventListener('touchmove', function (e) {
+      if (!active) return;
+      e.preventDefault();
+      var dy = e.touches[0].clientY - startY;
+      if (Math.abs(dy) > 8) moved = true;
+      // 每滑 120px 縮放一級：下滑放大、上滑縮小（同 Google Maps）
+      map.setZoom(startZoom + dy / 120, { animate: false });
+    }, { passive: false });
+
+    function endGesture() {
+      if (!active) return;
+      active = false;
+      map.dragging.enable();
+      // 沒有滑動 → 視為一般雙擊：以點擊處為中心放大一級
+      if (!moved) map.setZoomAround(tapPoint, Math.round(startZoom) + 1);
+    }
+    container.addEventListener('touchend', endGesture);
+    container.addEventListener('touchcancel', endGesture);
+  })();
 
   // 因為分頁一開始是隱藏的，切過來時容器尺寸才確定，需重新計算一次
   setTimeout(function () { map.invalidateSize(); }, 120);
