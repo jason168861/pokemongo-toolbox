@@ -1,116 +1,141 @@
 {
-    "lastUpdated": "2026年7月10日19時",
+    "lastUpdated": "2026年7月11日01時",
     "bosses": [
         {
-            "name": "Zacian (Crowned Sword)",
-            "englishName": "Zacian (Crowned Sword)",
+            "name": "帝牙盧卡 (起源)",
+            "englishName": "Dialga (Origin)",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "fairy",
-                    "image": "https://leekduck.com/assets/img/types/fairy.png"
-                },
-                {
                     "name": "steel",
                     "image": "https://leekduck.com/assets/img/types/steel.png"
+                },
+                {
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2100,
-                    "max": 2188
+                    "min": 2246,
+                    "max": 2337
                 },
                 "boosted": {
-                    "min": 2625,
-                    "max": 2735
+                    "min": 2807,
+                    "max": 2921
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
-                },
-                {
                     "name": "snow",
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm888.fCROWNED_SWORD.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm483.fORIGIN.icon.png"
         },
         {
-            "name": "Zamazenta (Crowned Shield)",
-            "englishName": "Zamazenta (Crowned Shield)",
+            "name": "帕路奇亞 (起源)",
+            "englishName": "Palkia (Origin)",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "fighting",
-                    "image": "https://leekduck.com/assets/img/types/fighting.png"
+                    "name": "water",
+                    "image": "https://leekduck.com/assets/img/types/water.png"
                 },
                 {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2100,
-                    "max": 2188
+                    "min": 2274,
+                    "max": 2367
                 },
                 "boosted": {
-                    "min": 2625,
-                    "max": 2735
+                    "min": 2843,
+                    "max": 2958
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 },
                 {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm889.fCROWNED_SHIELD.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm484.fORIGIN.icon.png"
         },
         {
-            "name": "超級 耿鬼",
-            "englishName": "Mega Gengar",
-            "tier": "Mega Raids",
+            "name": "原始 蓋歐卡",
+            "englishName": "Primal Kyogre",
+            "tier": "Primal Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "ghost",
-                    "image": "https://leekduck.com/assets/img/types/ghost.png"
-                },
-                {
-                    "name": "poison",
-                    "image": "https://leekduck.com/assets/img/types/poison.png"
+                    "name": "water",
+                    "image": "https://leekduck.com/assets/img/types/water.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1566,
-                    "max": 1644
+                    "min": 2260,
+                    "max": 2351
                 },
                 "boosted": {
-                    "min": 1958,
-                    "max": 2055
+                    "min": 2825,
+                    "max": 2939
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "fog",
-                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
-                },
-                {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm94.fMEGA.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm382.fPRIMAL.icon.png"
+        },
+        {
+            "name": "原始 固拉多",
+            "englishName": "Primal Groudon",
+            "tier": "Primal Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "ground",
+                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                },
+                {
+                    "name": "fire",
+                    "image": "https://leekduck.com/assets/img/types/fire.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 2260,
+                    "max": 2351
+                },
+                "boosted": {
+                    "min": 2825,
+                    "max": 2939
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm383.fPRIMAL.icon.png"
         },
         {
             "name": "暗影 小小象",
