@@ -521,6 +521,282 @@
     ]
   },
   {
+    "category": "Pokémon GO Fest 2026: Global - Water hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Water-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Squirtle wearing a Pikachu Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cSPRING_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "405",
+            "minCp": "372"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "墨海馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm116.icon.png",
+            "isShiny": true,
+            "maxCp": "452",
+            "minCp": "418"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "角金魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm118.icon.png",
+            "isShiny": true,
+            "maxCp": "493",
+            "minCp": "458"
+          }
+        ]
+      },
+      {
+        "description": "Power up Water-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Squirtle wearing a Pikachu Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cSPRING_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "405",
+            "minCp": "372"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "墨海馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm116.icon.png",
+            "isShiny": true,
+            "maxCp": "452",
+            "minCp": "418"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "角金魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm118.icon.png",
+            "isShiny": true,
+            "maxCp": "493",
+            "minCp": "458"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Flying hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Flying-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飛天螳螂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
+            "isShiny": true,
+            "maxCp": "1160",
+            "minCp": "1104"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "天蠍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm207.icon.png",
+            "isShiny": true,
+            "maxCp": "796",
+            "minCp": "750"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "嗡蝠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm714.icon.png",
+            "isShiny": true,
+            "maxCp": "285",
+            "minCp": "258"
+          }
+        ]
+      },
+      {
+        "description": "Power up Flying-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飛天螳螂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
+            "isShiny": true,
+            "maxCp": "1160",
+            "minCp": "1104"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "天蠍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm207.icon.png",
+            "isShiny": true,
+            "maxCp": "796",
+            "minCp": "750"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "嗡蝠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm714.icon.png",
+            "isShiny": true,
+            "maxCp": "285",
+            "minCp": "258"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Rock hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Rock-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "化石翼龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm142.icon.png",
+            "isShiny": true,
+            "maxCp": "1193",
+            "minCp": "1136"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盾甲龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
+            "isShiny": true,
+            "maxCp": "381",
+            "minCp": "348"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "石居蟹",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm557.icon.png",
+            "isShiny": true,
+            "maxCp": "524",
+            "minCp": "488"
+          }
+        ]
+      },
+      {
+        "description": "Power up Rock-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "化石翼龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm142.icon.png",
+            "isShiny": true,
+            "maxCp": "1193",
+            "minCp": "1136"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盾甲龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
+            "isShiny": true,
+            "maxCp": "381",
+            "minCp": "348"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "石居蟹",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm557.icon.png",
+            "isShiny": true,
+            "maxCp": "524",
+            "minCp": "488"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Dragon hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Dragon-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "寶貝龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+            "isShiny": true,
+            "maxCp": "495",
+            "minCp": "459"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "黏黏寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm704.icon.png",
+            "isShiny": true,
+            "maxCp": "418",
+            "minCp": "385"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "爆焰龜獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm776.icon.png",
+            "isShiny": true,
+            "maxCp": "952",
+            "minCp": "902"
+          }
+        ]
+      },
+      {
+        "description": "Power up Dragon-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "寶貝龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+            "isShiny": true,
+            "maxCp": "495",
+            "minCp": "459"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "黏黏寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm704.icon.png",
+            "isShiny": true,
+            "maxCp": "418",
+            "minCp": "385"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "爆焰龜獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm776.icon.png",
+            "isShiny": true,
+            "maxCp": "952",
+            "minCp": "902"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
