@@ -1,5 +1,526 @@
 [
   {
+    "category": "Pokémon GO Fest 2026: Global - Common tasks",
+    "tasks": [
+      {
+        "description": "Catch 8 different species of Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Bulbasaur wearing a Pikachu Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.cSPRING_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "477",
+            "minCp": "442"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Charmander wearing a Pikachu Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.cSPRING_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Squirtle wearing a Pikachu Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cSPRING_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "405",
+            "minCp": "372"
+          }
+        ]
+      },
+      {
+        "description": "Catch 8 different species of Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a Team Instinct hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOFEST_2026_CAP_YELLOW.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a Team Mystic hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOFEST_2026_CAP_BLUE.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a Team Valor hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOFEST_2026_CAP_RED.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "捕捉10隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×3",
+            "quantity": "×3"
+          }
+        ]
+      },
+      {
+        "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          }
+        ]
+      },
+      {
+        "description": "旋轉5個寶可補給站或道館的轉盤",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "精靈球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×3",
+            "quantity": "×3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Electric hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Electric-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "麻麻小魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm602.icon.png",
+            "isShiny": true,
+            "maxCp": "347",
+            "minCp": "317"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥巴魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.icon.png",
+            "isShiny": true,
+            "maxCp": "926",
+            "minCp": "876"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咚咚鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "743"
+          }
+        ]
+      },
+      {
+        "description": "Power up Electric-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "麻麻小魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm602.icon.png",
+            "isShiny": true,
+            "maxCp": "347",
+            "minCp": "317"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥巴魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.icon.png",
+            "isShiny": true,
+            "maxCp": "926",
+            "minCp": "876"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "咚咚鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm702.icon.png",
+            "isShiny": true,
+            "maxCp": "789",
+            "minCp": "743"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Ice hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Ice-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "拉普拉斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm131.icon.png",
+            "isShiny": true,
+            "maxCp": "1131",
+            "minCp": "1076"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "冰雪龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm698.icon.png",
+            "isShiny": true,
+            "maxCp": "584",
+            "minCp": "545"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "冰寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm712.icon.png",
+            "isShiny": true,
+            "maxCp": "520",
+            "minCp": "484"
+          }
+        ]
+      },
+      {
+        "description": "Power up Ice-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "拉普拉斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm131.icon.png",
+            "isShiny": true,
+            "maxCp": "1131",
+            "minCp": "1076"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "冰雪龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm698.icon.png",
+            "isShiny": true,
+            "maxCp": "584",
+            "minCp": "545"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "冰寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm712.icon.png",
+            "isShiny": true,
+            "maxCp": "520",
+            "minCp": "484"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Fire hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Fire-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Charmander wearing a Pikachu Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.cSPRING_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 卡蒂狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm58.fHISUIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "566",
+            "minCp": "527"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小獅獅",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm667.icon.png",
+            "isShiny": true,
+            "maxCp": "611",
+            "minCp": "571"
+          }
+        ]
+      },
+      {
+        "description": "Power up Fire-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Charmander wearing a Pikachu Visor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.cSPRING_2020_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 卡蒂狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm58.fHISUIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "566",
+            "minCp": "527"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小獅獅",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm667.icon.png",
+            "isShiny": true,
+            "maxCp": "611",
+            "minCp": "571"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Ghost hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Ghost-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "夜巡靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm355.icon.png",
+            "isShiny": true,
+            "maxCp": "302",
+            "minCp": "273"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "輕飄飄",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm592.icon.png",
+            "isShiny": true,
+            "maxCp": "539",
+            "minCp": "501"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小木靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "isShiny": true,
+            "maxCp": "481",
+            "minCp": "446"
+          }
+        ]
+      },
+      {
+        "description": "Power up Ghost-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "夜巡靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm355.icon.png",
+            "isShiny": true,
+            "maxCp": "302",
+            "minCp": "273"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "輕飄飄",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm592.icon.png",
+            "isShiny": true,
+            "maxCp": "539",
+            "minCp": "501"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小木靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "isShiny": true,
+            "maxCp": "481",
+            "minCp": "446"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Psychic hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Psychic-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "跳跳豬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm325.icon.png",
+            "isShiny": true,
+            "maxCp": "571",
+            "minCp": "533"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "天秤偶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm343.icon.png",
+            "isShiny": true,
+            "maxCp": "337",
+            "minCp": "307"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "銅鏡怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm436.icon.png",
+            "isShiny": true,
+            "maxCp": "258",
+            "minCp": "229"
+          }
+        ]
+      },
+      {
+        "description": "Power up Psychic-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "跳跳豬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm325.icon.png",
+            "isShiny": true,
+            "maxCp": "571",
+            "minCp": "533"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "天秤偶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm343.icon.png",
+            "isShiny": true,
+            "maxCp": "337",
+            "minCp": "307"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "銅鏡怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm436.icon.png",
+            "isShiny": true,
+            "maxCp": "258",
+            "minCp": "229"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Saturday Tasks",
+    "tasks": [
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm150.fMEGA_X.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Mega Mewtwo Energy X.png",
+            "name": "Mega Mewtwo X 超級能量",
+            "quantity": "×150"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Sunday Tasks",
+    "tasks": [
+      {
+        "description": "贏得1場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm150.fMEGA_Y.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Mega Mewtwo Energy Y.png",
+            "name": "Mega Mewtwo Y 超級能量",
+            "quantity": "×150"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
