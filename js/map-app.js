@@ -668,11 +668,95 @@ export function initializeMapApp() {
     })();
   }
 
+  // ---- 縣市篩選：載入簡化縣市邊界（約 100m 精度），用射線法判斷點歸屬 ----
+  var countyFeatures = null;      // [{name, polys, bbox}]
+  var countyMaskCache = {};       // 縣市名 -> Uint8Array(poiData.length) 的歸屬遮罩
+  var COUNTY_ORDER = ['基隆市', '台北市', '新北市', '桃園市', '新竹市', '新竹縣',
+    '苗栗縣', '台中市', '彰化縣', '南投縣', '雲林縣', '嘉義市', '嘉義縣', '台南市',
+    '高雄市', '屏東縣', '宜蘭縣', '花蓮縣', '台東縣', '澎湖縣', '金門縣', '連江縣'];
+
+  function loadCounties() {
+    if (countyFeatures) return Promise.resolve(countyFeatures);
+    return fetch('data/tw-counties.json')
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (gj) {
+        countyFeatures = gj.features.map(function (f) {
+          // 邊界檔是 2010 年版，桃園當時尚未升格
+          var name = f.properties.name === '桃園縣' ? '桃園市' : f.properties.name;
+          var polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+          var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+          polys.forEach(function (rings) {
+            rings.forEach(function (ring) {
+              ring.forEach(function (p) {
+                if (p[0] < minX) minX = p[0]; if (p[0] > maxX) maxX = p[0];
+                if (p[1] < minY) minY = p[1]; if (p[1] > maxY) maxY = p[1];
+              });
+            });
+          });
+          return { name: name, polys: polys, bbox: [minX, minY, maxX, maxY] };
+        });
+        return countyFeatures;
+      });
+  }
+
+  // 射線法（even-odd）：支援 MultiPolygon 與內圈洞
+  function pointInPolys(lng, lat, polys) {
+    var inside = false;
+    for (var pi = 0; pi < polys.length; pi++) {
+      var rings = polys[pi];
+      for (var ri = 0; ri < rings.length; ri++) {
+        var ring = rings[ri];
+        for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+          var xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+          if ((yi > lat) !== (yj > lat) &&
+              lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) inside = !inside;
+        }
+      }
+    }
+    return inside;
+  }
+
+  // 算出「哪些 POI 屬於此縣市」的遮罩（bbox 快篩 + PIP，分段避免卡 UI），結果快取
+  async function getCountyMask(name) {
+    var m = countyMaskCache[name];
+    if (m && m.length === poiData.length) return m;
+    var c = null;
+    for (var ci = 0; ci < countyFeatures.length; ci++)
+      if (countyFeatures[ci].name === name) { c = countyFeatures[ci]; break; }
+    if (!c) return null;
+    m = new Uint8Array(poiData.length);
+    var b = c.bbox;
+    for (var i = 0; i < poiData.length; i++) {
+      var lng = poiData[i].geometry.coordinates[0], lat = poiData[i].geometry.coordinates[1];
+      if (lng >= b[0] && lng <= b[2] && lat >= b[1] && lat <= b[3] &&
+          pointInPolys(lng, lat, c.polys)) m[i] = 1;
+      if ((i & 16383) === 0) await yieldToUI();
+    }
+    countyMaskCache[name] = m;
+    return m;
+  }
+
   // ---- 排名 UI ----
   var rankBtn = document.getElementById('rankBtn');
   var rankbox = document.getElementById('rankbox');
   var rankListEl = document.getElementById('rankList');
+  var regionSelect = document.getElementById('rankRegion');
   var rankMode = 'gym80';
+  var rankRegion = '';   // '' = 全台
+
+  function populateRegionSelect() {
+    if (regionSelect.options.length > 1) return;   // 已填過
+    var names = countyFeatures.map(function (f) { return f.name; });
+    names.sort(function (a, b) {
+      var ia = COUNTY_ORDER.indexOf(a), ib = COUNTY_ORDER.indexOf(b);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+    names.forEach(function (nm) {
+      var opt = document.createElement('option');
+      opt.value = nm; opt.textContent = nm;
+      regionSelect.appendChild(opt);
+    });
+  }
 
   function rankMsg(text) {
     rankListEl.innerHTML = '';
@@ -714,30 +798,50 @@ export function initializeMapApp() {
   async function showRank(mode) {
     rankMode = mode;
     setRankTab(mode);
-    if (rankCache[mode]) { renderRankList(rankCache[mode]); return; }
+    var key = mode + '|' + rankRegion;
+    if (rankCache[key]) { renderRankList(rankCache[key]); return; }
     if (!poiData.length) { rankMsg('地點資料尚未載入，請稍候'); return; }
     if (rankBusy) { rankMsg('另一項排名計算中，請稍候…'); return; }
     rankBusy = true;
-    rankMsg('計算中…');
     var cfg = RANK_MODES[mode];
-    var feats = poiData.filter(function (f) {
-      return f.properties.status === 'ACTIVE' && cfg.filter(f);
-    });
     try {
+      var mask = null;
+      if (rankRegion) {
+        rankMsg('篩選 ' + rankRegion + ' 的地點中…');
+        await loadCounties();
+        mask = await getCountyMask(rankRegion);
+        if (!mask) { rankMsg('找不到「' + rankRegion + '」的邊界資料'); return; }
+      }
+      rankMsg('計算中…');
+      var feats = poiData.filter(function (f, i) {
+        return (!mask || mask[i]) && f.properties.status === 'ACTIVE' && cfg.filter(f);
+      });
+      if (!feats.length) { rankMsg('此地區沒有符合的地點'); return; }
       var res = await computeTopSpots(feats, cfg.r, function (stage, done, total) {
         rankMsg('計算中（' + stage + ' ' + Math.round(done / total * 100) + '%）…');
       });
-      rankCache[mode] = res;
-      if (rankMode === mode) renderRankList(res);
+      rankCache[key] = res;
+      if (rankMode === mode && key === mode + '|' + rankRegion) renderRankList(res);
+    } catch (e) {
+      rankMsg('計算失敗：' + e.message);
     } finally {
       rankBusy = false;
     }
   }
 
+  regionSelect.addEventListener('change', function () {
+    rankRegion = regionSelect.value;
+    showRank(rankMode);
+  });
+
   rankBtn.addEventListener('click', function () {
     var show = rankbox.style.display === 'none';
     rankbox.style.display = show ? 'block' : 'none';
-    if (show) showRank(rankMode);
+    if (show) {
+      // 順便載入縣市清單填入下拉選單（失敗不影響全台排名）
+      loadCounties().then(populateRegionSelect).catch(function () {});
+      showRank(rankMode);
+    }
   });
   rankbox.querySelector('.rank-close').addEventListener('click', function () {
     rankbox.style.display = 'none';
