@@ -667,6 +667,15 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "大岩蛇",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm95.icon.png",
+            "isShiny": true,
+            "maxCp": "472",
+            "minCp": "435"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "化石翼龍",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm142.icon.png",
             "isShiny": true,
@@ -681,15 +690,6 @@
             "isShiny": true,
             "maxCp": "381",
             "minCp": "348"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "石居蟹",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm557.icon.png",
-            "isShiny": true,
-            "maxCp": "524",
-            "minCp": "488"
           }
         ]
       },
@@ -699,6 +699,15 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "大岩蛇",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm95.icon.png",
+            "isShiny": true,
+            "maxCp": "472",
+            "minCp": "435"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "化石翼龍",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm142.icon.png",
             "isShiny": true,
@@ -713,15 +722,6 @@
             "isShiny": true,
             "maxCp": "381",
             "minCp": "348"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "石居蟹",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm557.icon.png",
-            "isShiny": true,
-            "maxCp": "524",
-            "minCp": "488"
           }
         ]
       }
@@ -736,11 +736,11 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "寶貝龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+            "name": "迷你龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm147.icon.png",
             "isShiny": true,
-            "maxCp": "495",
-            "minCp": "459"
+            "maxCp": "430",
+            "minCp": "397"
           },
           {
             "isFeatured": true,
@@ -768,11 +768,11 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "寶貝龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+            "name": "迷你龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm147.icon.png",
             "isShiny": true,
-            "maxCp": "495",
-            "minCp": "459"
+            "maxCp": "430",
+            "minCp": "397"
           },
           {
             "isFeatured": true,
@@ -791,6 +791,282 @@
             "isShiny": true,
             "maxCp": "952",
             "minCp": "902"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Ground hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Ground-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "圓陸鯊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm443.icon.png",
+            "isShiny": true,
+            "maxCp": "477",
+            "minCp": "441"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "沙河馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm449.icon.png",
+            "isShiny": true,
+            "maxCp": "582",
+            "minCp": "542"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥巴魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.icon.png",
+            "isShiny": true,
+            "maxCp": "926",
+            "minCp": "876"
+          }
+        ]
+      },
+      {
+        "description": "Power up Ground-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "圓陸鯊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm443.icon.png",
+            "isShiny": true,
+            "maxCp": "477",
+            "minCp": "441"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "沙河馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm449.icon.png",
+            "isShiny": true,
+            "maxCp": "582",
+            "minCp": "542"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥巴魚",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.icon.png",
+            "isShiny": true,
+            "maxCp": "926",
+            "minCp": "876"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Steel hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Steel-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大嘴娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm303.icon.png",
+            "isShiny": true,
+            "maxCp": "700",
+            "minCp": "658"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鐵啞鈴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm374.icon.png",
+            "isShiny": true,
+            "maxCp": "418",
+            "minCp": "385"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "齒輪兒",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm599.icon.png",
+            "isShiny": true,
+            "maxCp": "409",
+            "minCp": "377"
+          }
+        ]
+      },
+      {
+        "description": "Power up Steel-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大嘴娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm303.icon.png",
+            "isShiny": true,
+            "maxCp": "700",
+            "minCp": "658"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鐵啞鈴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm374.icon.png",
+            "isShiny": true,
+            "maxCp": "418",
+            "minCp": "385"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "齒輪兒",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm599.icon.png",
+            "isShiny": true,
+            "maxCp": "409",
+            "minCp": "377"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Normal hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Normal-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "土龍弟弟",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm206.icon.png",
+            "isShiny": true,
+            "maxCp": "724",
+            "minCp": "679"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "蛇紋熊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm263.icon.png",
+            "isShiny": true,
+            "maxCp": "218",
+            "minCp": "193"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "智揮猩",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm765.icon.png",
+            "isShiny": true,
+            "maxCp": "1050",
+            "minCp": "997"
+          }
+        ]
+      },
+      {
+        "description": "Power up Normal-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "土龍弟弟",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm206.icon.png",
+            "isShiny": true,
+            "maxCp": "724",
+            "minCp": "679"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "蛇紋熊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm263.icon.png",
+            "isShiny": true,
+            "maxCp": "218",
+            "minCp": "193"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "智揮猩",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm765.icon.png",
+            "isShiny": true,
+            "maxCp": "1050",
+            "minCp": "997"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Bug hour Tasks",
+    "tasks": [
+      {
+        "description": "Catch 6 Bug-type Pokémon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "凱羅斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm127.icon.png",
+            "isShiny": true,
+            "maxCp": "1268",
+            "minCp": "1209"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "榛果球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm204.icon.png",
+            "isShiny": true,
+            "maxCp": "475",
+            "minCp": "440"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "滴蛛",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm751.icon.png",
+            "isShiny": true,
+            "maxCp": "306",
+            "minCp": "277"
+          }
+        ]
+      },
+      {
+        "description": "Power up Bug-type Pokémon 3 times",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "凱羅斯",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm127.icon.png",
+            "isShiny": true,
+            "maxCp": "1268",
+            "minCp": "1209"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "榛果球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm204.icon.png",
+            "isShiny": true,
+            "maxCp": "475",
+            "minCp": "440"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "滴蛛",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm751.icon.png",
+            "isShiny": true,
+            "maxCp": "306",
+            "minCp": "277"
           }
         ]
       }
