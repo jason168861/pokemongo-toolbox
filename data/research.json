@@ -26,6 +26,15 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "World Championships 2023 Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2023.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "World Championships 2024 Pikachu",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2024.icon.png",
             "isShiny": true,
