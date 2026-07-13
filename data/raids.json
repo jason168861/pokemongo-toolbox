@@ -2,8 +2,8 @@
     "lastUpdated": "2026年7月13日15時",
     "bosses": [
         {
-            "name": "Dapper Pikachu with red accents",
-            "englishName": "Dapper Pikachu with red accents",
+            "name": "Formal Pikachu with red accents",
+            "englishName": "Formal Pikachu with red accents",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -28,11 +28,11 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_GOGGLES_RED.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_MONOCLE_RED.icon.png"
         },
         {
-            "name": "Dapper Pikachu with yellow accents",
-            "englishName": "Dapper Pikachu with yellow accents",
+            "name": "Formal Pikachu with yellow accents",
+            "englishName": "Formal Pikachu with yellow accents",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -57,11 +57,11 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_GOGGLES_YELLOW.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_MONOCLE_YELLOW.icon.png"
         },
         {
-            "name": "Dapper Pikachu with blue accents",
-            "englishName": "Dapper Pikachu with blue accents",
+            "name": "Formal Pikachu with blue accents",
+            "englishName": "Formal Pikachu with blue accents",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -86,7 +86,7 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_GOGGLES_BLUE.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_MONOCLE_BLUE.icon.png"
         },
         {
             "name": "Pikachu wearing a Safari Hat",

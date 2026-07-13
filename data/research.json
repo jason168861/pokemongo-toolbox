@@ -3,47 +3,6 @@
     "category": "Special Anniversary Pikachu Celebration Tasks",
     "tasks": [
       {
-        "description": "贏得3場團體戰",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "Pikachu wearing a varsity jacket",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2025.icon.png",
-            "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "World Championships 2022 Pikachu",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2022.icon.png",
-            "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "World Championships 2023 Pikachu",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2023.icon.png",
-            "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "World Championships 2024 Pikachu",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2024.icon.png",
-            "isShiny": true,
-            "maxCp": "402",
-            "minCp": "369"
-          }
-        ]
-      },
-      {
         "description": "Catch 10 Pikachu",
         "rewards": [
           {
@@ -92,6 +51,47 @@
             "type": "encounter",
             "name": "Meloetta Hat Pikachu",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOFEST_2021_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "贏得3場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a varsity jacket",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2025.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "World Championships 2022 Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2022.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "World Championships 2023 Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2023.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "World Championships 2024 Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2024.icon.png",
             "isShiny": true,
             "maxCp": "402",
             "minCp": "369"
