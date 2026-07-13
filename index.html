@@ -158,9 +158,21 @@
     <div class="main-container">
 <div id="docs-app" class="app-content active">
     <div class="container home-container">
-        <section class="home-intro">
-            <h1>Pokémon Go 工具箱</h1>
-            <p>IV100 CP 查詢、PvP IV 排名、搜尋篩選指令、團體戰與孵蛋列表——Pokémon GO 玩家常用的中文查詢工具，選一張卡片即可開始。</p>
+        <section class="home-hero">
+            <div class="home-hero-copy">
+                <p class="home-eyebrow">Pokémon GO 中文工具箱</p>
+                <h1>查 CP、算排名、看地圖，一站搞定</h1>
+                <p class="home-lead">IV100 CP 查詢、PvP IV 排名、全台補給站/道館地圖、團體戰與孵蛋列表——台灣玩家常用的查詢工具全部集中在這裡，免安裝、免登入，打開就能用。</p>
+                <div class="home-actions">
+                    <button class="home-primary-action tab-button" data-target="map-app">🗺️ 開啟補給站/道館地圖</button>
+                    <button class="home-secondary-action tab-button" data-target="cp-checker-app">IV100 CP 查詢</button>
+                </div>
+            </div>
+            <div class="home-hero-panel">
+                <div class="home-stat"><span>21 萬+</span><p>全台補給站與道館位置，可疊 S2 網格</p></div>
+                <div class="home-stat"><span>22 縣市</span><p>含離島，還能查各縣市最佳站位排名</p></div>
+                <div class="home-stat"><span>10 種工具</span><p>查詢、篩選、地圖與圖表一次備齊</p></div>
+            </div>
         </section>
 
         <section class="home-section">
@@ -169,48 +181,53 @@
                 <p>先從最常用的工具開始。</p>
             </div>
             <div class="home-grid">
+                <button class="home-card tab-button" data-target="map-app">
+                    <span class="home-card-icon">🗺️</span>
+                    <span class="home-card-title">補給站/道館地圖</span>
+                    <span class="home-card-text">全台位置、S2 網格、40/80m 範圍圈與最佳站位排名。</span>
+                </button>
                 <button class="home-card tab-button" data-target="cp-checker-app">
-                    <span class="home-card-icon">CP</span>
+                    <span class="home-card-icon">💯</span>
                     <span class="home-card-title">IV100 CP 查詢</span>
                     <span class="home-card-text">快速查等級 15 / 20 / 25 的 CP。</span>
                 </button>
                 <button class="home-card tab-button" data-target="pvp-ranker-app">
-                    <span class="home-card-icon">PvP</span>
+                    <span class="home-card-icon">🏆</span>
                     <span class="home-card-title">PvP IV 排名</span>
                     <span class="home-card-text">找出各聯盟前段班寶可夢。</span>
                 </button>
                 <button class="home-card tab-button" data-target="id-selector-app">
-                    <span class="home-card-icon">#</span>
+                    <span class="home-card-icon">🔢</span>
                     <span class="home-card-title">編號篩選器</span>
                     <span class="home-card-text">勾選後直接產生搜尋編號。</span>
                 </button>
                 <button class="home-card tab-button" data-target="raids-app">
-                    <span class="home-card-icon">⚔</span>
+                    <span class="home-card-icon">⚔️</span>
                     <span class="home-card-title">團體戰列表</span>
                     <span class="home-card-text">查看當期頭目與天氣加成。</span>
                 </button>
                 <button class="home-card tab-button" data-target="eggs-app">
-                    <span class="home-card-icon">蛋</span>
+                    <span class="home-card-icon">🥚</span>
                     <span class="home-card-title">孵蛋列表</span>
                     <span class="home-card-text">一眼看懂各距離蛋池。</span>
                 </button>
                 <button class="home-card tab-button" data-target="research-app">
-                    <span class="home-card-icon">任</span>
+                    <span class="home-card-icon">📋</span>
                     <span class="home-card-title">田野調查</span>
                     <span class="home-card-text">精選獎勵與所有任務可切換。</span>
                 </button>
                 <button class="home-card tab-button" data-target="special-research-app">
-                    <span class="home-card-icon">☆</span>
+                    <span class="home-card-icon">⭐</span>
                     <span class="home-card-title">特殊調查</span>
                     <span class="home-card-text">搜尋任務流程與獎勵內容。</span>
                 </button>
                 <button class="home-card tab-button" data-target="search-filters-app">
-                    <span class="home-card-icon">?</span>
+                    <span class="home-card-icon">🔍</span>
                     <span class="home-card-title">搜尋指令</span>
                     <span class="home-card-text">整理遊戲內篩選語法小抄。</span>
                 </button>
                 <button class="home-card tab-button" data-target="info-hub-app">
-                    <span class="home-card-icon">i</span>
+                    <span class="home-card-icon">ℹ️</span>
                     <span class="home-card-title">特別資訊</span>
                     <span class="home-card-text">快速查補充型資訊。</span>
                 </button>
@@ -225,9 +242,10 @@
             <details>
                 <summary>顯示完整功能說明</summary>
                 <div class="home-docs-copy">
-                    <p>這個工具箱整合了查詢、篩選與資訊整理功能。若你只是想快速找到入口，上方卡片就夠了。</p>
+                    <p>這個工具箱整合了查詢、篩選、地圖與資訊整理功能。若你只是想快速找到入口，上方卡片就夠了。</p>
                     <ul>
                         <li>IV100 CP、PvP 排名、編號篩選可以快速進入常用查詢。</li>
+                        <li>補給站/道館地圖涵蓋全台 21 萬個以上地點，支援 S2 網格（L14 道館格／L17 補給站格）、地點搜尋、定位範圍圈，還能依縣市查詢 80 公尺內道館最多、40 公尺內補給站最多的最佳站位排名。</li>
                         <li>團體戰、孵蛋、田野調查與特殊調查提供當期資料。</li>
                         <li>搜尋指令頁整理了遊戲內常用的篩選語法。</li>
                     </ul>

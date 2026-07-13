@@ -278,6 +278,7 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 800;
+    font-size: 22px;   /* emoji 圖示在 44px 框內的適當大小 */
     background: #e8f1ff;
     color: #0f5cc0;
 }
