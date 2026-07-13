@@ -348,6 +348,44 @@ export function initializeMapApp() {
     });
   }
 
+  // ---- 手機版地圖操作教學（一次性標注卡）----
+  // 只在手機第一次進地圖時自動跳一次（用 localStorage 記住），之後不再打擾；
+  // 想再看可從 ❓ 說明彈窗的「重看教學」重新開啟。
+  (function setupMapTutorial() {
+    var tut = document.getElementById('mapTutorial');
+    if (!tut) return;
+    var doneBtn = document.getElementById('mapTutorialDone');
+    var replayBtn = document.getElementById('mapReplayTutorial');
+    var SEEN_KEY = 'mapTutorialSeen';
+
+    function open() {
+      tut.classList.add('open');
+      tut.setAttribute('aria-hidden', 'false');
+    }
+    function dismiss() {
+      tut.classList.remove('open');
+      tut.setAttribute('aria-hidden', 'true');
+      try { localStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
+    }
+
+    if (doneBtn) doneBtn.addEventListener('click', dismiss);
+    // 點卡片外的半透明背景也可關閉
+    tut.addEventListener('click', function (e) { if (e.target === tut) dismiss(); });
+    // 「重看教學」：先關掉 ❓ 說明彈窗再開教學（不寫入 SEEN，允許重複觀看）
+    if (replayBtn) replayBtn.addEventListener('click', function () {
+      if (seoEl) seoEl.classList.remove('open');
+      open();
+    });
+
+    // 只在手機、且從未看過時自動顯示一次
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+    var seen = null;
+    try { seen = localStorage.getItem(SEEN_KEY); } catch (e) {}
+    if (isMobile && !seen) {
+      setTimeout(open, 500);  // 等地圖尺寸與控制項就緒後再跳
+    }
+  })();
+
   // -------------------------------------------------------------------------
   // 讓 .map-topbar 當作「中間欄」：兩側各自避開 Leaflet 控制項
   //   左：縮放 + 定位鈕；右：「選擇地圖」圖層清單（含滑過/點擊展開後的寬度）

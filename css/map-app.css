@@ -235,3 +235,65 @@ html.map-noscroll body { padding-bottom: 0; }
   #map-app .map-topbar .panel { display: none; }
   #map-app.panel-open .map-topbar .panel { display: flex; }
 }
+
+/* ===== 手機版地圖操作教學（一次性標注卡）===== */
+#map-app .map-tutorial {
+  display: none;
+  position: absolute; inset: 0; z-index: 2500;
+  background: rgba(15, 23, 42, 0.62);
+  align-items: center; justify-content: center;
+  padding: 16px;
+}
+#map-app .map-tutorial.open { display: flex; }
+
+/* 角落標籤：釘在四角，天然對齊真實控制項（⚙️左上、選擇底圖右上、🧍右下）*/
+#map-app .map-tutorial .mt-label {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.96);
+  color: #1a202c; font: 600 13px/1.3 system-ui, sans-serif;
+  padding: 6px 11px; border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  animation: mtPulse 1.6s ease-in-out infinite;
+}
+#map-app .map-tutorial .mt-tl { top: 12px; left: 56px; }    /* 避開左上縮放鈕 */
+#map-app .map-tutorial .mt-tr { top: 12px; right: 12px; }
+#map-app .map-tutorial .mt-br { bottom: 88px; right: 12px; } /* 在 🧍 控制盒上方 */
+@keyframes mtPulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+#map-app .map-tutorial .mt-card {
+  background: #fff; border-radius: 16px;
+  max-width: 340px; width: 100%;
+  padding: 20px 22px;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.45);
+}
+#map-app .map-tutorial .mt-card h3 {
+  margin: 0 0 14px; font-size: 1.15rem; color: #111827;
+}
+#map-app .map-tutorial .mt-card ul {
+  margin: 0 0 18px; padding: 0; list-style: none;
+}
+#map-app .map-tutorial .mt-card li {
+  margin: 11px 0; color: #374151; line-height: 1.6; font-size: 14px;
+}
+#map-app .map-tutorial .mt-card li b { color: #2b6cb0; }
+#map-app .map-tutorial .mt-done {
+  width: 100%; border: none; border-radius: 10px;
+  background: #2b6cb0; color: #fff; font-size: 15px; font-weight: 700;
+  padding: 12px; cursor: pointer;
+}
+#map-app .map-tutorial .mt-done:hover { background: #2c5282; }
+
+/* 「重看地圖操作教學」按鈕（❓ 說明彈窗內）：只在手機顯示 */
+#map-app .map-seo-tutorial { display: none; }
+@media (max-width: 768px) {
+  #map-app .map-seo-tutorial {
+    display: inline-block;
+    border: 1px solid #2b6cb0; background: #ebf8ff; color: #2b6cb0;
+    padding: 8px 14px; border-radius: 8px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+}

@@ -657,6 +657,25 @@
 
                 <div class="coordbox" id="coordbox">緯度 --, 經度 --</div>
                 <div id="s2map" class="s2map"></div>
+
+                <!-- 手機版首次進地圖的操作教學（一次性標注卡）：只在手機第一次進地圖時
+                     自動跳一次，看過後存 localStorage 不再自動顯示；可從 ❓ 說明彈窗的
+                     「重看教學」重新開啟。角落標籤用 CSS 釘在四角，天然對齊真實控制項位置。 -->
+                <div class="map-tutorial" id="mapTutorial" aria-hidden="true">
+                    <div class="mt-label mt-tl">⚙️ 設定　❓ 說明</div>
+                    <div class="mt-label mt-tr">選擇底圖 🗺️</div>
+                    <div class="mt-label mt-br">拖我到地圖 🧍</div>
+                    <div class="mt-card" role="dialog" aria-label="地圖操作教學">
+                        <h3>歡迎使用地圖 🗺️</h3>
+                        <ul>
+                            <li><b>⚙️（左上）</b>開啟設定：S2 網格、補給站/道館篩選、站位排名</li>
+                            <li><b>🧍（右下）</b>按住拖到地圖上放置人物，顯示 40／80 公尺範圍圈</li>
+                            <li><b>🔍（上方）</b>輸入地點名稱快速跳轉</li>
+                            <li><b>選擇底圖（右上）</b>切換街道／衛星／地形</li>
+                        </ul>
+                        <button type="button" class="mt-done" id="mapTutorialDone">知道了，開始使用</button>
+                    </div>
+                </div>
             </div>
 
             <!-- 說明/FAQ：改為彈窗形式（內容保留在 DOM 供搜尋引擎索引），
@@ -665,6 +684,7 @@
                 <div class="map-seo-inner">
                 <button type="button" class="map-seo-close" title="關閉說明">✕</button>
                 <h1>台灣寶可夢補給站、道館與 S2 網格地圖</h1>
+                <p><button type="button" class="map-seo-tutorial" id="mapReplayTutorial">▶ 重看地圖操作教學</button></p>
                 <p>這是一份涵蓋全台灣的 Pokémon GO 補給站（PokéStop）與道館（Gym）位置地圖，資料整理自 Niantic Wayspot。你可以疊上 S2 網格（L14 道館網格／L17 補給站網格）、搜尋地點、一鍵定位，並顯示以自己為中心的 40 公尺（寶可夢出沒範圍）與 80 公尺（補給站／道館互動範圍）兩個範圍圈，方便判斷道館生成、寶可夢出沒與可互動範圍。</p>
 
                 <ul class="map-features">
