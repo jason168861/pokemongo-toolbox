@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 import re
@@ -78,6 +79,107 @@ GENERAL_TRANSLATIONS = {
         'Solar Fusion Energy':'太陽能量','Lunar Fusion Energy':'月亮能量',
 }
 
+# ==================== 官方在地化文本（主要翻譯來源）====================
+# 一勞永逸的關鍵：Pokémon GO 遊戲本身就有官方繁中翻譯。
+# PokeMiners 每日 dump 遊戲文字資源，這裡下載「英文 ↔ 繁體中文」對照，
+# 自動翻譯任務句型、道具與寶可夢名稱：
+#   - 精確對照：沒有佔位符的字串（道具名、寶可夢名、單數任務句）
+#   - 句型模板：帶 {0} 佔位符的任務句（如 "Catch {0} Pokémon" → "捕捉 {0} 隻寶可夢"）
+# 【優先順序】官方文本優先；上方的手動字典只在官方查不到時後援
+# （例如 LeekDuck 自創的造型寶可夢描述名）。
+# 兩邊都查不到的字串會寫入 scripts/untranslated_report.json 供人工檢查。
+
+POGO_TEXT_EN = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20APK/English.txt"
+POGO_TEXT_ZHT = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20APK/ChineseTraditional.txt"
+
+_OFFICIAL = {"exact": {}, "templates": []}
+_UNTRANSLATED = set()
+
+def _parse_pogo_text(raw):
+    """解析 PokeMiners 的文字格式：RESOURCE ID: / TEXT: 交替出現，支援多行文本"""
+    data = {}
+    key = None
+    last_key = None
+    for line in raw.splitlines():
+        if line.startswith("RESOURCE ID: "):
+            key = line[13:].strip()
+            last_key = None
+        elif line.startswith("TEXT: ") and key:
+            data[key] = line[6:].strip()
+            last_key = key
+            key = None
+        elif last_key and line.strip():
+            data[last_key] += " " + line.strip()  # 多行文本的後續行
+    return data
+
+def _normalize_text(s):
+    """統一彎引號/不換行空格等差異，讓 LeekDuck 文字能對上官方文本"""
+    return s.replace(" ", " ").replace("’", "'").replace("‘", "'").strip()
+
+def build_official_translation_db():
+    """下載並建立官方英繁對照庫。下載失敗時靜默退回純手動字典模式。"""
+    try:
+        en_raw = requests.get(POGO_TEXT_EN, headers=HEADERS, timeout=60).text
+        zht_raw = requests.get(POGO_TEXT_ZHT, headers=HEADERS, timeout=60).text
+    except Exception as e:
+        print(f"⚠️ 無法下載官方在地化文本（{e}），本次僅使用手動字典。")
+        return
+    en_map = _parse_pogo_text(en_raw)
+    zht_map = _parse_pogo_text(zht_raw)
+    ph_re = re.compile(r"\{(\d+)\}")
+
+    for key, en_text in en_map.items():
+        zh_text = zht_map.get(key)
+        if not zh_text or zh_text == en_text:
+            continue  # 該鍵沒有中文翻譯
+        en_norm = _normalize_text(en_text)
+        placeholders = ph_re.findall(en_norm)
+        if placeholders:
+            # 太通用的模板（如 "{0}s"、"{0} {1}"）幾乎什麼都能配到，會把
+            # 真正的未知字串誤翻，要求字面文字至少 8 字元才收錄
+            if len(ph_re.sub("", en_norm)) < 8:
+                continue
+            # 帶佔位符 → 轉成正則模板；記下佔位符出現順序供代回中文
+            pattern = re.escape(en_norm)
+            for n in set(placeholders):
+                pattern = pattern.replace(re.escape("{%s}" % n), "(.+?)")
+            _OFFICIAL["templates"].append(
+                (re.compile("^" + pattern + "$", re.IGNORECASE), zh_text, placeholders, len(en_norm))
+            )
+        else:
+            _OFFICIAL["exact"].setdefault(en_norm.lower(), zh_text)
+
+    # 長模板優先比對（字面文字越長越精確，避免被短模板搶先誤配）
+    _OFFICIAL["templates"].sort(key=lambda t: -t[3])
+    print(f"✅ 官方文本載入完成：{len(_OFFICIAL['exact'])} 條精確對照、{len(_OFFICIAL['templates'])} 個句型模板")
+
+def official_translate(text):
+    """用官方文本翻譯，找不到回傳 None"""
+    if not text:
+        return None
+    t = _normalize_text(text)
+    hit = _OFFICIAL["exact"].get(t.lower())
+    if hit:
+        return hit
+    for regex, zh_tmpl, placeholders, _ in _OFFICIAL["templates"]:
+        m = regex.match(t)
+        if m:
+            out = zh_tmpl
+            for i, n in enumerate(placeholders):
+                val = m.group(i + 1)
+                # 代入值本身可能還是英文（如 "Charizard Mega Energy" 捕到 "Charizard"），
+                # 先查一次精確對照把它翻成中文；數字等查不到就原樣代入
+                val = _OFFICIAL["exact"].get(_normalize_text(val).lower(), val)
+                out = out.replace("{%s}" % n, val)
+            return out
+    return None
+
+def record_untranslated(text):
+    _UNTRANSLATED.add(text)
+    return text
+
+# ==================== 官方在地化文本 END ====================
+
 def load_json_map(filename):
     """通用函式，用於載入 JSON 格式的翻譯檔"""
     try:
@@ -91,10 +193,15 @@ def load_json_map(filename):
         return {}
 
 def translate_name(eng_name, name_map, form_map):
-    """將寶可夢英文名稱翻譯成中文"""
-    if not eng_name or not name_map:
+    """將寶可夢英文名稱翻譯成中文：官方文本優先，手動字典後援"""
+    if not eng_name:
         return eng_name
-    
+
+    # 官方文本優先（涵蓋所有寶可夢的官方繁中名）
+    official = official_translate(eng_name)
+    if official:
+        return official
+
     form_in_parentheses_match = re.match(r'(.+?)\s*\((.+?)\)', eng_name)
     if form_in_parentheses_match:
         base_name, form_name = form_in_parentheses_match.groups()
@@ -114,20 +221,31 @@ def translate_name(eng_name, name_map, form_map):
 
     if eng_name in name_map:
         return name_map[eng_name]
-    
-    return eng_name
+
+    return record_untranslated(eng_name)
 
 # ==================================================================
 #                    【⭐️ 這裡是修正的核心 ⭐️】
 # 將下方的 translate_item_resource 函式替換掉您原本的函式
 # ==================================================================
 def translate_item_resource(eng_name, general_map, pokemon_map):
-    """翻譯道具、資源，並處理像超級能量和帶有數量的道具等特殊情況。"""
-    # 優先處理超級能量，例如 "Venusaur Mega Energy"
+    """翻譯道具、資源：官方文本優先，手動字典後援。"""
+    # 官方文本優先：先試完整字串，再試剝掉尾端數量（例如 " ×1500"）
+    official = official_translate(eng_name)
+    if official:
+        return official
+    qty_match = re.match(r"^(.*?)\s*([×x]\s*[\d,]+)$", eng_name)
+    if qty_match:
+        base, qty = qty_match.groups()
+        official = official_translate(base.strip())
+        if official:
+            return f"{official} {qty}"
+
+    # 超級能量組合字，例如 "Venusaur Mega Energy"（官方沒有這種合成字串）
     mega_energy_match = re.match(r'(.+?)\s+Mega Energy', eng_name)
     if mega_energy_match:
         pokemon_name = mega_energy_match.group(1).strip()
-        translated_pokemon = pokemon_map.get(pokemon_name, pokemon_name)
+        translated_pokemon = official_translate(pokemon_name) or pokemon_map.get(pokemon_name, pokemon_name)
         translated_mega_energy = general_map.get('Mega Energy', 'Mega Energy')
         return f"{translated_pokemon} {translated_mega_energy}"
 
@@ -148,11 +266,15 @@ def translate_item_resource(eng_name, general_map, pokemon_map):
             # 將翻譯後的名稱與剩餘的數量部分重新組合
             return f"{translated_item} {remaining_part}".strip()
             
-    # 如果遍歷完字典都找不到匹配的開頭，則返回原始名稱
-    return eng_name
+    # 官方與手動字典都查不到，記錄下來供人工檢查
+    return record_untranslated(eng_name)
 
 def translate_task_description(task_text, task_map):
-    """翻譯田野調查任務，並用規則補上常見但尚未收錄的新句型。"""
+    """翻譯田野調查任務：官方句型模板優先，手動字典與規則後援。"""
+    official = official_translate(task_text)
+    if official:
+        return official
+
     if task_text in task_map:
         return task_map[task_text]
 
@@ -175,7 +297,7 @@ def translate_task_description(task_text, task_map):
             return f"連續投出 {count} 次 {translated_throw_type}".replace('  ', ' ').strip()
         return f"投出 {count} 次 {translated_throw_type}".replace('  ', ' ').strip()
 
-    return task_text
+    return record_untranslated(task_text)
 
 # ==================== 翻譯資料區塊 END ======================
 
@@ -185,8 +307,10 @@ HEADERS = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit
 
 def scrape_research_data_full():
     pokemon_name_map = load_json_map("./data/pokemon_translation_map.json")
-    task_translation_map = load_json_map("./scripts/task_translation_map.json") 
+    task_translation_map = load_json_map("./scripts/task_translation_map.json")
     category_translation_map = load_json_map("./scripts/category_translation_map.json") # <-- 新增此行
+
+    build_official_translation_db()   # 官方英繁對照庫（自動翻譯後援）
 
     print("⏳ 正在從 LeekDuck 的田野調查頁面抓取資料...")
     response = requests.get(URL, headers=HEADERS)
@@ -285,6 +409,17 @@ def scrape_research_data_full():
         json.dump(research_data, f, indent=2, ensure_ascii=False)
     
     print(f"\n🎉 成功！ 田野調查資料已儲存至 {output_filename}")
-    
+
+    # 手動字典和官方文本都翻不到的字串 → 寫入報告供人工檢查
+    report_path = "./scripts/untranslated_report.json"
+    if _UNTRANSLATED:
+        with open(report_path, "w", encoding="utf-8") as f:
+            json.dump(sorted(_UNTRANSLATED), f, indent=2, ensure_ascii=False)
+        print(f"⚠️ 有 {len(_UNTRANSLATED)} 條字串連官方文本都查不到（頁面上顯示英文原文），已寫入 {report_path}")
+    else:
+        print("✅ 所有字串皆已翻譯，沒有遺漏。")
+        if os.path.exists(report_path):
+            os.remove(report_path)   # 清掉上次的舊報告，避免誤導
+
 if __name__ == "__main__":
     scrape_research_data_full()

@@ -3,12 +3,12 @@
     "category": "Special Anniversary Pikachu Celebration Tasks",
     "tasks": [
       {
-        "description": "Catch 10 Pikachu",
+        "description": "捕捉 10 隻皮卡丘",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing Leaf's Hat",
+            "name": "戴著莉佳帽子的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_A_02.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -17,7 +17,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing Lyra's Hat",
+            "name": "戴著琴音帽子的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_B_02.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -26,7 +26,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing May's Bandana",
+            "name": "戴著小遙頭巾的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOTOUR_2023_BANDANA_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -35,7 +35,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing Red's Hat",
+            "name": "戴著赤紅帽子的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_A.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -44,12 +44,12 @@
         ]
       },
       {
-        "description": "Catch 15 Pikachu",
+        "description": "捕捉 15 隻皮卡丘",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Meloetta Hat Pikachu",
+            "name": "戴美洛耶塔帽子的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOFEST_2021_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -58,12 +58,12 @@
         ]
       },
       {
-        "description": "贏得3場團體戰",
+        "description": "在團體戰中獲勝 3 次",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing a varsity jacket",
+            "name": "穿著棒球外套的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2025.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -72,7 +72,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "World Championships 2022 Pikachu",
+            "name": "2022世界錦標賽皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2022.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -81,7 +81,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "World Championships 2023 Pikachu",
+            "name": "2023世界錦標賽皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2023.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -90,7 +90,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "World Championships 2024 Pikachu",
+            "name": "2024世界錦標賽皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2024.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -104,12 +104,12 @@
     "category": "Pokémon GO Fest 2026: Global - Common tasks Tasks",
     "tasks": [
       {
-        "description": "Catch 8 different species of Pokémon",
+        "description": "捕捉 8 隻不同的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Bulbasaur wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的妙蛙種子",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "477",
@@ -118,7 +118,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Charmander wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的小火龍",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "420",
@@ -127,7 +127,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Squirtle wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的傑尼龜",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "405",
@@ -136,12 +136,12 @@
         ]
       },
       {
-        "description": "Catch 8 different species of Pokémon",
+        "description": "捕捉 8 隻不同的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing a Team Instinct hat",
+            "name": "戴著閃電隊帽子的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOFEST_2026_CAP_YELLOW.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -150,7 +150,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing a Team Mystic hat",
+            "name": "戴著急凍隊帽子的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOFEST_2026_CAP_BLUE.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -159,7 +159,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Pikachu wearing a Team Valor hat",
+            "name": "戴著火焰隊帽子的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOFEST_2026_CAP_RED.icon.png",
             "isShiny": true,
             "maxCp": "402",
@@ -168,14 +168,14 @@
         ]
       },
       {
-        "description": "捕捉10隻寶可夢",
+        "description": "捕捉 10 隻寶可夢",
         "rewards": [
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
+            "name": "球球 ×10",
             "quantity": "×10"
           },
           {
@@ -210,14 +210,14 @@
         ]
       },
       {
-        "description": "旋轉5個寶可補給站或道館的轉盤",
+        "description": "拜訪 5 個寶可補給站",
         "rewards": [
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
+            "name": "球球 ×10",
             "quantity": "×10"
           },
           {
@@ -244,7 +244,7 @@
     "category": "Pokémon GO Fest 2026: Global - Electric hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Electric-type Pokémon",
+        "description": "捕捉 6 隻電屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -276,7 +276,7 @@
         ]
       },
       {
-        "description": "Power up Electric-type Pokémon 3 times",
+        "description": "強化電屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -313,7 +313,7 @@
     "category": "Pokémon GO Fest 2026: Global - Ice hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Ice-type Pokémon",
+        "description": "捕捉 6 隻冰屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -345,7 +345,7 @@
         ]
       },
       {
-        "description": "Power up Ice-type Pokémon 3 times",
+        "description": "強化冰屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -382,12 +382,12 @@
     "category": "Pokémon GO Fest 2026: Global - Fire hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Fire-type Pokémon",
+        "description": "捕捉 6 隻火屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Charmander wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的小火龍",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "420",
@@ -414,12 +414,12 @@
         ]
       },
       {
-        "description": "Power up Fire-type Pokémon 3 times",
+        "description": "強化火屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Charmander wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的小火龍",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "420",
@@ -451,7 +451,7 @@
     "category": "Pokémon GO Fest 2026: Global - Ghost hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Ghost-type Pokémon",
+        "description": "捕捉 6 隻幽靈屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -483,7 +483,7 @@
         ]
       },
       {
-        "description": "Power up Ghost-type Pokémon 3 times",
+        "description": "強化幽靈屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -520,7 +520,7 @@
     "category": "Pokémon GO Fest 2026: Global - Psychic hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Psychic-type Pokémon",
+        "description": "捕捉 6 隻超能力屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -552,7 +552,7 @@
         ]
       },
       {
-        "description": "Power up Psychic-type Pokémon 3 times",
+        "description": "強化超能力屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -589,14 +589,14 @@
     "category": "Pokémon GO Fest 2026: Global - Saturday Tasks",
     "tasks": [
       {
-        "description": "贏得1場團體戰",
+        "description": "在團體戰中獲勝1次",
         "rewards": [
           {
             "isFeatured": true,
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm150.fMEGA_X.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Mega Mewtwo Energy X.png",
-            "name": "Mega Mewtwo X 超級能量",
+            "name": "超級超夢Ｘ超級能量 ×150",
             "quantity": "×150"
           }
         ]
@@ -607,14 +607,14 @@
     "category": "Pokémon GO Fest 2026: Global - Sunday Tasks",
     "tasks": [
       {
-        "description": "贏得1場團體戰",
+        "description": "在團體戰中獲勝1次",
         "rewards": [
           {
             "isFeatured": true,
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm150.fMEGA_Y.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Mega Mewtwo Energy Y.png",
-            "name": "Mega Mewtwo Y 超級能量",
+            "name": "超級超夢Ｙ超級能量 ×150",
             "quantity": "×150"
           }
         ]
@@ -625,12 +625,12 @@
     "category": "Pokémon GO Fest 2026: Global - Water hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Water-type Pokémon",
+        "description": "捕捉 6 隻水屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Squirtle wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的傑尼龜",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "405",
@@ -657,12 +657,12 @@
         ]
       },
       {
-        "description": "Power up Water-type Pokémon 3 times",
+        "description": "強化水屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Squirtle wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的傑尼龜",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "405",
@@ -694,7 +694,7 @@
     "category": "Pokémon GO Fest 2026: Global - Flying hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Flying-type Pokémon",
+        "description": "捕捉 6 隻飛行屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -726,7 +726,7 @@
         ]
       },
       {
-        "description": "Power up Flying-type Pokémon 3 times",
+        "description": "強化飛行屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -763,7 +763,7 @@
     "category": "Pokémon GO Fest 2026: Global - Rock hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Rock-type Pokémon",
+        "description": "捕捉 6 隻岩石屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -795,7 +795,7 @@
         ]
       },
       {
-        "description": "Power up Rock-type Pokémon 3 times",
+        "description": "強化岩石屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -832,7 +832,7 @@
     "category": "Pokémon GO Fest 2026: Global - Dragon hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Dragon-type Pokémon",
+        "description": "捕捉 6 隻龍屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -864,7 +864,7 @@
         ]
       },
       {
-        "description": "Power up Dragon-type Pokémon 3 times",
+        "description": "強化龍屬性寶可夢 3 次",
         "rewards": [
           {
             "isFeatured": true,
@@ -901,7 +901,7 @@
     "category": "Pokémon GO Fest 2026: Global - Ground hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Ground-type Pokémon",
+        "description": "捕捉 6 隻地面屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -924,7 +924,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "伽勒爾 泥巴魚",
+            "name": "泥巴魚（伽勒爾的樣子）",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.fGALARIAN.icon.png",
             "isShiny": true,
             "maxCp": "926",
@@ -933,7 +933,7 @@
         ]
       },
       {
-        "description": "Power up Ground-type Pokémon 3 times",
+        "description": "強化地面屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -956,7 +956,7 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "伽勒爾 泥巴魚",
+            "name": "泥巴魚（伽勒爾的樣子）",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.fGALARIAN.icon.png",
             "isShiny": true,
             "maxCp": "926",
@@ -970,7 +970,7 @@
     "category": "Pokémon GO Fest 2026: Global - Steel hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Steel-type Pokémon",
+        "description": "捕捉 6 隻鋼屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1002,7 +1002,7 @@
         ]
       },
       {
-        "description": "Power up Steel-type Pokémon 3 times",
+        "description": "強化鋼屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -1039,7 +1039,7 @@
     "category": "Pokémon GO Fest 2026: Global - Normal hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Normal-type Pokémon",
+        "description": "捕捉 6 隻一般屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1071,7 +1071,7 @@
         ]
       },
       {
-        "description": "Power up Normal-type Pokémon 3 times",
+        "description": "強化一般屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -1108,7 +1108,7 @@
     "category": "Pokémon GO Fest 2026: Global - Poison hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Poison-type Pokémon",
+        "description": "捕捉 6 隻毒屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1140,7 +1140,7 @@
         ]
       },
       {
-        "description": "Power up Poison-type Pokémon 3 times",
+        "description": "強化毒屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -1177,7 +1177,7 @@
     "category": "Pokémon GO Fest 2026: Global - Bug hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Bug-type Pokémon",
+        "description": "捕捉 6 隻蟲屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1209,7 +1209,7 @@
         ]
       },
       {
-        "description": "Power up Bug-type Pokémon 3 times",
+        "description": "強化蟲屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -1246,12 +1246,12 @@
     "category": "Pokémon GO Fest 2026: Global - Grass hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Grass-type Pokémon",
+        "description": "捕捉 6 隻草屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Bulbasaur wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的妙蛙種子",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "477",
@@ -1278,12 +1278,12 @@
         ]
       },
       {
-        "description": "Power up Grass-type Pokémon 3 times",
+        "description": "強化草屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "Bulbasaur wearing a Pikachu Visor",
+            "name": "戴皮卡丘面罩的妙蛙種子",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.cSPRING_2020_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "477",
@@ -1315,7 +1315,7 @@
     "category": "Pokémon GO Fest 2026: Global - Dark hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Dark-type Pokémon",
+        "description": "捕捉 6 隻惡屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1347,7 +1347,7 @@
         ]
       },
       {
-        "description": "Power up Dark-type Pokémon 3 times",
+        "description": "強化惡屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -1384,7 +1384,7 @@
     "category": "Pokémon GO Fest 2026: Global - Fairy hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Fairy-type Pokémon",
+        "description": "捕捉 6 隻妖精屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1416,7 +1416,7 @@
         ]
       },
       {
-        "description": "Power up Fairy-type Pokémon 3 times",
+        "description": "強化妖精屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -1453,7 +1453,7 @@
     "category": "Pokémon GO Fest 2026: Global - Fighting hour Tasks",
     "tasks": [
       {
-        "description": "Catch 6 Fighting-type Pokémon",
+        "description": "捕捉 6 隻格鬥屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1485,7 +1485,7 @@
         ]
       },
       {
-        "description": "Power up Fighting-type Pokémon 3 times",
+        "description": "強化格鬥屬性的寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -1522,7 +1522,7 @@
     "category": "捕捉相關任務",
     "tasks": [
       {
-        "description": "捕捉7隻寶可夢",
+        "description": "捕捉 7 隻寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1647,7 +1647,7 @@
         ]
       },
       {
-        "description": "捕捉7種不同種類的寶可夢",
+        "description": "捕捉 7 隻不同的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1760,7 +1760,7 @@
         ]
       },
       {
-        "description": "捕捉10隻寶可夢",
+        "description": "捕捉 10 隻寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -1775,7 +1775,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×5",
+            "name": "球球 ×5",
             "quantity": "×5"
           },
           {
@@ -1797,7 +1797,7 @@
         ]
       },
       {
-        "description": "捕捉10隻草屬性的寶可夢",
+        "description": "捕捉 10 隻草屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -1885,7 +1885,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm254.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Sceptile Mega Energy.png",
-            "name": "蜥蜴王 超級能量",
+            "name": "蜥蜴王超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -1893,7 +1893,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm3.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Venusaur Mega Energy.png",
-            "name": "妙蛙花 超級能量",
+            "name": "妙蛙花超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -1931,7 +1931,7 @@
         ]
       },
       {
-        "description": "捕捉10隻火屬性的寶可夢",
+        "description": "捕捉 10 隻火屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -2019,7 +2019,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm257.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Blaziken Mega Energy.png",
-            "name": "火焰雞 超級能量",
+            "name": "火焰雞超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -2027,7 +2027,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm6.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Charizard Mega Energy.png",
-            "name": "噴火龍 超級能量",
+            "name": "噴火龍超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -2065,7 +2065,7 @@
         ]
       },
       {
-        "description": "捕捉10隻水屬性的寶可夢",
+        "description": "捕捉 10 隻水屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -2153,7 +2153,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm9.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Blastoise Mega Energy.png",
-            "name": "水箭龜 超級能量",
+            "name": "水箭龜超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -2161,7 +2161,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm260.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Swampert Mega Energy.png",
-            "name": "巨沼怪 超級能量",
+            "name": "巨沼怪超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -2199,14 +2199,14 @@
         ]
       },
       {
-        "description": "捕捉10隻一般屬性的寶可夢",
+        "description": "捕捉 10 隻一般屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm18.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Pidgeot Mega Energy.png",
-            "name": "大比鳥 超級能量",
+            "name": "大比鳥超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -2244,7 +2244,7 @@
         ]
       },
       {
-        "description": "捕捉5隻天氣加成下的寶可夢",
+        "description": "捕捉 5 隻擁有天氣優勢的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -2322,7 +2322,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×5",
+            "name": "球球 ×5",
             "quantity": "×5"
           },
           {
@@ -2344,7 +2344,7 @@
         ]
       },
       {
-        "description": "捕捉10隻天氣加成下的寶可夢",
+        "description": "捕捉 10 隻擁有天氣優勢的寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -2381,7 +2381,7 @@
         ]
       },
       {
-        "description": "Catch 25 Pokémon",
+        "description": "捕捉 25 隻寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -2394,7 +2394,7 @@
         ]
       },
       {
-        "description": "Catch 50 Pokémon",
+        "description": "捕捉 50 隻寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -2407,7 +2407,7 @@
         ]
       },
       {
-        "description": "使用5個樹果協助捕捉寶可夢",
+        "description": "捕捉寶可夢時使用 5 個樹果",
         "rewards": [
           {
             "isFeatured": false,
@@ -2544,7 +2544,7 @@
         ]
       },
       {
-        "description": "投出 10 次 Nice",
+        "description": "投出 10 次Nice",
         "rewards": [
           {
             "isFeatured": true,
@@ -2639,7 +2639,7 @@
         ]
       },
       {
-        "description": "投出 2 次 Excellent",
+        "description": "投出 2 次Excellent",
         "rewards": [
           {
             "isFeatured": true,
@@ -2653,7 +2653,7 @@
         ]
       },
       {
-        "description": "連續投出 2 次 Nice 曲球",
+        "description": "連續用曲球投出 2 次Nice",
         "rewards": [
           {
             "isFeatured": false,
@@ -2668,7 +2668,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×5",
+            "name": "球球 ×5",
             "quantity": "×5"
           },
           {
@@ -2690,7 +2690,7 @@
         ]
       },
       {
-        "description": "連續投出 3 次 Excellent",
+        "description": "連續投出 3 次Excellent",
         "rewards": [
           {
             "isFeatured": true,
@@ -2722,7 +2722,7 @@
         ]
       },
       {
-        "description": "投出 3 次 Great 曲球",
+        "description": "用曲球投出 3 次Great",
         "rewards": [
           {
             "isFeatured": false,
@@ -2737,7 +2737,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
+            "name": "球球 ×10",
             "quantity": "×10"
           },
           {
@@ -2775,7 +2775,7 @@
         ]
       },
       {
-        "description": "連續投出 3 次 Great 曲球",
+        "description": "連續用曲球投出 3 次Great",
         "rewards": [
           {
             "isFeatured": false,
@@ -2804,7 +2804,7 @@
         ]
       },
       {
-        "description": "投出 3 次 Great",
+        "description": "投出 3 次Great",
         "rewards": [
           {
             "isFeatured": true,
@@ -2864,7 +2864,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×5",
+            "name": "球球 ×5",
             "quantity": "×5"
           },
           {
@@ -2886,7 +2886,7 @@
         ]
       },
       {
-        "description": "連續投出 3 次 Great",
+        "description": "連續投出 3 次Great",
         "rewards": [
           {
             "isFeatured": true,
@@ -2919,7 +2919,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
+            "name": "球球 ×10",
             "quantity": "×10"
           },
           {
@@ -2957,7 +2957,7 @@
         ]
       },
       {
-        "description": "連續投出 3 次 Nice",
+        "description": "連續投出 3 次Nice",
         "rewards": [
           {
             "isFeatured": false,
@@ -2994,7 +2994,7 @@
         ]
       },
       {
-        "description": "連續投出5次曲球",
+        "description": "連續投出 5 次曲球",
         "rewards": [
           {
             "isFeatured": false,
@@ -3031,7 +3031,7 @@
         ]
       },
       {
-        "description": "連續投出 5 次 Great 曲球",
+        "description": "連續用曲球投出 5 次Great",
         "rewards": [
           {
             "isFeatured": true,
@@ -3054,7 +3054,7 @@
         ]
       },
       {
-        "description": "投出 5 次 Nice",
+        "description": "投出 5 次Nice",
         "rewards": [
           {
             "isFeatured": true,
@@ -3096,7 +3096,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×5",
+            "name": "球球 ×5",
             "quantity": "×5"
           },
           {
@@ -3118,7 +3118,7 @@
         ]
       },
       {
-        "description": "投出 1 次 Excellent",
+        "description": "投出1次Excellent Throw",
         "rewards": [
           {
             "isFeatured": false,
@@ -3160,7 +3160,7 @@
     "category": "對戰相關任務",
     "tasks": [
       {
-        "description": "Battle in a raid",
+        "description": "參加1場團體戰",
         "rewards": [
           {
             "isFeatured": false,
@@ -3173,7 +3173,7 @@
         ]
       },
       {
-        "description": "贏得1場團體戰",
+        "description": "在團體戰中獲勝1次",
         "rewards": [
           {
             "isFeatured": true,
@@ -3286,7 +3286,7 @@
         ]
       },
       {
-        "description": "Battle in 3 raids",
+        "description": "參加 3 場團體戰",
         "rewards": [
           {
             "isFeatured": false,
@@ -3299,7 +3299,7 @@
         ]
       },
       {
-        "description": "贏得1場3星級以上的團體戰",
+        "description": "在等級3以上的團體戰中獲勝1次",
         "rewards": [
           {
             "isFeatured": true,
@@ -3322,7 +3322,7 @@
         ]
       },
       {
-        "description": "贏得5場團體戰",
+        "description": "在團體戰中獲勝 5 次",
         "rewards": [
           {
             "isFeatured": true,
@@ -3354,7 +3354,7 @@
         ]
       },
       {
-        "description": "贏得1場極限對戰",
+        "description": "在極巨對戰中獲勝1次",
         "rewards": [
           {
             "isFeatured": false,
@@ -3372,7 +3372,7 @@
     "category": "探索相關任務",
     "tasks": [
       {
-        "description": "獲得10000星星沙子",
+        "description": "獲得星星沙子x10000",
         "rewards": [
           {
             "isFeatured": false,
@@ -3385,7 +3385,7 @@
         ]
       },
       {
-        "description": "獲得10000 XP",
+        "description": "獲得 10000 XP",
         "rewards": [
           {
             "isFeatured": false,
@@ -3398,7 +3398,7 @@
         ]
       },
       {
-        "description": "探索2公里",
+        "description": "探索 2 公里",
         "rewards": [
           {
             "isFeatured": true,
@@ -3615,7 +3615,7 @@
         ]
       },
       {
-        "description": "孵化2顆蛋",
+        "description": "孵化 2 顆蛋",
         "rewards": [
           {
             "isFeatured": true,
@@ -3655,7 +3655,7 @@
         ]
       },
       {
-        "description": "Hatch 5 Eggs",
+        "description": "孵化 5 顆蛋",
         "rewards": [
           {
             "isFeatured": false,
@@ -3668,7 +3668,7 @@
         ]
       },
       {
-        "description": "旋轉3個寶可補給站或道館的轉盤",
+        "description": "拜訪 3 個寶可補給站",
         "rewards": [
           {
             "isFeatured": true,
@@ -3741,7 +3741,7 @@
         ]
       },
       {
-        "description": "旋轉5個寶可補給站或道館的轉盤",
+        "description": "拜訪 5 個寶可補給站",
         "rewards": [
           {
             "isFeatured": true,
@@ -3935,7 +3935,7 @@
         ]
       },
       {
-        "description": "給野生的寶可夢拍攝1張照片",
+        "description": "為野生寶可夢拍攝1張GO Snapshot照片",
         "rewards": [
           {
             "isFeatured": true,
@@ -3972,7 +3972,7 @@
     "category": "寶可夢訓練任務",
     "tasks": [
       {
-        "description": "進化1隻寶可夢",
+        "description": "讓1隻寶可夢進化",
         "rewards": [
           {
             "isFeatured": true,
@@ -4049,7 +4049,7 @@
         ]
       },
       {
-        "description": "強化寶可夢15次",
+        "description": "強化寶可夢 15 次",
         "rewards": [
           {
             "isFeatured": false,
@@ -4062,7 +4062,7 @@
         ]
       },
       {
-        "description": "強化寶可夢3次",
+        "description": "強化寶可夢 3 次",
         "rewards": [
           {
             "isFeatured": true,
@@ -4094,7 +4094,7 @@
         ]
       },
       {
-        "description": "強化寶可夢5次",
+        "description": "強化寶可夢 5 次",
         "rewards": [
           {
             "isFeatured": true,
@@ -4128,7 +4128,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm306.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Aggron Mega Energy.png",
-            "name": "波士可多拉 超級能量",
+            "name": "波士可多拉超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -4136,7 +4136,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm15.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Beedrill Mega Energy.png",
-            "name": "大針蜂 超級能量",
+            "name": "大針蜂超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -4144,7 +4144,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm9.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Blastoise Mega Energy.png",
-            "name": "水箭龜 超級能量",
+            "name": "水箭龜超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -4152,7 +4152,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm6.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Charizard Mega Energy.png",
-            "name": "噴火龍 超級能量",
+            "name": "噴火龍超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -4160,7 +4160,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm310.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Manectric Mega Energy.png",
-            "name": "雷電獸 超級能量",
+            "name": "雷電獸超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -4168,7 +4168,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm18.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Pidgeot Mega Energy.png",
-            "name": "大比鳥 超級能量",
+            "name": "大比鳥超級能量 ×10",
             "quantity": "×10"
           },
           {
@@ -4176,13 +4176,13 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm3.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Venusaur Mega Energy.png",
-            "name": "妙蛙花 超級能量",
+            "name": "妙蛙花超級能量 ×10",
             "quantity": "×10"
           }
         ]
       },
       {
-        "description": "強化寶可夢7次",
+        "description": "強化寶可夢 7 次",
         "rewards": [
           {
             "isFeatured": true,
@@ -4219,7 +4219,7 @@
     "category": "夥伴與友誼任務",
     "tasks": [
       {
-        "description": "與你的夥伴同行並獲得2顆糖果",
+        "description": "和夥伴一起走路，取得 2 顆糖果",
         "rewards": [
           {
             "isFeatured": true,
@@ -4278,12 +4278,12 @@
         ]
       },
       {
-        "description": "與你的夥伴同行並獲得3顆糖果",
+        "description": "和夥伴一起走路，取得 3 顆糖果",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "伽勒爾 泥巴魚",
+            "name": "泥巴魚（伽勒爾的樣子）",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.fGALARIAN.icon.png",
             "isShiny": true,
             "maxCp": "926",
@@ -4301,7 +4301,7 @@
         ]
       },
       {
-        "description": "送出3個附上貼圖的友情禮物",
+        "description": "傳送 3 個貼了貼圖的友情禮物",
         "rewards": [
           {
             "isFeatured": true,
@@ -4397,7 +4397,7 @@
     "category": "GO火箭隊任務",
     "tasks": [
       {
-        "description": "擊敗 1 名 GO 火箭隊手下",
+        "description": "打敗1個GO火箭隊手下",
         "rewards": [
           {
             "isFeatured": true,
@@ -4434,7 +4434,7 @@
     "category": "贊助商任務",
     "tasks": [
       {
-        "description": "捕捉8隻寶可夢",
+        "description": "捕捉 8 隻寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -4455,7 +4455,7 @@
         ]
       },
       {
-        "description": "傳送3個友情禮物給朋友",
+        "description": "傳送 3 個友情禮物",
         "rewards": [
           {
             "isFeatured": false,
@@ -4488,7 +4488,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "精靈球 ×10",
+            "name": "球球 ×10",
             "quantity": "×10"
           },
           {
