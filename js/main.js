@@ -409,6 +409,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const group = title.closest('.nav-group');
             if (group) {
                 group.classList.toggle('is-expanded');
+                // 觸控裝置（平板）沒有 mouseleave：再點一次標題也能解除抑制、重新打開
+                group.classList.remove('menu-suppressed');
             }
         });
     });
@@ -528,15 +530,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     desktopSubmenuButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const parentSubLinks = button.closest('.sub-links');
-            if (parentSubLinks) {
-                // 暫時將 display 設為 none 來強制隱藏
-                parentSubLinks.style.display = 'none';
-
-                // 短暫延遲後移除 style，讓 CSS 的 :hover 效果能重新接管
-                setTimeout(() => {
-                    parentSubLinks.style.display = '';
-                }, 100);
+            const group = button.closest('.nav-group');
+            if (group) {
+                // 選完項目後抑制選單（不然滑鼠還停在原地、選單會一直開著），
+                // 滑鼠離開該區域後解除，之後 hover 即可再次展開
+                group.classList.add('menu-suppressed');
+                button.blur();   // 放掉焦點，避免 :focus-within 讓選單持續顯示
+                group.addEventListener('mouseleave', () => {
+                    group.classList.remove('menu-suppressed');
+                }, { once: true });
             }
         });
     });

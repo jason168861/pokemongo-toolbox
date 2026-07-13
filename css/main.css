@@ -453,9 +453,13 @@ body {
         color: #1877f2;
     }
 
-    /* Style the dropdown menu itself */
+    /* Style the dropdown menu itself
+       用 visibility/opacity 切換（而非 display）：滑出後有 0.25s 寬限才真正關閉，
+       斜向移入子選單時就算短暫滑出範圍也不會中途消失 */
     .nav-group .sub-links {
-        display: none;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.15s ease, visibility 0s linear 0.25s;
         position: absolute;
         top: 100%;
         left: 50%;
@@ -474,7 +478,15 @@ body {
     /* Show dropdown on hover */
     .nav-group:hover .sub-links,
     .nav-group:focus-within .sub-links {
-        display: block;
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
+    }
+
+    /* 點選項目後暫時抑制選單（避免切完分頁選單還掛著），滑鼠離開後解除，見 main.js */
+    .nav-group.menu-suppressed .sub-links {
+        visibility: hidden !important;
+        opacity: 0 !important;
     }
 
     /* Style individual items within the dropdown */
@@ -881,15 +893,15 @@ body {
 /* 桌面：下拉展開成兩欄，各有分類標題 */
 @media (min-width: 769px) {
     .nav-group .sub-links.mega-menu {
-        left: 0;
-        transform: none;              /* 靠左對齊按鈕，避免 480px 寬置中時溢出畫面 */
-        min-width: 480px;
-        padding: 14px 8px;
-    }
-    .nav-group:hover .sub-links.mega-menu,
-    .nav-group:focus-within .sub-links.mega-menu {
         display: flex;
         gap: 8px;
+        /* 往左側展開：右緣對齊按鈕右緣，避免平板上 480px 寬超出視窗右緣被裁掉 */
+        left: auto;
+        right: 0;
+        transform: none;
+        min-width: 480px;
+        max-width: calc(100vw - 24px);
+        padding: 14px 8px;
     }
     .mega-col { flex: 1; min-width: 0; }
     .mega-col + .mega-col { border-left: 1px solid #eee; padding-left: 8px; }
