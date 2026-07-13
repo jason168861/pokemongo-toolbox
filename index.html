@@ -127,28 +127,29 @@
         <span></span>
     </button>
 
+    <!-- 導覽項目用 <a href> 而非 <button>：才能右鍵/中鍵「在新分頁開啟」，
+         左鍵點擊由 main.js 攔截改走 SPA 切換（不重新載入頁面） -->
     <div class="nav-links">
-        <button class="tab-button active" data-target="docs-app">功能說明</button>
+        <a class="tab-button active" data-target="docs-app" href="./">功能說明</a>
 
         <div class="nav-group mega-group">
             <button class="group-title">功能選單</button>
             <div class="sub-links mega-menu">
                 <div class="mega-col">
                     <div class="mega-heading">常用查詢</div>
-                    <button class="tab-button" data-target="cp-checker-app">IV100 CP 查詢</button>
-                    <button class="tab-button" data-target="pvp-ranker-app">PvP IV 排名查詢</button>
-                    <button class="tab-button" data-target="id-selector-app">寶可夢編號篩選器</button>
-                    <button class="tab-button" data-target="search-filters-app">搜尋篩選指令</button>
+                    <a class="tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">IV100 CP 查詢</a>
+                    <a class="tab-button" data-target="pvp-ranker-app" href="?tab=pvp-ranker-app">PvP IV 排名查詢</a>
+                    <a class="tab-button" data-target="id-selector-app" href="?tab=id-selector-app">寶可夢編號篩選器</a>
+                    <a class="tab-button" data-target="search-filters-app" href="?tab=search-filters-app">搜尋篩選指令</a>
                 </div>
                 <div class="mega-col">
                     <div class="mega-heading">遊戲資訊</div>
-                    <button class="tab-button" data-target="raids-app">團體戰列表</button>
-                    <button class="tab-button" data-target="eggs-app">孵蛋列表</button>
-                    <button class="tab-button" data-target="research-app">田野調查任務</button>
-                    <button class="tab-button" data-target="special-research-app">特殊調查</button>
-                    <!-- <button class="tab-button" data-target="level-up-app">升級條件</button> -->
-                    <button class="tab-button" data-target="info-hub-app">特別資訊</button>
-                    <button class="tab-button" data-target="map-app">補給站/道館地圖</button>
+                    <a class="tab-button" data-target="raids-app" href="?tab=raids-app">團體戰列表</a>
+                    <a class="tab-button" data-target="eggs-app" href="?tab=eggs-app">孵蛋列表</a>
+                    <a class="tab-button" data-target="research-app" href="?tab=research-app">田野調查任務</a>
+                    <a class="tab-button" data-target="special-research-app" href="?tab=special-research-app">特殊調查</a>
+                    <a class="tab-button" data-target="info-hub-app" href="?tab=info-hub-app">特別資訊</a>
+                    <a class="tab-button" data-target="map-app" href="?tab=map-app">補給站/道館地圖</a>
                 </div>
             </div>
         </div>
@@ -251,8 +252,8 @@
 </div>
         <div id="cp-checker-app" class="app-content">
              <div class="container">
-                <h1>Pokémon Go</h1>
-                <p style="text-align: center; margin-top: -15px; margin-bottom: 25px; color: #606770;">15等、20等 & 25等 IV100 CP 查詢</p>
+                <h1>IV100 CP 查詢</h1>
+                <p style="text-align: center; margin-top: -15px; margin-bottom: 25px; color: #606770;">15等、20等 & 25等滿 IV 的 CP 數值速查</p>
                 <div class="search-area">
                     <input type="text" id="cpSearchInput" placeholder="輸入寶可夢名稱、形態或全國圖鑑編號...">
                     <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
@@ -333,6 +334,7 @@
             <header>
                 <h1>寶可夢編號篩選器</h1>
                 <p>點擊圖片來選擇或取消選擇寶可夢。</p>
+                <p class="combo-tip">💡 產生的編號可以和<a href="?tab=search-filters-app" class="tab-button combo-tip-link" data-target="search-filters-app">搜尋篩選指令</a>組合使用，例如「<code>1,4,7&amp;iv4*</code>」＝ 只顯示這些編號中 IV 100 的寶可夢。</p>
                 <footer>
                     <div id="output-container">
                         <div class="output-header">

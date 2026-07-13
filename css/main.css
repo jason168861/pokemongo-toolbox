@@ -69,12 +69,49 @@ body {
     color: #1877f2;
 }
 
+/* 導覽列的 <a> 版分頁連結：外觀與 <button> 版一致 */
+a.tab-button {
+    display: inline-block;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
 .tab-button.active {
     color: #1877f2;
 }
 
 .tab-button.active::after {
     transform: scaleX(1);
+}
+
+/* 編號篩選器頁首的「搭配搜尋指令」提示 */
+#id-selector-app .combo-tip {
+    margin: 6px auto 0;
+    max-width: 640px;
+    font-size: 14px;
+    color: #4a5568;
+    background: #ebf8ff;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+#id-selector-app .combo-tip-link {
+    /* 共用 .tab-button 的分頁切換邏輯，但外觀還原成一般文字連結 */
+    display: inline;
+    padding: 0;
+    font-size: inherit;
+    font-weight: 700;
+    color: #1877f2;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    position: static;
+}
+#id-selector-app .combo-tip-link::after { display: none; }
+#id-selector-app .combo-tip code {
+    background: #fff;
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e0;
 }
 
 /* --- App 內容區 --- */

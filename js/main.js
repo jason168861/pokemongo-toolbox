@@ -193,7 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
             desc: 'Pokémon GO 玩家的一站式中文工具箱：IV100 CP 查詢、PvP IV 排名、編號篩選器、搜尋篩選指令、團體戰、孵蛋與田野調查，資料每日更新。'
         },
         'cp-checker-app': {
-            title: 'IV100 CP 查詢（15／20／25 等）｜Pokémon Go 工具箱',
+            // 避免使用括號：Google 改寫標題時容易從括號中間截斷，變成「25 等）｜…」
+            title: 'IV100 CP 查詢表：15、20、25 等滿 IV CP 速查｜Pokémon Go 工具箱',
             desc: '輸入寶可夢名稱或編號，立即查出 IV 100% 在 15、20、25 等的 CP 數值，快速判斷團體戰捕捉與研究獎勵是否值得。'
         },
         'pvp-ranker-app': {
@@ -331,9 +332,12 @@ document.addEventListener('DOMContentLoaded', () => {
         activateTab(targetAppId);
     }
 
-    // 點擊分頁按鈕 → 更新網址 + 切換內容
+    // 點擊分頁按鈕/連結 → 更新網址 + 切換內容
     tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
+            // 按住 Ctrl/Cmd/Shift 點 <a> 連結時交給瀏覽器開新分頁/視窗
+            if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+            e.preventDefault();   // <a>：阻止整頁重新載入，改走 SPA 切換
             navigateTo(button.dataset.target, false);
         });
     });

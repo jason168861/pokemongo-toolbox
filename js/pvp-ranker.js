@@ -478,4 +478,13 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
     updateSliderDisplay('atk', atkSelect.value);
     updateSliderDisplay('def', defSelect.value);
     updateSliderDisplay('hp', hpSelect.value);
+
+    // 預設帶入妙蛙種子並直接計算：讓新用戶一進來就看到結果長什麼樣子，
+    // 而不是面對一片空白不知道要做什麼
+    const defaultPokemon = POKEDEX.find(p => p.name === '妙蛙種子') || POKEDEX.find(p => p.dexNumber === 1);
+    if (defaultPokemon) {
+        pokemonInput.value = defaultPokemon.name;
+        clearBtn.classList.remove('hidden');
+        handleCalculate();
+    }
 }
