@@ -640,7 +640,11 @@
                 <div id="s2map" class="s2map"></div>
             </div>
 
-            <section class="map-seo">
+            <!-- 說明/FAQ：改為彈窗形式（內容保留在 DOM 供搜尋引擎索引），
+                 由地圖左側的 ❓ 按鈕開啟，避免頁面往下捲動離開地圖 -->
+            <section class="map-seo" id="mapSeo" role="dialog" aria-label="地圖說明與常見問題">
+                <div class="map-seo-inner">
+                <button type="button" class="map-seo-close" title="關閉說明">✕</button>
                 <h1>台灣寶可夢補給站、道館與 S2 網格地圖</h1>
                 <p>這是一份涵蓋全台灣的 Pokémon GO 補給站（PokéStop）與道館（Gym）位置地圖，資料整理自 Niantic Wayspot。你可以疊上 S2 網格（L14 道館網格／L17 補給站網格）、搜尋地點、一鍵定位，並顯示以自己為中心的 40 公尺（寶可夢出沒範圍）與 80 公尺（補給站／道館互動範圍）兩個範圍圈，方便判斷道館生成、寶可夢出沒與可互動範圍。</p>
 
@@ -679,6 +683,7 @@
                     <summary>資料會更新嗎？</summary>
                     <p>位置資料會不定期補充。若你發現有缺漏或已移除的地點，歡迎回報協助更新。</p>
                 </details>
+                </div>
             </section>
         </div>
     </div>

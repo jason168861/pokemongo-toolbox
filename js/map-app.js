@@ -306,6 +306,36 @@ export function initializeMapApp() {
   });
   map.addControl(new PanelToggle());
 
+  // 說明/FAQ 開關鈕：內容原本是地圖下方的 SEO 文章，改成彈窗避免頁面捲離地圖
+  var seoEl = document.getElementById('mapSeo');
+  var InfoToggle = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd: function () {
+      var container = L.DomUtil.create('div', 'leaflet-bar info-toggle-control');
+      var link = L.DomUtil.create('a', '', container);
+      link.href = '#';
+      link.title = '地圖說明與常見問題';
+      link.setAttribute('role', 'button');
+      link.textContent = '❓';
+      L.DomEvent.on(link, 'click', function (e) {
+        L.DomEvent.stop(e);
+        seoEl.classList.add('open');
+      });
+      L.DomEvent.disableClickPropagation(container);
+      return container;
+    }
+  });
+  if (seoEl) {
+    map.addControl(new InfoToggle());
+    seoEl.querySelector('.map-seo-close').addEventListener('click', function () {
+      seoEl.classList.remove('open');
+    });
+    // 點擊半透明背景（彈窗外）也可關閉
+    seoEl.addEventListener('click', function (e) {
+      if (e.target === seoEl) seoEl.classList.remove('open');
+    });
+  }
+
   // -------------------------------------------------------------------------
   // 讓 .map-topbar 當作「中間欄」：兩側各自避開 Leaflet 控制項
   //   左：縮放 + 定位鈕；右：「選擇地圖」圖層清單（含滑過/點擊展開後的寬度）

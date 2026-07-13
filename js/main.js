@@ -302,10 +302,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // 地圖分頁：捲動位置會沿用上一個分頁，若已往下捲會看不到地圖上方的
-        // 控制列（搜尋框/面板），新用戶不知道那裡可以操作 → 進入時拉回頂端
+        // 控制列（搜尋框/面板），新用戶不知道那裡可以操作 → 進入時拉回頂端。
+        // 並鎖住頁面捲動（地圖已滿版，說明文字改為 ❓ 彈窗），避免滑動時捲離地圖。
         if (targetAppId === 'map-app') {
             window.scrollTo(0, 0);
         }
+        document.documentElement.classList.toggle('map-noscroll', targetAppId === 'map-app');
 
         // 4.【SEO】更新此分頁對應的標題與描述
         applySeo(targetAppId);
