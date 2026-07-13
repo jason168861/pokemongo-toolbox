@@ -7,7 +7,6 @@
   "COMPLETE_FIFTY_PERCENT",
   "COMPLETE_TEN_PERCENT",
   "CONTINENTAL",
-  "COUNTERFEIT",
   "DANDY",
   "DEBUTANTE",
   "DIAMOND",
@@ -38,7 +37,6 @@
   "MODERN",
   "MONSOON",
   "NATURAL",
-  "NEUTRAL",
   "OCEAN",
   "ORANGE",
   "PHARAOH",
@@ -54,6 +52,5 @@
   "SNOWY",
   "STAR",
   "SUNNY",
-  "TUNDRA",
-  "UNREMARKABLE"
+  "TUNDRA"
 ]

@@ -13,7 +13,9 @@
 import os
 import re
 import json
+import hashlib
 import requests
+from PIL import Image
 
 LOCAL_DIR = r"C:\Users\qian\Desktop\poke_web\pogo_assets\Images\Pokemon - 256x256\Addressable Assets"
 IMAGE_BASE = "https://cdn.jsdelivr.net/gh/PokeMiners/pogo_assets@master/Images/Pokemon%20-%20256x256/Addressable%20Assets/"
@@ -143,6 +145,12 @@ def build_translators():
     return name_zh, form_zh, forms
 
 
+def pixel_hash(fn):
+    """圖片的逐像素雜湊：像素完全相同的圖會得到相同雜湊（PNG 編碼差異不影響）"""
+    with Image.open(os.path.join(LOCAL_DIR, fn)) as im:
+        return hashlib.md5(im.convert("RGBA").tobytes()).hexdigest()
+
+
 def parse_filename(fn):
     m = re.match(r"^pm(\d+)(?:\.f([A-Za-z0-9_]+))?(?:\.c([A-Za-z0-9_]+))?"
                  r"(?:\.g(\d))?(\.s)?\.icon\.png$", fn)
@@ -194,13 +202,28 @@ def main():
             continue
         by_dex.setdefault(v["dex"], []).append(v)
 
+    print("⏳ 逐像素比對、移除重複變體…")
     pokemon = []
+    dup_removed = []
     for dex in sorted(by_dex):
         variants = by_dex[dex]
         # 排序：一般在前 → 造型（Mega 等）→ 服裝排最後；各自的異色緊跟在本體後
         variants.sort(key=lambda v: (
             bool(v["costume"]), bool(v["form"]), v["form"] or "",
             v["costume"] or "", v["gender"] or 0, v["shiny"]))
+        # 逐像素去重：同一隻內像素完全相同的變體（多為沒實際換裝的服裝佔位圖），
+        # 因為已排序，保留下來的會是最基本的那張（一般 > 造型 > 服裝）。
+        seen = {}
+        unique = []
+        for v in variants:
+            h = pixel_hash(v["file"])
+            if h in seen:
+                dup_removed.append((v["file"], seen[h]))
+                continue
+            seen[h] = v["file"]
+            unique.append(v)
+        variants = unique
+
         out_variants = []
         for v in variants:
             out_variants.append({
@@ -236,6 +259,10 @@ def main():
     size_kb = os.path.getsize(OUTPUT) / 1024
     print(f"\n🎉 完成！{len(pokemon)} 隻寶可夢、{manifest['variantCount']} 個變體 "
           f"→ {OUTPUT}（{size_kb:.0f} KB）")
+    if dup_removed:
+        print(f"🧹 移除 {len(dup_removed)} 個與其他變體像素完全相同的重複圖，例如：")
+        for dropped, kept in dup_removed[:5]:
+            print(f"    {dropped} ＝ {kept}")
     if skipped:
         print(f"⚠️ {len(skipped)} 個檔名無法解析：{skipped[:5]}")
 
