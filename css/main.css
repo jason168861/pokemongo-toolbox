@@ -118,7 +118,7 @@ body {
 
 #docs-app .home-hero {
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
+    grid-template-columns: 1fr;
     gap: 20px;
     align-items: stretch;
     margin-bottom: 28px;
@@ -335,12 +335,31 @@ body {
         padding: 18px;
     }
 
+    /* 手機：卡片精簡成兩欄、只留圖示＋名稱，一屏掃完全部功能 */
     #docs-app .home-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
     }
 
     #docs-app .home-card {
         min-height: 0;
+        padding: 12px;
+        gap: 6px;
+    }
+
+    #docs-app .home-card-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        font-size: 18px;
+    }
+
+    #docs-app .home-card-title {
+        font-size: 0.95rem;
+    }
+
+    #docs-app .home-card-text {
+        display: none;
     }
 }
 
