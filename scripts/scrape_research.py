@@ -89,10 +89,20 @@ GENERAL_TRANSLATIONS = {
 # （例如 LeekDuck 自創的造型寶可夢描述名）。
 # 兩邊都查不到的字串會寫入 scripts/untranslated_report.json 供人工檢查。
 
-POGO_TEXT_EN = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20APK/English.txt"
-POGO_TEXT_ZHT = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Texts/Latest%20APK/ChineseTraditional.txt"
+# 文字來源（依序載入合併，後面的來源覆蓋前面）：
+#   holoholo-text：最完整的官方遊戲文字 dump（含活動/特殊調查字串），持續更新。
+#   格式標記：'txt' = PokeMiners 的 RESOURCE ID/TEXT 格式；'json' = {"data": [k,v,k,v,…]}
+POGO_TEXT_SOURCES = [
+    ("json",
+     "https://raw.githubusercontent.com/sora10pls/holoholo-text/refs/heads/main/Release/English/en-us_raw.json",
+     "https://raw.githubusercontent.com/sora10pls/holoholo-text/refs/heads/main/Release/Traditional%20Chinese/zh-tw_raw.json"),
+    # Remote＝遠端下發的活動字串（活動限定的特殊調查標題/任務常只在這裡）
+    ("json",
+     "https://raw.githubusercontent.com/sora10pls/holoholo-text/refs/heads/main/Remote/English/en-us_raw.json",
+     "https://raw.githubusercontent.com/sora10pls/holoholo-text/refs/heads/main/Remote/Traditional%20Chinese/zh-tw_raw.json"),
+]
 
-_OFFICIAL = {"exact": {}, "templates": []}
+_OFFICIAL = {"exact": {}, "loose": {}, "templates": []}
 _UNTRANSLATED = set()
 
 def _parse_pogo_text(raw):
@@ -116,16 +126,24 @@ def _normalize_text(s):
     """統一彎引號/不換行空格等差異，讓 LeekDuck 文字能對上官方文本"""
     return s.replace(" ", " ").replace("’", "'").replace("‘", "'").strip()
 
+def _parse_pogo_json(raw):
+    """解析 holoholo-text 的 JSON 格式：{"data": [key, value, key, value, …]}"""
+    data = json.loads(raw)["data"]
+    return dict(zip(data[0::2], data[1::2]))
+
 def build_official_translation_db():
-    """下載並建立官方英繁對照庫。下載失敗時靜默退回純手動字典模式。"""
-    try:
-        en_raw = requests.get(POGO_TEXT_EN, headers=HEADERS, timeout=60).text
-        zht_raw = requests.get(POGO_TEXT_ZHT, headers=HEADERS, timeout=60).text
-    except Exception as e:
-        print(f"⚠️ 無法下載官方在地化文本（{e}），本次僅使用手動字典。")
+    """下載並建立官方英繁對照庫。下載失敗時退回純手動字典模式。"""
+    en_map, zht_map = {}, {}
+    for fmt, en_url, zht_url in POGO_TEXT_SOURCES:
+        parse = _parse_pogo_json if fmt == "json" else _parse_pogo_text
+        try:
+            en_map.update(parse(requests.get(en_url, headers=HEADERS, timeout=60).text))
+            zht_map.update(parse(requests.get(zht_url, headers=HEADERS, timeout=60).text))
+        except Exception as e:
+            print(f"⚠️ 無法下載官方文本 {en_url.split('/')[-1]}（{e}），略過此來源。")
+    if not en_map:
+        print("⚠️ 官方文本全數下載失敗，本次僅使用手動字典。")
         return
-    en_map = _parse_pogo_text(en_raw)
-    zht_map = _parse_pogo_text(zht_raw)
     ph_re = re.compile(r"\{(\d+)\}")
 
     for key, en_text in en_map.items():
@@ -148,6 +166,12 @@ def build_official_translation_db():
             )
         else:
             _OFFICIAL["exact"].setdefault(en_norm.lower(), zh_text)
+            # 寬鬆索引：去掉標點/空白，容忍來源網站與遊戲內的細微差異
+            # （如 "Chill Out, Frigibax" vs 官方 "Chill Out, Frigibax!"）。
+            # 只收較長字串，避免短字串誤配。
+            lk = re.sub(r"[^a-z0-9]", "", en_norm.lower())
+            if len(lk) >= 8:
+                _OFFICIAL["loose"].setdefault(lk, zh_text)
 
     # 長模板優先比對（字面文字越長越精確，避免被短模板搶先誤配）
     _OFFICIAL["templates"].sort(key=lambda t: -t[3])
@@ -161,6 +185,13 @@ def official_translate(text):
     hit = _OFFICIAL["exact"].get(t.lower())
     if hit:
         return hit
+    # 寬鬆比對：去標點/空白後再試，並容忍尾端複數 s 的差異
+    lk = re.sub(r"[^a-z0-9]", "", t.lower())
+    if len(lk) >= 8:
+        hit = _OFFICIAL["loose"].get(lk) \
+            or (_OFFICIAL["loose"].get(lk[:-1]) if lk.endswith("s") else _OFFICIAL["loose"].get(lk + "s"))
+        if hit:
+            return hit
     for regex, zh_tmpl, placeholders, _ in _OFFICIAL["templates"]:
         m = regex.match(t)
         if m:
@@ -177,6 +208,76 @@ def official_translate(text):
 def record_untranslated(text):
     _UNTRANSLATED.add(text)
     return text
+
+# 組合式翻譯規則：官方文本沒有的「參數化句型」（活動限定字串常見），
+# 把屬性/地區/寶可夢名當參數代換，一條規則涵蓋一整族句子。
+POKEMON_TYPES_ZH = {
+    'Normal': '一般', 'Fire': '火', 'Water': '水', 'Grass': '草', 'Electric': '電',
+    'Ice': '冰', 'Fighting': '格鬥', 'Poison': '毒', 'Ground': '地面', 'Flying': '飛行',
+    'Psychic': '超能力', 'Bug': '蟲', 'Rock': '岩石', 'Ghost': '幽靈', 'Dragon': '龍',
+    'Dark': '惡', 'Steel': '鋼', 'Fairy': '妖精',
+}
+REGIONS_ZH = {
+    'Kanto': '關都', 'Johto': '城都', 'Hoenn': '豐緣', 'Sinnoh': '神奧', 'Unova': '合眾',
+    'Kalos': '卡洛斯', 'Alola': '阿羅拉', 'Galar': '伽勒爾', 'Hisui': '洗翠', 'Paldea': '帕底亞',
+}
+CITIES_ZH = {
+    'Amsterdam': '阿姆斯特丹', 'Bangkok': '曼谷', 'Buenos Aires': '布宜諾斯艾利斯',
+    'Cancun': '坎昆', 'Miami': '邁阿密', 'Sydney': '雪梨', 'Valencia': '瓦倫西亞',
+    'Vancouver': '溫哥華', 'Tokyo': '東京', 'Chicago': '芝加哥', 'Copenhagen': '哥本哈根',
+    'Nagasaki': '長崎', 'Taipei': '台北', 'New Taipei City': '新北', 'Seoul': '首爾',
+    'Barcelona': '巴塞隆納', 'Mexico City': '墨西哥城', 'Singapore': '新加坡',
+}
+
+def _count_zh(s):
+    return '1' if s.lower() in ('a', 'an') else s
+
+def compose_translate(task_text):
+    """規則組合翻譯，翻不出來回傳 None"""
+    m = re.match(r'^Earn (\d+) hearts? with an? ([A-Za-z]+)-type buddy$', task_text, re.IGNORECASE)
+    if m:
+        t = POKEMON_TYPES_ZH.get(m.group(2).capitalize())
+        if t:
+            return f'將{t}屬性的寶可夢設成夥伴，並和牠獲得{m.group(1)}顆心心'
+    m = re.match(r'^Catch (an?|\d+) Pokémon originally discovered in the ([A-Za-z]+) region$',
+                 task_text, re.IGNORECASE)
+    if m:
+        r = REGIONS_ZH.get(m.group(2).capitalize())
+        if r:
+            return f'捕捉 {_count_zh(m.group(1))} 隻最初發現於{r}地區的寶可夢'
+    # "Catch a Scatterbug" / "Catch 3 Scatterbug"：後半段翻得出寶可夢名才成立
+    m = re.match(r'^Catch (an?|\d+) (.+)$', task_text)
+    if m:
+        name = official_translate(m.group(2))
+        if name:
+            return f'捕捉 {_count_zh(m.group(1))} 隻{name}'
+    # "Explore 2km"（官方模板要求 km 前有空格，這裡容忍無空格寫法）
+    m = re.match(r'^Explore (\d+)\s*km$', task_text, re.IGNORECASE)
+    if m:
+        return f'探索 {m.group(1)} 公里'
+    m = re.match(r'^Use an? ([A-Za-z]+)-type Charged Attack in (\d+) battles?$', task_text, re.IGNORECASE)
+    if m:
+        t = POKEMON_TYPES_ZH.get(m.group(1).capitalize())
+        if t:
+            return f'在 {m.group(2)} 場對戰中使出{t}屬性的特殊招式'
+    m = re.match(r'^Earn a Candy exploring with an? ([A-Za-z]+) type as your buddy$', task_text, re.IGNORECASE)
+    if m:
+        t = POKEMON_TYPES_ZH.get(m.group(1).capitalize())
+        if t:
+            return f'和{t}屬性的夥伴寶可夢一起走路獲得 1 顆糖果'
+    m = re.match(r'^Power up ([A-Za-z]+) Pokémon (\d+) times$', task_text, re.IGNORECASE)
+    if m:
+        t = POKEMON_TYPES_ZH.get(m.group(1).capitalize())
+        if t:
+            return f'強化{t}屬性的寶可夢 {m.group(2)} 次'
+    # City Safari 城市限定任務
+    m = re.match(r'^Spin an? PokéStops? or Gyms? in (.+)$', task_text, re.IGNORECASE)
+    if m and m.group(1) in CITIES_ZH:
+        return f'在{CITIES_ZH[m.group(1)]}轉動補給站或道館的轉盤'
+    m = re.match(r'^Take a Snapshot of your Eevee in (.+)$', task_text, re.IGNORECASE)
+    if m and m.group(1) in CITIES_ZH:
+        return f'在{CITIES_ZH[m.group(1)]}為你的伊布拍攝 1 張 GO Snapshot 照片'
+    return None
 
 # ==================== 官方在地化文本 END ====================
 
@@ -296,6 +397,10 @@ def translate_task_description(task_text, task_map):
         if in_a_row:
             return f"連續投出 {count} 次 {translated_throw_type}".replace('  ', ' ').strip()
         return f"投出 {count} 次 {translated_throw_type}".replace('  ', ' ').strip()
+
+    composed = compose_translate(task_text)
+    if composed:
+        return composed
 
     return record_untranslated(task_text)
 
