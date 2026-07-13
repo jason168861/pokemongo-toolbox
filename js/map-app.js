@@ -65,8 +65,20 @@ export function initializeMapApp() {
     container.addEventListener('touchcancel', endGesture);
   })();
 
-  // 因為分頁一開始是隱藏的，切過來時容器尺寸才確定，需重新計算一次
-  setTimeout(function () { map.invalidateSize(); }, 120);
+  // 讓地圖外框「精確」填滿導覽列以下到視窗底的空間。
+  // CSS 的 calc(100dvh - var(--nav-height) - 33px) 只是載入前的估算值，
+  // nav 高度變數量測不準時會多出 ~20px 可捲高度，這裡改用實際位置計算，
+  // 讓頁面總高 = 視窗高，配合捲動鎖（map-noscroll）做到完全不可捲。
+  var wrapEl = map.getContainer().closest('.map-app-wrap');
+  function fitMapHeight() {
+    if (!wrapEl || !wrapEl.offsetParent) return;   // 分頁隱藏時不算（rect 會是 0）
+    var top = wrapEl.getBoundingClientRect().top;
+    wrapEl.style.height = Math.max(320, window.innerHeight - top) + 'px';
+    map.invalidateSize();
+  }
+  // 分頁一開始是隱藏的，切過來時容器尺寸才確定，需延遲一拍再算
+  setTimeout(fitMapHeight, 120);
+  window.addEventListener('resize', fitMapHeight);   // 轉向、手機網址列縮放時重算
 
   var baseLayers = {
     '街道圖 (OSM)': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

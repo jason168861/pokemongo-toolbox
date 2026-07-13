@@ -56,6 +56,13 @@
    （html 也要鎖：iOS Safari 只鎖 body 時觸控捲動仍會漏） */
 html.map-noscroll, html.map-noscroll body { overflow: hidden; }
 
+/* 地圖分頁把 footer 一併隱藏：讓頁面沒有任何可捲的剩餘高度，
+   連「聚焦輸入框時瀏覽器自動捲動」這類程式化捲動也無處可捲。
+   其他分頁的 copyright / fair-use 聲明不受影響。 */
+html.map-noscroll .site-footer { display: none; }
+/* body 底部 padding 也會製造 5px 可捲高度，一併歸零 */
+html.map-noscroll body { padding-bottom: 0; }
+
 /* 說明 / FAQ（SEO 文字內容）：平常收合成彈窗，由 ❓ 按鈕開啟。
    內容保留在 DOM 中供搜尋引擎索引，不佔頁面高度。 */
 #map-app .map-seo {
