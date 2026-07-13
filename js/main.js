@@ -301,6 +301,12 @@ document.addEventListener('DOMContentLoaded', () => {
             mapAppInitialized = true;
         }
 
+        // 地圖分頁：捲動位置會沿用上一個分頁，若已往下捲會看不到地圖上方的
+        // 控制列（搜尋框/面板），新用戶不知道那裡可以操作 → 進入時拉回頂端
+        if (targetAppId === 'map-app') {
+            window.scrollTo(0, 0);
+        }
+
         // 4.【SEO】更新此分頁對應的標題與描述
         applySeo(targetAppId);
     }
