@@ -1,6 +1,98 @@
 [
   {
-    "category": "Pokémon GO Fest 2026: Global - Common tasks",
+    "category": "Special Anniversary Pikachu Celebration Tasks",
+    "tasks": [
+      {
+        "description": "贏得3場團體戰",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a varsity jacket",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2025.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "World Championships 2022 Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2022.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "World Championships 2024 Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2024.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "Catch 10 Pikachu",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Leaf's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_A_02.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Lyra's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_B_02.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing May's Bandana",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOTOUR_2023_BANDANA_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Red's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_A.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "Catch 15 Pikachu",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Meloetta Hat Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOFEST_2021_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Fest 2026: Global - Common tasks Tasks",
     "tasks": [
       {
         "description": "Catch 8 different species of Pokémon",
@@ -1099,11 +1191,11 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "滴蛛",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm751.icon.png",
+            "name": "膽小蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm767.icon.png",
             "isShiny": true,
-            "maxCp": "306",
-            "minCp": "277"
+            "maxCp": "215",
+            "minCp": "191"
           }
         ]
       },
@@ -1131,11 +1223,11 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "滴蛛",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm751.icon.png",
+            "name": "膽小蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm767.icon.png",
             "isShiny": true,
-            "maxCp": "306",
-            "minCp": "277"
+            "maxCp": "215",
+            "minCp": "191"
           }
         ]
       }
