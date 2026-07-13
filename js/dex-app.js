@@ -6,6 +6,17 @@
 // 由 main.js 在切到此分頁時呼叫 initializeDexApp() 延遲初始化。
 // ============================================================================
 
+// 18 屬性：英文代碼 → [中文, 官方色]
+const TYPES = {
+  normal: ['一般', '#9099a1'], fire: ['火', '#ff9d55'], water: ['水', '#4d90d5'],
+  electric: ['電', '#f3d23b'], grass: ['草', '#63bc5a'], ice: ['冰', '#73cec0'],
+  fighting: ['格鬥', '#ce4069'], poison: ['毒', '#ab6ac8'], ground: ['地面', '#d97845'],
+  flying: ['飛行', '#8fa8dd'], psychic: ['超能力', '#f97176'], bug: ['蟲', '#90c12c'],
+  rock: ['岩石', '#c7b78b'], ghost: ['幽靈', '#5269ad'], dragon: ['龍', '#0b6dc3'],
+  dark: ['惡', '#5a5366'], steel: ['鋼', '#5a8ea2'], fairy: ['妖精', '#ec8fe6']
+};
+const GEN_NAMES = { 1: '關都', 2: '城都', 3: '豐緣', 4: '神奧', 5: '合眾', 6: '卡洛斯', 7: '阿羅拉', 8: '伽勒爾', 9: '帕底亞' };
+
 let dexInited = false;
 
 export function initializeDexApp() {
@@ -16,15 +27,28 @@ export function initializeDexApp() {
   const statusEl = document.getElementById('dexStatus');
   const searchInput = document.getElementById('dexSearch');
   const shinyToggle = document.getElementById('dexShinyToggle');
+  const genSelect = document.getElementById('dexGen');
+  const typeSelect = document.getElementById('dexType');
   const chips = document.querySelectorAll('#dex-app .dex-chip');
   const modal = document.getElementById('dexModal');
   const modalBody = document.getElementById('dexModalBody');
   const modalClose = document.getElementById('dexModalClose');
 
+  // 填入世代（1–9）與屬性下拉選項
+  for (let g = 1; g <= 9; g++) {
+    genSelect.insertAdjacentHTML('beforeend',
+      `<option value="${g}">第 ${g} 世代・${GEN_NAMES[g]}</option>`);
+  }
+  Object.entries(TYPES).forEach(([code, [zh]]) => {
+    typeSelect.insertAdjacentHTML('beforeend', `<option value="${code}">${zh}</option>`);
+  });
+
   let pokemon = null;
   let imageBase = '';
   let filter = 'all';
   let query = '';
+  let gen = '';
+  let type = '';
   let showShiny = false;
 
   fetch('data/pokedex_manifest.json')
@@ -49,6 +73,8 @@ export function initializeDexApp() {
     if (filter === 'shiny' && !p.hasShiny) return false;
     if (filter === 'mega' && !p.hasMega) return false;
     if (filter === 'costume' && !p.hasCostume) return false;
+    if (gen && p.gen !== parseInt(gen, 10)) return false;
+    if (type && !(p.types || []).includes(type)) return false;
     if (query) {
       const q = query.toLowerCase();
       const byNum = /^\d+$/.test(q) && p.dex === parseInt(q, 10);
@@ -58,6 +84,10 @@ export function initializeDexApp() {
   }
 
   const padNo = dex => '#' + String(dex).padStart(4, '0');
+  const typeBadges = types => (types || []).map(t => {
+    const [zh, color] = TYPES[t] || [t, '#888'];
+    return `<span class="dex-type" style="background:${color}">${zh}</span>`;
+  }).join('');
 
   function render() {
     if (!pokemon) return;
@@ -92,7 +122,8 @@ export function initializeDexApp() {
       `<div class="dex-modal-head">
          <span class="dex-modal-no">${padNo(p.dex)}</span>
          <h2>${p.name}</h2>
-         <span class="dex-modal-count">${p.variants.length} 種樣式</span>
+         <span class="dex-modal-types">${typeBadges(p.types)}</span>
+         <span class="dex-modal-count">第 ${p.gen} 世代・${p.variants.length} 種樣式</span>
        </div>
        <div class="dex-var-grid">${vars}</div>`;
     modal.classList.add('open');
@@ -115,6 +146,8 @@ export function initializeDexApp() {
     searchTimer = setTimeout(() => { query = searchInput.value.trim(); render(); }, 200);
   });
   shinyToggle.addEventListener('change', () => { showShiny = shinyToggle.checked; render(); });
+  genSelect.addEventListener('change', () => { gen = genSelect.value; render(); });
+  typeSelect.addEventListener('change', () => { type = typeSelect.value; render(); });
   chips.forEach(c => c.addEventListener('click', () => {
     chips.forEach(x => x.classList.remove('active'));
     c.classList.add('active');

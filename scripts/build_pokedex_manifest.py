@@ -77,6 +77,40 @@ def load_holo(url):
     return dict(zip(d[0::2], d[1::2]))
 
 
+# 各世代的全國圖鑑編號上界（1=關都 … 9=帕底亞）
+GEN_BOUNDS = [151, 251, 386, 493, 649, 721, 809, 905, 1025]
+
+
+def gen_of(dex):
+    for i, b in enumerate(GEN_BOUNDS, 1):
+        if dex <= b:
+            return i
+    return 0
+
+
+def load_pokedex_types():
+    """從現有的 POKEDEX（JS 檔）取每隻的屬性；同編號取第一個（base form）。
+    檔案含多個變數陣列，用括號配對只擷取 POKEDEX = [...] 這一段。"""
+    txt = open("./data/pokemon_data_and_rankings.js", encoding="utf-8").read()
+    start = txt.index("[", txt.index("POKEDEX"))
+    depth, end = 0, start
+    for i in range(start, len(txt)):
+        if txt[i] == "[":
+            depth += 1
+        elif txt[i] == "]":
+            depth -= 1
+            if depth == 0:
+                end = i + 1
+                break
+    arr = json.loads(txt[start:end])
+    types = {}
+    for e in arr:
+        d = e.get("dexNumber")
+        if d and d not in types and e.get("types"):
+            types[d] = e["types"]
+    return types
+
+
 def build_translators():
     en = load_holo(HOLO_EN)
     zht = load_holo(HOLO_ZHT)
@@ -147,6 +181,7 @@ def make_label(v, form_zh):
 def main():
     print("⏳ 載入官方繁中文本…")
     name_zh, form_zh, forms = build_translators()
+    dex_types = load_pokedex_types()
 
     print("⏳ 掃描本地圖片檔名…")
     files = [f for f in os.listdir(LOCAL_DIR) if f.endswith(".icon.png")]
@@ -179,6 +214,8 @@ def main():
         pokemon.append({
             "dex": dex,
             "name": name_zh(dex) or ("#%d" % dex),
+            "gen": gen_of(dex),
+            "types": dex_types.get(dex, []),
             "variants": out_variants,
             # 方便前端做「有無異色 / 有無 Mega / 有無服裝」篩選的快速旗標
             "hasShiny": any(v["shiny"] for v in variants),
