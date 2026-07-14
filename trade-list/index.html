@@ -420,7 +420,25 @@ async function downloadPNG(){
     if(t.outline){x.lineJoin='round';x.lineWidth=Math.max(3,t.size*0.1);x.strokeStyle=THEMES[THEME].exp.tOut;x.strokeText(t.text,px,py);}
     x.fillStyle=t.color;x.fillText(t.text,px,py);
   }
-  const a=document.createElement('a');a.download=tr('fname')+'.png';a.href=cv.toDataURL('image/png');a.click();
+  await saveCanvas(cv, tr('fname')+'.png');
+}
+async function saveCanvas(cv, name){
+  // iOS Safari:data URL 的「檢視」常沒反應 → 改用 Blob + 系統分享(可存到相簿),桌機則直接下載
+  const blob = await new Promise(res=>{ if(cv.toBlob) cv.toBlob(res,'image/png'); else res(null); });
+  if(blob){
+    const file = new File([blob], name, {type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file], title:name}); return; }
+      catch(e){ if(e && e.name==='AbortError') return; }   // 使用者取消就結束;其他錯誤往下走
+    }
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download=name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 6000);
+    return;
+  }
+  // 極端後備:舊瀏覽器沒有 toBlob
+  const a=document.createElement('a'); a.download=name; a.href=cv.toDataURL('image/png'); a.click();
 }
 
 /* ---------- 以下為既有邏輯(縮圖/清單) ---------- */
