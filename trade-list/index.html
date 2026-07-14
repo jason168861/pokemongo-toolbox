@@ -24,10 +24,11 @@
   .chip.scope{border-style:dashed}
   .chip.scope.on{background:var(--acc);color:#fff;border-color:transparent;border-style:solid}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:7px;max-height:66vh;overflow:auto}
-  .cell{position:relative;background:var(--cellbg);border:1px solid var(--line);border-radius:9px;overflow:hidden;cursor:pointer;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+  .cell{position:relative;background:var(--cellbg);border:1px solid var(--line);border-radius:9px;overflow:hidden;cursor:pointer}
+  .cell::before{content:"";display:block;padding-top:100%}   /* 撐出正方形,不靠 aspect-ratio(iOS Safari 相容) */
   .cell:hover{border-color:var(--acc2);transform:translateY(-2px)}
   .cell.added{outline:2px solid var(--want);opacity:.55}
-  .cell img.m{width:88%;height:88%;object-fit:contain;position:relative;z-index:2}
+  .cell img.m{position:absolute;inset:0;margin:auto;width:88%;height:88%;object-fit:contain;z-index:2}
   .cell img.cbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
   .cell .bd{position:absolute;right:2px;top:2px;width:32%;height:32%;object-fit:contain;z-index:3}
   .cell .sh{position:absolute;left:3px;top:2px;font-size:11px;z-index:3}
@@ -45,7 +46,8 @@
   .li{position:relative;cursor:grab}.li.dragging{opacity:.35}
   .li.insb::before{content:'';position:absolute;left:-6px;top:0;bottom:0;width:4px;background:var(--acc2);border-radius:2px;z-index:6}
   .li.insa::after{content:'';position:absolute;right:-6px;top:0;bottom:0;width:4px;background:var(--acc2);border-radius:2px;z-index:6}
-  .li .card{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:var(--cellbg);border:1px solid var(--line)}
+  .li .card{position:relative;border-radius:10px;overflow:hidden;background:var(--cellbg);border:1px solid var(--line)}
+  .li .card::before{content:"";display:block;padding-top:100%}
   .li .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .li .m{position:absolute;inset:0;margin:auto;width:80%;height:80%;object-fit:contain;z-index:2}
   .li .bd{position:absolute;right:5%;top:5%;width:28%;height:28%;z-index:3}
@@ -57,10 +59,10 @@
   .toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
   .themeSel{display:flex;align-items:center;gap:8px;margin-left:auto}
   /* 匯出編輯器 */
-  #editor{position:relative;user-select:none;touch-action:none;margin-top:8px}
+  #editor{position:relative;user-select:none;margin-top:8px}
   #baseCv{width:100%;display:block;border-radius:12px}
   #txtLayer{position:absolute;inset:0}
-  .txt{position:absolute;cursor:grab;white-space:nowrap;line-height:1;font-family:"Arial Black","Microsoft JhengHei",sans-serif}
+  .txt{position:absolute;cursor:grab;white-space:nowrap;line-height:1;touch-action:none;font-family:"Arial Black","Microsoft JhengHei",sans-serif}
   .txt.sel{outline:1.5px dashed #fff;outline-offset:4px;cursor:grabbing}
   .txtctl{display:none;gap:6px;align-items:center;margin-top:10px;flex-wrap:wrap}
   .txtctl input[type=text]{flex:1 1 100%;min-width:100%;font-size:14px}
