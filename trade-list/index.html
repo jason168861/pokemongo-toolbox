@@ -152,6 +152,9 @@
 
 <script>
 const $=s=>document.querySelector(s);
+// 線上(github.io)走 jsDelivr CDN 加速圖片;本機開發用相對路徑。資料 JSON 仍走同源。
+const CDN=(location.protocol==='https:'&&/github\.io$/.test(location.hostname))?'https://cdn.jsdelivr.net/gh/jason168861/pokemongo-toolbox@main/trade-list/':'';
+function cdn(p){ return p && !/^(https?:|data:)/.test(p) ? CDN+p : p; }
 const badgeD='assets/badge_dynamax.png',badgeG='assets/badge_gigantamax.png',badgeP='assets/badge_purified.png',shinyIcon='assets/ic_shiny.png';
 let POKE={},BG=[],THUMBS=[],BGCOMBOS=[],TAB='mon',TARGET='want';
 const FILT={fNormal:true,fShiny:true,fDmax:true,fGmax:true,fCos:true,fSelected:false,fLego:false};
@@ -323,11 +326,11 @@ function reconcile(lay){
 }
 
 /* ---------- 畫底圖(漸層+面板+卡片,不含文字) ---------- */
-function loadImg(s){return new Promise(r=>{const i=new Image();i.crossOrigin='anonymous';i.referrerPolicy='no-referrer';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=s})}
-// 網格/清單用小縮圖(WebP)加速;匯出仍用原圖高解析
+function loadImg(s){return new Promise(r=>{const i=new Image();i.crossOrigin='anonymous';i.referrerPolicy='no-referrer';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=cdn(s)})}
+// 網格/清單用小縮圖(WebP)加速;匯出仍用原圖高解析。皆走 cdn()。
 function thumbOf(u){ if(!u)return u;
-  if(u.startsWith('assets/img/'))return 'assets/thumb/'+u.slice(11).replace(/\.png$/i,'.webp');
-  if(u.startsWith('assets/bg/'))return 'assets/bgthumb/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp');
+  if(u.startsWith('assets/img/'))return cdn('assets/thumb/'+u.slice(11).replace(/\.png$/i,'.webp'));
+  if(u.startsWith('assets/bg/'))return cdn('assets/bgthumb/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp'));
   return u; }
 function rrPath(x,rx,ry,w,h,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+w,ry,rx+w,ry+h,r);x.arcTo(rx+w,ry+h,rx,ry+h,r);x.arcTo(rx,ry+h,rx,ry,r);x.arcTo(rx,ry,rx+w,ry,r);x.closePath();}
 function star(x,cx,cy,r,fill){x.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr_=i%2?r*0.45:r;x[i?'lineTo':'moveTo'](cx+rr_*Math.cos(a),cy+rr_*Math.sin(a));}x.closePath();x.fillStyle=fill;x.fill();}
@@ -480,19 +483,39 @@ function render(){
   }
   appendBatch(); g.onscroll=()=>{if(g.scrollTop+g.clientHeight>g.scrollHeight-300)appendBatch()};
 }
+// 只預載「已渲染之後的接下來一段」(不是全部),首屏最快,滾動時再往前補
+const AHEAD=360;                          // 預先暖快取的張數(約接下來幾屏)
+let preloadToken=0;
+function preloadAhead(){
+  const my=++preloadToken;                // 換篩選/滾動就取消上一輪
+  const start=shown, end=Math.min(shown+AHEAD, FILTERED.length);
+  const urls=[]; for(let k=start;k<end;k++){ const it=FILTERED[k]; if(!it)continue; urls.push(thumbOf(it.url)); if(it.bg)urls.push(thumbOf(it.bg)); }
+  let i=0, active=0; const MAX=6;
+  function pump(){
+    if(my!==preloadToken) return;
+    while(active<MAX && i<urls.length){
+      const u=urls[i++]; if(!u)continue;
+      active++; const im=new Image(); im.referrerPolicy='no-referrer';
+      im.onload=im.onerror=()=>{ active--; if(my===preloadToken) pump(); };
+      im.src=u;
+    }
+  }
+  pump();
+}
 function appendBatch(){
   const g=$('#grid');const end=Math.min(shown+300,FILTERED.length);
   for(let i=shown;i<end;i++){
     const it=FILTERED[i];const d=document.createElement('div');d.className='cell';
     if(inTarget(it))d.classList.add('added');
     d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${thumbOf(it.bg)}">`:''}
-      <img class="m" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${it.badge}">`:''}
+      <img class="m" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
       ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${inTarget(it)?'<span class="ok">✓</span>':''}`;
     d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
     d.onclick=()=>toggleItem(it,d);
     g.appendChild(d);
   }
   shown=end;
+  preloadAhead();   // 暖快取:接下來一段的縮圖
 }
 let LIST={want:[],have:[]};
 let dragK=null,dragIdx=null;
@@ -514,7 +537,7 @@ function drawLists(){
     box.ondrop=e=>{ if(dragK===k&&dragIdx!=null&&e.target===box){e.preventDefault();clearIns();moveItem(k,dragIdx,LIST[k].length);} };
     LIST[k].forEach((c,i)=>{const d=document.createElement('div');d.className='li';d.draggable=true;
       d.innerHTML=`<div class="card">${c.bg?`<img class="bg" loading="lazy" decoding="async" src="${thumbOf(c.bg)}" referrerpolicy="no-referrer">`:''}
-        <img class="m" loading="lazy" decoding="async" src="${thumbOf(c.url)}">${c.badge?`<img class="bd" src="${c.badge}">`:''}
+        <img class="m" loading="lazy" decoding="async" src="${thumbOf(c.url)}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}
         ${c.shiny?'<span class="sh">✨</span>':''}${c.gender==='female'?'<span class="gn">♀</span>':''}${c.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}</div>
         <button class="del">✕</button>`;
       d.querySelector('.del').onclick=e=>{e.stopPropagation();LIST[k].splice(i,1);drawLists();render();renderBase();};
