@@ -423,22 +423,17 @@ async function downloadPNG(){
   await saveCanvas(cv, tr('fname')+'.png');
 }
 async function saveCanvas(cv, name){
-  // iOS Safari:data URL 的「檢視」常沒反應 → 改用 Blob + 系統分享(可存到相簿),桌機則直接下載
+  // 保留 Safari 原本的「下載 / 檢視」選單,只把 data URL 換成 Blob URL
+  // (原本「檢視」沒反應是因為 2x 解析度的 data URL 太長,Safari 開不了;blob: 是短參照就正常)
   const blob = await new Promise(res=>{ if(cv.toBlob) cv.toBlob(res,'image/png'); else res(null); });
   if(blob){
-    const file = new File([blob], name, {type:'image/png'});
-    if(navigator.canShare && navigator.canShare({files:[file]})){
-      try{ await navigator.share({files:[file], title:name}); return; }
-      catch(e){ if(e && e.name==='AbortError') return; }   // 使用者取消就結束;其他錯誤往下走
-    }
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a'); a.href=url; a.download=name;
     document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url), 6000);
+    setTimeout(()=>URL.revokeObjectURL(url), 120000);   // 留時間給「檢視/下載」使用,之後才釋放
     return;
   }
-  // 極端後備:舊瀏覽器沒有 toBlob
-  const a=document.createElement('a'); a.download=name; a.href=cv.toDataURL('image/png'); a.click();
+  const a=document.createElement('a'); a.download=name; a.href=cv.toDataURL('image/png'); a.click();   // 舊瀏覽器後備
 }
 
 /* ---------- 以下為既有邏輯(縮圖/清單) ---------- */
