@@ -82,6 +82,29 @@ def main():
     json.dump(bg, open(os.path.join(HERE, "data", "backgrounds.local.json"), "w", encoding="utf-8"), ensure_ascii=False)
     print(f"\n完成:ok {ok} / 已存在跳過 {skip} / 失敗 {err}", flush=True)
     print("已寫出 data/pokemon.local.json 與 data/backgrounds.local.json", flush=True)
+    make_thumbs()
+
+def make_thumbs():
+    """產生網格用的小 WebP 縮圖(sprite 128px、背卡 220px),大幅加速載入。原圖仍供匯出高解析用。"""
+    try:
+        from PIL import Image
+    except ImportError:
+        print("(略過縮圖:未安裝 Pillow,pip install Pillow)", flush=True); return
+    import glob
+    def gen(srcdir, dstdir, size):
+        src = os.path.join(HERE, srcdir); dst = os.path.join(HERE, dstdir); os.makedirs(dst, exist_ok=True)
+        ok = 0
+        for fn in os.listdir(src):
+            if not fn.lower().endswith((".png", ".jpg", ".jpeg", ".webp")): continue
+            out = os.path.join(dst, os.path.splitext(fn)[0] + ".webp")
+            if os.path.exists(out): continue
+            try:
+                im = Image.open(os.path.join(src, fn)).convert("RGBA"); im.thumbnail((size, size), Image.LANCZOS)
+                im.save(out, "WEBP", quality=82, method=4); ok += 1
+            except Exception: pass
+        print(f"縮圖 {dstdir}: 新增 {ok}", flush=True)
+    gen("assets/img", "assets/thumb", 128)
+    gen("assets/bg", "assets/bgthumb", 220)
 
 if __name__ == "__main__":
     main()
