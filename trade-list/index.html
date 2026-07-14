@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>寶可夢 GO 交易清單產生器</title>
+<style>
+  :root{--bg:#0f1220;--card:#1a1f36;--line:#2b3153;--fg:#eef0fb;--mut:#9aa3c7;--acc:#e0276c;--acc2:#7b5cff;--want:#2f9e57;--have:#c9a227;--cellbg:#0d1024}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font-family:system-ui,"Microsoft JhengHei","PingFang TC",sans-serif;background:var(--bg);background-attachment:fixed;color:var(--fg)}
+  header{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header h1{font-size:16px;margin:0}.sub{color:var(--mut);font-size:12px}
+  .wrap{display:grid;grid-template-columns:1fr 420px;gap:16px;padding:16px;align-items:start}
+  @media(max-width:1020px){.wrap{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px}
+  .tabs{display:flex;gap:8px;margin-bottom:10px}
+  .tabs button{flex:1;background:var(--cellbg);border:1px solid var(--line);color:var(--fg);padding:8px;border-radius:8px;cursor:pointer;font:inherit}
+  .tabs button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));border:0;font-weight:700;color:#fff}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+  input[type=text],input[type=number],select{background:var(--cellbg);border:1px solid var(--line);color:var(--fg);border-radius:8px;padding:8px 10px;font:inherit}
+  .chip{font-size:12px;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:6px 10px;cursor:pointer;user-select:none}
+  .chip.on{background:var(--acc2);color:#fff;border-color:transparent}
+  .fdiv{color:var(--mut);font-size:11px;margin-left:4px;padding-left:9px;border-left:1px solid var(--line);align-self:center}
+  .chip.scope{border-style:dashed}
+  .chip.scope.on{background:var(--acc);color:#fff;border-color:transparent;border-style:solid}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:7px;max-height:66vh;overflow:auto}
+  .cell{position:relative;background:var(--cellbg);border:1px solid var(--line);border-radius:9px;overflow:hidden;cursor:pointer;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+  .cell:hover{border-color:var(--acc2);transform:translateY(-2px)}
+  .cell.added{outline:2px solid var(--want);opacity:.55}
+  .cell img.m{width:88%;height:88%;object-fit:contain;position:relative;z-index:2}
+  .cell img.cbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .cell .bd{position:absolute;right:2px;top:2px;width:32%;height:32%;object-fit:contain;z-index:3}
+  .cell .sh{position:absolute;left:3px;top:2px;font-size:11px;z-index:3}
+  .li .sh{position:absolute;left:4%;top:2%;font-size:12px;z-index:3}
+  .cell .gn{position:absolute;left:3px;bottom:2px;font-size:12px;z-index:3;color:#ff9ec7;text-shadow:0 1px 2px #000}
+  .cell .ok{position:absolute;right:3px;bottom:2px;z-index:4;font-size:12px;color:#7dffb0}
+  .seg{display:flex;gap:6px;margin-bottom:8px}
+  .seg button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--cellbg);color:var(--fg);cursor:pointer;font:inherit}
+  .seg button.on{font-weight:700;border:0;color:#fff}
+  .seg button.want.on{background:var(--want)} .seg button.have.on{background:var(--have)}
+  .flyrow{display:flex;align-items:center;gap:8px;margin:6px 0 2px}
+  .sec{margin-top:12px}.sec h3{margin:0 0 6px;font-size:13px}
+  .sec.want h3{color:var(--want)} .sec.have h3{color:var(--have)}
+  .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;min-height:40px}
+  .li{position:relative;cursor:grab}.li.dragging{opacity:.35}
+  .li.insb::before{content:'';position:absolute;left:-6px;top:0;bottom:0;width:4px;background:var(--acc2);border-radius:2px;z-index:6}
+  .li.insa::after{content:'';position:absolute;right:-6px;top:0;bottom:0;width:4px;background:var(--acc2);border-radius:2px;z-index:6}
+  .li .card{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:var(--cellbg);border:1px solid var(--line)}
+  .li .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .li .m{position:absolute;inset:0;margin:auto;width:80%;height:80%;object-fit:contain;z-index:2}
+  .li .bd{position:absolute;right:5%;top:5%;width:28%;height:28%;z-index:3}
+  .li .gn{position:absolute;left:4%;bottom:3%;z-index:3;font-size:11px;color:#ff9ec7;text-shadow:0 1px 2px #000}
+  .li .del{position:absolute;right:2px;bottom:2px;z-index:4;width:18px;height:18px;padding:0;border-radius:50%;background:#000b;border:1px solid #fff5;color:#fff;cursor:pointer;font-size:11px;line-height:1}
+  .empty{color:var(--mut);font-size:12px;padding:6px}
+  .btn{padding:9px 12px;border:0;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
+  .btn.g{background:var(--cellbg);border:1px solid var(--line);color:var(--fg);font-weight:400}
+  .toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .themeSel{display:flex;align-items:center;gap:8px;margin-left:auto}
+  /* 匯出編輯器 */
+  #editor{position:relative;user-select:none;touch-action:none;margin-top:8px}
+  #baseCv{width:100%;display:block;border-radius:12px}
+  #txtLayer{position:absolute;inset:0}
+  .txt{position:absolute;cursor:grab;white-space:nowrap;line-height:1;font-family:"Arial Black","Microsoft JhengHei",sans-serif}
+  .txt.sel{outline:1.5px dashed #fff;outline-offset:4px;cursor:grabbing}
+  .txtctl{display:none;gap:6px;align-items:center;margin-top:10px;flex-wrap:wrap}
+  .txtctl input[type=text]{flex:1 1 100%;min-width:100%;font-size:14px}
+  .txtctl input[type=color]{width:36px;min-width:36px;height:34px;padding:2px;border-radius:8px;border:1px solid var(--line);background:var(--cellbg)}
+  .txtctl input[type=number]{width:64px;min-width:64px}
+  .hint{color:var(--mut);font-size:11px;margin-top:6px}
+  #backBtn{display:none}
+  body.editmode #selPanel,body.editmode #listPanel{display:none}
+  body.editmode #backBtn{display:inline-block}
+  body.editmode .wrap{grid-template-columns:1fr;max-width:900px;margin:0 auto}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="appTitle">🔴 寶可夢 GO 交易清單產生器</h1>
+  <span id="stat" class="sub"></span>
+  <span class="themeSel">
+    <span class="sub">🌐</span><select id="langSel"></select>
+    <span class="sub" id="themeLabel">風格</span>
+    <select id="themeSel"><option value="neon">深色霓虹</option><option value="warm">暖色活潑</option><option value="light">乾淨簡約</option></select>
+  </span>
+</header>
+
+<div class="wrap">
+  <div class="panel" id="selPanel" style="margin-bottom:0">
+    <div class="tabs">
+      <button id="tMon" class="on" onclick="setTab('mon')">寶可夢（全組合）</button>
+      <button id="tBg" onclick="setTab('bg')">背卡組合</button>
+    </div>
+    <div class="filters" id="monFilters">
+      <span style="position:relative;flex:1;min-width:160px;display:inline-flex">
+        <input type="text" id="q" style="width:100%" placeholder="搜尋…中文或編號(例:噴火龍 / 6)">
+        <button id="qClear" type="button" title="清除" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--mut);font-size:15px;cursor:pointer;padding:2px 7px;display:none">✕</button>
+      </span>
+      <span class="chip on" id="fNormal" onclick="tog('fNormal')">一般</span>
+      <span class="chip on" id="fShiny" onclick="tog('fShiny')">✨ 異色</span>
+      <span class="chip on" id="fDmax" onclick="tog('fDmax')">極巨化</span>
+      <span class="chip on" id="fGmax" onclick="tog('fGmax')">超極巨化</span>
+      <span class="chip on" id="fCos" onclick="tog('fCos')">造形/服裝</span>
+      <span class="fdiv" id="fdiv">只看▸</span>
+      <span class="chip scope" id="fSelected" onclick="tog('fSelected')">✓ 已選</span>
+      <span class="chip scope" id="fLego" onclick="tog('fLego')">👑 傳說</span>
+    </div>
+    <div id="grid" class="grid"></div>
+    <div class="sub" id="gcount" style="margin-top:8px"></div>
+  </div>
+
+  <div>
+    <div class="panel" id="listPanel">
+      <div class="seg">
+        <button class="want on" id="segWant" onclick="setTarget('want')">加到「我想要的」</button>
+        <button class="have" id="segHave" onclick="setTarget('have')">加到「我能提供的」</button>
+      </div>
+      <label class="flyrow"><input type="checkbox" id="canfly"> <span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
+      <div class="sec want"><h3><span id="labWant">🟢 我想要的</span> <span class="sub" id="cW">0</span></h3><div class="list" id="listW"><div class="empty">點左邊縮圖加入</div></div></div>
+      <div class="sec have"><h3><span id="labHave">🟡 我能提供的</span> <span class="sub" id="cH">0</span></h3><div class="list" id="listH"><div class="empty">點左邊縮圖加入</div></div></div>
+      <div class="toolbar">
+        <button class="btn" id="startBtn" onclick="setMode('edit')">🎨 我選好了，開始製圖</button>
+        <button class="btn g" id="sortBtn">↕ 依編號排序</button>
+        <button class="btn g" id="clr">清空清單</button>
+      </div>
+    </div>
+
+    <div class="panel" id="editPanel">
+      <button class="btn g" id="backBtn" onclick="setMode('select')" style="margin-bottom:10px">← 返回選擇</button>
+      <strong id="editTitle">匯出圖（直接拖曳/編輯文字）</strong>
+      <div id="editor"><canvas id="baseCv"></canvas><div id="txtLayer"></div></div>
+      <div class="hint" id="editHint">點文字可選取 → 拖曳移動、下方改字/色/大小。</div>
+      <div class="txtctl" id="txtctl">
+        <input type="text" id="ctlText" placeholder="文字內容">
+        <input type="color" id="ctlColor" title="顏色">
+        <input type="number" id="ctlSize" min="10" max="120" title="大小">
+        <select id="ctlFont" title="字體"></select>
+        <select id="ctlWeight" title="粗細"></select>
+        <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--mut)"><input type="checkbox" id="ctlOutline"><span id="ctlOutlineLabel">外框</span></label>
+        <button class="btn g" id="ctlDel">刪除</button>
+      </div>
+      <div class="toolbar">
+        <button class="btn g" id="txtAdd">＋ 新增文字</button>
+        <button class="btn g" id="txtReset">↺ 復原預設文字</button>
+      </div>
+      <div class="toolbar">
+        <button class="btn" id="dl">⬇ 下載 PNG</button>
+      </div>
+    </div>
+  </div>
+</div>
+<canvas id="cv" style="display:none"></canvas>
+
+<script>
+const $=s=>document.querySelector(s);
+const badgeD='assets/badge_dynamax.png',badgeG='assets/badge_gigantamax.png',badgeP='assets/badge_purified.png',shinyIcon='assets/ic_shiny.png';
+let POKE={},BG=[],THUMBS=[],BGCOMBOS=[],TAB='mon',TARGET='want';
+const FILT={fNormal:true,fShiny:true,fDmax:true,fGmax:true,fCos:true,fSelected:false,fLego:false};
+const THEMES={
+ neon:{ui:{bg:'linear-gradient(160deg,#0f1220,#191540)',card:'#1a1f36',line:'#2b3153',fg:'#eef0fb',mut:'#9aa3c7',acc:'#e0276c',acc2:'#7b5cff',want:'#2f9e57',have:'#c9a227',cellbg:'#0d1024'},
+      exp:{grad:['#100e1e','#211741'],panel:'rgba(26,28,52,0.90)',cardbg:'#14162c',line:'rgba(123,92,255,0.55)',title:'#e0276c',tOut:'#ffffff',sec1:'#50dc8c',sec2:'#f0c850',fly:'#7b5cff',foot:'#b4b4d2'}},
+ warm:{ui:{bg:'linear-gradient(160deg,#ff7a5a,#ffb073)',card:'rgba(255,255,255,0.94)',line:'rgba(120,60,40,0.16)',fg:'#4a2f28',mut:'#9a6f60',acc:'#e0603c',acc2:'#ff8a4c',want:'#2e9e57',have:'#c98a1e',cellbg:'#ffffff'},
+      exp:{grad:['#ff785a','#ffb175'],panel:'rgba(255,243,238,0.95)',cardbg:'#ffffff',line:'rgba(0,0,0,0)',title:'#ffec96',tOut:'#5a2a40',sec1:'#2e9e57',sec2:'#c98a1e',fly:'#3cc878',foot:'#ffffff'}},
+ light:{ui:{bg:'linear-gradient(160deg,#eef2fc,#e0e7f4)',card:'#ffffff',line:'#d6dfec',fg:'#2a3346',mut:'#7a869c',acc:'#5a6f96',acc2:'#7088c0',want:'#2e9e57',have:'#c8962a',cellbg:'#f6f8fb'},
+      exp:{grad:['#eef2fc','#dfe7f4'],panel:'#ffffff',cardbg:'#f8fafd',line:'rgba(210,220,235,1)',title:'#46587e',tOut:'#ffffff',sec1:'#2e9e57',sec2:'#c8962a',fly:'#4682d2',foot:'#7a869c'}}};
+let THEME='neon';
+let TEXTS=[];     // {id,text,align,cx,y,size,color,weight,font,outline,moved,edited}
+let SEL=null;
+const DEFONT='"Arial Black","Microsoft JhengHei",sans-serif';
+const FONTS=[['font_game',DEFONT],['font_hei','"Microsoft JhengHei","PingFang TC",sans-serif'],['font_impact','Impact,"Microsoft JhengHei",sans-serif'],['font_round','"Segoe UI","Microsoft JhengHei",sans-serif'],['font_serif','Georgia,"Microsoft JhengHei",serif']];
+const WEIGHTS=[['w_normal',400],['w_med',600],['w_bold',700],['w_black',900]];
+
+/* ---------- 多國語言 ---------- */
+const LANGS=[['zh','繁中'],['en','English'],['ja','日本語'],['ko','한국어'],['fr','Français'],['de','Deutsch'],['es','Español']];
+const I18N={
+ zh:{font_game:'遊戲粗黑',font_hei:'黑體',font_impact:'Impact',font_round:'圓潤',font_serif:'襯線',w_normal:'一般',w_med:'中黑',w_bold:'粗',w_black:'特粗',app:'寶可夢 GO 交易清單產生器',fname:'交易清單',theme:'風格',th_neon:'深色霓虹',th_warm:'暖色活潑',th_light:'乾淨簡約',tab_mon:'寶可夢（全組合）',tab_bg:'背卡組合',search_mon:'搜尋…名稱或編號',search_bg:'搜尋…寶可夢或背卡',f_normal:'一般',f_shiny:'異色',f_dmax:'極巨化',f_gmax:'超極巨化',f_cos:'造形/服裝',only:'只看',f_sel:'已選',f_lego:'傳說',combos_unit:'種組合',bg_unit:'個背卡組合',mons:'隻',seg_want:'加到「我想要的」',seg_have:'加到「我能提供的」',canfly:'我能飛（顯示 CAN FLY）',want:'我想要的',have:'我能提供的',empty:'點左邊縮圖加入',start:'我選好了，開始製圖',sort:'依編號排序',clear:'清空清單',download:'下載 PNG',addtext:'新增文字',reset:'復原預設文字',back:'返回選擇',edit_title:'匯出圖（拖曳/編輯文字）',edit_hint:'點文字可選取 → 拖曳移動、下方改字/色/大小。',text_content:'文字內容',del:'刪除',outline:'外框',confirm_clear:'確定要清空整個清單嗎？',list_empty:'清單是空的',edit_empty:'清單還是空的，先從左邊加寶可夢',export_foot:'Pokémon GO 交易清單',newtext:'文字'},
+ en:{font_game:'Game Black',font_hei:'Sans',font_impact:'Impact',font_round:'Rounded',font_serif:'Serif',w_normal:'Normal',w_med:'Medium',w_bold:'Bold',w_black:'Black',app:'Pokémon GO Trade List Maker',fname:'trade-list',theme:'Theme',th_neon:'Dark Neon',th_warm:'Warm',th_light:'Light',tab_mon:'Pokémon (all)',tab_bg:'Backgrounds',search_mon:'Search name or number',search_bg:'Search Pokémon or background',f_normal:'Normal',f_shiny:'Shiny',f_dmax:'Dynamax',f_gmax:'Gigantamax',f_cos:'Form/Costume',only:'Only',f_sel:'Selected',f_lego:'Legendary',combos_unit:'combos',bg_unit:'bg combos',mons:'Pokémon',seg_want:'Add to Looking For',seg_have:'Add to For Trade',canfly:'Can fly (show CAN FLY)',want:'Looking For',have:'For Trade',empty:'Click thumbnails to add',start:'Done — make image',sort:'Sort by number',clear:'Clear list',download:'Download PNG',addtext:'Add text',reset:'Reset text',back:'Back',edit_title:'Export image (drag/edit text)',edit_hint:'Click text to select → drag to move; edit below.',text_content:'Text',del:'Delete',outline:'Outline',confirm_clear:'Clear the whole list?',list_empty:'List is empty',edit_empty:'List is empty — add Pokémon first',export_foot:'Pokémon GO Trade List',newtext:'Text'},
+ ja:{font_game:'ゲーム太字',font_hei:'ゴシック',font_impact:'Impact',font_round:'丸ゴシック',font_serif:'明朝',w_normal:'標準',w_med:'中太',w_bold:'太字',w_black:'極太',app:'ポケモンGO トレードリスト作成',fname:'トレードリスト',theme:'テーマ',th_neon:'ダークネオン',th_warm:'ウォーム',th_light:'ライト',tab_mon:'ポケモン（全部）',tab_bg:'背景',search_mon:'名前や番号で検索',search_bg:'ポケモン・背景を検索',f_normal:'通常',f_shiny:'色違い',f_dmax:'ダイマックス',f_gmax:'キョダイマックス',f_cos:'すがた/コスチューム',only:'絞込',f_sel:'選択済',f_lego:'伝説',combos_unit:'件',bg_unit:'件',mons:'匹',seg_want:'「ほしい」に追加',seg_have:'「ゆずれる」に追加',canfly:'飛べる（CAN FLY表示）',want:'ほしいもの',have:'ゆずれるもの',empty:'左のアイコンから追加',start:'選び終わった、画像を作る',sort:'番号順に並べ替え',clear:'リストを消去',download:'PNGを保存',addtext:'テキスト追加',reset:'文字をリセット',back:'戻る',edit_title:'書き出し画像（文字をドラッグ/編集）',edit_hint:'文字をタップで選択 → ドラッグで移動、下で編集。',text_content:'テキスト',del:'削除',outline:'縁取り',confirm_clear:'リストを全部消しますか？',list_empty:'リストが空です',edit_empty:'リストが空です。先にポケモンを追加',export_foot:'ポケモンGO トレードリスト',newtext:'テキスト'},
+ ko:{font_game:'게임 볼드',font_hei:'고딕',font_impact:'Impact',font_round:'둥근',font_serif:'세리프',w_normal:'보통',w_med:'중간',w_bold:'굵게',w_black:'매우 굵게',app:'포켓몬 GO 교환 목록 생성기',fname:'교환목록',theme:'테마',th_neon:'다크 네온',th_warm:'따뜻한',th_light:'라이트',tab_mon:'포켓몬(전체)',tab_bg:'배경',search_mon:'이름·번호 검색',search_bg:'포켓몬·배경 검색',f_normal:'일반',f_shiny:'이로치',f_dmax:'다이맥스',f_gmax:'거다이맥스',f_cos:'모습/의상',only:'필터',f_sel:'선택됨',f_lego:'전설',combos_unit:'개',bg_unit:'개',mons:'마리',seg_want:'「원해요」에 추가',seg_have:'「줄 수 있어요」에 추가',canfly:'날 수 있음(CAN FLY 표시)',want:'원하는 것',have:'줄 수 있는 것',empty:'왼쪽 아이콘에서 추가',start:'선택 완료, 이미지 만들기',sort:'번호순 정렬',clear:'목록 비우기',download:'PNG 저장',addtext:'텍스트 추가',reset:'문구 초기화',back:'뒤로',edit_title:'내보내기 이미지(문자 드래그/편집)',edit_hint:'문자를 눌러 선택 → 드래그로 이동, 아래에서 편집.',text_content:'텍스트',del:'삭제',outline:'외곽선',confirm_clear:'목록을 모두 비울까요?',list_empty:'목록이 비어 있습니다',edit_empty:'목록이 비어 있어요. 먼저 포켓몬을 추가하세요',export_foot:'포켓몬 GO 교환 목록',newtext:'텍스트'},
+ fr:{font_game:'Jeu gras',font_hei:'Sans',font_impact:'Impact',font_round:'Arrondi',font_serif:'Serif',w_normal:'Normal',w_med:'Moyen',w_bold:'Gras',w_black:'Extra-gras',app:"Générateur de liste d'échange Pokémon GO",fname:'liste-echange',theme:'Thème',th_neon:'Néon sombre',th_warm:'Chaud',th_light:'Clair',tab_mon:'Pokémon (tous)',tab_bg:'Fonds',search_mon:'Nom ou numéro',search_bg:'Pokémon ou fond',f_normal:'Normal',f_shiny:'Chromatique',f_dmax:'Dynamax',f_gmax:'Gigamax',f_cos:'Forme/Costume',only:'Filtrer',f_sel:'Sélection',f_lego:'Légendaire',combos_unit:'combos',bg_unit:'combos',mons:'Pokémon',seg_want:'Vers Recherche',seg_have:'Vers Échange',canfly:'Peut voler (CAN FLY)',want:'Je recherche',have:'Je propose',empty:'Cliquez les vignettes',start:"C'est fait, créer l'image",sort:'Trier par numéro',clear:'Vider la liste',download:'Télécharger PNG',addtext:'Ajouter texte',reset:'Réinit. texte',back:'Retour',edit_title:'Image (glisser/éditer texte)',edit_hint:'Cliquez un texte → glissez ; éditez en dessous.',text_content:'Texte',del:'Supprimer',outline:'Contour',confirm_clear:'Vider toute la liste ?',list_empty:'Liste vide',edit_empty:'Liste vide — ajoutez des Pokémon',export_foot:"Liste d'échange Pokémon GO",newtext:"Texte"},
+ de:{font_game:'Spiel-Fett',font_hei:'Serifenlos',font_impact:'Impact',font_round:'Rund',font_serif:'Serife',w_normal:'Normal',w_med:'Mittel',w_bold:'Fett',w_black:'Extrafett',app:'Pokémon GO Tauschlisten-Generator',fname:'tauschliste',theme:'Design',th_neon:'Dunkel Neon',th_warm:'Warm',th_light:'Hell',tab_mon:'Pokémon (alle)',tab_bg:'Hintergründe',search_mon:'Name oder Nummer',search_bg:'Pokémon oder Hintergrund',f_normal:'Normal',f_shiny:'Schillernd',f_dmax:'Dynamax',f_gmax:'Gigadynamax',f_cos:'Form/Kostüm',only:'Filter',f_sel:'Gewählt',f_lego:'Legendär',combos_unit:'Kombis',bg_unit:'Kombis',mons:'Pokémon',seg_want:'Zu Gesucht',seg_have:'Zu Biete',canfly:'Kann fliegen (CAN FLY)',want:'Gesucht',have:'Biete',empty:'Vorschaubilder anklicken',start:'Fertig — Bild erstellen',sort:'Nach Nummer sortieren',clear:'Liste leeren',download:'PNG speichern',addtext:'Text hinzufügen',reset:'Text zurücksetzen',back:'Zurück',edit_title:'Bild (Text ziehen/bearbeiten)',edit_hint:'Text anklicken → ziehen; unten bearbeiten.',text_content:'Text',del:'Löschen',outline:'Umriss',confirm_clear:'Ganze Liste leeren?',list_empty:'Liste ist leer',edit_empty:'Liste leer — erst Pokémon hinzufügen',export_foot:'Pokémon GO Tauschliste',newtext:'Text'},
+ es:{font_game:'Juego negrita',font_hei:'Sans',font_impact:'Impact',font_round:'Redondeada',font_serif:'Serif',w_normal:'Normal',w_med:'Media',w_bold:'Negrita',w_black:'Extranegrita',app:'Generador de lista de intercambio Pokémon GO',fname:'lista-intercambio',theme:'Tema',th_neon:'Neón oscuro',th_warm:'Cálido',th_light:'Claro',tab_mon:'Pokémon (todos)',tab_bg:'Fondos',search_mon:'Nombre o número',search_bg:'Pokémon o fondo',f_normal:'Normal',f_shiny:'Variocolor',f_dmax:'Dinamax',f_gmax:'Gigamax',f_cos:'Forma/Disfraz',only:'Filtrar',f_sel:'Elegidos',f_lego:'Legendario',combos_unit:'combos',bg_unit:'combos',mons:'Pokémon',seg_want:'A Busco',seg_have:'A Ofrezco',canfly:'Puede volar (CAN FLY)',want:'Busco',have:'Ofrezco',empty:'Toca las miniaturas',start:'Listo — crear imagen',sort:'Ordenar por número',clear:'Vaciar lista',download:'Descargar PNG',addtext:'Añadir texto',reset:'Restablecer texto',back:'Volver',edit_title:'Imagen (arrastrar/editar texto)',edit_hint:'Toca un texto → arrastra; edita abajo.',text_content:'Texto',del:'Eliminar',outline:'Contorno',confirm_clear:'¿Vaciar toda la lista?',list_empty:'La lista está vacía',edit_empty:'Lista vacía — añade Pokémon primero',export_foot:'Lista de intercambio Pokémon GO',newtext:'Texto'}};
+let LANG='zh',NAMES={};
+function tr(k){return (I18N[LANG]&&I18N[LANG][k])||I18N.en[k]||k;}
+function nameOf(dex){return NAMES[dex]||(POKE[dex]&&POKE[dex].zh)||('#'+dex);}
+async function loadNames(lang){ try{const r=await fetch('data/names/'+lang+'.json');if(r.ok)return await r.json();}catch(e){} return {}; }
+let ALLNAMES={};   // dex -> 所有語言名稱串接(小寫),供跨語言搜尋
+async function loadAllNames(){
+  const maps=await Promise.all(LANGS.map(([c])=>loadNames(c)));
+  const idx={};
+  for(const m of maps) for(const dex in m){ (idx[dex]=idx[dex]||[]).push(m[dex]); }
+  ALLNAMES={}; for(const dex in idx) ALLNAMES[dex]=idx[dex].join('|').toLowerCase();
+}
+function matchName(dex,q){ return (ALLNAMES[dex]||'').includes(q); }
+async function applyLang(lang){
+  if(!I18N[lang])lang='en'; LANG=lang; localStorage.setItem('bgtoolLang',lang);
+  document.documentElement.lang=lang; $('#langSel').value=lang;
+  NAMES=await loadNames(lang);
+  for(const x of THUMBS)x.zh=nameOf(x.dex);
+  for(const x of BGCOMBOS)x.zh=nameOf(x.dex);
+  for(const kk of ['want','have'])for(const c of LIST[kk])c.zh=nameOf(c.dex);
+  for(const t of TEXTS){ if(t.edited)continue;   // 未手動改過的預設文字 → 換語言
+    if(t.id==='lab-want')t.text='🟢 '+tr('want');
+    else if(t.id==='lab-have')t.text='🟡 '+tr('have');
+    else if(t.id==='foot')t.text=tr('export_foot'); }
+  applyStaticI18n();
+  render(); drawLists(); if($('#baseCv').width)renderBase();
+}
+function applyStaticI18n(){
+  const T=tr;
+  $('#appTitle').textContent='🔴 '+T('app'); $('#themeLabel').textContent=T('theme');
+  const th=$('#themeSel').options; th[0].textContent=T('th_neon');th[1].textContent=T('th_warm');th[2].textContent=T('th_light');
+  $('#tMon').textContent=T('tab_mon'); $('#tBg').textContent=T('tab_bg');
+  $('#fNormal').textContent=T('f_normal'); $('#fShiny').textContent='✨ '+T('f_shiny'); $('#fDmax').textContent=T('f_dmax'); $('#fGmax').textContent=T('f_gmax'); $('#fCos').textContent=T('f_cos');
+  $('#fdiv').textContent=T('only')+'▸'; $('#fLego').textContent='👑 '+T('f_lego');
+  $('#fSelected').textContent='✓ '+T('f_sel')+'：'+(TARGET==='want'?T('want'):T('have'));
+  $('#segWant').textContent=T('seg_want'); $('#segHave').textContent=T('seg_have');
+  $('#canflyLabel').textContent='✈ '+T('canfly');
+  $('#labWant').textContent='🟢 '+T('want'); $('#labHave').textContent='🟡 '+T('have');
+  $('#startBtn').textContent='🎨 '+T('start'); $('#sortBtn').textContent='↕ '+T('sort'); $('#clr').textContent=T('clear');
+  $('#dl').textContent='⬇ '+T('download'); $('#txtAdd').textContent='＋ '+T('addtext'); $('#txtReset').textContent='↺ '+T('reset'); $('#backBtn').textContent='← '+T('back');
+  $('#editTitle').textContent=T('edit_title'); $('#editHint').textContent=T('edit_hint');
+  $('#ctlText').placeholder=T('text_content'); $('#ctlDel').textContent=T('del'); $('#ctlOutlineLabel').textContent=T('outline');
+  $('#q').placeholder=TAB==='mon'?T('search_mon'):T('search_bg');
+  $('#stat').textContent=Object.keys(POKE).length+' '+T('mons');
+  if($('#ctlFont')){ $('#ctlFont').innerHTML=FONTS.map((f,i)=>`<option value="${i}">${T(f[0])}</option>`).join('');
+    $('#ctlWeight').innerHTML=WEIGHTS.map(w=>`<option value="${w[1]}">${T(w[0])}</option>`).join(''); if(SEL)selCtl(); }
+}
+
+async function loadData(name){
+  try{const r=await fetch('data/'+name+'.local.json');if(r.ok)return await r.json();}catch(e){}
+  return fetch('data/'+name+'.json').then(r=>r.json());
+}
+async function boot(){
+  LANG=localStorage.getItem('bgtoolLang')||'zh'; if(!I18N[LANG])LANG='zh';
+  $('#langSel').innerHTML=LANGS.map(([c,n])=>`<option value="${c}">${n}</option>`).join('');
+  $('#langSel').value=LANG; $('#langSel').onchange=()=>applyLang($('#langSel').value);
+  NAMES=await loadNames(LANG);
+  await loadAllNames();
+  [POKE,BG]=await Promise.all([loadData('pokemon'),loadData('backgrounds')]);
+  buildThumbs();
+  $('#q').oninput=()=>{ $('#qClear').style.display=$('#q').value?'':'none'; render(); };
+  $('#qClear').onclick=()=>{ $('#q').value=''; $('#qClear').style.display='none'; render(); $('#q').focus(); };
+  $('#dl').onclick=downloadPNG;
+  $('#clr').onclick=()=>{ if(confirm(tr('confirm_clear'))){LIST={want:[],have:[]};drawLists();render();renderBase();} };
+  $('#sortBtn').onclick=()=>{ const r=t=>(t.tag==='超極巨化'?3:t.tag==='極巨化'?2:t.tag==='淨化'?1:0)*2+(t.shiny?1:0);
+    for(const k of ['want','have']) LIST[k].sort((a,b)=>(a.dex||0)-(b.dex||0)||r(a)-r(b)); drawLists();renderBase(); };
+  $('#canfly').onchange=()=>{ TEXTS=TEXTS.filter(t=>t.id!=='canfly'); renderBase(); };
+  $('#themeSel').onchange=()=>applyTheme($('#themeSel').value);
+  $('#txtAdd').onclick=addText;
+  $('#txtReset').onclick=()=>{ TEXTS=[]; SEL=null; renderBase(); };
+  $('#ctlText').oninput=()=>{ if(SEL){SEL.text=$('#ctlText').value;SEL.edited=true;layoutTexts();} };
+  $('#ctlColor').oninput=()=>{ if(SEL){SEL.color=$('#ctlColor').value;layoutTexts();} };
+  $('#ctlSize').oninput=()=>{ if(SEL){SEL.size=+$('#ctlSize').value||24;layoutTexts();} };
+  $('#ctlFont').innerHTML=FONTS.map((f,i)=>`<option value="${i}">${tr(f[0])}</option>`).join('');
+  $('#ctlWeight').innerHTML=WEIGHTS.map(w=>`<option value="${w[1]}">${tr(w[0])}</option>`).join('');
+  $('#ctlFont').onchange=()=>{ if(SEL){SEL.font=FONTS[+$('#ctlFont').value][1];layoutTexts();} };
+  $('#ctlWeight').onchange=()=>{ if(SEL){SEL.weight=+$('#ctlWeight').value;layoutTexts();} };
+  $('#ctlOutline').onchange=()=>{ if(SEL){SEL.outline=$('#ctlOutline').checked;layoutTexts();} };
+  $('#ctlDel').onclick=()=>{ if(SEL){TEXTS=TEXTS.filter(t=>t!==SEL);SEL=null;layoutTexts();selCtl();} };
+  window.addEventListener('resize',layoutTexts);
+  applyTheme(localStorage.getItem('bgtoolTheme')||'neon');
+  applyStaticI18n();
+  drawLists();
+  render();
+}
+function applyTheme(k){
+  if(!THEMES[k])k='neon'; THEME=k; $('#themeSel').value=k;
+  const u=THEMES[k].ui,R=document.documentElement.style;
+  const map={'--bg':u.bg,'--card':u.card,'--line':u.line,'--fg':u.fg,'--mut':u.mut,'--acc':u.acc,'--acc2':u.acc2,'--want':u.want,'--have':u.have,'--cellbg':u.cellbg};
+  for(const p in map) R.setProperty(p,map[p]);
+  localStorage.setItem('bgtoolTheme',k);
+  // 主題色套到「未被手動改色」的預設文字
+  const T=THEMES[k].exp;
+  for(const t of TEXTS){ if(t.autoColor){ if(t.id==='title')t.color=T.title; else if(t.id==='canfly')t.color=T.fly; else if(t.id==='lab-want')t.color=T.sec1; else if(t.id==='lab-have')t.color=T.sec2; else if(t.id==='foot')t.color=T.foot; } }
+  renderBase();
+}
+
+function setMode(m){
+  if(m==='edit' && !LIST.want.length && !LIST.have.length){ alert(tr('edit_empty')); return; }
+  document.body.classList.toggle('editmode', m==='edit');
+  requestAnimationFrame(()=>renderBase());   // 版面寬度變了,重新排版
+}
+/* ---------- 版面計算(卡片固定,文字浮動) ---------- */
+const LAYW=1000,PAD=40,S=132,GAP=16,COLS=6;
+function rowsOf(n){return Math.max(1,Math.ceil(n/COLS));}
+function computeLayout(){
+  const fly=$('#canfly').checked;
+  const secs=[{key:'want',items:LIST.want,col:THEMES[THEME].exp.sec1,def:'🟢 '+tr('want')},
+              {key:'have',items:LIST.have,col:THEMES[THEME].exp.sec2,def:'🟡 '+tr('have')}].filter(s=>s.items.length);
+  let top=140+(fly?42:0);
+  let y=top; const S2=[];
+  for(const s of secs){ const ph=rowsOf(s.items.length)*(S+GAP)+GAP; S2.push({...s,labelY:y,panelY:y+46,ph}); y=y+46+ph+28; }
+  const H=Math.max(y+50,240);
+  return {fly,secs:S2,H,top};
+}
+function defaultTexts(lay){
+  const T=THEMES[THEME].exp,list=[];
+  list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:34,size:54,color:T.title,weight:900,font:DEFONT,outline:false,autoColor:true});
+  if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:112,size:26,color:T.fly,weight:900,font:DEFONT,outline:false,autoColor:true});
+  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:28,color:s.col,weight:900,font:DEFONT,outline:false,autoColor:true});
+  list.push({id:'foot',text:tr('export_foot'),align:'center',cx:LAYW/2,y:lay.H-40,size:22,color:T.foot,weight:700,font:DEFONT,outline:false,autoColor:true});
+  return list;
+}
+function reconcile(lay){
+  if(!TEXTS.length){ TEXTS=defaultTexts(lay); return; }
+  const byId=id=>TEXTS.find(t=>t.id===id);
+  const def=defaultTexts(lay);
+  // 標題/頁尾 一定存在
+  for(const id of ['title','foot']){ if(!byId(id)) TEXTS.push(def.find(d=>d.id===id)); }
+  // canfly 依開關
+  if(lay.fly && !byId('canfly')) TEXTS.push(def.find(d=>d.id==='canfly'));
+  if(!lay.fly) TEXTS=TEXTS.filter(t=>t.id!=='canfly');
+  // 區塊標籤:有該區才有,沒手動移動就跟著版面
+  for(const key of ['want','have']){
+    const has=lay.secs.some(s=>s.key===key);
+    let el=byId('lab-'+key);
+    if(has && !el){ TEXTS.push(def.find(d=>d.id==='lab-'+key)); }
+    else if(!has && el){ TEXTS=TEXTS.filter(t=>t!==el); }
+    else if(has && el && !el.moved){ el.y=lay.secs.find(s=>s.key===key).labelY; }
+  }
+  // 頁尾未手動移動 → 貼底
+  const f=byId('foot'); if(f && !f.moved) f.y=lay.H-40;
+}
+
+/* ---------- 畫底圖(漸層+面板+卡片,不含文字) ---------- */
+function loadImg(s){return new Promise(r=>{const i=new Image();i.crossOrigin='anonymous';i.referrerPolicy='no-referrer';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=s})}
+function rrPath(x,rx,ry,w,h,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+w,ry,rx+w,ry+h,r);x.arcTo(rx+w,ry+h,rx,ry+h,r);x.arcTo(rx,ry+h,rx,ry,r);x.arcTo(rx,ry,rx+w,ry,r);x.closePath();}
+function star(x,cx,cy,r,fill){x.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr_=i%2?r*0.45:r;x[i?'lineTo':'moveTo'](cx+rr_*Math.cos(a),cy+rr_*Math.sin(a));}x.closePath();x.fillStyle=fill;x.fill();}
+async function drawCard(x,cx,cy,c,T){
+  x.save();x.shadowColor='rgba(0,0,0,0.35)';x.shadowBlur=8;x.shadowOffsetY=3;x.fillStyle=T.cardbg;rrPath(x,cx,cy,S,S,S*0.16);x.fill();x.restore();
+  x.save();rrPath(x,cx,cy,S,S,S*0.16);x.clip();x.fillStyle=T.cardbg;x.fillRect(cx,cy,S,S);
+  if(c.bg){const b=await loadImg(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
+  const m=await loadImg(c.url);if(m)x.drawImage(m,cx+S*0.09,cy+S*0.09,S*0.82,S*0.82);
+  x.restore();
+  if(T.line&&!/,\s*0\)$/.test(T.line)){x.strokeStyle=T.line;x.lineWidth=2;rrPath(x,cx,cy,S,S,S*0.16);x.stroke();}
+  if(c.badge){const b=await loadImg(c.badge);if(b)x.drawImage(b,cx+S*0.63,cy+S*0.04,S*0.33,S*0.33);}
+  if(c.shiny){x.textAlign='left';x.font=Math.round(S*0.2)+'px "Segoe UI Emoji","Microsoft JhengHei"';x.fillText('✨',cx+S*0.04,cy+S*0.24);}
+  if(c.gender==='female'||c.gender==='male'){x.fillStyle=c.gender==='female'?'#ff8ec2':'#8fc7ff';x.font='700 '+Math.round(S*0.16)+'px "Microsoft JhengHei",sans-serif';x.fillText(c.gender==='female'?'♀':'♂',cx+S*0.05,cy+S*0.95);}
+}
+async function drawBaseTo(x,lay,SC){
+  const T=THEMES[THEME].exp,W=LAYW,H=lay.H;
+  x.setTransform(SC,0,0,SC,0,0);
+  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,T.grad[0]);g.addColorStop(1,T.grad[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
+  for(const s of lay.secs){
+    x.fillStyle=T.panel;rrPath(x,PAD,s.panelY,W-2*PAD,s.ph,24);x.fill();
+    for(let i=0;i<s.items.length;i++){await drawCard(x,PAD+GAP+(i%COLS)*(S+GAP),s.panelY+GAP+((i/COLS)|0)*(S+GAP),s.items[i],T);}
+  }
+}
+let baseBusy=false,baseAgain=false;
+async function renderBase(){
+  if(baseBusy){baseAgain=true;return;} baseBusy=true;
+  const lay=computeLayout(); reconcile(lay);
+  const SC=2,cv=$('#baseCv');cv.width=LAYW*SC;cv.height=lay.H*SC;
+  await drawBaseTo(cv.getContext('2d'),lay,SC);
+  layoutTexts();
+  baseBusy=false; if(baseAgain){baseAgain=false;renderBase();}
+}
+
+/* ---------- 文字層(可拖曳/選取) ---------- */
+function layoutTexts(){
+  const layer=$('#txtLayer'),cv=$('#baseCv');
+  const sc=cv.clientWidth/LAYW; if(!sc)return;
+  layer.innerHTML='';
+  for(const t of TEXTS){
+    const d=document.createElement('div');d.className='txt'+(t===SEL?' sel':'');
+    d.textContent=t.text; d.style.left=t.cx*sc+'px'; d.style.top=t.y*sc+'px';
+    d.style.fontSize=t.size*sc+'px'; d.style.color=t.color; d.style.fontWeight=t.weight; d.style.fontFamily=t.font||DEFONT;
+    if(t.align==='center')d.style.transform='translateX(-50%)';
+    if(t.outline){const o=THEMES[THEME].exp.tOut;d.style.webkitTextStroke=Math.max(1,t.size*sc*0.06)+'px '+o;}
+    d.onpointerdown=e=>startDrag(e,t,d,sc);
+    layer.appendChild(d);
+  }
+}
+let drag=null;
+function startDrag(e,t,d,sc){
+  e.preventDefault();
+  SEL=t; selCtl();
+  document.querySelectorAll('.txt.sel').forEach(x=>x.classList.remove('sel')); d.classList.add('sel');
+  drag={t,sc,px:e.clientX,py:e.clientY,cx0:t.cx,y0:t.y};
+  d.setPointerCapture(e.pointerId);
+  d.onpointermove=ev=>{ if(!drag)return; t.cx=drag.cx0+(ev.clientX-drag.px)/sc; t.y=drag.y0+(ev.clientY-drag.py)/sc; t.moved=true; d.style.left=t.cx*sc+'px'; d.style.top=t.y*sc+'px'; };
+  d.onpointerup=()=>{drag=null;d.onpointermove=null;};
+}
+function select(t){ SEL=t; layoutTexts(); selCtl(); }
+function selCtl(){
+  const c=$('#txtctl');
+  if(!SEL){c.style.display='none';return;}
+  c.style.display='flex';
+  $('#ctlText').value=SEL.text; $('#ctlColor').value=toHex(SEL.color); $('#ctlSize').value=Math.round(SEL.size);
+  const fi=FONTS.findIndex(f=>f[1]===(SEL.font||DEFONT)); $('#ctlFont').value=fi<0?0:fi;
+  $('#ctlWeight').value=SEL.weight||900; $('#ctlOutline').checked=!!SEL.outline;
+}
+function toHex(c){ if(/^#/.test(c))return c; const m=c.match(/\d+/g); if(!m)return '#ffffff'; return '#'+m.slice(0,3).map(n=>(+n).toString(16).padStart(2,'0')).join(''); }
+function addText(){
+  const b=SEL||{size:34,color:THEMES[THEME].exp.title,weight:900,font:DEFONT,outline:false};  // 沿用目前選取的樣式
+  TEXTS.push({id:'u'+Date.now(),text:tr('newtext'),align:'center',cx:LAYW/2,y:computeLayout().top-60,size:b.size,color:b.color,weight:b.weight,font:b.font||DEFONT,outline:b.outline});
+  layoutTexts(); select(TEXTS[TEXTS.length-1]);
+}
+
+/* ---------- 下載(底圖+文字合成) ---------- */
+async function downloadPNG(){
+  if(!LIST.want.length&&!LIST.have.length){alert(tr('list_empty'));return;}
+  const lay=computeLayout(); reconcile(lay);
+  const SC=2,cv=$('#cv');cv.width=LAYW*SC;cv.height=lay.H*SC;const x=cv.getContext('2d');
+  await drawBaseTo(x,lay,SC);
+  x.setTransform(SC,0,0,SC,0,0);
+  for(const t of TEXTS){
+    x.font=`${t.weight} ${t.size}px ${t.font||DEFONT}`;
+    x.textAlign=t.align; const px=t.cx, py=t.y+t.size*0.85;
+    if(t.outline){x.lineJoin='round';x.lineWidth=Math.max(3,t.size*0.1);x.strokeStyle=THEMES[THEME].exp.tOut;x.strokeText(t.text,px,py);}
+    x.fillStyle=t.color;x.fillText(t.text,px,py);
+  }
+  const a=document.createElement('a');a.download=tr('fname')+'.png';a.href=cv.toDataURL('image/png');a.click();
+}
+
+/* ---------- 以下為既有邏輯(縮圖/清單) ---------- */
+function baseVar(p,shiny){return p.variants.find(v=>!!v.shiny===shiny&&!v.form&&!v.costume&&!v.gender)||p.variants.find(v=>!!v.shiny===shiny)||null;}
+function buildThumbs(){
+  THUMBS=[];BGCOMBOS=[];
+  for(const p of Object.values(POKE)){
+    for(const v of p.variants) THUMBS.push({url:v.url,dex:p.id,zh:nameOf(p.id),shiny:v.shiny,gender:v.gender,badge:null,tag:'',cos:!!(v.form||v.costume)});
+    if(p.gigantamax){
+      if(p.gigantamax.normal)THUMBS.push({url:p.gigantamax.normal,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeG,tag:'超極巨化',gmax:true});
+      if(p.gigantamax.shiny)THUMBS.push({url:p.gigantamax.shiny,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeG,tag:'超極巨化',gmax:true});
+    }
+    if(p.dynamax_capable){
+      const n=baseVar(p,false),s=baseVar(p,true);
+      if(n)THUMBS.push({url:n.url,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeD,tag:'極巨化',dmax:true});
+      if(s)THUMBS.push({url:s.url,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeD,tag:'極巨化',dmax:true});
+    }
+  }
+  for(const b of BG){
+    if(!b.image_url)continue;
+    for(const mon of b.pokemon){
+      const dex=mon.dex, p=POKE[dex]; if(!p)continue;
+      const vn=baseVar(p,false), vs=baseVar(p,true);
+      const add=(url,shiny,badge,tag,gm)=>{ if(url)BGCOMBOS.push({url,bg:b.image_url,dex,zh:nameOf(p.id),bgname:b.image_name,badge:badge||null,shiny:!!shiny,tag:tag||'',dmax:tag==='極巨化',gmax:!!gm,purified:tag==='淨化'}); };
+      if(mon.gmax){ if(p.gigantamax){ add(p.gigantamax.normal,false,badgeG,'超極巨化',true); if(mon.shiny) add(p.gigantamax.shiny,true,badgeG,'超極巨化',true);} }
+      else if(mon.dynamax){ add(vn&&vn.url,false,badgeD,'極巨化'); if(mon.shiny) add(vs&&vs.url,true,badgeD,'極巨化'); }
+      else if(mon.shadow){ add(vn&&vn.url,false,badgeP,'淨化'); if(mon.shiny) add(vs&&vs.url,true,badgeP,'淨化'); }
+      else { add(vn&&vn.url,false,null,''); if(mon.shiny) add(vs&&vs.url,true,null,''); }
+    }
+  }
+  for(const t of THUMBS) t.legendary=!!(POKE[t.dex]&&POKE[t.dex].legendary);
+  for(const c of BGCOMBOS) c.legendary=!!(POKE[c.dex]&&POKE[c.dex].legendary);
+}
+function setTab(t){TAB=t;$('#tMon').classList.toggle('on',t==='mon');$('#tBg').classList.toggle('on',t==='bg');
+  $('#fCos').style.display=t==='mon'?'':'none';
+  ['fNormal','fShiny','fDmax','fGmax'].forEach(id=>$('#'+id).style.display='');
+  $('#q').placeholder=t==='mon'?tr('search_mon'):tr('search_bg');render();}
+function tog(id){FILT[id]=!FILT[id];$('#'+id).classList.toggle('on',FILT[id]);render();}
+function setTarget(t){TARGET=t;$('#segWant').classList.toggle('on',t==='want');$('#segHave').classList.toggle('on',t==='have');
+  $('#fSelected').textContent='✓ '+tr('f_sel')+'：'+(t==='want'?tr('want'):tr('have'));render();}
+let shown=0,FILTERED=[];
+function keyOf(c){return (c.url||'')+'|'+(c.bg||'')+'|'+(c.badge||'');}
+function inTarget(c){return LIST[TARGET].some(x=>keyOf(x)===keyOf(c));}
+function inAnyList(c){return LIST.want.some(x=>keyOf(x)===keyOf(c))||LIST.have.some(x=>keyOf(x)===keyOf(c));}
+function render(){
+  const g=$('#grid');g.innerHTML='';shown=0;
+  const q=$('#q').value.trim().toLowerCase();
+  if(TAB==='bg'){
+    FILTERED=BGCOMBOS.filter(c=>{const normal=!c.shiny&&!c.dmax&&!c.gmax;   // 淨化算「一般」
+      if(normal&&!FILT.fNormal)return false; if(c.shiny&&!FILT.fShiny)return false;
+      if(c.dmax&&!FILT.fDmax)return false; if(c.gmax&&!FILT.fGmax)return false;
+      if(FILT.fSelected&&!inTarget(c))return false; if(FILT.fLego&&!c.legendary)return false;
+      if(q&&!(matchName(c.dex,q)||c.bgname.toLowerCase().includes(q)||String(c.dex)===q))return false; return true;});
+    $('#gcount').textContent=`${FILTERED.length} ${tr('bg_unit')}`;
+  }else{
+    FILTERED=THUMBS.filter(t=>{const normal=!t.shiny&&!t.cos&&!t.dmax&&!t.gmax;
+      if(normal&&!FILT.fNormal)return false; if(t.gmax&&!FILT.fGmax)return false; if(t.dmax&&!FILT.fDmax)return false;
+      if(t.shiny&&!FILT.fShiny)return false; if(t.cos&&!FILT.fCos)return false;
+      if(FILT.fSelected&&!inTarget(t))return false; if(FILT.fLego&&!t.legendary)return false;
+      if(q&&!(matchName(t.dex,q)||String(t.dex)===q||String(t.dex).padStart(4,'0')===q))return false; return true;});
+    $('#gcount').textContent=`${FILTERED.length} ${tr('combos_unit')}`;
+  }
+  appendBatch(); g.onscroll=()=>{if(g.scrollTop+g.clientHeight>g.scrollHeight-300)appendBatch()};
+}
+function appendBatch(){
+  const g=$('#grid');const end=Math.min(shown+300,FILTERED.length);
+  for(let i=shown;i<end;i++){
+    const it=FILTERED[i];const d=document.createElement('div');d.className='cell';
+    if(inTarget(it))d.classList.add('added');
+    d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" referrerpolicy="no-referrer" src="${it.bg}">`:''}
+      <img class="m" loading="lazy" src="${it.url}">${it.badge?`<img class="bd" src="${it.badge}">`:''}
+      ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${inTarget(it)?'<span class="ok">✓</span>':''}`;
+    d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
+    d.onclick=()=>toggleItem(it,d);
+    g.appendChild(d);
+  }
+  shown=end;
+}
+let LIST={want:[],have:[]};
+let dragK=null,dragIdx=null;
+function toggleItem(it,cell){
+  const c={url:it.url,badge:it.badge||null,zh:it.zh,shiny:!!it.shiny,tag:it.tag||'',bg:it.bg||null,gender:it.gender||null,dex:it.dex};
+  const arr=LIST[TARGET];const idx=arr.findIndex(x=>keyOf(x)===keyOf(c));
+  if(idx>=0){arr.splice(idx,1);cell&&cell.classList.remove('added');cell&&cell.querySelector('.ok')?.remove();}
+  else{arr.push(c);if(cell){cell.classList.add('added');if(!cell.querySelector('.ok')){const s=document.createElement('span');s.className='ok';s.textContent='✓';cell.appendChild(s);}}}
+  drawLists(); if(FILT.fSelected)render(); renderBase();
+}
+function clearIns(){document.querySelectorAll('.li.insb,.li.insa').forEach(x=>x.classList.remove('insb','insa'));}
+function moveItem(k,from,to){const arr=LIST[k];const[mv]=arr.splice(from,1);if(to>from)to--;arr.splice(to,0,mv);drawLists();renderBase();}
+function drawLists(){
+  for(const [k,el,cnt] of [['want','#listW','#cW'],['have','#listH','#cH']]){
+    const box=$(el);$(cnt).textContent=LIST[k].length;
+    if(!LIST[k].length){box.innerHTML='<div class="empty">'+tr('empty')+'</div>';box.ondragover=box.ondrop=null;continue;}
+    box.innerHTML='';
+    box.ondragover=e=>{ if(dragK===k)e.preventDefault(); };
+    box.ondrop=e=>{ if(dragK===k&&dragIdx!=null&&e.target===box){e.preventDefault();clearIns();moveItem(k,dragIdx,LIST[k].length);} };
+    LIST[k].forEach((c,i)=>{const d=document.createElement('div');d.className='li';d.draggable=true;
+      d.innerHTML=`<div class="card">${c.bg?`<img class="bg" src="${c.bg}" crossorigin="anonymous" referrerpolicy="no-referrer">`:''}
+        <img class="m" src="${c.url}" crossorigin="anonymous">${c.badge?`<img class="bd" src="${c.badge}">`:''}
+        ${c.shiny?'<span class="sh">✨</span>':''}${c.gender==='female'?'<span class="gn">♀</span>':''}${c.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}</div>
+        <button class="del">✕</button>`;
+      d.querySelector('.del').onclick=e=>{e.stopPropagation();LIST[k].splice(i,1);drawLists();render();renderBase();};
+      d.ondragstart=e=>{dragK=k;dragIdx=i;d.classList.add('dragging');e.dataTransfer.effectAllowed='move';};
+      d.ondragend=()=>{d.classList.remove('dragging');clearIns();dragK=null;dragIdx=null;};
+      d.ondragover=e=>{ if(dragK!==k)return; e.preventDefault();
+        const r=d.getBoundingClientRect(),after=(e.clientX-r.left)>r.width/2;
+        clearIns(); d.classList.add(after?'insa':'insb'); };
+      d.ondrop=e=>{ if(dragK!==k||dragIdx==null)return; e.preventDefault();e.stopPropagation();clearIns();
+        const r=d.getBoundingClientRect(),after=(e.clientX-r.left)>r.width/2;
+        moveItem(k,dragIdx,after?i+1:i); };
+      box.appendChild(d);});
+  }
+}
+boot();
+</script>
+</body>
+</html>

@@ -36,7 +36,6 @@ import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
 import { initializePvpRanker } from './pvp-ranker.js';
 import { initializeMapApp } from './map-app.js';
-import { initializeDexApp } from './dex-app.js';
 
 document.addEventListener('DOMContentLoaded', () => {
         const app = initializeApp(window.firebaseConfig); // 假設您的 config 在 window 上
@@ -185,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let specialResearchAppInitialized = false;
     let infoHubAppInitialized = false; // <-- 【新增】
     let mapAppInitialized = false;
-    let dexAppInitialized = false;
     // 【SEO】每個分頁的標題與描述，切換時動態套用，讓每個 ?tab= 網址在
     // 搜尋結果有各自明確的標題與摘要（而不是全部顯示同一段主頁文字）。
     const SITE_BASE = 'https://jason168861.github.io/pokemongo-toolbox/';
@@ -235,9 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
             title: '補給站／道館地圖 + S2 網格｜Pokémon Go 工具箱',
             desc: '在地圖上查看 Pokémon GO 補給站與道館位置，支援 S2 網格（L14/L17）切換、地點搜尋與範圍測量，方便判斷道館生成與活動範圍。'
         },
-        'dex-app': {
-            title: '全寶可夢圖鑑：造型、異色一次看｜Pokémon Go 工具箱',
-            desc: 'Pokémon GO 全圖鑑：收錄所有已實裝寶可夢與其阿羅拉、伽勒爾、洗翠、Mega、超極巨化等造型與異色（Shiny）樣式，可搜尋、切換異色一次瀏覽。'
+        'trade-list': {
+            title: '交易清單產生器：選寶可夢與背卡做圖｜Pokémon Go 工具箱',
+            desc: 'Pokémon GO 交易清單產生器：挑選寶可夢（含異色、極巨化、超極巨化、造形）與特殊背卡，分「想要／可提供」，一鍵匯出交易清單圖片。'
         }
     };
 
@@ -306,9 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (targetAppId === 'map-app' && !mapAppInitialized) {
             initializeMapApp();
             mapAppInitialized = true;
-        } else if (targetAppId === 'dex-app' && !dexAppInitialized) {
-            initializeDexApp();
-            dexAppInitialized = true;
         }
 
         // 地圖分頁：捲動位置會沿用上一個分頁，若已往下捲會看不到地圖上方的
@@ -346,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', (e) => {
             // 按住 Ctrl/Cmd/Shift 點 <a> 連結時交給瀏覽器開新分頁/視窗
             if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+            if (!button.dataset.target) return;   // 沒有 data-target = 真正跳頁的連結（如交易清單），交給瀏覽器正常導覽
             e.preventDefault();   // <a>：阻止整頁重新載入，改走 SPA 切換
             navigateTo(button.dataset.target, false);
         });

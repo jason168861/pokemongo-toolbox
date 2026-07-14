@@ -77,7 +77,6 @@
     <link rel="stylesheet" href="css/search-filters.css">
     <link rel="stylesheet" href="css/special-research.css">
     <link rel="stylesheet" href="css/info-hub.css">
-    <link rel="stylesheet" href="css/dex-app.css">
 
     <!-- 地圖：Leaflet + S2 幾何（供補給站/道館地圖使用） -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -155,7 +154,7 @@
                     <a class="tab-button" data-target="special-research-app" href="?tab=special-research-app">特殊調查</a>
                     <a class="tab-button" data-target="info-hub-app" href="?tab=info-hub-app">特別資訊</a>
                     <a class="tab-button" data-target="map-app" href="?tab=map-app">補給站/道館地圖</a>
-                    <a class="tab-button" data-target="dex-app" href="?tab=dex-app">全寶可夢圖鑑</a>
+                    <a class="tab-button" href="trade-list/">🔴 交易清單產生器</a>
                 </div>
             </div>
         </div>
@@ -188,10 +187,10 @@
                     <span class="home-card-title">補給站/道館地圖</span>
                     <span class="home-card-text">全台位置、S2 網格、40/80m 範圍圈與最佳站位排名。</span>
                 </a>
-                <a class="home-card tab-button" data-target="dex-app" href="?tab=dex-app">
-                    <span class="home-card-icon">📕</span>
-                    <span class="home-card-title">全寶可夢圖鑑</span>
-                    <span class="home-card-text">所有寶可夢、造型與異色一次看。</span>
+                <a class="home-card" href="trade-list/">
+                    <span class="home-card-icon">🔴</span>
+                    <span class="home-card-title">交易清單產生器</span>
+                    <span class="home-card-text">選寶可夢與背卡，一鍵做出交易清單圖片。</span>
                 </a>
                 <a class="home-card tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">
                     <span class="home-card-icon">💯</span>
@@ -733,36 +732,6 @@
             </section>
         </div>
 
-        <div id="dex-app" class="app-content">
-            <div class="container dex-container">
-                <div class="dex-header">
-                    <h1>全寶可夢圖鑑</h1>
-                    <p class="dex-sub">收錄所有已實裝寶可夢與其造型、異色（Shiny）樣式。圖片來源：PokéMiners。</p>
-                </div>
-                <div class="dex-toolbar">
-                    <input type="search" id="dexSearch" placeholder="搜尋名稱或編號，例如：噴火龍 或 6" autocomplete="off">
-                    <div class="dex-filters">
-                        <select id="dexGen" class="dex-select" aria-label="世代篩選"><option value="">全部世代</option></select>
-                        <select id="dexType" class="dex-select" aria-label="屬性篩選"><option value="">全部屬性</option></select>
-                        <button type="button" class="dex-chip active" data-filter="all">全部</button>
-                        <button type="button" class="dex-chip" data-filter="shiny">✨ 可異色</button>
-                        <button type="button" class="dex-chip" data-filter="mega">Mega</button>
-                        <button type="button" class="dex-chip" data-filter="costume">特殊造型</button>
-                        <label class="dex-shiny-toggle"><input type="checkbox" id="dexShinyToggle"> 縮圖顯示異色 ✨</label>
-                    </div>
-                </div>
-                <div class="dex-status" id="dexStatus">正在載入圖鑑資料…</div>
-                <div class="dex-grid" id="dexGrid"></div>
-            </div>
-
-            <!-- 單隻詳情彈窗：顯示該寶可夢的所有變體（造型/服裝/異色）大圖 -->
-            <div class="dex-modal" id="dexModal" aria-hidden="true">
-                <div class="dex-modal-inner" role="dialog" aria-label="寶可夢造型與異色">
-                    <button type="button" class="dex-modal-close" id="dexModalClose" title="關閉">✕</button>
-                    <div id="dexModalBody"></div>
-                </div>
-            </div>
-        </div>
     </div>
             <footer class="site-footer">
         <p>&copy; <span id="copyright-year"></span> Pokémon Go 工具箱. All rights reserved by their respective owners.</p>
