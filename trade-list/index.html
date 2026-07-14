@@ -58,6 +58,11 @@
   .btn.g{background:var(--cellbg);border:1px solid var(--line);color:var(--fg);font-weight:400}
   .toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
   .themeSel{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .homelink{color:var(--fg);text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--cellbg)}
+  .homelink:hover{border-color:var(--acc2)}
+  #authBtn{font-size:12px;border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--cellbg);color:var(--fg);cursor:pointer}
+  #authBtn:hover{border-color:var(--acc2)}
+  #cloudMsg{font-size:11px;color:var(--mut)}
   /* 匯出編輯器 */
   #editor{position:relative;user-select:none;margin-top:8px}
   #baseCv{width:100%;display:block;border-radius:12px}
@@ -77,9 +82,27 @@
 </head>
 <body>
 <header>
+  <a class="homelink" href="../" id="homeLink">🧰 <span id="homeTxt">工具箱</span></a>
+  <select id="toolJump" class="homelink" onchange="if(this.value){location.href='../?tab='+this.value}">
+    <option value="">🔀 前往其他工具…</option>
+    <option value="cp-checker-app">IV100 CP 查詢</option>
+    <option value="pvp-ranker-app">PvP IV 排名查詢</option>
+    <option value="id-selector-app">寶可夢編號篩選器</option>
+    <option value="search-filters-app">搜尋篩選指令</option>
+    <option value="raids-app">團體戰列表</option>
+    <option value="eggs-app">孵蛋列表</option>
+    <option value="research-app">田野調查任務</option>
+    <option value="special-research-app">特殊調查</option>
+    <option value="info-hub-app">特別資訊</option>
+    <option value="map-app">補給站/道館地圖</option>
+  </select>
   <h1 id="appTitle">🔴 寶可夢 GO 交易清單產生器</h1>
   <span id="stat" class="sub"></span>
   <span class="themeSel">
+    <span style="display:flex;flex-direction:column;align-items:flex-end;gap:1px">
+      <button id="authBtn">以 Google 登入</button>
+      <span id="cloudMsg"></span>
+    </span>
     <span class="sub">🌐</span><select id="langSel"></select>
     <span class="sub" id="themeLabel">風格</span>
     <select id="themeSel"><option value="neon">深色霓虹</option><option value="warm">暖色活潑</option><option value="light">乾淨簡約</option></select>
@@ -177,8 +200,8 @@ const WEIGHTS=[['w_normal',400],['w_med',600],['w_bold',700],['w_black',900]];
 /* ---------- 多國語言 ---------- */
 const LANGS=[['zh','繁中'],['en','English'],['ja','日本語'],['ko','한국어'],['fr','Français'],['de','Deutsch'],['es','Español']];
 const I18N={
- zh:{font_game:'遊戲粗黑',font_hei:'黑體',font_impact:'Impact',font_round:'圓潤',font_serif:'襯線',w_normal:'一般',w_med:'中黑',w_bold:'粗',w_black:'特粗',app:'寶可夢 GO 交易清單產生器',fname:'交易清單',theme:'風格',th_neon:'深色霓虹',th_warm:'暖色活潑',th_light:'乾淨簡約',tab_mon:'寶可夢（全組合）',tab_bg:'背卡組合',search_mon:'搜尋…名稱或編號',search_bg:'搜尋…寶可夢或背卡',f_normal:'一般',f_shiny:'異色',f_dmax:'極巨化',f_gmax:'超極巨化',f_cos:'造形/服裝',only:'只看',f_sel:'已選',f_lego:'傳說',combos_unit:'種組合',bg_unit:'個背卡組合',mons:'隻',seg_want:'加到「我想要的」',seg_have:'加到「我能提供的」',canfly:'我能飛（顯示 CAN FLY）',want:'我想要的',have:'我能提供的',empty:'點左邊縮圖加入',start:'我選好了，開始製圖',sort:'依編號排序',clear:'清空清單',download:'下載 PNG',addtext:'新增文字',reset:'復原預設文字',back:'返回選擇',edit_title:'匯出圖（拖曳/編輯文字）',edit_hint:'點文字可選取 → 拖曳移動、下方改字/色/大小。',text_content:'文字內容',del:'刪除',outline:'外框',confirm_clear:'確定要清空整個清單嗎？',list_empty:'清單是空的',edit_empty:'清單還是空的，先從左邊加寶可夢',export_foot:'Pokémon GO 交易清單',newtext:'文字'},
- en:{font_game:'Game Black',font_hei:'Sans',font_impact:'Impact',font_round:'Rounded',font_serif:'Serif',w_normal:'Normal',w_med:'Medium',w_bold:'Bold',w_black:'Black',app:'Pokémon GO Trade List Maker',fname:'trade-list',theme:'Theme',th_neon:'Dark Neon',th_warm:'Warm',th_light:'Light',tab_mon:'Pokémon (all)',tab_bg:'Backgrounds',search_mon:'Search name or number',search_bg:'Search Pokémon or background',f_normal:'Normal',f_shiny:'Shiny',f_dmax:'Dynamax',f_gmax:'Gigantamax',f_cos:'Form/Costume',only:'Only',f_sel:'Selected',f_lego:'Legendary',combos_unit:'combos',bg_unit:'bg combos',mons:'Pokémon',seg_want:'Add to Looking For',seg_have:'Add to For Trade',canfly:'Can fly (show CAN FLY)',want:'Looking For',have:'For Trade',empty:'Click thumbnails to add',start:'Done — make image',sort:'Sort by number',clear:'Clear list',download:'Download PNG',addtext:'Add text',reset:'Reset text',back:'Back',edit_title:'Export image (drag/edit text)',edit_hint:'Click text to select → drag to move; edit below.',text_content:'Text',del:'Delete',outline:'Outline',confirm_clear:'Clear the whole list?',list_empty:'List is empty',edit_empty:'List is empty — add Pokémon first',export_foot:'Pokémon GO Trade List',newtext:'Text'},
+ zh:{font_game:'遊戲粗黑',font_hei:'黑體',font_impact:'Impact',font_round:'圓潤',font_serif:'襯線',w_normal:'一般',w_med:'中黑',w_bold:'粗',w_black:'特粗',app:'寶可夢 GO 交易清單產生器',fname:'交易清單',theme:'風格',th_neon:'深色霓虹',th_warm:'暖色活潑',th_light:'乾淨簡約',tab_mon:'寶可夢（全組合）',tab_bg:'背卡組合',search_mon:'搜尋…名稱或編號',search_bg:'搜尋…寶可夢或背卡',f_normal:'一般',f_shiny:'異色',f_dmax:'極巨化',f_gmax:'超極巨化',f_cos:'造形/服裝',only:'只看',f_sel:'已選',f_lego:'傳說',combos_unit:'種組合',bg_unit:'個背卡組合',mons:'隻',seg_want:'加到「我想要的」',seg_have:'加到「我能提供的」',canfly:'我能飛（顯示 CAN FLY）',want:'我想要的',have:'我能提供的',empty:'點左邊縮圖加入',start:'我選好了，開始製圖',sort:'依編號排序',clear:'清空清單',download:'下載 PNG',addtext:'新增文字',reset:'復原預設文字',back:'返回選擇',edit_title:'匯出圖（拖曳/編輯文字）',edit_hint:'點文字可選取 → 拖曳移動、下方改字/色/大小。',text_content:'文字內容',del:'刪除',outline:'外框',confirm_clear:'確定要清空整個清單嗎？',list_empty:'清單是空的',edit_empty:'清單還是空的，先從左邊加寶可夢',export_foot:'Pokémon GO 交易清單',newtext:'文字',home:'工具箱',auth_login:'以 Google 登入',auth_logout:'登出',auth_synced:'雲端同步中',auth_guest:'未登入 · 暫存於此瀏覽器'},
+ en:{font_game:'Game Black',font_hei:'Sans',font_impact:'Impact',font_round:'Rounded',font_serif:'Serif',w_normal:'Normal',w_med:'Medium',w_bold:'Bold',w_black:'Black',app:'Pokémon GO Trade List Maker',fname:'trade-list',theme:'Theme',th_neon:'Dark Neon',th_warm:'Warm',th_light:'Light',tab_mon:'Pokémon (all)',tab_bg:'Backgrounds',search_mon:'Search name or number',search_bg:'Search Pokémon or background',f_normal:'Normal',f_shiny:'Shiny',f_dmax:'Dynamax',f_gmax:'Gigantamax',f_cos:'Form/Costume',only:'Only',f_sel:'Selected',f_lego:'Legendary',combos_unit:'combos',bg_unit:'bg combos',mons:'Pokémon',seg_want:'Add to Looking For',seg_have:'Add to For Trade',canfly:'Can fly (show CAN FLY)',want:'Looking For',have:'For Trade',empty:'Click thumbnails to add',start:'Done — make image',sort:'Sort by number',clear:'Clear list',download:'Download PNG',addtext:'Add text',reset:'Reset text',back:'Back',edit_title:'Export image (drag/edit text)',edit_hint:'Click text to select → drag to move; edit below.',text_content:'Text',del:'Delete',outline:'Outline',confirm_clear:'Clear the whole list?',list_empty:'List is empty',edit_empty:'List is empty — add Pokémon first',export_foot:'Pokémon GO Trade List',newtext:'Text',home:'Toolbox',auth_login:'Sign in with Google',auth_logout:'Sign out',auth_synced:'Synced to cloud',auth_guest:'Not signed in · saved in this browser'},
  ja:{font_game:'ゲーム太字',font_hei:'ゴシック',font_impact:'Impact',font_round:'丸ゴシック',font_serif:'明朝',w_normal:'標準',w_med:'中太',w_bold:'太字',w_black:'極太',app:'ポケモンGO トレードリスト作成',fname:'トレードリスト',theme:'テーマ',th_neon:'ダークネオン',th_warm:'ウォーム',th_light:'ライト',tab_mon:'ポケモン（全部）',tab_bg:'背景',search_mon:'名前や番号で検索',search_bg:'ポケモン・背景を検索',f_normal:'通常',f_shiny:'色違い',f_dmax:'ダイマックス',f_gmax:'キョダイマックス',f_cos:'すがた/コスチューム',only:'絞込',f_sel:'選択済',f_lego:'伝説',combos_unit:'件',bg_unit:'件',mons:'匹',seg_want:'「ほしい」に追加',seg_have:'「ゆずれる」に追加',canfly:'飛べる（CAN FLY表示）',want:'ほしいもの',have:'ゆずれるもの',empty:'左のアイコンから追加',start:'選び終わった、画像を作る',sort:'番号順に並べ替え',clear:'リストを消去',download:'PNGを保存',addtext:'テキスト追加',reset:'文字をリセット',back:'戻る',edit_title:'書き出し画像（文字をドラッグ/編集）',edit_hint:'文字をタップで選択 → ドラッグで移動、下で編集。',text_content:'テキスト',del:'削除',outline:'縁取り',confirm_clear:'リストを全部消しますか？',list_empty:'リストが空です',edit_empty:'リストが空です。先にポケモンを追加',export_foot:'ポケモンGO トレードリスト',newtext:'テキスト'},
  ko:{font_game:'게임 볼드',font_hei:'고딕',font_impact:'Impact',font_round:'둥근',font_serif:'세리프',w_normal:'보통',w_med:'중간',w_bold:'굵게',w_black:'매우 굵게',app:'포켓몬 GO 교환 목록 생성기',fname:'교환목록',theme:'테마',th_neon:'다크 네온',th_warm:'따뜻한',th_light:'라이트',tab_mon:'포켓몬(전체)',tab_bg:'배경',search_mon:'이름·번호 검색',search_bg:'포켓몬·배경 검색',f_normal:'일반',f_shiny:'이로치',f_dmax:'다이맥스',f_gmax:'거다이맥스',f_cos:'모습/의상',only:'필터',f_sel:'선택됨',f_lego:'전설',combos_unit:'개',bg_unit:'개',mons:'마리',seg_want:'「원해요」에 추가',seg_have:'「줄 수 있어요」에 추가',canfly:'날 수 있음(CAN FLY 표시)',want:'원하는 것',have:'줄 수 있는 것',empty:'왼쪽 아이콘에서 추가',start:'선택 완료, 이미지 만들기',sort:'번호순 정렬',clear:'목록 비우기',download:'PNG 저장',addtext:'텍스트 추가',reset:'문구 초기화',back:'뒤로',edit_title:'내보내기 이미지(문자 드래그/편집)',edit_hint:'문자를 눌러 선택 → 드래그로 이동, 아래에서 편집.',text_content:'텍스트',del:'삭제',outline:'외곽선',confirm_clear:'목록을 모두 비울까요?',list_empty:'목록이 비어 있습니다',edit_empty:'목록이 비어 있어요. 먼저 포켓몬을 추가하세요',export_foot:'포켓몬 GO 교환 목록',newtext:'텍스트'},
  fr:{font_game:'Jeu gras',font_hei:'Sans',font_impact:'Impact',font_round:'Arrondi',font_serif:'Serif',w_normal:'Normal',w_med:'Moyen',w_bold:'Gras',w_black:'Extra-gras',app:"Générateur de liste d'échange Pokémon GO",fname:'liste-echange',theme:'Thème',th_neon:'Néon sombre',th_warm:'Chaud',th_light:'Clair',tab_mon:'Pokémon (tous)',tab_bg:'Fonds',search_mon:'Nom ou numéro',search_bg:'Pokémon ou fond',f_normal:'Normal',f_shiny:'Chromatique',f_dmax:'Dynamax',f_gmax:'Gigamax',f_cos:'Forme/Costume',only:'Filtrer',f_sel:'Sélection',f_lego:'Légendaire',combos_unit:'combos',bg_unit:'combos',mons:'Pokémon',seg_want:'Vers Recherche',seg_have:'Vers Échange',canfly:'Peut voler (CAN FLY)',want:'Je recherche',have:'Je propose',empty:'Cliquez les vignettes',start:"C'est fait, créer l'image",sort:'Trier par numéro',clear:'Vider la liste',download:'Télécharger PNG',addtext:'Ajouter texte',reset:'Réinit. texte',back:'Retour',edit_title:'Image (glisser/éditer texte)',edit_hint:'Cliquez un texte → glissez ; éditez en dessous.',text_content:'Texte',del:'Supprimer',outline:'Contour',confirm_clear:'Vider toute la liste ?',list_empty:'Liste vide',edit_empty:'Liste vide — ajoutez des Pokémon',export_foot:"Liste d'échange Pokémon GO",newtext:"Texte"},
@@ -227,6 +250,7 @@ function applyStaticI18n(){
   $('#ctlText').placeholder=T('text_content'); $('#ctlDel').textContent=T('del'); $('#ctlOutlineLabel').textContent=T('outline');
   $('#q').placeholder=TAB==='mon'?T('search_mon'):T('search_bg');
   $('#stat').textContent=Object.keys(POKE).length+' '+T('mons');
+  $('#homeTxt').textContent=T('home'); updateAuthUI(AUTHUSER);
   if($('#ctlFont')){ $('#ctlFont').innerHTML=FONTS.map((f,i)=>`<option value="${i}">${T(f[0])}</option>`).join('');
     $('#ctlWeight').innerHTML=WEIGHTS.map(w=>`<option value="${w[1]}">${T(w[0])}</option>`).join(''); if(SEL)selCtl(); }
 }
@@ -265,6 +289,12 @@ async function boot(){
   window.addEventListener('resize',layoutTexts);
   applyTheme(localStorage.getItem('bgtoolTheme')||'neon');
   applyStaticI18n();
+  // 還原上次的清單(未登入時的本機暫存;登入後 Firebase 會覆蓋)
+  try{ const s=localStorage.getItem(LS_KEY); if(s){ const d=JSON.parse(s);
+    LIST={want:Array.isArray(d.want)?d.want:[],have:Array.isArray(d.have)?d.have:[]};
+    for(const k of ['want','have']) for(const c of LIST[k]) c.zh=nameOf(c.dex);
+    if(d.canfly && $('#canfly')) $('#canfly').checked=true; } }catch(e){}
+  ready=true; bootResolve();
   drawLists();
   render();
 }
@@ -566,8 +596,81 @@ function drawLists(){
         moveItem(k,dragIdx,after?i+1:i); };
       box.appendChild(d);});
   }
+  persist();
 }
+
+/* ===== 清單記錄:登入→雲端(Firebase Realtime DB),未登入→localStorage ===== */
+const LS_KEY='tradeListData';
+let AUTHUSER=null, cloudUid=null, cloudSave=null, ready=false, saveTimer=null;
+let bootResolve; const bootReady=new Promise(r=>{bootResolve=r;});   // boot 完成(本機清單已還原)後 resolve
+function collect(){ return {v:1, want:LIST.want, have:LIST.have, canfly:$('#canfly')?$('#canfly').checked:false}; }
+function persist(){
+  if(!ready) return;
+  const data=collect();
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(data)); }catch(e){}
+  if(cloudUid && cloudSave){ clearTimeout(saveTimer); saveTimer=setTimeout(()=>cloudSave(data), 700); }
+}
+function applyData(d){
+  if(!d) return;
+  LIST={want:Array.isArray(d.want)?d.want:[], have:Array.isArray(d.have)?d.have:[]};
+  for(const k of ['want','have']) for(const c of LIST[k]) c.zh=nameOf(c.dex);   // 名稱依目前語言重算
+  if($('#canfly')){ $('#canfly').checked=!!d.canfly; TEXTS=TEXTS.filter(t=>t.id!=='canfly'); }
+  drawLists(); render(); renderBase();
+}
+function updateAuthUI(user){
+  AUTHUSER=user; const b=$('#authBtn'), m=$('#cloudMsg'); if(!b) return;
+  if(user){ b.textContent=tr('auth_logout'); b.onclick=()=>window.__tlAuth&&window.__tlAuth.signOut();
+    if(m) m.textContent=(user.displayName||user.email||'')+' · '+tr('auth_synced'); }
+  else{ b.textContent=tr('auth_login'); b.onclick=()=>window.__tlAuth&&window.__tlAuth.signIn();
+    if(m) m.textContent=tr('auth_guest'); }
+}
+// 給 Firebase 模組(另一支 type=module 腳本)呼叫的橋接
+window.__TL={
+  applyData, collect, updateAuthUI, ready:bootReady,
+  setCloudSave(fn){ cloudSave=fn; },
+  setCloudUid(u){ cloudUid=u; if(u) persist(); }   // 登入後把目前清單立即同步一次
+};
 boot();
+</script>
+
+<!-- Firebase 登入 + 雲端清單同步(沿用主站 config.js / Realtime Database)。ES module,透過 window.__TL 與上面的主腳本溝通。 -->
+<script src="../config.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+  import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+  const TL = () => window.__TL;
+  if(window.firebaseConfig){
+    const app = initializeApp(window.firebaseConfig);
+    const auth = getAuth(app), db = getDatabase(app), provider = new GoogleAuthProvider();
+    const path = uid => `users/${uid}/tradeList`;
+    // 提供給主腳本按鈕使用的登入/登出
+    window.__tlAuth = {
+      signIn(){ signInWithPopup(auth, provider).catch(e=>{ console.error(e); alert('登入失敗:'+(e.message||e)); }); },
+      signOut(){ signOut(auth); }
+    };
+    // 雲端存檔器交給主腳本(每次清單變動且已登入時會呼叫)
+    const saver = async (data) => { const u = auth.currentUser; if(!u) return;
+      try{ await set(ref(db, path(u.uid)), data); }catch(e){ console.error('雲端儲存失敗', e); } };
+    if(TL()) TL().setCloudSave(saver);
+    onAuthStateChanged(auth, async (user) => {
+      const tl = TL(); if(!tl) return;
+      await tl.ready;                                   // 等 boot 完成、本機清單已還原,雲端才覆蓋
+      tl.updateAuthUI(user);
+      if(user){
+        try{
+          const snap = await get(ref(db, path(user.uid)));
+          if(snap.exists()) tl.applyData(snap.val());   // 雲端有→覆蓋本機顯示
+          else saver(tl.collect());                     // 雲端還沒有→把目前本機清單上傳
+        }catch(e){ console.error('讀取雲端清單失敗', e); }
+        tl.setCloudUid(user.uid);                        // 之後的變動都寫雲端
+      }else{
+        tl.setCloudUid(null);
+      }
+    });
+  }else{
+    console.warn('找不到 window.firebaseConfig,交易清單的登入/雲端同步已停用(本機暫存仍可用)。');
+  }
 </script>
 </body>
 </html>
