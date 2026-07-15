@@ -1,6 +1,6 @@
 [
   {
-    "category": "Special Anniversary Pikachu Celebration Tasks",
+    "category": "Special Anniversary Pikachu Celebration - Celebration 1 Tasks",
     "tasks": [
       {
         "description": "捕捉 10 隻皮卡丘",
@@ -51,6 +51,134 @@
             "type": "encounter",
             "name": "戴美洛耶塔帽子的皮卡丘",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOFEST_2021_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "在團體戰中獲勝 3 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "穿著棒球外套的皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2025.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "2022世界錦標賽皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2022.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "2023世界錦標賽皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2023.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "2024世界錦標賽皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2024.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Special Anniversary Pikachu Celebration - Celebration 2 Tasks",
+    "tasks": [
+      {
+        "description": "捕捉 10 隻皮卡丘",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Akari's Kerchief",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_B_02.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Brendan's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOTOUR_2023_HAT.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Dawn's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_A_02.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Ethan's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2026_B.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Lucas's Hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_A.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "戴著小遙頭巾的皮卡丘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOTOUR_2023_BANDANA_NOEVOLVE.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing Rei's Cap",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fGOTOUR_2024_B.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 15 隻皮卡丘",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Gracidea Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.cGOFEST_2022_NOEVOLVE.icon.png",
             "isShiny": true,
             "maxCp": "402",
             "minCp": "369"
