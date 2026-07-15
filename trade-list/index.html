@@ -297,6 +297,7 @@ async function boot(){
   ready=true; bootResolve();
   drawLists();
   render();
+  renderBase();   // 還原清單後即時畫出匯出預覽(PNG 區)
 }
 function applyTheme(k){
   if(!THEMES[k])k='neon'; THEME=k; $('#themeSel').value=k;
