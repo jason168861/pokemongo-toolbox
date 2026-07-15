@@ -363,7 +363,18 @@ function reconcile(lay){
 }
 
 /* ---------- 畫底圖(漸層+面板+卡片,不含文字) ---------- */
-function loadImg(s){return new Promise(r=>{const i=new Image();i.crossOrigin='anonymous';i.referrerPolicy='no-referrer';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=cdn(s)})}
+const _imgCache=new Map();   // url→Promise<Image|null>,避免每次匯出都重新下載/解碼
+function loadImg(s){
+  if(!s) return Promise.resolve(null);
+  const key=cdn(s);
+  if(_imgCache.has(key)) return _imgCache.get(key);
+  const p=new Promise(r=>{const i=new Image();i.crossOrigin='anonymous';i.referrerPolicy='no-referrer';
+    i.onload=()=>r(i); i.onerror=()=>{_imgCache.delete(key);r(null);}; i.src=key;});
+  _imgCache.set(key,p); return p;
+}
+// 匯出用中尺寸背卡縮圖(~384px webp,原圖背卡動輒 500KB+);縮圖缺失時自動退回原圖
+function expOf(u){ return (u&&u.startsWith('assets/bg/')) ? 'assets/bgexp/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp') : u; }
+function loadExport(u){ const e=expOf(u); if(e===u) return loadImg(u); return loadImg(e).then(im=>im||loadImg(u)); }
 let _qrImg;   // 推廣 QR(固定圖,載一次快取)
 async function qrImg(){ if(_qrImg!==undefined) return _qrImg; _qrImg=await loadImg('assets/brand/qr.png'); return _qrImg; }
 // 網格/清單用小縮圖(WebP)加速;匯出仍用原圖高解析。皆走 cdn()。
@@ -376,7 +387,7 @@ function star(x,cx,cy,r,fill){x.beginPath();for(let i=0;i<10;i++){const a=-Math.
 async function drawCard(x,cx,cy,c,T){
   x.save();x.shadowColor='rgba(0,0,0,0.35)';x.shadowBlur=8;x.shadowOffsetY=3;x.fillStyle=T.cardbg;rrPath(x,cx,cy,S,S,S*0.16);x.fill();x.restore();
   x.save();rrPath(x,cx,cy,S,S,S*0.16);x.clip();x.fillStyle=T.cardbg;x.fillRect(cx,cy,S,S);
-  if(c.bg){const b=await loadImg(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
+  if(c.bg){const b=await loadExport(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
   const m=await loadImg(c.url);if(m)x.drawImage(m,cx+S*0.09,cy+S*0.09,S*0.82,S*0.82);
   x.restore();
   if(T.line&&!/,\s*0\)$/.test(T.line)){x.strokeStyle=T.line;x.lineWidth=2;rrPath(x,cx,cy,S,S,S*0.16);x.stroke();}
@@ -388,6 +399,9 @@ async function drawBaseTo(x,lay,SC){
   const T=THEMES[THEME].exp,W=LAYW,H=lay.H;
   x.setTransform(SC,0,0,SC,0,0);
   const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,T.grad[0]);g.addColorStop(1,T.grad[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
+  // 先平行啟動本次要用的所有圖片下載(填入快取);下面的 draw 迴圈再逐張命中 → 平行載入、漸進顯示,不再一張等一張
+  for(const s of lay.secs) for(const c of s.items){ loadImg(c.url); if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
+  if(lay.qr) qrImg();
   for(const s of lay.secs){
     x.fillStyle=T.panel;rrPath(x,PAD,s.panelY,W-2*PAD,s.ph,24);x.fill();
     for(let i=0;i<s.items.length;i++){await drawCard(x,PAD+GAP+(i%COLS)*(S+GAP),s.panelY+GAP+((i/COLS)|0)*(S+GAP),s.items[i],T);}
@@ -525,7 +539,17 @@ function setTab(t){TAB=t;$('#tMon').classList.toggle('on',t==='mon');$('#tBg').c
   $('#q').placeholder=t==='mon'?tr('search_mon'):tr('search_bg');render();}
 function tog(id){FILT[id]=!FILT[id];$('#'+id).classList.toggle('on',FILT[id]);render();}
 function setTarget(t){TARGET=t;$('#segWant').classList.toggle('on',t==='want');$('#segHave').classList.toggle('on',t==='have');
-  $('#fSelected').textContent='✓ '+tr('f_sel')+'：'+(t==='want'?tr('want'):tr('have'));render();}
+  $('#fSelected').textContent='✓ '+tr('f_sel')+'：'+(t==='want'?tr('want'):tr('have'));
+  if(FILT.fSelected)render(); else refreshAdded();}   // 只在「已選」篩選開啟時才需重建;否則原地更新✓
+function refreshAdded(){
+  for(const d of $('#grid').children){
+    const it=d._it; if(!it)continue;
+    const on=inTarget(it); d.classList.toggle('added',on);
+    const ok=d.querySelector('.ok');
+    if(on&&!ok){const s=document.createElement('span');s.className='ok';s.textContent='✓';d.appendChild(s);}
+    else if(!on&&ok){ok.remove();}
+  }
+}
 let shown=0,FILTERED=[];
 function keyOf(c){return (c.url||'')+'|'+(c.bg||'')+'|'+(c.badge||'');}
 function inTarget(c){return LIST[TARGET].some(x=>keyOf(x)===keyOf(c));}
@@ -578,6 +602,7 @@ function appendBatch(){
       <img class="m" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
       ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${inTarget(it)?'<span class="ok">✓</span>':''}`;
     d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
+    d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
     d.onclick=()=>toggleItem(it,d);
     g.appendChild(d);
   }
@@ -590,7 +615,8 @@ function toggleItem(it,cell){
   const c={url:it.url,badge:it.badge||null,zh:it.zh,shiny:!!it.shiny,tag:it.tag||'',bg:it.bg||null,gender:it.gender||null,dex:it.dex};
   const arr=LIST[TARGET];const idx=arr.findIndex(x=>keyOf(x)===keyOf(c));
   if(idx>=0){arr.splice(idx,1);cell&&cell.classList.remove('added');cell&&cell.querySelector('.ok')?.remove();}
-  else{arr.push(c);if(cell){cell.classList.add('added');if(!cell.querySelector('.ok')){const s=document.createElement('span');s.className='ok';s.textContent='✓';cell.appendChild(s);}}}
+  else{arr.push(c);if(cell){cell.classList.add('added');if(!cell.querySelector('.ok')){const s=document.createElement('span');s.className='ok';s.textContent='✓';cell.appendChild(s);}}
+    loadImg(c.url); if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge);}   // 加入時就先把匯出用圖抓進快取,之後製圖免等
   drawLists(); if(FILT.fSelected)render(); renderBase();
 }
 function clearIns(){document.querySelectorAll('.li.insb,.li.insa').forEach(x=>x.classList.remove('insb','insa'));}

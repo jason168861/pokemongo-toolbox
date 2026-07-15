@@ -103,8 +103,9 @@ def make_thumbs():
                 im.save(out, "WEBP", quality=82, method=4); ok += 1
             except Exception: pass
         print(f"縮圖 {dstdir}: 新增 {ok}", flush=True)
-    gen("assets/img", "assets/thumb", 128)
-    gen("assets/bg", "assets/bgthumb", 220)
+    gen("assets/img", "assets/thumb", 128)     # 網格/清單用小縮圖
+    gen("assets/bg", "assets/bgthumb", 220)    # 網格/清單用背卡縮圖
+    gen("assets/bg", "assets/bgexp", 384)      # 匯出 PNG 用中尺寸背卡(原圖動輒 500KB+,卡片只畫 264px)
 
 if __name__ == "__main__":
     main()
