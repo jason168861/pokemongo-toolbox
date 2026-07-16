@@ -68,9 +68,9 @@ export function initializeCpChecker() {
                     <h2>${pokemon.name}</h2>
                     <div class="id">#${pokemon.id}</div>
                     <div class="cp-container">
-                        <div class="cp"><span>Lv15 100% </span>${pokemon.cp15}</div>
-                        <div class="cp"><span>Lv20 100% </span>${pokemon.cp20}</div>
-                        <div class="cp"><span>Lv25 100% </span>${pokemon.cp25}</div>
+                        <div class="cp lv15"><span>Lv15 100% </span>${pokemon.cp15}</div>
+                        <div class="cp lv20"><span>Lv20 100% </span>${pokemon.cp20}</div>
+                        <div class="cp lv25"><span>Lv25 100% </span>${pokemon.cp25}</div>
                     </div>
                 </div>`;
             fragment.appendChild(pokemonCard);

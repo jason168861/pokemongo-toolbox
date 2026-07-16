@@ -44,6 +44,49 @@
 #cp-checker-app #resultsContainer {
     margin-top: 20px;
 }
+/* --- L15/L20/L25 用途說明 --- */
+#cp-checker-app .cp-legend {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 4px 0 6px;
+}
+#cp-checker-app .cp-legend-item {
+    flex: 1 1 170px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f7f8fa;
+    border: 1px solid #dddfe2;
+    border-left-width: 4px;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+#cp-checker-app .cp-legend-item.lv15 { border-left-color: #2f9e57; }
+#cp-checker-app .cp-legend-item.lv20 { border-left-color: #2b6cb0; }
+#cp-checker-app .cp-legend-item.lv25 { border-left-color: #d97706; }
+#cp-checker-app .cp-legend-badge {
+    flex: none;
+    color: #fff;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: .5px;
+    padding: 5px 9px;
+    border-radius: 6px;
+}
+#cp-checker-app .cp-legend-item.lv15 .cp-legend-badge { background: #2f9e57; }
+#cp-checker-app .cp-legend-item.lv20 .cp-legend-badge { background: #2b6cb0; }
+#cp-checker-app .cp-legend-item.lv25 .cp-legend-badge { background: #d97706; }
+#cp-checker-app .cp-legend-desc {
+    font-size: 13px;
+    color: #3a3b3c;
+    line-height: 1.35;
+}
+/* 卡片內 L15/L20/L25 標籤上對應色，與上方說明呼應 */
+#cp-checker-app .pokemon-info .cp.lv15 span { color: #2f9e57; font-weight: 700; }
+#cp-checker-app .pokemon-info .cp.lv20 span { color: #2b6cb0; font-weight: 700; }
+#cp-checker-app .pokemon-info .cp.lv25 span { color: #d97706; font-weight: 700; }
 #cp-checker-app .pokemon-card {
     display: flex;
     align-items: center;
