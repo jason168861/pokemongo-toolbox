@@ -3,7 +3,49 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>寶可夢 GO 交易清單產生器</title>
+<title>Pokémon GO Trade List Maker – 交易清單產生器 (Shiny・Forms・Backgrounds)</title>
+<meta name="description" content="Free Pokémon GO trade list generator. Browse every Pokémon combination — shiny, forms, costumes, gender, Dynamax, Gigantamax and special event backgrounds — split them into Looking For / For Trade and export a shareable image. Works in 7 languages. 免費製作寶可夢 GO 交易清單並一鍵匯出圖片。">
+<meta name="keywords" content="Pokemon GO trade list,Pokemon GO trade list maker,Pokemon GO trade list generator,Pokemon GO trading,shiny,costume,form,Dynamax,Gigantamax,background card,trade card,ポケモンGO 交換リスト,포켓몬고 교환 목록,寶可夢GO交易清單,交換清單,背卡,異色">
+<link rel="canonical" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
+<meta name="robots" content="index,follow">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pokémon GO Toolbox">
+<meta property="og:title" content="Pokémon GO Trade List Maker – build & export your trade list">
+<meta property="og:description" content="Browse every Pokémon combination (shiny, forms, costumes, Dynamax, backgrounds), sort into Looking For / For Trade, and export a shareable image. 7 languages, free.">
+<meta property="og:url" content="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
+<meta property="og:image" content="https://jason168861.github.io/pokemongo-toolbox/trade-list/assets/brand/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pokémon GO Trade List Maker – 交易清單產生器">
+<meta name="twitter:description" content="Build a Pokémon GO trade list (shiny, forms, costumes, Dynamax, backgrounds) and export a shareable image. Free, 7 languages.">
+<meta name="twitter:image" content="https://jason168861.github.io/pokemongo-toolbox/trade-list/assets/brand/og.png">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Pokémon GO Trade List Maker",
+  "alternateName":["寶可夢 GO 交易清單產生器","ポケモンGO 交換リストメーカー","포켓몬고 교환 목록 생성기"],
+  "url":"https://jason168861.github.io/pokemongo-toolbox/trade-list/",
+  "applicationCategory":"UtilityApplication",
+  "operatingSystem":"Web",
+  "browserRequirements":"Requires JavaScript",
+  "inLanguage":["en","zh-Hant","ja","ko","fr","de","es"],
+  "isAccessibleForFree":true,
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "description":"Free Pokémon GO trade list generator: browse every Pokémon combination (shiny, forms, costumes, gender, Dynamax, Gigantamax, special backgrounds), split into Looking For / For Trade, and export a shareable image in 7 languages.",
+  "isPartOf":{"@type":"WebSite","name":"Pokémon GO Toolbox","url":"https://jason168861.github.io/pokemongo-toolbox/"}
+}
+</script>
 <style>
   :root{--bg:#0f1220;--card:#1a1f36;--line:#2b3153;--fg:#eef0fb;--mut:#9aa3c7;--acc:#e0276c;--acc2:#7b5cff;--want:#2f9e57;--have:#c9a227;--cellbg:#0d1024}
   *{box-sizing:border-box}
@@ -93,6 +135,14 @@
 </style>
 </head>
 <body>
+<noscript>
+  <div style="max-width:820px;margin:24px auto;padding:0 18px;color:#eef0fb;font-family:system-ui,sans-serif;line-height:1.7">
+    <h1>Pokémon GO Trade List Maker · 交易清單產生器</h1>
+    <p>A free Pokémon GO trade list generator. Browse every Pokémon combination — shiny, forms, costumes, gender, Dynamax, Gigantamax and special event backgrounds — sort them into <strong>Looking For</strong> and <strong>For Trade</strong>, then export a shareable image. Available in English, 繁體中文, 日本語, 한국어, Français, Deutsch and Español.</p>
+    <p>This tool needs JavaScript enabled. 本工具需要啟用 JavaScript 才能使用。</p>
+    <p><a href="../" style="color:#7b5cff">Pokémon GO Toolbox</a></p>
+  </div>
+</noscript>
 <header>
   <a class="homelink" href="../" id="homeLink">🧰 <span id="homeTxt">工具箱</span></a>
   <select id="toolJump" class="homelink" onchange="if(this.value){location.href='../?tab='+this.value}">
@@ -224,6 +274,15 @@ const I18N={
  es:{font_game:'Juego negrita',font_hei:'Sans',font_impact:'Impact',font_round:'Redondeada',font_serif:'Serif',w_normal:'Normal',w_med:'Media',w_bold:'Negrita',w_black:'Extranegrita',app:'Generador de lista de intercambio Pokémon GO',fname:'lista-intercambio',theme:'Tema',th_neon:'Neón oscuro',th_warm:'Cálido',th_light:'Claro',tab_mon:'Pokémon (todos)',tab_bg:'Fondos',search_mon:'Nombre o número',search_bg:'Pokémon o fondo',f_normal:'Normal',f_shiny:'Variocolor',f_dmax:'Dinamax',f_gmax:'Gigamax',f_cos:'Forma/Disfraz',only:'Filtrar',f_sel:'Elegidos',f_lego:'Legendario',combos_unit:'combos',bg_unit:'combos',mons:'Pokémon',seg_want:'A Busco',seg_have:'A Ofrezco',canfly:'Puede volar (CAN FLY)',want:'Busco',have:'Ofrezco',empty:'Toca las miniaturas',start:'Listo — crear imagen',sort:'Ordenar por número',clear:'Vaciar lista',download:'Descargar PNG',addtext:'Añadir texto',reset:'Restablecer texto',back:'Volver',edit_title:'Imagen (arrastrar/editar texto)',edit_hint:'Toca un texto → arrastra; edita abajo.',text_content:'Texto',del:'Eliminar',outline:'Contorno',confirm_clear:'¿Vaciar toda la lista?',list_empty:'La lista está vacía',edit_empty:'Lista vacía — añade Pokémon primero',export_foot:'Lista de intercambio Pokémon GO',newtext:'Texto'}};
 let LANG='zh',NAMES={};
 function tr(k){return (I18N[LANG]&&I18N[LANG][k])||I18N.en[k]||k;}
+// 首次造訪:依瀏覽器語言挑支援的語系(國外訪客不會一進來就是中文);老訪客仍用存過的選擇
+function detectLang(){
+  for(const l of (navigator.languages||[navigator.language||''])){
+    const c=String(l).toLowerCase();
+    if(c.startsWith('zh')) return 'zh';
+    if(I18N[c.slice(0,2)]) return c.slice(0,2);
+  }
+  return 'zh';
+}
 function nameOf(dex){return NAMES[dex]||(POKE[dex]&&POKE[dex].zh)||('#'+dex);}
 async function loadNames(lang){ try{const r=await fetch('data/names/'+lang+'.json');if(r.ok)return await r.json();}catch(e){} return {}; }
 let ALLNAMES={};   // dex -> 所有語言名稱串接(小寫),供跨語言搜尋
@@ -275,7 +334,7 @@ async function loadData(name){
   return fetch('data/'+name+'.json').then(r=>r.json());
 }
 async function boot(){
-  LANG=localStorage.getItem('bgtoolLang')||'zh'; if(!I18N[LANG])LANG='zh';
+  LANG=localStorage.getItem('bgtoolLang')||detectLang(); if(!I18N[LANG])LANG='zh';
   $('#langSel').innerHTML=LANGS.map(([c,n])=>`<option value="${c}">${n}</option>`).join('');
   $('#langSel').value=LANG; $('#langSel').onchange=()=>applyLang($('#langSel').value);
   NAMES=await loadNames(LANG);
