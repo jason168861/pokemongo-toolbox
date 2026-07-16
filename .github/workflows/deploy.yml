@@ -56,6 +56,7 @@ jobs:
           python scripts/scrape_eggs.py
           python scripts/scrape_boss.py
           python scripts/generate_pokemon_data.py
+          python scripts/build_cp_sitemap.py   # 產生每隻寶可夢的 CP 深連結 sitemap
       # ================================================================
 
       # 步驟 4: 從 Secret 建立 config.js 檔案
