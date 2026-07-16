@@ -6,6 +6,10 @@
 
 let mapInited = false;
 
+// 進頁時就先抓住網址上的分享參數（main.js 稍後可能把網址改成只剩 ?tab=map-app，
+// 這裡在 module 載入當下就讀,確保 ?loc=&name= 不會遺失）
+const SHARE_PARAMS = new URLSearchParams(location.search);
+
 export function initializeMapApp() {
   if (mapInited) return;      // 只初始化一次
   mapInited = true;
@@ -224,15 +228,60 @@ export function initializeMapApp() {
   var COORD_MIN_ZOOM = 13;   // 縮太小時（找大範圍位置階段）點地圖不放座標點
   var clickTimer = null;
 
-  function placeClickMarker(latlng) {
+  // 產生分享連結：.../?tab=map-app&loc=lat,lng&z=..&name=..
+  function shareUrl(latlng, name) {
+    var p = new URLSearchParams();
+    p.set('tab', 'map-app');
+    p.set('loc', latlng.lat.toFixed(6) + ',' + latlng.lng.toFixed(6));
+    p.set('z', String(Math.round(map.getZoom())));
+    if (name) p.set('name', name);
+    return location.origin + location.pathname + '?' + p.toString();
+  }
+
+  // 紅點的分享 popup：名稱欄 + 複製連結 + Google 地圖開啟
+  function buildSharePopup(latlng, name) {
+    var box = L.DomUtil.create('div', 'share-popup');
+    box.innerHTML =
+      '<input type="text" class="sp-name" maxlength="60" placeholder="地點名稱（選填）" ' +
+        'style="width:100%;box-sizing:border-box;margin:0 0 6px;padding:5px 7px;border:1px solid #ccc;border-radius:6px;font-size:13px">' +
+      '<div class="sp-coord" style="font:12px monospace;color:#666;margin-bottom:7px">' +
+        latlng.lat.toFixed(6) + ', ' + latlng.lng.toFixed(6) + '</div>' +
+      '<button class="sp-share" style="width:100%;padding:6px 8px;border:0;border-radius:6px;' +
+        'background:#7b5cff;color:#fff;font-size:13px;font-weight:700;cursor:pointer">🔗 複製分享連結</button>' +
+      '<a class="sp-gmap" target="_blank" rel="noopener" ' +
+        'style="display:block;text-align:center;margin-top:6px;font-size:12px;color:#2a6fd6">在 Google 地圖開啟</a>' +
+      '<div class="sp-msg" style="font-size:12px;color:#2f9e57;margin-top:5px;min-height:1.1em"></div>';
+    var nameEl = box.querySelector('.sp-name');
+    var btn = box.querySelector('.sp-share');
+    var msg = box.querySelector('.sp-msg');
+    var gmap = box.querySelector('.sp-gmap');
+    if (name) nameEl.value = name;
+    gmap.href = 'https://www.google.com/maps?q=' + latlng.lat.toFixed(6) + ',' + latlng.lng.toFixed(6);
+    btn.onclick = function () {
+      var nm = nameEl.value.trim();
+      var url = shareUrl(latlng, nm);
+      if (clickMarker) {                        // 同步更新圖釘上的名稱標籤
+        clickMarker.unbindTooltip();
+        if (nm) clickMarker.bindTooltip(nm, { permanent: true, direction: 'top', offset: [0, -6] });
+      }
+      function done() { msg.textContent = '已複製！貼給朋友就能開到這個點'; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, function () { window.prompt('複製這個連結分享：', url); });
+      } else { window.prompt('複製這個連結分享：', url); }
+    };
+    L.DomEvent.disableClickPropagation(box);   // 在 popup 內打字/點擊不會誤觸地圖
+    L.DomEvent.disableScrollPropagation(box);
+    return box;
+  }
+
+  function placeClickMarker(latlng, name) {
     if (clickMarker) map.removeLayer(clickMarker);
     clickMarker = L.circleMarker(latlng, {
       radius: 5, color: '#ff0000', weight: 2, fillColor: '#ffff00', fillOpacity: 1
     }).addTo(map);
-    clickMarker.bindPopup(
-      "<div style='font:14px monospace;'><b>緯度:</b> " + latlng.lat.toFixed(6) +
-      "<br><b>經度:</b> " + latlng.lng.toFixed(6) + "</div>"
-    ).openPopup();
+    clickMarker.bindPopup(buildSharePopup(latlng, name || ''), { minWidth: 210 });
+    if (name) clickMarker.bindTooltip(name, { permanent: true, direction: 'top', offset: [0, -6] });
+    clickMarker.openPopup();
   }
   function cancelPendingClick() {
     if (clickTimer) { clearTimeout(clickTimer); clickTimer = null; }
@@ -248,6 +297,20 @@ export function initializeMapApp() {
     }, 330);
   });
   map.on('dblclick zoomstart movestart', cancelPendingClick);
+
+  // 有人開了「分享連結」（?loc=lat,lng&z=..&name=..）→ 飛到該點並放圖釘
+  (function applySharedLocation() {
+    var loc = SHARE_PARAMS.get('loc');
+    if (!loc) return;
+    var parts = loc.split(',');
+    var la = parseFloat(parts[0]), ln = parseFloat(parts[1]);
+    if (!isFinite(la) || !isFinite(ln)) return;
+    var z = parseFloat(SHARE_PARAMS.get('z')) || 17;
+    var nm = (SHARE_PARAMS.get('name') || '').slice(0, 60);
+    map.setView([la, ln], z);
+    placeClickMarker(L.latLng(la, ln), nm);
+    setStatus(nm ? '已開啟分享的地點：' + nm : '已開啟分享的地點');
+  })();
 
   // -------------------------------------------------------------------------
   // 定位：用瀏覽器 Geolocation 找目前位置
