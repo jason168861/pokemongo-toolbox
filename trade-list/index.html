@@ -40,6 +40,18 @@
   .seg button.on{font-weight:700;border:0;color:#fff}
   .seg button.want.on{background:var(--want)} .seg button.have.on{background:var(--have)}
   .flyrow{display:flex;align-items:center;gap:8px;margin:6px 0 2px}
+  /* 匯出選項開關 */
+  .expopts{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 4px}
+  .switch{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;font-size:13px;color:var(--fg);
+          background:var(--cellbg);border:1px solid var(--line);border-radius:999px;padding:7px 14px 7px 10px;transition:border-color .15s,background .15s}
+  .switch:hover{border-color:var(--acc2)}
+  .switch input{position:absolute;opacity:0;width:0;height:0}
+  .switch .track{flex:none;width:38px;height:21px;border-radius:999px;background:var(--line);position:relative;transition:background .18s}
+  .switch .track::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .18s}
+  .switch input:checked ~ .track{background:var(--acc2)}
+  .switch input:checked ~ .track::after{transform:translateX(17px)}
+  .switch input:focus-visible ~ .track{outline:2px solid var(--acc);outline-offset:2px}
+  .switch:has(input:checked){background:color-mix(in srgb,var(--acc2) 15%,var(--cellbg));border-color:var(--acc2)}
   .sec{margin-top:12px}.sec h3{margin:0 0 6px;font-size:13px}
   .sec.want h3{color:var(--want)} .sec.have h3{color:var(--have)}
   .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;min-height:40px}
@@ -139,8 +151,6 @@
         <button class="want on" id="segWant" onclick="setTarget('want')">加到「我想要的」</button>
         <button class="have" id="segHave" onclick="setTarget('have')">加到「我能提供的」</button>
       </div>
-      <label class="flyrow"><input type="checkbox" id="canfly"> <span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
-      <label class="flyrow"><input type="checkbox" id="qrOn" checked> <span id="qrLabel">📷 在圖片加上推廣 QR</span></label>
       <div class="sec want"><h3><span id="labWant">🟢 我想要的</span> <span class="sub" id="cW">0</span></h3><div class="list" id="listW"><div class="empty">點左邊縮圖加入</div></div></div>
       <div class="sec have"><h3><span id="labHave">🟡 我能提供的</span> <span class="sub" id="cH">0</span></h3><div class="list" id="listH"><div class="empty">點左邊縮圖加入</div></div></div>
       <div class="toolbar">
@@ -153,6 +163,10 @@
     <div class="panel" id="editPanel">
       <button class="btn g" id="backBtn" onclick="setMode('select')" style="margin-bottom:10px">← 返回選擇</button>
       <strong id="editTitle">匯出圖（直接拖曳/編輯文字）</strong>
+      <div class="expopts">
+        <label class="switch"><input type="checkbox" id="canfly"><span class="track"></span><span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
+        <label class="switch"><input type="checkbox" id="qrOn" checked><span class="track"></span><span id="qrLabel">📷 在圖片加上推廣 QR</span></label>
+      </div>
       <div id="editor"><canvas id="baseCv"></canvas><div id="txtLayer"></div></div>
       <div class="hint" id="editHint">點文字可選取 → 拖曳移動、下方改字/色/大小。</div>
       <div class="txtctl" id="txtctl">
