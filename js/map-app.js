@@ -228,60 +228,80 @@ export function initializeMapApp() {
   var COORD_MIN_ZOOM = 13;   // 縮太小時（找大範圍位置階段）點地圖不放座標點
   var clickTimer = null;
 
-  // 產生分享連結：.../?tab=map-app&loc=lat,lng&z=..&name=..
-  function shareUrl(latlng, name) {
-    var p = new URLSearchParams();
-    p.set('tab', 'map-app');
-    p.set('loc', latlng.lat.toFixed(6) + ',' + latlng.lng.toFixed(6));
-    p.set('z', String(Math.round(map.getZoom())));
-    if (name) p.set('name', name);
-    return location.origin + location.pathname + '?' + p.toString();
-  }
-
-  // 紅點的分享 popup：名稱欄 + 複製連結 + Google 地圖開啟
-  function buildSharePopup(latlng, name) {
-    var box = L.DomUtil.create('div', 'share-popup');
-    box.innerHTML =
-      '<input type="text" class="sp-name" maxlength="60" placeholder="地點名稱（選填）" ' +
-        'style="width:100%;box-sizing:border-box;margin:0 0 6px;padding:5px 7px;border:1px solid #ccc;border-radius:6px;font-size:13px">' +
-      '<div class="sp-coord" style="font:12px monospace;color:#666;margin-bottom:7px">' +
-        latlng.lat.toFixed(6) + ', ' + latlng.lng.toFixed(6) + '</div>' +
-      '<button class="sp-share" style="width:100%;padding:6px 8px;border:0;border-radius:6px;' +
-        'background:#7b5cff;color:#fff;font-size:13px;font-weight:700;cursor:pointer">🔗 複製分享連結</button>' +
-      '<a class="sp-gmap" target="_blank" rel="noopener" ' +
-        'style="display:block;text-align:center;margin-top:6px;font-size:12px;color:#2a6fd6">在 Google 地圖開啟</a>' +
-      '<div class="sp-msg" style="font-size:12px;color:#2f9e57;margin-top:5px;min-height:1.1em"></div>';
-    var nameEl = box.querySelector('.sp-name');
-    var btn = box.querySelector('.sp-share');
-    var msg = box.querySelector('.sp-msg');
-    var gmap = box.querySelector('.sp-gmap');
-    if (name) nameEl.value = name;
-    gmap.href = 'https://www.google.com/maps?q=' + latlng.lat.toFixed(6) + ',' + latlng.lng.toFixed(6);
-    btn.onclick = function () {
-      var nm = nameEl.value.trim();
-      var url = shareUrl(latlng, nm);
-      if (clickMarker) {                        // 同步更新圖釘上的名稱標籤
-        clickMarker.unbindTooltip();
-        if (nm) clickMarker.bindTooltip(nm, { permanent: true, direction: 'top', offset: [0, -6] });
-      }
-      function done() { msg.textContent = '已複製！貼給朋友就能開到這個點'; }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(done, function () { window.prompt('複製這個連結分享：', url); });
-      } else { window.prompt('複製這個連結分享：', url); }
-    };
-    L.DomEvent.disableClickPropagation(box);   // 在 popup 內打字/點擊不會誤觸地圖
-    L.DomEvent.disableScrollPropagation(box);
-    return box;
-  }
-
-  function placeClickMarker(latlng, name) {
+  function placeClickMarker(latlng) {
     if (clickMarker) map.removeLayer(clickMarker);
     clickMarker = L.circleMarker(latlng, {
       radius: 5, color: '#ff0000', weight: 2, fillColor: '#ffff00', fillOpacity: 1
     }).addTo(map);
-    clickMarker.bindPopup(buildSharePopup(latlng, name || ''), { minWidth: 210 });
-    if (name) clickMarker.bindTooltip(name, { permanent: true, direction: 'top', offset: [0, -6] });
-    clickMarker.openPopup();
+    clickMarker.bindPopup(
+      "<div style='font:14px monospace;'><b>緯度:</b> " + latlng.lat.toFixed(6) +
+      "<br><b>經度:</b> " + latlng.lng.toFixed(6) + "</div>"
+    ).openPopup();
+  }
+
+  // ---- 分享補給站/道館 POI ----
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  var POI_LABEL = { GYM: '道館', POKESTOP: '補給站' };
+  // 產生分享連結：.../?tab=map-app&loc=lat,lng&z=..&name=..&poi=GYM|POKESTOP
+  function poiShareUrl(lat, lng, name, poiType) {
+    var p = new URLSearchParams();
+    p.set('tab', 'map-app');
+    p.set('loc', lat.toFixed(6) + ',' + lng.toFixed(6));
+    p.set('z', String(Math.round(map.getZoom())));
+    if (name) p.set('name', name);
+    if (poiType) p.set('poi', poiType);
+    return location.origin + location.pathname + '?' + p.toString();
+  }
+  function copyText(text, onDone) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onDone, function () { window.prompt('複製這個連結分享：', text); });
+    } else { window.prompt('複製這個連結分享：', text); }
+  }
+  // POI 的 popup（懶建立：Leaflet 開啟時才呼叫）：名稱/類型/座標 + 分享按鈕
+  function makePoiPopup(lat, lng, props, st, inactive) {
+    var title = props.title || '(無名稱)';
+    var box = L.DomUtil.create('div', 'poi-popup');
+    box.innerHTML =
+      "<div style='font:13px system-ui;'>" +
+        "<b>" + escapeHtml(title) + "</b><br>類型: " + st.label + (inactive ? '（未啟用）' : '') + "<br>" +
+        "<span style='font-family:monospace;color:#666'>" + lat.toFixed(6) + ', ' + lng.toFixed(6) + "</span></div>" +
+      "<button class='pp-share' style='width:100%;margin-top:7px;padding:6px 8px;border:0;border-radius:6px;" +
+        "background:#7b5cff;color:#fff;font-size:13px;font-weight:700;cursor:pointer'>🔗 分享此地點</button>" +
+      "<a class='pp-gmap' target='_blank' rel='noopener' style='display:block;text-align:center;margin-top:5px;font-size:12px;color:#2a6fd6'>在 Google 地圖開啟</a>" +
+      "<div class='pp-msg' style='font-size:12px;color:#2f9e57;margin-top:5px;min-height:1.1em'></div>";
+    box.querySelector('.pp-gmap').href = 'https://www.google.com/maps?q=' + lat.toFixed(6) + ',' + lng.toFixed(6);
+    var msg = box.querySelector('.pp-msg');
+    box.querySelector('.pp-share').onclick = function () {
+      copyText(poiShareUrl(lat, lng, title, props.type), function () {
+        msg.textContent = '已複製！貼給朋友就能開到這個' + st.label;
+      });
+    };
+    L.DomEvent.disableClickPropagation(box);
+    return box;
+  }
+  // 收到分享連結時：在該 POI 位置放一個醒目的高亮圈 + 說明 popup
+  var shareMarker = null;
+  function highlightSharedPoi(lat, lng, name, poiType) {
+    if (shareMarker) map.removeLayer(shareMarker);
+    var label = POI_LABEL[poiType] || '地點';
+    shareMarker = L.circleMarker([lat, lng], {
+      radius: 12, color: '#7b5cff', weight: 3, fillColor: '#b9a7ff', fillOpacity: 0.45
+    }).addTo(map);
+    shareMarker.bindPopup(
+      "<div style='font:13px system-ui;text-align:center'>" +
+        "<div style='font-size:12px;color:#7b5cff;font-weight:700'>📍 分享的" + label + "</div>" +
+        "<b style='font-size:15px'>" + escapeHtml(name || '(無名稱)') + "</b><br>" +
+        "<span style='font-family:monospace;color:#666'>" + lat.toFixed(6) + ', ' + lng.toFixed(6) + "</span><br>" +
+        "<a href='https://www.google.com/maps?q=" + lat.toFixed(6) + ',' + lng.toFixed(6) +
+          "' target='_blank' rel='noopener' style='font-size:12px;color:#2a6fd6'>在 Google 地圖開啟</a></div>",
+      { minWidth: 180 }
+    );
+    if (name) shareMarker.bindTooltip(name, { permanent: true, direction: 'top', offset: [0, -9] });
+    shareMarker.openPopup();
   }
   function cancelPendingClick() {
     if (clickTimer) { clearTimeout(clickTimer); clickTimer = null; }
@@ -306,9 +326,10 @@ export function initializeMapApp() {
     var la = parseFloat(parts[0]), ln = parseFloat(parts[1]);
     if (!isFinite(la) || !isFinite(ln)) return;
     var z = parseFloat(SHARE_PARAMS.get('z')) || 17;
-    var nm = (SHARE_PARAMS.get('name') || '').slice(0, 60);
+    var nm = (SHARE_PARAMS.get('name') || '').slice(0, 80);
+    var poiType = SHARE_PARAMS.get('poi') || '';
     map.setView([la, ln], z);
-    placeClickMarker(L.latLng(la, ln), nm);
+    highlightSharedPoi(la, ln, nm, poiType);
     setStatus(nm ? '已開啟分享的地點：' + nm : '已開啟分享的地點');
   })();
 
@@ -622,11 +643,7 @@ export function initializeMapApp() {
         opacity: inactive && hollow ? 0.35 : 1,
         fillColor: st.fill, fillOpacity: hollow ? 0 : (inactive ? 0.25 : 0.9)
       });
-      m.bindPopup(
-        "<div style='font:13px system-ui;'><b>" + (f.properties.title || '(無名稱)') + "</b><br>" +
-        "類型: " + st.label + (inactive ? '（未啟用）' : '') + "<br>" +
-        "<span style='font-family:monospace;'>" + lat.toFixed(6) + ', ' + lng.toFixed(6) + "</span></div>"
-      );
+      m.bindPopup(makePoiPopup.bind(null, lat, lng, f.properties, st, inactive), { minWidth: 200 });
       m.addTo(poiLayer);
       shown++;
     });
