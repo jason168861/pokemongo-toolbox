@@ -6,7 +6,15 @@
 <title>Pokémon GO Trade List Maker – 交易清單產生器 (Shiny・Forms・Backgrounds)</title>
 <meta name="description" content="Free Pokémon GO trade list generator. Browse every Pokémon combination — shiny, forms, costumes, gender, Dynamax, Gigantamax and special event backgrounds — split them into Looking For / For Trade and export a shareable image. Works in 7 languages. 免費製作寶可夢 GO 交易清單並一鍵匯出圖片。">
 <meta name="keywords" content="Pokemon GO trade list,Pokemon GO trade list maker,Pokemon GO trade list generator,Pokemon GO trading,shiny,costume,form,Dynamax,Gigantamax,background card,trade card,ポケモンGO 交換リスト,포켓몬고 교환 목록,寶可夢GO交易清單,交換清單,背卡,異色">
-<link rel="canonical" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
+<link rel="canonical" id="canonicalLink" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
+<link rel="alternate" hreflang="x-default" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
+<link rel="alternate" hreflang="en" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=en">
+<link rel="alternate" hreflang="zh-Hant" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=zh">
+<link rel="alternate" hreflang="ja" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=ja">
+<link rel="alternate" hreflang="ko" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=ko">
+<link rel="alternate" hreflang="fr" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=fr">
+<link rel="alternate" hreflang="de" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=de">
+<link rel="alternate" hreflang="es" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=es">
 <meta name="robots" content="index,follow">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -283,6 +291,14 @@ function detectLang(){
   }
   return 'zh';
 }
+// ?lang= 獨立網址 + hreflang:每個語言變體有自己的網址與自我參照 canonical
+const HREFLANG={zh:'zh-Hant',en:'en',ja:'ja',ko:'ko',fr:'fr',de:'de',es:'es'};
+const BASEURL='https://jason168861.github.io/pokemongo-toolbox/trade-list/';
+function syncLangMeta(lang, isVariant){
+  document.documentElement.lang=HREFLANG[lang]||'en';
+  const c=document.getElementById('canonicalLink');
+  if(c) c.href = isVariant ? BASEURL+'?lang='+lang : BASEURL;   // 變體自我參照,基底=x-default
+}
 function nameOf(dex){return NAMES[dex]||(POKE[dex]&&POKE[dex].zh)||('#'+dex);}
 async function loadNames(lang){ try{const r=await fetch('data/names/'+lang+'.json');if(r.ok)return await r.json();}catch(e){} return {}; }
 let ALLNAMES={};   // dex -> 所有語言名稱串接(小寫),供跨語言搜尋
@@ -295,7 +311,8 @@ async function loadAllNames(){
 function matchName(dex,q){ return (ALLNAMES[dex]||'').includes(q); }
 async function applyLang(lang){
   if(!I18N[lang])lang='en'; LANG=lang; localStorage.setItem('bgtoolLang',lang);
-  document.documentElement.lang=lang; $('#langSel').value=lang;
+  syncLangMeta(lang, true); $('#langSel').value=lang;
+  try{ const u=new URL(location.href); u.searchParams.set('lang',lang); history.replaceState(null,'',u); }catch(e){}
   NAMES=await loadNames(lang);
   for(const x of THUMBS)x.zh=nameOf(x.dex);
   for(const x of BGCOMBOS)x.zh=nameOf(x.dex);
@@ -309,7 +326,7 @@ async function applyLang(lang){
 }
 function applyStaticI18n(){
   const T=tr;
-  $('#appTitle').textContent='🔴 '+T('app'); $('#themeLabel').textContent=T('theme');
+  $('#appTitle').textContent='🔴 '+T('app'); document.title=T('app'); $('#themeLabel').textContent=T('theme');
   const th=$('#themeSel').options; th[0].textContent=T('th_neon');th[1].textContent=T('th_warm');th[2].textContent=T('th_light');
   $('#tMon').textContent=T('tab_mon'); $('#tBg').textContent=T('tab_bg');
   $('#fNormal').textContent=T('f_normal'); $('#fShiny').textContent='✨ '+T('f_shiny'); $('#fDmax').textContent=T('f_dmax'); $('#fGmax').textContent=T('f_gmax'); $('#fCos').textContent=T('f_cos');
@@ -334,7 +351,11 @@ async function loadData(name){
   return fetch('data/'+name+'.json').then(r=>r.json());
 }
 async function boot(){
-  LANG=localStorage.getItem('bgtoolLang')||detectLang(); if(!I18N[LANG])LANG='zh';
+  const urlLang=new URLSearchParams(location.search).get('lang');
+  const langFromUrl=!!(urlLang&&I18N[urlLang]);
+  LANG = langFromUrl ? urlLang : (localStorage.getItem('bgtoolLang')||detectLang());
+  if(!I18N[LANG])LANG='zh';
+  syncLangMeta(LANG, langFromUrl);   // 設定 <html lang> 與 canonical(變體自我參照,基底為 x-default)
   $('#langSel').innerHTML=LANGS.map(([c,n])=>`<option value="${c}">${n}</option>`).join('');
   $('#langSel').value=LANG; $('#langSel').onchange=()=>applyLang($('#langSel').value);
   NAMES=await loadNames(LANG);
