@@ -368,6 +368,14 @@ export function initializeFilterBuilder() {
     } catch (e) { toast('編號篩選器目前沒有勾選任何寶可夢', true); }
   };
 
+  // 前往編號篩選器分頁：直接點主導覽對應的按鈕，交給 main.js 的 SPA 切換邏輯處理
+  const goto = $('#fb-gotoIds');
+  if (goto) goto.onclick = () => {
+    const tab = document.querySelector('.tab-button[data-target="id-selector-app"]');
+    if (tab) { tab.click(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    else window.location.href = '?tab=id-selector-app';
+  };
+
   // 組合管理
   $('#fb-addSet').onclick = () => { const s = newSet(); sets.push(s); activeId = s.id;
     save(); renderSets(); renderAll(); build(); toast('已新增「' + s.name + '」'); };

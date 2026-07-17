@@ -553,14 +553,23 @@
           </div>
 
           <div class="fb-card">
-            <div class="fb-h2">寶可夢編號 <span class="fb-tag">來自編號篩選器</span></div>
-            <p class="fb-cardhint">支援單一或範圍，例如 <code>1,4,7</code> 或 <code>1-151</code>。</p>
+            <div class="fb-h2">寶可夢編號 <span class="fb-tag">可與編號篩選器連動</span></div>
+            <p class="fb-cardhint">
+              遊戲的搜尋框可以直接用<b>全國圖鑑編號</b>指定寶可夢，多隻用逗號隔開（<code>1,4,7</code>）、連續範圍用短橫線（<code>1-151</code>＝第一代全部）。
+              編號很難背，所以本站的「<b>寶可夢編號篩選器</b>」可以讓你<b>用點圖片的方式挑寶可夢</b>，自動產生這串編號。
+            </p>
+            <p class="fb-cardhint" style="margin-bottom:10px">
+              👉 到編號篩選器勾選完，<b>回到這裡按「匯入編號篩選器」</b>，就會把你目前勾選的直接帶過來，不必手動複製貼上。
+            </p>
             <div class="fb-numrow">
               <input type="text" id="fb-nums" placeholder="貼上編號，例如：1,4,7 或 1-151" inputmode="numeric">
               <button type="button" class="fb-btn fb-primary" id="fb-importNums">⬇ 匯入編號篩選器</button>
               <button type="button" class="fb-btn" id="fb-clearNums">清空</button>
             </div>
-            <p class="fb-hint">到「寶可夢編號篩選器」分頁勾選想要的寶可夢，回來按這顆就會自動帶入目前的選取。</p>
+            <p class="fb-hint">
+              還沒挑好？<button type="button" class="fb-link" id="fb-gotoIds">→ 前往「寶可夢編號篩選器」</button>
+              （勾選後回到本頁按匯入即可；已登入的話你的勾選也會被記住）
+            </p>
           </div>
 
           <div id="fb-sections"></div>

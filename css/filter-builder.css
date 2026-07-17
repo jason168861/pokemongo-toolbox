@@ -26,6 +26,12 @@
 }
 #filter-builder .fb-cardhint{font-size:12px;color:var(--fb-mut);margin:0 0 12px}
 #filter-builder .fb-hint{font-size:12px;color:var(--fb-mut);margin:8px 0 0}
+/* 內文連結樣式的按鈕（切到編號篩選器分頁） */
+#filter-builder .fb-link{
+  border:0;background:none;padding:0;font:inherit;font-weight:700;
+  color:var(--fb-accent);cursor:pointer;text-decoration:underline;
+}
+#filter-builder .fb-link:hover{filter:brightness(1.2)}
 #filter-builder code{background:#f0f2f7;border-radius:4px;padding:1px 5px;font-size:12px}
 
 /* 按鈕 */
@@ -156,3 +162,21 @@
 
 /* 讓內容不被底部固定列蓋住 */
 #search-filters-app{padding-bottom:110px}
+
+/* ---- 手機版 ---- */
+@media (max-width:560px){
+  /* 數值範圍：不要換成兩列。標籤可壓縮換行，輸入框縮窄，整列維持單行 */
+  #filter-builder .fb-rangerow{flex-wrap:nowrap;gap:6px}
+  #filter-builder .fb-rlabel{min-width:0;flex:1 1 auto}
+  #filter-builder .fb-rin{width:60px;padding:6px 6px;font-size:13px}
+  #filter-builder .fb-field .fb-rin,
+  #filter-builder .fb-field select{flex:0 0 auto}
+  /* 三段切換：讓寶可夢名稱有空間，按鈕縮一點 */
+  #filter-builder .fb-seg button{min-width:42px;padding:6px 8px;font-size:12.5px}
+  #filter-builder .fb-ficon{width:48px}
+  #filter-builder .fb-card{padding:12px 12px 14px}
+  /* 底部預覽列 */
+  #search-filters-app .fb-out{padding:10px 10px}
+  #search-filters-app .fb-copy{padding:9px 12px;font-size:13px}
+  #search-filters-app .fb-side .fb-btn{padding:8px 10px;font-size:12px}
+}
