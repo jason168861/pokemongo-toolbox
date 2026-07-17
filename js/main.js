@@ -32,6 +32,7 @@ import { initializeEggsApp } from './eggs.js';
 import { initializeRaidsApp } from './raids.js'; // <-- 新增此行
 import { initializeLevelUpApp } from './level-up.js';
 import { initializeSearchFiltersApp } from './search-filters.js';
+import { initializeFilterBuilder } from './filter-builder.js';
 import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
 import { initializePvpRanker } from './pvp-ranker.js';
@@ -147,6 +148,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch(error) {
             console.error("讀取寶可夢編號資料時發生錯誤:", error);
+        }
+
+        // --- 篩選指令產生器的組合 ---
+        try {
+            const fbSnapshot = await get(ref(db, `users/${userId}/filterBuilder/sets`));
+            const fbData = fbSnapshot.exists() ? fbSnapshot.val() : null;
+            if (typeof window.loadFilterBuilderState === 'function') {
+                window.loadFilterBuilderState(fbData);   // 已初始化 → 直接套用（雲端沒資料時會把本機的推上去）
+            } else {
+                window.pendingFilterBuilder = fbData;    // 還沒開過該分頁 → 先暫存，初始化時再套用
+            }
+        } catch (error) {
+            console.error("讀取篩選組合資料時發生錯誤:", error);
         }
     }
 
@@ -294,6 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
             levelUpAppInitialized = true;
         } else if (targetAppId === 'search-filters-app' && !searchFiltersAppInitialized) {
             initializeSearchFiltersApp();
+            initializeFilterBuilder();   // 同分頁的「篩選指令產生器」
             searchFiltersAppInitialized = true;
         } else if (targetAppId === 'special-research-app' && !specialResearchAppInitialized) {
             initializeSpecialResearchApp();

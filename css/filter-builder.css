@@ -1,0 +1,158 @@
+/* 篩選指令產生器（search-filters-app 內）
+   所有類名一律 fb- 前綴並 scope 在 #filter-builder / #search-filters-app 底下，
+   避免和主站既有的 .btn / .hint / .container 及 h1~h3、table 樣式互相污染。 */
+#filter-builder{
+  --fb-line:#dfe3ea; --fb-fg:#1c2333; --fb-mut:#6b7385;
+  --fb-accent:#4f46e5; --fb-inc:#1f9d55; --fb-exc:#e0284a; --fb-chip:#f4f6fa;
+  color:var(--fb-fg);
+  font-family:system-ui,"Microsoft JhengHei","PingFang TC",sans-serif;
+  line-height:1.5;
+  margin-bottom:24px;
+}
+#filter-builder *{box-sizing:border-box}
+#filter-builder .fb-title{font-size:20px;font-weight:800;margin:0 0 4px}
+#filter-builder .fb-sub{color:var(--fb-mut);font-size:13px;margin:0 0 16px}
+#filter-builder .fb-card{
+  background:#fff;border:1px solid var(--fb-line);border-radius:14px;
+  padding:14px 16px 16px;margin-bottom:14px;box-shadow:0 1px 2px rgba(20,30,60,.04);
+}
+#filter-builder .fb-h2{
+  font-size:14px;font-weight:700;margin:0 0 4px;letter-spacing:.3px;
+  display:flex;align-items:center;gap:7px;
+}
+#filter-builder .fb-tag{
+  font-size:11px;font-weight:600;color:var(--fb-accent);
+  background:#eef0ff;border-radius:999px;padding:2px 8px;
+}
+#filter-builder .fb-cardhint{font-size:12px;color:var(--fb-mut);margin:0 0 12px}
+#filter-builder .fb-hint{font-size:12px;color:var(--fb-mut);margin:8px 0 0}
+#filter-builder code{background:#f0f2f7;border-radius:4px;padding:1px 5px;font-size:12px}
+
+/* 按鈕 */
+#filter-builder .fb-btn{
+  border:1px solid var(--fb-line);background:#fff;color:var(--fb-fg);border-radius:10px;
+  padding:9px 13px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;
+}
+#filter-builder .fb-btn:hover{border-color:var(--fb-accent);color:var(--fb-accent)}
+#filter-builder .fb-btn.fb-primary{background:var(--fb-accent);color:#fff;border-color:var(--fb-accent)}
+#filter-builder .fb-btn.fb-primary:hover{filter:brightness(1.08);color:#fff}
+#filter-builder .fb-btn.fb-danger:hover{border-color:var(--fb-exc);color:var(--fb-exc)}
+
+/* 組合列 */
+#filter-builder .fb-setbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;min-height:36px}
+#filter-builder .fb-setchip{
+  display:inline-flex;align-items:center;border:1px solid var(--fb-line);
+  background:var(--fb-chip);border-radius:999px;overflow:hidden;cursor:grab;
+}
+#filter-builder .fb-setchip:active{cursor:grabbing}
+#filter-builder .fb-setchip.fb-dragging{opacity:.4}
+#filter-builder .fb-setchip.fb-insb{box-shadow:-3px 0 0 var(--fb-accent)}
+#filter-builder .fb-setchip.fb-insa{box-shadow:3px 0 0 var(--fb-accent)}
+#filter-builder .fb-setchip .fb-nm{
+  padding:7px 12px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--fb-fg);
+  max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+#filter-builder .fb-setchip .fb-cp{
+  border:0;background:transparent;cursor:pointer;padding:7px 10px 7px 4px;
+  font-size:13px;opacity:.6;border-left:1px solid var(--fb-line);
+}
+#filter-builder .fb-setchip .fb-cp:hover{opacity:1;background:rgba(0,0,0,.05)}
+#filter-builder .fb-setchip.fb-on{background:var(--fb-accent);border-color:var(--fb-accent)}
+#filter-builder .fb-setchip.fb-on .fb-nm{color:#fff}
+#filter-builder .fb-setchip.fb-on .fb-cp{border-left-color:rgba(255,255,255,.35)}
+#filter-builder .fb-setchip.fb-on .fb-cp:hover{background:rgba(255,255,255,.15)}
+#filter-builder .fb-setacts{display:flex;gap:8px;flex-wrap:wrap}
+
+/* 編號 */
+#filter-builder .fb-numrow{display:flex;gap:8px;flex-wrap:wrap}
+#filter-builder #fb-nums{
+  flex:1;min-width:190px;font:14px/1.4 ui-monospace,Menlo,Consolas,monospace;
+  padding:10px 12px;border:1px solid var(--fb-line);border-radius:10px;background:#fbfcfe;color:var(--fb-fg);
+}
+#filter-builder #fb-nums:focus{outline:2px solid var(--fb-accent);outline-offset:1px;border-color:var(--fb-accent)}
+
+/* 三段切換 */
+#filter-builder .fb-frow{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid #f0f2f6}
+#filter-builder .fb-frow:first-child{border-top:0}
+#filter-builder .fb-ficon{flex:none;width:64px;display:flex;align-items:center;justify-content:center;gap:3px}
+#filter-builder .fb-ficon img{max-height:30px;max-width:100%;object-fit:contain;border-radius:4px}
+#filter-builder .fb-ficon.fb-multi img{max-height:24px}
+#filter-builder .fb-ficon img.fb-sil{filter:brightness(0);opacity:.62}          /* 未登錄 → 黑色剪影 */
+#filter-builder .fb-ficon img.fb-dark{background:#39405a;border-radius:8px;padding:4px;height:30px;width:30px}
+#filter-builder .fb-fname{flex:1;font-size:14px;font-weight:600;min-width:0}
+#filter-builder .fb-fname small{display:block;font-weight:400;color:var(--fb-mut);font-size:11.5px}
+#filter-builder .fb-seg{
+  display:inline-flex;background:var(--fb-chip);border:1px solid var(--fb-line);
+  border-radius:10px;padding:2px;flex:none;
+}
+#filter-builder .fb-seg button{
+  border:0;background:transparent;color:var(--fb-mut);font-size:13px;font-weight:600;
+  padding:6px 11px;border-radius:8px;cursor:pointer;min-width:48px;
+}
+#filter-builder .fb-seg button.fb-on[data-state=any]{background:#6b7385;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+#filter-builder .fb-seg button.fb-on[data-state=include]{background:var(--fb-inc);color:#fff}
+#filter-builder .fb-seg button.fb-on[data-state=exclude]{background:var(--fb-exc);color:#fff}
+
+/* chips（性別 / 屬性 / 星級） */
+#filter-builder .fb-chips{display:flex;gap:8px;flex-wrap:wrap}
+#filter-builder .fb-chip{
+  border:1px solid var(--fb-line);background:var(--fb-chip);border-radius:999px;
+  padding:7px 13px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--fb-fg);
+  display:inline-flex;align-items:center;gap:6px;
+}
+#filter-builder .fb-chip img{height:19px;width:19px;object-fit:contain;flex:none}
+#filter-builder .fb-chip.fb-on{background:var(--fb-accent);border-color:var(--fb-accent);color:#fff}
+
+/* IV 細項 / 數值範圍 */
+#filter-builder .fb-grid{display:grid;grid-template-columns:1fr;gap:10px}
+#filter-builder .fb-field{display:flex;align-items:center;gap:8px;font-size:13.5px}
+#filter-builder .fb-field label{flex:1;font-weight:600;margin:0}
+#filter-builder select,
+#filter-builder .fb-rin{
+  font:14px ui-monospace,monospace;padding:7px 9px;border:1px solid var(--fb-line);
+  border-radius:9px;background:#fbfcfe;color:var(--fb-fg);width:auto;
+}
+#filter-builder .fb-rin{width:80px}
+#filter-builder .fb-rangerow{
+  display:flex;align-items:center;gap:8px;padding:8px 0;
+  border-top:1px solid #f0f2f6;flex-wrap:wrap;
+}
+#filter-builder .fb-rangerow:first-child{border-top:0}
+#filter-builder .fb-rlabel{flex:1;min-width:130px;font-size:13.5px;font-weight:600}
+#filter-builder .fb-rlabel small{display:block;font-weight:400;color:var(--fb-mut);font-size:11px}
+
+/* 底部固定預覽列（放在 #search-filters-app 底下，切到別的分頁時整個 app-content 會 display:none 而自動隱藏） */
+#search-filters-app .fb-out{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:#fff;border-top:1px solid #dfe3ea;box-shadow:0 -4px 20px rgba(20,30,60,.08);padding:12px 16px;
+}
+#search-filters-app .fb-inner{max-width:780px;margin:0 auto;display:flex;gap:10px;align-items:stretch}
+#search-filters-app #fb-preview{
+  flex:1;min-height:46px;max-height:96px;overflow:auto;background:#0f1424;color:#d7e0ff;
+  border-radius:10px;padding:10px 12px;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;
+  word-break:break-all;white-space:pre-wrap;
+}
+#search-filters-app #fb-preview .fb-ph{color:#6b7385}
+#search-filters-app .fb-side{display:flex;flex-direction:column;gap:6px;justify-content:center}
+#search-filters-app .fb-side .fb-btns{display:flex;gap:8px}
+#search-filters-app .fb-copy{
+  background:#4f46e5;color:#fff;border:0;border-radius:10px;padding:10px 16px;
+  font-size:14px;font-weight:700;cursor:pointer;
+}
+#search-filters-app .fb-copy:hover{filter:brightness(1.08)}
+#search-filters-app .fb-side .fb-btn{
+  border:1px solid #dfe3ea;background:#fff;color:#1c2333;border-radius:10px;
+  padding:9px 13px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;
+}
+#search-filters-app .fb-side .fb-btn:hover{border-color:#4f46e5;color:#4f46e5}
+#search-filters-app .fb-count{font-size:11px;color:#6b7385;text-align:center}
+#search-filters-app .fb-toast{
+  position:fixed;bottom:104px;left:50%;transform:translateX(-50%);z-index:51;
+  background:#1f9d55;color:#fff;padding:8px 16px;border-radius:999px;font-size:13px;
+  opacity:0;transition:.2s;pointer-events:none;
+}
+#search-filters-app .fb-toast.fb-show{opacity:1}
+#search-filters-app .fb-toast.fb-err{background:#e0284a}
+
+/* 讓內容不被底部固定列蓋住 */
+#search-filters-app{padding-bottom:110px}

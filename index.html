@@ -75,6 +75,7 @@
     <link rel="stylesheet" href="css/pvp-ranker.css"> 
     <link rel="stylesheet" href="css/level-up.css">
     <link rel="stylesheet" href="css/search-filters.css">
+    <link rel="stylesheet" href="css/filter-builder.css">
     <link rel="stylesheet" href="css/special-research.css">
     <link rel="stylesheet" href="css/info-hub.css">
 
@@ -532,7 +533,41 @@
 <div id="search-filters-app" class="app-content">
     <div class="container">
         <h1>Pokémon Go 搜尋篩選指令大全</h1>
-        
+
+        <!-- ===== 篩選指令產生器 ===== -->
+        <div id="filter-builder">
+          <div class="fb-title">🔎 篩選指令產生器</div>
+          <p class="fb-sub">每個條件選「要 / 不要 / 任意」，自動組出遊戲內搜尋框可貼上的指令。</p>
+
+          <div class="fb-card">
+            <div class="fb-h2">篩選組合 <span class="fb-tag">可建立多組</span></div>
+            <p class="fb-cardhint">點名稱切換編輯；點 📋 直接複製該組指令。可拖曳調整順序。<b>登入後會同步到你的帳號</b>，未登入則存在這台瀏覽器。</p>
+            <div class="fb-setbar" id="fb-setbar"></div>
+            <div class="fb-setacts">
+              <button type="button" class="fb-btn fb-primary" id="fb-addSet">＋ 新增組合</button>
+              <button type="button" class="fb-btn" id="fb-renameSet">✎ 重新命名</button>
+              <button type="button" class="fb-btn" id="fb-dupSet">⧉ 複製此組</button>
+              <button type="button" class="fb-btn fb-danger" id="fb-delSet">🗑 刪除此組</button>
+              <button type="button" class="fb-btn fb-danger" id="fb-delAllSets">🧹 全部刪除</button>
+            </div>
+          </div>
+
+          <div class="fb-card">
+            <div class="fb-h2">寶可夢編號 <span class="fb-tag">來自編號篩選器</span></div>
+            <p class="fb-cardhint">支援單一或範圍，例如 <code>1,4,7</code> 或 <code>1-151</code>。</p>
+            <div class="fb-numrow">
+              <input type="text" id="fb-nums" placeholder="貼上編號，例如：1,4,7 或 1-151" inputmode="numeric">
+              <button type="button" class="fb-btn fb-primary" id="fb-importNums">⬇ 匯入編號篩選器</button>
+              <button type="button" class="fb-btn" id="fb-clearNums">清空</button>
+            </div>
+            <p class="fb-hint">到「寶可夢編號篩選器」分頁勾選想要的寶可夢，回來按這顆就會自動帶入目前的選取。</p>
+          </div>
+
+          <div id="fb-sections"></div>
+        </div>
+        <hr>
+        <!-- ===== 以下為原本的指令說明大全 ===== -->
+
         <h2>寶可夢搜尋篩選條件</h2>
 
         <h3>1. 固定字詞</h3>
@@ -611,6 +646,22 @@
             </tbody>
         </table>
     </div>
+
+    <!-- 產生器的固定預覽列（放在 .container 外，避免 position:fixed 受祖先影響；
+         切到其他分頁時整個 #search-filters-app 會 display:none 而自動隱藏） -->
+    <div class="fb-out">
+      <div class="fb-inner">
+        <div id="fb-preview"><span class="fb-ph">在上方選擇條件，這裡會即時產生指令…</span></div>
+        <div class="fb-side">
+          <div class="fb-btns">
+            <button type="button" class="fb-copy" id="fb-copyBtn">📋 複製</button>
+            <button type="button" class="fb-btn" id="fb-resetAll">↺ 重設</button>
+          </div>
+          <span class="fb-count" id="fb-count"></span>
+        </div>
+      </div>
+    </div>
+    <div class="fb-toast" id="fb-toast"></div>
 </div>
         <div id="special-research-app" class="app-content">
             <h1>Pokémon GO 特殊調查任務列表</h1>

@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>篩選指令產生器（測試）</title>
+<style>
+  :root{
+    --bg:#eef1f6; --card:#fff; --line:#dfe3ea; --fg:#1c2333; --mut:#6b7385;
+    --accent:#4f46e5; --inc:#1f9d55; --exc:#e0284a; --chip:#f4f6fa;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font-family:system-ui,"Microsoft JhengHei","PingFang TC",sans-serif;line-height:1.5}
+  .wrap{max-width:780px;margin:0 auto;padding:22px 16px 170px}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--mut);font-size:13px;margin:0 0 20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+        padding:14px 16px 16px;margin-bottom:14px;box-shadow:0 1px 2px rgba(20,30,60,.04)}
+  .card h2{font-size:14px;margin:0 0 4px;letter-spacing:.3px;
+           display:flex;align-items:center;gap:7px}
+  .card h2 .tag{font-size:11px;font-weight:600;color:var(--accent);
+                background:#eef0ff;border-radius:999px;padding:2px 8px}
+  .cardhint{font-size:12px;color:var(--mut);margin:0 0 12px}
+  .hint{font-size:12px;color:var(--mut);margin:8px 0 0}
+  /* 編號 */
+  .numrow{display:flex;gap:8px;flex-wrap:wrap}
+  #nums{flex:1;min-width:190px;font:14px/1.4 ui-monospace,Menlo,Consolas,monospace;
+        padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fbfcfe;color:var(--fg)}
+  #nums:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+  .btn{border:1px solid var(--line);background:#fff;color:var(--fg);border-radius:10px;
+       padding:9px 13px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btn.primary:hover{filter:brightness(1.08);color:#fff}
+  .btn.danger:hover{border-color:var(--exc);color:var(--exc)}
+  /* 組合列 */
+  .setbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .setchip{display:inline-flex;align-items:center;gap:0;border:1px solid var(--line);
+           background:var(--chip);border-radius:999px;overflow:hidden;cursor:grab}
+  .setchip:active{cursor:grabbing}
+  .setchip.dragging{opacity:.4}
+  .setchip.insb{box-shadow:-3px 0 0 var(--accent)}   /* 會插到這顆之前 */
+  .setchip.insa{box-shadow:3px 0 0 var(--accent)}    /* 會插到這顆之後 */
+  .setchip .nm{padding:7px 12px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--fg);
+               max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .setchip .cp{border:0;background:transparent;cursor:pointer;padding:7px 10px 7px 4px;
+               font-size:13px;opacity:.6;border-left:1px solid var(--line)}
+  .setchip .cp:hover{opacity:1;background:rgba(0,0,0,.05)}
+  .setchip.on{background:var(--accent);border-color:var(--accent)}
+  .setchip.on .nm{color:#fff}
+  .setchip.on .cp{border-left-color:rgba(255,255,255,.35)}
+  .setchip.on .cp:hover{background:rgba(255,255,255,.15)}
+  .setacts{display:flex;gap:8px;flex-wrap:wrap}
+  /* 三段切換 */
+  .frow{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid #f0f2f6}
+  .frow:first-child{border-top:0}
+  /* 項目圖示 */
+  .ficon{flex:none;width:64px;display:flex;align-items:center;justify-content:center;gap:3px}
+  .ficon img{max-height:30px;max-width:100%;object-fit:contain;border-radius:4px}
+  .ficon.multi img{max-height:24px}
+  .ficon img.sil{filter:brightness(0);opacity:.62}   /* 未登錄 → 黑色剪影 */
+  /* 白色圖示（傳說／田野調查）在白底看不見 → 給深色圓角底襯著 */
+  .ficon img.dark{background:#39405a;border-radius:8px;padding:4px;height:30px;width:30px}
+  .fname{flex:1;font-size:14px;font-weight:600;min-width:0}
+  .fname small{display:block;font-weight:400;color:var(--mut);font-size:11.5px}
+  .seg{display:inline-flex;background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:2px;flex:none}
+  .seg button{border:0;background:transparent;color:var(--mut);font-size:13px;font-weight:600;
+              padding:6px 11px;border-radius:8px;cursor:pointer;min-width:48px}
+  .seg button.on[data-state=any]{background:#6b7385;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+  .seg button.on[data-state=include]{background:var(--inc);color:#fff}
+  .seg button.on[data-state=exclude]{background:var(--exc);color:#fff}
+  .seg button.on[data-state=on]{background:var(--accent);color:#fff}
+  /* chips（星級/屬性/性別） */
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:var(--chip);border-radius:999px;
+        padding:7px 13px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--fg);
+        display:inline-flex;align-items:center;gap:6px}
+  .chip img{height:19px;width:19px;object-fit:contain;flex:none}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  /* IV 細項 / 範圍 */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .field{display:flex;align-items:center;gap:8px;font-size:13.5px}
+  .field label{flex:1;font-weight:600}
+  .field label small{display:block;font-weight:400;color:var(--mut);font-size:11px}
+  select,.rin{font:14px ui-monospace,monospace;padding:7px 9px;border:1px solid var(--line);
+              border-radius:9px;background:#fbfcfe;color:var(--fg)}
+  .rin{width:80px}
+  .rangerow{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid #f0f2f6;flex-wrap:wrap}
+  .rangerow:first-child{border-top:0}
+  .rlabel{flex:1;min-width:130px;font-size:13.5px;font-weight:600}
+  .rlabel small{display:block;font-weight:400;color:var(--mut);font-size:11px}
+  /* 底部預覽 */
+  .out{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);
+       box-shadow:0 -4px 20px rgba(20,30,60,.08);padding:12px 16px}
+  .out .inner{max-width:780px;margin:0 auto;display:flex;gap:10px;align-items:stretch}
+  #preview{flex:1;min-height:46px;max-height:96px;overflow:auto;background:#0f1424;color:#d7e0ff;
+           border-radius:10px;padding:10px 12px;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;
+           word-break:break-all;white-space:pre-wrap}
+  #preview .ph{color:#6b7385}
+  .out .side{display:flex;flex-direction:column;gap:6px;justify-content:center}
+  .out .side .btns{display:flex;gap:8px}
+  .copy{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 16px;
+        font-size:14px;font-weight:700;cursor:pointer}
+  .copy:hover{filter:brightness(1.08)}
+  .count{font-size:11px;color:var(--mut);text-align:center}
+  .toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:#1f9d55;color:#fff;
+         padding:8px 16px;border-radius:999px;font-size:13px;opacity:0;transition:.2s;pointer-events:none;z-index:5}
+  .toast.show{opacity:1}
+  .toast.err{background:var(--exc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔎 篩選指令產生器 <span style="font-size:12px;color:var(--mut);font-weight:400">測試版</span></h1>
+  <p class="sub">每個條件選「要 / 不要 / 任意」，自動組出 Pokémon GO 遊戲內搜尋框可貼上的篩選指令。</p>
+
+  <!-- 組合管理 -->
+  <div class="card">
+    <h2>篩選組合 <span class="tag">可建立多組</span></h2>
+    <p class="cardhint">點名稱切換編輯；點 📋 直接複製該組指令（不用切換）。所有組合會自動存在這台瀏覽器。</p>
+    <div class="setbar" id="setbar"></div>
+    <div class="setacts">
+      <button class="btn primary" id="addSet">＋ 新增組合</button>
+      <button class="btn" id="renameSet">✎ 重新命名</button>
+      <button class="btn" id="dupSet">⧉ 複製此組</button>
+      <button class="btn danger" id="delSet">🗑 刪除此組</button>
+      <button class="btn danger" id="delAllSets">🧹 全部刪除</button>
+    </div>
+  </div>
+
+  <!-- 編號 -->
+  <div class="card">
+    <h2>寶可夢編號 <span class="tag">來自編號篩選器</span></h2>
+    <p class="cardhint">支援單一或範圍，例如 <code>1,4,7</code> 或 <code>1-151</code>。</p>
+    <div class="numrow">
+      <input id="nums" placeholder="貼上編號，例如：1,4,7 或 1-151" inputmode="numeric">
+      <button class="btn primary" id="importNums">⬇ 匯入編號篩選器</button>
+      <button class="btn" id="clearNums">清空</button>
+    </div>
+    <p class="hint" id="importHint">測試階段：先在「寶可夢編號篩選器」按複製，再點此鈕從剪貼簿帶入。（正式整合後會自動讀取目前勾選，不需複製）</p>
+  </div>
+
+  <div id="sections"></div>
+</div>
+
+<!-- 底部預覽 -->
+<div class="out">
+  <div class="inner">
+    <div id="preview"><span class="ph">在上方選擇條件，這裡會即時產生指令…</span></div>
+    <div class="side">
+      <div class="btns">
+        <button class="copy" id="copyBtn">📋 複製</button>
+        <button class="btn" id="resetAll">↺ 重設</button>
+      </div>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+
+/* ---------- 資料定義 ---------- */
+// 三段切換旗標（分組），desc=白話說明（比字面難懂的都寫）
+const IMG='img/';
+const GROUPS=[
+  {title:'狀態', items:[
+    {term:'異色', label:'異色', desc:'色違寶可夢', img:['shiny.svg']},
+    {term:'亮晶晶', label:'亮晶晶（幸運）', desc:'透過交換獲得、升等花費減半的幸運寶可夢', img:['ui_bg_lucky_pokemon.png']},
+    {term:'暗影', label:'暗影', desc:'從火箭隊手中救出、尚未淨化', img:['ic_shadow.png']},
+    {term:'淨化', label:'淨化', desc:'已淨化的前暗影寶可夢', img:['ic_purified.png']},
+    {term:'交換', label:'交換', desc:'從好友交換得到的', img:['pogo_trading_icon.png']},
+    {term:'特殊', label:'特殊（造型）', desc:'穿戴特殊裝扮，例如戴帽子的皮卡丘', img:['trim/pm25.cSINNOH_2020_NOEVOLVE.g2.icon.png']},
+    {term:'孵化', label:'孵化', desc:'從蛋孵出來的', img:['Egg_A.png']},
+    {term:'只限蛋', label:'只限蛋（寶寶）', desc:'寶寶／幼年型態（如波克比、皮丘）', img:['trim/pokemon_icon_172_00.png']},
+    {term:'糖果XL', label:'糖果XL', desc:'曾使用 XL 糖果升過等', img:['RareXLCandy_PSD.png']},
+    {term:'防禦者', label:'防禦者', desc:'目前正在道館防守中', img:['ic_defend.png']},
+    {term:'背卡', label:'背卡', desc:'擁有特殊活動背景卡', img:['GO_Dark_Skies_background.png']},
+    {term:'極巨化', label:'極巨化', desc:'可進行極巨化', img:['badge_dynamax.png']},
+    {term:'超極巨化', label:'超極巨化', desc:'可進行超極巨化', img:['badge_gigantamax.png']},
+    {term:'冒險效果', label:'冒險效果', desc:'擁有冒險效果的寶可夢（如起源帝牙盧卡、起源帕路奇亞、蒼響等）', img:['trim/pm483.fORIGIN.icon.png','trim/pm484.fORIGIN.icon.png']},
+  ]},
+  {title:'稀有度', items:[
+    {term:'傳說的寶可夢', label:'傳說', desc:'神獸（傳說寶可夢）', img:['ic_Legendary_small.png'], dark:true},
+    {term:'幻', label:'幻', desc:'幻之寶可夢（如夢幻、時拉比）', img:['trim/pm151.icon.png']},
+    {term:'究極異獸', label:'究極異獸', desc:'Ultra Beast', img:['raid_ultra_icon.png']},
+  ]},
+  {title:'可進化狀態', items:[
+    {term:'進化', label:'可進化', desc:'目前糖果足夠、可以進化', img:['trim/pm2.icon.png']},
+    {term:'超級進化', label:'可超級進化', desc:'目前可以 Mega 超級進化', img:['tx_raid_coin_mega.png']},
+    {term:'交換進化', label:'交換進化', desc:'交換後可免糖果直接進化', img:['trim/pm64.icon.png','trim/pm67.icon.png','trim/pm93.icon.png']},
+    {term:'道具', label:'道具進化', desc:'需要進化道具才能進化', img:['Bag_King_Rock_Sprite.png','Bag_Sun_Stone_Sprite.png']},
+    {term:'未登錄', label:'未登錄', desc:'進化後可解鎖新的圖鑑登錄', img:['trim/pokemon_icon_003_00.png'], sil:true},
+  ]},
+  {title:'獲得來源（限 2020/11 後）', items:[
+    {term:'調查', label:'田野調查', desc:'田野調查任務獎勵', img:['TodayView_Icon_Research.png'], dark:true},
+    {term:'火箭隊', label:'火箭隊', desc:'擊敗火箭隊獲得', img:['teamrocket_r_full.png']},
+    {term:'Snapshot', label:'Snapshot', desc:'AR 拍照時亂入捕捉的', img:['tx_ar_photo_tut_pika.png']},
+  ]},
+  {title:'招式', items:[
+    {term:'@天氣', label:'@ 天氣加成', desc:'招式當前受天氣加成', img:['ic_partly_cloudy_night.png']},
+    {term:'@特別', label:'@ 絕版招式', desc:'擁有絕版／傳承招式（社群日等）', img:[]},
+  ]},
+];
+// 性別（單選）
+const GENDERS=[['雄性','♂ 雄性'],['雌性','♀ 雌性'],['性別不明','⚲ 性別不明']];
+// 屬性（複選＝任一）：[中文名, 圖檔代號]
+const TYPES=[['一般','NORMAL'],['火','FIRE'],['水','WATER'],['電','ELECTRIC'],['草','GRASS'],['冰','ICE'],
+  ['格鬥','FIGHTING'],['毒','POISON'],['地面','GROUND'],['飛行','FLYING'],['超能力','PSYCHIC'],['蟲','BUG'],
+  ['岩石','ROCK'],['幽靈','GHOST'],['龍','DRAGON'],['惡','DARK'],['鋼','STEEL'],['妖精','FAIRY']];
+// IV 細項（各 0–4；0=IV0、1=1–5、2=6–10、3=11–14、4=15）
+const IVDETAIL=[{term:'攻擊',label:'攻擊'},{term:'防禦',label:'防禦'},{term:'HP',label:'HP'}];
+// 範圍類（from/to，空白＝不加）
+const RANGES=[
+  {key:'cp', prefix:'cp',   label:'CP',       desc:'戰鬥力，例：cp2000-3000',   min:10},
+  {key:'hp', prefix:'hp',   label:'HP',       desc:'血量，例：hp200-',          min:1},
+  {key:'year',prefix:'年',  label:'捕獲年份', desc:'例：年2016；只填「從」＝該年之後', min:2016, max:2099},
+  {key:'day',prefix:'日數', label:'捕獲天數', desc:'日數0＝24小時內、日數365-＝一年前', min:0},
+  {key:'dist',prefix:'距離',label:'距離(km)', desc:'距離100-＝100公里外',        min:0},
+  {key:'buddy',prefix:'夥伴',label:'夥伴等級', desc:'0–5',                       min:0, max:5},
+  {key:'mega',prefix:'超級',label:'超級等級', desc:'1–3',                       min:1, max:3},
+];
+
+/* ---------- 多組狀態（每組各自一份設定，存 localStorage） ---------- */
+const LS='filterBuilderSets';
+let sets=[], activeId=null;
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+function newState(){
+  const s={nums:'', gender:'', flag:{}, types:[], stars:[], iv:{}, ranges:{}, move:''};
+  GROUPS.forEach(g=>g.items.forEach(i=>s.flag[i.term]='any'));
+  IVDETAIL.forEach(d=>s.iv[d.term]={a:'',b:''});
+  RANGES.forEach(r=>s.ranges[r.key]={a:'',b:''});
+  return s;
+}
+// 命名避免撞名：找出最小的未使用編號（刪掉中間某組後再新增也不會重複）
+function nextName(){ const taken=new Set(sets.map(s=>s.name)); let n=1;
+  while(taken.has('組合 '+n)) n++; return '組合 '+n; }
+// 指定名稱已存在時自動加序號（複製此組連按多次用得到）
+function uniqueName(base){ const taken=new Set(sets.map(s=>s.name));
+  if(!taken.has(base)) return base;
+  let i=2; while(taken.has(base+' '+i)) i++; return base+' '+i; }
+function newSet(name){ return {id:uid(), name:name||nextName(), state:newState()}; }
+function cur(){ return sets.find(s=>s.id===activeId)||sets[0]; }
+function save(){ try{ localStorage.setItem(LS, JSON.stringify({sets, activeId})); }catch(e){} }
+// 讀舊資料時用預設補齊 → 日後新增篩選項目也不會壞掉
+function normalize(st){
+  const d=newState(), o={...d, ...(st||{})};
+  o.flag={...d.flag, ...((st&&st.flag)||{})};
+  o.iv={...d.iv}; IVDETAIL.forEach(x=>{const v=st&&st.iv&&st.iv[x.term]; if(v)o.iv[x.term]={a:v.a||'',b:v.b||''};});
+  o.ranges={...d.ranges}; RANGES.forEach(r=>{const v=st&&st.ranges&&st.ranges[r.key]; if(v)o.ranges[r.key]={a:v.a||'',b:v.b||''};});
+  o.types=Array.isArray(o.types)?o.types:[];
+  o.stars=Array.isArray(o.stars)?o.stars:[];
+  return o;
+}
+function load(){
+  try{
+    const d=JSON.parse(localStorage.getItem(LS)||'null');
+    if(d&&Array.isArray(d.sets)&&d.sets.length){
+      sets=d.sets.map(s=>({id:s.id||uid(), name:s.name||'組合', state:normalize(s.state)}));
+      activeId=(d.activeId&&sets.some(s=>s.id===d.activeId))?d.activeId:sets[0].id;
+      return;
+    }
+  }catch(e){}
+  sets=[newSet('組合 1')]; activeId=sets[0].id;
+}
+
+/* ---------- 產生指令 ---------- */
+function rangeTerm(prefix,a,b){ a=(a||'').trim(); b=(b||'').trim();
+  if(a&&b) return a===b?prefix+a:prefix+a+'-'+b;
+  if(a) return prefix+a+'-'; if(b) return prefix+'-'+b; return ''; }
+// IV 細項：數字在前、屬性字在後（同遊戲的 4攻擊）；兩邊不同＝範圍 2-4攻擊
+function statTerm(word,a,b){ a=(a||''); b=(b||'');
+  if(a!==''&&b!==''){ const lo=Math.min(+a,+b), hi=Math.max(+a,+b); return (lo===hi?lo:lo+'-'+hi)+word; }
+  if(a!=='') return a+word; if(b!=='') return b+word; return ''; }
+// 由一份 state 產生完整指令（純函式 → 組合列也能直接拿去顯示/複製）
+function strOf(st){
+  const parts=[];
+  const nums=(st.nums||'').split(/[,\s]+/).filter(Boolean).join(',');
+  if(nums) parts.push(nums);
+  if(st.gender) parts.push(st.gender);
+  GROUPS.forEach(g=>g.items.forEach(i=>{
+    const v=st.flag[i.term];
+    if(v==='include') parts.push(i.term); else if(v==='exclude') parts.push('!'+i.term);
+  }));
+  if(st.types.length) parts.push(TYPES.map(t=>t[0]).filter(n=>st.types.includes(n)).join(','));
+  if(st.stars.length) parts.push([...st.stars].sort().map(n=>n+'*').join(','));
+  IVDETAIL.forEach(d=>{ const t=statTerm(d.term, st.iv[d.term].a, st.iv[d.term].b); if(t)parts.push(t); });
+  RANGES.forEach(r=>{ const t=rangeTerm(r.prefix, st.ranges[r.key].a, st.ranges[r.key].b); if(t)parts.push(t); });
+  if(st.move) parts.push('@'+st.move.replace(/^@/,''));
+  return parts.join('&');
+}
+
+/* ---------- 組合列 ---------- */
+function toast(msg,err){ const t=$('#toast'); t.textContent=msg; t.classList.toggle('err',!!err);
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); }
+async function copyStr(str,okMsg){
+  try{ await navigator.clipboard.writeText(str); toast(okMsg); }
+  catch(e){ window.prompt('複製這段指令：',str); }
+}
+let dragId=null;
+function clearIns(){ document.querySelectorAll('.setchip.insb,.setchip.insa')
+  .forEach(x=>x.classList.remove('insb','insa')); }
+// 把 id 這組搬到索引 to（to 是「搬移前」的插入位置）
+function moveSet(id,to){
+  const from=sets.findIndex(s=>s.id===id); if(from<0) return;
+  const [m]=sets.splice(from,1);
+  if(to>from) to--;
+  sets.splice(Math.max(0,Math.min(to,sets.length)),0,m);
+  dragId=null; save(); renderSets();
+}
+function renderSets(){
+  const bar=$('#setbar'); bar.innerHTML='';
+  sets.forEach((s,idx)=>{
+    const cmd=strOf(s.state);
+    const chip=el('div','setchip'+(s.id===activeId?' on':''));
+    chip.draggable=true;
+    chip.title='可拖曳調整順序';
+    const nm=el('span','nm',s.name);
+    nm.title=cmd||'（這組還沒有任何條件）';
+    nm.onclick=()=>{ activeId=s.id; save(); renderSets(); renderAll(); build(); };
+    const cp=el('button','cp','📋'); cp.title='直接複製此組指令';
+    cp.onclick=e=>{ e.stopPropagation();
+      if(!cmd){ toast('這組還沒有任何條件',true); return; }
+      copyStr(cmd,'已複製「'+s.name+'」'); };
+    // 拖曳排序
+    chip.ondragstart=e=>{ dragId=s.id; chip.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',s.id); };
+    chip.ondragend=()=>{ dragId=null; clearIns();
+      document.querySelectorAll('.setchip.dragging').forEach(x=>x.classList.remove('dragging')); };
+    chip.ondragover=e=>{ if(!dragId||dragId===s.id) return; e.preventDefault();
+      const r=chip.getBoundingClientRect(), after=(e.clientX-r.left)>r.width/2;
+      clearIns(); chip.classList.add(after?'insa':'insb'); };
+    chip.ondrop=e=>{ if(!dragId||dragId===s.id) return; e.preventDefault(); e.stopPropagation();
+      const r=chip.getBoundingClientRect(), after=(e.clientX-r.left)>r.width/2;
+      clearIns(); moveSet(dragId, idx+(after?1:0)); };
+    chip.appendChild(nm); chip.appendChild(cp); bar.appendChild(chip);
+  });
+  // 拖到空白處 → 移到最後
+  bar.ondragover=e=>{ if(dragId) e.preventDefault(); };
+  bar.ondrop=e=>{ if(dragId && e.target===bar){ e.preventDefault(); clearIns(); moveSet(dragId, sets.length); } };
+}
+
+/* ---------- 建立 UI（依目前組合重繪） ---------- */
+const SEG=[['any','任意'],['include','要'],['exclude','不要']];
+function renderAll(){
+  const st=cur().state;
+  $('#nums').value=st.nums||'';
+  const root=$('#sections'); root.innerHTML='';
+
+  // 旗標分組
+  GROUPS.forEach(g=>{
+    const card=el('div','card'); card.appendChild(el('h2',null,g.title));
+    g.items.forEach(it=>{
+      const row=el('div','frow'); row.title='指令詞：'+it.term;
+      const imgs=it.img||[];
+      const ic=el('span','ficon'+(imgs.length>1?' multi':''));
+      imgs.forEach(src=>{ const im=el('img'); im.src=IMG+src; im.alt=''; im.loading='lazy';
+        if(it.sil)im.classList.add('sil');      // 未登錄 → 黑色剪影
+        if(it.dark)im.classList.add('dark');    // 白色圖示 → 加深色底才看得到
+        ic.appendChild(im); });
+      row.appendChild(ic);
+      row.appendChild(el('span','fname',`${it.label}<small>${it.desc}</small>`));
+      const seg=el('div','seg');
+      SEG.forEach(([sv,txt])=>{
+        const b=el('button',null,txt); b.dataset.state=sv;
+        if(st.flag[it.term]===sv)b.classList.add('on');
+        b.onclick=()=>{ st.flag[it.term]=sv;
+          seg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.state===sv)); build(); };
+        seg.appendChild(b);
+      });
+      row.appendChild(seg); card.appendChild(row);
+    });
+    root.appendChild(card);
+  });
+
+  // 性別
+  {
+    const card=el('div','card'); card.appendChild(el('h2',null,'性別'));
+    card.appendChild(el('p','cardhint','只會選一種。'));
+    const chips=el('div','chips');
+    [['','任意'],...GENDERS].forEach(([val,txt])=>{
+      const c=el('div','chip',txt); if(st.gender===val)c.classList.add('on');
+      c.onclick=()=>{ st.gender=val;
+        chips.querySelectorAll('.chip').forEach(x=>x.classList.remove('on')); c.classList.add('on'); build(); };
+      chips.appendChild(c);
+    });
+    card.appendChild(chips); root.appendChild(card);
+  }
+
+  // 屬性
+  {
+    const card=el('div','card');
+    card.appendChild(el('h2',null,'屬性 <span class="tag">複選＝任一符合</span>'));
+    const chips=el('div','chips');
+    TYPES.forEach(([name,code])=>{
+      const c=el('div','chip',`<img src="${IMG}type/POKEMON_TYPE_${code}.png" alt="" loading="lazy">${name}`);
+      if(st.types.includes(name))c.classList.add('on');
+      c.onclick=()=>{ const i=st.types.indexOf(name);
+        if(i>=0){st.types.splice(i,1);c.classList.remove('on');} else {st.types.push(name);c.classList.add('on');}
+        build(); };
+      chips.appendChild(c);
+    });
+    card.appendChild(chips); root.appendChild(card);
+  }
+
+  // 評價星級
+  {
+    const card=el('div','card');
+    card.appendChild(el('h2',null,'評價星級 <span class="tag">複選＝任一符合</span>'));
+    const chips=el('div','chips');
+    [0,1,2,3,4].forEach(n=>{
+      const c=el('div','chip',n+'★'); if(st.stars.includes(n))c.classList.add('on');
+      c.onclick=()=>{ const i=st.stars.indexOf(n);
+        if(i>=0){st.stars.splice(i,1);c.classList.remove('on');} else {st.stars.push(n);c.classList.add('on');}
+        build(); };
+      chips.appendChild(c);
+    });
+    card.appendChild(chips);
+    card.appendChild(el('p','hint','4★＝100%(滿三圍) · 3★＝82–98% · 2★＝66–80% · 1★＝51–64% · 0★＝0–49%'));
+    root.appendChild(card);
+  }
+
+  // IV 細項
+  {
+    const card=el('div','card');
+    card.appendChild(el('h2',null,'IV 細項 <span class="tag">攻/防/HP 可選範圍</span>'));
+    card.appendChild(el('p','cardhint','數字 0–4 對應 IV：0＝0、1＝1–5、2＝6–10、3＝11–14、4＝15。「從/到」相同或只選一邊＝單一值，兩邊不同＝範圍（例 2–4）。三者皆 4 即完美 IV。'));
+    const grid=el('div','grid'); grid.style.gridTemplateColumns='1fr';
+    const mkSel=v=>{ const s=el('select');
+      s.innerHTML='<option value="">任意</option>'+[0,1,2,3,4].map(n=>`<option value="${n}">${n}</option>`).join('');
+      s.value=v||''; return s; };
+    IVDETAIL.forEach(d=>{
+      const f=el('div','field'); f.appendChild(el('label',null,d.label));
+      const sa=mkSel(st.iv[d.term].a), sb=mkSel(st.iv[d.term].b);
+      sa.onchange=()=>{ st.iv[d.term].a=sa.value; build(); };
+      sb.onchange=()=>{ st.iv[d.term].b=sb.value; build(); };
+      f.appendChild(sa); f.appendChild(el('span',null,'–')); f.appendChild(sb);
+      grid.appendChild(f);
+    });
+    card.appendChild(grid); root.appendChild(card);
+  }
+
+  // 數值範圍
+  {
+    const card=el('div','card'); card.appendChild(el('h2',null,'數值範圍 <span class="tag">選填</span>'));
+    RANGES.forEach(r=>{
+      const row=el('div','rangerow');
+      row.appendChild(el('span','rlabel',`${r.label}<small>${r.desc}</small>`));
+      const a=el('input','rin'); a.type='number'; a.placeholder='從'; a.value=st.ranges[r.key].a;
+      const b=el('input','rin'); b.type='number'; b.placeholder='到'; b.value=st.ranges[r.key].b;
+      if(r.min!=null){a.min=r.min;b.min=r.min;} if(r.max!=null){a.max=r.max;b.max=r.max;}
+      a.oninput=()=>{ st.ranges[r.key].a=a.value; build(); };
+      b.oninput=()=>{ st.ranges[r.key].b=b.value; build(); };
+      row.appendChild(a); row.appendChild(el('span',null,'–')); row.appendChild(b);
+      card.appendChild(row);
+    });
+    root.appendChild(card);
+  }
+
+  // 指定招式
+  {
+    const card=el('div','card'); card.appendChild(el('h2',null,'指定招式 <span class="tag">選填</span>'));
+    card.appendChild(el('p','cardhint','輸入招式名會加上 <code>@</code>，例：輸入「破壞光線」→ <code>@破壞光線</code>。'));
+    const inp=el('input','rin'); inp.style.width='100%'; inp.placeholder='招式名稱，例：破壞光線'; inp.value=st.move||'';
+    inp.oninput=()=>{ st.move=inp.value.trim(); build(); };
+    card.appendChild(inp); root.appendChild(card);
+  }
+}
+
+/* ---------- 預覽 ---------- */
+function build(){
+  const str=strOf(cur().state);
+  const pv=$('#preview');
+  if(str) pv.textContent=str; else pv.innerHTML='<span class="ph">在上方選擇條件，這裡會即時產生指令…</span>';
+  $('#count').textContent=str?str.length+' 字':'';
+  save(); renderSets();
+  return str;
+}
+
+/* ---------- 編號輸入 / 匯入 ---------- */
+$('#nums').oninput=()=>{ const v=$('#nums').value.replace(/[^0-9,\-\s]/g,'');
+  $('#nums').value=v; cur().state.nums=v; build(); };
+$('#clearNums').onclick=()=>{ $('#nums').value=''; cur().state.nums=''; build(); };
+$('#importNums').onclick=async()=>{
+  // 整合後：同頁若有編號篩選器的輸出，直接讀即時選取（不需複製）
+  const live=document.getElementById('selected-ids');
+  if(live && live.textContent.trim()){
+    const v=live.textContent.trim(); $('#nums').value=v; cur().state.nums=v; build();
+    toast('已帶入目前勾選的編號'); return;
+  }
+  // 測試/未整合：退回讀剪貼簿（先在編號篩選器按複製）
+  try{
+    const txt=(await navigator.clipboard.readText()||'').replace(/[^0-9,\-\s]/g,'').trim();
+    if(!txt){ toast('剪貼簿沒有編號，請先在編號篩選器按複製',true); return; }
+    const v=txt.split(/[,\s]+/).filter(Boolean).join(',');
+    $('#nums').value=v; cur().state.nums=v; build(); toast('已從剪貼簿帶入編號');
+  }catch(e){ toast('無法讀取剪貼簿，請直接貼到欄位',true); }
+};
+
+/* ---------- 組合管理 ---------- */
+$('#addSet').onclick=()=>{ const s=newSet(); sets.push(s); activeId=s.id;
+  save(); renderSets(); renderAll(); build(); toast('已新增「'+s.name+'」'); };
+$('#renameSet').onclick=()=>{ const s=cur(); const n=window.prompt('組合名稱：', s.name);
+  if(n===null) return; s.name=n.trim()||s.name; save(); renderSets(); };
+$('#dupSet').onclick=()=>{ const s=cur();
+  const c={id:uid(), name:uniqueName(s.name+' 複本'), state:JSON.parse(JSON.stringify(s.state))};
+  sets.splice(sets.indexOf(s)+1,0,c); activeId=c.id;
+  save(); renderSets(); renderAll(); build(); toast('已複製為「'+c.name+'」'); };
+$('#delSet').onclick=()=>{
+  if(sets.length<=1){ toast('至少要保留一組',true); return; }
+  const s=cur(); if(!confirm('確定刪除「'+s.name+'」？')) return;
+  sets=sets.filter(x=>x.id!==s.id); activeId=sets[0].id;
+  save(); renderSets(); renderAll(); build(); toast('已刪除');
+};
+$('#delAllSets').onclick=()=>{
+  if(!confirm('確定刪除全部 '+sets.length+' 組篩選組合？\n此動作無法復原。')) return;
+  sets=[newSet('組合 1')]; activeId=sets[0].id;   // 一律保留一組空白的，介面才有東西可編輯
+  save(); renderSets(); renderAll(); build(); toast('已刪除全部組合');
+};
+
+/* ---------- 複製 / 重設 ---------- */
+$('#copyBtn').onclick=()=>{ const str=strOf(cur().state);
+  if(!str){ toast('目前沒有任何條件',true); return; }
+  copyStr(str,'已複製到剪貼簿'); };
+$('#resetAll').onclick=()=>{ const s=cur();
+  if(!confirm('清空「'+s.name+'」的所有條件？')) return;
+  s.state=newState(); save(); renderAll(); build(); toast('已重設此組'); };
+
+/* ---------- 啟動 ---------- */
+load(); renderSets(); renderAll(); build();
+</script>
+</body>
+</html>
