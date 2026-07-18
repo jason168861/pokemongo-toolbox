@@ -159,7 +159,7 @@
   .li .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .li .m{position:absolute;inset:0;margin:auto;width:80%;height:80%;object-fit:contain;z-index:2}
   .li .bd{position:absolute;right:5%;top:5%;width:28%;height:28%;z-index:3}
-  .li .gn{position:absolute;left:5%;bottom:5%;z-index:3;font-size:12px;line-height:1;color:#ff9ec7;text-shadow:0 0 2px #000,0 1px 2px #000}
+  .li .gn{position:absolute;left:5%;bottom:5%;z-index:3;font-size:12px;line-height:1;color:#ff9ec7}
   .li .card .del{position:absolute;right:2px;bottom:2px;z-index:4;width:18px;height:18px;padding:0;border-radius:50%;background:#000b;border:1px solid #fff5;color:#fff;cursor:pointer;font-size:11px;line-height:1}
   .li .note{display:block;width:100%;margin-top:3px;box-sizing:border-box;font-size:10px;padding:2px 4px;line-height:1.25;
             border:1px solid var(--line);border-radius:6px;background:var(--cellbg);color:var(--fg);text-align:center;cursor:text;
@@ -205,6 +205,15 @@
   #edDone:hover{filter:brightness(1.08)}
   .edUR button,#dl{min-width:42px;padding:7px 9px;display:inline-flex;align-items:center;justify-content:center}
   #edTop .edUR svg,#edTop #dl svg{width:19px;height:19px;display:block}
+  /* 下載鍵改用強調色,較醒目;電腦版再放大並顯示文字 */
+  #dl{background:var(--acc2);color:#fff;border:0}
+  #dl:hover{filter:brightness(1.08)}
+  #dl .dlTxt{display:none}
+  @media(min-width:900px){
+    #dl{padding:9px 18px}
+    #edTop #dl svg{width:22px;height:22px}
+    #dl .dlTxt{display:inline;margin-left:7px;font-size:15px;font-weight:800}
+  }
   #edDone{display:inline-flex;align-items:center;gap:5px}
   #edDone svg{width:17px;height:17px;display:block}
   #edTop button:disabled{opacity:.38}
@@ -354,7 +363,7 @@
           <button class="btn g" id="edRedo" title="下一步" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
           <button class="btn g" id="txtReset" title="復原預設文字"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
         </div>
-        <button class="btn" id="dl" title="下載 PNG"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+        <button class="btn" id="dl" title="下載 PNG"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span class="dlTxt" id="dlTxt">下載</span></button>
       </div>
 
       <div id="edSelBar">
@@ -484,7 +493,7 @@ function applyStaticI18n(){
   $('#canflyLabel').textContent='✈ '+T('canfly'); if($('#qrLabel'))$('#qrLabel').textContent='📷 '+T('qr_toggle');
   $('#labWant').textContent='🟢 '+T('want'); $('#labHave').textContent='🟡 '+T('have');
   $('#startBtn').textContent='🎨 '+T('start'); $('#sortBtn').textContent='↕ '+T('sort'); $('#clr').textContent=T('clear');
-  $('#dlList').textContent='⬇ '+T('download');
+  $('#dlList').textContent='⬇ '+T('download'); $('#dlTxt').textContent=T('download');
   $('#enterEditTxt').textContent=T('edit_photo'); $('#edDoneTxt').textContent=T('done');
   $('#txtAdd').textContent='＋ '+T('addtext'); $('#edStyle').textContent='🅰 '+T('t_style'); $('#edColorLabel').textContent=T('t_color');
   $('#q').placeholder=TAB==='mon'?T('search_mon'):T('search_bg');
