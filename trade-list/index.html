@@ -75,9 +75,13 @@
             justify-content:space-between;gap:8px;margin:-4px -4px 10px;padding:6px 0}
   .pickHead b{font-size:15px}
   #pickClose{background:var(--acc2);color:#fff;border:0;font-weight:700}
-  .editSec{margin-left:auto;font-size:11px;padding:3px 10px;border:1px solid var(--acc2);color:var(--acc2);
-           background:transparent;border-radius:999px;cursor:pointer;font-weight:700}
+  .secBtns{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .editSec{font-size:11px;padding:3px 10px;border:1px solid var(--acc2);color:var(--acc2);
+           background:transparent;border-radius:999px;cursor:pointer;font-weight:700;white-space:nowrap}
   .editSec:hover{background:var(--acc2);color:#fff}
+  .editSec.danger{border-color:var(--acc);color:var(--acc)}
+  .editSec.danger:hover{background:var(--acc);color:#fff}
+  .toolbar.listops{margin:12px 0 10px;padding-top:12px;border-top:1px solid var(--line)}
   .tabs{display:flex;gap:8px;margin-bottom:10px}
   .tabs button{flex:1;background:var(--cellbg);border:1px solid var(--line);color:var(--fg);padding:8px;border-radius:8px;cursor:pointer;font:inherit}
   .tabs button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));border:0;font-weight:700;color:#fff}
@@ -149,8 +153,9 @@
   .li .bd{position:absolute;right:5%;top:5%;width:28%;height:28%;z-index:3}
   .li .gn{position:absolute;left:5%;bottom:5%;z-index:3;font-size:11px;line-height:1;color:#ff9ec7;background:rgba(0,0,0,.5);border-radius:5px;padding:1px 3px}
   .li .card .del{position:absolute;right:2px;bottom:2px;z-index:4;width:18px;height:18px;padding:0;border-radius:50%;background:#000b;border:1px solid #fff5;color:#fff;cursor:pointer;font-size:11px;line-height:1}
-  .li .note{display:block;width:100%;margin-top:3px;box-sizing:border-box;font-size:10px;padding:2px 4px;
-            border:1px solid var(--line);border-radius:6px;background:var(--cellbg);color:var(--fg);text-align:center;cursor:text}
+  .li .note{display:block;width:100%;margin-top:3px;box-sizing:border-box;font-size:10px;padding:2px 4px;line-height:1.25;
+            border:1px solid var(--line);border-radius:6px;background:var(--cellbg);color:var(--fg);text-align:center;cursor:text;
+            resize:none;overflow:hidden;font-family:inherit;-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
   .li .note::placeholder{color:var(--mut);opacity:.7}
   .li .note:focus{outline:1px solid var(--acc2);border-color:var(--acc2)}
   .li .note.has{border-color:var(--acc2);color:var(--acc2);font-weight:700}
@@ -178,8 +183,9 @@
   .hint{color:var(--mut);font-size:11px;margin-top:6px}
   /* ===== IG 風格文字編輯器 ===== */
   #edTop,#edBottom{display:none}
-  #enterEdit{position:absolute;right:8px;top:8px;z-index:6;background:var(--acc2);color:#fff;border:0;
-             border-radius:999px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px #0007}
+  #enterEdit{display:block;width:100%;margin:2px 0 8px;background:var(--acc2);color:#fff;border:0;
+             border-radius:10px;padding:11px 14px;font-size:15px;font-weight:800;cursor:pointer}
+  #enterEdit:hover{filter:brightness(1.08)}
   .edUR{display:flex;gap:6px}
   #edSize{width:100%;margin-bottom:8px}
   .edRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -195,14 +201,15 @@
   .txt .h-tr{right:0;bottom:0;transform:translate(50%,50%) translate(13px,13px);cursor:nwse-resize;background:var(--acc2);color:#fff}
   /* 進入編輯 → 整個匯出區變全螢幕,圖片放大 */
   body.editmode #editPanel{position:fixed;inset:0;z-index:200;margin:0;border:0;border-radius:0;
-        background:var(--bg);display:flex;flex-direction:column;padding:10px;overflow:hidden}
-  body.editmode #edTop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
-  body.editmode #edBottom{display:flex;align-items:center;gap:8px;margin-top:8px}
+        background:var(--bg);display:flex;flex-direction:column;padding:8px;overflow:hidden}
+  body.editmode #edTop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none;margin-bottom:4px}
+  body.editmode #edBottom{display:block;flex:none;margin-top:6px}
   body.editmode #enterEdit{display:none}
-  body.editmode #flyRow{margin-top:6px}
-  body.editmode #editor{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;margin-top:0}
+  body.editmode #flyRow{flex:none;margin:0 0 4px;font-size:13px}
+  body.editmode #editor{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;margin:0;overflow:hidden}
   body.editmode #edStage{position:relative;width:auto;max-width:100%}
-  body.editmode #baseCv{display:block;width:auto;height:auto;max-width:calc(100vw - 28px);max-height:calc(100vh - 175px)}
+  /* 用視窗尺寸限制圖片高度,預留上下工具列空間(dvh 隨手機瀏覽器列高度變動),確保不擋到按鈕 */
+  body.editmode #baseCv{display:block;width:auto;height:auto;max-width:calc(100vw - 20px);max-height:calc(100dvh - 205px)}
   /* 全螢幕文字輸入 */
   #txtEditOverlay{position:fixed;inset:0;z-index:300;background:rgba(8,10,20,.86);display:none;
         flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px}
@@ -210,6 +217,9 @@
   #txtEditArea{width:min(560px,92vw);font-size:26px;font-weight:800;text-align:center;line-height:1.3;
         background:transparent;border:0;outline:0;color:#fff;resize:none;caret-color:var(--acc2)}
   #txtEditDone{font-size:15px}
+  /* 手機:避免點輸入框時自動放大(iOS 會在字級<16px時放大);停用快速點兩下放大 */
+  body{touch-action:manipulation}
+  @media(max-width:700px){ input,textarea,select{font-size:16px} }
   body.editmode #selPanel,body.editmode #listPanel{display:none}
 </style>
 </head>
@@ -289,12 +299,19 @@
         <button class="btn g" id="setDel">🗑 刪除</button>
         <button class="btn g" id="setDelAll">🧹 全部刪除</button>
       </div>
-      <div class="sec want"><h3><span id="labWant">🟢 我想要的</span> <span class="sub" id="cW">0</span> <button class="editSec want" id="addWant" onclick="openPicker('want')">✏️ 加入</button></h3><div class="list" id="listW"><div class="empty">點 ✏️ 加入寶可夢</div></div></div>
-      <div class="sec have"><h3><span id="labHave">🟡 我能提供的</span> <span class="sub" id="cH">0</span> <button class="editSec have" id="addHave" onclick="openPicker('have')">✏️ 加入</button></h3><div class="list" id="listH"><div class="empty">點 ✏️ 加入寶可夢</div></div></div>
-      <div class="toolbar">
-        <button class="btn" id="startBtn" onclick="setMode('edit')">🎨 我選好了，開始製圖</button>
+      <div class="toolbar listops">
         <button class="btn g" id="sortBtn">↕ 依編號排序</button>
         <button class="btn g" id="clr">清空清單</button>
+      </div>
+      <div class="sec want"><h3><span id="labWant">🟢 我想要的</span> <span class="sub" id="cW">0</span>
+        <span class="secBtns"><button class="editSec want" id="addWant" onclick="openPicker('want')">✏️ 加入</button><button class="editSec danger" id="clrWant" onclick="clearSide('want')">🗑 全部刪除</button></span></h3>
+        <div class="list" id="listW"><div class="empty">點 ✏️ 加入寶可夢</div></div></div>
+      <div class="sec have"><h3><span id="labHave">🟡 我能提供的</span> <span class="sub" id="cH">0</span>
+        <span class="secBtns"><button class="editSec have" id="addHave" onclick="openPicker('have')">✏️ 加入</button><button class="editSec danger" id="clrHave" onclick="clearSide('have')">🗑 全部刪除</button></span></h3>
+        <div class="list" id="listH"><div class="empty">點 ✏️ 加入寶可夢</div></div></div>
+      <div class="toolbar">
+        <button class="btn" id="startBtn" onclick="setMode('edit')">🎨 我選好了，開始製圖</button>
+        <button class="btn" id="dlList" onclick="downloadPNG()">⬇ 下載 PNG</button>
       </div>
     </div>
 
@@ -309,12 +326,12 @@
         <button class="btn" id="dl" title="下載 PNG">⬇</button>
       </div>
 
+      <button id="enterEdit">✏️ <span id="enterEditTxt">編輯文字</span></button>
+      <label class="switch" id="flyRow"><input type="checkbox" id="canfly"><span class="track"></span><span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
+
       <div id="editor">
         <div id="edStage"><canvas id="baseCv"></canvas><div id="txtLayer"></div></div>
-        <button id="enterEdit">✏️ <span id="enterEditTxt">編輯文字</span></button>
       </div>
-
-      <label class="switch" id="flyRow"><input type="checkbox" id="canfly"><span class="track"></span><span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
 
       <div id="edBottom">
         <input type="range" id="edSize" min="12" max="160" value="44" title="文字大小" disabled>
@@ -358,8 +375,8 @@ const WEIGHTS=[['w_normal',400],['w_med',600],['w_bold',700],['w_black',900]];
 /* ---------- 多國語言 ---------- */
 const LANGS=[['zh','繁中'],['en','English'],['ja','日本語'],['ko','한국어'],['fr','Français'],['de','Deutsch'],['es','Español']];
 const I18N={
- zh:{font_game:'遊戲粗黑',font_hei:'黑體',font_impact:'Impact',font_round:'圓潤',font_serif:'襯線',w_normal:'一般',w_med:'中黑',w_bold:'粗',w_black:'特粗',app:'寶可夢 GO 交易清單產生器',fname:'交易清單',theme:'風格',th_neon:'深色霓虹',th_warm:'暖色活潑',th_light:'乾淨簡約',tab_mon:'寶可夢（全組合）',tab_bg:'背卡組合',search_mon:'搜尋…名稱或編號',search_bg:'搜尋…寶可夢或背卡',f_normal:'一般',f_shiny:'異色',f_dmax:'極巨化',f_gmax:'超極巨化',f_cos:'造形/服裝',only:'只看',f_sel:'已選',f_lego:'傳說',combos_unit:'種組合',bg_unit:'個背卡組合',mons:'隻',seg_want:'加到「我想要的」',seg_have:'加到「我能提供的」',canfly:'我能飛（顯示 CAN FLY）',want:'我想要的',have:'我能提供的',empty:'點 ✏️ 加入寶可夢',start:'我選好了，開始製圖',sort:'依編號排序',clear:'清空清單',download:'下載 PNG',addtext:'新增文字',reset:'復原預設文字',back:'返回選擇',edit_title:'匯出圖（拖曳/編輯文字）',edit_hint:'點文字可選取 → 拖曳移動、下方改字/色/大小。',text_content:'文字內容',del:'刪除',outline:'外框',confirm_clear:'確定要清空整個清單嗎？',list_empty:'清單是空的',edit_empty:'清單還是空的，先點 ✏️ 加入寶可夢',export_foot:'Pokémon GO 交易清單',newtext:'文字',home:'工具箱',auth_login:'以 Google 登入',auth_logout:'登出',auth_synced:'雲端同步中',auth_guest:'未登入 · 暫存於此瀏覽器',qr_toggle:'在圖片加上推廣 QR',scan_hint:'掃描・免費製作你的交易清單',sets_title:'我的清單',set_hint:'點名稱切換・可拖曳排序',set_add:'新增',set_rename:'重新命名',set_dup:'複製',set_del:'刪除',set_delall:'全部刪除',set_default:'清單',set_prompt:'清單名稱：',set_confirm_del:'確定刪除「{n}」？',set_confirm_delall:'確定刪除全部 {n} 組清單？此動作無法復原。',set_keep_one:'至少要保留一組清單',note_ph:'備註',pick_title:'選擇要加入的寶可夢',pick_done:'✓ 完成',sec_add:'加入',edit_photo:'編輯文字',done:'完成',t_style:'字體/底色',t_color:'顏色'},
- en:{font_game:'Game Black',font_hei:'Sans',font_impact:'Impact',font_round:'Rounded',font_serif:'Serif',w_normal:'Normal',w_med:'Medium',w_bold:'Bold',w_black:'Black',app:'Pokémon GO Trade List Maker',fname:'trade-list',theme:'Theme',th_neon:'Dark Neon',th_warm:'Warm',th_light:'Light',tab_mon:'Pokémon (all)',tab_bg:'Backgrounds',search_mon:'Search name or number',search_bg:'Search Pokémon or background',f_normal:'Normal',f_shiny:'Shiny',f_dmax:'Dynamax',f_gmax:'Gigantamax',f_cos:'Form/Costume',only:'Only',f_sel:'Selected',f_lego:'Legendary',combos_unit:'combos',bg_unit:'bg combos',mons:'Pokémon',seg_want:'Add to Looking For',seg_have:'Add to For Trade',canfly:'Can fly (show CAN FLY)',want:'Looking For',have:'For Trade',empty:'Tap ✏️ to add Pokémon',start:'Done — make image',sort:'Sort by number',clear:'Clear list',download:'Download PNG',addtext:'Add text',reset:'Reset text',back:'Back',edit_title:'Export image (drag/edit text)',edit_hint:'Click text to select → drag to move; edit below.',text_content:'Text',del:'Delete',outline:'Outline',confirm_clear:'Clear the whole list?',list_empty:'List is empty',edit_empty:'List is empty — tap ✏️ to add Pokémon',export_foot:'Pokémon GO Trade List',newtext:'Text',home:'Toolbox',auth_login:'Sign in with Google',auth_logout:'Sign out',auth_synced:'Synced to cloud',auth_guest:'Not signed in · saved in this browser',qr_toggle:'Add promo QR to image',scan_hint:'Scan to make your own trade list',sets_title:'My lists',set_hint:'Click a name to switch · drag to reorder',set_add:'New',set_rename:'Rename',set_dup:'Duplicate',set_del:'Delete',set_delall:'Delete all',set_default:'List',set_prompt:'List name:',set_confirm_del:'Delete "{n}"?',set_confirm_delall:'Delete all {n} lists? This cannot be undone.',set_keep_one:'Keep at least one list',note_ph:'Note',pick_title:'Choose Pokémon to add',pick_done:'✓ Done',sec_add:'Add',edit_photo:'Edit text',done:'Done',t_style:'Font/BG',t_color:'Color'},
+ zh:{font_game:'遊戲粗黑',font_hei:'黑體',font_impact:'Impact',font_round:'圓潤',font_serif:'襯線',w_normal:'一般',w_med:'中黑',w_bold:'粗',w_black:'特粗',app:'寶可夢 GO 交易清單產生器',fname:'交易清單',theme:'風格',th_neon:'深色霓虹',th_warm:'暖色活潑',th_light:'乾淨簡約',tab_mon:'寶可夢（全組合）',tab_bg:'背卡組合',search_mon:'搜尋…名稱或編號',search_bg:'搜尋…寶可夢或背卡',f_normal:'一般',f_shiny:'異色',f_dmax:'極巨化',f_gmax:'超極巨化',f_cos:'造形/服裝',only:'只看',f_sel:'已選',f_lego:'傳說',combos_unit:'種組合',bg_unit:'個背卡組合',mons:'隻',seg_want:'加到「我想要的」',seg_have:'加到「我能提供的」',canfly:'我能飛（顯示 CAN FLY）',want:'我想要的',have:'我能提供的',empty:'點 ✏️ 加入寶可夢',start:'我選好了，開始製圖',sort:'依編號排序',clear:'清空清單',download:'下載 PNG',addtext:'新增文字',reset:'復原預設文字',back:'返回選擇',edit_title:'匯出圖（拖曳/編輯文字）',edit_hint:'點文字可選取 → 拖曳移動、下方改字/色/大小。',text_content:'文字內容',del:'刪除',outline:'外框',confirm_clear:'確定要清空整個清單嗎？',list_empty:'清單是空的',edit_empty:'清單還是空的，先點 ✏️ 加入寶可夢',export_foot:'Pokémon GO 交易清單',newtext:'文字',home:'工具箱',auth_login:'以 Google 登入',auth_logout:'登出',auth_synced:'雲端同步中',auth_guest:'未登入 · 暫存於此瀏覽器',qr_toggle:'在圖片加上推廣 QR',scan_hint:'掃描・免費製作你的交易清單',sets_title:'我的清單',set_hint:'點名稱切換・可拖曳排序',set_add:'新增清單',set_rename:'重命名清單',set_dup:'複製清單',set_del:'刪除清單',set_delall:'全部刪除清單',set_default:'清單',clear_side:'全部刪除',set_prompt:'清單名稱：',set_confirm_del:'確定刪除「{n}」？',set_confirm_delall:'確定刪除全部 {n} 組清單？此動作無法復原。',set_keep_one:'至少要保留一組清單',note_ph:'備註',pick_title:'選擇要加入的寶可夢',pick_done:'✓ 完成',sec_add:'加入',edit_photo:'編輯文字',done:'完成',t_style:'字體/底色',t_color:'顏色'},
+ en:{font_game:'Game Black',font_hei:'Sans',font_impact:'Impact',font_round:'Rounded',font_serif:'Serif',w_normal:'Normal',w_med:'Medium',w_bold:'Bold',w_black:'Black',app:'Pokémon GO Trade List Maker',fname:'trade-list',theme:'Theme',th_neon:'Dark Neon',th_warm:'Warm',th_light:'Light',tab_mon:'Pokémon (all)',tab_bg:'Backgrounds',search_mon:'Search name or number',search_bg:'Search Pokémon or background',f_normal:'Normal',f_shiny:'Shiny',f_dmax:'Dynamax',f_gmax:'Gigantamax',f_cos:'Form/Costume',only:'Only',f_sel:'Selected',f_lego:'Legendary',combos_unit:'combos',bg_unit:'bg combos',mons:'Pokémon',seg_want:'Add to Looking For',seg_have:'Add to For Trade',canfly:'Can fly (show CAN FLY)',want:'Looking For',have:'For Trade',empty:'Tap ✏️ to add Pokémon',start:'Done — make image',sort:'Sort by number',clear:'Clear list',download:'Download PNG',addtext:'Add text',reset:'Reset text',back:'Back',edit_title:'Export image (drag/edit text)',edit_hint:'Click text to select → drag to move; edit below.',text_content:'Text',del:'Delete',outline:'Outline',confirm_clear:'Clear the whole list?',list_empty:'List is empty',edit_empty:'List is empty — tap ✏️ to add Pokémon',export_foot:'Pokémon GO Trade List',newtext:'Text',home:'Toolbox',auth_login:'Sign in with Google',auth_logout:'Sign out',auth_synced:'Synced to cloud',auth_guest:'Not signed in · saved in this browser',qr_toggle:'Add promo QR to image',scan_hint:'Scan to make your own trade list',sets_title:'My lists',set_hint:'Click a name to switch · drag to reorder',set_add:'New list',set_rename:'Rename list',set_dup:'Duplicate list',set_del:'Delete list',set_delall:'Delete all lists',set_default:'List',clear_side:'Clear all',set_prompt:'List name:',set_confirm_del:'Delete "{n}"?',set_confirm_delall:'Delete all {n} lists? This cannot be undone.',set_keep_one:'Keep at least one list',note_ph:'Note',pick_title:'Choose Pokémon to add',pick_done:'✓ Done',sec_add:'Add',edit_photo:'Edit text',done:'Done',t_style:'Font/BG',t_color:'Color'},
  ja:{font_game:'ゲーム太字',font_hei:'ゴシック',font_impact:'Impact',font_round:'丸ゴシック',font_serif:'明朝',w_normal:'標準',w_med:'中太',w_bold:'太字',w_black:'極太',app:'ポケモンGO トレードリスト作成',fname:'トレードリスト',theme:'テーマ',th_neon:'ダークネオン',th_warm:'ウォーム',th_light:'ライト',tab_mon:'ポケモン（全部）',tab_bg:'背景',search_mon:'名前や番号で検索',search_bg:'ポケモン・背景を検索',f_normal:'通常',f_shiny:'色違い',f_dmax:'ダイマックス',f_gmax:'キョダイマックス',f_cos:'すがた/コスチューム',only:'絞込',f_sel:'選択済',f_lego:'伝説',combos_unit:'件',bg_unit:'件',mons:'匹',seg_want:'「ほしい」に追加',seg_have:'「ゆずれる」に追加',canfly:'飛べる（CAN FLY表示）',want:'ほしいもの',have:'ゆずれるもの',empty:'左のアイコンから追加',start:'選び終わった、画像を作る',sort:'番号順に並べ替え',clear:'リストを消去',download:'PNGを保存',addtext:'テキスト追加',reset:'文字をリセット',back:'戻る',edit_title:'書き出し画像（文字をドラッグ/編集）',edit_hint:'文字をタップで選択 → ドラッグで移動、下で編集。',text_content:'テキスト',del:'削除',outline:'縁取り',confirm_clear:'リストを全部消しますか？',list_empty:'リストが空です',edit_empty:'リストが空です。先にポケモンを追加',export_foot:'ポケモンGO トレードリスト',newtext:'テキスト'},
  ko:{font_game:'게임 볼드',font_hei:'고딕',font_impact:'Impact',font_round:'둥근',font_serif:'세리프',w_normal:'보통',w_med:'중간',w_bold:'굵게',w_black:'매우 굵게',app:'포켓몬 GO 교환 목록 생성기',fname:'교환목록',theme:'테마',th_neon:'다크 네온',th_warm:'따뜻한',th_light:'라이트',tab_mon:'포켓몬(전체)',tab_bg:'배경',search_mon:'이름·번호 검색',search_bg:'포켓몬·배경 검색',f_normal:'일반',f_shiny:'이로치',f_dmax:'다이맥스',f_gmax:'거다이맥스',f_cos:'모습/의상',only:'필터',f_sel:'선택됨',f_lego:'전설',combos_unit:'개',bg_unit:'개',mons:'마리',seg_want:'「원해요」에 추가',seg_have:'「줄 수 있어요」에 추가',canfly:'날 수 있음(CAN FLY 표시)',want:'원하는 것',have:'줄 수 있는 것',empty:'왼쪽 아이콘에서 추가',start:'선택 완료, 이미지 만들기',sort:'번호순 정렬',clear:'목록 비우기',download:'PNG 저장',addtext:'텍스트 추가',reset:'문구 초기화',back:'뒤로',edit_title:'내보내기 이미지(문자 드래그/편집)',edit_hint:'문자를 눌러 선택 → 드래그로 이동, 아래에서 편집.',text_content:'텍스트',del:'삭제',outline:'외곽선',confirm_clear:'목록을 모두 비울까요?',list_empty:'목록이 비어 있습니다',edit_empty:'목록이 비어 있어요. 먼저 포켓몬을 추가하세요',export_foot:'포켓몬 GO 교환 목록',newtext:'텍스트'},
  fr:{font_game:'Jeu gras',font_hei:'Sans',font_impact:'Impact',font_round:'Arrondi',font_serif:'Serif',w_normal:'Normal',w_med:'Moyen',w_bold:'Gras',w_black:'Extra-gras',app:"Générateur de liste d'échange Pokémon GO",fname:'liste-echange',theme:'Thème',th_neon:'Néon sombre',th_warm:'Chaud',th_light:'Clair',tab_mon:'Pokémon (tous)',tab_bg:'Fonds',search_mon:'Nom ou numéro',search_bg:'Pokémon ou fond',f_normal:'Normal',f_shiny:'Chromatique',f_dmax:'Dynamax',f_gmax:'Gigamax',f_cos:'Forme/Costume',only:'Filtrer',f_sel:'Sélection',f_lego:'Légendaire',combos_unit:'combos',bg_unit:'combos',mons:'Pokémon',seg_want:'Vers Recherche',seg_have:'Vers Échange',canfly:'Peut voler (CAN FLY)',want:'Je recherche',have:'Je propose',empty:'Cliquez les vignettes',start:"C'est fait, créer l'image",sort:'Trier par numéro',clear:'Vider la liste',download:'Télécharger PNG',addtext:'Ajouter texte',reset:'Réinit. texte',back:'Retour',edit_title:'Image (glisser/éditer texte)',edit_hint:'Cliquez un texte → glissez ; éditez en dessous.',text_content:'Texte',del:'Supprimer',outline:'Contour',confirm_clear:'Vider toute la liste ?',list_empty:'Liste vide',edit_empty:'Liste vide — ajoutez des Pokémon',export_foot:"Liste d'échange Pokémon GO",newtext:"Texte"},
@@ -417,11 +434,13 @@ function applyStaticI18n(){
   $('#fdiv').textContent=T('only')+'▸'; $('#fLego').textContent='👑 '+T('f_lego');
   $('#fSelected').textContent='✓ '+T('f_sel')+'：'+(TARGET==='want'?T('want'):T('have'));
   $('#addWant').innerHTML='✏️ '+T('sec_add'); $('#addHave').innerHTML='✏️ '+T('sec_add');
+  $('#clrWant').innerHTML='🗑 '+T('clear_side'); $('#clrHave').innerHTML='🗑 '+T('clear_side');
   $('#pickClose').textContent=T('pick_done');
   if(!document.body.classList.contains('picking'))$('#pickTitle').textContent=T('pick_title');
   $('#canflyLabel').textContent='✈ '+T('canfly'); if($('#qrLabel'))$('#qrLabel').textContent='📷 '+T('qr_toggle');
   $('#labWant').textContent='🟢 '+T('want'); $('#labHave').textContent='🟡 '+T('have');
   $('#startBtn').textContent='🎨 '+T('start'); $('#sortBtn').textContent='↕ '+T('sort'); $('#clr').textContent=T('clear');
+  $('#dlList').textContent='⬇ '+T('download');
   $('#enterEditTxt').textContent=T('edit_photo'); $('#edDoneTxt').textContent=T('done');
   $('#txtAdd').textContent='＋ '+T('addtext'); $('#edStyle').textContent='🅰 '+T('t_style'); $('#edColorLabel').textContent=T('t_color');
   $('#q').placeholder=TAB==='mon'?T('search_mon'):T('search_bg');
@@ -438,6 +457,7 @@ async function loadData(name){
   return fetch('data/'+name+'.json').then(r=>r.json());
 }
 async function boot(){
+  setCols();   // 依裝置寬度決定匯出圖每排幾隻
   const urlLang=new URLSearchParams(location.search).get('lang');
   const langFromUrl=!!(urlLang&&I18N[urlLang]);
   LANG = langFromUrl ? urlLang : (localStorage.getItem('bgtoolLang')||detectLang());
@@ -512,16 +532,20 @@ function setMode(m){
   if(m==='edit' && !LIST.want.length && !LIST.have.length){ alert(tr('edit_empty')); return; }
   document.body.classList.remove('picking');   // 進入製圖前先收起選取面板
   document.body.classList.toggle('editmode', m==='edit');
-  requestAnimationFrame(()=>renderBase());   // 版面寬度變了,重新排版
+  requestAnimationFrame(()=>{ renderBase();     // 版面寬度變了,重新排版
+    if(m==='select') $('#editPanel').scrollIntoView({behavior:'smooth',block:'start'}); });   // 完成後回到圖片處
 }
 /* ---------- 版面計算(卡片固定,文字浮動) ---------- */
-const LAYW=1000,PAD=40,S=164,GAP=16,COLS=5;
+const PAD=40,S=164,GAP=16,NOTELH=30;   // NOTELH=備註每行高度
+let COLS=5, LAYW=2*PAD+GAP+COLS*(S+GAP);   // 於 boot 依裝置寬度設定:桌機每排更多、手機維持 5
+function setCols(){ COLS = window.innerWidth>=1100?8 : window.innerWidth>=880?7 : 5; LAYW=2*PAD+GAP+COLS*(S+GAP); }
 function rowsOf(n){return Math.max(1,Math.ceil(n/COLS));}
 function computeLayout(){
   const fly=$('#canfly').checked;
   const secs=[{key:'want',items:LIST.want,col:THEMES[THEME].exp.sec1,def:'🟢 '+tr('want')},
               {key:'have',items:LIST.have,col:THEMES[THEME].exp.sec2,def:'🟡 '+tr('have')}].filter(s=>s.items.length);
-  const noteH = secs.some(s=>s.items.some(c=>c.note)) ? 36 : 0;   // 有備註才在卡片下方保留文字空間
+  let noteLines=0; for(const s of secs) for(const c of s.items){ if(c.note) noteLines=Math.max(noteLines,String(c.note).split('\n').length); }
+  const noteH = noteLines ? noteLines*NOTELH+8 : 0;   // 依最多行數保留卡片下方文字空間
   let top=140+(fly?46:0);
   let y=top; const S2=[];
   for(const s of secs){ const ph=rowsOf(s.items.length)*(S+noteH+GAP)+GAP; S2.push({...s,labelY:y,panelY:y+58,ph}); y=y+58+ph+30; }
@@ -584,13 +608,15 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
   if(c.badge){const b=await loadImg(c.badge);if(b)x.drawImage(b,cx+S*0.63,cy+S*0.04,S*0.33,S*0.33);}
   if(c.shiny){x.textAlign='left';x.font=Math.round(S*0.2)+'px "Segoe UI Emoji","Microsoft JhengHei"';x.fillText('✨',cx+S*0.04,cy+S*0.24);}
   if(c.gender==='female'||c.gender==='male'){x.fillStyle=c.gender==='female'?'#ff8ec2':'#8fc7ff';x.font='700 '+Math.round(S*0.16)+'px "Microsoft JhengHei",sans-serif';x.fillText(c.gender==='female'?'♀':'♂',cx+S*0.05,cy+S*0.95);}
-  if(c.note && noteH){   // 附加文字:畫在整張卡片「下方」,不擋圖
+  if(c.note && noteH){   // 附加文字:畫在整張卡片「下方」,不擋圖(支援多行)
     x.save();
-    let fs=Math.round(noteH*0.66);
+    const lines=String(c.note).split('\n');
+    let fs=Math.round(NOTELH*0.72);
     const setF=()=>x.font='800 '+fs+'px "Microsoft JhengHei","Segoe UI Emoji",sans-serif';
-    setF(); while(fs>9 && x.measureText(c.note).width>S){ fs--; setF(); }
+    setF(); const wMax=()=>Math.max(...lines.map(l=>x.measureText(l).width));
+    while(fs>9 && wMax()>S){ fs--; setF(); }
     x.fillStyle=noteCol||T.title||'#fff'; x.textAlign='center'; x.textBaseline='middle';
-    x.fillText(c.note, cx+S/2, cy+S+noteH*0.56);
+    lines.forEach((l,i)=>{ x.fillText(l, cx+S/2, cy+S+6+NOTELH*(i+0.5)); });
     x.restore();
   }
 }
@@ -650,12 +676,8 @@ function layoutTexts(){
     styleText(d,t,sc);
     d.onpointerdown=e=>{
       if(e.target!==d) return;                                       // 點到把手 → 交給把手處理
-      if(SEL!==t){
-        if(e.pointerType==='touch'){ select(t); return; }            // 手機:先選取,不擋捲動
-        select(t);                                                   // 桌機:選取後同一動作即可拖(select 會重建,取新節點)
-        const nd=[...$('#txtLayer').children].find(c=>c.__t===t)||d;
-        startMove(e,t,nd,sc); return;
-      }
+      if(SEL!==t){ select(t);   // 一拉就能動:選取後立即用新節點開始拖曳(全螢幕編輯無捲動衝突)
+        const nd=[...$('#txtLayer').children].find(c=>c.__t===t)||d; startMove(e,t,nd,sc); return; }
       startMove(e,t,d,sc);
     };
     if(t===SEL){
@@ -943,6 +965,8 @@ function toggleItem(it,cell){
 }
 function clearIns(){document.querySelectorAll('.li.insb,.li.insa').forEach(x=>x.classList.remove('insb','insa'));}
 function moveItem(k,from,to){const arr=LIST[k];const[mv]=arr.splice(from,1);if(to>from)to--;arr.splice(to,0,mv);drawLists();renderBase();}
+function clearSide(k){ if(!LIST[k].length)return; if(!confirm(tr('confirm_clear')))return; LIST[k]=[]; drawLists(); render(); renderBase(); }
+function noteGrow(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,64)+'px'; }
 // pointer-based 清單拖曳排序:桌機移動即拖;手機長按 200ms 才拖(拖之前可正常捲動)。
 let liDragActive=false;
 document.addEventListener('touchmove',e=>{ if(liDragActive && e.cancelable) e.preventDefault(); },{passive:false});
@@ -981,9 +1005,10 @@ function drawLists(){
         ${c.shiny?'<span class="sh">✨</span>':''}${c.gender==='female'?'<span class="gn">♀</span>':''}${c.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}
         <button class="del">✕</button></div>`;
       // 每張卡片的附加文字（顯示在匯出圖上）
-      const ni=document.createElement('input');ni.className='note'+(c.note?' has':'');ni.maxLength=16;ni.placeholder=tr('note_ph');ni.value=c.note||'';
-      ni.oninput=()=>{ c.note=ni.value; ni.classList.toggle('has',!!ni.value); renderBase(); persist(); };
+      const ni=document.createElement('textarea');ni.className='note'+(c.note?' has':'');ni.maxLength=40;ni.rows=1;ni.placeholder=tr('note_ph');ni.value=c.note||'';
+      ni.oninput=()=>{ c.note=ni.value; ni.classList.toggle('has',!!ni.value); noteGrow(ni); renderBase(); persist(); };
       ni.onpointerdown=e=>e.stopPropagation();   // 點備註不觸發拖曳
+      requestAnimationFrame(()=>noteGrow(ni));   // 依內容自動長高(多行)
       const del=d.querySelector('.del'); del.onpointerdown=e=>e.stopPropagation();
       del.onclick=e=>{e.stopPropagation();LIST[k].splice(i,1);drawLists();render();renderBase();};
       liDrag(d,k,i);
