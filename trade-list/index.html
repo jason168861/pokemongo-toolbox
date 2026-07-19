@@ -191,7 +191,8 @@
              font-size:11px;line-height:1;transition:transform .3s cubic-bezier(.4,0,.2,1),background .15s,border-color .15s}
   .secToggle:hover{border-color:currentColor;background:color-mix(in srgb,currentColor 12%,var(--cellbg))}
   .secToggle:active{transform:scale(.9)}
-  .secLab{cursor:pointer;user-select:none}
+  .secLab{cursor:pointer;user-select:none;font-size:16px;font-weight:800}
+  @media(min-width:900px){ .secLab{font-size:21px} }
   .sec.collapsed .secToggle{transform:rotate(-90deg)}
   .sec.collapsed .secToggle:active{transform:rotate(-90deg) scale(.9)}
   /* 平滑展開/收合(grid 0fr↔1fr) */
@@ -217,7 +218,7 @@
   .li .note::placeholder{color:var(--mut);opacity:.7}
   .li .note:focus{outline:1px solid var(--acc2);border-color:var(--acc2)}
   .li .note.has{border-color:var(--acc2);color:var(--acc2);font-weight:700}
-  .empty{color:var(--mut);font-size:12px;padding:6px}
+  .empty{color:var(--mut);font-size:12px;padding:6px;grid-column:1/-1;white-space:nowrap}   /* 橫跨整行,不被單欄寬度擠成兩行 */
   .btn{padding:9px 12px;border:0;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
   /* 彩色底的白字加細陰影,讓文字在較亮的主題色上也清楚 */
   .btn:not(.g),.tabs button.on,.chip.on,.setchip.on,.seg button.on,#pickClose{text-shadow:0 1px 2px rgba(0,0,0,.35)}
@@ -700,23 +701,28 @@ window.addEventListener('popstate',()=>{ if(document.body.classList.contains('ed
 const PAD=40,S=164,GAP=16,NOTELH=30;   // NOTELH=備註每行高度
 let COLS=5, LAYW=2*PAD+GAP+COLS*(S+GAP);   // 於 boot 依裝置寬度設定:桌機每排更多、手機維持 5
 const COLS_MIN=1, COLS_MAX=15;
+// 有效每排數量:不超過「內容較多的一側」的隻數(例如兩側各 6/5,設 10 時實際每排 6,不留空位)
+function maxRowItems(){ return Math.max(1, (LIST.want||[]).length, (LIST.have||[]).length); }
+function effCols(){ return Math.max(1, Math.min(COLS, maxRowItems())); }
+function calcLAYW(){ return 2*PAD+GAP+effCols()*(S+GAP); }
 function setCols(){   // 優先用使用者存過的每排數量;沒有才依裝置寬度給預設
   const saved=+localStorage.getItem('bgtoolCols');
   COLS = (saved>=COLS_MIN&&saved<=COLS_MAX) ? saved : (window.innerWidth>=1100?8 : window.innerWidth>=880?7 : 5);
-  LAYW=2*PAD+GAP+COLS*(S+GAP);
+  LAYW=calcLAYW();
 }
 function updateColsUI(){ const v=$('#colsVal'); if(v)v.textContent=COLS;
   const m=$('#colsMinus'),p=$('#colsPlus'); if(m)m.disabled=COLS<=COLS_MIN; if(p)p.disabled=COLS>=COLS_MAX; }
 // 編輯圖片時調整每排幾隻:改 COLS→重算版面寬度,並把文字水平位置等比例縮放以維持相對位置
 function setColsExport(n){
   n=Math.max(COLS_MIN,Math.min(COLS_MAX,Math.round(n))); if(n===COLS){ updateColsUI(); return; }
-  const oldW=LAYW; COLS=n; LAYW=2*PAD+GAP+COLS*(S+GAP);
+  const oldW=calcLAYW(); COLS=n; LAYW=calcLAYW();
   const r=LAYW/oldW; for(const t of TEXTS) t.cx*=r;
   try{ localStorage.setItem('bgtoolCols',COLS); }catch(e){}
   updateColsUI(); renderBase();
 }
-function rowsOf(n){return Math.max(1,Math.ceil(n/COLS));}
+function rowsOf(n){return Math.max(1,Math.ceil(n/effCols()));}
 function computeLayout(){
+  const EC=effCols(); LAYW=2*PAD+GAP+EC*(S+GAP);   // 依有效每排數量決定整張寬度
   const fly=$('#canfly').checked;
   const secs=[{key:'want',items:LIST.want,col:THEMES[THEME].exp.sec1,def:'🟢 '+tr('want')},
               {key:'have',items:LIST.have,col:THEMES[THEME].exp.sec2,def:'🟡 '+tr('have')}].filter(s=>s.items.length);
@@ -726,7 +732,7 @@ function computeLayout(){
     const nrows=rowsOf(s.items.length), rows=[]; let yoff=0;
     for(let r=0;r<nrows;r++){   // 每排的備註高度只看「這一排」有沒有備註 → 沒備註的排不會被撐開
       let lines=0;
-      for(let c=0;c<COLS;c++){ const it=s.items[r*COLS+c]; if(it&&it.note) lines=Math.max(lines,String(it.note).split('\n').length); }
+      for(let c=0;c<EC;c++){ const it=s.items[r*EC+c]; if(it&&it.note) lines=Math.max(lines,String(it.note).split('\n').length); }
       const nh = lines ? lines*NOTELH+6 : 0;
       rows.push({y:yoff, noteH:nh}); yoff += S+nh+GAP;
     }
@@ -734,7 +740,7 @@ function computeLayout(){
     S2.push({...s,labelY:y,panelY:y+80,ph,rows}); y=y+80+ph+30;   // 80:給放大的區塊標題留空間
   }
   const H=Math.max(y+50,240);
-  return {fly,secs:S2,H,top};
+  return {fly,secs:S2,H,top,cols:EC};
 }
 function defaultTexts(lay){
   const T=THEMES[THEME].exp,list=[];
@@ -870,11 +876,12 @@ async function drawBaseTo(x,lay,SC,offY){
   const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,T.grad[0]);g.addColorStop(1,T.grad[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
   // 先平行啟動本次要用的所有圖片下載(填入快取);下面的 draw 迴圈再逐張命中 → 平行載入、漸進顯示,不再一張等一張
   for(const s of lay.secs) for(const c of s.items){ loadImg(c.url); if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
+  const EC=lay.cols||effCols();
   for(const s of lay.secs){
     if(s.panelY<=visBot && s.panelY+s.ph>=visTop){ x.fillStyle=T.panel;rrPath(x,PAD,s.panelY,W-2*PAD,s.ph,24);x.fill(); }
     for(let i=0;i<s.items.length;i++){
-      const row=(i/COLS)|0, rw=s.rows[row];
-      const cx=PAD+GAP+(i%COLS)*(S+GAP), cy=s.panelY+GAP+rw.y;
+      const row=(i/EC)|0, rw=s.rows[row];
+      const cx=PAD+GAP+(i%EC)*(S+GAP), cy=s.panelY+GAP+rw.y;
       if(cy+S+rw.noteH<visTop || cy>visBot) continue;   // 不在此段 → 跳過
       await drawCard(x,cx,cy,s.items[i],T,rw.noteH,s.col);
     }
