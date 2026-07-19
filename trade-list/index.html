@@ -734,8 +734,10 @@ function reconcile(lay){
     let el=byId('lab-'+key);
     if(has && !el){ TEXTS.push(def.find(d=>d.id==='lab-'+key)); }
     else if(!has && el){ TEXTS=TEXTS.filter(t=>t!==el); }
-    else if(has && el && !el.moved){ el.y=lay.secs.find(s=>s.key===key).labelY;
-      if(el.autoSize!==false){ const dd=def.find(d=>d.id==='lab-'+key); if(dd){ el.size=dd.size; el.outline=dd.outline; el.shadow=dd.shadow; el.bg=dd.bg; } } }   // 未手動改過大小/樣式 → 套用新的預設(放大+背景橫條)
+    else if(has && el){
+      if(!el.moved) el.y=lay.secs.find(s=>s.key===key).labelY;   // 位置:沒手動移動過才跟著版面
+      // 大小/樣式:只要沒「手動縮放過」就套用最新預設(與有沒有移動位置無關) → 改預設字級才會生效
+      if(el.autoSize!==false){ const dd=def.find(d=>d.id==='lab-'+key); if(dd){ el.size=dd.size; el.outline=dd.outline; el.shadow=dd.shadow; el.bg=dd.bg; } } }
   }
 }
 
