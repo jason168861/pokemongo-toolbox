@@ -707,7 +707,7 @@ function computeLayout(){
       rows.push({y:yoff, noteH:nh}); yoff += S+nh+GAP;
     }
     const ph=yoff+GAP;
-    S2.push({...s,labelY:y,panelY:y+72,ph,rows}); y=y+72+ph+30;   // 72:給更大的區塊標題留空間
+    S2.push({...s,labelY:y,panelY:y+80,ph,rows}); y=y+80+ph+30;   // 80:給放大的區塊標題留空間
   }
   const H=Math.max(y+50,240);
   return {fly,secs:S2,H,top};
@@ -716,7 +716,7 @@ function defaultTexts(lay){
   const T=THEMES[THEME].exp,list=[];
   list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:32,size:62,color:T.title,weight:900,font:DEFONT,outline:false,autoColor:true});
   if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:114,size:32,color:T.fly,weight:900,font:DEFONT,outline:false,autoColor:true});
-  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:58,color:s.col,weight:900,font:DEFONT,outline:false,bg:2,autoColor:true,autoSize:true});
+  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:66,color:s.col,weight:900,font:DEFONT,outline:false,bg:0,autoColor:true,autoSize:true});
   return list;
 }
 function reconcile(lay){
