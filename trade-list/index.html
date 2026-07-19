@@ -158,6 +158,19 @@
   .setchip.on .ct{color:rgba(255,255,255,.85)}
   .setacts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
   .setacts .btn{padding:5px 9px;font-size:11px}
+  /* 電腦版:清單管理區與「我想要的/我能提供的」標題列 → 間距更寬、按鈕更大、字更大 */
+  @media(min-width:900px){
+    .setsHead{margin-bottom:10px} .setsHead b{font-size:15px}
+    .setbar{gap:8px;margin-bottom:14px}
+    .setchip .nm{padding:8px 13px;font-size:14px} .setchip .ct{font-size:12px}
+    .setacts{gap:9px;margin-bottom:20px}
+    .setacts .btn{padding:9px 16px;font-size:14px}
+    .toolbar.listops{margin:18px 0 14px}
+    .sec{margin-top:26px} .sec h3{font-size:17px;margin:0 0 12px;gap:9px}
+    .secToggle{width:30px;height:30px;font-size:13px}
+    .editSec{font-size:14px;padding:7px 16px}
+    .sec .list{gap:10px}
+  }
   /* 匯出選項開關 */
   .expopts{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 4px}
   .switch{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;font-size:13px;color:var(--fg);
@@ -813,7 +826,7 @@ function hookTrim(img,hasBg){
     if(!img.naturalWidth) return;
     const bb=trimBBox(img,img.src); if(!bb) return;   // 讀不到(跨域無 CORS 等)→ 維持原樣
     img.style.width='100%'; img.style.height='100%';
-    const pad=hasBg?0.84:0.96;
+    const pad=hasBg?0.82:0.86;
     const L=img.clientWidth||img.offsetWidth||72, dpr=window.devicePixelRatio||1;
     // 放大不超過來源(縮圖)主體像素的 MAXUP 倍 → 小主體不會被放大到模糊(改為置中、較小但清晰)
     const sMax=MAXUP*img.naturalWidth/Math.max(1,L*dpr);
@@ -828,8 +841,8 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
   x.save();x.shadowColor='rgba(0,0,0,0.35)';x.shadowBlur=8;x.shadowOffsetY=3;x.fillStyle=T.cardbg;rrPath(x,cx,cy,S,S,S*0.16);x.fill();x.restore();
   x.save();rrPath(x,cx,cy,S,S,S*0.16);x.clip();x.fillStyle=T.cardbg;x.fillRect(cx,cy,S,S);
   if(c.bg){const b=await loadExport(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
-  // 去透明邊後放大:無背卡幾乎填滿卡片;有背卡放小一點以露出背卡
-  const ins = c.bg ? 0.08 : 0.02, box = S*(1-2*ins);
+  // 去透明邊後放大:留一點邊避免蓋到角落的性別/異色標誌;有背卡再小一點以露出背卡
+  const ins = c.bg ? 0.09 : 0.07, box = S*(1-2*ins);
   const m=await loadImg(c.url);if(m)drawMon(x,m,cdn(c.url),cx+S*ins,cy+S*ins,box);
   x.restore();
   if(T.line&&!/,\s*0\)$/.test(T.line)){x.strokeStyle=T.line;x.lineWidth=2;rrPath(x,cx,cy,S,S,S*0.16);x.stroke();}
