@@ -716,7 +716,7 @@ function defaultTexts(lay){
   const T=THEMES[THEME].exp,list=[];
   list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:32,size:62,color:T.title,weight:900,font:DEFONT,outline:false,autoColor:true});
   if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:114,size:32,color:T.fly,weight:900,font:DEFONT,outline:false,autoColor:true});
-  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:58,color:s.col,weight:900,font:DEFONT,outline:false,shadow:true,autoColor:true,autoSize:true});
+  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:58,color:s.col,weight:900,font:DEFONT,outline:false,bg:2,autoColor:true,autoSize:true});
   return list;
 }
 function reconcile(lay){
@@ -735,7 +735,7 @@ function reconcile(lay){
     if(has && !el){ TEXTS.push(def.find(d=>d.id==='lab-'+key)); }
     else if(!has && el){ TEXTS=TEXTS.filter(t=>t!==el); }
     else if(has && el && !el.moved){ el.y=lay.secs.find(s=>s.key===key).labelY;
-      if(el.autoSize!==false){ const dd=def.find(d=>d.id==='lab-'+key); if(dd){ el.size=dd.size; el.outline=dd.outline; el.shadow=dd.shadow; } } }   // 未手動改過大小/樣式 → 套用新的預設(更大更顯眼)
+      if(el.autoSize!==false){ const dd=def.find(d=>d.id==='lab-'+key); if(dd){ el.size=dd.size; el.outline=dd.outline; el.shadow=dd.shadow; el.bg=dd.bg; } } }   // 未手動改過大小/樣式 → 套用新的預設(放大+背景橫條)
   }
 }
 
