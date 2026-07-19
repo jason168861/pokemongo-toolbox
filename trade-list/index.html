@@ -760,6 +760,7 @@ function rrPath(x,rx,ry,w,h,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+w,ry,r
 // 自動去透明邊:很多寶可夢 icon 圖檔四周有一圈透明 padding,主體只佔中央。
 // 掃描出不透明範圍的 bounding box(以比例 0~1 快取),繪製時只取主體 → 寶可夢顯示更大。
 const _bboxCache=new Map(); let _trimCv=null;
+const MAXUP=2.4;   // 去邊後最大放大倍率(相對來源主體像素):太小的主體不硬撐到填滿,避免放大到模糊
 function trimBBox(img,key){
   if(_bboxCache.has(key)) return _bboxCache.get(key);
   let box=null;
@@ -781,11 +782,14 @@ function trimBBox(img,key){
 }
 // 把(去邊後的)寶可夢等比例置中畫進卡片內的正方框
 function drawMon(x,m,key,dx0,dy0,box){
+  x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high';
   const bb=trimBBox(m,key);
   if(!bb){ x.drawImage(m,dx0,dy0,box,box); return; }
   const iw=m.naturalWidth||m.width, ih=m.naturalHeight||m.height;
   const sx=bb.x*iw, sy=bb.y*ih, sw=bb.w*iw, sh=bb.h*ih;
-  const sc=Math.min(box/sw, box/sh), dw=sw*sc, dh=sh*sc;       // contain,維持比例
+  const SC=(x.getTransform&&x.getTransform().a)||1;            // 目前整體縮放(匯出解析度)
+  // contain,但放大不超過來源主體像素的 MAXUP 倍(小主體就不硬撐到填滿,置中即可)→ 不模糊
+  const sc=Math.min(box/sw, box/sh, MAXUP/SC), dw=sw*sc, dh=sh*sc;
   x.drawImage(m, sx,sy,sw,sh, dx0+(box-dw)/2, dy0+(box-dh)/2, dw, dh);
 }
 // 預覽(選取格子/清單)的 <img> 也去透明邊:量出主體範圍後,用 transform 放大並置中,
@@ -794,9 +798,13 @@ function hookTrim(img,hasBg){
   const run=()=>{
     if(!img.naturalWidth) return;
     const bb=trimBBox(img,img.src); if(!bb) return;   // 讀不到(跨域無 CORS 等)→ 維持原樣
-    const pad=hasBg?0.84:0.96, s=pad/Math.max(bb.w,bb.h);
-    const tx=-((bb.x+bb.w/2)-0.5)*s*100, ty=-((bb.y+bb.h/2)-0.5)*s*100;
     img.style.width='100%'; img.style.height='100%';
+    const pad=hasBg?0.84:0.96;
+    const L=img.clientWidth||img.offsetWidth||72, dpr=window.devicePixelRatio||1;
+    // 放大不超過來源(縮圖)主體像素的 MAXUP 倍 → 小主體不會被放大到模糊(改為置中、較小但清晰)
+    const sMax=MAXUP*img.naturalWidth/Math.max(1,L*dpr);
+    const s=Math.min(pad/Math.max(bb.w,bb.h), sMax);
+    const tx=-((bb.x+bb.w/2)-0.5)*s*100, ty=-((bb.y+bb.h/2)-0.5)*s*100;
     img.style.transform=`translate(${tx}%,${ty}%) scale(${s})`;
   };
   if(img.complete && img.naturalWidth) run(); else img.addEventListener('load',run,{once:true});
@@ -1214,8 +1222,8 @@ function appendBatch(){
     d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
     bindCellTap(d,it);
-    const mi=d.querySelector('img.m'); if(mi)hookTrim(mi,!!it.bg);   // 預覽也去透明邊
     g.appendChild(d);
+    const mi=d.querySelector('img.m'); if(mi)hookTrim(mi,!!it.bg);   // 預覽也去透明邊(需已在 DOM 才量得到寬度)
   }
   shown=end;
   preloadAhead();   // 暖快取:接下來一段的縮圖
@@ -1382,9 +1390,10 @@ function drawLists(){
         if(!LIST[k].length) box.innerHTML='<div class="empty">'+tr('empty')+'</div>';
         renderSets(); persist(); scheduleBase(); };
       liDrag(d,k,i);
-      const mi=d.querySelector('.m'); if(mi)hookTrim(mi,!!c.bg);   // 預覽也去透明邊
       d.appendChild(ni);
-      box.appendChild(d);});
+      box.appendChild(d);
+      const mi=d.querySelector('.m'); if(mi)hookTrim(mi,!!c.bg);   // 預覽也去透明邊(需已在 DOM 才量得到寬度)
+    });
   }
   persist();
   renderSets();   // 更新清單膠囊上的數量
