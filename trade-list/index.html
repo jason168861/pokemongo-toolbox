@@ -704,6 +704,10 @@ function setMode(m){
 window.addEventListener('popstate',()=>{ if(document.body.classList.contains('editmode')) setMode('select'); });
 /* ---------- 版面計算(卡片固定,文字浮動) ---------- */
 const PAD=40,S=164,GAP=16,NOTELH=30;   // NOTELH=備註每行高度
+// 右上角推廣 QR 卡片(只放 QR)的尺寸;供繪製與「標題避讓」計算共用
+const QR_S=150, QR_PADPX=16, QR_CARD=QR_S+QR_PADPX*2, QR_TOP=20, QR_GAP=14;
+let _measCtx=null;   // 離屏量測文字寬度(給標題避讓用)
+function measureText(text,font){ if(!_measCtx)_measCtx=document.createElement('canvas').getContext('2d'); _measCtx.font=font; return _measCtx.measureText(text).width; }
 let COLS=5, LAYW=2*PAD+GAP+COLS*(S+GAP);   // 於 boot 依裝置寬度設定:桌機每排更多、手機維持 5
 const COLS_MIN=1, COLS_MAX=15;
 // 有效每排數量:不超過「內容較多的一側」的隻數(例如兩側各 6/5,設 10 時實際每排 6,不留空位)
@@ -728,10 +732,18 @@ function setColsExport(n){
 function rowsOf(n){return Math.max(1,Math.ceil(n/effCols()));}
 function computeLayout(){
   const EC=effCols(); LAYW=2*PAD+GAP+EC*(S+GAP);   // 依有效每排數量決定整張寬度
+  // 標題避讓 QR:若置中標題會與右上角 QR 水平重疊(窄圖),就把標題與整個內容下移到 QR 下方 → 保證不擋
+  let qrPush=0;
+  if(LIST.qr){
+    const tt=TEXTS.find(t=>t.id==='title'); const tText=(tt&&tt.text)||'POKÉMON TRADE', tSize=(tt&&tt.size)||62;
+    const tW=measureText(tText,((tt&&tt.weight)||900)+' '+tSize+'px '+DEFONT);
+    const qrLeft=LAYW-PAD-QR_CARD;
+    if(!(tt&&tt.moved) && LAYW/2+tW/2 > qrLeft-QR_GAP) qrPush=QR_TOP+QR_CARD+QR_GAP-32;
+  }
   const fly=$('#canfly').checked;
   const secs=[{key:'want',items:LIST.want,col:THEMES[THEME].exp.sec1,def:'🟢 '+tr('want')},
               {key:'have',items:LIST.have,col:THEMES[THEME].exp.sec2,def:'🟡 '+tr('have')}].filter(s=>s.items.length);
-  let top=140+(fly?46:0);
+  let top=140+(fly?46:0)+qrPush;
   let y=top; const S2=[];
   for(const s of secs){
     const nrows=rowsOf(s.items.length), rows=[]; let yoff=0;
@@ -745,12 +757,12 @@ function computeLayout(){
     S2.push({...s,labelY:y,panelY:y+80,ph,rows}); y=y+80+ph+30;   // 80:給放大的區塊標題留空間
   }
   const H=Math.max(y+50,240);
-  return {fly,secs:S2,H,top,cols:EC};
+  return {fly,secs:S2,H,top,cols:EC,qrPush};
 }
 function defaultTexts(lay){
-  const T=THEMES[THEME].exp,list=[];
-  list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:32,size:62,color:T.title,weight:900,font:DEFONT,outline:false,autoColor:true});
-  if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:114,size:32,color:T.fly,weight:900,font:DEFONT,outline:false,autoColor:true});
+  const T=THEMES[THEME].exp,list=[],qp=lay.qrPush||0;
+  list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:32+qp,size:62,color:T.title,weight:900,font:DEFONT,outline:false,autoColor:true});
+  if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:114+qp,size:32,color:T.fly,weight:900,font:DEFONT,outline:false,autoColor:true});
   for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:66,color:s.col,weight:900,font:DEFONT,outline:false,bg:0,autoColor:true,autoSize:true});
   return list;
 }
@@ -759,11 +771,11 @@ function reconcile(lay){
   const byId=id=>TEXTS.find(t=>t.id===id);
   const def=defaultTexts(lay);
   // 標題一定存在;LAYW 會隨每排數量/內容改變 → 未手動移動的置中文字重新置中,避免跑位
-  const ti=byId('title'); if(!ti) TEXTS.push(def.find(d=>d.id==='title')); else if(!ti.moved) ti.cx=LAYW/2;
+  const ti=byId('title'); if(!ti) TEXTS.push(def.find(d=>d.id==='title')); else if(!ti.moved){ ti.cx=LAYW/2; ti.y=32+(lay.qrPush||0); }
   // canfly 依開關
   if(lay.fly && !byId('canfly')) TEXTS.push(def.find(d=>d.id==='canfly'));
   if(!lay.fly) TEXTS=TEXTS.filter(t=>t.id!=='canfly');
-  const cf=byId('canfly'); if(cf && !cf.moved) cf.cx=LAYW/2;
+  const cf=byId('canfly'); if(cf && !cf.moved){ cf.cx=LAYW/2; cf.y=114+(lay.qrPush||0); }
   // 區塊標籤:有該區才有,沒手動移動就跟著版面
   for(const key of ['want','have']){
     const has=lay.secs.some(s=>s.key===key);
@@ -892,29 +904,14 @@ async function drawBaseTo(x,lay,SC,offY){
       await drawCard(x,cx,cy,s.items[i],T,rw.noteH,s.col);
     }
   }
-  // 右上角推廣 QR + 網址(由開關控制,關掉即移除);分塊輸出時只在含頂部的那一段畫
+  // 右上角推廣 QR(只放 QR,由開關控制,關掉即移除);分塊輸出時只在含頂部的那一段畫
   if(LIST.qr){
-    const qrS=150, pad=16;
-    const hint=tr('scan_hint');
-    const host=BASEURL.replace(/^https?:\/\//,'').replace(/\/$/,'');   // 網址拆兩行:網域 + 路徑
-    const sl=host.indexOf('/'), line1=sl>0?host.slice(0,sl):host, line2=sl>0?host.slice(sl):'';
-    const hintF='700 19px "Microsoft JhengHei",sans-serif', urlF='700 17px "Microsoft JhengHei",sans-serif';
-    const wOf=(s,f)=>{ x.font=f; return x.measureText(s).width; };
-    const contentW=Math.max(qrS, wOf(hint,hintF), wOf(line1,urlF), wOf(line2,urlF));
-    const cardW=contentW+pad*2, hintH=27, urlH=23;
-    const cardH=pad+qrS+10+hintH+urlH+(line2?urlH:0)+pad-4;
-    const cx0=W-PAD-cardW, cy0=20, midX=cx0+cardW/2;
-    if(cy0+cardH>=visTop && cy0<=visBot){
+    const cx0=W-PAD-QR_CARD, cy0=QR_TOP;
+    if(cy0+QR_CARD>=visTop && cy0<=visBot){
       const q=await loadImg('assets/brand/qr.png');
       x.save(); x.shadowColor='rgba(0,0,0,.28)'; x.shadowBlur=10; x.shadowOffsetY=3;
-      x.fillStyle='#fff'; rrPath(x,cx0,cy0,cardW,cardH,16); x.fill(); x.restore();
-      if(q) x.drawImage(q, midX-qrS/2, cy0+pad, qrS, qrS);      // QR 置中
-      x.textAlign='center'; x.textBaseline='top';
-      let yy=cy0+pad+qrS+10;
-      x.font=hintF; x.fillStyle='#111'; x.fillText(hint, midX, yy); yy+=hintH;
-      x.font=urlF; x.fillStyle='#1a1a1a';
-      x.fillText(line1, midX, yy); yy+=urlH;
-      if(line2) x.fillText(line2, midX, yy);
+      x.fillStyle='#fff'; rrPath(x,cx0,cy0,QR_CARD,QR_CARD,16); x.fill(); x.restore();
+      if(q) x.drawImage(q, cx0+QR_PADPX, cy0+QR_PADPX, QR_S, QR_S);
     }
   }
 }
