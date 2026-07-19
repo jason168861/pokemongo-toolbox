@@ -193,7 +193,14 @@
   .themeSel{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
   /* 登入按鈕放在工具選單右側;隱藏「956 隻」統計文字 */
   #stat{display:none}
-  @media(max-width:700px){ header{gap:8px 10px} }
+  @media(max-width:700px){
+    /* 手機:讓 🧰 / 工具選單 / 登入 緊密塞在同一行,長語言的文字不會把登入擠到下一行 */
+    header{gap:6px 8px;padding:10px 12px}
+    .homelink{padding:5px 9px;font-size:12px}
+    #homeLink #homeTxt{display:none}          /* 只保留 🧰 圖示,省下空間 */
+    #toolJump{max-width:46vw;min-width:0}
+    #authBtn{padding:6px 14px}
+  }
   .homelink{color:var(--fg);text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--cellbg)}
   .homelink:hover{border-color:var(--acc2)}
   .authBox{display:flex;align-items:center}
