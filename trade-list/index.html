@@ -685,7 +685,9 @@ function setMode(m){
   if(m==='edit' && !LIST.want.length && !LIST.have.length){ alert(tr('edit_empty')); return; }
   document.body.classList.remove('picking');   // 進入製圖前先收起選取面板
   if(m==='edit'){
-    $('#edSize').value=25;                      // 初始畫面大小約 1/4
+    // 電腦版:少於 100 隻用最小(整張顯示),否則約 1/8 位置;手機維持約 1/4
+    const total=LIST.want.length+LIST.have.length;
+    $('#edSize').value = window.innerWidth>=900 ? (total<100 ? 0 : 13) : 25;
     document.body.classList.add('editmode');
     try{ history.pushState({tlEdit:1},''); }catch(e){}   // 讓「返回/右滑」先回到清單,而不是離站
   }else{
