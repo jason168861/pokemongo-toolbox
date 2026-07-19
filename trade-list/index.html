@@ -68,8 +68,11 @@
   .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px}
   /* 選取面板改成點「加入」才跳出的浮層 */
   #selPanel{position:fixed;top:10px;bottom:10px;left:50%;transform:translateX(-50%);
-            width:calc(100% - 20px);max-width:720px;z-index:100;display:none;overflow:auto;
+            width:calc(100% - 20px);max-width:720px;z-index:100;display:none;flex-direction:column;overflow:hidden;
             margin:0!important;box-shadow:0 16px 50px #000b}
+  /* 面板本身固定在視窗內、不捲動;只有下方的 #grid 會捲動 */
+  #selPanel .pickHead,#selPanel .tabs,#selPanel .filters,#selPanel #gcount{flex:none}
+  #selPanel #grid{flex:1 1 auto;min-height:0;max-height:none}
   /* 電腦版:選取面板更寬、圖片更大(每排數量不變) */
   @media(min-width:900px){
     #selPanel{max-width:1020px}
@@ -77,7 +80,7 @@
     .list{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}
   }
   body.picking{overflow:hidden}
-  body.picking #selPanel{display:block}
+  body.picking #selPanel{display:flex}
   body.picking::before{content:"";position:fixed;inset:0;background:#0009;z-index:99}
   .pickHead{position:sticky;top:-4px;background:var(--card);z-index:3;display:flex;align-items:center;
             justify-content:space-between;gap:8px;margin:-4px -4px 10px;padding:6px 0}
