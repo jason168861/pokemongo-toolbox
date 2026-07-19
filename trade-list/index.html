@@ -757,14 +757,45 @@ function thumbOf(u){ if(!u)return u;
   if(u.startsWith('assets/bg/'))return cdn('assets/bgthumb/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp'));
   return u; }
 function rrPath(x,rx,ry,w,h,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+w,ry,rx+w,ry+h,r);x.arcTo(rx+w,ry+h,rx,ry+h,r);x.arcTo(rx,ry+h,rx,ry,r);x.arcTo(rx,ry,rx+w,ry,r);x.closePath();}
+// 自動去透明邊:很多寶可夢 icon 圖檔四周有一圈透明 padding,主體只佔中央。
+// 掃描出不透明範圍的 bounding box(以比例 0~1 快取),繪製時只取主體 → 寶可夢顯示更大。
+const _bboxCache=new Map(); let _trimCv=null;
+function trimBBox(img,key){
+  if(_bboxCache.has(key)) return _bboxCache.get(key);
+  let box=null;
+  try{
+    const iw=img.naturalWidth||img.width, ih=img.naturalHeight||img.height;
+    if(!iw||!ih) return null;   // 尚未載入完成,先不快取
+    const scale=Math.min(1,96/Math.max(iw,ih));                 // 縮到 ~96px 掃描即可,加速
+    const w=Math.max(1,Math.round(iw*scale)), h=Math.max(1,Math.round(ih*scale));
+    const cv=_trimCv||(_trimCv=document.createElement('canvas'));
+    cv.width=w; cv.height=h; const cx=cv.getContext('2d',{willReadFrequently:true});
+    cx.clearRect(0,0,w,h); cx.drawImage(img,0,0,w,h);
+    const d=cx.getImageData(0,0,w,h).data;
+    let minX=w,minY=h,maxX=-1,maxY=-1;
+    for(let y=0;y<h;y++)for(let xx=0;xx<w;xx++){ if(d[(y*w+xx)*4+3]>16){
+      if(xx<minX)minX=xx; if(xx>maxX)maxX=xx; if(y<minY)minY=y; if(y>maxY)maxY=y; } }
+    if(maxX>=minX && maxY>=minY) box={x:minX/w, y:minY/h, w:(maxX-minX+1)/w, h:(maxY-minY+1)/h};
+  }catch(e){ box=null; }   // 跨域無 CORS 等讀不到像素 → 不裁,退回整張圖
+  _bboxCache.set(key,box); return box;
+}
+// 把(去邊後的)寶可夢等比例置中畫進卡片內的正方框
+function drawMon(x,m,key,dx0,dy0,box){
+  const bb=trimBBox(m,key);
+  if(!bb){ x.drawImage(m,dx0,dy0,box,box); return; }
+  const iw=m.naturalWidth||m.width, ih=m.naturalHeight||m.height;
+  const sx=bb.x*iw, sy=bb.y*ih, sw=bb.w*iw, sh=bb.h*ih;
+  const sc=Math.min(box/sw, box/sh), dw=sw*sc, dh=sh*sc;       // contain,維持比例
+  x.drawImage(m, sx,sy,sw,sh, dx0+(box-dw)/2, dy0+(box-dh)/2, dw, dh);
+}
 function star(x,cx,cy,r,fill){x.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr_=i%2?r*0.45:r;x[i?'lineTo':'moveTo'](cx+rr_*Math.cos(a),cy+rr_*Math.sin(a));}x.closePath();x.fillStyle=fill;x.fill();}
 async function drawCard(x,cx,cy,c,T,noteH,noteCol){
   x.save();x.shadowColor='rgba(0,0,0,0.35)';x.shadowBlur=8;x.shadowOffsetY=3;x.fillStyle=T.cardbg;rrPath(x,cx,cy,S,S,S*0.16);x.fill();x.restore();
   x.save();rrPath(x,cx,cy,S,S,S*0.16);x.clip();x.fillStyle=T.cardbg;x.fillRect(cx,cy,S,S);
   if(c.bg){const b=await loadExport(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
-  // 無背卡:寶可夢放大、幾乎填滿卡片(減少四周留白/白邊);有背卡:維持較小以露出背卡
-  const ins = c.bg ? 0.09 : 0.02, sz = 1-2*ins;
-  const m=await loadImg(c.url);if(m)x.drawImage(m,cx+S*ins,cy+S*ins,S*sz,S*sz);
+  // 去透明邊後放大:無背卡幾乎填滿卡片;有背卡也放大一點(但仍露出背卡)
+  const ins = c.bg ? 0.05 : 0.02, box = S*(1-2*ins);
+  const m=await loadImg(c.url);if(m)drawMon(x,m,cdn(c.url),cx+S*ins,cy+S*ins,box);
   x.restore();
   if(T.line&&!/,\s*0\)$/.test(T.line)){x.strokeStyle=T.line;x.lineWidth=2;rrPath(x,cx,cy,S,S,S*0.16);x.stroke();}
   if(c.badge){const b=await loadImg(c.badge);if(b)x.drawImage(b,cx+S*0.63,cy+S*0.04,S*0.33,S*0.33);}
