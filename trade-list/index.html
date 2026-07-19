@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
 <link rel="apple-touch-icon" href="../img/masterball.png">
-<title>Pokémon GO Trade List Maker – 交易清單產生器 (Shiny・Forms・Backgrounds)</title>
-<meta name="description" content="Free Pokémon GO trade list generator. Browse every Pokémon combination — shiny, forms, costumes, gender, Dynamax, Gigantamax and special event backgrounds — split them into Looking For / For Trade and export a shareable image. Works in 7 languages. 免費製作寶可夢 GO 交易清單並一鍵匯出圖片。">
-<meta name="keywords" content="Pokemon GO trade list,Pokemon GO trade list maker,Pokemon GO trade list generator,Pokemon GO trading,shiny,costume,form,Dynamax,Gigantamax,background card,trade card,ポケモンGO 交換リスト,포켓몬고 교환 목록,寶可夢GO交易清單,交換清單,背卡,異色">
+<title>Pokémon GO Trade List Maker – 交換清單產生器 (Shiny・Forms・Backgrounds)</title>
+<meta name="description" content="Free Pokémon GO trade list generator. Browse every Pokémon combination — shiny, forms, costumes, gender, Dynamax, Gigantamax and special event backgrounds — split them into Looking For / For Trade and export a shareable image. Works in 7 languages. 免費製作寶可夢 GO 交換清單並一鍵匯出圖片。">
+<meta name="keywords" content="Pokemon GO trade list,Pokemon GO trade list maker,Pokemon GO trade list generator,Pokemon GO trading,shiny,costume,form,Dynamax,Gigantamax,background card,trade card,ポケモンGO 交換リスト,포켓몬고 교환 목록,寶可夢GO交換清單,交換清單,交換列表,寶可夢GO交易清單,交易清單,背卡,異色">
 <link rel="canonical" id="canonicalLink" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
 <link rel="alternate" hreflang="x-default" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
 <link rel="alternate" hreflang="en" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=en">
@@ -36,7 +36,7 @@
 <meta property="og:locale:alternate" content="es_ES">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Pokémon GO Trade List Maker – 交易清單產生器">
+<meta name="twitter:title" content="Pokémon GO Trade List Maker – 交換清單產生器">
 <meta name="twitter:description" content="Build a Pokémon GO trade list (shiny, forms, costumes, Dynamax, backgrounds) and export a shareable image. Free, 7 languages.">
 <meta name="twitter:image" content="https://jason168861.github.io/pokemongo-toolbox/trade-list/assets/brand/og.png">
 <script type="application/ld+json">
@@ -44,7 +44,7 @@
   "@context":"https://schema.org",
   "@type":"WebApplication",
   "name":"Pokémon GO Trade List Maker",
-  "alternateName":["寶可夢 GO 交易清單產生器","ポケモンGO 交換リストメーカー","포켓몬고 교환 목록 생성기"],
+  "alternateName":["寶可夢 GO 交換清單產生器","ポケモンGO 交換リストメーカー","포켓몬고 교환 목록 생성기"],
   "url":"https://jason168861.github.io/pokemongo-toolbox/trade-list/",
   "applicationCategory":"UtilityApplication",
   "operatingSystem":"Web",
@@ -351,7 +351,7 @@
 <body>
 <noscript>
   <div style="max-width:820px;margin:24px auto;padding:0 18px;color:#eef0fb;font-family:system-ui,sans-serif;line-height:1.7">
-    <h1>Pokémon GO Trade List Maker · 交易清單產生器</h1>
+    <h1>Pokémon GO Trade List Maker · 交換清單產生器</h1>
     <p>A free Pokémon GO trade list generator. Browse every Pokémon combination — shiny, forms, costumes, gender, Dynamax, Gigantamax and special event backgrounds — sort them into <strong>Looking For</strong> and <strong>For Trade</strong>, then export a shareable image. Available in English, 繁體中文, 日本語, 한국어, Français, Deutsch and Español.</p>
     <p>This tool needs JavaScript enabled. 本工具需要啟用 JavaScript 才能使用。</p>
     <p><a href="../" style="color:#7b5cff">Pokémon GO Toolbox</a></p>
@@ -376,7 +376,7 @@
     <button id="authBtn">登入</button>
     <span id="cloudMsg"></span>
   </span>
-  <h1 id="appTitle">🔴 寶可夢 GO 交易清單產生器</h1>
+  <h1 id="appTitle">🔴 寶可夢 GO 交換清單產生器</h1>
   <span id="stat" class="sub"></span>
   <span class="themeSel">
     <span class="sub">🌐</span><select id="langSel"></select>
@@ -517,7 +517,7 @@ const WEIGHTS=[['w_normal',400],['w_med',600],['w_bold',700],['w_black',900]];
 /* ---------- 多國語言 ---------- */
 const LANGS=[['zh','繁中'],['en','English'],['ja','日本語'],['ko','한국어'],['fr','Français'],['de','Deutsch'],['es','Español']];
 const I18N={
- zh:{font_game:'遊戲粗黑',font_hei:'黑體',font_impact:'Impact',font_round:'圓潤',font_serif:'襯線',w_normal:'一般',w_med:'中黑',w_bold:'粗',w_black:'特粗',app:'寶可夢 GO 交易清單產生器',fname:'交易清單',theme:'風格',th_neon:'深色霓虹',th_warm:'暖色活潑',th_light:'乾淨簡約',tab_mon:'寶可夢（全組合）',tab_bg:'背卡組合',search_mon:'搜尋…名稱或編號',search_bg:'搜尋…寶可夢或背卡',f_normal:'一般',f_shiny:'異色',f_dmax:'極巨化',f_gmax:'超極巨化',f_cos:'造形/服裝',only:'只看',f_sel:'已選',f_lego:'傳說',combos_unit:'種組合',bg_unit:'個背卡組合',mons:'隻',seg_want:'加到「我想要的」',seg_have:'加到「我能提供的」',canfly:'我能飛（顯示 CAN FLY）',want:'我想要的',have:'我能提供的',empty:'點 ✏️ 加入寶可夢',start:'我選好了，開始製圖',sort:'依編號排序',clear:'清空清單',download:'下載 PNG',addtext:'新增文字',reset:'復原預設文字',back:'返回選擇',edit_title:'匯出圖（拖曳/編輯文字）',edit_hint:'點文字可選取 → 拖曳移動、下方改字/色/大小。',text_content:'文字內容',del:'刪除',outline:'外框',confirm_clear:'確定要清空整個清單嗎？',list_empty:'清單是空的',edit_empty:'清單還是空的，先點 ✏️ 加入寶可夢',export_foot:'Pokémon GO 交易清單',newtext:'文字',home:'工具箱',auth_login:'登入',auth_logout:'登出',auth_synced:'雲端同步中',auth_guest:'未登入 · 暫存於此瀏覽器',qr_toggle:'在圖片加上推廣 QR',scan_hint:'掃描・免費製作你的交易清單',sets_title:'我的清單',set_hint:'點名稱切換・可拖曳排序',set_add:'新增清單',set_rename:'重命名清單',set_dup:'複製清單',set_del:'刪除清單',set_delall:'全部刪除清單',set_default:'清單',clear_side:'全部刪除',set_prompt:'清單名稱：',set_confirm_del:'確定刪除「{n}」？',set_confirm_delall:'確定刪除全部 {n} 組清單？此動作無法復原。',set_keep_one:'至少要保留一組清單',note_ph:'備註',pick_title:'選擇要加入的寶可夢',pick_done:'✓ 完成',sec_add:'加入',edit_photo:'編輯文字',done:'完成',t_style:'字體/底色',t_color:'顏色',th_ocean:'海洋',th_sakura:'櫻花',th_forest:'森林',zoom_hint:'拖曳調整畫面大小',scheme:'配色',per_row:'每排數量'},
+ zh:{font_game:'遊戲粗黑',font_hei:'黑體',font_impact:'Impact',font_round:'圓潤',font_serif:'襯線',w_normal:'一般',w_med:'中黑',w_bold:'粗',w_black:'特粗',app:'寶可夢 GO 交換清單產生器',fname:'交換清單',theme:'風格',th_neon:'深色霓虹',th_warm:'暖色活潑',th_light:'乾淨簡約',tab_mon:'寶可夢（全組合）',tab_bg:'背卡組合',search_mon:'搜尋…名稱或編號',search_bg:'搜尋…寶可夢或背卡',f_normal:'一般',f_shiny:'異色',f_dmax:'極巨化',f_gmax:'超極巨化',f_cos:'造形/服裝',only:'只看',f_sel:'已選',f_lego:'傳說',combos_unit:'種組合',bg_unit:'個背卡組合',mons:'隻',seg_want:'加到「我想要的」',seg_have:'加到「我能提供的」',canfly:'我能飛（顯示 CAN FLY）',want:'我想要的',have:'我能提供的',empty:'點 ✏️ 加入寶可夢',start:'我選好了，開始製圖',sort:'依編號排序',clear:'清空清單',download:'下載 PNG',addtext:'新增文字',reset:'復原預設文字',back:'返回選擇',edit_title:'匯出圖（拖曳/編輯文字）',edit_hint:'點文字可選取 → 拖曳移動、下方改字/色/大小。',text_content:'文字內容',del:'刪除',outline:'外框',confirm_clear:'確定要清空整個清單嗎？',list_empty:'清單是空的',edit_empty:'清單還是空的，先點 ✏️ 加入寶可夢',export_foot:'Pokémon GO 交換清單',newtext:'文字',home:'工具箱',auth_login:'登入',auth_logout:'登出',auth_synced:'雲端同步中',auth_guest:'未登入 · 暫存於此瀏覽器',qr_toggle:'在圖片加上推廣 QR',scan_hint:'掃描・免費製作你的交換清單',sets_title:'我的清單',set_hint:'點名稱切換・可拖曳排序',set_add:'新增清單',set_rename:'重命名清單',set_dup:'複製清單',set_del:'刪除清單',set_delall:'全部刪除清單',set_default:'清單',clear_side:'全部刪除',set_prompt:'清單名稱：',set_confirm_del:'確定刪除「{n}」？',set_confirm_delall:'確定刪除全部 {n} 組清單？此動作無法復原。',set_keep_one:'至少要保留一組清單',note_ph:'備註',pick_title:'選擇要加入的寶可夢',pick_done:'✓ 完成',sec_add:'加入',edit_photo:'編輯文字',done:'完成',t_style:'字體/底色',t_color:'顏色',th_ocean:'海洋',th_sakura:'櫻花',th_forest:'森林',zoom_hint:'拖曳調整畫面大小',scheme:'配色',per_row:'每排數量'},
  en:{font_game:'Game Black',font_hei:'Sans',font_impact:'Impact',font_round:'Rounded',font_serif:'Serif',w_normal:'Normal',w_med:'Medium',w_bold:'Bold',w_black:'Black',app:'Pokémon GO Trade List Maker',fname:'trade-list',theme:'Theme',th_neon:'Dark Neon',th_warm:'Warm',th_light:'Light',tab_mon:'Pokémon (all)',tab_bg:'Backgrounds',search_mon:'Search name or number',search_bg:'Search Pokémon or background',f_normal:'Normal',f_shiny:'Shiny',f_dmax:'Dynamax',f_gmax:'Gigantamax',f_cos:'Form/Costume',only:'Only',f_sel:'Selected',f_lego:'Legendary',combos_unit:'combos',bg_unit:'bg combos',mons:'Pokémon',seg_want:'Add to Looking For',seg_have:'Add to For Trade',canfly:'Can fly (show CAN FLY)',want:'Looking For',have:'For Trade',empty:'Tap ✏️ to add Pokémon',start:'Done — make image',sort:'Sort by number',clear:'Clear list',download:'Download PNG',addtext:'Add text',reset:'Reset text',back:'Back',edit_title:'Export image (drag/edit text)',edit_hint:'Click text to select → drag to move; edit below.',text_content:'Text',del:'Delete',outline:'Outline',confirm_clear:'Clear the whole list?',list_empty:'List is empty',edit_empty:'List is empty — tap ✏️ to add Pokémon',export_foot:'Pokémon GO Trade List',newtext:'Text',home:'Toolbox',auth_login:'Log in',auth_logout:'Sign out',auth_synced:'Synced to cloud',auth_guest:'Not signed in · saved in this browser',qr_toggle:'Add promo QR to image',scan_hint:'Scan to make your own trade list',sets_title:'My lists',set_hint:'Click a name to switch · drag to reorder',set_add:'New list',set_rename:'Rename list',set_dup:'Duplicate list',set_del:'Delete list',set_delall:'Delete all lists',set_default:'List',clear_side:'Clear all',set_prompt:'List name:',set_confirm_del:'Delete "{n}"?',set_confirm_delall:'Delete all {n} lists? This cannot be undone.',set_keep_one:'Keep at least one list',note_ph:'Note',pick_title:'Choose Pokémon to add',pick_done:'✓ Done',sec_add:'Add',edit_photo:'Edit text',done:'Done',t_style:'Font/BG',t_color:'Color',th_ocean:'Ocean',th_sakura:'Sakura',th_forest:'Forest',zoom_hint:'Drag to zoom the view',scheme:'Colors',per_row:'Per row'},
  ja:{font_game:'ゲーム太字',font_hei:'ゴシック',font_impact:'Impact',font_round:'丸ゴシック',font_serif:'明朝',w_normal:'標準',w_med:'中太',w_bold:'太字',w_black:'極太',app:'ポケモンGO トレードリスト作成',fname:'トレードリスト',theme:'テーマ',th_neon:'ダークネオン',th_warm:'ウォーム',th_light:'ライト',tab_mon:'ポケモン（全部）',tab_bg:'背景',search_mon:'名前や番号で検索',search_bg:'ポケモン・背景を検索',f_normal:'通常',f_shiny:'色違い',f_dmax:'ダイマックス',f_gmax:'キョダイマックス',f_cos:'すがた/コスチューム',only:'絞込',f_sel:'選択済',f_lego:'伝説',combos_unit:'件',bg_unit:'件',mons:'匹',seg_want:'「ほしい」に追加',seg_have:'「ゆずれる」に追加',canfly:'飛べる（CAN FLY表示）',want:'ほしいもの',have:'ゆずれるもの',empty:'左のアイコンから追加',start:'選び終わった、画像を作る',sort:'番号順に並べ替え',clear:'リストを消去',download:'PNGを保存',addtext:'テキスト追加',reset:'文字をリセット',back:'戻る',edit_title:'書き出し画像（文字をドラッグ/編集）',edit_hint:'文字をタップで選択 → ドラッグで移動、下で編集。',text_content:'テキスト',del:'削除',outline:'縁取り',confirm_clear:'リストを全部消しますか？',list_empty:'リストが空です',edit_empty:'リストが空です。先にポケモンを追加',export_foot:'ポケモンGO トレードリスト',newtext:'テキスト',set_add:'新規リスト',set_rename:'名前変更',set_dup:'複製',set_del:'リスト削除',set_delall:'すべて削除',clear_side:'すべて削除',sec_add:'追加',set_default:'リスト',home:'ツールボックス',auth_login:'ログイン',auth_logout:'ログアウト',auth_synced:'クラウド同期中',auth_guest:'未ログイン · このブラウザに保存',qr_toggle:'画像にQRを追加',scan_hint:'スキャンして自分のリストを作成',sets_title:'マイリスト',set_hint:'名前をタップで切替・ドラッグで並べ替え',set_prompt:'リスト名：',set_confirm_del:'「{n}」を削除しますか？',set_confirm_delall:'全{n}件のリストを削除しますか？元に戻せません。',set_keep_one:'リストは最低1つ必要です',note_ph:'メモ',pick_title:'追加するポケモンを選択',pick_done:'✓ 完了',edit_photo:'テキスト編集',done:'完了',t_style:'フォント/背景',t_color:'色',th_ocean:'オーシャン',th_sakura:'さくら',th_forest:'フォレスト',zoom_hint:'ドラッグで表示サイズ調整',scheme:'配色',per_row:'1列の数'},
  ko:{font_game:'게임 볼드',font_hei:'고딕',font_impact:'Impact',font_round:'둥근',font_serif:'세리프',w_normal:'보통',w_med:'중간',w_bold:'굵게',w_black:'매우 굵게',app:'포켓몬 GO 교환 목록 생성기',fname:'교환목록',theme:'테마',th_neon:'다크 네온',th_warm:'따뜻한',th_light:'라이트',tab_mon:'포켓몬(전체)',tab_bg:'배경',search_mon:'이름·번호 검색',search_bg:'포켓몬·배경 검색',f_normal:'일반',f_shiny:'이로치',f_dmax:'다이맥스',f_gmax:'거다이맥스',f_cos:'모습/의상',only:'필터',f_sel:'선택됨',f_lego:'전설',combos_unit:'개',bg_unit:'개',mons:'마리',seg_want:'「원해요」에 추가',seg_have:'「줄 수 있어요」에 추가',canfly:'날 수 있음(CAN FLY 표시)',want:'원하는 것',have:'줄 수 있는 것',empty:'왼쪽 아이콘에서 추가',start:'선택 완료, 이미지 만들기',sort:'번호순 정렬',clear:'목록 비우기',download:'PNG 저장',addtext:'텍스트 추가',reset:'문구 초기화',back:'뒤로',edit_title:'내보내기 이미지(문자 드래그/편집)',edit_hint:'문자를 눌러 선택 → 드래그로 이동, 아래에서 편집.',text_content:'텍스트',del:'삭제',outline:'외곽선',confirm_clear:'목록을 모두 비울까요?',list_empty:'목록이 비어 있습니다',edit_empty:'목록이 비어 있어요. 먼저 포켓몬을 추가하세요',export_foot:'포켓몬 GO 교환 목록',newtext:'텍스트',set_add:'새 목록',set_rename:'이름 변경',set_dup:'복제',set_del:'목록 삭제',set_delall:'전체 삭제',clear_side:'전체 삭제',sec_add:'추가',set_default:'목록',home:'도구상자',auth_login:'로그인',auth_logout:'로그아웃',auth_synced:'클라우드 동기화 중',auth_guest:'로그인 안 됨 · 이 브라우저에 저장',qr_toggle:'이미지에 QR 추가',scan_hint:'스캔하여 나만의 교환 목록 만들기',sets_title:'내 목록',set_hint:'이름을 눌러 전환 · 드래그로 정렬',set_prompt:'목록 이름:',set_confirm_del:'"{n}"을(를) 삭제할까요?',set_confirm_delall:'전체 {n}개 목록을 삭제할까요? 되돌릴 수 없습니다.',set_keep_one:'목록은 최소 1개 필요합니다',note_ph:'메모',pick_title:'추가할 포켓몬 선택',pick_done:'✓ 완료',edit_photo:'텍스트 편집',done:'완료',t_style:'글꼴/배경',t_color:'색상',th_ocean:'오션',th_sakura:'벚꽃',th_forest:'포레스트',zoom_hint:'드래그하여 화면 크기 조절',scheme:'색상',per_row:'한 줄 개수'},
@@ -1613,7 +1613,7 @@ boot();
       }
     });
   }else{
-    console.warn('找不到 window.firebaseConfig,交易清單的登入/雲端同步已停用(本機暫存仍可用)。');
+    console.warn('找不到 window.firebaseConfig,交換清單的登入/雲端同步已停用(本機暫存仍可用)。');
   }
 </script>
 </body>
