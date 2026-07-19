@@ -126,7 +126,7 @@
   .cell::before{content:"";display:block;padding-top:100%}   /* 撐出正方形,不靠 aspect-ratio(iOS Safari 相容) */
   /* 只有真正支援滑鼠 hover 的裝置才變色/浮起;手機觸控不會殘留 hover 邊框 */
   @media(hover:hover){ .cell:hover{border-color:var(--acc2);transform:translateY(-2px)} }
-  .cell.added{outline:2px solid var(--want);opacity:.55}
+  .cell.added{outline:3px solid #00ff72;outline-offset:-3px;box-shadow:0 0 0 3px rgba(0,255,114,.35),inset 0 0 12px rgba(0,255,114,.45);opacity:.6}
   .cell img.m{position:absolute;inset:0;margin:auto;width:88%;height:88%;object-fit:contain;z-index:2}
   .cell img.m.big{width:96%;height:96%}   /* 無背卡:放大填滿,減少白邊(與下載圖一致) */
   .cell img.cbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
