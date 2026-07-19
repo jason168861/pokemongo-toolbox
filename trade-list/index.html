@@ -1335,7 +1335,12 @@ function clearIns(){document.querySelectorAll('.li.insb,.li.insa').forEach(x=>x.
 // 匯出預覽(canvas)重畫很重(清單很多時要畫上百張卡片)→ 合併延後,避免刪除/打字時每次都重畫造成卡頓
 let _baseTimer=null;
 function scheduleBase(){ clearTimeout(_baseTimer); _baseTimer=setTimeout(()=>{ _baseTimer=null; renderBase(); },160); }
-function moveItem(k,from,to){const arr=LIST[k];const[mv]=arr.splice(from,1);if(to>from)to--;arr.splice(to,0,mv);drawLists();renderBase();}
+// 拖曳排序:只在陣列裡搬一項,並在 DOM 只移動「那一個節點」(不重建整個清單),canvas 重畫延後合併 → 300+ 隻也不卡
+function moveItem(k,from,to,node,ref){
+  const arr=LIST[k];const[mv]=arr.splice(from,1);if(to>from)to--;arr.splice(to,0,mv);
+  if(node&&node.parentNode){ if(ref!==node) node.parentNode.insertBefore(node,ref); persist(); scheduleBase(); }
+  else { drawLists(); renderBase(); }   // 無節點資訊時退回完整重建(相容其他呼叫)
+}
 function clearSide(k){ if(!LIST[k].length)return; if(!confirm(tr('confirm_clear')))return; LIST[k]=[]; drawLists(); render(); renderBase(); }
 function noteGrow(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,64)+'px'; }
 // pointer-based 清單拖曳排序:桌機移動即拖;手機長按 200ms 才拖(拖之前可正常捲動)。
@@ -1359,7 +1364,8 @@ function liDrag(d,k,i){
         clearIns(); d.classList.remove('dragging');
         if(li&&li.parentNode===d.parentNode){ const kids=[...d.parentNode.children],
           from=kids.indexOf(d), idx=kids.indexOf(li),
-          r=li.getBoundingClientRect(),after=(ev.clientX-r.left)>r.width/2; moveItem(k,from,after?idx+1:idx); } }
+          r=li.getBoundingClientRect(),after=(ev.clientX-r.left)>r.width/2,
+          ref=after?li.nextSibling:li; moveItem(k,from,after?idx+1:idx,d,ref); } }
       cleanup(); };
     function cleanup(){ clearTimeout(hold); liDragActive=false; dragK=null; dragIdx=null;
       d.removeEventListener('pointermove',move); d.removeEventListener('pointerup',up); d.removeEventListener('pointercancel',up); }
