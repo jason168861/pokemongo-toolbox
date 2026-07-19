@@ -95,6 +95,13 @@
   .editSec:hover{background:var(--acc2);color:#fff}
   .editSec.danger{border-color:var(--acc);color:var(--acc)}
   .editSec.danger:hover{background:var(--acc);color:#fff}
+  /* 亮色主題:加深「加入/刪除」小按鈕的字與邊框,避免在白底上太淡看不清 */
+  body[data-theme=warm] .editSec{color:#b8481a;border-color:#b8481a} body[data-theme=warm] .editSec:hover{background:#b8481a}
+  body[data-theme=warm] .editSec.danger{color:#b53d22;border-color:#b53d22} body[data-theme=warm] .editSec.danger:hover{background:#b53d22}
+  body[data-theme=light] .editSec{color:#465c92;border-color:#465c92} body[data-theme=light] .editSec:hover{background:#465c92}
+  body[data-theme=light] .editSec.danger{color:#455778;border-color:#455778} body[data-theme=light] .editSec.danger:hover{background:#455778}
+  body[data-theme=sakura] .editSec{color:#b83059;border-color:#b83059} body[data-theme=sakura] .editSec:hover{background:#b83059}
+  body[data-theme=sakura] .editSec.danger{color:#b83059;border-color:#b83059} body[data-theme=sakura] .editSec.danger:hover{background:#b83059}
   .toolbar.listops{margin:12px 0 10px;padding-top:12px;border-top:1px solid var(--line)}
   .tabs{display:flex;gap:8px;margin-bottom:10px}
   .tabs button{flex:1;background:var(--cellbg);border:1px solid var(--line);color:var(--fg);padding:8px;border-radius:8px;cursor:pointer;font:inherit}
@@ -199,7 +206,9 @@
   .li .note.has{border-color:var(--acc2);color:var(--acc2);font-weight:700}
   .empty{color:var(--mut);font-size:12px;padding:6px}
   .btn{padding:9px 12px;border:0;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
-  .btn.g{background:var(--cellbg);border:1px solid var(--line);color:var(--fg);font-weight:400}
+  /* 彩色底的白字加細陰影,讓文字在較亮的主題色上也清楚 */
+  .btn:not(.g),.tabs button.on,.chip.on,.setchip.on,.seg button.on,#pickClose{text-shadow:0 1px 2px rgba(0,0,0,.35)}
+  .btn.g{background:var(--cellbg);border:1px solid var(--line);color:var(--fg);font-weight:400;text-shadow:none}
   .toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
   .themeSel{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
   /* 登入按鈕放在工具選單右側;隱藏「956 隻」統計文字 */
@@ -471,13 +480,13 @@ const THEMES={
  neon:{ui:{bg:'linear-gradient(160deg,#0f1220,#191540)',card:'#1a1f36',line:'#2b3153',fg:'#eef0fb',mut:'#9aa3c7',acc:'#e0276c',acc2:'#7b5cff',want:'#2f9e57',have:'#c9a227',cellbg:'#0d1024'},
       exp:{grad:['#100e1e','#211741'],panel:'rgba(26,28,52,0.90)',cardbg:'#14162c',line:'rgba(123,92,255,0.55)',title:'#e0276c',tOut:'#ffffff',sec1:'#50dc8c',sec2:'#f0c850',fly:'#7b5cff',foot:'#b4b4d2'}},
  warm:{ui:{bg:'linear-gradient(160deg,#ff7a5a,#ffb073)',card:'rgba(255,255,255,0.94)',line:'rgba(120,60,40,0.16)',fg:'#4a2f28',mut:'#9a6f60',acc:'#e0603c',acc2:'#ff8a4c',want:'#2e9e57',have:'#c98a1e',cellbg:'#ffffff'},
-      exp:{grad:['#ff785a','#ffb175'],panel:'rgba(255,243,238,0.95)',cardbg:'#ffffff',line:'rgba(0,0,0,0)',title:'#ffec96',tOut:'#5a2a40',sec1:'#2e9e57',sec2:'#c98a1e',fly:'#3cc878',foot:'#ffffff'}},
+      exp:{grad:['#ff785a','#ffb175'],panel:'rgba(255,243,238,0.95)',cardbg:'#ffffff',line:'rgba(0,0,0,0)',title:'#4a1526',tOut:'#5a2a40',sec1:'#0d4f2a',sec2:'#5c3408',fly:'#0d4f2a',foot:'#3d1420'}},
  light:{ui:{bg:'linear-gradient(160deg,#eef2fc,#e0e7f4)',card:'#ffffff',line:'#d6dfec',fg:'#2a3346',mut:'#7a869c',acc:'#5a6f96',acc2:'#7088c0',want:'#2e9e57',have:'#c8962a',cellbg:'#f6f8fb'},
-      exp:{grad:['#eef2fc','#dfe7f4'],panel:'#ffffff',cardbg:'#f8fafd',line:'rgba(210,220,235,1)',title:'#46587e',tOut:'#ffffff',sec1:'#2e9e57',sec2:'#c8962a',fly:'#4682d2',foot:'#7a869c'}},
+      exp:{grad:['#eef2fc','#dfe7f4'],panel:'#ffffff',cardbg:'#f8fafd',line:'rgba(210,220,235,1)',title:'#46587e',tOut:'#ffffff',sec1:'#177038',sec2:'#806012',fly:'#4682d2',foot:'#4e5768'}},
  ocean:{ui:{bg:'linear-gradient(160deg,#08203a,#0a3d4d)',card:'#0f2b3d',line:'#1c4256',fg:'#e6f2f7',mut:'#8fb3c4',acc:'#00b4d8',acc2:'#2ec4b6',want:'#2f9e57',have:'#e9c46a',cellbg:'#0a2231'},
       exp:{grad:['#08243e','#0a4a52'],panel:'rgba(12,40,56,0.9)',cardbg:'#0e2a3a',line:'rgba(46,196,182,0.5)',title:'#48cae4',tOut:'#ffffff',sec1:'#5be3a0',sec2:'#ffd166',fly:'#2ec4b6',foot:'#a9c8d6'}},
  sakura:{ui:{bg:'linear-gradient(160deg,#ffd9e6,#ffc0cb)',card:'rgba(255,255,255,0.95)',line:'rgba(160,60,90,0.16)',fg:'#5a2a40',mut:'#a06f80',acc:'#e05a86',acc2:'#ff8fab',want:'#2e9e57',have:'#c98a1e',cellbg:'#ffffff'},
-      exp:{grad:['#ffd0e0','#ffb3c6'],panel:'rgba(255,245,249,0.95)',cardbg:'#ffffff',line:'rgba(0,0,0,0)',title:'#d6336c',tOut:'#ffffff',sec1:'#2e9e57',sec2:'#c98a1e',fly:'#e05a86',foot:'#a06f80'}},
+      exp:{grad:['#ffd0e0','#ffb3c6'],panel:'rgba(255,245,249,0.95)',cardbg:'#ffffff',line:'rgba(0,0,0,0)',title:'#9c1a4a',tOut:'#ffffff',sec1:'#125e34',sec2:'#6b4408',fly:'#a02452',foot:'#5e3646'}},
  forest:{ui:{bg:'linear-gradient(160deg,#0e2a1e,#143d2a)',card:'#153b2a',line:'#245a41',fg:'#e6f4ec',mut:'#9ac4ac',acc:'#40c057',acc2:'#82c91e',want:'#37b24d',have:'#e6b800',cellbg:'#0e2a1e'},
       exp:{grad:['#0e2c1f','#164a32'],panel:'rgba(16,44,32,0.9)',cardbg:'#123526',line:'rgba(130,201,30,0.5)',title:'#69db7c',tOut:'#ffffff',sec1:'#69db7c',sec2:'#ffe066',fly:'#82c91e',foot:'#a9d6bc'}}};
 const THEME_LIST=[['neon','th_neon'],['warm','th_warm'],['light','th_light'],['ocean','th_ocean'],['sakura','th_sakura'],['forest','th_forest']];
@@ -644,7 +653,7 @@ function buildThemeSwatches(){
     if(k===THEME)b.classList.add('on'); b.onclick=()=>applyTheme(k); box.appendChild(b); }
 }
 function applyTheme(k){
-  if(!THEMES[k])k='neon'; THEME=k; $('#themeSel').value=k;
+  if(!THEMES[k])k='neon'; THEME=k; $('#themeSel').value=k; document.body.dataset.theme=k;
   document.querySelectorAll('#edThemes button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
   const u=THEMES[k].ui,R=document.documentElement.style;
   const map={'--bg':u.bg,'--card':u.card,'--line':u.line,'--fg':u.fg,'--mut':u.mut,'--acc':u.acc,'--acc2':u.acc2,'--want':u.want,'--have':u.have,'--cellbg':u.cellbg};
