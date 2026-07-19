@@ -70,9 +70,11 @@
   #selPanel{position:fixed;top:10px;bottom:10px;left:50%;transform:translateX(-50%);
             width:calc(100% - 20px);max-width:720px;z-index:100;display:none;flex-direction:column;overflow:hidden;
             margin:0!important;box-shadow:0 16px 50px #000b}
-  /* 面板本身固定在視窗內、不捲動;只有下方的 #grid 會捲動 */
+  /* 面板本身固定在視窗內、不捲動;只有裝著網格的 #gridWrap 會捲動 */
+  /* 捲動容器用純 div 包住,grid 本身依內容決定高度 —— 避免 iOS Safari 把方格圖片壓成一條線 */
   #selPanel .pickHead,#selPanel .tabs,#selPanel .filters,#selPanel #gcount{flex:none}
-  #selPanel #grid{flex:1 1 auto;min-height:0;max-height:none}
+  #selPanel #gridWrap{flex:1 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}
+  #selPanel #grid{max-height:none;overflow:visible}
   /* 電腦版:選取面板更寬、圖片更大(每排數量不變) */
   @media(min-width:900px){
     #selPanel{max-width:1020px}
@@ -372,7 +374,7 @@
       <span class="chip scope" id="fSelected" onclick="tog('fSelected')">✓ 已選</span>
       <span class="chip scope" id="fLego" onclick="tog('fLego')">👑 傳說</span>
     </div>
-    <div id="grid" class="grid"></div>
+    <div id="gridWrap"><div id="grid" class="grid"></div></div>
     <div class="sub" id="gcount" style="margin-top:8px"></div>
   </div>
 
@@ -960,7 +962,7 @@ function setTarget(t){TARGET=t;
   if(FILT.fSelected)render(); else refreshAdded();}   // 只在「已選」篩選開啟時才需重建;否則原地更新✓
 function openPicker(t){ setTarget(t);
   const pt=$('#pickTitle'); if(pt)pt.textContent=tr('pick_title')+'：'+(t==='want'?tr('want'):tr('have'));
-  document.body.classList.add('picking'); const g=$('#grid'); if(g)g.scrollTop=0; }
+  document.body.classList.add('picking'); const g=$('#gridWrap'); if(g)g.scrollTop=0; }
 function closePicker(){ document.body.classList.remove('picking'); }
 // 「我想要的 / 我能提供的」可收合;狀態記在 localStorage
 function toggleSec(k){ const sec=document.querySelector('.sec.'+k); if(!sec)return;
@@ -1006,7 +1008,7 @@ function render(){
       if(q&&!(matchName(t.dex,q)||String(t.dex)===q||String(t.dex).padStart(4,'0')===q))return false; return true;});
     $('#gcount').textContent=`${FILTERED.length} ${tr('combos_unit')}`;
   }
-  appendBatch(); g.onscroll=()=>{if(g.scrollTop+g.clientHeight>g.scrollHeight-300)appendBatch()};
+  appendBatch(); const sc=$('#gridWrap'); sc.onscroll=()=>{if(sc.scrollTop+sc.clientHeight>sc.scrollHeight-300)appendBatch()};
 }
 // 只預載「已渲染之後的接下來一段」(不是全部),首屏最快,滾動時再往前補
 const AHEAD=360;                          // 預先暖快取的張數(約接下來幾屏)
