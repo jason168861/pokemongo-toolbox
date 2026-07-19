@@ -778,17 +778,21 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
     x.restore();
   }
 }
-async function drawBaseTo(x,lay,SC){
+// offY:此次繪製要往上平移的 device 像素(分塊輸出時,只把某一水平段畫進 canvas)。預設 0=整張。
+async function drawBaseTo(x,lay,SC,offY){
+  offY=offY||0;
   const T=THEMES[THEME].exp,W=LAYW,H=lay.H;
-  x.setTransform(SC,0,0,SC,0,0);
+  const visTop=offY/SC, visBot=(offY+x.canvas.height)/SC;   // 此段對應的版面(layout)y 範圍,超出者略過不畫以加速
+  x.setTransform(SC,0,0,SC,0,-offY);
   const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,T.grad[0]);g.addColorStop(1,T.grad[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
   // 先平行啟動本次要用的所有圖片下載(填入快取);下面的 draw 迴圈再逐張命中 → 平行載入、漸進顯示,不再一張等一張
   for(const s of lay.secs) for(const c of s.items){ loadImg(c.url); if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
   for(const s of lay.secs){
-    x.fillStyle=T.panel;rrPath(x,PAD,s.panelY,W-2*PAD,s.ph,24);x.fill();
+    if(s.panelY<=visBot && s.panelY+s.ph>=visTop){ x.fillStyle=T.panel;rrPath(x,PAD,s.panelY,W-2*PAD,s.ph,24);x.fill(); }
     for(let i=0;i<s.items.length;i++){
       const row=(i/COLS)|0, rw=s.rows[row];
       const cx=PAD+GAP+(i%COLS)*(S+GAP), cy=s.panelY+GAP+rw.y;
+      if(cy+S+rw.noteH<visTop || cy>visBot) continue;   // 不在此段 → 跳過
       await drawCard(x,cx,cy,s.items[i],T,rw.noteH,s.col);
     }
   }
@@ -938,20 +942,9 @@ function addText(){
 }
 
 /* ---------- 下載(底圖+文字合成) ---------- */
-async function downloadPNG(){
-  if(!LIST.want.length&&!LIST.have.length){alert(tr('list_empty'));return;}
-  const lay=computeLayout(); reconcile(lay);
-  const cv=$('#cv'); let SC=scaleForExport(lay.H), x=cv.getContext('2d');
-  // 針對「實際輸出尺寸」逐步偵測降採樣:在真正要輸出的 canvas 上測角落細線,
-  // 一旦被降採樣(糊)就降解析度重建再測,直到清晰為止 → 在裝置能力內取最高清晰度。
-  for(let tries=0; tries<7; tries++){
-    cv.width=Math.round(LAYW*SC); cv.height=Math.round(lay.H*SC); x=cv.getContext('2d');
-    if(sharpEnough(x,cv.width,cv.height)) break;   // 這個尺寸清晰 → 採用
-    if(SC<=0.4) break;                              // 已降到下限,不再降
-    SC*=0.82;
-  }
-  await drawBaseTo(x,lay,SC);
-  x.setTransform(SC,0,0,SC,0,0);
+// 文字層繪製抽成函式,offY 供分塊輸出時平移(與 drawBaseTo 一致)
+function drawTextsTo(x,SC,offY){
+  x.setTransform(SC,0,0,SC,0,-(offY||0));
   for(const t of TEXTS){
     if(!t.text) continue;
     x.save();
@@ -966,19 +959,90 @@ async function downloadPNG(){
     else { if(t.outline){ x.lineJoin='round'; x.lineWidth=Math.max(3,t.size*0.12); x.strokeStyle=THEMES[THEME].exp.tOut; x.strokeText(t.text,0,0); } x.fillStyle=t.color; x.fillText(t.text,0,0); }
     x.restore();
   }
+}
+/* ===== 分塊 PNG 編碼:繞過手機 canvas 單邊/面積上限,產生大而清晰的圖 =====
+   把整張切成多個高度安全(不會被 iOS 降採樣)的水平段分別繪製,取像素後自己組成 PNG。
+   壓縮用瀏覽器內建 CompressionStream('deflate'=zlib),不需外部函式庫。 */
+const _crcTable=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0;}return t;})();
+function _crc32(bytes){let c=0xFFFFFFFF;for(let i=0;i<bytes.length;i++)c=_crcTable[(c^bytes[i])&0xFF]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
+function _u32(n){return new Uint8Array([(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255]);}
+function _pngChunk(type,data){
+  const body=new Uint8Array(4+data.length);
+  for(let i=0;i<4;i++)body[i]=type.charCodeAt(i);
+  body.set(data,4);
+  return [_u32(data.length), body, _u32(_crc32(body))];
+}
+async function _deflate(bytes){
+  const cs=new CompressionStream('deflate');   // zlib 格式(PNG IDAT 需要)
+  const wr=cs.writable.getWriter(); wr.write(bytes); wr.close();
+  const rd=cs.readable.getReader(), chunks=[]; let len=0;
+  for(;;){ const {done,value}=await rd.read(); if(done)break; chunks.push(value); len+=value.length; }
+  const out=new Uint8Array(len); let o=0; for(const c of chunks){ out.set(c,o); o+=c.length; }
+  return out;
+}
+async function encodePNG(rgba,w,h){
+  const stride=w*4, raw=new Uint8Array((stride+1)*h);   // 每列前置 1 個 filter byte(0=None)
+  for(let y=0;y<h;y++){ raw[y*(stride+1)]=0; raw.set(rgba.subarray(y*stride,(y+1)*stride), y*(stride+1)+1); }
+  const comp=await _deflate(raw);
+  const ihdr=new Uint8Array(13);
+  ihdr.set(_u32(w),0); ihdr.set(_u32(h),4); ihdr[8]=8; ihdr[9]=6;   // 8-bit, color type 6 = RGBA
+  const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),
+    ..._pngChunk('IHDR',ihdr), ..._pngChunk('IDAT',comp), ..._pngChunk('IEND',new Uint8Array(0))];
+  return new Blob(parts,{type:'image/png'});
+}
+// 分塊繪製 → 拼成完整 RGBA → 編碼 PNG。每段高度 TILE(device px)遠低於任何裝置上限,故不降採樣。
+async function exportTiledBlob(lay,SC){
+  const W=Math.round(LAYW*SC), H=Math.round(lay.H*SC), TILE=1024;
+  const rgba=new Uint8Array(W*H*4);
+  const tc=document.createElement('canvas'); tc.width=W;
+  for(let y0=0;y0<H;y0+=TILE){
+    const th=Math.min(TILE,H-y0); tc.height=th;
+    const x=tc.getContext('2d'); x.clearRect(0,0,W,th);
+    await drawBaseTo(x,lay,SC,y0); drawTextsTo(x,SC,y0);
+    rgba.set(x.getImageData(0,0,W,th).data, y0*W*4);
+  }
+  tc.width=tc.height=1;   // 釋放小 canvas
+  return encodePNG(rgba,W,H);
+}
+async function downloadPNG(){
+  if(!LIST.want.length&&!LIST.have.length){alert(tr('list_empty'));return;}
+  const lay=computeLayout(); reconcile(lay);
+  const total=LIST.want.length+LIST.have.length;
+  const cv=$('#cv');
+  // 大清單/高圖:改用「分塊編碼 PNG」避開 iOS canvas 上限造成的降採樣模糊(需瀏覽器支援 CompressionStream)
+  const canTile = typeof CompressionStream!=='undefined';
+  if(canTile && (total>100 || lay.H>3600)){
+    let SC=scaleForExport(lay.H);
+    // 分塊已不受單邊上限限制,只需控制記憶體:RGBA buffer ≈ W*H*4 bytes,把它壓在約 1.6 億 bytes(~160MB)內
+    const cap=1.6e8; let px=LAYW*SC*lay.H*SC; if(px*4>cap) SC*=Math.sqrt(cap/(px*4));
+    SC=Math.max(0.6,Math.min(3,SC));
+    try{
+      const blob=await exportTiledBlob(lay,SC);
+      await saveBlob(blob, tr('fname')+'.png');
+      return;
+    }catch(e){ console.warn('分塊輸出失敗,改用一般方式', e); /* 落到下面的一般流程 */ }
+  }
+  // 一般流程(小圖或不支援 CompressionStream):單一 canvas,並偵測降採樣自動降解析度
+  let SC=scaleForExport(lay.H), x=cv.getContext('2d');
+  for(let tries=0; tries<7; tries++){
+    cv.width=Math.round(LAYW*SC); cv.height=Math.round(lay.H*SC); x=cv.getContext('2d');
+    if(sharpEnough(x,cv.width,cv.height)) break;
+    if(SC<=0.4) break;
+    SC*=0.82;
+  }
+  await drawBaseTo(x,lay,SC); drawTextsTo(x,SC,0);
   await saveCanvas(cv, tr('fname')+'.png');
 }
+async function saveBlob(blob, name){
+  // 保留 Safari 原本的「下載 / 檢視」選單:用 Blob URL(短參照),Safari「檢視」才正常
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 120000);   // 留時間給「檢視/下載」使用,之後才釋放
+}
 async function saveCanvas(cv, name){
-  // 保留 Safari 原本的「下載 / 檢視」選單,只把 data URL 換成 Blob URL
-  // (原本「檢視」沒反應是因為 2x 解析度的 data URL 太長,Safari 開不了;blob: 是短參照就正常)
   const blob = await new Promise(res=>{ if(cv.toBlob) cv.toBlob(res,'image/png'); else res(null); });
-  if(blob){
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url; a.download=name;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url), 120000);   // 留時間給「檢視/下載」使用,之後才釋放
-    return;
-  }
+  if(blob){ await saveBlob(blob, name); return; }
   const a=document.createElement('a'); a.download=name; a.href=cv.toDataURL('image/png'); a.click();   // 舊瀏覽器後備
 }
 
