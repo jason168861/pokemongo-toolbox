@@ -155,6 +155,13 @@
   .switch:has(input:checked){background:color-mix(in srgb,var(--acc2) 15%,var(--cellbg));border-color:var(--acc2)}
   .sec{margin-top:12px}.sec h3{margin:0 0 6px;font-size:13px;display:flex;align-items:center;gap:6px}
   .sec.want h3{color:var(--want)} .sec.have h3{color:var(--have)}
+  /* 可收合的區塊標題 */
+  .secToggle{flex:none;background:none;border:0;color:inherit;cursor:pointer;font-size:12px;line-height:1;
+             padding:2px 3px;transition:transform .15s;opacity:.85}
+  .secToggle:hover{opacity:1}
+  .secLab{cursor:pointer;user-select:none}
+  .sec.collapsed .secToggle{transform:rotate(-90deg)}
+  .sec.collapsed .list{display:none}
   .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;min-height:40px}
   .li{position:relative;cursor:grab}.li.dragging{opacity:.35}
   .li.insb::before{content:'';position:absolute;left:-6px;top:0;bottom:0;width:4px;background:var(--acc2);border-radius:2px;z-index:6}
@@ -177,7 +184,11 @@
   .btn{padding:9px 12px;border:0;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
   .btn.g{background:var(--cellbg);border:1px solid var(--line);color:var(--fg);font-weight:400}
   .toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-  .themeSel{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .themeSel{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  /* Google 登入放在標題右側;隱藏「956 隻」統計文字 */
+  .authBox{margin-left:auto}
+  #stat{display:none}
+  @media(max-width:700px){ header{gap:8px 10px} .authBox{margin-left:auto} }
   .homelink{color:var(--fg);text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--cellbg)}
   .homelink:hover{border-color:var(--acc2)}
   .authBox{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
@@ -308,12 +319,12 @@
     <option value="map-app">補給站/道館地圖</option>
   </select>
   <h1 id="appTitle">🔴 寶可夢 GO 交易清單產生器</h1>
+  <span class="authBox">
+    <button id="authBtn">以 Google 登入</button>
+    <span id="cloudMsg"></span>
+  </span>
   <span id="stat" class="sub"></span>
   <span class="themeSel">
-    <span class="authBox">
-      <button id="authBtn">以 Google 登入</button>
-      <span id="cloudMsg"></span>
-    </span>
     <span class="sub">🌐</span><select id="langSel"></select>
     <span class="sub" id="themeLabel">風格</span>
     <select id="themeSel"><option value="neon">深色霓虹</option><option value="warm">暖色活潑</option><option value="light">乾淨簡約</option></select>
@@ -364,10 +375,10 @@
         <button class="btn g" id="sortBtn">↕ 依編號排序</button>
         <button class="btn g" id="clr">清空清單</button>
       </div>
-      <div class="sec want"><h3><span id="labWant">🟢 我想要的</span> <span class="sub" id="cW">0</span>
+      <div class="sec want"><h3><button class="secToggle" id="tgWant" onclick="toggleSec('want')" title="收合/展開" aria-expanded="true">▾</button><span class="secLab" id="labWant" onclick="toggleSec('want')">🟢 我想要的</span> <span class="sub" id="cW">0</span>
         <span class="secBtns"><button class="editSec want" id="addWant" onclick="openPicker('want')">✏️ 加入</button><button class="editSec danger" id="clrWant" onclick="clearSide('want')">🗑 全部刪除</button></span></h3>
         <div class="list" id="listW"><div class="empty">點 ✏️ 加入寶可夢</div></div></div>
-      <div class="sec have"><h3><span id="labHave">🟡 我能提供的</span> <span class="sub" id="cH">0</span>
+      <div class="sec have"><h3><button class="secToggle" id="tgHave" onclick="toggleSec('have')" title="收合/展開" aria-expanded="true">▾</button><span class="secLab" id="labHave" onclick="toggleSec('have')">🟡 我能提供的</span> <span class="sub" id="cH">0</span>
         <span class="secBtns"><button class="editSec have" id="addHave" onclick="openPicker('have')">✏️ 加入</button><button class="editSec danger" id="clrHave" onclick="clearSide('have')">🗑 全部刪除</button></span></h3>
         <div class="list" id="listH"><div class="empty">點 ✏️ 加入寶可夢</div></div></div>
       <div class="toolbar" id="startBar">
@@ -589,6 +600,7 @@ async function boot(){
   ready=true; bootResolve();
   renderSets();
   drawLists();
+  restoreCollapse();   // 還原「我想要的/我能提供的」收合狀態
   render();
   renderBase();   // 還原清單後即時畫出匯出預覽(PNG 區)
 }
@@ -934,6 +946,15 @@ function openPicker(t){ setTarget(t);
   const pt=$('#pickTitle'); if(pt)pt.textContent=tr('pick_title')+'：'+(t==='want'?tr('want'):tr('have'));
   document.body.classList.add('picking'); const g=$('#grid'); if(g)g.scrollTop=0; }
 function closePicker(){ document.body.classList.remove('picking'); }
+// 「我想要的 / 我能提供的」可收合;狀態記在 localStorage
+function toggleSec(k){ const sec=document.querySelector('.sec.'+k); if(!sec)return;
+  const c=sec.classList.toggle('collapsed');
+  const tg=document.getElementById(k==='want'?'tgWant':'tgHave'); if(tg)tg.setAttribute('aria-expanded',c?'false':'true');
+  try{ localStorage.setItem('tlCollapse_'+k, c?'1':'0'); }catch(e){} }
+function restoreCollapse(){ for(const k of ['want','have']){
+  let v=null; try{ v=localStorage.getItem('tlCollapse_'+k); }catch(e){}
+  if(v==='1'){ const sec=document.querySelector('.sec.'+k); if(sec)sec.classList.add('collapsed');
+    const tg=document.getElementById(k==='want'?'tgWant':'tgHave'); if(tg)tg.setAttribute('aria-expanded','false'); } } }
 // 點浮層外的暗色背景 → 收起選取面板(點面板內或編輯鈕不會誤關)
 // 手機版:面板左右兩側有縫隙,誤觸會跳離選擇 → 手機只用「✓ 完成」關閉,不因點外面而關;電腦版維持點外面即關
 document.addEventListener('pointerdown',e=>{ if(window.innerWidth<=700)return;
