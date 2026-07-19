@@ -615,6 +615,7 @@ async function boot(){
   $('#q').oninput=()=>{ $('#qClear').style.display=$('#q').value?'':'none'; render(); };
   $('#qClear').onclick=()=>{ $('#q').value=''; $('#qClear').style.display='none'; render(); $('#q').focus(); };
   $('#dl').onclick=downloadPNG;
+  setupGridSelect($('#grid'));   // 選取網格:單點切換 + 橫向起手的拖曳批次選取(iPhone 相簿式)
   $('#clr').onclick=()=>{ if(confirm(tr('confirm_clear'))){LIST.want=[];LIST.have=[];drawLists();render();renderBase();} };
   // 多組清單:新增/命名/複製/刪除/全部刪除
   $('#setAdd').onclick=()=>{ const s=newSet(); SETS.push(s); switchSet(s.id); persist(); };
@@ -1261,8 +1262,7 @@ function appendBatch(){
       ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${inTarget(it)?'<span class="ok">✓</span>':''}`;
     d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
-    bindCellTap(d,it);
-    g.appendChild(d);
+    g.appendChild(d);   // 點選/拖曳選取由 setupGridSelect 在容器層統一處理(事件委派)
     const mi=d.querySelector('img.m'); if(mi)hookTrim(mi,!!it.bg);   // 預覽也去透明邊(需已在 DOM 才量得到寬度)
   }
   shown=end;
@@ -1342,13 +1342,62 @@ function renderSets(){
 // 觸控:改用 pointer 事件即時反應。click 在手機上有延遲、快速連點會掉點,
 // 兩指同時各點一隻還會被當成夾捏縮放而完全不觸發 → 改用 pointerdown/up,每個觸點各自獨立。
 // 手指按下即先標記,放開(未滑動)才確定選取;滑動捲動時瀏覽器會發 pointercancel,自動取消。
-function bindCellTap(d,it){
-  let sx=0,sy=0,moved=false,active=false;
-  d.addEventListener('pointerdown',e=>{ if(e.pointerType==='mouse'&&e.button!==0)return;
-    active=true; moved=false; sx=e.clientX; sy=e.clientY; });
-  d.addEventListener('pointermove',e=>{ if(active&&(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10))moved=true; });
-  d.addEventListener('pointerup',e=>{ if(!active)return; active=false; if(!moved)toggleItem(it,d); });
-  d.addEventListener('pointercancel',()=>{ active=false; });
+// ===== iPhone 相簿式拖曳批次選取 =====
+// 橫向起手 → 進入拖曳選取(依起點是否已選,決定這趟是「選」還是「取消」);之後上下左右滑,
+// 經過的格子成一個區間一起設定;拖回去會還原。縱向起手 → 交給捲動。單點(未滑) → 切換單一格。
+let gridSelectActive=false;
+document.addEventListener('touchmove',e=>{ if(gridSelectActive && e.cancelable) e.preventDefault(); },{passive:false});
+function gridCellState(cell){ return cell.classList.contains('added'); }
+function setGridCell(cell,on){   // 直接改 LIST[TARGET] 與格子外觀(不逐格重畫,批次結束再統一 sync)
+  const it=cell._it; if(!it || gridCellState(cell)===on) return;
+  const arr=LIST[TARGET], c={url:it.url,badge:it.badge||null,zh:it.zh,shiny:!!it.shiny,tag:it.tag||'',bg:it.bg||null,gender:it.gender||null,dex:it.dex};
+  if(on){ arr.push(c); loadImg(it.url); if(it.bg)loadExport(it.bg); if(it.badge)loadImg(it.badge); }
+  else { const i=arr.findIndex(x=>keyOf(x)===keyOf(c)); if(i>=0)arr.splice(i,1); }
+  cell.classList.toggle('added',on);
+  let ok=cell.querySelector('.ok');
+  if(on&&!ok){ ok=document.createElement('span'); ok.className='ok'; ok.textContent='✓'; cell.appendChild(ok); }
+  else if(!on&&ok) ok.remove();
+}
+function setupGridSelect(grid){
+  let mode='idle', sx=0, sy=0, startCell=null, startIdx=-1, val=true, dMin=-1, dMax=-1;
+  const base=new Map();                              // idx → 拖曳前狀態,供還原
+  const idxOf=cell=>[...grid.children].indexOf(cell);
+  const setV=i=>{ const c=grid.children[i]; if(!c||!c._it)return; if(!base.has(i))base.set(i,gridCellState(c)); setGridCell(c,val); };
+  const restore=i=>{ const c=grid.children[i]; if(c&&c._it&&base.has(i)) setGridCell(c,base.get(i)); };
+  function end(){ if(mode==='select'){ gridSelectActive=false; base.clear(); scheduleToggleSync(); }
+    mode='idle'; startCell=null; dMin=dMax=-1; }
+  grid.addEventListener('pointerdown',e=>{
+    const cell=e.target.closest('.cell'); if(!cell||cell.parentNode!==grid)return;
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    mode='pending'; sx=e.clientX; sy=e.clientY; startCell=cell; startIdx=idxOf(cell);
+  });
+  grid.addEventListener('pointermove',e=>{
+    if(mode==='idle'||mode==='scroll')return;
+    const dx=e.clientX-sx, dy=e.clientY-sy;
+    if(mode==='pending'){
+      if(Math.abs(dx)>12 && Math.abs(dx)>Math.abs(dy)){   // 橫向 → 進入拖曳選取
+        mode='select'; gridSelectActive=true;
+        try{ grid.setPointerCapture(e.pointerId); }catch(_){}
+        val=!gridCellState(startCell);
+        base.set(startIdx,gridCellState(startCell)); setGridCell(startCell,val);
+        dMin=dMax=startIdx;
+      } else if(Math.abs(dy)>12){ mode='scroll'; }   // 縱向 → 讓它捲動
+      return;
+    }
+    // select:算目前 pointer 下的格子,把起點~目前的區間設為 val,離開區間的還原
+    if(e.cancelable)e.preventDefault();
+    const el=document.elementFromPoint(e.clientX,e.clientY), cell=el&&el.closest('.cell');
+    if(!cell||cell.parentNode!==grid)return;
+    const idx=idxOf(cell); if(idx<0)return;
+    const nMin=Math.min(startIdx,idx), nMax=Math.max(startIdx,idx);
+    for(let i=dMin;i<nMin;i++) restore(i);
+    for(let i=nMax+1;i<=dMax;i++) restore(i);
+    for(let i=nMin;i<dMin;i++) setV(i);
+    for(let i=dMax+1;i<=nMax;i++) setV(i);
+    dMin=nMin; dMax=nMax;
+  });
+  grid.addEventListener('pointerup',e=>{ if(mode==='pending'&&startCell) toggleItem(startCell._it,startCell); end(); });
+  grid.addEventListener('pointercancel',end);
 }
 // 連點時把「重畫清單/匯出預覽/重新篩選」延後合併:點選即時反應(格子的✓當下就更新)、
 // 不因每次點擊都重畫而卡頓或掉點。這些重畫在選取浮層開啟時本來就看不到,關閉時 flush 一次即可。
