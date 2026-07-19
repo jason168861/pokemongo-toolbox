@@ -121,6 +121,7 @@
   @media(hover:hover){ .cell:hover{border-color:var(--acc2);transform:translateY(-2px)} }
   .cell.added{outline:2px solid var(--want);opacity:.55}
   .cell img.m{position:absolute;inset:0;margin:auto;width:88%;height:88%;object-fit:contain;z-index:2}
+  .cell img.m.big{width:96%;height:96%}   /* 無背卡:放大填滿,減少白邊(與下載圖一致) */
   .cell img.cbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
   .cell .bd{position:absolute;right:2px;top:2px;width:32%;height:32%;object-fit:contain;z-index:3}
   .cell .sh{position:absolute;left:3px;top:2px;font-size:11px;z-index:3}
@@ -186,6 +187,7 @@
   .li .card::before{content:"";display:block;padding-top:100%}
   .li .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .li .m{position:absolute;inset:0;margin:auto;width:80%;height:80%;object-fit:contain;z-index:2}
+  .li .m.big{width:94%;height:94%}   /* 無背卡:放大填滿,減少白邊 */
   .li .bd{position:absolute;right:5%;top:5%;width:28%;height:28%;z-index:3}
   .li .gn{position:absolute;left:5%;bottom:5%;z-index:3;font-size:12px;line-height:1;color:#ff9ec7}
   .li .card .del{position:absolute;right:2px;bottom:2px;z-index:4;width:18px;height:18px;padding:0;border-radius:50%;background:#000b;border:1px solid #fff5;color:#fff;cursor:pointer;font-size:11px;line-height:1}
@@ -760,7 +762,9 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
   x.save();x.shadowColor='rgba(0,0,0,0.35)';x.shadowBlur=8;x.shadowOffsetY=3;x.fillStyle=T.cardbg;rrPath(x,cx,cy,S,S,S*0.16);x.fill();x.restore();
   x.save();rrPath(x,cx,cy,S,S,S*0.16);x.clip();x.fillStyle=T.cardbg;x.fillRect(cx,cy,S,S);
   if(c.bg){const b=await loadExport(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
-  const m=await loadImg(c.url);if(m)x.drawImage(m,cx+S*0.09,cy+S*0.09,S*0.82,S*0.82);
+  // 無背卡:寶可夢放大、幾乎填滿卡片(減少四周留白/白邊);有背卡:維持較小以露出背卡
+  const ins = c.bg ? 0.09 : 0.02, sz = 1-2*ins;
+  const m=await loadImg(c.url);if(m)x.drawImage(m,cx+S*ins,cy+S*ins,S*sz,S*sz);
   x.restore();
   if(T.line&&!/,\s*0\)$/.test(T.line)){x.strokeStyle=T.line;x.lineWidth=2;rrPath(x,cx,cy,S,S,S*0.16);x.stroke();}
   if(c.badge){const b=await loadImg(c.badge);if(b)x.drawImage(b,cx+S*0.63,cy+S*0.04,S*0.33,S*0.33);}
@@ -1161,7 +1165,7 @@ function appendBatch(){
     const it=FILTERED[i];const d=document.createElement('div');d.className='cell';
     if(inTarget(it))d.classList.add('added');
     d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${thumbOf(it.bg)}">`:''}
-      <img class="m" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
+      <img class="m${it.bg?'':' big'}" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
       ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${inTarget(it)?'<span class="ok">✓</span>':''}`;
     d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
@@ -1316,7 +1320,7 @@ function drawLists(){
     box.innerHTML='';
     LIST[k].forEach((c,i)=>{const d=document.createElement('div');d.className='li';
       d.innerHTML=`<div class="card">${c.bg?`<img class="bg" loading="lazy" decoding="async" src="${thumbOf(c.bg)}" referrerpolicy="no-referrer">`:''}
-        <img class="m" loading="lazy" decoding="async" src="${thumbOf(c.url)}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}
+        <img class="m${c.bg?'':' big'}" loading="lazy" decoding="async" src="${thumbOf(c.url)}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}
         ${c.shiny?'<span class="sh">✨</span>':''}${c.gender==='female'?'<span class="gn">♀</span>':''}${c.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}
         <button class="del">✕</button></div>`;
       // 每張卡片的附加文字（顯示在匯出圖上）
