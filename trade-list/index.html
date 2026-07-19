@@ -807,6 +807,21 @@ function scaleForExport(H){
   sc = Math.min(sc, MAXSIDE/LAYW, MAXSIDE/Math.max(H,1));          // 不超過單邊上限
   return Math.max(0.5, sc);
 }
+// 實測這台裝置能否正確輸出某尺寸的 canvas。iOS/手機超過 GPU 上限時「不會報錯」,
+// 而是把內容降解析度渲染再拉伸(檔案很大卻模糊),或整張空白 → 靠畫測試點讀回來判斷。
+function canvasWorks(w,h){
+  if(w<1||h<1) return false;
+  let c=null;
+  try{
+    c=document.createElement('canvas'); c.width=w; c.height=h;
+    const x=c.getContext('2d'); if(!x) return false;
+    x.fillStyle='#000'; x.fillRect(0,0,w,h);
+    x.fillStyle='#ff0000'; x.fillRect(w-4,h-4,4,4);      // 在最右下角畫一個小紅塊
+    const d=x.getImageData(w-1,h-1,1,1).data;            // 讀回最角落那一個像素
+    return d[0]>170 && d[1]<80 && d[2]<80;               // 仍是純紅 → 該尺寸能正確渲染
+  }catch(e){ return false; }
+  finally{ if(c){ c.width=c.height=1; } }                // 釋放記憶體
+}
 let LAYH=1000;   // 目前版面總高(layout 單位),供縮放滑桿計算
 // 縮放滑桿:0=整張顯示(符合高度)、50=符合寬度、100=再放大;由此設定 #baseCv 的顯示寬度,超出則捲動
 function applyZoom(){
@@ -925,7 +940,11 @@ function addText(){
 async function downloadPNG(){
   if(!LIST.want.length&&!LIST.have.length){alert(tr('list_empty'));return;}
   const lay=computeLayout(); reconcile(lay);
-  const SC=scaleForExport(lay.H),cv=$('#cv');cv.width=LAYW*SC;cv.height=lay.H*SC;const x=cv.getContext('2d');
+  let SC=scaleForExport(lay.H);
+  // 針對「實際輸出尺寸」逐步驗證這台裝置的能力:超過上限就降解析度重試,
+  // 在能力範圍內取最高清晰度 → 避免手機產出「檔案很大卻模糊」的圖。
+  while(SC>0.4 && !canvasWorks(Math.round(LAYW*SC), Math.round(lay.H*SC))) SC*=0.85;
+  const cv=$('#cv');cv.width=Math.round(LAYW*SC);cv.height=Math.round(lay.H*SC);const x=cv.getContext('2d');
   await drawBaseTo(x,lay,SC);
   x.setTransform(SC,0,0,SC,0,0);
   for(const t of TEXTS){
