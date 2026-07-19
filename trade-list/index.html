@@ -73,7 +73,8 @@
   /* 面板本身固定在視窗內、不捲動;只有裝著網格的 #gridWrap 會捲動 */
   /* 捲動容器用純 div 包住,grid 本身依內容決定高度 —— 避免 iOS Safari 把方格圖片壓成一條線 */
   #selPanel .pickHead,#selPanel .tabs,#selPanel .filters,#selPanel #gcount{flex:none}
-  #selPanel #gridWrap{flex:1 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}
+  /* touch-action:pan-y → 只允許上下捲動,停用夾捏縮放,讓兩指可同時各點選一隻(不會被當成縮放手勢) */
+  #selPanel #gridWrap{flex:1 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
   #selPanel #grid{max-height:none;overflow:visible}
   /* 電腦版:選取面板更寬、圖片更大(每排數量不變) */
   @media(min-width:900px){
@@ -1042,7 +1043,7 @@ function appendBatch(){
       ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${inTarget(it)?'<span class="ok">✓</span>':''}`;
     d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
-    d.onclick=()=>toggleItem(it,d);
+    bindCellTap(d,it);
     g.appendChild(d);
   }
   shown=end;
@@ -1118,6 +1119,17 @@ function renderSets(){
   });
   bar.ondragover=e=>{ if(setDragId)e.preventDefault(); };
   bar.ondrop=e=>{ if(setDragId&&e.target===bar){ e.preventDefault(); clearSetIns(); moveSetTo(setDragId,SETS.length); } };
+}
+// 觸控:改用 pointer 事件即時反應。click 在手機上有延遲、快速連點會掉點,
+// 兩指同時各點一隻還會被當成夾捏縮放而完全不觸發 → 改用 pointerdown/up,每個觸點各自獨立。
+// 手指按下即先標記,放開(未滑動)才確定選取;滑動捲動時瀏覽器會發 pointercancel,自動取消。
+function bindCellTap(d,it){
+  let sx=0,sy=0,moved=false,active=false;
+  d.addEventListener('pointerdown',e=>{ if(e.pointerType==='mouse'&&e.button!==0)return;
+    active=true; moved=false; sx=e.clientX; sy=e.clientY; });
+  d.addEventListener('pointermove',e=>{ if(active&&(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10))moved=true; });
+  d.addEventListener('pointerup',e=>{ if(!active)return; active=false; if(!moved)toggleItem(it,d); });
+  d.addEventListener('pointercancel',()=>{ active=false; });
 }
 // 連點時把「重畫清單/匯出預覽/重新篩選」延後合併:點選即時反應(格子的✓當下就更新)、
 // 不因每次點擊都重畫而卡頓或掉點。這些重畫在選取浮層開啟時本來就看不到,關閉時 flush 一次即可。
