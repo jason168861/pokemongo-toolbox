@@ -1373,7 +1373,7 @@ function drawLists(){
     box.innerHTML='';
     LIST[k].forEach((c,i)=>{const d=document.createElement('div');d.className='li';
       d.innerHTML=`<div class="card">${c.bg?`<img class="bg" loading="lazy" decoding="async" src="${thumbOf(c.bg)}" referrerpolicy="no-referrer">`:''}
-        <img class="m${c.bg?'':' big'}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(c.url)}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}
+        <img class="m${c.bg?'':' big'}" crossorigin="anonymous" loading="lazy" decoding="async" src="${cdn(c.url)}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}
         ${c.shiny?'<span class="sh">✨</span>':''}${c.gender==='female'?'<span class="gn">♀</span>':''}${c.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}
         <button class="del">✕</button></div>`;
       // 每張卡片的附加文字（顯示在匯出圖上）
