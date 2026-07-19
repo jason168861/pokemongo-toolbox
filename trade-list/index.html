@@ -716,7 +716,7 @@ function defaultTexts(lay){
   const T=THEMES[THEME].exp,list=[];
   list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:32,size:62,color:T.title,weight:900,font:DEFONT,outline:false,autoColor:true});
   if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:114,size:32,color:T.fly,weight:900,font:DEFONT,outline:false,autoColor:true});
-  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:58,color:s.col,weight:900,font:DEFONT,outline:true,autoColor:true,autoSize:true});
+  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:58,color:s.col,weight:900,font:DEFONT,outline:false,shadow:true,autoColor:true,autoSize:true});
   return list;
 }
 function reconcile(lay){
@@ -735,7 +735,7 @@ function reconcile(lay){
     if(has && !el){ TEXTS.push(def.find(d=>d.id==='lab-'+key)); }
     else if(!has && el){ TEXTS=TEXTS.filter(t=>t!==el); }
     else if(has && el && !el.moved){ el.y=lay.secs.find(s=>s.key===key).labelY;
-      if(el.autoSize!==false){ const dd=def.find(d=>d.id==='lab-'+key); if(dd){ el.size=dd.size; el.outline=dd.outline; } } }   // 未手動改過大小/樣式 → 套用新的預設(更大更顯眼)
+      if(el.autoSize!==false){ const dd=def.find(d=>d.id==='lab-'+key); if(dd){ el.size=dd.size; el.outline=dd.outline; el.shadow=dd.shadow; } } }   // 未手動改過大小/樣式 → 套用新的預設(更大更顯眼)
   }
 }
 
@@ -918,10 +918,11 @@ function redo(){ if(!redoStack.length)return; undoStack.push(JSON.stringify(TEXT
 function styleText(d,t,sc){   // 套用外觀到現有 div(不重建,供拖曳/縮放即時更新)
   d.style.left=t.cx*sc+'px'; d.style.top=t.y*sc+'px';
   d.style.fontSize=t.size*sc+'px'; d.style.fontWeight=t.weight||900; d.style.fontFamily=t.font||DEFONT;
-  d.style.background=''; d.style.padding=''; d.style.borderRadius=''; d.style.webkitTextStroke=''; d.style.color=t.color;
+  d.style.background=''; d.style.padding=''; d.style.borderRadius=''; d.style.webkitTextStroke=''; d.style.color=t.color; d.style.textShadow='';
   if(t.bg===1){ d.style.background=t.color; d.style.color=contrast(t.color); d.style.padding='0.06em 0.26em'; d.style.borderRadius='0.16em'; }
   else if(t.bg===2){ d.style.background='rgba(0,0,0,.45)'; d.style.padding='0.06em 0.26em'; d.style.borderRadius='0.16em'; }
   if(t.outline){ d.style.webkitTextStroke=Math.max(1,t.size*sc*0.06)+'px '+THEMES[THEME].exp.tOut; }
+  if(t.shadow){ d.style.textShadow='0 '+Math.max(1,t.size*sc*0.05)+'px '+Math.max(2,t.size*sc*0.10)+'px rgba(0,0,0,.55)'; }
   d.style.transform=(t.align==='center'?'translateX(-50%) ':'')+((t.rot)?'rotate('+t.rot+'rad)':'');
 }
 function mkH(cls,txt){ const h=document.createElement('span'); h.className='h '+cls; h.textContent=txt; return h; }
@@ -1013,7 +1014,9 @@ function drawTextsTo(x,SC,offY){
     const padX=h*0.26, padY=h*0.13;
     if(t.bg===1){ rrPath(x,-w/2-padX,-h/2-padY,w+2*padX,h+2*padY,h*0.18); x.fillStyle=t.color; x.fill(); x.fillStyle=contrast(t.color); x.fillText(t.text,0,0); }
     else if(t.bg===2){ rrPath(x,-w/2-padX,-h/2-padY,w+2*padX,h+2*padY,h*0.18); x.fillStyle='rgba(0,0,0,.45)'; x.fill(); x.fillStyle=t.color; x.fillText(t.text,0,0); }
-    else { if(t.outline){ x.lineJoin='round'; x.lineWidth=Math.max(3,t.size*0.12); x.strokeStyle=THEMES[THEME].exp.tOut; x.strokeText(t.text,0,0); } x.fillStyle=t.color; x.fillText(t.text,0,0); }
+    else { if(t.outline){ x.lineJoin='round'; x.lineWidth=Math.max(3,t.size*0.12); x.strokeStyle=THEMES[THEME].exp.tOut; x.strokeText(t.text,0,0); }
+      if(t.shadow){ x.shadowColor='rgba(0,0,0,0.55)'; x.shadowBlur=Math.max(2,t.size*0.10); x.shadowOffsetY=Math.max(1,t.size*0.05); }
+      x.fillStyle=t.color; x.fillText(t.text,0,0); }
     x.restore();
   }
 }
