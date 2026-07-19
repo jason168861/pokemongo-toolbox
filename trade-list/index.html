@@ -788,13 +788,26 @@ function drawMon(x,m,key,dx0,dy0,box){
   const sc=Math.min(box/sw, box/sh), dw=sw*sc, dh=sh*sc;       // contain,維持比例
   x.drawImage(m, sx,sy,sw,sh, dx0+(box-dw)/2, dy0+(box-dh)/2, dw, dh);
 }
+// 預覽(選取格子/清單)的 <img> 也去透明邊:量出主體範圍後,用 transform 放大並置中,
+// 超出的透明邊由容器 overflow:hidden 裁掉,與下載圖效果一致。pad=主體佔卡片的比例。
+function hookTrim(img,hasBg){
+  const run=()=>{
+    if(!img.naturalWidth) return;
+    const bb=trimBBox(img,img.src); if(!bb) return;   // 讀不到(跨域無 CORS 等)→ 維持原樣
+    const pad=hasBg?0.84:0.96, s=pad/Math.max(bb.w,bb.h);
+    const tx=-((bb.x+bb.w/2)-0.5)*s*100, ty=-((bb.y+bb.h/2)-0.5)*s*100;
+    img.style.width='100%'; img.style.height='100%';
+    img.style.transform=`translate(${tx}%,${ty}%) scale(${s})`;
+  };
+  if(img.complete && img.naturalWidth) run(); else img.addEventListener('load',run,{once:true});
+}
 function star(x,cx,cy,r,fill){x.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr_=i%2?r*0.45:r;x[i?'lineTo':'moveTo'](cx+rr_*Math.cos(a),cy+rr_*Math.sin(a));}x.closePath();x.fillStyle=fill;x.fill();}
 async function drawCard(x,cx,cy,c,T,noteH,noteCol){
   x.save();x.shadowColor='rgba(0,0,0,0.35)';x.shadowBlur=8;x.shadowOffsetY=3;x.fillStyle=T.cardbg;rrPath(x,cx,cy,S,S,S*0.16);x.fill();x.restore();
   x.save();rrPath(x,cx,cy,S,S,S*0.16);x.clip();x.fillStyle=T.cardbg;x.fillRect(cx,cy,S,S);
   if(c.bg){const b=await loadExport(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
-  // 去透明邊後放大:無背卡幾乎填滿卡片;有背卡也放大一點(但仍露出背卡)
-  const ins = c.bg ? 0.05 : 0.02, box = S*(1-2*ins);
+  // 去透明邊後放大:無背卡幾乎填滿卡片;有背卡放小一點以露出背卡
+  const ins = c.bg ? 0.08 : 0.02, box = S*(1-2*ins);
   const m=await loadImg(c.url);if(m)drawMon(x,m,cdn(c.url),cx+S*ins,cy+S*ins,box);
   x.restore();
   if(T.line&&!/,\s*0\)$/.test(T.line)){x.strokeStyle=T.line;x.lineWidth=2;rrPath(x,cx,cy,S,S,S*0.16);x.stroke();}
@@ -1196,11 +1209,12 @@ function appendBatch(){
     const it=FILTERED[i];const d=document.createElement('div');d.className='cell';
     if(inTarget(it))d.classList.add('added');
     d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${thumbOf(it.bg)}">`:''}
-      <img class="m${it.bg?'':' big'}" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
+      <img class="m${it.bg?'':' big'}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
       ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${inTarget(it)?'<span class="ok">✓</span>':''}`;
     d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
     bindCellTap(d,it);
+    const mi=d.querySelector('img.m'); if(mi)hookTrim(mi,!!it.bg);   // 預覽也去透明邊
     g.appendChild(d);
   }
   shown=end;
@@ -1351,7 +1365,7 @@ function drawLists(){
     box.innerHTML='';
     LIST[k].forEach((c,i)=>{const d=document.createElement('div');d.className='li';
       d.innerHTML=`<div class="card">${c.bg?`<img class="bg" loading="lazy" decoding="async" src="${thumbOf(c.bg)}" referrerpolicy="no-referrer">`:''}
-        <img class="m${c.bg?'':' big'}" loading="lazy" decoding="async" src="${thumbOf(c.url)}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}
+        <img class="m${c.bg?'':' big'}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(c.url)}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}
         ${c.shiny?'<span class="sh">✨</span>':''}${c.gender==='female'?'<span class="gn">♀</span>':''}${c.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}
         <button class="del">✕</button></div>`;
       // 每張卡片的附加文字（顯示在匯出圖上）
@@ -1368,6 +1382,7 @@ function drawLists(){
         if(!LIST[k].length) box.innerHTML='<div class="empty">'+tr('empty')+'</div>';
         renderSets(); persist(); scheduleBase(); };
       liDrag(d,k,i);
+      const mi=d.querySelector('.m'); if(mi)hookTrim(mi,!!c.bg);   // 預覽也去透明邊
       d.appendChild(ni);
       box.appendChild(d);});
   }
