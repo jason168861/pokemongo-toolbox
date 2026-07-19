@@ -703,7 +703,7 @@ let COLS=5, LAYW=2*PAD+GAP+COLS*(S+GAP);   // 於 boot 依裝置寬度設定:桌
 const COLS_MIN=1, COLS_MAX=15;
 // 有效每排數量:不超過「內容較多的一側」的隻數(例如兩側各 6/5,設 10 時實際每排 6,不留空位)
 function maxRowItems(){ return Math.max(1, (LIST.want||[]).length, (LIST.have||[]).length); }
-function effCols(){ return Math.max(1, Math.min(COLS, maxRowItems())); }
+function effCols(){ return Math.max(Math.min(3,COLS), Math.min(COLS, maxRowItems())); }   // 至少 3 格(除非設定<3),避免只選一兩隻時圖太窄
 function calcLAYW(){ return 2*PAD+GAP+effCols()*(S+GAP); }
 function setCols(){   // 優先用使用者存過的每排數量;沒有才依裝置寬度給預設
   const saved=+localStorage.getItem('bgtoolCols');
@@ -753,11 +753,12 @@ function reconcile(lay){
   if(!TEXTS.length){ TEXTS=defaultTexts(lay); return; }
   const byId=id=>TEXTS.find(t=>t.id===id);
   const def=defaultTexts(lay);
-  // 標題一定存在
-  if(!byId('title')) TEXTS.push(def.find(d=>d.id==='title'));
+  // 標題一定存在;LAYW 會隨每排數量/內容改變 → 未手動移動的置中文字重新置中,避免跑位
+  const ti=byId('title'); if(!ti) TEXTS.push(def.find(d=>d.id==='title')); else if(!ti.moved) ti.cx=LAYW/2;
   // canfly 依開關
   if(lay.fly && !byId('canfly')) TEXTS.push(def.find(d=>d.id==='canfly'));
   if(!lay.fly) TEXTS=TEXTS.filter(t=>t.id!=='canfly');
+  const cf=byId('canfly'); if(cf && !cf.moved) cf.cx=LAYW/2;
   // 區塊標籤:有該區才有,沒手動移動就跟著版面
   for(const key of ['want','have']){
     const has=lay.secs.some(s=>s.key===key);
