@@ -330,6 +330,8 @@
   body{touch-action:manipulation}
   @media(max-width:700px){ input,textarea,select,.li .note,#q{font-size:16px} }
   body.editmode #selPanel,body.editmode #listPanel{display:none}
+  /* 一開始只顯示清單;按「開始製圖」進入編輯模式才出現編輯/預覽面板 */
+  body:not(.editmode) #editPanel{display:none}
 </style>
 </head>
 <body>
@@ -677,7 +679,7 @@ function setMode(m){
     document.body.classList.remove('editmode');
   }
   requestAnimationFrame(()=>{ renderBase();     // 版面寬度變了,重新排版
-    if(m==='select') $('#editPanel').scrollIntoView({behavior:'smooth',block:'start'}); });   // 完成後回到圖片處
+    if(m==='select') $('#listPanel').scrollIntoView({behavior:'smooth',block:'start'}); });   // 完成編輯 → 回到清單(編輯面板已收起)
 }
 // 手機右滑/瀏覽器返回:若在編輯中,先回到清單(消耗掉進編輯時 push 的那一步)
 window.addEventListener('popstate',()=>{ if(document.body.classList.contains('editmode')) setMode('select'); });
