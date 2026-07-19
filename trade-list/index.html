@@ -709,7 +709,7 @@ const QR_S=150, QR_PADPX=16, QR_CARD=QR_S+QR_PADPX*2, QR_TOP=20, QR_GAP=14;
 let _measCtx=null;   // 離屏量測文字寬度(給標題避讓用)
 function measureText(text,font){ if(!_measCtx)_measCtx=document.createElement('canvas').getContext('2d'); _measCtx.font=font; return _measCtx.measureText(text).width; }
 let COLS=5, LAYW=2*PAD+GAP+COLS*(S+GAP);   // 於 boot 依裝置寬度設定:桌機每排更多、手機維持 5
-const COLS_MIN=1, COLS_MAX=15;
+const COLS_MIN=3, COLS_MAX=15;
 // 有效每排數量:不超過「內容較多的一側」的隻數(例如兩側各 6/5,設 10 時實際每排 6,不留空位)
 function maxRowItems(){ return Math.max(1, (LIST.want||[]).length, (LIST.have||[]).length); }
 function effCols(){ return Math.max(Math.min(3,COLS), Math.min(COLS, maxRowItems())); }   // 至少 3 格(除非設定<3),避免只選一兩隻時圖太窄
