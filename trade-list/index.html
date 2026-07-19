@@ -1134,9 +1134,16 @@ function bindCellTap(d,it){
 // 連點時把「重畫清單/匯出預覽/重新篩選」延後合併:點選即時反應(格子的✓當下就更新)、
 // 不因每次點擊都重畫而卡頓或掉點。這些重畫在選取浮層開啟時本來就看不到,關閉時 flush 一次即可。
 let _toggleSyncTimer=null;
-function runToggleSync(){ _toggleSyncTimer=null; drawLists(); if(FILT.fSelected)render(); renderBase(); }
+function runToggleSync(){ _toggleSyncTimer=null;
+  // 選取浮層開啟中:清單與匯出預覽都在浮層後面看不到 → 只做輕量存檔,
+  // 完全略過 drawLists()/renderBase() 這種重畫,避免背景繪製造成手機卡頓。
+  if(document.body.classList.contains('picking')){ if(FILT.fSelected)render(); persist(); return; }
+  drawLists(); if(FILT.fSelected)render(); renderBase();
+}
 function scheduleToggleSync(){ clearTimeout(_toggleSyncTimer); _toggleSyncTimer=setTimeout(runToggleSync,180); }
-function flushToggleSync(){ if(_toggleSyncTimer){ clearTimeout(_toggleSyncTimer); runToggleSync(); } }
+// 關閉浮層時務必做一次完整重畫(此時 picking 已移除,runToggleSync 會走完整路徑),
+// 不論當下是否還有待處理的 timer,確保清單與匯出預覽反映所有選取。
+function flushToggleSync(){ clearTimeout(_toggleSyncTimer); _toggleSyncTimer=null; runToggleSync(); }
 function toggleItem(it,cell){
   const c={url:it.url,badge:it.badge||null,zh:it.zh,shiny:!!it.shiny,tag:it.tag||'',bg:it.bg||null,gender:it.gender||null,dex:it.dex};
   const arr=LIST[TARGET];const idx=arr.findIndex(x=>keyOf(x)===keyOf(c));
