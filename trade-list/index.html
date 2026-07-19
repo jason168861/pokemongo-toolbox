@@ -458,6 +458,7 @@
         <button class="btn" id="dlList" onclick="downloadPNG()">⬇ 下載 PNG</button>
       </div>
       <label class="switch" id="flyRow"><input type="checkbox" id="canfly"><span class="track"></span><span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
+      <label class="switch" id="qrRow"><input type="checkbox" id="qrToggle"><span class="track"></span><span id="qrLabel">📷 在圖片加上推廣 QR</span></label>
 
       <div id="editor">
         <div id="edStage"><canvas id="baseCv"></canvas><div id="txtLayer"></div></div>
@@ -632,6 +633,7 @@ async function boot(){
   $('#sortBtn').onclick=()=>{ const r=t=>(t.tag==='超極巨化'?3:t.tag==='極巨化'?2:t.tag==='淨化'?1:0)*2+(t.shiny?1:0);
     for(const k of ['want','have']) LIST[k].sort((a,b)=>(a.dex||0)-(b.dex||0)||r(a)-r(b)); drawLists();renderBase(); };
   $('#canfly').onchange=()=>{ LIST.canfly=$('#canfly').checked; TEXTS=TEXTS.filter(t=>t.id!=='canfly'); renderBase(); persist(); };
+  $('#qrToggle').onchange=()=>{ LIST.qr=$('#qrToggle').checked; renderBase(); persist(); };
   $('#themeSel').onchange=()=>applyTheme($('#themeSel').value);
   // IG 風格文字編輯器的按鈕
   $('#enterEdit').onclick=()=>setMode('edit');
@@ -888,6 +890,24 @@ async function drawBaseTo(x,lay,SC,offY){
       const cx=PAD+GAP+(i%EC)*(S+GAP), cy=s.panelY+GAP+rw.y;
       if(cy+S+rw.noteH<visTop || cy>visBot) continue;   // 不在此段 → 跳過
       await drawCard(x,cx,cy,s.items[i],T,rw.noteH,s.col);
+    }
+  }
+  // 右上角推廣 QR + 網址(由開關控制,關掉即移除);分塊輸出時只在含頂部的那一段畫
+  if(LIST.qr){
+    const qrS=140, cardW=qrS+18, cardH=qrS+62, cx0=W-PAD-cardW, cy0=20;
+    if(cy0+cardH>=visTop && cy0<=visBot){
+      const q=await loadImg('assets/brand/qr.png');
+      x.save(); x.shadowColor='rgba(0,0,0,.28)'; x.shadowBlur=10; x.shadowOffsetY=3;
+      x.fillStyle='#fff'; rrPath(x,cx0,cy0,cardW,cardH,16); x.fill(); x.restore();
+      if(q) x.drawImage(q, cx0+9, cy0+9, qrS, qrS);
+      const midX=cx0+cardW/2; x.textAlign='center'; x.textBaseline='top';
+      let fs=18; const hint=tr('scan_hint'), setF=s=>x.font='700 '+s+'px "Microsoft JhengHei",sans-serif';
+      setF(fs); while(fs>10 && x.measureText(hint).width>cardW-12){ setF(--fs); }
+      x.fillStyle='#111'; x.fillText(hint, midX, cy0+qrS+12);
+      let us=14; const url=BASEURL.replace(/^https?:\/\//,'').replace(/\/$/,'');
+      x.font=us+'px "Microsoft JhengHei",sans-serif';
+      while(us>8 && x.measureText(url).width>cardW-8){ us--; x.font=us+'px "Microsoft JhengHei",sans-serif'; }
+      x.fillStyle='#555'; x.fillText(url, midX, cy0+qrS+14+fs);
     }
   }
 }
@@ -1308,6 +1328,7 @@ function bindActiveSet(){
   LIST=curSet().data;
   for(const k of ['want','have']) for(const c of LIST[k]) c.zh=nameOf(c.dex);   // 名稱依目前語言重算
   if($('#canfly')) $('#canfly').checked=!!LIST.canfly;
+  if($('#qrToggle')) $('#qrToggle').checked=!!LIST.qr;
   TEXTS=TEXTS.filter(t=>t.id!=='canfly');
 }
 function switchSet(id){ activeSetId=id; bindActiveSet(); renderSets(); drawLists(); render(); renderBase(); }
@@ -1523,6 +1544,7 @@ let bootResolve; const bootReady=new Promise(r=>{bootResolve=r;});   // boot 完
 function collect(){
   // 勾選框的即時狀態同步回目前這組,再整包存(v2:多組)
   if($('#canfly')) LIST.canfly=$('#canfly').checked;
+  if($('#qrToggle')) LIST.qr=$('#qrToggle').checked;
   return {v:2, sets:SETS, activeId:activeSetId};
 }
 function persist(){
