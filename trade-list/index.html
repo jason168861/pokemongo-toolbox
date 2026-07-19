@@ -894,20 +894,27 @@ async function drawBaseTo(x,lay,SC,offY){
   }
   // 右上角推廣 QR + 網址(由開關控制,關掉即移除);分塊輸出時只在含頂部的那一段畫
   if(LIST.qr){
-    const qrS=140, cardW=qrS+18, cardH=qrS+62, cx0=W-PAD-cardW, cy0=20;
+    const qrS=150, pad=16;
+    const hint=tr('scan_hint');
+    const host=BASEURL.replace(/^https?:\/\//,'').replace(/\/$/,'');   // 網址拆兩行:網域 + 路徑
+    const sl=host.indexOf('/'), line1=sl>0?host.slice(0,sl):host, line2=sl>0?host.slice(sl):'';
+    const hintF='700 19px "Microsoft JhengHei",sans-serif', urlF='700 17px "Microsoft JhengHei",sans-serif';
+    const wOf=(s,f)=>{ x.font=f; return x.measureText(s).width; };
+    const contentW=Math.max(qrS, wOf(hint,hintF), wOf(line1,urlF), wOf(line2,urlF));
+    const cardW=contentW+pad*2, hintH=27, urlH=23;
+    const cardH=pad+qrS+10+hintH+urlH+(line2?urlH:0)+pad-4;
+    const cx0=W-PAD-cardW, cy0=20, midX=cx0+cardW/2;
     if(cy0+cardH>=visTop && cy0<=visBot){
       const q=await loadImg('assets/brand/qr.png');
       x.save(); x.shadowColor='rgba(0,0,0,.28)'; x.shadowBlur=10; x.shadowOffsetY=3;
       x.fillStyle='#fff'; rrPath(x,cx0,cy0,cardW,cardH,16); x.fill(); x.restore();
-      if(q) x.drawImage(q, cx0+9, cy0+9, qrS, qrS);
-      const midX=cx0+cardW/2; x.textAlign='center'; x.textBaseline='top';
-      let fs=18; const hint=tr('scan_hint'), setF=s=>x.font='700 '+s+'px "Microsoft JhengHei",sans-serif';
-      setF(fs); while(fs>10 && x.measureText(hint).width>cardW-12){ setF(--fs); }
-      x.fillStyle='#111'; x.fillText(hint, midX, cy0+qrS+12);
-      let us=14; const url=BASEURL.replace(/^https?:\/\//,'').replace(/\/$/,'');
-      x.font=us+'px "Microsoft JhengHei",sans-serif';
-      while(us>8 && x.measureText(url).width>cardW-8){ us--; x.font=us+'px "Microsoft JhengHei",sans-serif'; }
-      x.fillStyle='#555'; x.fillText(url, midX, cy0+qrS+14+fs);
+      if(q) x.drawImage(q, midX-qrS/2, cy0+pad, qrS, qrS);      // QR 置中
+      x.textAlign='center'; x.textBaseline='top';
+      let yy=cy0+pad+qrS+10;
+      x.font=hintF; x.fillStyle='#111'; x.fillText(hint, midX, yy); yy+=hintH;
+      x.font=urlF; x.fillStyle='#1a1a1a';
+      x.fillText(line1, midX, yy); yy+=urlH;
+      if(line2) x.fillText(line2, midX, yy);
     }
   }
 }
