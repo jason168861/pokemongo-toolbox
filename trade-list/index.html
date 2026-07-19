@@ -673,7 +673,7 @@ window.addEventListener('popstate',()=>{ if(document.body.classList.contains('ed
 /* ---------- 版面計算(卡片固定,文字浮動) ---------- */
 const PAD=40,S=164,GAP=16,NOTELH=30;   // NOTELH=備註每行高度
 let COLS=5, LAYW=2*PAD+GAP+COLS*(S+GAP);   // 於 boot 依裝置寬度設定:桌機每排更多、手機維持 5
-const COLS_MIN=1, COLS_MAX=10;
+const COLS_MIN=1, COLS_MAX=15;
 function setCols(){   // 優先用使用者存過的每排數量;沒有才依裝置寬度給預設
   const saved=+localStorage.getItem('bgtoolCols');
   COLS = (saved>=COLS_MIN&&saved<=COLS_MAX) ? saved : (window.innerWidth>=1100?8 : window.innerWidth>=880?7 : 5);
@@ -797,6 +797,16 @@ let baseBusy=false,baseAgain=false;
 // 大清單時 canvas 面積會超過瀏覽器(尤其 iOS ~16M px)上限而變空白 → 依總高度自動降解析度
 function scaleFor(H){ const MAX = window.innerWidth<700 ? 5e6 : 14e6;   // 手機記憶體較緊,面積上限壓低避免拖曳時被回收成空白
   return Math.min(2, Math.sqrt(MAX/(LAYW*Math.max(H,1)))); }
+// 下載用:比預覽更清晰。下載 canvas 是一次性產生 blob(不像預覽會長時間保留、拖曳時被回收),
+// 可用到接近瀏覽器上限的解析度;仍以「面積」與「單邊」雙上限保護,避免超限變空白。
+function scaleForExport(H){
+  const mob = window.innerWidth<700 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const MAXAREA = mob ? 1.6e7 : 6e7;     // 面積上限:手機≈iOS 16M px 內, 桌機更寬鬆
+  const MAXSIDE = mob ? 8192  : 16384;   // 單邊像素上限
+  let sc = Math.min(3, Math.sqrt(MAXAREA/(LAYW*Math.max(H,1))));   // 理想最高 3 倍
+  sc = Math.min(sc, MAXSIDE/LAYW, MAXSIDE/Math.max(H,1));          // 不超過單邊上限
+  return Math.max(0.5, sc);
+}
 let LAYH=1000;   // 目前版面總高(layout 單位),供縮放滑桿計算
 // 縮放滑桿:0=整張顯示(符合高度)、50=符合寬度、100=再放大;由此設定 #baseCv 的顯示寬度,超出則捲動
 function applyZoom(){
@@ -915,7 +925,7 @@ function addText(){
 async function downloadPNG(){
   if(!LIST.want.length&&!LIST.have.length){alert(tr('list_empty'));return;}
   const lay=computeLayout(); reconcile(lay);
-  const SC=scaleFor(lay.H),cv=$('#cv');cv.width=LAYW*SC;cv.height=lay.H*SC;const x=cv.getContext('2d');
+  const SC=scaleForExport(lay.H),cv=$('#cv');cv.width=LAYW*SC;cv.height=lay.H*SC;const x=cv.getContext('2d');
   await drawBaseTo(x,lay,SC);
   x.setTransform(SC,0,0,SC,0,0);
   for(const t of TEXTS){
