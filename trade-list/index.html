@@ -108,13 +108,16 @@
     /* 手機:「只看」這一組(只看/已選/傳說)自己一行,不跟前面的篩選擠在一起 */
     .fbreak{display:block;flex-basis:100%;height:0;margin:0}
     .fdiv{border-left:0;margin-left:0;padding-left:0}
+    /* 手機:雌性 ♀ 圖標稍微上移,避免底部被裁掉顯示不完整 */
+    .cell .gn{bottom:6px;line-height:1.1}
   }
   .chip.scope{border-style:dashed}
   .chip.scope.on{background:var(--acc);color:#fff;border-color:transparent;border-style:solid}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:7px;max-height:66vh;overflow:auto}
   .cell{position:relative;background:var(--cellbg);border:1px solid var(--line);border-radius:9px;overflow:hidden;cursor:pointer}
   .cell::before{content:"";display:block;padding-top:100%}   /* 撐出正方形,不靠 aspect-ratio(iOS Safari 相容) */
-  .cell:hover{border-color:var(--acc2);transform:translateY(-2px)}
+  /* 只有真正支援滑鼠 hover 的裝置才變色/浮起;手機觸控不會殘留 hover 邊框 */
+  @media(hover:hover){ .cell:hover{border-color:var(--acc2);transform:translateY(-2px)} }
   .cell.added{outline:2px solid var(--want);opacity:.55}
   .cell img.m{position:absolute;inset:0;margin:auto;width:88%;height:88%;object-fit:contain;z-index:2}
   .cell img.cbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
@@ -963,7 +966,7 @@ function setTarget(t){TARGET=t;
 function openPicker(t){ setTarget(t);
   const pt=$('#pickTitle'); if(pt)pt.textContent=tr('pick_title')+'：'+(t==='want'?tr('want'):tr('have'));
   document.body.classList.add('picking'); const g=$('#gridWrap'); if(g)g.scrollTop=0; }
-function closePicker(){ document.body.classList.remove('picking'); }
+function closePicker(){ document.body.classList.remove('picking'); flushToggleSync(); }
 // 「我想要的 / 我能提供的」可收合;狀態記在 localStorage
 function toggleSec(k){ const sec=document.querySelector('.sec.'+k); if(!sec)return;
   const c=sec.classList.toggle('collapsed');
@@ -1116,13 +1119,19 @@ function renderSets(){
   bar.ondragover=e=>{ if(setDragId)e.preventDefault(); };
   bar.ondrop=e=>{ if(setDragId&&e.target===bar){ e.preventDefault(); clearSetIns(); moveSetTo(setDragId,SETS.length); } };
 }
+// 連點時把「重畫清單/匯出預覽/重新篩選」延後合併:點選即時反應(格子的✓當下就更新)、
+// 不因每次點擊都重畫而卡頓或掉點。這些重畫在選取浮層開啟時本來就看不到,關閉時 flush 一次即可。
+let _toggleSyncTimer=null;
+function runToggleSync(){ _toggleSyncTimer=null; drawLists(); if(FILT.fSelected)render(); renderBase(); }
+function scheduleToggleSync(){ clearTimeout(_toggleSyncTimer); _toggleSyncTimer=setTimeout(runToggleSync,180); }
+function flushToggleSync(){ if(_toggleSyncTimer){ clearTimeout(_toggleSyncTimer); runToggleSync(); } }
 function toggleItem(it,cell){
   const c={url:it.url,badge:it.badge||null,zh:it.zh,shiny:!!it.shiny,tag:it.tag||'',bg:it.bg||null,gender:it.gender||null,dex:it.dex};
   const arr=LIST[TARGET];const idx=arr.findIndex(x=>keyOf(x)===keyOf(c));
   if(idx>=0){arr.splice(idx,1);cell&&cell.classList.remove('added');cell&&cell.querySelector('.ok')?.remove();}
   else{arr.push(c);if(cell){cell.classList.add('added');if(!cell.querySelector('.ok')){const s=document.createElement('span');s.className='ok';s.textContent='✓';cell.appendChild(s);}}
     loadImg(c.url); if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge);}   // 加入時就先把匯出用圖抓進快取,之後製圖免等
-  drawLists(); if(FILT.fSelected)render(); renderBase();
+  scheduleToggleSync();
 }
 function clearIns(){document.querySelectorAll('.li.insb,.li.insa').forEach(x=>x.classList.remove('insb','insa'));}
 function moveItem(k,from,to){const arr=LIST[k];const[mv]=arr.splice(from,1);if(to>from)to--;arr.splice(to,0,mv);drawLists();renderBase();}
