@@ -315,6 +315,10 @@
   .edHint{text-align:center;font-size:12px;color:var(--mut);margin-bottom:2px}
   .edFieldRow{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 4px}
   .edFieldRow input{flex:1 1 140px;min-width:0;font-size:14px}
+  /* 訓練家代碼列:桌面版別撐滿整條,標題窄、代碼剛好放得下 12 碼 */
+  #trainerRow{max-width:340px}
+  #trainerRow #trainerLabel{flex:0 1 118px}
+  #trainerRow #trainerCode{flex:1 1 160px}
   .edThemesWrap{display:flex;align-items:center;gap:8px;margin:8px 0 4px}
   .edThemesLabel{font-size:12px;color:var(--mut);flex:none}
   .edThemes{display:flex;gap:8px;flex-wrap:wrap}
@@ -838,7 +842,7 @@ function defaultTexts(lay){
   return list;
 }
 function reconcile(lay){
-  if(!TEXTS.length){ TEXTS=defaultTexts(lay); return; }
+  if(!TEXTS.length){ TEXTS=defaultTexts(lay); }   // 清空後重建預設,但不 return → 下方訓練家代碼仍會依 LIST.trainer 補回
   const byId=id=>TEXTS.find(t=>t.id===id);
   const def=defaultTexts(lay);
   // 標題一定存在;LAYW 會隨每排數量/內容改變 → 未手動移動的置中文字重新置中,避免跑位
