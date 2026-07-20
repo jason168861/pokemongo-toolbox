@@ -1307,6 +1307,8 @@ async function saveCanvas(cv, name){
 
 /* ---------- 以下為既有邏輯(縮圖/清單) ---------- */
 function baseVar(p,shiny){return p.variants.find(v=>!!v.shiny===shiny&&!v.form&&!v.costume&&!v.gender)||p.variants.find(v=>!!v.shiny===shiny)||null;}
+// 背卡指定型態(如帕底亞肯泰羅)時挑該型態變體;沒有就退回基本圖
+function formVar(p,form,shiny){return p.variants.find(v=>v.form===form&&!!v.shiny===shiny&&!v.costume&&!v.gender)||p.variants.find(v=>v.form===form&&!!v.shiny===shiny)||baseVar(p,shiny);}
 function buildThumbs(){
   THUMBS=[];BGCOMBOS=[];
   for(const p of Object.values(POKE)){
@@ -1325,7 +1327,7 @@ function buildThumbs(){
     if(!b.image_url)continue;
     for(const mon of b.pokemon){
       const dex=mon.dex, p=POKE[dex]; if(!p)continue;
-      const vn=baseVar(p,false), vs=baseVar(p,true);
+      const vn=mon.form?formVar(p,mon.form,false):baseVar(p,false), vs=mon.form?formVar(p,mon.form,true):baseVar(p,true);
       const add=(url,shiny,badge,tag,gm)=>{ if(url)BGCOMBOS.push({url,bg:b.image_url,dex,zh:nameOf(p.id),bgname:b.image_name,badge:badge||null,shiny:!!shiny,tag:tag||'',dmax:tag==='極巨化',gmax:!!gm,purified:tag==='淨化'}); };
       if(mon.gmax){ if(p.gigantamax){ add(p.gigantamax.normal,false,badgeG,'超極巨化',true); if(mon.shiny) add(p.gigantamax.shiny,true,badgeG,'超極巨化',true);} }
       else if(mon.dynamax){ add(vn&&vn.url,false,badgeD,'極巨化'); if(mon.shiny) add(vs&&vs.url,true,badgeD,'極巨化'); }
