@@ -698,12 +698,18 @@ function buildThemeSwatches(){
     b.style.background=THEMES[k].ui.bg; b.title=tr(ik); b.dataset.k=k;
     if(k===THEME)b.classList.add('on'); b.onclick=()=>applyTheme(k); box.appendChild(b); }
 }
-function applyTheme(k){
-  if(!THEMES[k])k='neon'; THEME=k; $('#themeSel').value=k; document.body.dataset.theme=k;
-  document.querySelectorAll('#edThemes button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
-  const u=THEMES[k].ui,R=document.documentElement.style;
+// 把主題色套到整個網頁介面(CSS 變數)
+function syncUITheme(){
+  const u=THEMES[THEME].ui,R=document.documentElement.style;
+  document.body.dataset.theme=THEME;
   const map={'--bg':u.bg,'--card':u.card,'--line':u.line,'--fg':u.fg,'--mut':u.mut,'--acc':u.acc,'--acc2':u.acc2,'--want':u.want,'--have':u.have,'--cellbg':u.cellbg};
   for(const p in map) R.setProperty(p,map[p]);
+}
+function applyTheme(k){
+  if(!THEMES[k])k='neon'; THEME=k; $('#themeSel').value=k;
+  document.querySelectorAll('#edThemes button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+  // 編輯圖片時切換配色 → 只換「匯出圖(主體)」的配色,不動整個網頁介面(避免畫面跟著閃色)
+  if(!document.body.classList.contains('editmode')) syncUITheme();
   localStorage.setItem('bgtoolTheme',k);
   // 主題色套到「未被手動改色」的預設文字
   const T=THEMES[k].exp;
@@ -723,6 +729,7 @@ function setMode(m){
   }else{
     SEL=null;                                   // 離開編輯 → 清掉選取虛線框
     document.body.classList.remove('editmode');
+    syncUITheme();                              // 離開編輯時,介面才追上編輯中換過的配色
   }
   requestAnimationFrame(()=>{ renderBase();     // 版面寬度變了,重新排版
     if(m==='select') $('#listPanel').scrollIntoView({behavior:'smooth',block:'start'}); });   // 完成編輯 → 回到清單(編輯面板已收起)
@@ -732,9 +739,13 @@ window.addEventListener('popstate',()=>{ if(document.body.classList.contains('ed
 /* ---------- 版面計算(卡片固定,文字浮動) ---------- */
 const PAD=40,S=164,GAP=16,NOTELH=30;   // NOTELH=備註每行高度
 // 右上角推廣 QR 卡片(只放 QR)的尺寸;供繪製與「標題避讓」計算共用
-const QR_S=150, QR_PADPX=16, QR_CARD=QR_S+QR_PADPX*2, QR_TOP=20, QR_GAP=14;
-let _measCtx=null;   // 離屏量測文字寬度(給標題避讓用)
+const QR_S=150, QR_PADPX=16, QR_TOP=20, QR_GAP=14, QR_TEXTH=26;   // QR_TEXTH:QR 下方提示文字的高度
+const QR_HINTF='700 15px "Microsoft JhengHei",sans-serif';
+let _measCtx=null;   // 離屏量測文字寬度(給標題避讓/QR 卡片大小用)
 function measureText(text,font){ if(!_measCtx)_measCtx=document.createElement('canvas').getContext('2d'); _measCtx.font=font; return _measCtx.measureText(text).width; }
+// QR 卡片尺寸(含下方提示文字):寬度自適應文字但有上限,高度固定
+function qrCardW(){ return Math.max(QR_S, Math.min(measureText(tr('scan_hint'),QR_HINTF),300))+QR_PADPX*2; }
+function qrCardH(){ return QR_PADPX+QR_S+8+QR_TEXTH+QR_PADPX; }
 let COLS=5, LAYW=2*PAD+GAP+COLS*(S+GAP);   // 於 boot 依裝置寬度設定:桌機每排更多、手機維持 5
 const COLS_MIN=3, COLS_MAX=15;
 // 有效每排數量:不超過「內容較多的一側」的隻數(例如兩側各 6/5,設 10 時實際每排 6,不留空位)
@@ -764,8 +775,8 @@ function computeLayout(){
   if(LIST.qr){
     const tt=TEXTS.find(t=>t.id==='title'); const tText=(tt&&tt.text)||'POKÉMON TRADE', tSize=(tt&&tt.size)||62;
     const tW=measureText(tText,((tt&&tt.weight)||900)+' '+tSize+'px '+DEFONT);
-    const qrLeft=LAYW-PAD-QR_CARD;
-    if(!(tt&&tt.moved) && LAYW/2+tW/2 > qrLeft-QR_GAP) qrPush=QR_TOP+QR_CARD+QR_GAP-32;
+    const qrLeft=LAYW-PAD-qrCardW();
+    if(!(tt&&tt.moved) && LAYW/2+tW/2 > qrLeft-QR_GAP) qrPush=QR_TOP+qrCardH()+QR_GAP-32;
   }
   const fly=$('#canfly').checked;
   const secs=[{key:'want',items:LIST.want,col:THEMES[THEME].exp.sec1,def:'🟢 '+tr('want')},
@@ -931,14 +942,18 @@ async function drawBaseTo(x,lay,SC,offY){
       await drawCard(x,cx,cy,s.items[i],T,rw.noteH,s.col);
     }
   }
-  // 右上角推廣 QR(只放 QR,由開關控制,關掉即移除);分塊輸出時只在含頂部的那一段畫
+  // 右上角推廣 QR + 一行提示文字(由開關控制,關掉即移除);分塊輸出時只在含頂部的那一段畫
   if(LIST.qr){
-    const cx0=W-PAD-QR_CARD, cy0=QR_TOP;
-    if(cy0+QR_CARD>=visTop && cy0<=visBot){
+    const cardW=qrCardW(), cardH=qrCardH(), cx0=W-PAD-cardW, cy0=QR_TOP, midX=cx0+cardW/2;
+    if(cy0+cardH>=visTop && cy0<=visBot){
       const q=await loadImg('assets/brand/qr.png');
       x.save(); x.shadowColor='rgba(0,0,0,.28)'; x.shadowBlur=10; x.shadowOffsetY=3;
-      x.fillStyle='#fff'; rrPath(x,cx0,cy0,QR_CARD,QR_CARD,16); x.fill(); x.restore();
-      if(q) x.drawImage(q, cx0+QR_PADPX, cy0+QR_PADPX, QR_S, QR_S);
+      x.fillStyle='#fff'; rrPath(x,cx0,cy0,cardW,cardH,16); x.fill(); x.restore();
+      if(q) x.drawImage(q, midX-QR_S/2, cy0+QR_PADPX, QR_S, QR_S);   // QR 置中
+      const hint=tr('scan_hint'); let fs=15; const setF=s=>x.font='700 '+s+'px "Microsoft JhengHei",sans-serif';
+      setF(fs); while(fs>10 && x.measureText(hint).width>cardW-12){ setF(--fs); }
+      x.fillStyle='#111'; x.textAlign='center'; x.textBaseline='top';
+      x.fillText(hint, midX, cy0+QR_PADPX+QR_S+8);
     }
   }
 }
