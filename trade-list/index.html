@@ -1306,7 +1306,8 @@ async function saveCanvas(cv, name){
 }
 
 /* ---------- 以下為既有邏輯(縮圖/清單) ---------- */
-function baseVar(p,shiny){return p.variants.find(v=>!!v.shiny===shiny&&!v.form&&!v.costume&&!v.gender)||p.variants.find(v=>!!v.shiny===shiny)||null;}
+// 基本圖:優先無 form;若該寶可夢基本型本身帶 form 代碼(酋雷姆 NORMAL、四季鹿 SPRING…)則用 base_form
+function baseVar(p,shiny){return p.variants.find(v=>!!v.shiny===shiny&&(!v.form||v.form===p.base_form)&&!v.costume&&!v.gender)||p.variants.find(v=>!!v.shiny===shiny)||null;}
 // 背卡指定型態(如帕底亞肯泰羅)時挑該型態變體;沒有就退回基本圖
 function formVar(p,form,shiny){return p.variants.find(v=>v.form===form&&!!v.shiny===shiny&&!v.costume&&!v.gender)||p.variants.find(v=>v.form===form&&!!v.shiny===shiny)||baseVar(p,shiny);}
 function buildThumbs(){

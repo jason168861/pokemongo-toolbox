@@ -92,11 +92,24 @@ for fn in sorted(os.listdir(ADDR)):
         p["variants"].append({"url": url, "shiny": v["shiny"], "gender": "female" if v["female"] else None, "form": v["form"], "costume": v["costume"]})
 pokemon = {k: v for k, v in pokemon.items() if v["variants"] or v["gigantamax"]}
 
+# 有些寶可夢沒有「無 form」基本圖(基本型本身也帶 form 代碼,如酋雷姆 NORMAL、四季鹿 SPRING、堅盾劍怪 SHIELD)。
+# 背卡未指定型態時要挑「預設型態」,否則前端會誤挑到第一個變體(如酋雷姆挑到黑色)。記到 pokemon.base_form。
+DEFAULT_FORMS = ("NORMAL", "STANDARD", "INCARNATE", "SPRING", "SHIELD", "ORDINARY",
+                 "DISGUISED", "MIDDAY", "SOLO", "BAILE", "AMPED", "OVERCAST", "RED", "FIFTY_PERCENT")
+for _p in pokemon.values():
+    _vs = _p["variants"]
+    if any((not v["form"]) and not v["costume"] and not v["gender"] for v in _vs):
+        continue   # 有無-form 基本圖 → 不需要 base_form
+    _forms = [v["form"] for v in _vs if v["form"] and not v["costume"] and not v["gender"]]
+    for _pref in DEFAULT_FORMS:
+        if _pref in _forms:
+            _p["base_form"] = _pref; break
+
 # ---- 型態解析共用工具(Bulbapedia 短碼後綴 與 Fandom 描述式 ci 共用) ----
 # 目標:背卡標的若是特定型態(帕底亞肯泰羅、Origin 神獸、Therian 三精靈…)就對到正確 sprite,而非基本圖。
 #   兩來源都對照該 dex「實際擁有的 form 代碼」比對,只在唯一/明確命中時採用,否則退回基本圖(絕不標錯)。
 #   未來新型態只要 form 代碼的字首縮寫或關鍵詞對得上就自動生效,無需維護對照表。
-COSTUME_ONLY = {25}   # 皮卡丘後綴幾乎都是造型,且易誤對到某個造型 form → 一律用基本圖
+COSTUME_ONLY = set()   # 想「只用基本圖、不解析型態」的 dex 放這裡。皮卡丘造型雖非精確年份仍照解析(使用者要造型)。
 REGIONAL_PREFIX = {"alolan": "ALOLA", "galarian": "GALARIAN", "hisuian": "HISUI", "paldean": "PALDEA"}
 
 def _forms_of(dex):
