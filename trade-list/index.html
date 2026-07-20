@@ -708,9 +708,8 @@ function syncUITheme(){
 function applyTheme(k){
   if(!THEMES[k])k='neon'; THEME=k; $('#themeSel').value=k;
   document.querySelectorAll('#edThemes button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
-  // 編輯圖片時切換配色 → 只換「匯出圖(主體)」的配色,不動整個網頁介面(避免畫面跟著閃色)
-  if(!document.body.classList.contains('editmode')) syncUITheme();
-  localStorage.setItem('bgtoolTheme',k);
+  // 編輯圖片時切換配色 → 只換「匯出圖(主體)」的配色;不動網頁介面、也不覆蓋介面主題偏好
+  if(!document.body.classList.contains('editmode')){ syncUITheme(); localStorage.setItem('bgtoolTheme',k); }
   // 主題色套到「未被手動改色」的預設文字
   const T=THEMES[k].exp;
   for(const t of TEXTS){ if(t.autoColor){ if(t.id==='title')t.color=T.title; else if(t.id==='canfly')t.color=T.fly; else if(t.id==='lab-want')t.color=T.sec1; else if(t.id==='lab-have')t.color=T.sec2; else if(t.id==='foot')t.color=T.foot; } }
@@ -729,7 +728,6 @@ function setMode(m){
   }else{
     SEL=null;                                   // 離開編輯 → 清掉選取虛線框
     document.body.classList.remove('editmode');
-    syncUITheme();                              // 離開編輯時,介面才追上編輯中換過的配色
   }
   requestAnimationFrame(()=>{ renderBase();     // 版面寬度變了,重新排版
     if(m==='select') $('#listPanel').scrollIntoView({behavior:'smooth',block:'start'}); });   // 完成編輯 → 回到清單(編輯面板已收起)
