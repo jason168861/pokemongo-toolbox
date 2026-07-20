@@ -237,6 +237,9 @@
   /* 彩色底的白字加細陰影,讓文字在較亮的主題色上也清楚 */
   .btn:not(.g),.tabs button.on,.chip.on,.setchip.on,.seg button.on,#pickClose{text-shadow:0 1px 2px rgba(0,0,0,.35)}
   .btn.g{background:var(--cellbg);border:1px solid var(--line);color:var(--fg);font-weight:400;text-shadow:none}
+  /* 分享連結是主要動作 → 用強調漸層跳出灰按鈕群 */
+  #setShare.g{background:linear-gradient(135deg,var(--acc),var(--acc2));border:0;color:#fff;font-weight:700;box-shadow:0 2px 10px rgba(224,39,108,.35)}
+  #setShare.g:hover{filter:brightness(1.08)}
   .toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
   .themeSel{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
   /* 登入按鈕放在工具選單右側;隱藏「956 隻」統計文字 */
