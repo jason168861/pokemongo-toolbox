@@ -1,266 +1,137 @@
 {
-    "lastUpdated": "2026年7月21日11時",
+    "lastUpdated": "2026年7月21日18時",
     "bosses": [
         {
-            "name": "Formal Pikachu with red accents",
-            "englishName": "Formal Pikachu with red accents",
+            "name": "果然翁",
+            "englishName": "Wobbuffet",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 493,
-                    "max": 536
+                    "min": 532,
+                    "max": 586
                 },
                 "boosted": {
-                    "min": 616,
-                    "max": 670
+                    "min": 665,
+                    "max": 733
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_MONOCLE_RED.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm202.icon.png"
         },
         {
-            "name": "Formal Pikachu with yellow accents",
-            "englishName": "Formal Pikachu with yellow accents",
+            "name": "觸手百合",
+            "englishName": "Lileep",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                    "name": "rock",
+                    "image": "https://leekduck.com/assets/img/types/rock.png"
+                },
+                {
+                    "name": "grass",
+                    "image": "https://leekduck.com/assets/img/types/grass.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 493,
-                    "max": 536
+                    "min": 686,
+                    "max": 738
                 },
                 "boosted": {
-                    "min": 616,
-                    "max": 670
+                    "min": 858,
+                    "max": 922
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                },
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_MONOCLE_YELLOW.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm345.icon.png"
         },
         {
-            "name": "Formal Pikachu with blue accents",
-            "englishName": "Formal Pikachu with blue accents",
+            "name": "太古羽蟲",
+            "englishName": "Anorith",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                    "name": "rock",
+                    "image": "https://leekduck.com/assets/img/types/rock.png"
+                },
+                {
+                    "name": "bug",
+                    "image": "https://leekduck.com/assets/img/types/bug.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 493,
-                    "max": 536
+                    "min": 817,
+                    "max": 874
                 },
                 "boosted": {
-                    "min": 616,
-                    "max": 670
+                    "min": 1022,
+                    "max": 1092
                 }
             },
             "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                },
                 {
                     "name": "rainy",
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGOFEST_2025_MONOCLE_BLUE.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm347.icon.png"
         },
         {
-            "name": "Pikachu wearing a Safari Hat",
-            "englishName": "Pikachu wearing a Safari Hat",
+            "name": "心鱗寶",
+            "englishName": "Jangmo-o",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 493,
-                    "max": 536
+                    "min": 510,
+                    "max": 553
                 },
                 "boosted": {
-                    "min": 616,
-                    "max": 670
+                    "min": 637,
+                    "max": 692
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.cSAFARI_2020_NOEVOLVE.icon.png"
-        },
-        {
-            "name": "穿著棒球外套的皮卡丘",
-            "englishName": "Pikachu wearing a varsity jacket",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 493,
-                    "max": 536
-                },
-                "boosted": {
-                    "min": 616,
-                    "max": 670
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fWCS_2025.icon.png"
-        },
-        {
-            "name": "Amethyst Crown Pikachu",
-            "englishName": "Amethyst Crown Pikachu",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 493,
-                    "max": 536
-                },
-                "boosted": {
-                    "min": 616,
-                    "max": 670
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fSUMMER_2023_E.icon.png"
-        },
-        {
-            "name": "2022世界錦標賽皮卡丘",
-            "englishName": "World Championships 2022 Pikachu",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 493,
-                    "max": 536
-                },
-                "boosted": {
-                    "min": 616,
-                    "max": 670
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fWCS_2022.icon.png"
-        },
-        {
-            "name": "2023世界錦標賽皮卡丘",
-            "englishName": "World Championships 2023 Pikachu",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 493,
-                    "max": 536
-                },
-                "boosted": {
-                    "min": 616,
-                    "max": 670
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fWCS_2023.icon.png"
-        },
-        {
-            "name": "2024世界錦標賽皮卡丘",
-            "englishName": "World Championships 2024 Pikachu",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 493,
-                    "max": 536
-                },
-                "boosted": {
-                    "min": 616,
-                    "max": 670
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fWCS_2024.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm782.icon.png"
         },
         {
             "name": "阿羅拉 雷丘",

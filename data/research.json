@@ -9,17 +9,17 @@
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
-            "name": "超級球 ×5",
-            "quantity": "×5"
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "球球 ×10",
+            "quantity": "×10"
           },
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×10",
-            "quantity": "×10"
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
           },
           {
             "isFeatured": false,
@@ -327,16 +327,16 @@
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Incense.png",
-            "name": "薰香 ×1",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Lucky Egg.png",
+            "name": "幸運蛋 ×1",
             "quantity": "×1"
           },
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Lucky Egg.png",
-            "name": "幸運蛋 ×1",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Star Piece.png",
+            "name": "星星碎片 ×1",
             "quantity": "×1"
           },
           {
@@ -351,45 +351,8 @@
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Star Piece.png",
-            "name": "星星碎片 ×1",
-            "quantity": "×1"
-          }
-        ]
-      },
-      {
-        "description": "完成 5 個田野調查課題",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Incense.png",
             "name": "薰香 ×1",
-            "quantity": "×1"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Lucky Egg.png",
-            "name": "幸運蛋 ×1",
-            "quantity": "×1"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Lure Module.png",
-            "name": "誘餌模組 ×1",
-            "quantity": "×1"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Star Piece.png",
-            "name": "星星碎片 ×1",
             "quantity": "×1"
           }
         ]
@@ -409,16 +372,16 @@
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Incense.png",
-            "name": "薰香 ×1",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Lucky Egg.png",
+            "name": "幸運蛋 ×1",
             "quantity": "×1"
           },
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Lucky Egg.png",
-            "name": "幸運蛋 ×1",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Star Piece.png",
+            "name": "星星碎片 ×1",
             "quantity": "×1"
           },
           {
@@ -433,8 +396,53 @@
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Incense.png",
+            "name": "薰香 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "完成 5 個田野調查課題",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/PokeCoin.png",
+            "name": "寶可幣 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Lucky Egg.png",
+            "name": "幸運蛋 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Star Piece.png",
             "name": "星星碎片 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Lure Module.png",
+            "name": "誘餌模組 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Incense.png",
+            "name": "薰香 ×1",
             "quantity": "×1"
           }
         ]
