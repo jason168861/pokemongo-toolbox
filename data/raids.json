@@ -1,10 +1,134 @@
 {
-    "lastUpdated": "2026年7月22日01時",
+    "lastUpdated": "2026年7月22日11時",
     "bosses": [
         {
-            "name": "果然翁",
-            "englishName": "Wobbuffet",
+            "name": "Professor Willow's assistant Pikachu",
+            "englishName": "Professor Willow's assistant Pikachu",
             "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 493,
+                    "max": 536
+                },
+                "boosted": {
+                    "min": 616,
+                    "max": 670
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fANNIVERSARY_2026.icon.png"
+        },
+        {
+            "name": "Raticate with a Party Hat",
+            "englishName": "Raticate with a Party Hat",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "normal",
+                    "image": "https://leekduck.com/assets/img/types/normal.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 930,
+                    "max": 989
+                },
+                "boosted": {
+                    "min": 1163,
+                    "max": 1236
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm20.cJAN_2020_NOEVOLVE.icon.png"
+        },
+        {
+            "name": "Party Hat Nidorino",
+            "englishName": "Party Hat Nidorino",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "poison",
+                    "image": "https://leekduck.com/assets/img/types/poison.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 743,
+                    "max": 796
+                },
+                "boosted": {
+                    "min": 929,
+                    "max": 995
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm33.cJAN_2020_NOEVOLVE.icon.png"
+        },
+        {
+            "name": "Gengar wearing a Party Hat",
+            "englishName": "Gengar wearing a Party Hat",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "ghost",
+                    "image": "https://leekduck.com/assets/img/types/ghost.png"
+                },
+                {
+                    "name": "poison",
+                    "image": "https://leekduck.com/assets/img/types/poison.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1566,
+                    "max": 1644
+                },
+                "boosted": {
+                    "min": 1958,
+                    "max": 2055
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "fog",
+                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
+                },
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pokemon_icon_094_00_11.png"
+        },
+        {
+            "name": "Wobbuffet wearing a party hat",
+            "englishName": "Wobbuffet wearing a party hat",
+            "tier": "3-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
@@ -28,221 +152,7 @@
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm202.icon.png"
-        },
-        {
-            "name": "觸手百合",
-            "englishName": "Lileep",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "rock",
-                    "image": "https://leekduck.com/assets/img/types/rock.png"
-                },
-                {
-                    "name": "grass",
-                    "image": "https://leekduck.com/assets/img/types/grass.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 686,
-                    "max": 738
-                },
-                "boosted": {
-                    "min": 858,
-                    "max": 922
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "partly cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
-                },
-                {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm345.icon.png"
-        },
-        {
-            "name": "太古羽蟲",
-            "englishName": "Anorith",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "rock",
-                    "image": "https://leekduck.com/assets/img/types/rock.png"
-                },
-                {
-                    "name": "bug",
-                    "image": "https://leekduck.com/assets/img/types/bug.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 817,
-                    "max": 874
-                },
-                "boosted": {
-                    "min": 1022,
-                    "max": 1092
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "partly cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
-                },
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm347.icon.png"
-        },
-        {
-            "name": "心鱗寶",
-            "englishName": "Jangmo-o",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 510,
-                    "max": 553
-                },
-                "boosted": {
-                    "min": 637,
-                    "max": 692
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm782.icon.png"
-        },
-        {
-            "name": "阿羅拉 雷丘",
-            "englishName": "Alolan Raichu",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                },
-                {
-                    "name": "psychic",
-                    "image": "https://leekduck.com/assets/img/types/psychic.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1238,
-                    "max": 1306
-                },
-                "boosted": {
-                    "min": 1548,
-                    "max": 1633
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm26.fALOLA.icon.png"
-        },
-        {
-            "name": "洗翠 火爆獸",
-            "englishName": "Hisuian Typhlosion",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "fire",
-                    "image": "https://leekduck.com/assets/img/types/fire.png"
-                },
-                {
-                    "name": "ghost",
-                    "image": "https://leekduck.com/assets/img/types/ghost.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1632,
-                    "max": 1710
-                },
-                "boosted": {
-                    "min": 2041,
-                    "max": 2138
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
-                },
-                {
-                    "name": "fog",
-                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm157.fHISUIAN.icon.png"
-        },
-        {
-            "name": "鋁鋼龍",
-            "englishName": "Duraludon",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
-                },
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1674,
-                    "max": 1753
-                },
-                "boosted": {
-                    "min": 2092,
-                    "max": 2191
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm884.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pokemon_icon_202_00_11.png"
         },
         {
             "name": "蓋歐卡",
