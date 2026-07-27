@@ -1310,6 +1310,16 @@ async function saveCanvas(cv, name){
 function baseVar(p,shiny){return p.variants.find(v=>!!v.shiny===shiny&&(!v.form||v.form===p.base_form)&&!v.costume&&!v.gender)||p.variants.find(v=>!!v.shiny===shiny)||null;}
 // 背卡指定型態(如帕底亞肯泰羅)時挑該型態變體;沒有就退回基本圖
 function formVar(p,form,shiny){return p.variants.find(v=>v.form===form&&!!v.shiny===shiny&&!v.costume&&!v.gender)||p.variants.find(v=>v.form===form&&!!v.shiny===shiny)||baseVar(p,shiny);}
+// 背卡指定造型(威洛博士皮卡丘、探險家伊布…)時挑該造型變體;沒有就退回基本圖
+function costVar(p,cos,shiny){return p.variants.find(v=>v.costume===cos&&!!v.shiny===shiny&&!v.gender)||p.variants.find(v=>v.costume===cos&&!!v.shiny===shiny)||baseVar(p,shiny);}
+// 背卡條目 → sprite 網址。優先序:wiki 造型原圖 > 本機造型 > 型態 > 基本圖。
+// mon.sprite 是 build_data 對不到本機 sprite 時存的 wiki 原圖(fetch_assets 已下載到本機);
+// mon.sprite_shiny 只有 Fandom 有獨立異色圖時才在,沒有就用一般圖 + 前端的異色星星角標。
+function monUrl(p,mon,shiny){
+  if(mon.sprite) return (shiny&&mon.sprite_shiny)||mon.sprite;
+  const v=mon.costume?costVar(p,mon.costume,shiny):(mon.form?formVar(p,mon.form,shiny):baseVar(p,shiny));
+  return v&&v.url;
+}
 function buildThumbs(){
   THUMBS=[];BGCOMBOS=[];
   for(const p of Object.values(POKE)){
@@ -1328,12 +1338,12 @@ function buildThumbs(){
     if(!b.image_url)continue;
     for(const mon of b.pokemon){
       const dex=mon.dex, p=POKE[dex]; if(!p)continue;
-      const vn=mon.form?formVar(p,mon.form,false):baseVar(p,false), vs=mon.form?formVar(p,mon.form,true):baseVar(p,true);
-      const add=(url,shiny,badge,tag,gm)=>{ if(url)BGCOMBOS.push({url,bg:b.image_url,dex,zh:nameOf(p.id),bgname:b.image_name,badge:badge||null,shiny:!!shiny,tag:tag||'',dmax:tag==='極巨化',gmax:!!gm,purified:tag==='淨化'}); };
+      const un=monUrl(p,mon,false), us=monUrl(p,mon,true);
+      const add=(url,shiny,badge,tag,gm)=>{ if(url)BGCOMBOS.push({url,bg:b.image_url,dex,zh:nameOf(p.id),bgname:b.image_name,badge:badge||null,shiny:!!shiny,tag:tag||'',dmax:tag==='極巨化',gmax:!!gm,purified:tag==='淨化',cos:!!(mon.costume||mon.sprite)}); };
       if(mon.gmax){ if(p.gigantamax){ add(p.gigantamax.normal,false,badgeG,'超極巨化',true); if(mon.shiny) add(p.gigantamax.shiny,true,badgeG,'超極巨化',true);} }
-      else if(mon.dynamax){ add(vn&&vn.url,false,badgeD,'極巨化'); if(mon.shiny) add(vs&&vs.url,true,badgeD,'極巨化'); }
-      else if(mon.shadow){ add(vn&&vn.url,false,badgeP,'淨化'); if(mon.shiny) add(vs&&vs.url,true,badgeP,'淨化'); }
-      else { add(vn&&vn.url,false,null,''); if(mon.shiny) add(vs&&vs.url,true,null,''); }
+      else if(mon.dynamax){ add(un,false,badgeD,'極巨化'); if(mon.shiny) add(us,true,badgeD,'極巨化'); }
+      else if(mon.shadow){ add(un,false,badgeP,'淨化'); if(mon.shiny) add(us,true,badgeP,'淨化'); }
+      else { add(un,false,null,''); if(mon.shiny) add(us,true,null,''); }
     }
   }
   for(const t of THUMBS) t.legendary=!!(POKE[t.dex]&&POKE[t.dex].legendary);

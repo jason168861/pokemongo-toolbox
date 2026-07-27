@@ -10,6 +10,11 @@
 import json, os, re, sys, urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+try:                                    # Windows 主控台預設 cp950,吐中文會炸
+    sys.stdout.reconfigure(encoding="utf-8"); sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 IMG = os.path.join(HERE, "assets", "img")
 BGD = os.path.join(HERE, "assets", "bg")
@@ -34,6 +39,13 @@ def dl(url, path, no_referer=False, force=False, tries=3):
 def sprite_local(url):
     return os.path.basename(url.split("?")[0])  # pm25.icon.png
 
+def wiki_sprite_local(url):
+    """背卡專用的 wiki 造型原圖(本機 PokeMiners 對不到時的兜底):
+    Bulbapedia .../GO0025Willow.png、Fandom .../Pikachu_willow.png/revision/latest?cb=…"""
+    m = re.search(r"/images/[0-9a-f/]+/([^/]+\.(?:png|jpg|jpeg|webp))/revision", url, re.I)
+    name = m.group(1) if m else os.path.basename(url.split("?")[0])
+    return "wiki_" + re.sub(r"[^A-Za-z0-9._-]", "_", name)
+
 def bg_local(url):
     m = re.search(r"/images/[0-9a-f/]+/([^/]+\.(?:png|jpg|jpeg|webp))/revision", url, re.I)
     name = m.group(1) if m else os.path.basename(url.split("?")[0])
@@ -51,14 +63,23 @@ def main():
             for k in ("normal", "shiny"):
                 if p["gigantamax"].get(k): sprite_urls.add(p["gigantamax"][k])
 
+    # 背卡條目裡對不到本機 sprite 的造型,用 wiki 原圖(一樣自我託管,不盜連)
+    wiki_urls = set()
+    for b in bg:
+        for m in b.get("pokemon", []):
+            for k in ("sprite", "sprite_shiny"):
+                if m.get(k): wiki_urls.add(m[k])
+
     jobs = []  # (url, path, no_referer, force)
     for u in sprite_urls:
         jobs.append((u, os.path.join(IMG, sprite_local(u)), False, False))
+    for u in wiki_urls:
+        jobs.append((u, os.path.join(IMG, wiki_sprite_local(u)), True, False))
     for b in bg:
         if b.get("image_url"):
             jobs.append((b["image_url"], os.path.join(BGD, bg_local(b["image_url"])), True, True))  # 背卡一律重抓
 
-    print(f"要處理:{len(sprite_urls)} sprite + {len(bg)} 背卡 = {len(jobs)} 檔", flush=True)
+    print(f"要處理:{len(sprite_urls)} sprite + {len(wiki_urls)} wiki 造型圖 + {len(bg)} 背卡 = {len(jobs)} 檔", flush=True)
     ok = skip = err = 0
     with ThreadPoolExecutor(max_workers=16) as ex:
         futs = {ex.submit(dl, u, p, nr, fo): u for (u, p, nr, fo) in jobs}
@@ -77,6 +98,9 @@ def main():
                 if p["gigantamax"].get(k): p["gigantamax"][k] = "assets/img/" + sprite_local(p["gigantamax"][k])
     for b in bg:
         if b.get("image_url"): b["image_url"] = "assets/bg/" + bg_local(b["image_url"])
+        for m in b.get("pokemon", []):
+            for k in ("sprite", "sprite_shiny"):
+                if m.get(k): m[k] = "assets/img/" + wiki_sprite_local(m[k])
 
     json.dump(pk, open(os.path.join(HERE, "data", "pokemon.local.json"), "w", encoding="utf-8"), ensure_ascii=False)
     json.dump(bg, open(os.path.join(HERE, "data", "backgrounds.local.json"), "w", encoding="utf-8"), ensure_ascii=False)
