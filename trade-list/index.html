@@ -899,7 +899,7 @@ function rrPath(x,rx,ry,w,h,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+w,ry,r
 // 自動去透明邊:很多寶可夢 icon 圖檔四周有一圈透明 padding,主體只佔中央。
 // 掃描出不透明範圍的 bounding box(以比例 0~1 快取),繪製時只取主體 → 寶可夢顯示更大。
 const _bboxCache=new Map(); let _trimCv=null;
-const MAXUP=2.4;   // 去邊後最大放大倍率(相對來源主體像素):太小的主體不硬撐到填滿,避免放大到模糊
+const MAXUP=1.4;   // 去邊後最大放大倍率(相對來源主體像素):太小的主體不硬撐到填滿,避免放大到模糊
 function trimBBox(img,key){
   if(_bboxCache.has(key)) return _bboxCache.get(key);
   let box=null;
@@ -919,7 +919,7 @@ function trimBBox(img,key){
   }catch(e){ box=null; }   // 跨域無 CORS 等讀不到像素 → 不裁,退回整張圖
   _bboxCache.set(key,box); return box;
 }
-// 把(去邊後的)寶可夢等比例置中畫進卡片內的正方框
+// 把(去邊後的)寶可夢等比例畫進卡片內的正方框:水平置中、垂直靠下(站在卡片底部)
 function drawMon(x,m,key,dx0,dy0,box){
   x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high';
   const bb=trimBBox(m,key);
@@ -927,23 +927,26 @@ function drawMon(x,m,key,dx0,dy0,box){
   const iw=m.naturalWidth||m.width, ih=m.naturalHeight||m.height;
   const sx=bb.x*iw, sy=bb.y*ih, sw=bb.w*iw, sh=bb.h*ih;
   const SC=(x.getTransform&&x.getTransform().a)||1;            // 目前整體縮放(匯出解析度)
-  // contain,但放大不超過來源主體像素的 MAXUP 倍(小主體就不硬撐到填滿,置中即可)→ 不模糊
+  // contain,但放大不超過來源主體像素的 MAXUP 倍(小主體就不硬撐到填滿)→ 不模糊
   const sc=Math.min(box/sw, box/sh, MAXUP/SC), dw=sw*sc, dh=sh*sc;
-  x.drawImage(m, sx,sy,sw,sh, dx0+(box-dw)/2, dy0+(box-dh)/2, dw, dh);
+  // 靠下:主體底邊貼齊方框底部(方框本身已內縮 ins,所以不會頂到卡片邊)
+  x.drawImage(m, sx,sy,sw,sh, dx0+(box-dw)/2, dy0+(box-dh), dw, dh);
 }
-// 預覽(選取格子/清單)的 <img> 也去透明邊:量出主體範圍後,用 transform 放大並置中,
+// 預覽(選取格子/清單)的 <img> 也去透明邊:量出主體範圍後,用 transform 放大並水平置中、垂直靠下,
 // 超出的透明邊由容器 overflow:hidden 裁掉,與下載圖效果一致。pad=主體佔卡片的比例。
 function hookTrim(img,hasBg){
   const run=()=>{
     if(!img.naturalWidth) return;
     const bb=trimBBox(img,img.src); if(!bb) return;   // 讀不到(跨域無 CORS 等)→ 維持原樣
     img.style.width='100%'; img.style.height='100%';
-    const pad=hasBg?0.82:0.86;
+    const pad=hasBg?0.82:0.86, gap=(1-pad)/2;         // gap=底部留白,沿用原本置中時的上下留白
     const L=img.clientWidth||img.offsetWidth||72, dpr=window.devicePixelRatio||1;
-    // 放大不超過來源(縮圖)主體像素的 MAXUP 倍 → 小主體不會被放大到模糊(改為置中、較小但清晰)
+    // 放大不超過來源(縮圖)主體像素的 MAXUP 倍 → 小主體不會被放大到模糊(改為較小但清晰)
     const sMax=MAXUP*img.naturalWidth/Math.max(1,L*dpr);
     const s=Math.min(pad/Math.max(bb.w,bb.h), sMax);
-    const tx=-((bb.x+bb.w/2)-0.5)*s*100, ty=-((bb.y+bb.h/2)-0.5)*s*100;
+    // translate 的 % 以元素自身尺寸計;元素填滿格子,故 1 單位=1 個格子邊長。
+    const tx=-((bb.x+bb.w/2)-0.5)*s*100;                       // 水平:主體中心對齊格子中心
+    const ty=((0.5-gap)-((bb.y+bb.h)-0.5)*s)*100;              // 垂直:主體底邊對齊格子底部內縮 gap 處
     img.style.transform=`translate(${tx}%,${ty}%) scale(${s})`;
   };
   if(img.complete && img.naturalWidth) run(); else img.addEventListener('load',run,{once:true});
