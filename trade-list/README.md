@@ -1,70 +1,90 @@
 # 寶可夢 GO 交易清單產生器
 
-全部圖片自我託管(不盜連別人),資料可自動更新。
+瀏覽所有寶可夢組合(異色 / 型態 / 造型 / 公母 / 極巨化 / 超極巨化 / 活動背卡),
+分成「想要」與「可換」兩欄,匯出成一張可分享的圖片。支援 7 種語言。
 
 ## 檔案
-- `index.html` — 前端(優先讀 `data/*.local.json` 本機圖;沒有才退回遠端)
-- `build_data.py` — 重建來源資料(遠端 URL 版)
-- `fetch_assets.py` — 把用到的圖下載到 `assets/`,並產出 `*.local.json`(本機路徑版)
+- `index.html` — 前端(優先讀 `data/*.local.json`;沒有才退回遠端網址)
+- `build_data.py` — 重建來源資料
+- `fetch_assets.py` — 把用到的圖存到 `assets/`,並產出 `*.local.json`(本機路徑版)
 - `preview.py` — 本機預覽(關快取,改完重新整理就生效)
 - `data/` — 資料 JSON
-- `assets/img/` — 寶可夢 sprite(`pm*` 來自 PokeMiners、`wiki_*` 是對不到本機檔時的 wiki 造型原圖)
+- `assets/img/` — 寶可夢 sprite(`pm*` 來自 PokeMiners、`wiki_*` 見下方「造型」說明)
 - `assets/bg/` — 背卡圖
-- `assets/badge_*.png` — 極巨化/超極巨化徽章
+- `assets/badge_*.png` — 極巨化 / 超極巨化徽章
 
-## 跑起來(本機預覽,不用 push)
+## 需求
+```bash
+pip install cloudscraper Pillow
+```
+
+## 本機預覽
 ```bash
 python preview.py          # 自動開 http://127.0.0.1:8797
-python preview.py --lan    # 手機也能連
+python preview.py --lan    # 同網段的手機也能連
 python preview.py -p 9000  # 換埠號
 ```
 改完 `index.html` 或 `data/*.json` 直接重新整理即可 —— `preview.py` 一律送 `no-store`,
 不會像 `python -m http.server` 那樣吃到瀏覽器快取。
 
-## 更新流程(有新活動/新寶可夢時)
+## 更新流程(有新活動 / 新寶可夢時)
 ```bash
-# 1) 先更新你的 PokeMiners clone(sprite 與中文名來源)
-cd /path/to/pogo_assets && git pull
-
-# 2) 重建來源資料(抓最新 GAME_MASTER + Fandom 背卡)
-cd 回本資料夾
-python build_data.py
-
-# 3) 下載新圖到本機(已存在的 sprite 會跳過;背卡一律重抓最新藝術圖)
-python fetch_assets.py
-
-# 4) 先本機看過再決定要不要 commit
-python preview.py
+python update.py            # pull PokeMiners → build_data → fetch_assets
+python update.py --commit   # 跑完順便 commit / push
 ```
-以上四步 `python update.py` 會做前三步(`--commit` 可順便 commit/push)。
+拆開跑也可以:
+```bash
+cd /path/to/pogo_assets && git pull   # 1) sprite 與各語言名稱來源
+python build_data.py                  # 2) 重建 data/*.json
+python fetch_assets.py                # 3) 下載圖片 + 產生縮圖
+python preview.py                     # 4) 本機確認後再 commit
+```
+`build_data.py` 需要 `POGO_ASSETS` 指到本機的 PokeMiners clone
+(預設與 repo 同層,或設環境變數覆寫)。實際只會用到兩個子目錄:
+`Images/Pokemon - 256x256/Addressable Assets` 與 `Texts/Latest APK/JSON`。
 
 ## 資料來源
+
+感謝以下社群專案與 wiki:
+
 | 內容 | 來源 |
 |------|------|
-| 寶可夢 sprite（造形/服裝/公母/異色/超極巨化） | PokeMiners `pogo_assets` |
-| 中文名 | PokeMiners GAME_MASTER 繁中 i18n |
-| 哪些 form 其實是「造型」 | GAME_MASTER `formSettings.isCostume` |
-| 可否極巨化 | Bulbapedia `Dynamax (GO)` |
-| 背卡 + 可用寶可夢（每隻直接帶 異色/極巨化/暗影，進化型明列） | **Bulbapedia** `Background (GO)` |
-| 背卡補充（Bulbapedia 整張缺、或整隻沒提到的） | Fandom `Backgrounds` |
+| 寶可夢 sprite(型態 / 造型 / 公母 / 異色 / 超極巨化) | [PokeMiners/pogo_assets](https://github.com/PokeMiners/pogo_assets) |
+| 各語言名稱 | PokeMiners GAME_MASTER i18n |
+| 哪些 form 屬於「造型」 | GAME_MASTER `formSettings.isCostume` |
+| 可否極巨化 | [Bulbapedia](https://bulbapedia.bulbagarden.net/) `Dynamax (GO)` |
+| 背卡 + 可用寶可夢(含異色 / 極巨化 / 暗影,進化型明列) | Bulbapedia `Background (GO)` |
+| 背卡補充(Bulbapedia 未收錄的卡或物種) | [Pokémon GO Wiki (Fandom)](https://pokemongo.fandom.com/) `Backgrounds` |
 
-### 背卡上的「造型」怎麼決定 sprite
-wiki 寫的是自家代號(Bulbapedia `0025Willow`、Fandom `ci=Pikachu willow`),跟 PokeMiners 的
-造型代碼(`SPRING_2023_MYSTIC`…)沒有官方對照表。`build_data.py` 走三層,對不到就往下掉:
+兩個 wiki 都是透過官方 `api.php` 讀取,並在批次之間節流。
+Bulbapedia 的 API 需要 `cloudscraper` 才能正常連線。
+
+## 背卡上的「造型」怎麼決定 sprite
+
+wiki 用的是自家代號(Bulbapedia `0025Willow`、Fandom `ci=Pikachu willow`),
+與 PokeMiners 的造型代碼(`SPRING_2023_MYSTIC`…)沒有官方對照表。
+`build_data.py` 走三層,對不到就往下掉:
 
 1. **型態** `resolve_suffix` / `resolve_form` → `128PA`→`PALDEA_AQUA`、`888C`→`CROWNED_SWORD`
 2. **本機造型** `resolve_costume` → `Jan2020`→`JAN_2020_NOEVOLVE`、`Mystic`→`SPRING_2023_MYSTIC`
-   只在「全 dex 唯一命中」時採用,寧可不對也不亂對
+   只在「該 dex 唯一命中」時採用,寧可不對也不亂對
 3. **wiki 原圖** → `File:GO0025Willow.png`(Bulbapedia)/ `File:Pikachu willow.png`(Fandom)
-   兩邊都是 256×256、就是頁面上顯示的那張,必定存在。`fetch_assets.py` 會下載成
-   `assets/img/wiki_*.png` 一併自我託管
+   兩邊都是 256×256、就是 wiki 頁面上顯示的那張,必定存在;
+   `fetch_assets.py` 會存成 `assets/img/wiki_*.png`
 
-跑 `build_data.py` 結尾會印**健檢**:MSP 標籤總數 vs 解析數、三層各命中幾筆、對不到的後綴清單。
-來源哪天改格式,這裡會立刻現形。
+第三層讓覆蓋率達到 100% 且不需維護對照表 —— wiki 頁面能顯示的造型,這裡就抓得到。
 
-> Bulbapedia 在 Cloudflare 後面,`build_data.py` 用 `cloudscraper` 取其 API(`pip install cloudscraper`);
-> 背卡圖床 archives.bulbagarden.net 可直接下載。改用 Bulbapedia 的好處:每張背卡的**異色/極巨化資格**都標明、進化型明列、更新更快。
+跑 `build_data.py` 結尾會印**健檢**:MSP 標籤總數 vs 解析數、三層各命中幾筆、
+對不到的後綴清單。來源哪天改格式,這裡會立刻現形。
 
-## 注意
-- 圖片版權屬 Niantic / 任天堂 / 寶可夢公司。個人/非商業 fan 用途通常被容忍;公開發佈請加免責聲明,商業化有風險。
-- `build_data.py` 內的 `POGO_ASSETS` 需指到你的 pogo_assets clone(或設環境變數 `POGO_ASSETS`)。
+## 圖片顯示
+
+sprite 四周常有一圈透明 padding。前端會掃描出主體的 bounding box,
+水平置中、垂直靠下擺放,放大上限 `MAXUP`(見 `index.html`)以避免小圖被放大到模糊。
+網格用 128px WebP 縮圖,匯出 PNG 時改用 256px 原圖重畫。
+
+## 授權與聲明
+
+程式碼為個人非商業用途的同好作品。
+寶可夢、Pokémon GO 及相關圖像之著作權屬 Nintendo / Creatures Inc. /
+GAME FREAK inc. / Niantic, Inc. 所有,本專案與上述公司無任何關聯。

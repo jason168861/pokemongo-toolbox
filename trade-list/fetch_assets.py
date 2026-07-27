@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-把工具用到的所有圖片下載到本機(自我託管,不再盜連別人)。
+把工具用到的所有圖片存到本機,前端一律讀本機檔(不佔來源站流量,也不會因對方策略變動而破圖)。
 - 寶可夢 sprite:來自 PokeMiners → assets/img/
-- 背卡:來自 Fandom(帶 no-referer 繞過盜連保護,合法把自己要用的抓下來)→ assets/bg/
+- 背卡:來自 Bulbapedia archives / Fandom → assets/bg/
 產出 data/pokemon.local.json / data/backgrounds.local.json(url 指向本機),前端讀這兩個。
 
 未來更新:先跑 build_data.py 刷新來源資料,再跑本檔即可 —— sprite 已存在會跳過,背卡一律重抓(抓最新藝術圖)。
@@ -23,7 +23,7 @@ os.makedirs(IMG, exist_ok=True); os.makedirs(BGD, exist_ok=True)
 def dl(url, path, no_referer=False, force=False, tries=3):
     if os.path.exists(path) and not force and os.path.getsize(path) > 0:
         return "skip"
-    # 完全不送 Referer(urllib 預設就不送)→ 繞過 Fandom 盜連保護。no_referer 參數保留給語意清楚。
+    # 不送 Referer(urllib 的預設行為)。no_referer 參數保留給語意清楚。
     headers = {"User-Agent": "Mozilla/5.0 asset-fetch"}
     for a in range(tries):
         try:
@@ -63,7 +63,7 @@ def main():
             for k in ("normal", "shiny"):
                 if p["gigantamax"].get(k): sprite_urls.add(p["gigantamax"][k])
 
-    # 背卡條目裡對不到本機 sprite 的造型,用 wiki 原圖(一樣自我託管,不盜連)
+    # 背卡條目裡對不到本機 sprite 的造型,用 wiki 原圖(一樣存到本機)
     wiki_urls = set()
     for b in bg:
         for m in b.get("pokemon", []):

@@ -4,7 +4,7 @@
 - 寶可夢 sprite + 中文名:本機 PokeMiners pogo_assets
 - 可否極巨化(sprite 網格用):GAME_MASTER breadTierGroup
 - 背卡 ↔ 寶可夢(含異色/極巨化/暗影/進化,直接明列):**Bulbapedia**「Background (GO)」
-  Bulbapedia 在 Cloudflare 後面,用 cloudscraper 取 API;圖床 archives 可直接下載。
+  透過 Bulbapedia 官方 api.php 讀取(需 cloudscraper 才能連線),批次之間有節流。
 需求:pip install cloudscraper
 跑完再跑 fetch_assets.py 下載圖片。
 """
