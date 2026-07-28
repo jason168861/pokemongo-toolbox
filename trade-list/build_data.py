@@ -50,10 +50,20 @@ name2dex = {v.upper().replace(" ", "_"): d for d, v in en_names.items()}
 # ---- GM:可否極巨化 + 哪些 form 其實是「造型」----
 gm = get_json("https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json")
 lego_dex = set()
-gm_tradable = {}    # dex → {form 代碼(基本型為 None): isTradable};不可交換的不列入交換清單,見 tradable()
+gm_tradable = {}    # dex → {form 代碼(基本型為 None): True/False/None};None=GM 沒講,見 _trad()/tradable()
 # 近年的造型(WCS_2024、GOTOUR_2026_A、ROCK_STAR…)在檔名裡是寫成 form 而非 costume,
 # 只有 GAME_MASTER 的 formSettings.isCostume 分得出來。抓下來,parse() 時把它們歸回 costume。
 gm_costume = {}; gm_real = {}
+
+def _trad(ps):
+    """單一型態的 isTradable。GM 對某些型態根本沒寫這個欄位,不能一律當成 False ——
+    王之劍蒼響 / 王之盾藏瑪然特就是這樣(欄位缺席,但 isTransferable 是 true),實際遊戲裡可以交換。
+    真正鎖住的合體型態(黑白酋雷姆、基格爾德、奈克洛茲瑪合體、無極汰那)是「兩個欄位一起缺席」。
+    → 缺席但可轉移 = GM 只是沒重寫,回 None 讓 tradable() 退回該 dex 基本型的值。"""
+    t = ps.get("isTradable")
+    if t is not None: return bool(t)
+    return None if ps.get("isTransferable") else False
+
 for e in gm:
     tid = e.get("templateId", "")
     m = re.match(r"V(\d+)_POKEMON_", tid)
@@ -62,7 +72,7 @@ for e in gm:
         dex = int(m.group(1))
         if ps.get("pokemonClass") in ("POKEMON_CLASS_LEGENDARY", "POKEMON_CLASS_MYTHIC", "POKEMON_CLASS_ULTRA_BEAST"): lego_dex.add(dex)
         sp, f = ps.get("pokemonId", ""), ps.get("form") or ""
-        gm_tradable.setdefault(dex, {})[f[len(sp) + 1:] if f.startswith(sp + "_") else (f or None)] = bool(ps.get("isTradable"))
+        gm_tradable.setdefault(dex, {})[f[len(sp) + 1:] if f.startswith(sp + "_") else (f or None)] = _trad(ps)
     fm = re.fullmatch(r"FORMS_V(\d+)_POKEMON_(.+)", tid)
     fs = e.get("data", {}).get("formSettings")
     if fm and fs:
@@ -85,7 +95,8 @@ except Exception as ex:
 
 # ---- 可否交換(GM pokemonSettings.isTradable,權威來源,不用自己維護名單)----
 # 不可交換的:幻之寶可夢(夢幻→薩戮德;美錄坦/美錄梅塔/桃歹郎是例外,GM 標 true)
-#   以及合體/究極型態:黑白酋雷姆、基格爾德(全型態)、奈克洛茲瑪合體、王之劍/王之盾、無極汰那。
+#   以及合體/究極型態:黑白酋雷姆、基格爾德(全型態)、奈克洛茲瑪合體、無極汰那。
+#   王之劍/王之盾不在此列(GM 只是漏寫 isTradable,見 _trad())。
 # 交換清單放這些等於讓人做出無效的清單 → 與 Mega/Primal 同政策,sprite 與背卡一律不列。
 # 注意:實際的排除放在最後(見「拿掉不可交換的變體」),不能在這裡就從 pokemon 裡刪掉——
 #   背卡的型態解析要靠完整的 form 清單才對得到「0646B → BLACK」,先刪會讓它退回 wiki 原圖、
@@ -94,7 +105,9 @@ def tradable(dex, form=None):
     """GM 沒收錄這隻/這個型態就當作可交換(寧可多列,不要因 GM 落後 sprite dump 而漏掉新寶可夢)。"""
     t = gm_tradable.get(dex)
     if not t: return True
-    return t[form] if form in t else t.get(None, True)
+    v = t.get(form)
+    if v is None: v = t.get(None)       # 該型態沒明講 → 退回基本型的值
+    return v is True                    # 基本型也沒明講(幻之寶可夢:代歐奇希斯、達克萊伊…)→ 不可交換
 
 # ---- sprite 變體(本機 PokeMiners)----
 def parse(fn):
