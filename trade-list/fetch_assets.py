@@ -107,6 +107,7 @@ def main():
     print(f"\n完成:ok {ok} / 已存在跳過 {skip} / 失敗 {err}", flush=True)
     print("已寫出 data/pokemon.local.json 與 data/backgrounds.local.json", flush=True)
     make_thumbs()
+    make_trim()
 
 def make_thumbs():
     """產生網格用的小 WebP 縮圖(sprite 128px、背卡 220px),大幅加速載入。原圖仍供匯出高解析用。"""
@@ -130,6 +131,42 @@ def make_thumbs():
     gen("assets/img", "assets/thumb", 128)     # 網格/清單用小縮圖
     gen("assets/bg", "assets/bgthumb", 220)    # 網格/清單用背卡縮圖
     gen("assets/bg", "assets/bgexp", 384)      # 匯出 PNG 用中尺寸背卡(原圖動輒 500KB+,卡片只畫 264px)
+
+
+def make_trim():
+    """算出每張 sprite 的「不透明範圍」(去透明邊用),存成 data/trim.json。
+
+    前端本來是即時用 canvas getImageData 掃描算的,但那是一趟 GPU→CPU 同步讀回:
+    實測手機等級 CPU 每張約 1.9ms,滑過 2500 張就是 5 秒主執行緒時間,捲動明顯卡頓
+    (而且降低掃描解析度也沒用 —— 貴的是讀回這個動作本身,不是像素數量)。
+    這裡用 Pillow 一次算好:比即時掃描更準(全解析度,不是縮到 96px),前端只要查表。
+    輸出的是比例(0~1),所以縮圖與原圖共用同一份;key 是去副檔名的檔名,
+    assets/thumb/pm25.s.icon.webp 與 assets/img/pm25.s.icon.png 都對得到 pm25.s.icon。
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        print("(略過 trim.json:未安裝 Pillow)", flush=True); return
+    src = os.path.join(HERE, "assets", "img")
+    out, skipped = {}, 0
+    for fn in sorted(os.listdir(src)):
+        if not fn.lower().endswith((".png", ".jpg", ".jpeg", ".webp")): continue
+        try:
+            im = Image.open(os.path.join(src, fn)).convert("RGBA")
+            w, h = im.size
+            # 與前端同一個門檻:alpha > 16 才算主體
+            box = im.getchannel("A").point(lambda a: 255 if a > 16 else 0).getbbox()
+            if not box: skipped += 1; continue          # 整張透明 → 不裁
+            x0, y0, x1, y1 = box
+            out[os.path.splitext(fn)[0]] = [round(x0 / w, 4), round(y0 / h, 4),
+                                            round((x1 - x0) / w, 4), round((y1 - y0) / h, 4)]
+        except Exception:
+            skipped += 1
+    p = os.path.join(HERE, "data", "trim.json")
+    json.dump(out, open(p, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    print(f"去邊範圍 data/trim.json: {len(out)} 筆"
+          f"{f'(略過 {skipped})' if skipped else ''} / {os.path.getsize(p)//1024} KB", flush=True)
+
 
 if __name__ == "__main__":
     main()

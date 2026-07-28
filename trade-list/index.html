@@ -536,6 +536,7 @@ const CDN=(location.protocol==='https:'&&/github\.io$/.test(location.hostname))?
 function cdn(p){ return p && !/^(https?:|data:)/.test(p) ? CDN+p : p; }
 const badgeD='assets/badge_dynamax.png',badgeG='assets/badge_gigantamax.png',badgeP='assets/badge_purified.png',shinyIcon='assets/ic_shiny.png';
 let POKE={},BG=[],THUMBS=[],BGCOMBOS=[],TAB='mon',TARGET='want';
+let TRIM={};   // 建置期算好的去透明邊範圍(data/trim.json,由 fetch_assets.py 產出);沒有就退回即時掃描
 const FILT={fNormal:true,fShiny:true,fDmax:true,fGmax:true,fCos:true,fSelected:false,fLego:false};
 const THEMES={
  neon:{ui:{bg:'linear-gradient(160deg,#0f1220,#191540)',card:'#1a1f36',line:'#2b3153',fg:'#eef0fb',mut:'#9aa3c7',acc:'#e0276c',acc2:'#7b5cff',want:'#2f9e57',have:'#c9a227',cellbg:'#0d1024'},
@@ -661,7 +662,9 @@ async function boot(){
   $('#langSel').value=LANG; $('#langSel').onchange=()=>applyLang($('#langSel').value);
   NAMES=await loadNames(LANG);
   await loadAllNames();
-  [POKE,BG]=await Promise.all([loadData('pokemon'),loadData('backgrounds')]);
+  // trim.json 沒有 .local 版本,直接抓;抓不到就讓 trimBBox 退回即時掃描(功能一樣,只是比較慢)
+  [POKE,BG,TRIM]=await Promise.all([loadData('pokemon'),loadData('backgrounds'),
+    fetch('data/trim.json').then(r=>r.ok?r.json():{}).catch(()=>({}))]);
   buildThumbs();
   $('#q').oninput=()=>{ $('#qClear').style.display=$('#q').value?'':'none'; render(); };
   $('#qClear').onclick=()=>{ $('#q').value=''; $('#qClear').style.display='none'; render(); $('#q').focus(); };
@@ -900,16 +903,26 @@ function rrPath(x,rx,ry,w,h,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+w,ry,r
 // 掃描出不透明範圍的 bounding box(以比例 0~1 快取),繪製時只取主體 → 寶可夢顯示更大。
 const _bboxCache=new Map(); let _trimCv=null;
 const MAXUP=1.4;   // 去邊後最大放大倍率(相對來源主體像素):太小的主體不硬撐到填滿,避免放大到模糊
-function trimBBox(img,key){
-  if(_bboxCache.has(key)) return _bboxCache.get(key);
+// maxScan=掃描解析度。匯出用預設 96(誤差約 1% 邊長),那是要下載的成品;
+// 網格預覽改用 64 —— 實測 96px 每張 2.35ms、64px 只要 0.42ms,而誤差只有 2% 格寬(格子才 72~108px,看不出來)。
+// 差別很有感:滑過 2500 張時,96px 光這件事就吃掉 6 秒主執行緒,是捲動卡頓的最大宗。
+// assets/thumb/pm25.s.icon.webp 與 assets/img/pm25.s.icon.png(含 CDN 前綴/query)都對到 pm25.s.icon
+const _trimKey=u=>{ const s=String(u).split('?')[0]; return s.slice(s.lastIndexOf('/')+1).replace(/\.[a-z0-9]+$/i,''); };
+function trimBBox(img,key,maxScan){
+  const MAX=maxScan||96, ck=key+'@'+MAX;
+  if(_bboxCache.has(ck)) return _bboxCache.get(ck);
+  const pre=TRIM[_trimKey(key)];        // 建置期算好的:全解析度、更準,而且不用碰 canvas
+  if(pre){ const b={x:pre[0],y:pre[1],w:pre[2],h:pre[3]}; _bboxCache.set(ck,b); return b; }
   let box=null;
   try{
     const iw=img.naturalWidth||img.width, ih=img.naturalHeight||img.height;
     if(!iw||!ih) return null;   // 尚未載入完成,先不快取
-    const scale=Math.min(1,96/Math.max(iw,ih));                 // 縮到 ~96px 掃描即可,加速
+    const scale=Math.min(1,MAX/Math.max(iw,ih));
     const w=Math.max(1,Math.round(iw*scale)), h=Math.max(1,Math.round(ih*scale));
     const cv=_trimCv||(_trimCv=document.createElement('canvas'));
-    cv.width=w; cv.height=h; const cx=cv.getContext('2d',{willReadFrequently:true});
+    // 只長不縮:每次指定 width/height 都會整塊重新配置畫布,一張圖一次的話很傷
+    if(cv.width<w||cv.height<h){ cv.width=Math.max(cv.width,w); cv.height=Math.max(cv.height,h); }
+    const cx=cv.getContext('2d',{willReadFrequently:true});
     cx.clearRect(0,0,w,h); cx.drawImage(img,0,0,w,h);
     const d=cx.getImageData(0,0,w,h).data;
     let minX=w,minY=h,maxX=-1,maxY=-1;
@@ -917,7 +930,7 @@ function trimBBox(img,key){
       if(xx<minX)minX=xx; if(xx>maxX)maxX=xx; if(y<minY)minY=y; if(y>maxY)maxY=y; } }
     if(maxX>=minX && maxY>=minY) box={x:minX/w, y:minY/h, w:(maxX-minX+1)/w, h:(maxY-minY+1)/h};
   }catch(e){ box=null; }   // 跨域無 CORS 等讀不到像素 → 不裁,退回整張圖
-  _bboxCache.set(key,box); return box;
+  _bboxCache.set(ck,box); return box;
 }
 // 把(去邊後的)寶可夢等比例畫進卡片內的正方框:水平置中、垂直靠下(站在卡片底部)
 function drawMon(x,m,key,dx0,dy0,box){
@@ -934,13 +947,14 @@ function drawMon(x,m,key,dx0,dy0,box){
 }
 // 預覽(選取格子/清單)的 <img> 也去透明邊:量出主體範圍後,用 transform 放大並水平置中、垂直靠下,
 // 超出的透明邊由容器 overflow:hidden 裁掉,與下載圖效果一致。pad=主體佔卡片的比例。
-function hookTrim(img,hasBg){
+function hookTrim(img,hasBg,cellW){
   const run=()=>{
     if(!img.naturalWidth) return;
-    const bb=trimBBox(img,img.src); if(!bb) return;   // 讀不到(跨域無 CORS 等)→ 維持原樣
+    const bb=trimBBox(img,img.src,64); if(!bb) return;   // 讀不到(跨域無 CORS 等)→ 維持原樣
     img.style.width='100%'; img.style.height='100%';
     const pad=hasBg?0.82:0.86, gap=(1-pad)/2;         // gap=底部留白,沿用原本置中時的上下留白
-    const L=img.clientWidth||img.offsetWidth||72, dpr=window.devicePixelRatio||1;
+    // cellW 由 appendBatch 整批量一次傳進來(格子等寬),沒給才自己讀 —— 自己讀會觸發同步重排
+    const L=cellW||img.clientWidth||img.offsetWidth||72, dpr=window.devicePixelRatio||1;
     // 放大不超過來源(縮圖)主體像素的 MAXUP 倍 → 小主體不會被放大到模糊(改為較小但清晰)
     const sMax=MAXUP*img.naturalWidth/Math.max(1,L*dpr);
     const s=Math.min(pad/Math.max(bb.w,bb.h), sMax);
@@ -1363,7 +1377,8 @@ function setTarget(t){TARGET=t;
   if(FILT.fSelected)render(); else refreshAdded();}   // 只在「已選」篩選開啟時才需重建;否則原地更新✓
 function openPicker(t){ setTarget(t);
   const pt=$('#pickTitle'); if(pt)pt.textContent=tr('pick_title')+'：'+(t==='want'?tr('want'):tr('have'));
-  document.body.classList.add('picking'); const g=$('#gridWrap'); if(g)g.scrollTop=0; }
+  document.body.classList.add('picking'); const g=$('#gridWrap'); if(g)g.scrollTop=0;
+  pumpBatches(); }   // 面板剛顯示才量得到高度,這時才知道要預先鋪幾螢幕
 function closePicker(){ document.body.classList.remove('picking'); flushToggleSync(); }
 // 「我想要的 / 我能提供的」可收合;狀態記在 localStorage
 function toggleSec(k){ const sec=document.querySelector('.sec.'+k); if(!sec)return;
@@ -1409,7 +1424,24 @@ function render(){
       if(q&&!(matchName(t.dex,q)||String(t.dex)===q||String(t.dex).padStart(4,'0')===q))return false; return true;});
     $('#gcount').textContent=`${FILTERED.length} ${tr('combos_unit')}`;
   }
-  appendBatch(); const sc=$('#gridWrap'); sc.onscroll=()=>{if(sc.scrollTop+sc.clientHeight>sc.scrollHeight-300)appendBatch()};
+  appendBatch(); pumpBatches(); const sc=$('#gridWrap'); sc.onscroll=pumpBatches;
+}
+// 捲動到底才補 → 一定看得到空白等待。改成「永遠比可視範圍多渲染兩螢幕」,而且一個 frame 只補一批:
+// 提早補所以不必等,單批有上限所以不會一次做完 300 格把畫面卡住。
+const AHEAD_SCREENS=2;
+let pumping=false;
+function needMore(){
+  const sc=$('#gridWrap'); if(!sc||shown>=FILTERED.length) return false;
+  const vh=sc.clientHeight; if(!vh) return false;      // 面板還沒打開(display:none)→ 等 openPicker 再補
+  return sc.scrollTop+vh > sc.scrollHeight-vh*AHEAD_SCREENS;
+}
+function pumpBatches(){
+  if(pumping) return; pumping=true;
+  const step=()=>{
+    if(!needMore()){ pumping=false; preloadAhead(); return; }   // 補夠了才暖快取,不必每批重啟一次
+    appendBatch(); requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 // 只預載「已渲染之後的接下來一段」(不是全部),首屏最快,滾動時再往前補
 const AHEAD=360;                          // 預先暖快取的張數(約接下來幾屏)
@@ -1430,21 +1462,24 @@ function preloadAhead(){
   }
   pump();
 }
+const BATCH=120;                            // 一批的格數:配合 pumpBatches 一 frame 一批,單次工作量有上限
 function appendBatch(){
-  const g=$('#grid');const end=Math.min(shown+300,FILTERED.length);
+  const g=$('#grid');const end=Math.min(shown+BATCH,FILTERED.length);
+  const frag=document.createDocumentFragment(), made=[];
   for(let i=shown;i<end;i++){
-    const it=FILTERED[i];const d=document.createElement('div');d.className='cell';
-    if(inTarget(it))d.classList.add('added');
+    const it=FILTERED[i];const on=inTarget(it);const d=document.createElement('div');d.className=on?'cell added':'cell';
     d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${thumbOf(it.bg)}">`:''}
       <img class="m${it.bg?'':' big'}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
-      ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${inTarget(it)?'<span class="ok">✓</span>':''}`;
+      ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${on?'<span class="ok">✓</span>':''}`;
     d.title=(it.zh||'')+(it.tag?'('+it.tag+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' 異色':'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
-    g.appendChild(d);   // 點選/拖曳選取由 setupGridSelect 在容器層統一處理(事件委派)
-    const mi=d.querySelector('img.m'); if(mi)hookTrim(mi,!!it.bg);   // 預覽也去透明邊(需已在 DOM 才量得到寬度)
+    frag.appendChild(d); made.push(d);
   }
+  g.appendChild(frag);   // 整批一次進 DOM(只觸發一次排版);點選/拖曳由 setupGridSelect 事件委派處理
   shown=end;
-  preloadAhead();   // 暖快取:接下來一段的縮圖
+  // 格子等寬,量一次就夠:原本每格 append 完馬上讀 clientWidth,讀寫交錯會逼瀏覽器一格重排一次
+  const L=(made[0]||g.firstElementChild||{}).clientWidth||0;
+  for(const d of made){ const mi=d.querySelector('img.m'); if(mi)hookTrim(mi,!!d._it.bg,L); }   // 預覽也去透明邊
 }
 let LIST={want:[],have:[]};   // 永遠指向「目前這組」的資料(curSet().data)
 let dragK=null,dragIdx=null;
