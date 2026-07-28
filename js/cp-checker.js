@@ -42,7 +42,8 @@ export function initializeCpChecker() {
         const s = (query || '').trim().toLowerCase();
         if (s) {
             const hit = allPokemonData.find(p => String(p.id) === s)
-                     || allPokemonData.find(p => p.name.toLowerCase() === s);
+                     || allPokemonData.find(p => p.name.toLowerCase() === s)
+                     || allPokemonData.find(p => (p.alt || '').toLowerCase() === s);
             if (hit) return hit;
         }
         return visibleIdx.length === 1 ? allPokemonData[visibleIdx[0]] : null;
@@ -88,6 +89,7 @@ export function initializeCpChecker() {
         const s = q.trim().toLowerCase();
         return allPokemonData.find(p => String(p.id) === s)
             || allPokemonData.find(p => p.name.toLowerCase() === s)
+            || allPokemonData.find(p => (p.alt || '').toLowerCase() === s)   // 改名前的舊 ?mon= 連結
             || allPokemonData.find(p => p.name.toLowerCase().includes(s)) || null;
     }
     // 把目前查詢反映到網址列（可分享/可被收錄）並更新標題、描述、canonical
@@ -127,6 +129,7 @@ export function initializeCpChecker() {
             const pokemonCard = document.createElement('div');
             pokemonCard.className = 'pokemon-card';
             pokemonCard.dataset.name = pokemon.name.toLowerCase();
+            pokemonCard.dataset.alt = (pokemon.alt || '').toLowerCase();   // 改名前的舊名（?mon= 舊連結用）
             pokemonCard.dataset.id = pokemon.id;
             pokemonCard.dataset.idx = i;   // 對回 allPokemonData（同 dex 的地區形態 id 會重複，不能用 id 反查）
             pokemonCard.innerHTML = `
@@ -151,9 +154,12 @@ export function initializeCpChecker() {
         const visibleIdx = [];
         allCards.forEach(card => {
             const pokemonName = card.dataset.name;
+            const pokemonAlt = card.dataset.alt;
             const pokemonId = card.dataset.id;
             const isQueryNumeric = !isNaN(query);
-            let isMatch = !query || (isQueryNumeric ? pokemonId===(query) : pokemonName.includes(query));
+            // 也比對舊名：名稱從英文改成中文之前的 ?mon= 連結（Flabebe、Farfetch'd…）還要能開
+            let isMatch = !query || (isQueryNumeric ? pokemonId===(query)
+                                                    : (pokemonName.includes(query) || (!!pokemonAlt && pokemonAlt.includes(query))));
             card.style.display = isMatch ? 'flex' : 'none';
             if (isMatch) visibleIdx.push(+card.dataset.idx);
         });

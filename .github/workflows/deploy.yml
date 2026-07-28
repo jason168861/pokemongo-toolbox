@@ -51,11 +51,19 @@ jobs:
 
       # ==================== ✨ 新增的資料抓取區塊 ✨ ====================
       - name: Run all scrapers to update data
+        env:
+          # refresh_cp_data.py 要用 GitHub API 列出 PokeMiners 的圖示檔名。
+          # 沒有 token 的話每小時只有 60 次額度(而且是整台 runner 共用),很容易被擋。
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python scripts/scrape_research.py
           python scripts/scrape_eggs.py
           python scripts/scrape_boss.py
           python scripts/generate_pokemon_data.py
+          # CP / 基礎數值 / 中文名 / GO 圖示,全部對齊官方 GAME_MASTER 與 APK。
+          # Niantic 調平衡時會自動跟上,變動會列在這一步的 log 裡(「基礎數值有變動」)。
+          # 要放在 build_cp_sitemap 之前 —— sitemap 的 ?mon= 網址是拿名稱組的。
+          python scripts/refresh_cp_data.py
           python scripts/build_cp_sitemap.py   # 產生每隻寶可夢的 CP 深連結 sitemap
       # ================================================================
 
