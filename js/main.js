@@ -380,6 +380,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
         const queryTab = params.get('tab');
         const hashTab = window.location.hash.substring(1);
+        // 網址已經帶了有效的 ?tab= → 只切內容，不要重寫網址。
+        // navigateTo() 是用 pathname + '?tab=' 重建網址的，會把 &mon= 這類深連結參數一起清掉；
+        // 雖然 cp-checker 之後會補回來，中間仍有一瞬間停在別的網址 —— Google 算的是渲染後的網址，
+        // 只要那次補救沒跑完（渲染有時間預算），整批 ?mon= 網址就會被判定「頁面會重新導向」而不收錄。
+        if (isValidTab(queryTab) && queryTab !== 'docs-app') { activateTab(queryTab); return; }
         const initialTabId = isValidTab(queryTab) ? queryTab
                            : (isValidTab(hashTab) ? hashTab : 'docs-app');
         navigateTo(initialTabId, true);

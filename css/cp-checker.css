@@ -167,3 +167,69 @@
 #cp-checker-app #cpSearchInput {
     padding-right: 35px; /* 增加右側內距 */
 }
+/* --- 全等級 CP 對照表（鎖定單一寶可夢時顯示） --- */
+#cp-checker-app .lv-table-section {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid #dddfe2;
+}
+#cp-checker-app .lv-table-section h2 {
+    font-size: 20px;
+    margin: 0 0 10px;
+    color: #1c1e21;
+}
+#cp-checker-app .lv-table-intro,
+#cp-checker-app .lv-table-foot {
+    color: #606770;
+    font-size: 14px;
+    line-height: 1.75;
+    margin: 0 0 14px;
+}
+#cp-checker-app .lv-table-foot { margin: 12px 0 0; font-size: 13px; }
+/* 窄螢幕時表格自己橫向捲，不讓整頁跑版 */
+#cp-checker-app .lv-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+#cp-checker-app .lv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+#cp-checker-app .lv-table caption {
+    caption-side: top;
+    text-align: left;
+    color: #606770;
+    font-size: 13px;
+    padding-bottom: 8px;
+}
+#cp-checker-app .lv-table th,
+#cp-checker-app .lv-table td {
+    border: 1px solid #e4e6eb;
+    padding: 7px 10px;
+    text-align: right;
+    white-space: nowrap;
+}
+#cp-checker-app .lv-table thead th {
+    background: #f7f8fa;
+    color: #1c1e21;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+}
+#cp-checker-app .lv-table tbody th { text-align: left; font-weight: 700; background: #fafbfc; }
+#cp-checker-app .lv-table .cp-max { font-weight: 700; color: #2f9e57; }
+#cp-checker-app .lv-table .cp-min { color: #606770; }
+#cp-checker-app .lv-table .lv-note,
+#cp-checker-app .lv-table thead th:last-child {   /* 表頭要跟著內容一起靠左 */
+    text-align: left;
+    white-space: normal;
+    color: #606770;
+    font-size: 13px;
+    width: 42%;
+}
+#cp-checker-app .lv-table thead th:last-child { color: #1c1e21; font-size: 14px; }
+#cp-checker-app .lv-table tbody tr:nth-child(even) td,
+#cp-checker-app .lv-table tbody tr:nth-child(even) th { background: #fcfcfd; }
+#cp-checker-app .lv-table tr.key-lv th,
+#cp-checker-app .lv-table tr.key-lv td { background: #eef7f1; }
+#cp-checker-app .lv-table tr.bb-lv th,
+#cp-checker-app .lv-table tr.bb-lv td { background: #fff7e8; }

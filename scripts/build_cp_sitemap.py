@@ -22,7 +22,9 @@ OUT = os.path.join(ROOT, "sitemap-cp.xml")
 
 def load_names():
     text = open(SRC, encoding="utf-8").read()
-    arr = ast.literal_eval(text[text.index("["):text.rindex("]") + 1])  # 單引號字典 → Python 字面值
+    # 只取第一個陣列(POKEMON_CP_DATA)。檔案後面還有 CP_MULTIPLIER 陣列,
+    # 用 rindex("]") 會抓到那個的結尾、把兩個陣列連同中間的 JS 一起餵進 literal_eval → 直接爆。
+    arr = ast.literal_eval(text[text.index("["):text.index("];") + 1])  # 單引號字典 → Python 字面值
     names, seen = [], set()
     for p in arr:
         n = (p.get("name") or "").strip()
