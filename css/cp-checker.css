@@ -18,10 +18,21 @@
     text-align: center;
     margin-bottom: 20px;
 }
+/* 搜尋框釘在頂端：捲到下面看卡片或全等級表時也能直接改查詢，不用滑回去。
+   top 用 main.js 量出來的 --header-height（頁首 .site-header-main 本身是 sticky 的）。
+   上下內距對稱，清除叉叉是 top:50% 絕對定位，不對稱就會歪掉。 */
 #cp-checker-app .search-area {
     display: flex;
     width: 100%;
-    margin-bottom: 20px;
+    position: sticky;
+    /* 往上多疊 4px：頁首高度是 JS 量的，行動裝置上網址列伸縮會有一兩 px 誤差，
+       寧可稍微被頁首蓋住（蓋到的是上緣留白）也不要露出縫隙讓內容穿過去。 */
+    top: calc(var(--header-height, 60px) - 4px);
+    z-index: 1000;
+    background-color: #ffffff;   /* 同 .container 底色，捲過去的內容才不會透出來 */
+    padding: 12px 0;
+    margin-bottom: 12px;
+    transition: top 0.1s ease-in-out;
 }
 #cp-checker-app #cpSearchInput {
     flex-grow: 1;
@@ -141,9 +152,9 @@
     display: block; /* 讓標籤自成一行 */
 }
 /* --- 【新增】叉叉按鈕樣式 --- */
-#cp-checker-app .search-area {
-    position: relative; /* 讓按鈕可以相對於它定位 */
-}
+/* 這裡原本有 position: relative，但它跟上面的 position: sticky 是同一個選擇器、又寫在後面，
+   會直接把 sticky 蓋掉（搜尋框就釘不住了）。sticky 本身也是「已定位元素」，
+   絕對定位的叉叉一樣會以它為基準，所以不需要再宣告 relative。 */
 
 #cp-checker-app .clear-search-btn {
     position: absolute;

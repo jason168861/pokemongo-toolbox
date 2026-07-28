@@ -398,14 +398,25 @@ document.addEventListener('DOMContentLoaded', () => {
    const nav = document.querySelector('.app-nav');
 
     // 1. 定義一個函式來設定 CSS 變數
+    const siteHeader = document.querySelector('.site-header-main');
     function setNavHeight() {
         const navHeight = nav.offsetHeight; // 取得導覽列的實際高度
         document.documentElement.style.setProperty('--nav-height', `${navHeight}px`);
+        // --nav-height 量的是 .app-nav，但真正 sticky 卡在畫面頂端的是外層的 .site-header-main
+        // （手機上 .app-nav 只有 30px、整條頁首卻有 55px）。要把東西釘在頁首下面得用這個，
+        // 用 --nav-height 會少算、被頁首蓋住一截。另開變數是為了不動到既有用 --nav-height 的頁面。
+        if (siteHeader) {
+            document.documentElement.style.setProperty('--header-height', `${siteHeader.offsetHeight}px`);
+        }
     }
 
 
     // 3. 頁面載入時，立即執行一次高度計算
     setNavHeight();
+    // DOMContentLoaded 當下版面還沒穩定（字體、圖片都還在載），這時量到的高度會偏掉，
+    // 釘在頁首下方的元素就會跟頁首之間露出縫隙。load 後再量一次，之後交給 ResizeObserver 持續校正。
+    window.addEventListener('load', setNavHeight);
+    if (window.ResizeObserver && siteHeader) new ResizeObserver(setNavHeight).observe(siteHeader);
 
     // 4. 為視窗加上事件監聽器
     window.addEventListener('resize', setNavHeight); // 當視窗大小改變時，重新計算高度
