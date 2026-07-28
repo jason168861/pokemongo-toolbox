@@ -49,6 +49,7 @@ name2dex = {v.upper().replace(" ", "_"): d for d, v in en_names.items()}
 # ---- GM:可否極巨化 + 哪些 form 其實是「造型」----
 gm = get_json("https://raw.githubusercontent.com/PokeMiners/game_masters/master/latest/latest.json")
 lego_dex = set()
+gm_tradable = {}    # dex → {form 代碼(基本型為 None): isTradable};不可交換的不列入交換清單,見 tradable()
 # 近年的造型(WCS_2024、GOTOUR_2026_A、ROCK_STAR…)在檔名裡是寫成 form 而非 costume,
 # 只有 GAME_MASTER 的 formSettings.isCostume 分得出來。抓下來,parse() 時把它們歸回 costume。
 gm_costume = {}; gm_real = {}
@@ -59,6 +60,8 @@ for e in gm:
     if m and ps:
         dex = int(m.group(1))
         if ps.get("pokemonClass") in ("POKEMON_CLASS_LEGENDARY", "POKEMON_CLASS_MYTHIC", "POKEMON_CLASS_ULTRA_BEAST"): lego_dex.add(dex)
+        sp, f = ps.get("pokemonId", ""), ps.get("form") or ""
+        gm_tradable.setdefault(dex, {})[f[len(sp) + 1:] if f.startswith(sp + "_") else (f or None)] = bool(ps.get("isTradable"))
     fm = re.fullmatch(r"FORMS_V(\d+)_POKEMON_(.+)", tid)
     fs = e.get("data", {}).get("formSettings")
     if fm and fs:
@@ -78,6 +81,19 @@ try:
     print(f"可極巨化(Bulbapedia):{len(dmax_dex)} 隻", file=sys.stderr)
 except Exception as ex:
     print("Dynamax 名單抓取失敗:", ex, file=sys.stderr)
+
+# ---- 可否交換(GM pokemonSettings.isTradable,權威來源,不用自己維護名單)----
+# 不可交換的:幻之寶可夢(夢幻→薩戮德;美錄坦/美錄梅塔/桃歹郎是例外,GM 標 true)
+#   以及合體/究極型態:黑白酋雷姆、基格爾德(全型態)、奈克洛茲瑪合體、王之劍/王之盾、無極汰那。
+# 交換清單放這些等於讓人做出無效的清單 → 與 Mega/Primal 同政策,sprite 與背卡一律不列。
+# 注意:實際的排除放在最後(見「拿掉不可交換的變體」),不能在這裡就從 pokemon 裡刪掉——
+#   背卡的型態解析要靠完整的 form 清單才對得到「0646B → BLACK」,先刪會讓它退回 wiki 原圖、
+#   form 變成 None 反而繞過這道過濾(實測會漏掉 40 筆)。
+def tradable(dex, form=None):
+    """GM 沒收錄這隻/這個型態就當作可交換(寧可多列,不要因 GM 落後 sprite dump 而漏掉新寶可夢)。"""
+    t = gm_tradable.get(dex)
+    if not t: return True
+    return t[form] if form in t else t.get(None, True)
 
 # ---- sprite 變體(本機 PokeMiners)----
 def parse(fn):
@@ -465,8 +481,21 @@ except Exception as ex:
 
 for r in rows: r["pokemon"] = tidy_mons(r["pokemon"], final=True)   # 收尾:拿掉中間欄位 wiki/ckey
 
+# ---- 拿掉不可交換的變體(型態解析都做完了,現在才刪才不會影響上面的 form 比對)----
+untradable_n = 0
+for _p in pokemon.values():
+    _keep = [v for v in _p["variants"] if tradable(_p["id"], v["form"])]
+    untradable_n += len(_p["variants"]) - len(_keep); _p["variants"] = _keep
+    if _p["gigantamax"] and not tradable(_p["id"]): _p["gigantamax"] = None
+pokemon = {k: v for k, v in pokemon.items() if v["variants"] or v["gigantamax"]}
+# 背卡側套同一條規則(黑酋雷姆、王之劍蒼響…背卡有列但換不了),整張卡只剩不可交換的就丟掉
+bg_untradable = 0
+for r in rows:
+    keep = [m for m in r["pokemon"] if tradable(m["dex"], m.get("form"))]
+    bg_untradable += len(r["pokemon"]) - len(keep); r["pokemon"] = keep
+
 json.dump({str(k): v for k, v in sorted(pokemon.items())}, open(os.path.join(HERE, "data", "pokemon.json"), "w", encoding="utf-8"), ensure_ascii=False)
-rows = [r for r in rows if not EXCLUDE_BG.search(r["image_name"])]  # 排除 Mega 專屬(不可交換)
+rows = [r for r in rows if r["pokemon"] and not EXCLUDE_BG.search(r["image_name"])]  # 另排除 Mega 專屬卡
 json.dump(rows, open(os.path.join(HERE, "data", "backgrounds.json"), "w", encoding="utf-8"), ensure_ascii=False)
 combos = sum(len(r["pokemon"]) for r in rows)
 print(f"寶可夢 {len(pokemon)} / 變體 {sum(len(p['variants']) for p in pokemon.values())} / 超極巨化 {sum(1 for p in pokemon.values() if p['gigantamax'])}")
@@ -480,6 +509,7 @@ print(f"[健檢] Bulbapedia MSP 標籤 {STAT['msp_total']} / 成功解析 {STAT[
       f"{'  ← ⚠ 有漏,正則要修' if STAT['msp_parsed'] < STAT['msp_total'] else '  ✔ 全數解析'}")
 print(f"[健檢] 後綴解析:型態 {STAT['form']} / 對到本機造型 {STAT['costume']} / 走 wiki 原圖 {STAT['wiki']}")
 print(f"[健檢] 產出帶造型的背卡條目 {_cos} 筆(本機 sprite) + {_spr} 筆(wiki 原圖)")
+print(f"[健檢] 不可交換而排除:sprite {untradable_n} 個變體 / 背卡 {bg_untradable} 筆(依 GM isTradable)")
 if STAT["unmapped"]:
     top = sorted(STAT["unmapped"].items(), key=lambda kv: -kv[1])[:15]
     print(f"[健檢] 對不到本機 sprite 的後綴 {len(STAT['unmapped'])} 種(已用 wiki 原圖,非錯誤):")
