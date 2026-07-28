@@ -51,10 +51,35 @@ FORM_ZH_OVERRIDE = {
     "CALYREX_ICE_RIDER": "白馬騎乘",
     "CALYREX_SHADOW_RIDER": "黑馬騎乘",
 }
+# 原始資料是用「基礎數值」去重的，所以**數值相同的另一個形態會整個消失**。
+# 焰白酋雷姆就是這樣不見的:牠跟闇黑酋雷姆同為 310/183/245，被當成同一筆。
+# 這裡明列要額外補回來的形態(templateId → 顯示名稱)，缺的話會自動補進去。
+#
+# 只補「玩家真的會分開查」的形態。同樣被去重掉的還有未知圖騰 A~Z、晃晃斑 00~19、
+# 彩粉蝶 20 種花紋、阿爾宙斯/銀伴戰獸的屬性形態…那些 CP 完全一樣，全列出來只是洗版，
+# 而且會讓 1076 個 ?mon= 網址變成幾百頁內容重複的頁面(Google 會判重複而不收錄)。
+EXTRA_FORMS = {
+    "V0646_POKEMON_KYUREM_WHITE": "酋雷姆 (焰白形態)",             # 與「闇黑形態」同為 310/183/245
+    "V0800_POKEMON_NECROZMA_DUSK_MANE": "奈克洛茲瑪 (黃昏之鬃形態)",  # 與「拂曉之翼形態」同為 277/220/200
+    "V0555_POKEMON_DARMANITAN": "達摩狒狒",                      # 見 GM_OVERRIDE：原本被伽勒爾那列佔走
+}
+
+# 名稱標了某個形態、實際卻對到別的 GAME_MASTER 條目的列。這種錯 CP 反查修不掉
+# （數值一樣就分不出來，或是原始資料本來就填錯數值），只能明講。
+GM_OVERRIDE = {
+    # 原始資料把阿羅拉椰蛋樹填成普通椰蛋樹的數值(233/149/216)，正確是 230/153/216
+    "椰蛋樹 (阿羅拉形態)": "V0103_POKEMON_EXEGGUTOR_ALOLA",
+    # 伽勒爾與通天的標準形態數值相同(263/114/233)，反查分不出來，被指到通天那筆 →
+    # 圖會變成通天達摩狒狒。改指伽勒爾後，通天那筆由 EXTRA_FORMS 補回來。
+    "達摩狒狒 (伽勒爾標準模式)": "V0555_POKEMON_DARMANITAN_GALARIAN_STANDARD",
+}
 # 挑「預設型態」用的偏好順序:有些寶可夢連基本圖都帶 form 代碼(未知圖騰、結草兒、櫻花兒…)，
 # 沒有 pm<dex>.icon.png 可用，得從牠自己的型態裡挑一個當代表。與 trade-list 同一套邏輯。
+# MALE 放在最後:愛管侍的 GM 基本型就是雄性，但檔案只有 fMALE / fFEMALE 沒有無形態的基本圖，
+# 不指定的話會照字母序挑到 fFEMALE，雄性雌性就會用同一張圖。
 DEFAULT_FORMS = ("NORMAL", "STANDARD", "INCARNATE", "SPRING", "SHIELD", "ORDINARY", "DISGUISED",
-                 "MIDDAY", "SOLO", "BAILE", "OVERCAST", "RED", "FIFTY_PERCENT", "PLANT", "WEST", "A")
+                 "MIDDAY", "SOLO", "BAILE", "OVERCAST", "RED", "FIFTY_PERCENT", "PLANT", "WEST", "A",
+                 "MALE")
 
 
 def get_json(url, token=None):
@@ -105,6 +130,7 @@ def main():
         raw_form = ps.get("form") or ""
         code = raw_form[len(species) + 1:] if raw_form.startswith(species + "_") else (raw_form or None)
         rec = {"tid": tid, "dex": int(m.group(1)), "species": species, "form": code,
+               "raw_form": raw_form or None,   # sprite 檔名有時保留物種前綴,見 image_url()
                "atk": a, "def": d, "sta": s}
         by_tid[tid] = rec
         by_dex.setdefault(rec["dex"], []).append(rec)
@@ -161,8 +187,12 @@ def main():
         """挑這個形態的 GO 圖示。排除異色(.s.)、雌性(.g2.)、造型(.c…)。"""
         def ok(fn):
             return fn in sprites
-        if rec["form"] and ok(f"pm{rec['dex']}.f{rec['form']}.icon.png"):
-            return SPRITE_BASE + f"pm{rec['dex']}.f{rec['form']}.icon.png"
+        # 檔名的 form 代碼有兩種寫法:多數是剝掉物種前綴的(pm800.fDUSK_MANE)，
+        # 但有些保留了(pm413.fWORMADAM_PLANT、pm412.fBURMY_TRASH)。兩種都要試，
+        # 只試剝掉的版本會讓結草兒/結草貴婦這類整族退回別的形態的圖(實測草木與垃圾會撞同一張)。
+        for code in (rec["form"], rec.get("raw_form")):
+            if code and ok(f"pm{rec['dex']}.f{code}.icon.png"):
+                return SPRITE_BASE + f"pm{rec['dex']}.f{code}.icon.png"
         if ok(f"pm{rec['dex']}.icon.png"):
             return SPRITE_BASE + f"pm{rec['dex']}.icon.png"
         # 連基本圖都帶 form 代碼 → 從該 dex 的純型態圖裡挑一個代表
@@ -179,6 +209,8 @@ def main():
 
     stat_chg, name_chg, img_chg, lost = [], [], [], []
     for p in rows:
+        if p["name"] in GM_OVERRIDE:          # 明列的修正優先於既有的 gm 與 CP 反查
+            p["gm"] = GM_OVERRIDE[p["name"]]
         rec = by_tid.get(p.get("gm")) if p.get("gm") else None
         if rec is None:   # 第一次跑(或 GM 改了 templateId):用 CP 反查認人
             rec = next((r for r in by_dex.get(p["id"], [])
@@ -203,6 +235,27 @@ def main():
         if url and url != p.get("imageUrl"):
             img_chg.append(p["name"])
             p["imageUrl"] = url
+
+    # 補上被數值去重吃掉的形態(見 EXTRA_FORMS)。插在同 dex 的最後一筆後面，維持圖鑑順序。
+    added = []
+    present = {p.get("gm") for p in rows}
+    for tid, name in EXTRA_FORMS.items():
+        if tid in present:
+            continue
+        rec = by_tid.get(tid)
+        if rec is None:
+            print(f"⚠ EXTRA_FORMS 的 {tid} 在 GAME_MASTER 找不到,略過")
+            continue
+        row = {"id": rec["dex"], "name": name, "imageUrl": image_url(rec),
+               "cp15": cp_at(rec, 15), "cp20": cp_at(rec, 20), "cp25": cp_at(rec, 25),
+               "atk": rec["atk"], "def": rec["def"], "sta": rec["sta"], "gm": tid}
+        last = max((i for i, p in enumerate(rows) if p["id"] == rec["dex"]), default=len(rows) - 1)
+        rows.insert(last + 1, row)
+        added.append(f"{name} (cp15={row['cp15']} cp20={row['cp20']} cp25={row['cp25']})")
+    if added:
+        print(f"\n補上遺漏的形態:{len(added)}")
+        for a in added:
+            print("   " + a)
 
     print(f"\n基礎數值有變動:{len(stat_chg)}")
     for n, a, b in stat_chg[:20]:
