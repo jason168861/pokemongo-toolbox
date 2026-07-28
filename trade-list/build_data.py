@@ -24,7 +24,8 @@ ADDR_URL = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Imag
 BULBA_API = "https://bulbapedia.bulbagarden.net/w/api.php"
 scraper = cloudscraper.create_scraper()
 # Mega / Primal 是不可交換的暫時形態 → 背卡與 sprite 一律不列
-EXCLUDE_BG = re.compile(r'Mega|Primal', re.I)
+# \b 是必要的:寶可夢中心「メガ東京」的卡叫 PokemonCenter MegaTokyo,沒有詞界會被當成 Mega 進化誤殺。
+EXCLUDE_BG = re.compile(r'\b(?:Mega|Primal)\b', re.I)
 EXCLUDE_FORM = re.compile(r'MEGA|PRIMAL')
 
 def get_json(u):
@@ -379,20 +380,45 @@ FILE_RE = re.compile(r'\[\[File:([A-Za-z][^\]\|]+?\.png)')
 MONI_RE = re.compile(r'\{\{I\|([^\|\}]+)((?:\|[^}]*?))?\}\}')
 fandom_need = set()          # 需要向 Fandom 問網址的 ci 圖名
 
+def flatten_nested(body):
+    """「同一列 N 張卡共用同一批寶可夢」的活動(寶可夢中心集章、National Trust…)在 Fandom 是用
+    巢狀表格排版:外層一列的第一格塞一整張 {| … |},裡面才是 3 欄一排的卡片。
+        |-  /  |  /  {| … |[[File:A]] |[[File:B]] |[[File:C]] / |- / |[[File:D]] … / |}  /  |{{I|Pikachu}}
+    巢狀的 |- 會把外層這一列切碎,B、C 連同後面「共用的寶可夢」一起失聯。
+    先把巢狀(depth≥2)的 |- 降級成普通儲存格分隔,外層一列才拿得到完整的「N 張圖 + 寶可夢」。"""
+    out, depth = [], 0
+    for line in body.split("\n"):
+        s = line.lstrip()
+        if s.startswith("{|"): depth += 1
+        elif s.startswith("|}"): depth = max(depth - 1, 0)
+        elif depth >= 2 and s.startswith("|-"): line = "|"
+        out.append(line)
+    return "\n".join(out)
+
+RS_MON = re.compile(r'rowspan\s*=\s*"?\d+"?\s*\|\s*\{\{I\|')   # 寶可夢那一格標了 rowspan
+
 def fandom_rows(body, kind):
-    """一個章節 body → 背卡列表,每隻帶 dex(+form/costume/ci)。rowspan 續行的寶可夢掛回上一張圖。"""
-    raw = []
-    for block in re.split(r'\n\|-', body):
-        im = FILE_RE.search(block)
+    """一個章節 body → 背卡列表,每隻帶 dex(+form/costume/ci)。
+    一列可能有多張圖(見 flatten_nested),此時整列的寶可夢由這幾張圖共用。
+    兩種 rowspan 續行都要接:寶可夢在上一列(圖在這列)、圖在上一列(寶可夢在這列)。"""
+    raw, span_mons = [], []
+    for block in re.split(r'\n\|-', flatten_nested(body)):
         mons = []
         for m in MONI_RE.finditer(block):
             rest = m.group(2) or ""; cm = re.search(r'ci=([^\|\}]+)', rest)
             mons.append((m.group(1).strip(), cm.group(1).strip() if cm else None))
-        if im:
-            nm = re.search(r'<br\s*/?>\s*([^\n<|\[]+)', block[im.end():])   # 圖後面 <br>地名
+        ims = list(FILE_RE.finditer(block))
+        if mons:
+            span_mons = list(mons) if RS_MON.search(block) else []
+        elif ims and span_mons:
+            mons = list(span_mons)      # 這列只有圖:寶可夢在上一列被 rowspan 攤開(里約、巴黎二號卡)
+        for im in ims:
+            eol = block.find("\n", im.end())                                # 地名在同一行的 <br> 後面;
+            tail = block[im.end(): eol if eol >= 0 else len(block)]          # 跨行找會撈到活動日期
+            nm = re.search(r'<br\s*/?>\s*([^\n<|\[]+)', tail)
             raw.append({"image_name": im.group(1).strip().replace("_", " "),
-                        "name": nm.group(1).strip() if nm else "", "mons": mons})
-        elif raw and mons:
+                        "name": nm.group(1).strip() if nm else "", "mons": list(mons)})
+        if not ims and raw and mons:
             raw[-1]["mons"] += mons
     out = []
     for r in raw:
@@ -420,11 +446,16 @@ def fandom_rows(body, kind):
 
 try:
     fwt = get_json("https://pokemongo.fandom.com/api.php?action=parse&page=Backgrounds&prop=wikitext&format=json")["parse"]["wikitext"]["*"]
-    def _fsec(a, b):
-        i = fwt.find(a); j = fwt.find(b) if b else len(fwt)
-        return fwt[i:j] if i >= 0 else ""
-    fboth = (fandom_rows(_fsec("List of Location Backgrounds", "\n==Unreleased"), "location")
-             + fandom_rows(_fsec("List of Special Backgrounds", "List of Location Backgrounds"), "special"))
+    def _fsec(title):
+        """章節內容:標題 → 下一個二級標題(=== 子標題不算,所以 ===2023=== 這種年份不會被切掉)。
+        原本是寫死結束標記 ==Unreleased,但該標題早就不存在(現在叫 ==Unused==),
+        find() 回 -1 讓 location 一路吃到 ==Unused==/==Trivia==,未發行的卡也會被當成正式卡。"""
+        i = fwt.find(title)
+        if i < 0: return ""
+        m = re.search(r'\n==[^=\n]+==', fwt[i + len(title):])
+        return fwt[i: i + len(title) + m.start()] if m else fwt[i:]
+    fboth = (fandom_rows(_fsec("List of Location Backgrounds"), "location")
+             + fandom_rows(_fsec("List of Special Backgrounds"), "special"))
     def fandom_image_urls(names):
         names = sorted(names); out = {}
         for k in range(0, len(names), 40):
