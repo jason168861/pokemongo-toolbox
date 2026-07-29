@@ -48,6 +48,85 @@ export function initializeCpChecker() {
         }
         return visibleIdx.length === 1 ? allPokemonData[visibleIdx[0]] : null;
     }
+
+    // ---- 站內連結 --------------------------------------------------------
+    // Search Console 對每個 ?mon= 網址都報「參照網頁：未偵測到任何參照網頁」。
+    // 1079 個網址只出現在 sitemap、站內沒有任何 <a> 指過去,Google 的檢索與
+    // 重新評估優先度都會很低（尤其這些頁彼此還有四成內容重複）。
+    // 下面讓卡片標題和「相關寶可夢」都變成真正的 <a href>,同時攔截點擊,
+    // 使用者體驗維持原本的即時篩選、不整頁重載。
+    // sitemap 是用 Python 的 quote() 產生的，會把 !'()* 也編碼成 %XX，
+    // 但 encodeURIComponent 會原樣保留它們。有 100 多個形態名帶括號，
+    // 不統一的話「sitemap 裡的網址」和「站內連結／canonical」會長得不一樣。
+    const monParam = n => encodeURIComponent(n)
+        .replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase());
+    const monHref = n => location.pathname + '?tab=cp-checker-app&mon=' + monParam(n);
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const monLink = n => `<a class="mon-link" href="${monHref(n)}">${esc(n)}</a>`;
+
+    const MON_NAMES = new Set(allPokemonData.map(p => p.name));   // 只連到真的有頁面的名字
+    const BY_DEX = new Map();          // 圖鑑編號 → 該編號底下的名稱（含各地區形態）
+    allPokemonData.forEach(p => {
+        if (!BY_DEX.has(p.id)) BY_DEX.set(p.id, []);
+        BY_DEX.get(p.id).push(p.name);
+    });
+    const MAX_DEX = Math.max(...BY_DEX.keys());
+
+    // POKEDEX 來自 data/pokemon_data_and_rankings.js,有 family.id / family.stage,
+    // 是現成的進化鏈資料。它是 defer 載入且排在 main.js 之前,所以這裡讀得到；
+    // 萬一讀不到就只降級成「圖鑑相鄰」,不會壞掉。
+    const FAMILY = (() => {
+        if (typeof POKEDEX === 'undefined' || !Array.isArray(POKEDEX)) return null;
+        const of = new Map(), members = new Map();
+        POKEDEX.forEach(d => {
+            const fid = d.family && d.family.id;
+            if (!fid || !d.name) return;
+            if (!of.has(d.name)) of.set(d.name, fid);
+            if (!members.has(fid)) members.set(fid, []);
+            members.get(fid).push({ name: d.name, stage: d.family.stage || 0, dex: d.dexNumber || 0 });
+        });
+        return { of, members };
+    })();
+
+    function relatedHtml(p) {
+        const parts = [];
+
+        // 1) 同編號的其他形態（阿羅拉／伽勒爾／闇黑…）
+        const forms = (BY_DEX.get(p.id) || []).filter(n => n !== p.name);
+        if (forms.length) {
+            parts.push(`<p><strong>${esc(p.name)} 的其他形態：</strong>${forms.map(monLink).join('、')}</p>`);
+        }
+
+        // 2) 進化家族。POKEDEX 的家族成員有些沒有 CP 頁面（造型皮卡丘、Mega 等）,
+        //    先過濾掉才不會連到不存在的網址。自己這一隻保留但不做成連結。
+        if (FAMILY) {
+            const fid = FAMILY.of.get(p.name);
+            const seen = new Set();
+            const chain = (fid ? FAMILY.members.get(fid) || [] : [])
+                .filter(m => (m.name === p.name || MON_NAMES.has(m.name))
+                          && !seen.has(m.name) && seen.add(m.name))
+                .sort((a, b) => a.stage - b.stage || a.dex - b.dex);
+            if (chain.length > 1) {
+                parts.push(`<p><strong>${esc(p.name)} 的進化家族：</strong>`
+                    + chain.map(m => m.name === p.name
+                        ? `<strong class="mon-cur">${esc(m.name)}</strong>` : monLink(m.name)).join(' → ')
+                    + '</p>');
+            }
+        }
+
+        // 3) 圖鑑編號相鄰。這條讓 1079 個網址串成一條完整的鏈——Google 只要爬到
+        //    其中任何一頁,就能沿著前後一路走完全部,不必依賴 sitemap。
+        const nb = [];
+        for (let d = p.id - 1; d >= 1; d--) { const a = BY_DEX.get(d); if (a) { nb.push('上一隻 #' + d + ' ' + monLink(a[0])); break; } }
+        for (let d = p.id + 1; d <= MAX_DEX; d++) { const a = BY_DEX.get(d); if (a) { nb.push('下一隻 #' + d + ' ' + monLink(a[0])); break; } }
+        if (nb.length) parts.push(`<p><strong>圖鑑相鄰：</strong>${nb.join('　·　')}</p>`);
+
+        if (!parts.length) return '';
+        return `<nav class="mon-related" aria-label="相關寶可夢">
+                  <h2>與 ${esc(p.name)} 相關的寶可夢</h2>${parts.join('')}
+                </nav>`;
+    }
+
     function renderLevelTable(p) {
         const box = document.getElementById('cpLevelTable');
         if (!box) return;
@@ -79,7 +158,8 @@ export function initializeCpChecker() {
             <p class="lv-table-foot">
                 Lv${BEST_BUDDY_LEVEL} 為最佳夥伴狀態下的等級上限；一般強化上限為 Lv${MAX_LEVEL}。
                 CP 由 ${p.name} 的基礎數值與各等級的 CP 倍率計算，資料來源為 Pokémon GO GAME_MASTER。
-            </p>`;
+            </p>
+            ${relatedHtml(p)}`;
         box.hidden = false;
     }
 
@@ -112,7 +192,7 @@ export function initializeCpChecker() {
                 name + ' 的 IV 100% CP 速查與 Lv1～50 全等級 CP 對照表：查看 ' + name
                 + ' 在 15、20、25 等的滿 IV CP，以及每個等級的 CP 上下限（100% / 0% IV），快速判斷團體戰捕捉與研究獎勵是否值得。');
             if (canonical) canonical.setAttribute('href',
-                location.origin + location.pathname + '?tab=cp-checker-app&mon=' + encodeURIComponent(q));
+                location.origin + monHref(q));   // 用同一個編碼規則，才跟 sitemap 完全一致
             if (h1) h1.textContent = name + ' IV100 CP 查詢';
         } else {
             if (h1) h1.textContent = 'IV100 CP 查詢';
@@ -135,7 +215,7 @@ export function initializeCpChecker() {
             pokemonCard.innerHTML = `
                 <img src="${pokemon.imageUrl}" alt="${pokemon.name}" loading="lazy">
                 <div class="pokemon-info">
-                    <h2>${pokemon.name}</h2>
+                    <h2><a class="mon-link" href="${monHref(pokemon.name)}">${esc(pokemon.name)}</a></h2>
                     <div class="id">#${pokemon.id}</div>
                     <div class="cp-container">
                         <div class="cp lv15"><span>Lv15 100% </span>${pokemon.cp15}</div>
@@ -197,6 +277,26 @@ export function initializeCpChecker() {
         filterResults(query);
     });
     createAllPokemonCards();
+
+    // 站內連結（卡片標題、相關寶可夢）點下去：走原本的即時篩選，不整頁重載。
+    // href 仍然是真的網址，所以 Google 照樣把它當連結、使用者也能用中鍵開新分頁。
+    function onMonLinkClick(event) {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const a = event.target.closest && event.target.closest('a.mon-link');
+        if (!a) return;
+        const raw = (a.getAttribute('href') || '').split('mon=')[1];
+        if (!raw) return;
+        event.preventDefault();
+        const name = decodeURIComponent(raw);
+        searchInput.value = name;
+        filterResults(name.trim().toLowerCase());
+        clearBtn.style.display = 'block';
+        syncMonUrlSeo(name);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    resultsContainer.addEventListener('click', onMonLinkClick);
+    const cpLevelTableBox = document.getElementById('cpLevelTable');
+    if (cpLevelTableBox) cpLevelTableBox.addEventListener('click', onMonLinkClick);
 
     // 深連結：有人開 ?tab=cp-checker-app&mon=皮卡丘 → 自動填入搜尋框並顯示結果
     if (CP_INITIAL_MON) {

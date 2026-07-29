@@ -244,3 +244,40 @@
 #cp-checker-app .lv-table tr.key-lv td { background: #eef7f1; }
 #cp-checker-app .lv-table tr.bb-lv th,
 #cp-checker-app .lv-table tr.bb-lv td { background: #fff7e8; }
+/* --- 站內連結：卡片標題與「相關寶可夢」 ---
+   這些是真的 <a href>（給 Google 爬），但點擊被攔下來走即時篩選，
+   所以樣式上刻意收斂一點，不要看起來像會跳走的外部連結。 */
+#cp-checker-app .pokemon-info h2 a.mon-link {
+    color: inherit;
+    text-decoration: none;
+}
+#cp-checker-app .pokemon-info h2 a.mon-link:hover {
+    color: #1877f2;
+    text-decoration: underline;
+}
+#cp-checker-app .mon-related {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #dddfe2;
+}
+#cp-checker-app .mon-related h2 {
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: #1c1e21;
+}
+#cp-checker-app .mon-related p {
+    margin: 0 0 8px;
+    font-size: 14px;
+    line-height: 1.9;
+    color: #3a3b3c;
+}
+#cp-checker-app .mon-related strong { color: #606770; font-weight: 600; }
+#cp-checker-app .mon-related a.mon-link {
+    color: #1877f2;
+    text-decoration: none;
+    /* 手機上這些連結會排得很密，撐開一點才好按 */
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+#cp-checker-app .mon-related a.mon-link:hover { background: #eaf2fd; text-decoration: underline; }
+#cp-checker-app .mon-related .mon-cur { color: #1c1e21; font-weight: 800; }

@@ -101,7 +101,10 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/
+          # sitemap-cp.xml 也要一起回寫：它的 <lastmod> 現在依賴
+          # data/sitemap_cp_lastmod.json 的狀態，兩者不同步的話 repo 裡會出現
+          # 「狀態說沒變、sitemap 卻是舊日期」這種對不上的情況，很難查。
+          git add data/ sitemap-cp.xml
           # 沒有變更就直接結束
           if git diff --staged --quiet; then
             echo "No data changes to commit."
@@ -113,7 +116,7 @@ jobs:
           for i in 1 2 3; do
             git fetch origin main
             git reset --soft origin/main        # HEAD 移到最新遠端，保留已 add 的資料變更
-            git add data/
+            git add data/ sitemap-cp.xml
             if git diff --staged --quiet; then
               echo "與最新遠端相比沒有差異，無需 push。"; exit 0
             fi
