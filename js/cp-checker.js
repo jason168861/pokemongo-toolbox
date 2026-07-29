@@ -203,9 +203,30 @@ export function initializeCpChecker() {
         }
     }
 
-    function createAllPokemonCards() {
+    // ---- 卡片清單：深連結時只放需要的那幾張 --------------------------------
+    // 原本不管什麼網址都把 1079 張卡片全部塞進 DOM，只用 display:none 藏起來。
+    // 但 Google 判定重複看的是「轉譯後的 HTML」，隱藏元素照樣算進去——量過
+    // ?mon= 頁面有 99.1% 的 HTML（93 萬字元）跟其他 1078 頁一模一樣，只有
+    // 0.89% 是自己的。轟擂金剛猩那頁就是這樣被 Google 覆寫 canonical、
+    // 判成「重複網頁」的。
+    //
+    // 所以：進來時網址帶 ?mon= 就只建立符合的那幾張卡片（Googlebot 不會打字，
+    // 看到的就是這個精簡版）；使用者一碰搜尋框才把全部補上。
+    // ?tab=cp-checker-app（沒有 mon）仍然建立全部 1079 張 —— 那頁是站內連結
+    // 的樞紐，1079 個 <a> 要留在那裡。
+    let builtAll = false;
+
+    function matchesQuery(p, query) {
+        if (!query) return true;
+        return !isNaN(query) ? String(p.id) === query
+                             : (p.name.toLowerCase().includes(query)
+                                || (p.alt || '').toLowerCase().includes(query));
+    }
+
+    function buildCards(indices) {
         const fragment = document.createDocumentFragment();
-        allPokemonData.forEach((pokemon, i) => {
+        indices.forEach(i => {
+            const pokemon = allPokemonData[i];
             const pokemonCard = document.createElement('div');
             pokemonCard.className = 'pokemon-card';
             pokemonCard.dataset.name = pokemon.name.toLowerCase();
@@ -227,6 +248,24 @@ export function initializeCpChecker() {
         });
         resultsContainer.appendChild(fragment);
         statusMessage.textContent = `資料載入成功！共 ${allPokemonData.length} 筆資料。`;
+    }
+
+    // 使用者要自己搜尋了 → 把剩下的卡片補齊。只做一次。
+    function ensureAllCards() {
+        if (builtAll) return;
+        builtAll = true;
+        resultsContainer.textContent = '';
+        buildCards(allPokemonData.map((_, i) => i));
+    }
+
+    // 只建立符合這個查詢的卡片（深連結進來、或點站內連結時用）
+    function showOnly(query) {
+        const q = (query || '').trim().toLowerCase();
+        resultsContainer.textContent = '';
+        buildCards(allPokemonData.reduce((acc, p, i) => {
+            if (matchesQuery(p, q)) acc.push(i);
+            return acc;
+        }, []));
     }
 
     function filterResults(query) {
@@ -251,7 +290,10 @@ export function initializeCpChecker() {
         // 鎖定到單一寶可夢時，補上牠的全等級 CP 表（這是每個 ?mon= 網址的主要獨立內容）
         renderLevelTable(resolveOne(query, visibleIdx));
     }
+    // focus 就先把卡片補齊：使用者打第一個字之前就備好，感覺不到延遲
+    searchInput.addEventListener('focus', ensureAllCards);
     searchInput.addEventListener('input', () => {
+        ensureAllCards();   // 深連結進來時 DOM 裡只有幾張卡，要先補齊才能搜尋
         const query = searchInput.value.trim().toLowerCase();
         filterResults(query);
         // 根據輸入框是否有值來顯示/隱藏按鈕
@@ -261,6 +303,7 @@ export function initializeCpChecker() {
 
     clearBtn.addEventListener('click', () => {
         searchInput.value = '';
+        ensureAllCards();
         filterResults(''); // 傳入空字串來顯示所有結果
         clearBtn.style.display = 'none';
         syncMonUrlSeo('');   // 清掉 ?mon= 並還原通用 SEO
@@ -276,7 +319,9 @@ export function initializeCpChecker() {
         const query = event.target.value.trim().toLowerCase();
         filterResults(query);
     });
-    createAllPokemonCards();
+    // 網址帶 ?mon= → 只建立那幾張卡（Googlebot 看到的就是這個精簡版）；
+    // 沒帶 → 建立全部 1079 張，這頁是站內連結的樞紐。
+    if (CP_INITIAL_MON) showOnly(CP_INITIAL_MON); else ensureAllCards();
 
     // 站內連結（卡片標題、相關寶可夢）點下去：走原本的即時篩選，不整頁重載。
     // href 仍然是真的網址，所以 Google 照樣把它當連結、使用者也能用中鍵開新分頁。
@@ -289,6 +334,9 @@ export function initializeCpChecker() {
         event.preventDefault();
         const name = decodeURIComponent(raw);
         searchInput.value = name;
+        // 還沒展開全部時就只換成目標那幾張卡，維持精簡的 DOM；
+        // 展開過了就照原本的篩選走。
+        if (!builtAll) showOnly(name);
         filterResults(name.trim().toLowerCase());
         clearBtn.style.display = 'block';
         syncMonUrlSeo(name);
