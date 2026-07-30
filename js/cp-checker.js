@@ -179,7 +179,15 @@ export function initializeCpChecker() {
             const u = new URL(location.href);
             u.searchParams.set('tab', 'cp-checker-app');
             if (q) u.searchParams.set('mon', q); else u.searchParams.delete('mon');
-            history.replaceState(history.state, '', u);
+            // 不能直接把 u 交給 replaceState。URLSearchParams 是用
+            // application/x-www-form-urlencoded 序列化的，空白會變成 '+'，
+            // 但 sitemap 和 canonical 用的是 %20。93 個帶空白的形態名
+            // （「椰蛋樹 (阿羅拉形態)」之類）會因此在載入時被改寫網址，
+            // Googlebot 看到請求網址 ≠ 渲染後網址 → 判定「頁面會重新導向」。
+            // 所以自己組 query string，用跟 canonical 同一套編碼。
+            const qs = Array.from(u.searchParams)
+                .map(([k, v]) => monParam(k) + '=' + monParam(v)).join('&');
+            history.replaceState(history.state, '', u.pathname + (qs ? '?' + qs : '') + u.hash);
         } catch (e) {}
         const canonical = document.querySelector('link[rel="canonical"]');
         const descTag = document.querySelector('meta[name="description"]');
