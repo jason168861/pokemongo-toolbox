@@ -462,8 +462,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // ★ 測試開關：false = 跳過開場動畫、立刻進入網站；true = 播放高級入場動畫
-    const SHOW_INTRO_ANIMATION = true;
+    // ★ 開關：false = 跳過開場動畫、立刻進入網站；true = 播放高級入場動畫
+    const SHOW_INTRO_ANIMATION = false;
 
     (function initIntro() {
         const overlay = document.getElementById('loading-overlay');
