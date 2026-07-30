@@ -462,8 +462,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // ★ 開關：false = 跳過開場動畫、立刻進入網站；true = 播放高級入場動畫
-    const SHOW_INTRO_ANIMATION = false;
+    // 開場動畫開關的單一來源在 index.html 的 <script>（那裡才來得及在首次繪製前
+    // 移除深藍色遮罩，寫在這裡會先閃一下）。這邊只是跟著讀，不要各寫各的。
+    const SHOW_INTRO_ANIMATION = window.SHOW_INTRO_ANIMATION === true;
 
     (function initIntro() {
         const overlay = document.getElementById('loading-overlay');

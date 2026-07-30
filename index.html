@@ -109,6 +109,21 @@
     </div>
     <div class="iv-flash"></div>
 </div>
+<script>
+    // ★ 開場動畫總開關：false = 不播、直接進站；true = 播放 Pokéball 入場動畫。
+    //
+    // 為什麼寫在這裡而不是 main.js：上面的 #loading-overlay 是滿版深藍色遮罩
+    // （intro.css 的 radial-gradient），瀏覽器解析到就會畫出來。main.js 是
+    // module（等同 defer），要等 300KB 的資料檔全部載完才執行，等它 remove()
+    // 時已經閃過一片深藍了。這段同步腳本在首次繪製前就把元素拿掉，才不會閃。
+    //
+    // 拿掉之後 main.js 的 initIntro() 會在 `if (!overlay) return;` 直接結束。
+    window.SHOW_INTRO_ANIMATION = false;
+    if (!window.SHOW_INTRO_ANIMATION) {
+        var __introOverlay = document.getElementById('loading-overlay');
+        if (__introOverlay) __introOverlay.remove();
+    }
+</script>
 <header class="site-header-main">
      <div id="auth-container">
         <span id="user-info" style="display: none;"></span>
