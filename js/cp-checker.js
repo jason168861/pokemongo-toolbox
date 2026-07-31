@@ -359,8 +359,10 @@ export function initializeCpChecker() {
         searchInput.value = CP_INITIAL_MON;
         filterResults(CP_INITIAL_MON.trim().toLowerCase());
         clearBtn.style.display = 'block';
-        // 延後執行：main.js 會在 initializeCpChecker 之後才呼叫 applySeo（通用標題），
-        // 用 setTimeout 讓「該寶可夢的 SEO」在其之後才設定，才不會被蓋掉。
-        setTimeout(() => syncMonUrlSeo(CP_INITIAL_MON), 0);
+        // 直接呼叫。原本這裡包了 setTimeout(0)，是為了讓「該寶可夢的 SEO」排在
+        // main.js 的 applySeo（通用標題）之後才設定，免得被蓋掉；但那是在賭執行順序，
+        // Googlebot 若在中間拍到快照，canonical 就是不帶 mon 的那個版本。
+        // 現在 applySeo() 看到網址有 ?mon= 會自己跳過，不必再靠計時器搶。
+        syncMonUrlSeo(CP_INITIAL_MON);
     }
 }

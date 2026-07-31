@@ -31,6 +31,67 @@
     <meta name="twitter:description" content="IV100 CP 查詢、PvP IV 排名、搜尋篩選指令大全、當期團體戰與孵蛋列表。">
     <meta name="twitter:image" content="https://cdn.leekduck.com/assets/img/pokemon_icons/pm150.fA.icon.png">
 
+    <!-- ===== 深連結（?tab= / ?mon=）的開場處理：必須是同步腳本 =====
+         上面那行 <link rel="canonical"> 寫死指向首頁，但 1079 個 ?mon= 網址共用
+         同一個 index.html —— 等於每一頁在原始 HTML 裡都先跟 Google 宣告
+         「我的標準網址是首頁」。原本只靠 main.js / cp-checker.js 之後改掉，
+         但那要等 300KB 資料檔 + Firebase SDK（gstatic）載完；實測慢速連線下
+         canonical 有 8 秒以上仍停在首頁。Googlebot 轉譯有時間預算，在那之前
+         拍到快照，這頁就會被歸給首頁而不編入索引。
+
+         同理，#docs-app 在 HTML 裡寫死 active，畫面會先出現首頁再被切走。
+         兩件事都在這裡於首次繪製前處理掉。 -->
+    <script>
+    (function () {
+        var p = new URLSearchParams(location.search);
+        var tab = p.get('tab') || location.hash.slice(1);
+        var mon = p.get('mon');
+        // 白名單：對不上就什麼都不做，交回 main.js 走原本流程退回首頁
+        var TABS = ['cp-checker-app', 'pvp-ranker-app', 'id-selector-app', 'search-filters-app',
+                    'raids-app', 'eggs-app', 'research-app', 'special-research-app',
+                    'info-hub-app', 'map-app'];
+        if (TABS.indexOf(tab) === -1) return;
+
+        // --- 1. canonical / og:url 改成本頁自己的網址 ---
+        // 編碼規則必須跟 sitemap（Python quote()）和 cp-checker.js 的 monParam 完全一致，
+        // 否則 canonical 與 sitemap 裡的網址會長得不一樣，Google 會當成兩個網址。
+        var enc = function (s) {
+            return encodeURIComponent(s).replace(/[!'()*]/g, function (c) {
+                return '%' + c.charCodeAt(0).toString(16).toUpperCase();
+            });
+        };
+        var url = location.origin + location.pathname + '?tab=' + tab + (mon ? '&mon=' + enc(mon) : '');
+        var set = function (sel, attr, val) {
+            var el = document.querySelector(sel);
+            if (el) el.setAttribute(attr, val);
+        };
+        set('link[rel="canonical"]', 'href', url);
+        set('meta[property="og:url"]', 'content', url);
+
+        // ?mon= 頁的標題與描述（字串與 cp-checker.js 的 syncMonUrlSeo 一致）。
+        // mon 參數本身就是寶可夢名稱，不必等資料檔就能組出來；
+        // cp-checker.js 之後會再用查得到的正式名稱補完（處理改名前的舊連結）。
+        if (tab === 'cp-checker-app' && mon) {
+            document.title = mon + ' IV100 CP 速查｜Lv1-50 全等級 CP 表｜Pokémon Go 工具箱';
+            set('meta[name="description"]', 'content',
+                mon + ' 的 IV 100% CP 速查與 Lv1～50 全等級 CP 對照表：查看 ' + mon
+                + ' 在 15、20、25 等的滿 IV CP，以及每個等級的 CP 上下限（100% / 0% IV），'
+                + '快速判斷團體戰捕捉與研究獎勵是否值得。');
+        }
+
+        // --- 2. 首次繪製前就切到該分頁，不要先閃一下首頁 ---
+        // 下面的 .app-content 此刻還沒被解析到，所以用注入 <style> 的方式
+        //（規則會在它們出現時就生效，不會「先畫錯再改」）。
+        // main.js 的 activateTab() 接手時會移除它，之後恢復由 .active class 控制。
+        document.documentElement.dataset.bootTab = tab;
+        var style = document.createElement('style');
+        style.id = 'boot-tab-style';
+        // #id 的權重高於 .app-content(.active)，能蓋掉 main.css 的預設顯示規則
+        style.textContent = '#docs-app.active{display:none}#' + tab + '{display:block}';
+        document.head.appendChild(style);
+    })();
+    </script>
+
     <!-- ===== 結構化資料（讓 Google 更理解站台）===== -->
     <script type="application/ld+json">
     {
@@ -178,33 +239,13 @@
     </nav>
 </header>
 <script>
-    // 深連結（?tab=…）進站時，在首次繪製前就把畫面切到該分頁。
-    //
-    // 為什麼需要這段：HTML 裡寫死 active 的是 #docs-app（首頁），真正負責切分頁的
-    // main.js 是 module（等同 defer），要等 300KB 的資料檔 + Firebase SDK（gstatic，
-    // 跨網域）全部載完才會執行 activateTab()。在那之前瀏覽器已經把首頁畫出來了，
-    // 使用者會先看到首頁、過一下才被切到該去的分頁 —— 理由同上面 #loading-overlay 那段。
-    //
-    // 下面的 .app-content 此刻還沒被解析到，所以用注入 <style> 的方式（規則會在它們
-    // 出現時就生效，不會有「先畫錯再改」）；導覽列已經解析完了，直接改 class 即可，
-    // 不必把它的 active 樣式複製一份。
-    // main.js 的 activateTab() 接手時會移除這個 <style>，之後恢復由 .active class 控制。
+    // 承 <head> 那段深連結處理：導覽列到這裡才解析完，所以 active 狀態在這裡改
+    //（直接改 class，不必把它的 active 樣式複製一份到注入的 <style> 裡）。
     (function () {
-        // 白名單：對不上就什麼都不做，交回 main.js 走原本流程退回首頁
-        //（避免注入到不存在的 id、把首頁藏掉變成一片空白）
-        var TABS = ['cp-checker-app', 'pvp-ranker-app', 'id-selector-app', 'search-filters-app',
-                    'raids-app', 'eggs-app', 'research-app', 'special-research-app',
-                    'info-hub-app', 'map-app'];
-        var tab = new URLSearchParams(location.search).get('tab') || location.hash.slice(1);
-        if (TABS.indexOf(tab) === -1) return;
+        var tab = document.documentElement.dataset.bootTab;
+        if (!tab) return;
 
-        var style = document.createElement('style');
-        style.id = 'boot-tab-style';
-        // #id 的權重高於 .app-content(.active)，所以能蓋掉 main.css 的預設顯示規則
-        style.textContent = '#docs-app.active{display:none}#' + tab + '{display:block}';
-        document.head.appendChild(style);
-
-        // 導覽列的 active 底線／高亮寫死在「功能說明」上，一併移到正確的項目
+        // 導覽列的 active 底線／高亮寫死在「功能說明」上，移到正確的項目
         var links = document.querySelectorAll('.app-nav .tab-button');
         for (var i = 0; i < links.length; i++) {
             links[i].classList.toggle('active', links[i].dataset.target === tab);

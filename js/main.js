@@ -254,6 +254,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function applySeo(targetAppId) {
+        // ?mon= 深連結的 SEO 是「單一寶可夢」層級的（index.html 的 head 腳本先設好、
+        // cp-checker.js 的 syncMonUrlSeo() 補完）。這裡設的是分頁層級的通用值，
+        // 會把 canonical 蓋成不帶 mon 的 ?tab=cp-checker-app —— Google 就會把那 1079
+        // 個網址全部歸給同一頁。有 mon 時直接跳過，讓細的那層說了算。
+        if (targetAppId === 'cp-checker-app' && new URLSearchParams(location.search).get('mon')) return;
+
         const seo = TAB_SEO[targetAppId] || TAB_SEO['docs-app'];
         document.title = seo.title;
         let descTag = document.querySelector('meta[name="description"]');
