@@ -266,6 +266,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function activateTab(targetAppId) {
+        // 0. 移除 index.html 那段同步腳本注入的「開場先切到深連結分頁」暫用樣式（見該處註解）。
+        //    JS 已經接手，之後一律由 .active class 控制顯示；不移除的話它寫死的
+        //    #docs-app{display:none} 會讓使用者之後切回首頁時看到空白。
+        const bootStyle = document.getElementById('boot-tab-style');
+        if (bootStyle) bootStyle.remove();
+
         // 1. 更新內容區塊的顯示狀態
         appContents.forEach(content => {
             if (content.id === targetAppId) {

@@ -177,6 +177,43 @@
     </div>
     </nav>
 </header>
+<script>
+    // 深連結（?tab=…）進站時，在首次繪製前就把畫面切到該分頁。
+    //
+    // 為什麼需要這段：HTML 裡寫死 active 的是 #docs-app（首頁），真正負責切分頁的
+    // main.js 是 module（等同 defer），要等 300KB 的資料檔 + Firebase SDK（gstatic，
+    // 跨網域）全部載完才會執行 activateTab()。在那之前瀏覽器已經把首頁畫出來了，
+    // 使用者會先看到首頁、過一下才被切到該去的分頁 —— 理由同上面 #loading-overlay 那段。
+    //
+    // 下面的 .app-content 此刻還沒被解析到，所以用注入 <style> 的方式（規則會在它們
+    // 出現時就生效，不會有「先畫錯再改」）；導覽列已經解析完了，直接改 class 即可，
+    // 不必把它的 active 樣式複製一份。
+    // main.js 的 activateTab() 接手時會移除這個 <style>，之後恢復由 .active class 控制。
+    (function () {
+        // 白名單：對不上就什麼都不做，交回 main.js 走原本流程退回首頁
+        //（避免注入到不存在的 id、把首頁藏掉變成一片空白）
+        var TABS = ['cp-checker-app', 'pvp-ranker-app', 'id-selector-app', 'search-filters-app',
+                    'raids-app', 'eggs-app', 'research-app', 'special-research-app',
+                    'info-hub-app', 'map-app'];
+        var tab = new URLSearchParams(location.search).get('tab') || location.hash.slice(1);
+        if (TABS.indexOf(tab) === -1) return;
+
+        var style = document.createElement('style');
+        style.id = 'boot-tab-style';
+        // #id 的權重高於 .app-content(.active)，所以能蓋掉 main.css 的預設顯示規則
+        style.textContent = '#docs-app.active{display:none}#' + tab + '{display:block}';
+        document.head.appendChild(style);
+
+        // 導覽列的 active 底線／高亮寫死在「功能說明」上，一併移到正確的項目
+        var links = document.querySelectorAll('.app-nav .tab-button');
+        for (var i = 0; i < links.length; i++) {
+            links[i].classList.toggle('active', links[i].dataset.target === tab);
+        }
+
+        // 地圖分頁要鎖住頁面捲動（同 activateTab()），否則 main.js 執行前這段時間還捲得動
+        if (tab === 'map-app') document.documentElement.classList.add('map-noscroll');
+    })();
+</script>
     <div class="main-container">
 <div id="docs-app" class="app-content active">
     <div class="container home-container">
