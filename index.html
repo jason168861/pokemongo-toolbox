@@ -16,6 +16,36 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jason168861.github.io/pokemongo-toolbox/">
 
+    <!-- ===== 深連結 SEO 初始化：在 JS 執行前先設置正確的 title/description/canonical ===== -->
+    <script>
+      (function() {
+        const params = new URLSearchParams(location.search);
+        const mon = params.get('mon');
+        if (!mon) return; // 沒有 ?mon= 參數，用默認值就好
+
+        const base = 'https://jason168861.github.io/pokemongo-toolbox/';
+        const monParam = n => encodeURIComponent(n)
+          .replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase());
+        const canonicalUrl = base + '?tab=cp-checker-app&mon=' + monParam(mon);
+
+        // 設置 title 和 description（暫用 mon 名稱，JS 會再補全）
+        document.title = mon + ' IV100 CP 速查｜Lv1-50 全等級 CP 表｜Pokémon Go 工具箱';
+
+        // 設置 description
+        const descTag = document.querySelector('meta[name="description"]');
+        if (descTag) {
+          descTag.setAttribute('content',
+            mon + ' 的 IV 100% CP 速查與 Lv1～50 全等級 CP 對照表：快速判斷團體戰捕捉與研究獎勵是否值得。');
+        }
+
+        // 最重要：設置 canonical 為完整的帶 &mon= 的 URL
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) {
+          canonical.setAttribute('href', canonicalUrl);
+        }
+      })();
+    </script>
+
     <!-- ===== Open Graph（Facebook / LINE 分享預覽）===== -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Pokémon Go 工具箱">
