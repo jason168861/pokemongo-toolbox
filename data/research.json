@@ -3,7 +3,7 @@
     "category": "Choose Your Path: Fairy Trail Tasks",
     "tasks": [
       {
-        "description": "打敗1個GO火箭隊手下",
+        "description": "擊敗 1 名 GO 火箭隊手下",
         "rewards": [
           {
             "isFeatured": true,
@@ -26,7 +26,7 @@
         ]
       },
       {
-        "description": "投出 5 次Nice",
+        "description": "投出 5 次 Nice",
         "rewards": [
           {
             "isFeatured": true,
@@ -49,7 +49,7 @@
         ]
       },
       {
-        "description": "探索 1 公里",
+        "description": "探索1公里",
         "rewards": [
           {
             "isFeatured": true,
@@ -77,7 +77,7 @@
     "category": "捕捉相關任務",
     "tasks": [
       {
-        "description": "捕捉 7 隻寶可夢",
+        "description": "捕捉7隻寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -202,7 +202,7 @@
         ]
       },
       {
-        "description": "捕捉 7 隻不同的寶可夢",
+        "description": "捕捉7種不同種類的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -315,7 +315,7 @@
         ]
       },
       {
-        "description": "捕捉 10 隻寶可夢",
+        "description": "捕捉10隻寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -330,7 +330,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×5",
+            "name": "精靈球 ×5",
             "quantity": "×5"
           },
           {
@@ -352,7 +352,7 @@
         ]
       },
       {
-        "description": "捕捉 10 隻草屬性的寶可夢",
+        "description": "捕捉10隻草屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -440,7 +440,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm254.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Sceptile Mega Energy.png",
-            "name": "蜥蜴王超級能量 ×10",
+            "name": "蜥蜴王 超級能量",
             "quantity": "×10"
           },
           {
@@ -448,7 +448,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm3.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Venusaur Mega Energy.png",
-            "name": "妙蛙花超級能量 ×10",
+            "name": "妙蛙花 超級能量",
             "quantity": "×10"
           },
           {
@@ -486,7 +486,7 @@
         ]
       },
       {
-        "description": "捕捉 10 隻火屬性的寶可夢",
+        "description": "捕捉10隻火屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -574,7 +574,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm257.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Blaziken Mega Energy.png",
-            "name": "火焰雞超級能量 ×10",
+            "name": "火焰雞 超級能量",
             "quantity": "×10"
           },
           {
@@ -582,7 +582,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm6.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Charizard Mega Energy.png",
-            "name": "噴火龍超級能量 ×10",
+            "name": "噴火龍 超級能量",
             "quantity": "×10"
           },
           {
@@ -620,7 +620,7 @@
         ]
       },
       {
-        "description": "捕捉 10 隻水屬性的寶可夢",
+        "description": "捕捉10隻水屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -708,7 +708,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm9.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Blastoise Mega Energy.png",
-            "name": "水箭龜超級能量 ×10",
+            "name": "水箭龜 超級能量",
             "quantity": "×10"
           },
           {
@@ -716,7 +716,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm260.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Swampert Mega Energy.png",
-            "name": "巨沼怪超級能量 ×10",
+            "name": "巨沼怪 超級能量",
             "quantity": "×10"
           },
           {
@@ -754,14 +754,14 @@
         ]
       },
       {
-        "description": "捕捉 10 隻一般屬性的寶可夢",
+        "description": "捕捉10隻一般屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm18.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Pidgeot Mega Energy.png",
-            "name": "大比鳥超級能量 ×10",
+            "name": "大比鳥 超級能量",
             "quantity": "×10"
           },
           {
@@ -799,7 +799,7 @@
         ]
       },
       {
-        "description": "捕捉 5 隻擁有天氣優勢的寶可夢",
+        "description": "捕捉5隻天氣加成下的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -877,7 +877,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×5",
+            "name": "精靈球 ×5",
             "quantity": "×5"
           },
           {
@@ -899,7 +899,7 @@
         ]
       },
       {
-        "description": "捕捉 10 隻擁有天氣優勢的寶可夢",
+        "description": "捕捉10隻天氣加成下的寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -936,7 +936,7 @@
         ]
       },
       {
-        "description": "捕捉 25 隻寶可夢",
+        "description": "Catch 25 Pokémon",
         "rewards": [
           {
             "isFeatured": false,
@@ -949,7 +949,7 @@
         ]
       },
       {
-        "description": "捕捉 50 隻寶可夢",
+        "description": "Catch 50 Pokémon",
         "rewards": [
           {
             "isFeatured": false,
@@ -962,7 +962,7 @@
         ]
       },
       {
-        "description": "捕捉寶可夢時使用 5 個樹果",
+        "description": "使用5個樹果協助捕捉寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -1099,7 +1099,7 @@
         ]
       },
       {
-        "description": "投出 10 次Nice",
+        "description": "投出 10 次 Nice",
         "rewards": [
           {
             "isFeatured": true,
@@ -1194,7 +1194,7 @@
         ]
       },
       {
-        "description": "投出 2 次Excellent",
+        "description": "投出 2 次 Excellent",
         "rewards": [
           {
             "isFeatured": true,
@@ -1208,7 +1208,7 @@
         ]
       },
       {
-        "description": "連續用曲球投出 2 次Nice",
+        "description": "連續投出 2 次 Nice 曲球",
         "rewards": [
           {
             "isFeatured": false,
@@ -1223,7 +1223,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×5",
+            "name": "精靈球 ×5",
             "quantity": "×5"
           },
           {
@@ -1245,7 +1245,7 @@
         ]
       },
       {
-        "description": "連續投出 3 次Excellent",
+        "description": "連續投出 3 次 Excellent",
         "rewards": [
           {
             "isFeatured": true,
@@ -1277,7 +1277,7 @@
         ]
       },
       {
-        "description": "用曲球投出 3 次Great",
+        "description": "投出 3 次 Great 曲球",
         "rewards": [
           {
             "isFeatured": false,
@@ -1292,7 +1292,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×10",
+            "name": "精靈球 ×10",
             "quantity": "×10"
           },
           {
@@ -1330,7 +1330,7 @@
         ]
       },
       {
-        "description": "連續用曲球投出 3 次Great",
+        "description": "連續投出 3 次 Great 曲球",
         "rewards": [
           {
             "isFeatured": false,
@@ -1359,7 +1359,7 @@
         ]
       },
       {
-        "description": "投出 3 次Great",
+        "description": "投出 3 次 Great",
         "rewards": [
           {
             "isFeatured": true,
@@ -1419,7 +1419,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×5",
+            "name": "精靈球 ×5",
             "quantity": "×5"
           },
           {
@@ -1441,7 +1441,7 @@
         ]
       },
       {
-        "description": "連續投出 3 次Great",
+        "description": "連續投出 3 次 Great",
         "rewards": [
           {
             "isFeatured": true,
@@ -1474,7 +1474,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×10",
+            "name": "精靈球 ×10",
             "quantity": "×10"
           },
           {
@@ -1512,7 +1512,7 @@
         ]
       },
       {
-        "description": "連續投出 3 次Nice",
+        "description": "連續投出 3 次 Nice",
         "rewards": [
           {
             "isFeatured": false,
@@ -1549,7 +1549,7 @@
         ]
       },
       {
-        "description": "連續投出 5 次曲球",
+        "description": "連續投出5次曲球",
         "rewards": [
           {
             "isFeatured": false,
@@ -1586,7 +1586,7 @@
         ]
       },
       {
-        "description": "連續用曲球投出 5 次Great",
+        "description": "連續投出 5 次 Great 曲球",
         "rewards": [
           {
             "isFeatured": true,
@@ -1609,7 +1609,7 @@
         ]
       },
       {
-        "description": "投出 5 次Nice",
+        "description": "投出 5 次 Nice",
         "rewards": [
           {
             "isFeatured": true,
@@ -1651,7 +1651,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×5",
+            "name": "精靈球 ×5",
             "quantity": "×5"
           },
           {
@@ -1673,7 +1673,7 @@
         ]
       },
       {
-        "description": "投出1次Excellent Throw",
+        "description": "投出 1 次 Excellent",
         "rewards": [
           {
             "isFeatured": false,
@@ -1715,7 +1715,7 @@
     "category": "對戰相關任務",
     "tasks": [
       {
-        "description": "參加1場團體戰",
+        "description": "Battle in a raid",
         "rewards": [
           {
             "isFeatured": false,
@@ -1728,7 +1728,7 @@
         ]
       },
       {
-        "description": "在團體戰中獲勝1次",
+        "description": "贏得1場團體戰",
         "rewards": [
           {
             "isFeatured": true,
@@ -1841,7 +1841,7 @@
         ]
       },
       {
-        "description": "參加 3 場團體戰",
+        "description": "Battle in 3 raids",
         "rewards": [
           {
             "isFeatured": false,
@@ -1854,7 +1854,7 @@
         ]
       },
       {
-        "description": "在等級3以上的團體戰中獲勝1次",
+        "description": "贏得1場3星級以上的團體戰",
         "rewards": [
           {
             "isFeatured": true,
@@ -1877,7 +1877,7 @@
         ]
       },
       {
-        "description": "在團體戰中獲勝 5 次",
+        "description": "贏得5場團體戰",
         "rewards": [
           {
             "isFeatured": true,
@@ -1909,7 +1909,7 @@
         ]
       },
       {
-        "description": "在極巨對戰中獲勝1次",
+        "description": "贏得1場極限對戰",
         "rewards": [
           {
             "isFeatured": false,
@@ -1927,7 +1927,7 @@
     "category": "探索相關任務",
     "tasks": [
       {
-        "description": "獲得星星沙子x10000",
+        "description": "獲得10000星星沙子",
         "rewards": [
           {
             "isFeatured": false,
@@ -1940,7 +1940,7 @@
         ]
       },
       {
-        "description": "獲得 10000 XP",
+        "description": "獲得10000 XP",
         "rewards": [
           {
             "isFeatured": false,
@@ -1953,7 +1953,7 @@
         ]
       },
       {
-        "description": "探索 2 公里",
+        "description": "探索2公里",
         "rewards": [
           {
             "isFeatured": true,
@@ -2170,7 +2170,7 @@
         ]
       },
       {
-        "description": "孵化 2 顆蛋",
+        "description": "孵化2顆蛋",
         "rewards": [
           {
             "isFeatured": true,
@@ -2210,7 +2210,7 @@
         ]
       },
       {
-        "description": "孵化 5 顆蛋",
+        "description": "Hatch 5 Eggs",
         "rewards": [
           {
             "isFeatured": false,
@@ -2223,7 +2223,7 @@
         ]
       },
       {
-        "description": "拜訪 3 個寶可補給站",
+        "description": "旋轉3個寶可補給站或道館的轉盤",
         "rewards": [
           {
             "isFeatured": true,
@@ -2296,7 +2296,7 @@
         ]
       },
       {
-        "description": "拜訪 5 個寶可補給站",
+        "description": "旋轉5個寶可補給站或道館的轉盤",
         "rewards": [
           {
             "isFeatured": true,
@@ -2490,7 +2490,7 @@
         ]
       },
       {
-        "description": "為野生寶可夢拍攝1張GO Snapshot照片",
+        "description": "給野生的寶可夢拍攝1張照片",
         "rewards": [
           {
             "isFeatured": true,
@@ -2527,7 +2527,7 @@
     "category": "寶可夢訓練任務",
     "tasks": [
       {
-        "description": "讓1隻寶可夢進化",
+        "description": "進化1隻寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -2604,7 +2604,7 @@
         ]
       },
       {
-        "description": "強化寶可夢 15 次",
+        "description": "強化寶可夢15次",
         "rewards": [
           {
             "isFeatured": false,
@@ -2617,7 +2617,7 @@
         ]
       },
       {
-        "description": "強化寶可夢 3 次",
+        "description": "強化寶可夢3次",
         "rewards": [
           {
             "isFeatured": true,
@@ -2649,7 +2649,7 @@
         ]
       },
       {
-        "description": "強化寶可夢 5 次",
+        "description": "強化寶可夢5次",
         "rewards": [
           {
             "isFeatured": true,
@@ -2683,7 +2683,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm306.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Aggron Mega Energy.png",
-            "name": "波士可多拉超級能量 ×10",
+            "name": "波士可多拉 超級能量",
             "quantity": "×10"
           },
           {
@@ -2691,7 +2691,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm15.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Beedrill Mega Energy.png",
-            "name": "大針蜂超級能量 ×10",
+            "name": "大針蜂 超級能量",
             "quantity": "×10"
           },
           {
@@ -2699,7 +2699,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm9.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Blastoise Mega Energy.png",
-            "name": "水箭龜超級能量 ×10",
+            "name": "水箭龜 超級能量",
             "quantity": "×10"
           },
           {
@@ -2707,7 +2707,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm6.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Charizard Mega Energy.png",
-            "name": "噴火龍超級能量 ×10",
+            "name": "噴火龍 超級能量",
             "quantity": "×10"
           },
           {
@@ -2715,7 +2715,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm310.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Manectric Mega Energy.png",
-            "name": "雷電獸超級能量 ×10",
+            "name": "雷電獸 超級能量",
             "quantity": "×10"
           },
           {
@@ -2723,7 +2723,7 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm18.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Pidgeot Mega Energy.png",
-            "name": "大比鳥超級能量 ×10",
+            "name": "大比鳥 超級能量",
             "quantity": "×10"
           },
           {
@@ -2731,13 +2731,13 @@
             "type": "item",
             "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm3.icon.png",
             "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Venusaur Mega Energy.png",
-            "name": "妙蛙花超級能量 ×10",
+            "name": "妙蛙花 超級能量",
             "quantity": "×10"
           }
         ]
       },
       {
-        "description": "強化寶可夢 7 次",
+        "description": "強化寶可夢7次",
         "rewards": [
           {
             "isFeatured": true,
@@ -2774,7 +2774,7 @@
     "category": "夥伴與友誼任務",
     "tasks": [
       {
-        "description": "和夥伴一起走路，取得 2 顆糖果",
+        "description": "與你的夥伴同行並獲得2顆糖果",
         "rewards": [
           {
             "isFeatured": true,
@@ -2833,12 +2833,12 @@
         ]
       },
       {
-        "description": "和夥伴一起走路，取得 3 顆糖果",
+        "description": "與你的夥伴同行並獲得3顆糖果",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "泥巴魚（伽勒爾的樣子）",
+            "name": "伽勒爾 泥巴魚",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.fGALARIAN.icon.png",
             "isShiny": true,
             "maxCp": "926",
@@ -2856,7 +2856,7 @@
         ]
       },
       {
-        "description": "傳送 3 個貼了貼圖的友情禮物",
+        "description": "送出3個附上貼圖的友情禮物",
         "rewards": [
           {
             "isFeatured": true,
@@ -2952,7 +2952,7 @@
     "category": "GO火箭隊任務",
     "tasks": [
       {
-        "description": "打敗1個GO火箭隊手下",
+        "description": "擊敗 1 名 GO 火箭隊手下",
         "rewards": [
           {
             "isFeatured": true,
@@ -2989,7 +2989,7 @@
     "category": "贊助商任務",
     "tasks": [
       {
-        "description": "捕捉 8 隻寶可夢",
+        "description": "捕捉8隻寶可夢",
         "rewards": [
           {
             "isFeatured": false,
@@ -3010,7 +3010,7 @@
         ]
       },
       {
-        "description": "傳送 3 個友情禮物",
+        "description": "傳送3個友情禮物給朋友",
         "rewards": [
           {
             "isFeatured": false,
@@ -3043,7 +3043,7 @@
             "type": "item",
             "pokemonIconUrl": null,
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
-            "name": "球球 ×10",
+            "name": "精靈球 ×10",
             "quantity": "×10"
           },
           {
