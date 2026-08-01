@@ -104,7 +104,9 @@ jobs:
           # sitemap-cp.xml 也要一起回寫：它的 <lastmod> 現在依賴
           # data/sitemap_cp_lastmod.json 的狀態，兩者不同步的話 repo 裡會出現
           # 「狀態說沒變、sitemap 卻是舊日期」這種對不上的情況，很難查。
-          git add data/ sitemap-cp.xml
+          # cp-list/ 是同一支腳本產生的靜態索引頁（1079 個站內連結），
+          # 名稱一改就要跟著更新，否則連結會指向已不存在的 ?mon= 網址。
+          git add data/ sitemap-cp.xml cp-list/
           # 沒有變更就直接結束
           if git diff --staged --quiet; then
             echo "No data changes to commit."
@@ -116,7 +118,7 @@ jobs:
           for i in 1 2 3; do
             git fetch origin main
             git reset --soft origin/main        # HEAD 移到最新遠端，保留已 add 的資料變更
-            git add data/ sitemap-cp.xml
+            git add data/ sitemap-cp.xml cp-list/
             if git diff --staged --quiet; then
               echo "與最新遠端相比沒有差異，無需 push。"; exit 0
             fi
