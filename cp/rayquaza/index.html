@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
+<title>烈空坐 IV100 CP 速查｜Lv1-50 全等級 CP 表｜Pokémon Go 工具箱</title>
+<meta name="description" content="烈空坐（#384，龍／飛行）的 IV 100% CP 速查與 Lv1～50 全等級 CP 對照表：滿 IV 最大 CP L40 3835／L50 4336，含屬性剋制、推薦招式、團體戰與 PvP 聯盟定位。">
+<link rel="canonical" href="https://jason168861.github.io/pokemongo-toolbox/cp/rayquaza/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Pokémon Go 工具箱">
+<meta property="og:title" content="烈空坐 IV100 CP 查詢｜Lv1-50 全等級 CP 表">
+<meta property="og:description" content="烈空坐（#384，龍／飛行）的 IV 100% CP 速查與 Lv1～50 全等級 CP 對照表：滿 IV 最大 CP L40 3835／L50 4336，含屬性剋制、推薦招式、團體戰與 PvP 聯盟定位。">
+<meta property="og:url" content="https://jason168861.github.io/pokemongo-toolbox/cp/rayquaza/">
+<meta property="og:image" content="https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon%20-%20256x256/Addressable%20Assets/pm384.icon.png">
+<meta property="og:locale" content="zh_TW">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Pokémon Go 工具箱","item":"https://jason168861.github.io/pokemongo-toolbox/"},{"@type":"ListItem","position":2,"name":"IV100 CP 查詢","item":"https://jason168861.github.io/pokemongo-toolbox/?tab=cp-checker-app"},{"@type":"ListItem","position":3,"name":"烈空坐 CP","item":"https://jason168861.github.io/pokemongo-toolbox/cp/rayquaza/"}]}</script>
+<style>
+:root{--bg:#f0f2f5;--card:#fff;--ink:#1c1e21;--ink2:#3a3b3c;--muted:#606770;--line:#dddfe2;
+ --blue:#1877f2;--blue2:#4aa3e8;--red:#e63946;--green:#2f9e57;--dragon:#6a5ae0;--flying:#4aa3e8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
+ line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 70px}
+.crumb{font-size:13px;color:var(--muted);margin:4px 0 16px}
+.crumb a{color:var(--blue);text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.card{background:var(--card);border-radius:10px;box-shadow:0 2px 4px rgba(0,0,0,.08);padding:22px 22px;margin-bottom:16px}
+.head{display:flex;gap:16px;align-items:center}
+.head img{width:84px;height:84px;border-radius:16px;background:linear-gradient(140deg,var(--dragon),var(--flying));padding:6px;flex:none}
+.dexno{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+h1{font-size:26px;margin:2px 0 8px;font-weight:750;letter-spacing:-.01em}
+.types{display:flex;gap:8px}
+.type{font-size:12.5px;font-weight:700;color:#fff;padding:3px 12px;border-radius:999px}
+.t0{background:var(--dragon)}.t1{background:var(--flying)}
+.lead{font-size:15px;color:var(--ink2);margin:16px 0 0}
+.lead strong{color:var(--ink)}
+h2{font-size:19px;margin:0 0 10px;color:var(--ink);letter-spacing:-.01em}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px}
+.stat{background:#f7f8fa;border-radius:11px;padding:13px 15px}
+.stat .v{font-size:23px;font-weight:730;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:.5em;color:var(--muted);font-weight:600}
+.stat .l{font-size:12px;color:var(--ink2);margin-top:1px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.cp{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+table.cp caption{caption-side:top;text-align:left;color:var(--muted);font-size:13px;padding-bottom:8px}
+table.cp th,table.cp td{border:1px solid #e4e6eb;padding:7px 10px;text-align:right;white-space:nowrap}
+table.cp thead th{background:#f7f8fa;color:var(--ink);font-weight:700}
+table.cp tbody th{text-align:left;background:#fafbfc}
+table.cp td.mx{font-weight:700;color:var(--green)}
+table.cp td.mn{color:var(--muted)}
+table.cp td.nt,table.cp thead th:last-child{text-align:left;white-space:normal;color:var(--muted);font-size:13px;width:42%}
+table.cp thead th:last-child{color:var(--ink)}
+table.cp tr:nth-child(even) td,table.cp tr:nth-child(even) th{background:#fcfcfd}
+table.cp tr.key th,table.cp tr.key td{background:#eef7f1}
+table.cp tr.bb th,table.cp tr.bb td{background:#fff7e8}
+.foot-t{color:var(--muted);font-size:13px;margin:12px 0 0}
+.matchup{display:flex;flex-direction:column;gap:10px;margin:4px 0 12px}
+.mg{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.mlab{flex:none;width:44px;font-size:13px;font-weight:700;color:var(--muted)}
+.chip{font-size:13px;font-weight:600;padding:5px 11px;border-radius:9px;display:inline-flex;gap:6px;align-items:center}
+.chip em{font-style:normal;font-size:11.5px;opacity:.85;font-variant-numeric:tabular-nums}
+.chip.wk{background:#fdecec;color:#c5221f}.chip.wk.dbl{background:#f9d5d3;color:#a50e0e;font-weight:800}
+.chip.rs{background:#e7f5ec;color:#1e7e46}
+.note{color:var(--muted);font-size:13px;margin:6px 0 0}
+.note strong,.lead strong,.role strong{color:var(--ink)}
+.role{font-size:14.5px;color:var(--ink2);margin:0 0 14px}
+ul.moves{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+ul.moves li{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+ul.moves .k{flex:none;width:82px;font-size:12.5px;font-weight:700;color:var(--muted)}
+ul.moves .v{font-size:14px}ul.moves .v b{color:var(--blue)}
+ul.moves .v em{font-style:normal;font-size:12px;color:#d97706;font-weight:700}
+.league{display:grid;gap:10px;margin:6px 0 12px}
+.lrow{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:center}
+.lname{font-size:13.5px;font-weight:600}
+.lbar{height:9px;background:#e9ebee;border-radius:999px;overflow:hidden}
+.lbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--blue2))}
+.lrk{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lrk b{color:var(--ink);font-size:13.5px}
+.related p{margin:0 0 8px;font-size:14px}
+.related a{color:var(--blue);text-decoration:none;padding:2px 4px;border-radius:4px}
+.related a:hover{background:#eaf2fd;text-decoration:underline}
+.related strong{color:var(--muted);font-weight:600}
+.cta{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;
+ padding:11px 20px;border-radius:8px;font-size:15px}
+.cta:hover{background:#166fe0}
+.pagefoot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px}
+.pagefoot a{color:var(--muted)}
+@media (max-width:480px){.lrow{grid-template-columns:64px 1fr}.lrk{grid-column:2;text-align:right}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumb" aria-label="麵包屑">
+    <a href="../../">工具箱首頁</a> ›
+    <a href="../../?tab=cp-checker-app">IV100 CP 查詢</a> ›
+    <span>烈空坐</span>
+  </nav>
+
+  <div class="card">
+    <div class="head">
+      <img src="https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon%20-%20256x256/Addressable%20Assets/pm384.icon.png" alt="烈空坐" width="84" height="84" loading="lazy">
+      <div>
+        <div class="dexno">#384</div>
+        <h1>烈空坐 IV100 CP 查詢</h1>
+        <div class="types"><span class="type t0">龍</span><span class="type t1">飛行</span></div>
+      </div>
+    </div>
+    <p class="lead">烈空坐（#384）是<strong>龍／飛行</strong>屬性的傳說寶可夢，基礎數值 攻擊 <strong>284</strong>／防禦 170／耐力 213 —— 以全遊戲數一數二的攻擊力，牠是典型的<strong>高攻低防「玻璃大砲」</strong>，主要價值在團體戰的龍系爆發輸出。 以下提供牠的 Lv1～50 全等級 CP 對照表、屬性剋制、角色定位、推薦招式與對戰聯盟表現。</p>
+  </div>
+
+  <div class="card">
+    <h2>烈空坐 關鍵數據</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">3835</div><div class="l">滿 IV 最大 CP（L40）</div></div>
+      <div class="stat"><div class="v">4336</div><div class="l">滿 IV 最大 CP（L50）</div></div>
+      <div class="stat"><div class="v">284</div><div class="l">基礎攻擊</div></div>
+      <div class="stat"><div class="v">170<small> / 213</small></div><div class="l">防禦 / 耐力</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>烈空坐 全等級 CP 對照表（Lv1～Lv50）</h2>
+    <p class="foot-t" style="margin:0 0 12px">烈空坐（#384）基礎數值 攻擊 284／防禦 170／耐力 213。
+       <strong>100% IV</strong>（15/15/15）為該等級 CP 上限，<strong>0% IV</strong>（0/0/0）為下限。</p>
+    <div class="tbl-wrap">
+      <table class="cp">
+        <caption>烈空坐 各等級 CP（100% IV / 0% IV）</caption>
+        <thead><tr><th>等級</th><th>100% IV</th><th>0% IV</th><th>說明</th></tr></thead>
+        <tbody><tr class=""><th scope="row">Lv1</th><td class="mx">54</td><td class="mn">47</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv2</th><td class="mx">170</td><td class="mn">149</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv3</th><td class="mx">285</td><td class="mn">251</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv4</th><td class="mx">401</td><td class="mn">353</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv5</th><td class="mx">517</td><td class="mn">455</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv6</th><td class="mx">633</td><td class="mn">557</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv7</th><td class="mx">748</td><td class="mn">659</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv8</th><td class="mx">864</td><td class="mn">760</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv9</th><td class="mx">980</td><td class="mn">862</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv10</th><td class="mx">1096</td><td class="mn">964</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv11</th><td class="mx">1205</td><td class="mn">1061</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv12</th><td class="mx">1315</td><td class="mn">1157</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv13</th><td class="mx">1424</td><td class="mn">1253</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv14</th><td class="mx">1534</td><td class="mn">1350</td><td class="nt"></td></tr><tr class="key"><th scope="row">Lv15</th><td class="mx">1643</td><td class="mn">1446</td><td class="nt">🔬 田野調查 · 🤝 小隊合作</td></tr><tr class=""><th scope="row">Lv16</th><td class="mx">1753</td><td class="mn">1543</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv17</th><td class="mx">1862</td><td class="mn">1639</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv18</th><td class="mx">1972</td><td class="mn">1735</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv19</th><td class="mx">2082</td><td class="mn">1832</td><td class="nt"></td></tr><tr class="key"><th scope="row">Lv20</th><td class="mx">2191</td><td class="mn">1928</td><td class="nt">⚔️ 團體戰（無天氣加成）· 🥚 孵化的蛋</td></tr><tr class=""><th scope="row">Lv21</th><td class="mx">2301</td><td class="mn">2025</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv22</th><td class="mx">2410</td><td class="mn">2121</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv23</th><td class="mx">2520</td><td class="mn">2218</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv24</th><td class="mx">2630</td><td class="mn">2314</td><td class="nt"></td></tr><tr class="key"><th scope="row">Lv25</th><td class="mx">2739</td><td class="mn">2411</td><td class="nt">☀️ 團體戰（天氣加成）</td></tr><tr class=""><th scope="row">Lv26</th><td class="mx">2849</td><td class="mn">2507</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv27</th><td class="mx">2958</td><td class="mn">2603</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv28</th><td class="mx">3068</td><td class="mn">2700</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv29</th><td class="mx">3178</td><td class="mn">2796</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv30</th><td class="mx">3287</td><td class="mn">2893</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv31</th><td class="mx">3342</td><td class="mn">2941</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv32</th><td class="mx">3397</td><td class="mn">2989</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv33</th><td class="mx">3451</td><td class="mn">3037</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv34</th><td class="mx">3506</td><td class="mn">3086</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv35</th><td class="mx">3561</td><td class="mn">3134</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv36</th><td class="mx">3616</td><td class="mn">3182</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv37</th><td class="mx">3671</td><td class="mn">3230</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv38</th><td class="mx">3725</td><td class="mn">3278</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv39</th><td class="mx">3780</td><td class="mn">3327</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv40</th><td class="mx">3835</td><td class="mn">3375</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv41</th><td class="mx">3884</td><td class="mn">3418</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv42</th><td class="mx">3933</td><td class="mn">3461</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv43</th><td class="mx">3982</td><td class="mn">3504</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv44</th><td class="mx">4031</td><td class="mn">3548</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv45</th><td class="mx">4081</td><td class="mn">3592</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv46</th><td class="mx">4132</td><td class="mn">3636</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv47</th><td class="mx">4182</td><td class="mn">3680</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv48</th><td class="mx">4233</td><td class="mn">3725</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv49</th><td class="mx">4284</td><td class="mn">3770</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv50</th><td class="mx">4336</td><td class="mn">3815</td><td class="nt"></td></tr><tr class="bb"><th scope="row">Lv51</th><td class="mx">4387</td><td class="mn">3861</td><td class="nt">⭐ 最佳夥伴加成</td></tr></tbody>
+      </table>
+    </div>
+    <p class="foot-t">Lv51 為最佳夥伴狀態下的等級上限；一般強化上限為 Lv50。資料來源為 Pokémon GO GAME_MASTER。</p>
+  </div>
+
+  <div class="card">
+    <h2>烈空坐 屬性與剋制</h2>
+    <div class="matchup">
+      <div class="mg"><span class="mlab">弱點</span><span class="chip wk dbl">冰 <em>×2.56</em></span><span class="chip wk">岩石 <em>×1.6</em></span><span class="chip wk">龍 <em>×1.6</em></span><span class="chip wk">妖精 <em>×1.6</em></span></div>
+      <div class="mg"><span class="mlab">抗性</span><span class="chip rs">地面 <em>免疫 ×0.39</em></span><span class="chip rs">草 <em>×0.39</em></span><span class="chip rs">火 <em>×0.63</em></span><span class="chip rs">水 <em>×0.63</em></span><span class="chip rs">格鬥 <em>×0.63</em></span><span class="chip rs">蟲 <em>×0.63</em></span></div>
+    </div>
+    <p class="note">龍／飛行的組合最怕冰系 —— 兩種屬性都被冰剋，形成雙重弱點。用<strong>冰系</strong>招式打烈空坐傷害最高；帶牠出戰時要避開對方的冰、岩石與妖精。天氣為<strong>刮風</strong>時，牠的龍系與飛行系招式都會加成，野外遇到時 CP 也較高。</p>
+  </div>
+
+  <div class="card">
+    <h2>烈空坐 角色定位與推薦招式</h2>
+    <p class="role">烈空坐是<strong>五星傳說團體戰頭目</strong>，可捕獲、有異色（閃光）版本。憑 284 攻擊，牠是最強的龍系攻擊手之一，適合在團體戰面對其他龍系對手（如快龍、暴飛龍、烈咬陸鯊）時打出高輸出；但防禦僅 170，續戰力偏低，屬於秒傷取向的玻璃大砲。</p>
+    <ul class="moves"><li><span class="k">團體戰輸出</span><span class="v">龍尾 ＋ <b>畫龍點睛</b>（招牌絕招，龍系爆發最高）</span></li><li><span class="k">對戰 PvP</span><span class="v">龍尾 ＋ 廣域破壞／畫龍點睛 <em>（皆為菁英招式）</em></span></li><li><span class="k">好友距離</span><span class="v">20 公里</span></li></ul>
+  </div>
+
+  <div class="card">
+    <h2>烈空坐 對戰聯盟表現</h2>
+    <div class="league"><div class="lrow"><span class="lname">大師聯盟</span><span class="lbar"><i style="width:76%"></i></span><span class="lrk"><b>#96</b> / 405 · 76.3 分</span></div><div class="lrow"><span class="lname">超級聯盟</span><span class="lbar"><i style="width:43%"></i></span><span class="lrk"><b>#361</b> / 841 · 77.8 分</span></div><div class="lrow"><span class="lname">特級聯盟</span><span class="lbar"><i style="width:39%"></i></span><span class="lrk"><b>#445</b> / 1143 · 77.2 分</span></div></div>
+    <p class="note">烈空坐在對戰中更適合<strong>大師聯盟</strong> —— 這裡沒有 CP 上限，牠不必刻意壓等。在超級與特級聯盟因體質偏脆、CP 又常超標，表現只算普通，一般不是首選。</p>
+  </div>
+
+  <div class="card related">
+    <h2>相關寶可夢</h2>
+    <p><strong>圖鑑相鄰：</strong>上一隻 <a href="../../?tab=cp-checker-app&mon=固拉多">固拉多</a>　·　下一隻 <a href="../../?tab=cp-checker-app&mon=基拉祈">基拉祈</a></p>
+    <p><strong>互動查詢：</strong>在工具裡即時查 <a href="../../?tab=cp-checker-app&mon=烈空坐">烈空坐</a> 的完整資料。</p>
+  </div>
+
+  <div style="text-align:center;margin-top:8px">
+    <a class="cta" href="../../?tab=cp-checker-app&mon=烈空坐">開啟互動 CP 查詢工具 →</a>
+  </div>
+
+  <p class="pagefoot"><a href="../../">Pokémon Go 工具箱</a> · IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢</p>
+</div>
+</body>
+</html>
