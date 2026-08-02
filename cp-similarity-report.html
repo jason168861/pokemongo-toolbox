@@ -1,0 +1,345 @@
+<title>cp-checker 頁面相似度分析</title>
+<style>
+  .wrap{
+    color-scheme: light;
+    --plane:#f9f9f7; --surface:#fcfcfb;
+    --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,.10);
+    --blue:#2a78d6;
+    --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+    /* sequential blue ramp */
+    --b1:#cde2fb;--b2:#9ec5f4;--b3:#6da7ec;--b4:#3987e5;--b5:#256abf;--b6:#184f95;--b7:#0d366b;
+    color:var(--ink); background:var(--plane);
+    font-family:system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])) .wrap{
+    color-scheme:dark;
+    --plane:#0d0d0d; --surface:#1a1a19;
+    --ink:#fff; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,.10);
+    --blue:#3987e5;
+  }}
+  :root[data-theme="dark"] .wrap{
+    color-scheme:dark;
+    --plane:#0d0d0d; --surface:#1a1a19;
+    --ink:#fff; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,.10);
+    --blue:#3987e5;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:56px 24px 96px;}
+  .eyebrow{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; margin:0 0 14px;}
+  h1{font-size:clamp(28px,5vw,40px); line-height:1.15; margin:0 0 12px; font-weight:750;
+     letter-spacing:-.01em; text-wrap:balance;}
+  .lede{font-size:17px; color:var(--ink2); margin:0; max-width:64ch;}
+  .lede code{background:color-mix(in srgb,var(--blue) 12%,transparent); color:var(--ink);
+     padding:.08em .4em; border-radius:5px; font-size:.9em;}
+  h2{font-size:22px; font-weight:700; letter-spacing:-.01em; margin:0 0 4px; text-wrap:balance;}
+  .sec{margin-top:52px;}
+  .sec > .cap{color:var(--ink2); font-size:14.5px; margin:0 0 22px; max-width:66ch;}
+  .num{font-variant-numeric:tabular-nums;}
+
+  /* hero stat */
+  .hero{margin-top:40px; background:var(--surface); border:1px solid var(--border);
+    border-radius:16px; padding:30px 32px; display:flex; gap:30px; align-items:center; flex-wrap:wrap;}
+  .hero .big{font-size:clamp(56px,11vw,84px); font-weight:780; line-height:.92;
+    letter-spacing:-.03em; color:var(--critical);}
+  .hero .big small{font-size:.42em; font-weight:600; color:var(--ink2); letter-spacing:0;}
+  .hero .txt{flex:1; min-width:240px;}
+  .hero .txt p{margin:0; color:var(--ink2); font-size:15px;}
+  .hero .txt b{color:var(--ink);}
+
+  /* kpi */
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:14px; margin-top:16px;}
+  .kpi{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 18px;}
+  .kpi .v{font-size:29px; font-weight:730; letter-spacing:-.02em;}
+  .kpi .l{font-size:13px; color:var(--ink2); margin-top:2px;}
+  .kpi .s{font-size:12px; color:var(--muted); margin-top:5px;}
+
+  /* figure card */
+  .fig{background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:22px 22px 18px; margin-top:18px;}
+  .fig h3{margin:0 0 2px; font-size:16px; font-weight:680;}
+  .fig .sub{margin:0 0 18px; font-size:13px; color:var(--muted);}
+  .scroll{overflow-x:auto;}
+  svg{display:block; max-width:100%;}
+  .legend{display:flex; flex-wrap:wrap; gap:16px; margin-top:14px; font-size:13px; color:var(--ink2);}
+  .legend span{display:inline-flex; align-items:center; gap:7px;}
+  .sw{width:11px; height:11px; border-radius:3px; flex:none;}
+
+  /* recommendations */
+  .rec{background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:20px 22px; margin-top:14px; display:grid; grid-template-columns:auto 1fr; gap:0 20px;}
+  .rec .rank{font-size:34px; font-weight:780; line-height:1; color:var(--blue);
+    font-variant-numeric:tabular-nums; grid-row:1/span 2;}
+  .rec .badge{align-self:start; font-size:11px; font-weight:700; letter-spacing:.06em;
+    text-transform:uppercase; padding:3px 9px; border-radius:999px; margin-bottom:8px; display:inline-block;}
+  .rec h3{margin:0 0 6px; font-size:17px; font-weight:700;}
+  .rec p{margin:0 0 8px; font-size:14.5px; color:var(--ink2);}
+  .rec p:last-child{margin-bottom:0;}
+  .rec code{background:color-mix(in srgb,var(--blue) 12%,transparent); color:var(--ink);
+     padding:.05em .38em; border-radius:4px; font-size:.88em;}
+  .b-crit{background:color-mix(in srgb,var(--critical) 16%,transparent); color:var(--critical);}
+  .b-high{background:color-mix(in srgb,var(--warning) 22%,transparent); color:#8a5a00;}
+  @media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])) .wrap .b-high{color:#e6a92e;}}
+  :root[data-theme="dark"] .wrap .b-high{color:#e6a92e;}
+  .b-med{background:color-mix(in srgb,var(--blue) 16%,transparent); color:var(--blue);}
+  .callout{border-left:3px solid var(--blue); background:color-mix(in srgb,var(--blue) 7%,transparent);
+    padding:14px 18px; border-radius:0 10px 10px 0; margin-top:20px; font-size:14.5px; color:var(--ink2);}
+  .callout b{color:var(--ink);}
+  .foot{margin-top:56px; padding-top:20px; border-top:1px solid var(--border);
+    font-size:12.5px; color:var(--muted);}
+  /* tooltip */
+  #tip{position:fixed; pointer-events:none; z-index:20; background:var(--ink); color:var(--plane);
+    padding:7px 10px; border-radius:7px; font-size:12.5px; line-height:1.45; opacity:0;
+    transition:opacity .1s; white-space:nowrap; box-shadow:0 4px 14px rgba(0,0,0,.28);}
+  .bar-rect{transition:opacity .1s;} .bar-rect:hover{opacity:.78;}
+  .cell:hover{stroke:var(--ink); stroke-width:1.2;}
+  @media (max-width:520px){.rec{grid-template-columns:1fr;} .rec .rank{grid-row:auto; margin-bottom:6px;}}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Google Search Console · 重複內容診斷</p>
+  <h1>cp-checker 頁面相似度分析</h1>
+  <p class="lede">你的 1079 個 <code>?mon=</code> 網址被判為「替代頁面（有適當的標準標記）」而未編入索引。
+     這份報告用實際頁面內容量化它們有多像，並說明怎麼改。</p>
+
+  <div class="hero">
+    <div class="big num">90%<small> 內容重複</small></div>
+    <div class="txt">
+      <p>把整頁可見文字算進去，每個 <b>?mon=</b> 網址平均約 <b>90% 的字</b>和其他所有頁一模一樣，
+         只有 <b>約 554 字</b>（寶可夢名字重複＋CP 數字）是這頁專屬的。Google 因此判定它們講同一件事，
+         只留一頁代表、其餘當「替代頁」不收錄。</p>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v num">1079</div><div class="l">CP 查詢頁</div><div class="s">全部共用同一份 index.html</div></div>
+    <div class="kpi"><div class="v num">1079<span style="font-size:.5em">/1079</span></div><div class="l">文字骨架完全相同</div><div class="s">扣掉名字與數字後 100% 一樣</div></div>
+    <div class="kpi"><div class="v num">121</div><div class="l">有近重複雙胞胎</div><div class="s">存在 ≥70% 相似的另一頁</div></div>
+    <div class="kpi"><div class="v num">~554</div><div class="l">每頁專屬字數</div><div class="s">相對 4642 字的共用外框</div></div>
+  </div>
+
+  <!-- FIG 1 -->
+  <section class="sec">
+    <h2>一、每頁的字，有多少是自己的？</h2>
+    <p class="cap">把一個 CP 查詢頁的全部可見文字拆開：導覽列、首頁卡片、其他分頁、說明文字，這些「外框」在
+       1079 個網址上完全相同；你特地為 SEO 加的全等級 CP 表也大多是固定模板。真正因寶可夢而異的只剩最右邊那一小段。</p>
+    <div class="fig">
+      <h3>單頁文字組成</h3>
+      <p class="sub">依字元數（不計空白），共用 = 每個網址都一樣</p>
+      <div class="scroll"><svg id="comp" width="820" height="96" role="img"
+        aria-label="單頁文字組成：共用外框4642字、共用模板415字、專屬554字"></svg></div>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--critical)"></i>共用外框（導覽/首頁/其他分頁）· 4642 字</span>
+        <span><i class="sw" style="background:var(--serious)"></i>共用模板（表格標題/固定句）· 415 字</span>
+        <span><i class="sw" style="background:var(--good)"></i>本頁專屬（名字＋CP 數字）· 554 字</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIG 2 -->
+  <section class="sec">
+    <h2>二、每頁和「最像的另一頁」有多像？</h2>
+    <p class="cap">只看你為 SEO 加的 CP 表區塊（最能區分彼此的部分），用 5 字連續片段算每頁對「最相似鄰居」的
+       重疊度（Jaccard）。越靠右代表越有一個幾乎一樣的雙胞胎。</p>
+    <div class="fig">
+      <h3>最近鄰相似度分布</h3>
+      <p class="sub">x＝與最相似頁的文字重疊度　y＝頁數。右側 ≥70% 為近重複風險區。</p>
+      <div class="scroll"><svg id="hist" width="820" height="300" role="img"
+        aria-label="最近鄰相似度分布直方圖"></svg></div>
+    </div>
+  </section>
+
+  <!-- FIG 3 -->
+  <section class="sec">
+    <h2>三、相似度熱力圖（圖鑑前 40 隻）</h2>
+    <p class="cap">每格顏色＝兩頁 CP 表的相似度，越深越像。對角線的亮塊是同一條進化系列或同一隻的不同形態
+       —— 數值接近、CP 表就接近，這些正是 Google 最容易併在一起的頁。滑過任一格看是哪兩隻。</p>
+    <div class="fig">
+      <h3>兩兩相似度矩陣</h3>
+      <p class="sub">40 × 40 · 顏色越深＝重疊越多</p>
+      <div class="scroll"><svg id="heat" role="img" aria-label="寶可夢頁面兩兩相似度熱力圖"></svg></div>
+      <div class="legend" id="heatlegend"></div>
+    </div>
+  </section>
+
+  <!-- diagnosis -->
+  <section class="sec">
+    <h2>這個 GSC 狀態到底是什麼意思？</h2>
+    <p class="cap" style="max-width:68ch">「替代頁面（有適當的標準標記）」＝ Google 有讀到、也願意遵守你每頁自己的 canonical；
+       問題不在標記錯，而在<b style="color:var(--ink)">內容太接近</b>：Google 把這些頁歸成同一群、只收一頁代表，其餘標為替代頁。
+       換句話說，canonical 你已經設對了，缺的是「讓每頁真的不一樣」。</p>
+  </section>
+
+  <!-- recommendations -->
+  <section class="sec">
+    <h2>怎麼改進</h2>
+    <p class="cap">依投資報酬率排序。第 1、2 項是主力，第 3、4 項是收斂，第 5 項是收尾。</p>
+
+    <div class="rec">
+      <div class="rank">1</div>
+      <div><span class="badge b-crit">影響最大</span>
+        <h3>讓每頁有「文字」而不只是「數字」的獨特內容</h3></div>
+      <div>
+        <p>目前頁與頁的差別幾乎只有名字和一張數字表。Google 對「同一模板換個名字＋一張數字表」的辨識力很強，會判為近重複。
+           你 <code>data/</code> 裡其實已經有夠用的素材：<code>types</code>（屬性）、<code>family/stage</code>（進化系列）、
+           PvP 的 <code>fastMove/score</code>（聯盟排名）。</p>
+        <p>用這些替每頁寫幾句真正不同的敘述：屬性與剋制關係、進化與所需糖果、在大師／超級聯盟的定位、最大 CP、
+           天氣加成條件、適不適合打團或放道館。關鍵是<b>句型也要隨屬性／角色變化</b>，不要只是同一句換名字。</p>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="rank">2</div>
+      <div><span class="badge b-high">結構性根治</span>
+        <h3>改用預先產生的靜態頁（SSG / prerender）</h3></div>
+      <div>
+        <p>1079 個網址現在其實是同一份 <code>index.html</code>，靠 JS 即時改 canonical／標題／內容。慢速連線下
+           Googlebot 可能在 JS 生效前就拍快照，而且每頁都先扛 4642 字的相同外框。</p>
+        <p>用一支 build script 針對每隻（或熱門那批）輸出真正的 <code>/cp/&lt;name&gt;.html</code>：把獨特內容<b>直接寫進原始 HTML</b>、
+           各自帶 self-canonical、外框精簡。GitHub Pages 直接放靜態檔即可。這一步同時解決「JS 時機」與「外框佔比過高」兩個問題。</p>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="rank">3</div>
+      <div><span class="badge b-med">收斂</span>
+        <h3>把「本來就一樣」的頁合併，別硬送</h3></div>
+      <div>
+        <p>數值相同的不同形態（相似度 0.98+，例如椰蛋樹各形態）產生的 CP 表幾乎完全一樣。這種就讓形態頁的
+           canonical 指回本體、或乾脆不放進 sitemap。與其送 1079 個薄頁，不如集中火力在真正獨立的頁。</p>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="rank">4</div>
+      <div><span class="badge b-med">務實取捨</span>
+        <h3>先攻熱門 150–300 隻，長尾用 canonical / noindex 收掉</h3></div>
+      <div>
+        <p>較新的小站，Google 不會把 1079 個薄近重複頁全收，硬推還可能被當成 doorway pages。先鎖定大家真的會搜的
+           熱門／當期 meta 寶可夢，給它們豐富獨特內容衝收錄；長尾先收斂。品質 &gt; 數量。</p>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="rank">5</div>
+      <div><span class="badge b-med">收尾</span>
+        <h3>技術面檢查（你已做對大半）</h3></div>
+      <div>
+        <p>canonical 與 sitemap 的編碼一致 ✓、站內有真實 <code>&lt;a&gt;</code> 連到每頁（相關寶可夢）✓。
+           剩下寫死在原始 HTML 第 17 行、指向首頁的 canonical，對深連結仍是風險 —— 最乾淨的解法還是第 2 項的靜態化。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b>一句話總結：</b>你把 canonical、sitemap、站內連結都做對了，卡點不是「標記」而是「內容」。
+      讓每頁多幾句真正因寶可夢而異的敘述（第 1 項），再把它寫進靜態 HTML（第 2 項），這個狀態就會逐步消失。
+    </div>
+  </section>
+
+  <p class="foot">相似度以各頁實際渲染文字重建計算：整頁重疊率含共用外框；分布與熱力圖採 CP 表區塊的 5 字片段
+     Jaccard（MinHash 128 估計）。資料來源：<span class="num">precomputed_pokemon_cp.js</span>、<span class="num">index.html</span>。</p>
+</div>
+
+<div id="tip"></div>
+
+<script>
+const D = {"N": 1079, "chrome": 4642, "template": 415, "unique": 554, "real": 0.9013, "twin70": 121, "twin80": 83, "twin90": 55, "identical": 1079, "hist": {"edges": [0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0], "counts": [0, 17, 146, 263, 237, 162, 87, 46, 18, 20, 7, 21, 43, 12]}, "heat": [[1.0, 0.328, 0.336, 0.367, 0.336, 0.273, 0.367, 0.328, 0.312, 0.312, 0.312, 0.32, 0.297, 0.32, 0.336, 0.336, 0.367, 0.312, 0.305, 0.359, 0.344, 0.328, 0.328, 0.344, 0.32, 0.305, 0.305, 0.32, 0.375, 0.391, 0.305, 0.344, 0.32, 0.406, 0.328, 0.367, 0.438, 0.312, 0.438, 0.297], [0.328, 1.0, 0.32, 0.344, 0.32, 0.258, 0.297, 0.32, 0.32, 0.305, 0.312, 0.281, 0.312, 0.281, 0.328, 0.305, 0.312, 0.297, 0.289, 0.344, 0.305, 0.297, 0.305, 0.312, 0.312, 0.273, 0.289, 0.328, 0.328, 0.289, 0.25, 0.305, 0.242, 0.352, 0.297, 0.297, 0.32, 0.305, 0.289, 0.266], [0.336, 0.32, 1.0, 0.305, 0.352, 0.297, 0.336, 0.32, 0.383, 0.359, 0.336, 0.312, 0.344, 0.32, 0.352, 0.336, 0.328, 0.367, 0.297, 0.336, 0.32, 0.367, 0.367, 0.336, 0.312, 0.32, 0.359, 0.344, 0.312, 0.328, 0.359, 0.398, 0.289, 0.406, 0.398, 0.352, 0.375, 0.391, 0.32, 0.391], [0.367, 0.344, 0.305, 1.0, 0.336, 0.258, 0.391, 0.32, 0.32, 0.305, 0.32, 0.352, 0.352, 0.305, 0.328, 0.336, 0.352, 0.305, 0.297, 0.359, 0.312, 0.344, 0.305, 0.383, 0.352, 0.391, 0.289, 0.328, 0.375, 0.352, 0.273, 0.344, 0.297, 0.375, 0.344, 0.359, 0.383, 0.32, 0.328, 0.273], [0.336, 0.32, 0.352, 0.336, 1.0, 0.289, 0.391, 0.312, 0.305, 0.375, 0.359, 0.367, 0.32, 0.352, 0.391, 0.32, 0.367, 0.344, 0.312, 0.359, 0.359, 0.336, 0.328, 0.367, 0.312, 0.344, 0.32, 0.359, 0.359, 0.359, 0.289, 0.328, 0.297, 0.391, 0.344, 0.375, 0.375, 0.32, 0.375, 0.32], [0.273, 0.258, 0.297, 0.258, 0.289, 1.0, 0.281, 0.258, 0.266, 0.336, 0.273, 0.234, 0.281, 0.273, 0.258, 0.266, 0.242, 0.289, 0.258, 0.258, 0.289, 0.258, 0.25, 0.273, 0.289, 0.266, 0.273, 0.266, 0.25, 0.234, 0.297, 0.297, 0.25, 0.289, 0.305, 0.266, 0.32, 0.344, 0.25, 0.289], [0.367, 0.297, 0.336, 0.391, 0.391, 0.281, 1.0, 0.281, 0.305, 0.359, 0.344, 0.336, 0.375, 0.352, 0.352, 0.328, 0.336, 0.344, 0.297, 0.32, 0.336, 0.32, 0.336, 0.406, 0.312, 0.391, 0.336, 0.359, 0.367, 0.336, 0.305, 0.367, 0.352, 0.398, 0.359, 0.391, 0.414, 0.352, 0.359, 0.312], [0.328, 0.32, 0.32, 0.32, 0.312, 0.258, 0.281, 1.0, 0.266, 0.312, 0.305, 0.289, 0.281, 0.281, 0.344, 0.266, 0.32, 0.344, 0.273, 0.336, 0.336, 0.266, 0.32, 0.328, 0.281, 0.297, 0.281, 0.297, 0.297, 0.289, 0.273, 0.305, 0.234, 0.367, 0.297, 0.297, 0.336, 0.281, 0.289, 0.273], [0.312, 0.32, 0.383, 0.32, 0.305, 0.266, 0.305, 0.266, 1.0, 0.289, 0.344, 0.312, 0.328, 0.289, 0.312, 0.289, 0.305, 0.312, 0.266, 0.289, 0.305, 0.312, 0.32, 0.32, 0.312, 0.289, 0.344, 0.367, 0.32, 0.289, 0.344, 0.375, 0.273, 0.328, 0.438, 0.312, 0.344, 0.391, 0.273, 0.406], [0.312, 0.305, 0.359, 0.305, 0.375, 0.336, 0.359, 0.312, 0.289, 1.0, 0.344, 0.297, 0.398, 0.43, 0.328, 0.305, 0.297, 0.344, 0.336, 0.312, 0.336, 0.328, 0.312, 0.352, 0.273, 0.336, 0.312, 0.305, 0.289, 0.281, 0.297, 0.352, 0.305, 0.352, 0.336, 0.352, 0.352, 0.367, 0.344, 0.297], [0.312, 0.312, 0.336, 0.32, 0.359, 0.273, 0.344, 0.305, 0.344, 0.344, 1.0, 0.297, 0.383, 0.367, 0.359, 0.312, 0.336, 0.32, 0.32, 0.336, 0.281, 0.32, 0.352, 0.336, 0.297, 0.289, 0.297, 0.328, 0.328, 0.289, 0.281, 0.344, 0.297, 0.383, 0.328, 0.367, 0.352, 0.336, 0.328, 0.305], [0.32, 0.281, 0.312, 0.352, 0.367, 0.234, 0.336, 0.289, 0.312, 0.297, 0.297, 1.0, 0.297, 0.297, 0.367, 0.281, 0.305, 0.305, 0.258, 0.336, 0.305, 0.273, 0.281, 0.328, 0.336, 0.266, 0.32, 0.336, 0.312, 0.305, 0.25, 0.352, 0.258, 0.344, 0.32, 0.336, 0.352, 0.281, 0.305, 0.281], [0.297, 0.312, 0.344, 0.352, 0.32, 0.281, 0.375, 0.281, 0.328, 0.398, 0.383, 0.297, 1.0, 0.344, 0.305, 0.375, 0.297, 0.312, 0.289, 0.305, 0.289, 0.336, 0.297, 0.336, 0.297, 0.281, 0.312, 0.297, 0.312, 0.289, 0.289, 0.383, 0.258, 0.336, 0.312, 0.352, 0.359, 0.328, 0.289, 0.328], [0.32, 0.281, 0.32, 0.305, 0.352, 0.273, 0.352, 0.281, 0.289, 0.43, 0.367, 0.297, 0.344, 1.0, 0.312, 0.305, 0.297, 0.305, 0.297, 0.297, 0.281, 0.297, 0.281, 0.336, 0.273, 0.297, 0.297, 0.273, 0.273, 0.289, 0.305, 0.305, 0.297, 0.352, 0.312, 0.312, 0.32, 0.32, 0.328, 0.281], [0.336, 0.328, 0.352, 0.328, 0.391, 0.258, 0.352, 0.344, 0.312, 0.328, 0.359, 0.367, 0.305, 0.312, 1.0, 0.266, 0.312, 0.359, 0.312, 0.359, 0.359, 0.297, 0.375, 0.336, 0.359, 0.273, 0.336, 0.375, 0.336, 0.344, 0.289, 0.344, 0.281, 0.398, 0.32, 0.312, 0.375, 0.32, 0.344, 0.305], [0.336, 0.305, 0.336, 0.336, 0.32, 0.266, 0.328, 0.266, 0.289, 0.305, 0.312, 0.281, 0.375, 0.305, 0.266, 1.0, 0.312, 0.266, 0.375, 0.312, 0.273, 0.344, 0.273, 0.297, 0.258, 0.281, 0.305, 0.297, 0.32, 0.312, 0.266, 0.305, 0.312, 0.312, 0.281, 0.398, 0.352, 0.297, 0.297, 0.281], [0.367, 0.312, 0.328, 0.352, 0.367, 0.242, 0.336, 0.32, 0.305, 0.297, 0.336, 0.305, 0.297, 0.297, 0.312, 0.312, 1.0, 0.297, 0.266, 0.352, 0.281, 0.305, 0.281, 0.328, 0.289, 0.32, 0.273, 0.289, 0.367, 0.383, 0.258, 0.289, 0.297, 0.391, 0.32, 0.344, 0.406, 0.305, 0.352, 0.281], [0.312, 0.297, 0.367, 0.305, 0.344, 0.289, 0.344, 0.344, 0.312, 0.344, 0.32, 0.305, 0.312, 0.305, 0.359, 0.266, 0.297, 1.0, 0.297, 0.336, 0.344, 0.312, 0.367, 0.352, 0.375, 0.281, 0.32, 0.359, 0.32, 0.312, 0.328, 0.398, 0.273, 0.359, 0.352, 0.336, 0.344, 0.352, 0.297, 0.352], [0.305, 0.289, 0.297, 0.297, 0.312, 0.258, 0.297, 0.273, 0.266, 0.336, 0.32, 0.258, 0.289, 0.297, 0.312, 0.375, 0.266, 0.297, 1.0, 0.289, 0.297, 0.344, 0.273, 0.312, 0.273, 0.258, 0.273, 0.297, 0.312, 0.289, 0.289, 0.305, 0.359, 0.344, 0.281, 0.375, 0.336, 0.273, 0.297, 0.273], [0.359, 0.344, 0.336, 0.359, 0.359, 0.258, 0.32, 0.336, 0.289, 0.312, 0.336, 0.336, 0.305, 0.297, 0.359, 0.312, 0.352, 0.336, 0.289, 1.0, 0.336, 0.336, 0.312, 0.32, 0.281, 0.273, 0.312, 0.344, 0.352, 0.336, 0.336, 0.367, 0.312, 0.391, 0.305, 0.344, 0.367, 0.312, 0.32, 0.32], [0.344, 0.305, 0.32, 0.312, 0.359, 0.289, 0.336, 0.336, 0.305, 0.336, 0.281, 0.305, 0.289, 0.281, 0.359, 0.273, 0.281, 0.344, 0.297, 0.336, 1.0, 0.266, 0.32, 0.336, 0.336, 0.305, 0.305, 0.32, 0.32, 0.312, 0.281, 0.312, 0.289, 0.352, 0.32, 0.305, 0.359, 0.328, 0.305, 0.312], [0.328, 0.297, 0.367, 0.344, 0.336, 0.258, 0.32, 0.266, 0.312, 0.328, 0.32, 0.273, 0.336, 0.297, 0.297, 0.344, 0.305, 0.312, 0.344, 0.336, 0.266, 1.0, 0.297, 0.32, 0.297, 0.312, 0.266, 0.312, 0.289, 0.289, 0.289, 0.32, 0.359, 0.352, 0.289, 0.391, 0.344, 0.281, 0.328, 0.289], [0.328, 0.305, 0.367, 0.305, 0.328, 0.25, 0.336, 0.32, 0.32, 0.312, 0.352, 0.281, 0.297, 0.281, 0.375, 0.273, 0.281, 0.367, 0.273, 0.312, 0.32, 0.297, 1.0, 0.312, 0.336, 0.305, 0.32, 0.359, 0.312, 0.305, 0.305, 0.367, 0.281, 0.383, 0.375, 0.305, 0.328, 0.375, 0.289, 0.305], [0.344, 0.312, 0.336, 0.383, 0.367, 0.273, 0.406, 0.328, 0.32, 0.352, 0.336, 0.328, 0.336, 0.336, 0.336, 0.297, 0.328, 0.352, 0.312, 0.32, 0.336, 0.32, 0.312, 1.0, 0.32, 0.406, 0.289, 0.359, 0.32, 0.312, 0.297, 0.352, 0.305, 0.383, 0.344, 0.367, 0.367, 0.336, 0.328, 0.297], [0.32, 0.312, 0.312, 0.352, 0.312, 0.289, 0.312, 0.281, 0.312, 0.273, 0.297, 0.336, 0.297, 0.273, 0.359, 0.258, 0.289, 0.375, 0.273, 0.281, 0.336, 0.297, 0.336, 0.32, 1.0, 0.297, 0.328, 0.352, 0.352, 0.273, 0.289, 0.336, 0.289, 0.352, 0.305, 0.336, 0.328, 0.305, 0.273, 0.32], [0.305, 0.273, 0.32, 0.391, 0.344, 0.266, 0.391, 0.297, 0.289, 0.336, 0.289, 0.266, 0.281, 0.297, 0.273, 0.281, 0.32, 0.281, 0.258, 0.273, 0.305, 0.312, 0.305, 0.406, 0.297, 1.0, 0.266, 0.305, 0.312, 0.305, 0.266, 0.312, 0.281, 0.352, 0.328, 0.352, 0.312, 0.336, 0.359, 0.273], [0.305, 0.289, 0.359, 0.289, 0.32, 0.273, 0.336, 0.281, 0.344, 0.312, 0.297, 0.32, 0.312, 0.297, 0.336, 0.305, 0.273, 0.32, 0.273, 0.312, 0.305, 0.266, 0.32, 0.289, 0.328, 0.266, 1.0, 0.336, 0.328, 0.312, 0.344, 0.359, 0.273, 0.32, 0.375, 0.289, 0.391, 0.383, 0.273, 0.352], [0.32, 0.328, 0.344, 0.328, 0.359, 0.266, 0.359, 0.297, 0.367, 0.305, 0.328, 0.336, 0.297, 0.273, 0.375, 0.297, 0.289, 0.359, 0.297, 0.344, 0.32, 0.312, 0.359, 0.359, 0.352, 0.305, 0.336, 1.0, 0.328, 0.273, 0.289, 0.391, 0.297, 0.359, 0.352, 0.359, 0.344, 0.336, 0.289, 0.352], [0.375, 0.328, 0.312, 0.375, 0.359, 0.25, 0.367, 0.297, 0.32, 0.289, 0.328, 0.312, 0.312, 0.273, 0.336, 0.32, 0.367, 0.32, 0.312, 0.352, 0.32, 0.289, 0.312, 0.32, 0.352, 0.312, 0.328, 0.328, 1.0, 0.391, 0.32, 0.352, 0.336, 0.492, 0.328, 0.344, 0.391, 0.336, 0.344, 0.297], [0.391, 0.289, 0.328, 0.352, 0.359, 0.234, 0.336, 0.289, 0.289, 0.281, 0.289, 0.305, 0.289, 0.289, 0.344, 0.312, 0.383, 0.312, 0.289, 0.336, 0.312, 0.289, 0.305, 0.312, 0.273, 0.305, 0.312, 0.273, 0.391, 1.0, 0.289, 0.328, 0.281, 0.406, 0.312, 0.336, 0.406, 0.336, 0.414, 0.281], [0.305, 0.25, 0.359, 0.273, 0.289, 0.297, 0.305, 0.273, 0.344, 0.297, 0.281, 0.25, 0.289, 0.305, 0.289, 0.266, 0.258, 0.328, 0.289, 0.336, 0.281, 0.289, 0.305, 0.297, 0.289, 0.266, 0.344, 0.289, 0.32, 0.289, 1.0, 0.367, 0.25, 0.336, 0.367, 0.328, 0.336, 0.383, 0.266, 0.391], [0.344, 0.305, 0.398, 0.344, 0.328, 0.297, 0.367, 0.305, 0.375, 0.352, 0.344, 0.352, 0.383, 0.305, 0.344, 0.305, 0.289, 0.398, 0.305, 0.367, 0.312, 0.32, 0.367, 0.352, 0.336, 0.312, 0.359, 0.391, 0.352, 0.328, 0.367, 1.0, 0.289, 0.391, 0.406, 0.344, 0.375, 0.406, 0.32, 0.383], [0.32, 0.242, 0.289, 0.297, 0.297, 0.25, 0.352, 0.234, 0.273, 0.305, 0.297, 0.258, 0.258, 0.297, 0.281, 0.312, 0.297, 0.273, 0.359, 0.312, 0.289, 0.359, 0.281, 0.305, 0.289, 0.281, 0.273, 0.297, 0.336, 0.281, 0.25, 0.289, 1.0, 0.375, 0.273, 0.367, 0.359, 0.312, 0.297, 0.281], [0.406, 0.352, 0.406, 0.375, 0.391, 0.289, 0.398, 0.367, 0.328, 0.352, 0.383, 0.344, 0.336, 0.352, 0.398, 0.312, 0.391, 0.359, 0.344, 0.391, 0.352, 0.352, 0.383, 0.383, 0.352, 0.352, 0.32, 0.359, 0.492, 0.406, 0.336, 0.391, 0.375, 1.0, 0.367, 0.406, 0.438, 0.398, 0.43, 0.359], [0.328, 0.297, 0.398, 0.344, 0.344, 0.305, 0.359, 0.297, 0.438, 0.336, 0.328, 0.32, 0.312, 0.312, 0.32, 0.281, 0.32, 0.352, 0.281, 0.305, 0.32, 0.289, 0.375, 0.344, 0.305, 0.328, 0.375, 0.352, 0.328, 0.312, 0.367, 0.406, 0.273, 0.367, 1.0, 0.336, 0.344, 0.43, 0.336, 0.352], [0.367, 0.297, 0.352, 0.359, 0.375, 0.266, 0.391, 0.297, 0.312, 0.352, 0.367, 0.336, 0.352, 0.312, 0.312, 0.398, 0.344, 0.336, 0.375, 0.344, 0.305, 0.391, 0.305, 0.367, 0.336, 0.352, 0.289, 0.359, 0.344, 0.336, 0.328, 0.344, 0.367, 0.406, 0.336, 1.0, 0.375, 0.305, 0.359, 0.32], [0.438, 0.32, 0.375, 0.383, 0.375, 0.32, 0.414, 0.336, 0.344, 0.352, 0.352, 0.352, 0.359, 0.32, 0.375, 0.352, 0.406, 0.344, 0.336, 0.367, 0.359, 0.344, 0.328, 0.367, 0.328, 0.312, 0.391, 0.344, 0.391, 0.406, 0.336, 0.375, 0.359, 0.438, 0.344, 0.375, 1.0, 0.367, 0.367, 0.344], [0.312, 0.305, 0.391, 0.32, 0.32, 0.344, 0.352, 0.281, 0.391, 0.367, 0.336, 0.281, 0.328, 0.32, 0.32, 0.297, 0.305, 0.352, 0.273, 0.312, 0.328, 0.281, 0.375, 0.336, 0.305, 0.336, 0.383, 0.336, 0.336, 0.336, 0.383, 0.406, 0.312, 0.398, 0.43, 0.305, 0.367, 1.0, 0.312, 0.359], [0.438, 0.289, 0.32, 0.328, 0.375, 0.25, 0.359, 0.289, 0.273, 0.344, 0.328, 0.305, 0.289, 0.328, 0.344, 0.297, 0.352, 0.297, 0.297, 0.32, 0.305, 0.328, 0.289, 0.328, 0.273, 0.359, 0.273, 0.289, 0.344, 0.414, 0.266, 0.32, 0.297, 0.43, 0.336, 0.359, 0.367, 0.312, 1.0, 0.289], [0.297, 0.266, 0.391, 0.273, 0.32, 0.289, 0.312, 0.273, 0.406, 0.297, 0.305, 0.281, 0.328, 0.281, 0.305, 0.281, 0.281, 0.352, 0.273, 0.32, 0.312, 0.289, 0.305, 0.297, 0.32, 0.273, 0.352, 0.352, 0.297, 0.281, 0.391, 0.383, 0.281, 0.359, 0.352, 0.32, 0.344, 0.359, 0.289, 1.0]], "heatNames": ["妙蛙種子", "妙蛙草", "妙蛙花", "小火龍", "火恐龍", "噴火龍", "傑尼龜", "卡咪龜", "水箭龜", "綠毛蟲", "鐵甲蛹", "巴大蝶", "獨角蟲", "鐵殼蛹", "大針蜂", "波波", "比比鳥", "大比鳥", "小拉達", "拉達 (阿羅拉形態)", "拉達", "烈雀", "大嘴雀", "阿柏蛇", "阿柏怪", "皮卡丘", "雷丘 (阿羅拉形態)", "雷丘", "穿山鼠 (阿羅拉形態)", "穿山鼠", "穿山王 (阿羅拉形態)", "穿山王", "尼多蘭", "尼多娜", "尼多后", "尼多朗", "尼多力諾", "尼多王", "皮皮", "皮可西"]};
+const tip = document.getElementById('tip');
+function showTip(html,e){tip.innerHTML=html;tip.style.opacity=1;moveTip(e);}
+function moveTip(e){const p=12;let x=e.clientX+p,y=e.clientY+p;
+  const r=tip.getBoundingClientRect();
+  if(x+r.width>innerWidth-8)x=e.clientX-r.width-p;
+  if(y+r.height>innerHeight-8)y=e.clientY-r.height-p;
+  tip.style.left=x+'px';tip.style.top=y+'px';}
+function hideTip(){tip.style.opacity=0;}
+const NS='http://www.w3.org/2000/svg';
+function el(n,a){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function css(v){return getComputedStyle(document.querySelector('.wrap')).getPropertyValue(v).trim();}
+
+/* ---- FIG 1 composition ---- */
+(function(){
+  const svg=document.getElementById('comp'), W=820,H=96,y=22,h=40,gap=3;
+  const segs=[['共用外框',D.chrome,'--critical'],['共用模板',D.template,'--serious'],['本頁專屬',D.unique,'--good']];
+  const total=segs.reduce((s,x)=>s+x[1],0);
+  let x=0;
+  segs.forEach(([lab,val,c])=>{
+    const w=Math.max(0,(val/total)*(W-2*gap)-(gap));
+    const r=el('rect',{x:x,y:y,width:w,height:h,rx:5,fill:css(c),class:'bar-rect'});
+    r.addEventListener('mousemove',e=>showTip(`<b>${lab}</b><br>${val} 字 · ${(val/total*100).toFixed(1)}%`,e));
+    r.addEventListener('mouseleave',hideTip);
+    svg.appendChild(r);
+    const pct=(val/total*100);
+    if(w>46){svg.appendChild(Object.assign(el('text',{x:x+w/2,y:y+h/2+5,'text-anchor':'middle',
+      fill:'#fff','font-size':'14','font-weight':'700'}),{textContent:pct.toFixed(0)+'%'}));}
+    x+=w+gap;
+  });
+  const axy=y+h+22;
+  const t=el('text',{x:0,y:axy,fill:css('--muted'),'font-size':'12.5'});
+  t.textContent=`一頁共約 ${total} 字可見文字，其中 ${((D.chrome+D.template)/total*100).toFixed(0)}% 在每個網址上都一樣`;
+  svg.appendChild(t);
+})();
+
+/* ---- FIG 2 histogram ---- */
+(function(){
+  const svg=document.getElementById('hist'), W=820,H=300;
+  const mL=44,mR=16,mT=16,mB=48, pw=W-mL-mR, ph=H-mT-mB;
+  const edges=D.hist.edges, counts=D.hist.counts, n=counts.length;
+  const maxC=Math.max(...counts);
+  const ramp=['--b1','--b2','--b3','--b4','--b5','--b6','--b7'].map(css);
+  const bw=pw/n;
+  // y grid + ticks
+  const ticks=4;
+  for(let i=0;i<=ticks;i++){
+    const val=Math.round(maxC/ticks*i), yy=mT+ph-(val/maxC)*ph;
+    svg.appendChild(el('line',{x1:mL,y1:yy,x2:W-mR,y2:yy,stroke:css('--grid'),'stroke-width':1}));
+    svg.appendChild(Object.assign(el('text',{x:mL-8,y:yy+4,'text-anchor':'end',fill:css('--muted'),'font-size':'11'}),{textContent:val}));
+  }
+  // danger zone >=0.70
+  const zx=mL + ((0.70-edges[0])/(edges[n]-edges[0]))*pw;
+  svg.appendChild(el('rect',{x:zx,y:mT,width:(W-mR)-zx,height:ph,fill:css('--critical'),opacity:.06}));
+  svg.appendChild(Object.assign(el('text',{x:(zx+(W-mR))/2,y:mT+16,'text-anchor':'middle',
+    fill:css('--critical'),'font-size':'11.5','font-weight':'700'}),{textContent:'近重複風險區 ≥70%'}));
+  // bars
+  counts.forEach((c,i)=>{
+    const bh=(c/maxC)*ph, x=mL+i*bw, y=mT+ph-bh;
+    const mid=(edges[i]+edges[i+1])/2;
+    const ci=Math.min(ramp.length-1, Math.floor((mid-0.30)/(1.0-0.30)*ramp.length));
+    const r=el('rect',{x:x+2,y:y,width:bw-4,height:Math.max(bh,c>0?2:0),rx:3,fill:ramp[ci],class:'bar-rect'});
+    r.addEventListener('mousemove',e=>showTip(`相似度 ${(edges[i]*100).toFixed(0)}–${(edges[i+1]*100).toFixed(0)}%<br><b>${c}</b> 頁`,e));
+    r.addEventListener('mouseleave',hideTip);
+    svg.appendChild(r);
+    if(i%2===0){svg.appendChild(Object.assign(el('text',{x:x+bw/2,y:H-mB+18,'text-anchor':'middle',
+      fill:css('--muted'),'font-size':'11'}),{textContent:(edges[i]*100).toFixed(0)+'%'}));}
+  });
+  svg.appendChild(el('line',{x1:mL,y1:mT+ph,x2:W-mR,y2:mT+ph,stroke:css('--axis'),'stroke-width':1}));
+  svg.appendChild(Object.assign(el('text',{x:mL,y:H-8,fill:css('--muted'),'font-size':'11.5'}),{textContent:'← 較獨特'}));
+  svg.appendChild(Object.assign(el('text',{x:W-mR,y:H-8,'text-anchor':'end',fill:css('--muted'),'font-size':'11.5'}),{textContent:'幾乎相同 →'}));
+})();
+
+/* ---- FIG 3 heatmap ---- */
+(function(){
+  const svg=document.getElementById('heat');
+  const m=D.heat, names=D.heatNames, S=m.length;
+  const cell=15, pad=1, W=S*(cell+pad)+pad, H=W;
+  svg.setAttribute('width',W); svg.setAttribute('height',H);
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const ramp=['--b1','--b2','--b3','--b4','--b5','--b6','--b7'].map(css);
+  function colOf(v){ if(v<=0)return css('--surface');
+    const idx=Math.min(ramp.length-1,Math.floor(v*ramp.length)); return ramp[idx];}
+  for(let i=0;i<S;i++)for(let j=0;j<S;j++){
+    const v=m[i][j];
+    const r=el('rect',{x:pad+j*(cell+pad),y:pad+i*(cell+pad),width:cell,height:cell,rx:2,
+      fill: i===j? css('--b7') : colOf(v), class:'cell'});
+    r.addEventListener('mousemove',e=>showTip(`<b>${names[i]}</b> × <b>${names[j]}</b><br>相似度 ${(v*100).toFixed(0)}%`,e));
+    r.addEventListener('mouseleave',hideTip);
+    svg.appendChild(r);
+  }
+  // legend gradient
+  const lg=document.getElementById('heatlegend');
+  const steps=ramp.map(c=>`<i class="sw" style="background:${c}"></i>`).join('');
+  lg.innerHTML=`<span style="gap:2px">低 ${steps} 高</span><span style="color:var(--muted)">對角線與亮塊＝同系列／同隻不同形態</span>`;
+})();
+</script>

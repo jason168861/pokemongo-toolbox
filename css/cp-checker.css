@@ -244,6 +244,62 @@
 #cp-checker-app .lv-table tr.key-lv td { background: #eef7f1; }
 #cp-checker-app .lv-table tr.bb-lv th,
 #cp-checker-app .lv-table tr.bb-lv td { background: #fff7e8; }
+/* --- 單隻寶可夢深入介紹（屬性/定位/招式/PvP）：目前僅烈空坐，用於收錄測試 --- */
+#cp-checker-app .mon-detail {
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid #dddfe2;
+}
+#cp-checker-app .mon-detail h2 {
+    font-size: 20px;
+    margin: 22px 0 10px;
+    color: #1c1e21;
+}
+#cp-checker-app .mon-detail h2:first-child { margin-top: 0; }
+#cp-checker-app .mon-detail-lead,
+#cp-checker-app .mon-detail-note {
+    color: #3a3b3c;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0 0 12px;
+}
+#cp-checker-app .mon-detail-note { color: #606770; font-size: 13px; }
+#cp-checker-app .mon-detail strong { color: #1c1e21; font-weight: 700; }
+/* 屬性剋制 chips */
+#cp-checker-app .mon-matchup { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 12px; }
+#cp-checker-app .mm-group { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+#cp-checker-app .mm-label {
+    flex: none; font-size: 13px; font-weight: 700; color: #606770;
+    width: 44px;
+}
+#cp-checker-app .mm-chip {
+    font-size: 13px; font-weight: 600; padding: 5px 11px; border-radius: 9px;
+    display: inline-flex; align-items: center; gap: 6px;
+}
+#cp-checker-app .mm-chip em { font-style: normal; font-size: 11.5px; opacity: .85; font-variant-numeric: tabular-nums; }
+#cp-checker-app .mm-chip.wk  { background: #fdecec; color: #c5221f; }
+#cp-checker-app .mm-chip.wk.dbl { background: #f9d5d3; color: #a50e0e; font-weight: 800; }
+#cp-checker-app .mm-chip.rs  { background: #e7f5ec; color: #1e7e46; }
+/* 推薦招式 */
+#cp-checker-app .mon-moves { list-style: none; margin: 4px 0 6px; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+#cp-checker-app .mon-moves li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+#cp-checker-app .mon-moves .mv-k { flex: none; width: 78px; font-size: 12.5px; font-weight: 700; color: #606770; }
+#cp-checker-app .mon-moves .mv-v { font-size: 14px; color: #1c1e21; }
+#cp-checker-app .mon-moves .mv-v b { color: #1877f2; }
+#cp-checker-app .mon-moves .mv-v em { font-style: normal; font-size: 12px; color: #d97706; font-weight: 700; }
+/* PvP 聯盟條 */
+#cp-checker-app .mon-league { display: grid; gap: 10px; margin: 6px 0 4px; }
+#cp-checker-app .ml-row { display: grid; grid-template-columns: 76px 1fr auto; gap: 12px; align-items: center; }
+#cp-checker-app .ml-name { font-size: 13.5px; font-weight: 600; color: #1c1e21; }
+#cp-checker-app .ml-bar { height: 9px; background: #e9ebee; border-radius: 999px; overflow: hidden; }
+#cp-checker-app .ml-bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #1877f2, #4aa3e8); }
+#cp-checker-app .ml-rk { font-size: 12.5px; color: #606770; font-variant-numeric: tabular-nums; white-space: nowrap; }
+#cp-checker-app .ml-rk b { color: #1c1e21; font-size: 13.5px; }
+@media (max-width: 480px) {
+    #cp-checker-app .ml-row { grid-template-columns: 64px 1fr; }
+    #cp-checker-app .ml-rk { grid-column: 2; text-align: right; }
+}
+
 /* --- 站內連結：卡片標題與「相關寶可夢」 ---
    這些是真的 <a href>（給 Google 爬），但點擊被攔下來走即時篩選，
    所以樣式上刻意收斂一點，不要看起來像會跳走的外部連結。 */

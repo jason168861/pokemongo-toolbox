@@ -127,6 +127,65 @@ export function initializeCpChecker() {
                 </nav>`;
     }
 
+    // ---- 單隻寶可夢的深入介紹（屬性剋制／定位／招式／PvP）---------------------
+    // 目前只做「烈空坐」一隻，用來測試：加入這種「因寶可夢而異」的敘述文字後，
+    // 這一頁能不能從「替代頁面（重複內容）」變成被 Google 正式收錄。
+    // 確認有效後再改成用 POKEDEX/rankings 資料自動生成全部 1079 頁。
+    // 資料為 Pokémon GO 現況（龍／飛行；招式、PvP 名次取自站內 rankings）。
+    const MON_DETAILS = {
+        '烈空坐': (p) => {
+            const cp40 = cpAt(p, 40, 15), cp50 = cpAt(p, 50, 15);
+            return `
+            <section class="mon-detail" aria-label="烈空坐 深入介紹">
+              <h2>烈空坐 屬性與剋制</h2>
+              <p class="mon-detail-lead">烈空坐是<strong>龍／飛行</strong>屬性。這個組合對冰系有<strong>雙重弱點</strong>——
+                 兩種屬性都被冰剋，用冰系招式打牠傷害最高（約 ×2.56）。此外也怕岩石、龍、妖精（各 ×1.6）。</p>
+              <div class="mon-matchup">
+                <div class="mm-group">
+                  <span class="mm-label">弱點</span>
+                  <span class="mm-chip wk dbl">冰 <em>×2.56</em></span>
+                  <span class="mm-chip wk">岩石 <em>×1.6</em></span>
+                  <span class="mm-chip wk">龍 <em>×1.6</em></span>
+                  <span class="mm-chip wk">妖精 <em>×1.6</em></span>
+                </div>
+                <div class="mm-group">
+                  <span class="mm-label">抗性</span>
+                  <span class="mm-chip rs">地面 <em>免疫 ×0.39</em></span>
+                  <span class="mm-chip rs">草 <em>×0.39</em></span>
+                  <span class="mm-chip rs">火 <em>×0.63</em></span>
+                  <span class="mm-chip rs">水 <em>×0.63</em></span>
+                  <span class="mm-chip rs">格鬥 <em>×0.63</em></span>
+                  <span class="mm-chip rs">蟲 <em>×0.63</em></span>
+                </div>
+              </div>
+              <p class="mon-detail-note">天氣為<strong>刮風</strong>時，烈空坐的龍系與飛行系招式都會得到加成，野外遇到時 CP 也較高。</p>
+
+              <h2>烈空坐 角色定位與推薦招式</h2>
+              <p class="mon-detail-lead">以 284 的基礎攻擊，烈空坐是遊戲中最強的龍系攻擊手之一，屬於典型的
+                 <strong>高攻低防「玻璃大砲」</strong>（防禦僅 170）。牠是<strong>五星傳說團體戰頭目</strong>，可捕獲且有異色（閃光）版本，
+                 滿 IV 最大 CP 為 <strong>L40 ${cp40}</strong>、<strong>L50 ${cp50}</strong>。主要價值在團體戰爆發輸出，
+                 尤其面對其他龍系對手（如快龍、暴飛龍、烈咬陸鯊）時。</p>
+              <ul class="mon-moves">
+                <li><span class="mv-k">團體戰輸出</span><span class="mv-v">龍尾 ＋ <b>畫龍點睛</b>（招牌絕招，龍系爆發最高）</span></li>
+                <li><span class="mv-k">對戰 PvP</span><span class="mv-v">龍尾 ＋ 廣域破壞／畫龍點睛 <em>（皆為菁英招式）</em></span></li>
+                <li><span class="mv-k">好友距離</span><span class="mv-v">20 公里</span></li>
+              </ul>
+
+              <h2>烈空坐 對戰聯盟表現</h2>
+              <p class="mon-detail-lead">烈空坐在對戰中更適合<strong>大師聯盟</strong>（不需壓 CP）；在超級與特級聯盟因體質偏脆、CP 又常超標，表現只算普通。</p>
+              <div class="mon-league">
+                <div class="ml-row"><span class="ml-name">大師聯盟</span><span class="ml-bar"><i style="width:76%"></i></span><span class="ml-rk"><b>#96</b> / 405 · 76.3 分</span></div>
+                <div class="ml-row"><span class="ml-name">超級聯盟</span><span class="ml-bar"><i style="width:43%"></i></span><span class="ml-rk"><b>#361</b> / 841 · 77.8 分</span></div>
+                <div class="ml-row"><span class="ml-name">特級聯盟</span><span class="ml-bar"><i style="width:39%"></i></span><span class="ml-rk"><b>#445</b> / 1143 · 77.2 分</span></div>
+              </div>
+            </section>`;
+        }
+    };
+    function monDetailHtml(p) {
+        const fn = p && MON_DETAILS[p.name];
+        return fn ? fn(p) : '';
+    }
+
     function renderLevelTable(p) {
         const box = document.getElementById('cpLevelTable');
         if (!box) return;
@@ -159,6 +218,7 @@ export function initializeCpChecker() {
                 Lv${BEST_BUDDY_LEVEL} 為最佳夥伴狀態下的等級上限；一般強化上限為 Lv${MAX_LEVEL}。
                 CP 由 ${p.name} 的基礎數值與各等級的 CP 倍率計算，資料來源為 Pokémon GO GAME_MASTER。
             </p>
+            ${monDetailHtml(p)}
             ${relatedHtml(p)}`;
         box.hidden = false;
     }
