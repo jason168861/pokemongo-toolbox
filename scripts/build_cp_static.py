@@ -41,6 +41,40 @@ def cp_at(p, L, iv):
     m = CPM[L - 1]
     return max(10, int((p["atk"] + iv) * math.sqrt(p["def"] + iv) * math.sqrt(p["sta"] + iv) * m * m / 10))
 
+# ---- 高 IV CP·HP 對照表（IV 100%～91.1%，仿使用者附圖）----
+IV_TABLE_LEVELS = [15, 20, 25, 40]   # 與參考圖一致
+IV_MIN_SUM = 41                       # IV 總和 41/45 = 91.11%
+
+def cp_iv(p, L, a, d, s):
+    m = CPM[L - 1]
+    return max(10, int((p["atk"] + a) * math.sqrt(p["def"] + d) * math.sqrt(p["sta"] + s) * m * m / 10))
+
+def hp_iv(p, L, s):
+    return max(10, int((p["sta"] + s) * CPM[L - 1]))
+
+def build_iv_table(p):
+    combos = []
+    for a in range(15, -1, -1):
+        for d in range(15, -1, -1):
+            for s in range(15, -1, -1):
+                tot = a + d + s
+                if tot >= IV_MIN_SUM:
+                    combos.append((tot, a, d, s, cp_iv(p, 40, a, d, s)))
+    combos.sort(key=lambda c: (-c[0], -c[4]))   # IV% 由高到低，同 IV% 內 CP 由高到低
+    body = ""
+    for tot, a, d, s, _ in combos:
+        pct = tot / 45 * 100
+        cells = "".join(f'<td>{cp_iv(p,L,a,d,s)}</td><td class="hp">{hp_iv(p,L,s)}</td>' for L in IV_TABLE_LEVELS)
+        ivc = (f'<td class="iv v{a}">{a}</td><td class="iv v{d}">{d}</td><td class="iv v{s}">{s}</td>')
+        hundo = ' class="hundo"' if tot == 45 else ''
+        body += f'<tr{hundo}><td class="pct">{pct:.2f}%</td>{ivc}{cells}</tr>'
+    heads1 = "".join(f'<th colspan="2">L{L}</th>' for L in IV_TABLE_LEVELS)
+    heads2 = "".join('<th>CP</th><th>HP</th>' for _ in IV_TABLE_LEVELS)
+    return (f'<table class="iv"><thead>'
+            f'<tr><th rowspan="2">IV%</th><th colspan="3">個體值 攻/防/耐</th>{heads1}</tr>'
+            f'<tr><th>攻</th><th>防</th><th>耐</th>{heads2}</tr>'
+            f'</thead><tbody>{body}</tbody></table>')
+
 def dex_neighbor(pid, step):
     d = pid + step
     while 1 <= d <= 1025:
@@ -149,6 +183,30 @@ ul.moves .v em{font-style:normal;font-size:12px;color:#d97706;font-weight:700}
 .pagefoot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px}
 .pagefoot a{color:var(--muted)}
 @media (max-width:480px){.lrow{grid-template-columns:64px 1fr}.lrk{grid-column:2;text-align:right}}
+/* 高 IV CP·HP 對照表 */
+table.iv{border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:560px}
+table.iv th,table.iv td{border:1px solid #e4e6eb;padding:4px 7px;text-align:right}
+table.iv thead th{background:#f7f8fa;color:var(--ink);font-weight:700;text-align:center}
+table.iv td.pct{text-align:left;color:var(--muted)}
+table.iv tr.hundo td.pct{color:var(--red);font-weight:800}
+table.iv td.hp{color:var(--muted)}
+table.iv td.iv{color:#fff;font-weight:700;text-align:center}
+table.iv td.v15{background:#e63946}
+table.iv td.v14{background:#2b6cb0}
+table.iv td.v13{background:#2f9e57}
+table.iv td.v12{background:#d98324}
+table.iv td.v11{background:#8a8f98}
+table.iv tbody tr:nth-child(even) td:not(.iv){background:#fcfcfd}
+.iv-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:12px;color:var(--muted)}
+.iv-legend span{display:inline-flex;align-items:center;gap:5px}
+.iv-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+/* 浮動搜尋鈕 */
+.fab{position:fixed;right:16px;bottom:16px;z-index:60;display:inline-flex;align-items:center;gap:8px;
+ background:var(--blue);color:#fff;text-decoration:none;font-weight:700;font-size:14px;
+ padding:12px 18px;border-radius:999px;box-shadow:0 6px 18px rgba(24,119,242,.45)}
+.fab:hover{background:#166fe0}
+.fab:active{transform:translateY(1px)}
+@media (max-width:480px){.fab{padding:12px 16px}}
 """
 
 def esc(s): return html.escape(str(s), quote=True)
@@ -170,6 +228,8 @@ def build(name):
         rows += (f'<tr class="{cls.strip()}"><th scope="row">Lv{L}</th>'
                  f'<td class="mx">{cp_at(p,L,15)}</td><td class="mn">{cp_at(p,L,0)}</td>'
                  f'<td class="nt">{note}</td></tr>')
+
+    iv_table = build_iv_table(p)
 
     types_html = "".join(f'<span class="type t{i}">{esc(t)}</span>' for i, t in enumerate(e["types"]))
     weak_html = "".join(f'<span class="chip wk{" dbl" if d else ""}">{esc(t)} <em>{esc(m)}</em></span>'
@@ -260,6 +320,20 @@ def build(name):
   </div>
 
   <div class="card">
+    <h2>{esc(name)} 高 IV CP·HP 對照表（IV 100%～91.1%）</h2>
+    <p class="foot-t" style="margin:0 0 12px">IV 總和最高的 35 種組合（IV% ≥ 91.1%），以及各自在 L15／L20／L25／L40 的 CP 與 HP。
+       攻／防／耐為個體值（0～15）。</p>
+    <div class="tbl-wrap">{iv_table}</div>
+    <div class="iv-legend">
+      <span><i style="background:#e63946"></i>15</span>
+      <span><i style="background:#2b6cb0"></i>14</span>
+      <span><i style="background:#2f9e57"></i>13</span>
+      <span><i style="background:#d98324"></i>12</span>
+      <span><i style="background:#8a8f98"></i>11</span>
+    </div>
+  </div>
+
+  <div class="card">
     <h2>{esc(name)} 屬性與剋制</h2>
     <div class="matchup">
       <div class="mg"><span class="mlab">弱點</span>{weak_html}</div>
@@ -292,6 +366,8 @@ def build(name):
 
   <p class="pagefoot"><a href="../../">Pokémon Go 工具箱</a> · IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢</p>
 </div>
+
+<a class="fab" href="../../?tab=cp-checker-app" aria-label="搜尋其他寶可夢">🔍 <span>搜尋寶可夢</span></a>
 </body>
 </html>"""
 
