@@ -5,7 +5,7 @@
 """
 import os, segno
 
-URL = "https://jason168861.github.io/pokemongo-toolbox/trade-list/"
+URL = "https://pogokit.com/trade-list/"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 out = os.path.join(HERE, "assets", "brand", "qr.png")

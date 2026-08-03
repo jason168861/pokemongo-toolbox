@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let mapAppInitialized = false;
     // 【SEO】每個分頁的標題與描述，切換時動態套用，讓每個 ?tab= 網址在
     // 搜尋結果有各自明確的標題與摘要（而不是全部顯示同一段主頁文字）。
-    const SITE_BASE = 'https://jason168861.github.io/pokemongo-toolbox/';
+    const SITE_BASE = 'https://pogokit.com/';
     const TAB_SEO = {
         'docs-app': {
             title: 'Pokémon Go 工具箱｜IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢',

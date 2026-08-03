@@ -30,7 +30,7 @@ from datetime import date
 from urllib.parse import quote
 from xml.sax.saxutils import escape
 
-SITE = "https://jason168861.github.io/pokemongo-toolbox/"
+SITE = "https://pogokit.com/"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "data", "precomputed_pokemon_cp.js")
 OUT = os.path.join(ROOT, "sitemap-cp.xml")

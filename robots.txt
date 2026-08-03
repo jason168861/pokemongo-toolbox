@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jason168861.github.io/pokemongo-toolbox/sitemap.xml
-Sitemap: https://jason168861.github.io/pokemongo-toolbox/sitemap-cp.xml
+Sitemap: https://pogokit.com/sitemap.xml
+Sitemap: https://pogokit.com/sitemap-cp.xml

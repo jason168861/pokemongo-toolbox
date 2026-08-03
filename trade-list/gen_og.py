@@ -61,7 +61,7 @@ for name in icons:
         break
 
 # 網址(右下)
-url = "jason168861.github.io/pokemongo-toolbox"
+url = "pogokit.com"
 uf = font("arialbd.ttf", 26)
 tw = d.textlength(url, font=uf)
 d.text((W - PAD - tw, 96), url, font=uf, fill=(122, 132, 170))

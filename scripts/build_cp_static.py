@@ -19,7 +19,7 @@ data/pokemon_data_and_rankings.js 的 POKEDEX / rankings 自動生成全部。
 import os, re, math, html, json
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ORIGIN = "https://jason168861.github.io/pokemongo-toolbox"
+ORIGIN = "https://pogokit.com"
 
 # ---- 讀 CP 資料與 CPM ----
 cp_js = open(os.path.join(ROOT, "data", "precomputed_pokemon_cp.js"), encoding="utf-8").read()

@@ -8,23 +8,23 @@
 <title>Pokémon GO Trade List Maker – 交換清單產生器 (Shiny・Forms・Backgrounds)</title>
 <meta name="description" content="Free Pokémon GO trade list generator. Browse every Pokémon combination — shiny, forms, costumes, gender, Dynamax, Gigantamax and special event backgrounds — split them into Looking For / For Trade and export a shareable image. Works in 7 languages. 免費製作寶可夢 GO 交換清單並一鍵匯出圖片。">
 <meta name="keywords" content="Pokemon GO trade list,Pokemon GO trade list maker,Pokemon GO trade list generator,Pokemon GO trading,shiny,costume,form,Dynamax,Gigantamax,background card,trade card,ポケモンGO 交換リスト,포켓몬고 교환 목록,寶可夢GO交換清單,交換清單,交換列表,寶可夢GO交易清單,交易清單,背卡,異色">
-<link rel="canonical" id="canonicalLink" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
-<link rel="alternate" hreflang="x-default" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
-<link rel="alternate" hreflang="en" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=en">
-<link rel="alternate" hreflang="zh-Hant" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=zh">
-<link rel="alternate" hreflang="ja" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=ja">
-<link rel="alternate" hreflang="ko" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=ko">
-<link rel="alternate" hreflang="fr" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=fr">
-<link rel="alternate" hreflang="de" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=de">
-<link rel="alternate" hreflang="es" href="https://jason168861.github.io/pokemongo-toolbox/trade-list/?lang=es">
+<link rel="canonical" id="canonicalLink" href="https://pogokit.com/trade-list/">
+<link rel="alternate" hreflang="x-default" href="https://pogokit.com/trade-list/">
+<link rel="alternate" hreflang="en" href="https://pogokit.com/trade-list/?lang=en">
+<link rel="alternate" hreflang="zh-Hant" href="https://pogokit.com/trade-list/?lang=zh">
+<link rel="alternate" hreflang="ja" href="https://pogokit.com/trade-list/?lang=ja">
+<link rel="alternate" hreflang="ko" href="https://pogokit.com/trade-list/?lang=ko">
+<link rel="alternate" hreflang="fr" href="https://pogokit.com/trade-list/?lang=fr">
+<link rel="alternate" hreflang="de" href="https://pogokit.com/trade-list/?lang=de">
+<link rel="alternate" hreflang="es" href="https://pogokit.com/trade-list/?lang=es">
 <meta name="robots" content="index,follow">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pokémon GO Toolbox">
 <meta property="og:title" content="Pokémon GO Trade List Maker – build & export your trade list">
 <meta property="og:description" content="Browse every Pokémon combination (shiny, forms, costumes, Dynamax, backgrounds), sort into Looking For / For Trade, and export a shareable image. 7 languages, free.">
-<meta property="og:url" content="https://jason168861.github.io/pokemongo-toolbox/trade-list/">
-<meta property="og:image" content="https://jason168861.github.io/pokemongo-toolbox/trade-list/assets/brand/og.png">
+<meta property="og:url" content="https://pogokit.com/trade-list/">
+<meta property="og:image" content="https://pogokit.com/trade-list/assets/brand/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
@@ -38,14 +38,14 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Pokémon GO Trade List Maker – 交換清單產生器">
 <meta name="twitter:description" content="Build a Pokémon GO trade list (shiny, forms, costumes, Dynamax, backgrounds) and export a shareable image. Free, 7 languages.">
-<meta name="twitter:image" content="https://jason168861.github.io/pokemongo-toolbox/trade-list/assets/brand/og.png">
+<meta name="twitter:image" content="https://pogokit.com/trade-list/assets/brand/og.png">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"WebApplication",
   "name":"Pokémon GO Trade List Maker",
   "alternateName":["寶可夢 GO 交換清單產生器","ポケモンGO 交換リストメーカー","포켓몬고 교환 목록 생성기"],
-  "url":"https://jason168861.github.io/pokemongo-toolbox/trade-list/",
+  "url":"https://pogokit.com/trade-list/",
   "applicationCategory":"UtilityApplication",
   "operatingSystem":"Web",
   "browserRequirements":"Requires JavaScript",
@@ -53,7 +53,7 @@
   "isAccessibleForFree":true,
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
   "description":"Free Pokémon GO trade list generator: browse every Pokémon combination (shiny, forms, costumes, gender, Dynamax, Gigantamax, special backgrounds), split into Looking For / For Trade, and export a shareable image in 7 languages.",
-  "isPartOf":{"@type":"WebSite","name":"Pokémon GO Toolbox","url":"https://jason168861.github.io/pokemongo-toolbox/"}
+  "isPartOf":{"@type":"WebSite","name":"Pokémon GO Toolbox","url":"https://pogokit.com/"}
 }
 </script>
 <style>
@@ -583,7 +583,7 @@ function detectLang(){
 }
 // ?lang= 獨立網址 + hreflang:每個語言變體有自己的網址與自我參照 canonical
 const HREFLANG={zh:'zh-Hant',en:'en',ja:'ja',ko:'ko',fr:'fr',de:'de',es:'es'};
-const BASEURL='https://jason168861.github.io/pokemongo-toolbox/trade-list/';
+const BASEURL='https://pogokit.com/trade-list/';
 function syncLangMeta(lang, isVariant){
   document.documentElement.lang=HREFLANG[lang]||'en';
   const c=document.getElementById('canonicalLink');
