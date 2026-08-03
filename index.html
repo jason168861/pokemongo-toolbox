@@ -381,10 +381,14 @@
                 <!-- CP 反查 IV：鎖定單一寶可夢時，輸入 CP（可選 HP）列出所有可能的等級與 IV 組合 -->
                 <section id="cpReverse" class="cp-reverse" hidden>
                     <h2 id="cpReverseTitle">CP 反查 IV 組合</h2>
-                    <p class="cp-reverse-hint">輸入這隻寶可夢目前的 <strong>CP</strong>（可再填 <strong>HP</strong> 大幅縮小範圍），列出所有可能的等級與 IV（攻／防／耐）組合。</p>
+                    <p class="cp-reverse-hint">填入已知的條件（<strong>CP</strong>、<strong>HP</strong>、<strong>攻／防／耐</strong> 個體值 或 <strong>等級</strong>，至少一項），列出所有符合的等級與 IV 組合。填越多、範圍越小。</p>
                     <div class="cp-reverse-form">
                         <label>CP<input type="number" id="cpReverseCP" inputmode="numeric" min="10" placeholder="例如 1500"></label>
                         <label>HP<input type="number" id="cpReverseHP" inputmode="numeric" min="10" placeholder="可選"></label>
+                        <label>攻<input class="sm" type="number" id="cpReverseA" inputmode="numeric" min="0" max="15" placeholder="0-15"></label>
+                        <label>防<input class="sm" type="number" id="cpReverseD" inputmode="numeric" min="0" max="15" placeholder="0-15"></label>
+                        <label>耐<input class="sm" type="number" id="cpReverseS" inputmode="numeric" min="0" max="15" placeholder="0-15"></label>
+                        <label>等級<input class="sm" type="number" id="cpReverseLv" inputmode="decimal" min="1" max="51" step="0.5" placeholder="1-51"></label>
                         <button type="button" id="cpReverseBtn">查詢</button>
                     </div>
                     <div id="cpReverseResult" class="cp-reverse-result"></div>

@@ -55,56 +55,89 @@ export function initializeCpChecker() {
     function hpAtM(p, m, s) {
         return Math.max(10, Math.floor((p.sta + s) * m));
     }
-    function reverseIV(p, cp, hp) {
+    // f：{cp, hp, a, d, s, lv} 每個可為 null（不限）。至少要有一個條件。
+    function reverseIV(p, f) {
         const res = [];
+        const aLo = f.a != null ? f.a : 0, aHi = f.a != null ? f.a : 15;
+        const dLo = f.d != null ? f.d : 0, dHi = f.d != null ? f.d : 15;
+        const sLo = f.s != null ? f.s : 0, sHi = f.s != null ? f.s : 15;
         for (const { lv, m } of FULL_CPM) {
-            for (let a = 0; a <= 15; a++)
-                for (let d = 0; d <= 15; d++)
-                    for (let s = 0; s <= 15; s++) {
-                        if (cpAtM(p, m, a, d, s) !== cp) continue;
-                        if (hp != null && hpAtM(p, m, s) !== hp) continue;
-                        res.push({ lv, a, d, s, hp: hpAtM(p, m, s), pct: (a + d + s) / 45 });
+            if (f.lv != null && lv !== f.lv) continue;
+            for (let a = aLo; a <= aHi; a++)
+                for (let d = dLo; d <= dHi; d++)
+                    for (let s = sLo; s <= sHi; s++) {
+                        const cp = cpAtM(p, m, a, d, s);
+                        if (f.cp != null && cp !== f.cp) continue;
+                        if (f.hp != null && hpAtM(p, m, s) !== f.hp) continue;
+                        res.push({ lv, a, d, s, cp, hp: hpAtM(p, m, s), pct: (a + d + s) / 45 });
                     }
         }
         res.sort((x, y) => x.lv - y.lv || y.pct - x.pct);   // 等級小→大，同等級 IV% 高→低
         return res;
     }
-    function renderReverse(box, p, cp, hp) {
+    const RV_PREVIEW = 20;   // 預設先顯示前幾筆，其餘收合
+    function renderReverse(box, p, f) {
         if (!box) return;
         if (!p || !FULL_CPM.length) { box.innerHTML = ''; return; }
-        if (!(cp > 0)) { box.innerHTML = '<p class="cp-reverse-empty">請先輸入 CP。</p>'; return; }
-        const rows = reverseIV(p, cp, (hp != null && hp > 0) ? hp : null);
+        const hasAny = ['cp', 'hp', 'a', 'd', 's', 'lv'].some(k => f[k] != null);
+        if (!hasAny) { box.innerHTML = '<p class="cp-reverse-empty">請至少輸入一個條件：CP、HP、攻／防／耐 或 等級。</p>'; return; }
+        const rows = reverseIV(p, f);
         if (!rows.length) {
-            box.innerHTML = `<p class="cp-reverse-empty">找不到 ${esc(p.name)} CP ${cp}${hp ? ' / HP ' + hp : ''} 的組合。`
-                + `請確認數字（CP 是否為天氣加成後、或是否強化過）。</p>`;
+            box.innerHTML = `<p class="cp-reverse-empty">找不到符合條件的 ${esc(p.name)} 組合，請確認數字`
+                + `（CP 是否為天氣加成後、或是否強化過）。</p>`;
             return;
         }
-        const CAP = 400, shown = rows.slice(0, CAP);
         let body = '';
-        for (const r of shown) {
-            body += `<tr><td>Lv${r.lv}</td>`
+        rows.forEach((r, i) => {
+            body += `<tr class="${i >= RV_PREVIEW ? 'rv-extra' : ''}"><td>Lv${r.lv}</td>`
                 + `<td class="ivcell v${r.a}">${r.a}</td><td class="ivcell v${r.d}">${r.d}</td><td class="ivcell v${r.s}">${r.s}</td>`
-                + `<td class="ivpct">${(r.pct * 100).toFixed(1)}%</td><td class="ivhp">${r.hp}</td></tr>`;
-        }
+                + `<td class="ivpct">${(r.pct * 100).toFixed(1)}%</td><td>${r.cp}</td><td class="ivhp">${r.hp}</td></tr>`;
+        });
+        const label = [
+            f.cp != null ? `CP ${f.cp}` : '', f.hp != null ? `HP ${f.hp}` : '',
+            f.a != null ? `攻${f.a}` : '', f.d != null ? `防${f.d}` : '', f.s != null ? `耐${f.s}` : '',
+            f.lv != null ? `Lv${f.lv}` : ''
+        ].filter(Boolean).join(' · ');
         box.innerHTML = `
-            <p class="cp-reverse-count">${esc(p.name)} CP ${cp}${hp ? ` · HP ${hp}` : ''}：共 <strong>${rows.length}</strong> 種可能組合`
-            + `${rows.length > CAP ? `（顯示前 ${CAP} 筆，建議填 HP 縮小範圍）` : ''}</p>
+            <p class="cp-reverse-count">${esc(p.name)}　${label}：共 <strong>${rows.length}</strong> 種組合</p>
             <div class="lv-table-wrap">
               <table class="iv-table reverse-table">
-                <thead><tr><th>等級</th><th>攻</th><th>防</th><th>耐</th><th>IV%</th><th>HP</th></tr></thead>
+                <thead><tr><th>等級</th><th>攻</th><th>防</th><th>耐</th><th>IV%</th><th>CP</th><th>HP</th></tr></thead>
                 <tbody>${body}</tbody>
               </table>
-            </div>`;
+            </div>
+            ${rows.length > RV_PREVIEW ? `<button class="rv-more" type="button">顯示全部（還有 ${rows.length - RV_PREVIEW} 筆）</button>` : ''}`;
+        if (rows.length > RV_PREVIEW) {
+            const btn = box.querySelector('.rv-more'), tbl = box.querySelector('.reverse-table');
+            btn.addEventListener('click', () => {
+                const open = tbl.classList.toggle('rv-open');
+                btn.textContent = open ? '收合' : `顯示全部（還有 ${rows.length - RV_PREVIEW} 筆）`;
+            });
+        }
     }
     // 目前鎖定的寶可夢（供 CP 反查用）；由 filterResults 更新
     let currentMon = null;
+    const RV_FIELDS = ['cpReverseCP', 'cpReverseHP', 'cpReverseA', 'cpReverseD', 'cpReverseS', 'cpReverseLv'];
     function runReverse() {
         const box = document.getElementById('cpReverseResult');
         if (!currentMon || !box) return;
-        const cpEl = document.getElementById('cpReverseCP'), hpEl = document.getElementById('cpReverseHP');
-        const cp = parseInt(cpEl ? cpEl.value : '', 10);
-        const hp = parseInt(hpEl ? hpEl.value : '', 10);
-        renderReverse(box, currentMon, isNaN(cp) ? 0 : cp, isNaN(hp) ? null : hp);
+        // 讀單一欄位並驗證範圍；空白或超範圍 → null（不限）
+        const num = (id, lo, hi, half) => {
+            const el = document.getElementById(id);
+            if (!el || el.value === '') return null;
+            const v = half ? parseFloat(el.value) : parseInt(el.value, 10);
+            if (isNaN(v) || (lo != null && v < lo) || (hi != null && v > hi)) return null;
+            return v;
+        };
+        const f = {
+            cp: num('cpReverseCP', 10, null, false),
+            hp: num('cpReverseHP', 10, null, false),
+            a: num('cpReverseA', 0, 15, false),
+            d: num('cpReverseD', 0, 15, false),
+            s: num('cpReverseS', 0, 15, false),
+            lv: num('cpReverseLv', 1, 51, true)
+        };
+        renderReverse(box, currentMon, f);
     }
     function updateReversePanel(mon) {
         currentMon = mon || null;
@@ -114,8 +147,9 @@ export function initializeCpChecker() {
         if (currentMon) {
             sec.hidden = false;
             if (title) title.textContent = currentMon.name + ' CP 反查 IV 組合';
-            const cpEl = document.getElementById('cpReverseCP');
-            if (cpEl && cpEl.value) runReverse(); else if (box) box.innerHTML = '';   // 換寶可夢時，若已填 CP 就即時重算
+            // 換寶可夢時，若已填任何條件就即時重算
+            const anyVal = RV_FIELDS.some(id => { const el = document.getElementById(id); return el && el.value; });
+            if (anyVal) runReverse(); else if (box) box.innerHTML = '';
         } else {
             sec.hidden = true;
             if (box) box.innerHTML = '';
@@ -502,7 +536,7 @@ export function initializeCpChecker() {
     // CP 反查 IV：查詢按鈕與 Enter
     const cpReverseBtn = document.getElementById('cpReverseBtn');
     if (cpReverseBtn) cpReverseBtn.addEventListener('click', runReverse);
-    ['cpReverseCP', 'cpReverseHP'].forEach(id => {
+    RV_FIELDS.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); runReverse(); } });
     });
