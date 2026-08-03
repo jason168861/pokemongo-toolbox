@@ -540,6 +540,7 @@ def build(name):
   </div>
 
   <p class="pagefoot"><a href="../../">Pokémon Go 工具箱</a> · IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢</p>
+  <p class="pagefoot"><a href="../../privacy/">隱私權政策</a> · <a href="../../disclaimer/">免責聲明</a></p>
 </div>
 
 <a class="fab" href="../../?tab=cp-checker-app" aria-label="搜尋其他寶可夢">🔍 <span>搜尋寶可夢</span></a>
