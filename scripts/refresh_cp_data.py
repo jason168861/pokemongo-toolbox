@@ -183,10 +183,19 @@ def main():
         new = f"{base} ({label})" if label else base
         return new if new != name else None
 
+    # 少數「預設形態」自己就有 form 專屬圖，但 GAME_MASTER 沒給 form 代碼，
+    # 會誤退回 pm<dex>.icon.png（多半是舊的通用圖）。這裡用 GM template id 強制指定。
+    IMAGE_OVERRIDES = {
+        "V0487_POKEMON_GIRATINA": "pm487.fALTERED.icon.png",   # 騎拉帝納 (別種形態)
+    }
+
     def image_url(rec):
         """挑這個形態的 GO 圖示。排除異色(.s.)、雌性(.g2.)、造型(.c…)。"""
         def ok(fn):
             return fn in sprites
+        ov = IMAGE_OVERRIDES.get(rec["tid"])
+        if ov and ok(ov):
+            return SPRITE_BASE + ov
         # 檔名的 form 代碼有兩種寫法:多數是剝掉物種前綴的(pm800.fDUSK_MANE)，
         # 但有些保留了(pm413.fWORMADAM_PLANT、pm412.fBURMY_TRASH)。兩種都要試，
         # 只試剝掉的版本會讓結草兒/結草貴婦這類整族退回別的形態的圖(實測草木與垃圾會撞同一張)。

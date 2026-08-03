@@ -16,7 +16,7 @@ data/pokemon_data_and_rankings.js 的 POKEDEX / rankings 自動生成全部。
 用法：  python scripts/build_cp_static.py
 輸出：  cp/<slug>/index.html
 """
-import os, re, math, html
+import os, re, math, html, json
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORIGIN = "https://jason168861.github.io/pokemongo-toolbox"
@@ -84,12 +84,177 @@ def dex_neighbor(pid, step):
         d += step
     return None
 
-# ---- 每隻的「差異化」內容（目前只有烈空坐）----
-# types/weak/resist/role/moves/leagues 都是 Pokémon GO 現況；未來改成自動生成。
-ENRICH = {
+# ================= 屬性相剋 / 資料 join（自動生成差異化內容用）=================
+TYPE_ZH = {"normal": "一般", "fire": "火", "water": "水", "electric": "電", "grass": "草", "ice": "冰",
+           "fighting": "格鬥", "poison": "毒", "ground": "地面", "flying": "飛行", "psychic": "超能力",
+           "bug": "蟲", "rock": "岩石", "ghost": "幽靈", "dragon": "龍", "dark": "惡", "steel": "鋼", "fairy": "妖精"}
+TYPE_COLOR = {"normal": "#9099a1", "fire": "#ff9d55", "water": "#4d90d5", "electric": "#f4d23c",
+              "grass": "#63bc5a", "ice": "#73cec0", "fighting": "#ce4069", "poison": "#ab6ac8",
+              "ground": "#d97845", "flying": "#8fa8dd", "psychic": "#f97176", "bug": "#90c12c",
+              "rock": "#c7b78b", "ghost": "#5269ad", "dragon": "#0b6dc3", "dark": "#5a5465",
+              "steel": "#5a8ea1", "fairy": "#ec8fe6"}
+# 每個「防守屬性」被哪些屬性 剋 / 抵抗 / 免疫（標準第六世代相剋表；PoGo 免疫＝×0.390625）
+TYPE_DEF = {
+    "normal":   (["fighting"], [], ["ghost"]),
+    "fire":     (["water", "ground", "rock"], ["fire", "grass", "ice", "bug", "steel", "fairy"], []),
+    "water":    (["electric", "grass"], ["fire", "water", "ice", "steel"], []),
+    "electric": (["ground"], ["electric", "flying", "steel"], []),
+    "grass":    (["fire", "ice", "poison", "flying", "bug"], ["water", "electric", "grass", "ground"], []),
+    "ice":      (["fire", "fighting", "rock", "steel"], ["ice"], []),
+    "fighting": (["flying", "psychic", "fairy"], ["bug", "rock", "dark"], []),
+    "poison":   (["ground", "psychic"], ["grass", "fighting", "poison", "bug", "fairy"], []),
+    "ground":   (["water", "grass", "ice"], ["poison", "rock"], ["electric"]),
+    "flying":   (["electric", "ice", "rock"], ["grass", "fighting", "bug"], ["ground"]),
+    "psychic":  (["bug", "ghost", "dark"], ["fighting", "psychic"], []),
+    "bug":      (["fire", "flying", "rock"], ["grass", "fighting", "ground"], []),
+    "rock":     (["water", "grass", "fighting", "ground", "steel"], ["normal", "fire", "poison", "flying"], []),
+    "ghost":    (["ghost", "dark"], ["poison", "bug"], ["normal", "fighting"]),
+    "dragon":   (["ice", "dragon", "fairy"], ["fire", "water", "grass", "electric"], []),
+    "dark":     (["fighting", "bug", "fairy"], ["ghost", "dark"], ["psychic"]),
+    "steel":    (["fire", "fighting", "ground"], ["normal", "grass", "ice", "flying", "psychic", "bug", "rock", "dragon", "steel", "fairy"], ["poison"]),
+    "fairy":    (["poison", "steel"], ["fighting", "bug", "dark"], ["dragon"]),
+}
+WEATHER_ZH = {"clear": "晴朗", "rain": "下雨", "partlycloudy": "多雲", "cloudy": "陰天",
+              "windy": "刮風", "snow": "下雪", "fog": "濃霧"}
+TYPE_WEATHER = {"grass": "clear", "fire": "clear", "ground": "clear", "water": "rain", "electric": "rain",
+                "bug": "rain", "normal": "partlycloudy", "rock": "partlycloudy", "fairy": "cloudy",
+                "fighting": "cloudy", "poison": "cloudy", "dragon": "windy", "flying": "windy",
+                "psychic": "windy", "ice": "snow", "steel": "snow", "dark": "fog", "ghost": "fog"}
+
+def _single_mult(atk, deft):
+    weak, resist, immune = TYPE_DEF[deft]
+    if atk in weak:   return 1.6
+    if atk in resist: return 0.625
+    if atk in immune: return 0.390625
+    return 1.0
+
+def _fmt_mult(m):
+    q = math.floor(m * 100 + 0.5) / 100   # 四捨五入到小數兩位（0.625→0.63，不用銀行家捨入）
+    return "×" + f"{q:.2f}".rstrip("0").rstrip(".")
+
+def matchups(types):
+    """回傳 (weaknesses, resistances)：weak=[(zh, mult_str, is_double)]、resist=[(zh, mult_str)]。"""
+    weak, resist = [], []
+    for atk in TYPE_DEF:
+        m = 1.0
+        for dt in types:
+            m *= _single_mult(atk, dt)
+        if m > 1.0001:
+            weak.append((TYPE_ZH[atk], _fmt_mult(m), m, m >= 2.5))
+        elif m < 0.9999:
+            resist.append((TYPE_ZH[atk], _fmt_mult(m), m))
+    weak.sort(key=lambda x: -x[2])
+    resist.sort(key=lambda x: x[2])
+    return ([(z, s, d) for z, s, _, d in weak], [(z, s) for z, s, _ in resist])
+
+def weathers_of(types):
+    seen, out = set(), []
+    for t in types:
+        w = TYPE_WEATHER.get(t)
+        if w and w not in seen:
+            seen.add(w); out.append(WEATHER_ZH[w])
+    return "、".join(out)
+
+# ---- 讀 POKEDEX（屬性/英文 slug）與 PvP rankings（招式/名次）----
+def _norm(s):
+    return re.sub(r"[\s()（）]|形態", "", s or "")
+
+def _json_block(txt, name):
+    i = txt.find("const " + name); j = txt.find("[", i); depth = 0; k = j
+    while k < len(txt):
+        c = txt[k]
+        if c == "[": depth += 1
+        elif c == "]":
+            depth -= 1
+            if depth == 0: break
+        k += 1
+    return json.loads(txt[j:k + 1])
+
+_RANK_SRC = open(os.path.join(ROOT, "data", "pokemon_data_and_rankings.js"), encoding="utf-8").read()
+POKEDEX = _json_block(_RANK_SRC, "POKEDEX")
+PDX_BY_NAME = {_norm(d["name"]): d for d in POKEDEX}
+LEAGUE_ZH = {"great": "特級聯盟", "ultra": "超級聯盟", "master": "大師聯盟"}
+RANKS = {}
+for _lg, _var in (("great", "POKEMON_RANKINGS_1500"), ("ultra", "POKEMON_RANKINGS_2500"), ("master", "POKEMON_RANKINGS_10000")):
+    _arr = _json_block(_RANK_SRC, _var)
+    for _i, _e in enumerate(_arr):
+        RANKS.setdefault(_norm(_e["name"]), {})[_lg] = {
+            "rank": _i + 1, "total": len(_arr), "score": _e["score"],
+            "fast": _e["fastMove"], "c1": _e["chargedMove1"], "c2": _e["chargedMove2"],
+            "buddy": _e.get("buddyDistance")}
+
+def auto_enrich(name, p):
+    """用現有資料自動組出屬性剋制／定位／招式／PvP 內容。"""
+    key = _norm(name)
+    d = PDX_BY_NAME.get(key)
+    types = d["types"] if d else []
+    slug = d["id"] if d else p["gm"].split("_POKEMON_")[-1].lower()
+    type_line = "／".join(TYPE_ZH[t] for t in types) if types else "未知"
+    types_disp = [(TYPE_ZH[t], TYPE_COLOR[t]) for t in types] or [(type_line, "#9099a1")]
+    c1 = TYPE_COLOR[types[0]] if types else "#9099a1"
+    c2 = TYPE_COLOR[types[-1]] if types else "#6a5ae0"
+    grad = f"linear-gradient(140deg,{c1},{c2})"
+
+    weak, resist = matchups(types) if types else ([], [])
+    cp40, cp50 = cp_at(p, 40, 15), cp_at(p, 50, 15)
+
+    lead = (f"{name}（#{p['id']}）是 <strong>{type_line}</strong> 屬性，"
+            f"基礎數值 攻擊 <strong>{p['atk']}</strong>／防禦 {p['def']}／耐力 {p['sta']}，"
+            f"滿 IV 最大 CP 為 L40 {cp40}、L50 {cp50}。")
+
+    wnote = ""
+    if weak:
+        prim = weak[0][0]
+        dbls = [z for z, s, dd in weak if dd]
+        dbl = "，其中對 " + "、".join(dbls) + " 為雙重弱點" if dbls else ""
+        wlist = "、".join(z for z, s, dd in weak[:4])
+        rlist = "、".join(z for z, s in resist[:4]) if resist else "—"
+        wnote = f"用 <strong>{prim}</strong>系招式打 {name} 效果最好；牠怕 {wlist}{dbl}，對 {rlist} 則有抗性。"
+    ws = weathers_of(types)
+    if ws:
+        wnote += f" 天氣為 <strong>{ws}</strong> 時，{name} 的招式會加成、被捕捉時 CP 也較高。"
+
+    atk, dfe, sta = p["atk"], p["def"], p["sta"]
+    if atk >= dfe and atk >= sta:
+        word = "高攻攻擊手" if atk >= 240 else "攻擊"
+        rnote = "攻擊數值突出，適合在團體戰擔任輸出。"
+    elif dfe >= atk and dfe >= sta:
+        word, rnote = "防禦", "防禦很高，適合放道館或防守型對戰，續戰力佳。"
+    else:
+        word, rnote = "耐久", "血量厚實，能長時間站場。"
+    role = f"{name} 的數值偏 <strong>{word}</strong>（攻擊 {atk}／防禦 {dfe}／耐力 {sta}）。{rnote}"
+
+    r = RANKS.get(key, {})
+    moves, leagues = [], []
+    league_note = f"{name} 在主要對戰聯盟的排名資料有限。"
+    avail = [lg for lg in ("master", "ultra", "great") if lg in r]
+    if avail:
+        best = max(avail, key=lambda lg: r[lg]["score"])
+        b = r[best]
+        moves.append(("推薦招式", f"{esc(b['fast'])} ＋ {esc(b['c1'])}／{esc(b['c2'])} <em>（依{LEAGUE_ZH[best]}排名）</em>"))
+        if b.get("buddy"):
+            moves.append(("好友距離", f"{b['buddy']} 公里"))
+        for lg in ("master", "ultra", "great"):
+            if lg in r:
+                v = r[lg]
+                leagues.append((LEAGUE_ZH[lg], round(v["score"], 1), f"#{v['rank']}", v["total"], f"{v['score']}"))
+        extra = "（此聯盟無 CP 上限）" if best == "master" else ""
+        league_note = (f"在對戰聯盟中，{name} 於 <strong>{LEAGUE_ZH[best]}</strong> 最實用"
+                       f"（第 {b['rank']} 名／共 {b['total']}，評分 {b['score']}）{extra}。")
+
+    return {
+        "slug": slug, "types": types_disp, "type_line": type_line, "grad": grad, "lead": lead,
+        "weak": weak or [("—", "", False)], "resist": resist or [("—", "")],
+        "type_note": wnote or "屬性相剋資料不足。", "role": role,
+        "moves": moves or [("—", "資料不足")], "leagues": leagues, "league_note": league_note,
+    }
+
+# ---- 手寫覆寫（想人工潤飾的少數幾隻放這裡；其餘走 auto_enrich）----
+MANUAL_ENRICH = {
     "烈空坐": {
         "slug": "rayquaza",
-        "types": ["龍", "飛行"],
+        "types": [("龍", TYPE_COLOR["dragon"]), ("飛行", TYPE_COLOR["flying"])],
+        "grad": f"linear-gradient(140deg,{TYPE_COLOR['dragon']},{TYPE_COLOR['flying']})",
         "type_line": "龍／飛行",
         "lead": ("烈空坐（#384）是<strong>龍／飛行</strong>屬性的傳說寶可夢，基礎數值 攻擊 <strong>284</strong>／防禦 170／耐力 213"
                  " —— 以全遊戲數一數二的攻擊力，牠是典型的<strong>高攻低防「玻璃大砲」</strong>，主要價值在團體戰的龍系爆發輸出。"),
@@ -109,6 +274,15 @@ ENRICH = {
                         "在超級與特級聯盟因體質偏脆、CP 又常超標，表現只算普通，一般不是首選。"),
     }
 }
+
+def get_enrich(name, p):
+    return MANUAL_ENRICH.get(name) or auto_enrich(name, p)
+
+# 要產生靜態頁的清單（挑 ?mon= 收不了的重要寶可夢；auto 生成，加名字即可）
+TARGETS = [
+    "烈空坐",
+    "雷公", "雷吉艾斯", "雷吉斯奇魯", "由克希", "露奈雅拉", "轟擂金剛猩", "騎拉帝納 (起源形態)",
+]
 
 CSS = """
 :root{--bg:#f0f2f5;--card:#fff;--ink:#1c1e21;--ink2:#3a3b3c;--muted:#606770;--line:#dddfe2;
@@ -212,7 +386,7 @@ table.iv tbody tr:nth-child(even) td:not(.iv){background:#fcfcfd}
 def esc(s): return html.escape(str(s), quote=True)
 
 def build(name):
-    p = CP_DATA[name]; e = ENRICH[name]
+    p = CP_DATA[name]; e = get_enrich(name, p)
     pid = p["id"]; slug = e["slug"]
     url = f"{ORIGIN}/cp/{slug}/"
     cp40, cp50 = cp_at(p, 40, 15), cp_at(p, 50, 15)
@@ -231,7 +405,7 @@ def build(name):
 
     iv_table = build_iv_table(p)
 
-    types_html = "".join(f'<span class="type t{i}">{esc(t)}</span>' for i, t in enumerate(e["types"]))
+    types_html = "".join(f'<span class="type" style="background:{c}">{esc(z)}</span>' for z, c in e["types"])
     weak_html = "".join(f'<span class="chip wk{" dbl" if d else ""}">{esc(t)} <em>{esc(m)}</em></span>'
                         for t, m, d in e["weak"])
     resist_html = "".join(f'<span class="chip rs">{esc(t)} <em>{esc(m)}</em></span>' for t, m in e["resist"])
@@ -285,7 +459,7 @@ def build(name):
 
   <div class="card">
     <div class="head">
-      <img src="{esc(p['imageUrl'])}" alt="{esc(name)}" width="84" height="84" loading="lazy">
+      <img src="{esc(p['imageUrl'])}" alt="{esc(name)}" width="84" height="84" loading="lazy" style="background:{e['grad']}">
       <div>
         <div class="dexno">#{pid}</div>
         <h1>{esc(name)} IV100 CP 查詢</h1>
@@ -372,12 +546,16 @@ def build(name):
 </html>"""
 
 def main():
-    for name in ENRICH:
-        out_dir = os.path.join(ROOT, "cp", ENRICH[name]["slug"])
+    for name in TARGETS:
+        p = CP_DATA.get(name)
+        if not p:
+            print("SKIP（找不到 CP 資料）:", name); continue
+        e = get_enrich(name, p)
+        out_dir = os.path.join(ROOT, "cp", e["slug"])
         os.makedirs(out_dir, exist_ok=True)
         out = os.path.join(out_dir, "index.html")
         open(out, "w", encoding="utf-8").write(build(name))
-        print("wrote", os.path.relpath(out, ROOT))
+        print("wrote", os.path.relpath(out, ROOT), "  (" + e["type_line"] + ")")
 
 if __name__ == "__main__":
     main()
