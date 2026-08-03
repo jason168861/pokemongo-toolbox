@@ -244,6 +244,32 @@
 #cp-checker-app .lv-table tr.key-lv td { background: #eef7f1; }
 #cp-checker-app .lv-table tr.bb-lv th,
 #cp-checker-app .lv-table tr.bb-lv td { background: #fff7e8; }
+/* --- 高 IV CP·HP 對照表（IV 100%～91.1%） --- */
+#cp-checker-app .iv-table-block { margin-bottom: 26px; }
+#cp-checker-app .iv-table {
+    border-collapse: collapse;
+    font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    min-width: 560px;
+}
+#cp-checker-app .iv-table th,
+#cp-checker-app .iv-table td { border: 1px solid #e4e6eb; padding: 4px 7px; text-align: right; }
+#cp-checker-app .iv-table thead th { background: #f7f8fa; color: #1c1e21; font-weight: 700; text-align: center; }
+#cp-checker-app .iv-table td.ivpct { text-align: left; color: #606770; }
+#cp-checker-app .iv-table tr.hundo td.ivpct { color: #e63946; font-weight: 800; }
+#cp-checker-app .iv-table td.ivhp { color: #606770; }
+#cp-checker-app .iv-table td.ivcell { color: #fff; font-weight: 700; text-align: center; }
+#cp-checker-app .iv-table td.v15 { background: #e63946; }
+#cp-checker-app .iv-table td.v14 { background: #2b6cb0; }
+#cp-checker-app .iv-table td.v13 { background: #2f9e57; }
+#cp-checker-app .iv-table td.v12 { background: #d98324; }
+#cp-checker-app .iv-table td.v11 { background: #8a8f98; }
+#cp-checker-app .iv-table tbody tr:nth-child(even) td:not(.ivcell) { background: #fcfcfd; }
+#cp-checker-app .iv-legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 0; font-size: 12px; color: #606770; }
+#cp-checker-app .iv-legend span { display: inline-flex; align-items: center; gap: 5px; }
+#cp-checker-app .iv-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
 /* --- 單隻寶可夢深入介紹（屬性/定位/招式/PvP）：目前僅烈空坐，用於收錄測試 --- */
 #cp-checker-app .mon-detail {
     margin-top: 26px;

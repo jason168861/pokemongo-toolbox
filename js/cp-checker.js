@@ -36,6 +36,45 @@ export function initializeCpChecker() {
         const m = CPM[level - 1];
         return Math.max(10, Math.floor((p.atk + iv) * Math.sqrt(p.def + iv) * Math.sqrt(p.sta + iv) * m * m / 10));
     }
+
+    // ---- 高 IV CP·HP 對照表（IV 100%～91.1%）----------------------------------
+    // 列出 IV 總和 ≥ 41（IV% ≥ 91.11%）的 35 種組合，及各自在 L15/20/25/40 的 CP 與 HP。
+    // 每一頁都不同，是 ?mon= 網址很好的獨立內容。
+    const IV_TABLE_LEVELS = [15, 20, 25, 40];
+    function cpIv(p, L, a, d, s) {
+        const m = CPM[L - 1];
+        return Math.max(10, Math.floor((p.atk + a) * Math.sqrt(p.def + d) * Math.sqrt(p.sta + s) * m * m / 10));
+    }
+    function hpIv(p, L, s) {
+        return Math.max(10, Math.floor((p.sta + s) * CPM[L - 1]));
+    }
+    function ivTableHtml(p) {
+        const combos = [];
+        for (let a = 15; a >= 0; a--)
+            for (let d = 15; d >= 0; d--)
+                for (let s = 15; s >= 0; s--) {
+                    const tot = a + d + s;
+                    if (tot >= 41) combos.push([tot, a, d, s, cpIv(p, 40, a, d, s)]);
+                }
+        combos.sort((x, y) => (y[0] - x[0]) || (y[4] - x[4]));   // IV% 高→低，同 IV% 內 CP 高→低
+        let body = '';
+        for (const [tot, a, d, s] of combos) {
+            const pct = (tot / 45 * 100).toFixed(2);
+            let cells = '';
+            for (const L of IV_TABLE_LEVELS) cells += `<td>${cpIv(p, L, a, d, s)}</td><td class="ivhp">${hpIv(p, L, s)}</td>`;
+            const ivc = `<td class="ivcell v${a}">${a}</td><td class="ivcell v${d}">${d}</td><td class="ivcell v${s}">${s}</td>`;
+            body += `<tr class="${tot === 45 ? 'hundo' : ''}"><td class="ivpct">${pct}%</td>${ivc}${cells}</tr>`;
+        }
+        const h1 = IV_TABLE_LEVELS.map(L => `<th colspan="2">L${L}</th>`).join('');
+        const h2 = IV_TABLE_LEVELS.map(() => '<th scope="col">CP</th><th scope="col">HP</th>').join('');
+        return `<table class="iv-table">
+                  <thead>
+                    <tr><th rowspan="2" scope="col">IV%</th><th colspan="3">個體值 攻/防/耐</th>${h1}</tr>
+                    <tr><th scope="col">攻</th><th scope="col">防</th><th scope="col">耐</th>${h2}</tr>
+                  </thead>
+                  <tbody>${body}</tbody>
+                </table>`;
+    }
     // 只在「編號或名稱完全相符」或「篩選後只剩一隻」時才出表，
     // 否則打一個字就跳出某一隻的完整表格會很怪。
     function resolveOne(query, visibleIdx) {
@@ -200,6 +239,21 @@ export function initializeCpChecker() {
                   + `<td class="lv-note">${note}</td></tr>`;
         }
         box.innerHTML = `
+            <section class="iv-table-block">
+              <h2>${p.name} 高 IV CP·HP 對照表（IV 100%～91.1%）</h2>
+              <p class="lv-table-intro">
+                ${p.name} IV 總和最高的 35 種組合（IV% ≥ 91.1%），以及各自在 L15／L20／L25／L40 的 CP 與 HP。
+                攻／防／耐為個體值（0～15）。
+              </p>
+              <div class="lv-table-wrap">${ivTableHtml(p)}</div>
+              <div class="iv-legend">
+                <span><i style="background:#e63946"></i>15</span>
+                <span><i style="background:#2b6cb0"></i>14</span>
+                <span><i style="background:#2f9e57"></i>13</span>
+                <span><i style="background:#d98324"></i>12</span>
+                <span><i style="background:#8a8f98"></i>11</span>
+              </div>
+            </section>
             <h2>${p.name} 全等級 CP 對照表（Lv1～Lv${MAX_LEVEL}）</h2>
             <p class="lv-table-intro">
                 ${p.name}（#${p.id}）的基礎數值為 攻擊 ${p.atk}／防禦 ${p.def}／耐力 ${p.sta}。

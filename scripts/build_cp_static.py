@@ -306,20 +306,6 @@ def build(name):
   </div>
 
   <div class="card">
-    <h2>{esc(name)} 全等級 CP 對照表（Lv1～Lv{MAX_LEVEL}）</h2>
-    <p class="foot-t" style="margin:0 0 12px">{esc(name)}（#{pid}）基礎數值 攻擊 {p['atk']}／防禦 {p['def']}／耐力 {p['sta']}。
-       <strong>100% IV</strong>（15/15/15）為該等級 CP 上限，<strong>0% IV</strong>（0/0/0）為下限。</p>
-    <div class="tbl-wrap">
-      <table class="cp">
-        <caption>{esc(name)} 各等級 CP（100% IV / 0% IV）</caption>
-        <thead><tr><th>等級</th><th>100% IV</th><th>0% IV</th><th>說明</th></tr></thead>
-        <tbody>{rows}</tbody>
-      </table>
-    </div>
-    <p class="foot-t">Lv{BB} 為最佳夥伴狀態下的等級上限；一般強化上限為 Lv{MAX_LEVEL}。資料來源為 Pokémon GO GAME_MASTER。</p>
-  </div>
-
-  <div class="card">
     <h2>{esc(name)} 高 IV CP·HP 對照表（IV 100%～91.1%）</h2>
     <p class="foot-t" style="margin:0 0 12px">IV 總和最高的 35 種組合（IV% ≥ 91.1%），以及各自在 L15／L20／L25／L40 的 CP 與 HP。
        攻／防／耐為個體值（0～15）。</p>
@@ -331,6 +317,20 @@ def build(name):
       <span><i style="background:#d98324"></i>12</span>
       <span><i style="background:#8a8f98"></i>11</span>
     </div>
+  </div>
+
+  <div class="card">
+    <h2>{esc(name)} 全等級 CP 對照表（Lv1～Lv{MAX_LEVEL}）</h2>
+    <p class="foot-t" style="margin:0 0 12px">{esc(name)}（#{pid}）基礎數值 攻擊 {p['atk']}／防禦 {p['def']}／耐力 {p['sta']}。
+       <strong>100% IV</strong>（15/15/15）為該等級 CP 上限，<strong>0% IV</strong>（0/0/0）為下限。</p>
+    <div class="tbl-wrap">
+      <table class="cp">
+        <caption>{esc(name)} 各等級 CP（100% IV / 0% IV）</caption>
+        <thead><tr><th>等級</th><th>100% IV</th><th>0% IV</th><th>說明</th></tr></thead>
+        <tbody>{rows}</tbody>
+      </table>
+    </div>
+    <p class="foot-t">Lv{BB} 為最佳夥伴狀態下的等級上限；一般強化上限為 Lv{MAX_LEVEL}。資料來源為 Pokémon GO GAME_MASTER。</p>
   </div>
 
   <div class="card">
