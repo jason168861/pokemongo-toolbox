@@ -378,6 +378,17 @@
                     </div>
                 </div>
                 <div id="resultsContainer"></div>
+                <!-- CP 反查 IV：鎖定單一寶可夢時，輸入 CP（可選 HP）列出所有可能的等級與 IV 組合 -->
+                <section id="cpReverse" class="cp-reverse" hidden>
+                    <h2 id="cpReverseTitle">CP 反查 IV 組合</h2>
+                    <p class="cp-reverse-hint">輸入這隻寶可夢目前的 <strong>CP</strong>（可再填 <strong>HP</strong> 大幅縮小範圍），列出所有可能的等級與 IV（攻／防／耐）組合。</p>
+                    <div class="cp-reverse-form">
+                        <label>CP<input type="number" id="cpReverseCP" inputmode="numeric" min="10" placeholder="例如 1500"></label>
+                        <label>HP<input type="number" id="cpReverseHP" inputmode="numeric" min="10" placeholder="可選"></label>
+                        <button type="button" id="cpReverseBtn">查詢</button>
+                    </div>
+                    <div id="cpReverseResult" class="cp-reverse-result"></div>
+                </section>
                 <!-- 鎖定單一寶可夢時（含 ?mon= 深連結）由 cp-checker.js 填入全等級 CP 表 -->
                 <section id="cpLevelTable" class="lv-table-section" hidden></section>
              </div>

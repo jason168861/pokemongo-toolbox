@@ -37,6 +37,91 @@ export function initializeCpChecker() {
         return Math.max(10, Math.floor((p.atk + iv) * Math.sqrt(p.def + iv) * Math.sqrt(p.sta + iv) * m * m / 10));
     }
 
+    // ---- CP 反查 IV：由 CP（可選 HP）反推所有可能的等級與 IV 組合 --------------
+    // 遊戲內寶可夢常在半等級（Lv X.5），整數等級 CPM 用官方公式內插出半等級：
+    // cpm(L+0.5) = √((cpm(L)² + cpm(L+1)²) / 2)
+    const FULL_CPM = (() => {
+        if (!CPM) return [];
+        const out = [];
+        for (let i = 0; i < CPM.length; i++) {
+            out.push({ lv: i + 1, m: CPM[i] });
+            if (i + 1 < CPM.length) out.push({ lv: i + 1.5, m: Math.sqrt((CPM[i] * CPM[i] + CPM[i + 1] * CPM[i + 1]) / 2) });
+        }
+        return out;
+    })();
+    function cpAtM(p, m, a, d, s) {
+        return Math.max(10, Math.floor((p.atk + a) * Math.sqrt(p.def + d) * Math.sqrt(p.sta + s) * m * m / 10));
+    }
+    function hpAtM(p, m, s) {
+        return Math.max(10, Math.floor((p.sta + s) * m));
+    }
+    function reverseIV(p, cp, hp) {
+        const res = [];
+        for (const { lv, m } of FULL_CPM) {
+            for (let a = 0; a <= 15; a++)
+                for (let d = 0; d <= 15; d++)
+                    for (let s = 0; s <= 15; s++) {
+                        if (cpAtM(p, m, a, d, s) !== cp) continue;
+                        if (hp != null && hpAtM(p, m, s) !== hp) continue;
+                        res.push({ lv, a, d, s, hp: hpAtM(p, m, s), pct: (a + d + s) / 45 });
+                    }
+        }
+        res.sort((x, y) => x.lv - y.lv || y.pct - x.pct);   // 等級小→大，同等級 IV% 高→低
+        return res;
+    }
+    function renderReverse(box, p, cp, hp) {
+        if (!box) return;
+        if (!p || !FULL_CPM.length) { box.innerHTML = ''; return; }
+        if (!(cp > 0)) { box.innerHTML = '<p class="cp-reverse-empty">請先輸入 CP。</p>'; return; }
+        const rows = reverseIV(p, cp, (hp != null && hp > 0) ? hp : null);
+        if (!rows.length) {
+            box.innerHTML = `<p class="cp-reverse-empty">找不到 ${esc(p.name)} CP ${cp}${hp ? ' / HP ' + hp : ''} 的組合。`
+                + `請確認數字（CP 是否為天氣加成後、或是否強化過）。</p>`;
+            return;
+        }
+        const CAP = 400, shown = rows.slice(0, CAP);
+        let body = '';
+        for (const r of shown) {
+            body += `<tr><td>Lv${r.lv}</td>`
+                + `<td class="ivcell v${r.a}">${r.a}</td><td class="ivcell v${r.d}">${r.d}</td><td class="ivcell v${r.s}">${r.s}</td>`
+                + `<td class="ivpct">${(r.pct * 100).toFixed(1)}%</td><td class="ivhp">${r.hp}</td></tr>`;
+        }
+        box.innerHTML = `
+            <p class="cp-reverse-count">${esc(p.name)} CP ${cp}${hp ? ` · HP ${hp}` : ''}：共 <strong>${rows.length}</strong> 種可能組合`
+            + `${rows.length > CAP ? `（顯示前 ${CAP} 筆，建議填 HP 縮小範圍）` : ''}</p>
+            <div class="lv-table-wrap">
+              <table class="iv-table reverse-table">
+                <thead><tr><th>等級</th><th>攻</th><th>防</th><th>耐</th><th>IV%</th><th>HP</th></tr></thead>
+                <tbody>${body}</tbody>
+              </table>
+            </div>`;
+    }
+    // 目前鎖定的寶可夢（供 CP 反查用）；由 filterResults 更新
+    let currentMon = null;
+    function runReverse() {
+        const box = document.getElementById('cpReverseResult');
+        if (!currentMon || !box) return;
+        const cpEl = document.getElementById('cpReverseCP'), hpEl = document.getElementById('cpReverseHP');
+        const cp = parseInt(cpEl ? cpEl.value : '', 10);
+        const hp = parseInt(hpEl ? hpEl.value : '', 10);
+        renderReverse(box, currentMon, isNaN(cp) ? 0 : cp, isNaN(hp) ? null : hp);
+    }
+    function updateReversePanel(mon) {
+        currentMon = mon || null;
+        const sec = document.getElementById('cpReverse');
+        if (!sec) return;
+        const title = document.getElementById('cpReverseTitle'), box = document.getElementById('cpReverseResult');
+        if (currentMon) {
+            sec.hidden = false;
+            if (title) title.textContent = currentMon.name + ' CP 反查 IV 組合';
+            const cpEl = document.getElementById('cpReverseCP');
+            if (cpEl && cpEl.value) runReverse(); else if (box) box.innerHTML = '';   // 換寶可夢時，若已填 CP 就即時重算
+        } else {
+            sec.hidden = true;
+            if (box) box.innerHTML = '';
+        }
+    }
+
     // ---- 高 IV CP·HP 對照表（IV 100%～91.1%）----------------------------------
     // 列出 IV 總和 ≥ 41（IV% ≥ 91.11%）的 35 種組合，及各自在 L15/20/25/40 的 CP 與 HP。
     // 每一頁都不同，是 ?mon= 網址很好的獨立內容。
@@ -410,8 +495,17 @@ export function initializeCpChecker() {
                 statusMessage.textContent = `資料載入成功！共 ${allPokemonData.length} 筆資料。`;
         }
         // 鎖定到單一寶可夢時，補上牠的全等級 CP 表（這是每個 ?mon= 網址的主要獨立內容）
-        renderLevelTable(resolveOne(query, visibleIdx));
+        const lockedMon = resolveOne(query, visibleIdx);
+        renderLevelTable(lockedMon);
+        updateReversePanel(lockedMon);   // 同步 CP 反查面板（顯示/隱藏 + 換寶可夢即時重算）
     }
+    // CP 反查 IV：查詢按鈕與 Enter
+    const cpReverseBtn = document.getElementById('cpReverseBtn');
+    if (cpReverseBtn) cpReverseBtn.addEventListener('click', runReverse);
+    ['cpReverseCP', 'cpReverseHP'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); runReverse(); } });
+    });
     // focus 就先把卡片補齊：使用者打第一個字之前就備好，感覺不到延遲
     searchInput.addEventListener('focus', ensureAllCards);
     searchInput.addEventListener('input', () => {

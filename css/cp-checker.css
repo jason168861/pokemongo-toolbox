@@ -270,6 +270,75 @@
 #cp-checker-app .iv-legend span { display: inline-flex; align-items: center; gap: 5px; }
 #cp-checker-app .iv-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
 
+/* --- CP 反查 IV（輸入 CP → 列出所有等級/IV 組合） --- */
+#cp-checker-app .cp-reverse {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #dddfe2;
+}
+#cp-checker-app .cp-reverse h2 {
+    font-size: 20px;
+    margin: 0 0 8px;
+    color: #1c1e21;
+}
+#cp-checker-app .cp-reverse-hint {
+    font-size: 14px;
+    color: #606770;
+    line-height: 1.7;
+    margin: 0 0 14px;
+}
+#cp-checker-app .cp-reverse-hint strong { color: #1c1e21; }
+#cp-checker-app .cp-reverse-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-end;
+}
+#cp-checker-app .cp-reverse-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #606770;
+    gap: 4px;
+}
+#cp-checker-app .cp-reverse-form input {
+    width: 120px;
+    padding: 9px 12px;
+    font-size: 16px;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+#cp-checker-app .cp-reverse-form input:focus { border-color: #1877f2; }
+#cp-checker-app .cp-reverse-form button {
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    background: #1877f2;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#cp-checker-app .cp-reverse-form button:hover { background: #166fe0; }
+#cp-checker-app .cp-reverse-count {
+    font-size: 14px;
+    color: #1c1e21;
+    margin: 16px 0 10px;
+}
+#cp-checker-app .cp-reverse-count strong { color: #1877f2; font-size: 16px; }
+#cp-checker-app .cp-reverse-empty {
+    font-size: 14px;
+    color: #606770;
+    margin: 16px 0 0;
+}
+/* 反查結果表沿用 .iv-table 樣式；等級欄靠左 */
+#cp-checker-app .iv-table.reverse-table td:first-child,
+#cp-checker-app .iv-table.reverse-table th:first-child { text-align: left; }
+
 /* --- 單隻寶可夢深入介紹（屬性/定位/招式/PvP）：目前僅烈空坐，用於收錄測試 --- */
 #cp-checker-app .mon-detail {
     margin-top: 26px;
