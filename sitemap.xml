@@ -81,6 +81,31 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://pogokit.com/cp/zapdos/</loc>
+    <lastmod>2026-08-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/cp/moltres/</loc>
+    <lastmod>2026-08-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/cp/articuno/</loc>
+    <lastmod>2026-08-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/cp/entei/</loc>
+    <lastmod>2026-08-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/cp/suicune/</loc>
+    <lastmod>2026-08-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://pogokit.com/?tab=pvp-ranker-app</loc>
     <lastmod>2026-07-08</lastmod>
     <priority>0.9</priority>
