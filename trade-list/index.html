@@ -774,7 +774,8 @@ window.addEventListener('popstate',()=>{ if(document.body.classList.contains('ed
 /* ---------- 版面計算(卡片固定,文字浮動) ---------- */
 const PAD=40,S=164,GAP=16,NOTELH=30;   // NOTELH=備註每行高度
 // 右上角推廣 QR 卡片(只放 QR)的尺寸;供繪製與「標題避讓」計算共用
-const QR_S=150, QR_PADPX=16, QR_TOP=20, QR_GAP=14, QR_TEXTH=26;   // QR_TEXTH:QR 下方提示文字的高度
+// 預設縮很小、只放右上角(不加下方提示文字)。QR_TEXTH=0 代表沒有文字列。
+const QR_S=72, QR_PADPX=8, QR_TOP=12, QR_GAP=14, QR_TEXTH=0;
 const QR_HINTF='700 15px "Microsoft JhengHei",sans-serif';
 let _measCtx=null;   // 離屏量測文字寬度(給標題避讓/QR 卡片大小用)
 function measureText(text,font){ if(!_measCtx)_measCtx=document.createElement('canvas').getContext('2d'); _measCtx.font=font; return _measCtx.measureText(text).width; }
@@ -783,9 +784,9 @@ function fitTextSize(text,base,maxW,weight,font){
   const w=measureText(text,(weight||900)+' '+base+'px '+(font||DEFONT));
   return w>maxW ? Math.max(16, Math.floor(base*maxW/w)) : base;
 }
-// QR 卡片尺寸(含下方提示文字):寬度自適應文字但有上限,高度固定
-function qrCardW(){ return Math.max(QR_S, Math.min(measureText(tr('scan_hint'),QR_HINTF),300))+QR_PADPX*2; }
-function qrCardH(){ return QR_PADPX+QR_S+8+QR_TEXTH+QR_PADPX; }
+// QR 卡片尺寸:只有 QR + 四周留白(不含文字),正方形小卡
+function qrCardW(){ return QR_S+QR_PADPX*2; }
+function qrCardH(){ return QR_S+QR_PADPX*2; }
 let COLS=5, LAYW=2*PAD+GAP+COLS*(S+GAP);   // 於 boot 依裝置寬度設定:桌機每排更多、手機維持 5
 const COLS_MIN=3, COLS_MAX=15;
 // 有效每排數量:不超過「內容較多的一側」的隻數(例如兩側各 6/5,設 10 時實際每排 6,不留空位)
@@ -1016,11 +1017,7 @@ async function drawBaseTo(x,lay,SC,offY){
       const q=await loadImg('assets/brand/qr.png');
       x.save(); x.shadowColor='rgba(0,0,0,.28)'; x.shadowBlur=10; x.shadowOffsetY=3;
       x.fillStyle='#fff'; rrPath(x,cx0,cy0,cardW,cardH,16); x.fill(); x.restore();
-      if(q) x.drawImage(q, midX-QR_S/2, cy0+QR_PADPX, QR_S, QR_S);   // QR 置中
-      const hint=tr('scan_hint'); let fs=15; const setF=s=>x.font='700 '+s+'px "Microsoft JhengHei",sans-serif';
-      setF(fs); while(fs>10 && x.measureText(hint).width>cardW-12){ setF(--fs); }
-      x.fillStyle='#111'; x.textAlign='center'; x.textBaseline='top';
-      x.fillText(hint, midX, cy0+QR_PADPX+QR_S+8);
+      if(q) x.drawImage(q, midX-QR_S/2, cy0+QR_PADPX, QR_S, QR_S);   // 只放小 QR,不加提示文字
     }
   }
 }
