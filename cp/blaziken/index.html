@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
+<title>火焰雞 IV100 CP 速查｜Lv1-50 全等級 CP 表｜Pokémon Go 工具箱</title>
+<meta name="description" content="火焰雞（#257，火／格鬥）的 IV 100% CP 速查與 Lv1～50 全等級 CP 對照表：滿 IV 最大 CP L40 2848／L50 3219，含屬性剋制、推薦招式、團體戰與 PvP 聯盟定位。">
+<link rel="canonical" href="https://jason168861.github.io/pokemongo-toolbox/cp/blaziken/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Pokémon Go 工具箱">
+<meta property="og:title" content="火焰雞 IV100 CP 查詢｜Lv1-50 全等級 CP 表">
+<meta property="og:description" content="火焰雞（#257，火／格鬥）的 IV 100% CP 速查與 Lv1～50 全等級 CP 對照表：滿 IV 最大 CP L40 2848／L50 3219，含屬性剋制、推薦招式、團體戰與 PvP 聯盟定位。">
+<meta property="og:url" content="https://jason168861.github.io/pokemongo-toolbox/cp/blaziken/">
+<meta property="og:image" content="https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon%20-%20256x256/Addressable%20Assets/pm257.icon.png">
+<meta property="og:locale" content="zh_TW">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Pokémon Go 工具箱","item":"https://jason168861.github.io/pokemongo-toolbox/"},{"@type":"ListItem","position":2,"name":"IV100 CP 查詢","item":"https://jason168861.github.io/pokemongo-toolbox/?tab=cp-checker-app"},{"@type":"ListItem","position":3,"name":"火焰雞 CP","item":"https://jason168861.github.io/pokemongo-toolbox/cp/blaziken/"}]}</script>
+<style>
+:root{--bg:#f0f2f5;--card:#fff;--ink:#1c1e21;--ink2:#3a3b3c;--muted:#606770;--line:#dddfe2;
+ --blue:#1877f2;--blue2:#4aa3e8;--red:#e63946;--green:#2f9e57;--dragon:#6a5ae0;--flying:#4aa3e8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
+ line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 70px}
+.crumb{font-size:13px;color:var(--muted);margin:4px 0 16px}
+.crumb a{color:var(--blue);text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.card{background:var(--card);border-radius:10px;box-shadow:0 2px 4px rgba(0,0,0,.08);padding:22px 22px;margin-bottom:16px}
+.head{display:flex;gap:16px;align-items:center}
+.head img{width:84px;height:84px;border-radius:16px;background:linear-gradient(140deg,var(--dragon),var(--flying));padding:6px;flex:none}
+.dexno{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+h1{font-size:26px;margin:2px 0 8px;font-weight:750;letter-spacing:-.01em}
+.types{display:flex;gap:8px}
+.type{font-size:12.5px;font-weight:700;color:#fff;padding:3px 12px;border-radius:999px}
+.t0{background:var(--dragon)}.t1{background:var(--flying)}
+.lead{font-size:15px;color:var(--ink2);margin:16px 0 0}
+.lead strong{color:var(--ink)}
+h2{font-size:19px;margin:0 0 10px;color:var(--ink);letter-spacing:-.01em}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px}
+.stat{background:#f7f8fa;border-radius:11px;padding:13px 15px}
+.stat .v{font-size:23px;font-weight:730;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:.5em;color:var(--muted);font-weight:600}
+.stat .l{font-size:12px;color:var(--ink2);margin-top:1px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.cp{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+table.cp caption{caption-side:top;text-align:left;color:var(--muted);font-size:13px;padding-bottom:8px}
+table.cp th,table.cp td{border:1px solid #e4e6eb;padding:7px 10px;text-align:right;white-space:nowrap}
+table.cp thead th{background:#f7f8fa;color:var(--ink);font-weight:700}
+table.cp tbody th{text-align:left;background:#fafbfc}
+table.cp td.mx{font-weight:700;color:var(--green)}
+table.cp td.mn{color:var(--muted)}
+table.cp td.nt,table.cp thead th:last-child{text-align:left;white-space:normal;color:var(--muted);font-size:13px;width:42%}
+table.cp thead th:last-child{color:var(--ink)}
+table.cp tr:nth-child(even) td,table.cp tr:nth-child(even) th{background:#fcfcfd}
+table.cp tr.key th,table.cp tr.key td{background:#eef7f1}
+table.cp tr.bb th,table.cp tr.bb td{background:#fff7e8}
+.foot-t{color:var(--muted);font-size:13px;margin:12px 0 0}
+.matchup{display:flex;flex-direction:column;gap:10px;margin:4px 0 12px}
+.mg{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.mlab{flex:none;width:44px;font-size:13px;font-weight:700;color:var(--muted)}
+.chip{font-size:13px;font-weight:600;padding:5px 11px;border-radius:9px;display:inline-flex;gap:6px;align-items:center}
+.chip em{font-style:normal;font-size:11.5px;opacity:.85;font-variant-numeric:tabular-nums}
+.chip.wk{background:#fdecec;color:#c5221f}.chip.wk.dbl{background:#f9d5d3;color:#a50e0e;font-weight:800}
+.chip.rs{background:#e7f5ec;color:#1e7e46}
+.note{color:var(--muted);font-size:13px;margin:6px 0 0}
+.note strong,.lead strong,.role strong{color:var(--ink)}
+.role{font-size:14.5px;color:var(--ink2);margin:0 0 14px}
+ul.moves{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+ul.moves li{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+ul.moves .k{flex:none;width:82px;font-size:12.5px;font-weight:700;color:var(--muted)}
+ul.moves .v{font-size:14px}ul.moves .v b{color:var(--blue)}
+ul.moves .v em{font-style:normal;font-size:12px;color:#d97706;font-weight:700}
+.league{display:grid;gap:10px;margin:6px 0 12px}
+.lrow{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:center}
+.lname{font-size:13.5px;font-weight:600}
+.lbar{height:9px;background:#e9ebee;border-radius:999px;overflow:hidden}
+.lbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--blue2))}
+.lrk{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lrk b{color:var(--ink);font-size:13.5px}
+.related p{margin:0 0 8px;font-size:14px}
+.related a{color:var(--blue);text-decoration:none;padding:2px 4px;border-radius:4px}
+.related a:hover{background:#eaf2fd;text-decoration:underline}
+.related strong{color:var(--muted);font-weight:600}
+.cta{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;
+ padding:11px 20px;border-radius:8px;font-size:15px}
+.cta:hover{background:#166fe0}
+.pagefoot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px}
+.pagefoot a{color:var(--muted)}
+@media (max-width:480px){.lrow{grid-template-columns:64px 1fr}.lrk{grid-column:2;text-align:right}}
+/* 高 IV CP·HP 對照表 */
+table.iv{border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:560px}
+table.iv th,table.iv td{border:1px solid #e4e6eb;padding:4px 7px;text-align:right}
+table.iv thead th{background:#f7f8fa;color:var(--ink);font-weight:700;text-align:center}
+table.iv td.pct{text-align:left;color:var(--muted)}
+table.iv tr.hundo td.pct{color:var(--red);font-weight:800}
+table.iv td.hp{color:var(--muted)}
+table.iv td.iv{color:#fff;font-weight:700;text-align:center}
+table.iv td.v15{background:#e63946}
+table.iv td.v14{background:#2b6cb0}
+table.iv td.v13{background:#2f9e57}
+table.iv td.v12{background:#d98324}
+table.iv td.v11{background:#8a8f98}
+table.iv tbody tr:nth-child(even) td:not(.iv){background:#fcfcfd}
+.iv-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:12px;color:var(--muted)}
+.iv-legend span{display:inline-flex;align-items:center;gap:5px}
+.iv-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+/* 浮動搜尋鈕 */
+.fab{position:fixed;right:16px;bottom:16px;z-index:60;display:inline-flex;align-items:center;gap:8px;
+ background:var(--blue);color:#fff;text-decoration:none;font-weight:700;font-size:14px;
+ padding:12px 18px;border-radius:999px;box-shadow:0 6px 18px rgba(24,119,242,.45)}
+.fab:hover{background:#166fe0}
+.fab:active{transform:translateY(1px)}
+@media (max-width:480px){.fab{padding:12px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumb" aria-label="麵包屑">
+    <a href="../../">工具箱首頁</a> ›
+    <a href="../../?tab=cp-checker-app">IV100 CP 查詢</a> ›
+    <span>火焰雞</span>
+  </nav>
+
+  <div class="card">
+    <div class="head">
+      <img src="https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon%20-%20256x256/Addressable%20Assets/pm257.icon.png" alt="火焰雞" width="84" height="84" loading="lazy" style="background:linear-gradient(140deg,#ff9d55,#ce4069)">
+      <div>
+        <div class="dexno">#257</div>
+        <h1>火焰雞 IV100 CP 查詢</h1>
+        <div class="types"><span class="type" style="background:#ff9d55">火</span><span class="type" style="background:#ce4069">格鬥</span></div>
+      </div>
+    </div>
+    <p class="lead">火焰雞（#257）是 <strong>火／格鬥</strong> 屬性，基礎數值 攻擊 <strong>240</strong>／防禦 141／耐力 190，滿 IV 最大 CP 為 L40 2848、L50 3219。 以下提供牠的 Lv1～50 全等級 CP 對照表、屬性剋制、角色定位、推薦招式與對戰聯盟表現。</p>
+  </div>
+
+  <div class="card">
+    <h2>火焰雞 關鍵數據</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">2848</div><div class="l">滿 IV 最大 CP（L40）</div></div>
+      <div class="stat"><div class="v">3219</div><div class="l">滿 IV 最大 CP（L50）</div></div>
+      <div class="stat"><div class="v">240</div><div class="l">基礎攻擊</div></div>
+      <div class="stat"><div class="v">141<small> / 190</small></div><div class="l">防禦 / 耐力</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>火焰雞 高 IV CP·HP 對照表（IV 100%～91.1%）</h2>
+    <p class="foot-t" style="margin:0 0 12px">IV 總和最高的 35 種組合（IV% ≥ 91.1%），以及各自在 L15／L20／L25／L40 的 CP 與 HP。
+       攻／防／耐為個體值（0～15）。</p>
+    <div class="tbl-wrap"><table class="iv"><thead><tr><th rowspan="2">IV%</th><th colspan="3">個體值 攻/防/耐</th><th colspan="2">L15</th><th colspan="2">L20</th><th colspan="2">L25</th><th colspan="2">L40</th></tr><tr><th>攻</th><th>防</th><th>耐</th><th>CP</th><th>HP</th><th>CP</th><th>HP</th><th>CP</th><th>HP</th><th>CP</th><th>HP</th></tr></thead><tbody><tr class="hundo"><td class="pct">100.00%</td><td class="iv v15">15</td><td class="iv v15">15</td><td class="iv v15">15</td><td>1220</td><td class="hp">106</td><td>1627</td><td class="hp">122</td><td>2034</td><td class="hp">136</td><td>2848</td><td class="hp">162</td></tr><tr><td class="pct">97.78%</td><td class="iv v15">15</td><td class="iv v15">15</td><td class="iv v14">14</td><td>1217</td><td class="hp">105</td><td>1623</td><td class="hp">121</td><td>2029</td><td class="hp">136</td><td>2841</td><td class="hp">161</td></tr><tr><td class="pct">97.78%</td><td class="iv v15">15</td><td class="iv v14">14</td><td class="iv v15">15</td><td>1216</td><td class="hp">106</td><td>1622</td><td class="hp">122</td><td>2027</td><td class="hp">136</td><td>2839</td><td class="hp">162</td></tr><tr><td class="pct">97.78%</td><td class="iv v14">14</td><td class="iv v15">15</td><td class="iv v15">15</td><td>1215</td><td class="hp">106</td><td>1621</td><td class="hp">122</td><td>2026</td><td class="hp">136</td><td>2836</td><td class="hp">162</td></tr><tr><td class="pct">95.56%</td><td class="iv v15">15</td><td class="iv v15">15</td><td class="iv v13">13</td><td>1214</td><td class="hp">105</td><td>1619</td><td class="hp">121</td><td>2024</td><td class="hp">135</td><td>2834</td><td class="hp">160</td></tr><tr><td class="pct">95.56%</td><td class="iv v15">15</td><td class="iv v14">14</td><td class="iv v14">14</td><td>1213</td><td class="hp">105</td><td>1618</td><td class="hp">121</td><td>2022</td><td class="hp">136</td><td>2832</td><td class="hp">161</td></tr><tr><td class="pct">95.56%</td><td class="iv v14">14</td><td class="iv v15">15</td><td class="iv v14">14</td><td>1212</td><td class="hp">105</td><td>1617</td><td class="hp">121</td><td>2021</td><td class="hp">136</td><td>2830</td><td class="hp">161</td></tr><tr><td class="pct">95.56%</td><td class="iv v15">15</td><td class="iv v13">13</td><td class="iv v15">15</td><td>1212</td><td class="hp">106</td><td>1616</td><td class="hp">122</td><td>2021</td><td class="hp">136</td><td>2829</td><td class="hp">162</td></tr><tr><td class="pct">95.56%</td><td class="iv v14">14</td><td class="iv v14">14</td><td class="iv v15">15</td><td>1212</td><td class="hp">106</td><td>1615</td><td class="hp">122</td><td>2019</td><td class="hp">136</td><td>2827</td><td class="hp">162</td></tr><tr><td class="pct">95.56%</td><td class="iv v13">13</td><td class="iv v15">15</td><td class="iv v15">15</td><td>1211</td><td class="hp">106</td><td>1614</td><td class="hp">122</td><td>2018</td><td class="hp">136</td><td>2825</td><td class="hp">162</td></tr><tr><td class="pct">93.33%</td><td class="iv v15">15</td><td class="iv v15">15</td><td class="iv v12">12</td><td>1211</td><td class="hp">104</td><td>1615</td><td class="hp">120</td><td>2019</td><td class="hp">134</td><td>2827</td><td class="hp">159</td></tr><tr><td class="pct">93.33%</td><td class="iv v15">15</td><td class="iv v14">14</td><td class="iv v13">13</td><td>1210</td><td class="hp">105</td><td>1614</td><td class="hp">121</td><td>2017</td><td class="hp">135</td><td>2825</td><td class="hp">160</td></tr><tr><td class="pct">93.33%</td><td class="iv v14">14</td><td class="iv v15">15</td><td class="iv v13">13</td><td>1210</td><td class="hp">105</td><td>1613</td><td class="hp">121</td><td>2016</td><td class="hp">135</td><td>2823</td><td class="hp">160</td></tr><tr><td class="pct">93.33%</td><td class="iv v15">15</td><td class="iv v13">13</td><td class="iv v14">14</td><td>1209</td><td class="hp">105</td><td>1613</td><td class="hp">121</td><td>2016</td><td class="hp">136</td><td>2822</td><td class="hp">161</td></tr><tr><td class="pct">93.33%</td><td class="iv v15">15</td><td class="iv v12">12</td><td class="iv v15">15</td><td>1208</td><td class="hp">106</td><td>1611</td><td class="hp">122</td><td>2014</td><td class="hp">136</td><td>2820</td><td class="hp">162</td></tr><tr><td class="pct">93.33%</td><td class="iv v14">14</td><td class="iv v14">14</td><td class="iv v14">14</td><td>1209</td><td class="hp">105</td><td>1611</td><td class="hp">121</td><td>2015</td><td class="hp">136</td><td>2820</td><td class="hp">161</td></tr><tr><td class="pct">93.33%</td><td class="iv v14">14</td><td class="iv v13">13</td><td class="iv v15">15</td><td>1208</td><td class="hp">106</td><td>1610</td><td class="hp">122</td><td>2013</td><td class="hp">136</td><td>2818</td><td class="hp">162</td></tr><tr><td class="pct">93.33%</td><td class="iv v13">13</td><td class="iv v15">15</td><td class="iv v14">14</td><td>1208</td><td class="hp">105</td><td>1610</td><td class="hp">121</td><td>2013</td><td class="hp">136</td><td>2818</td><td class="hp">161</td></tr><tr><td class="pct">93.33%</td><td class="iv v13">13</td><td class="iv v14">14</td><td class="iv v15">15</td><td>1207</td><td class="hp">106</td><td>1609</td><td class="hp">122</td><td>2012</td><td class="hp">136</td><td>2816</td><td class="hp">162</td></tr><tr><td class="pct">93.33%</td><td class="iv v12">12</td><td class="iv v15">15</td><td class="iv v15">15</td><td>1206</td><td class="hp">106</td><td>1608</td><td class="hp">122</td><td>2010</td><td class="hp">136</td><td>2814</td><td class="hp">162</td></tr><tr><td class="pct">91.11%</td><td class="iv v15">15</td><td class="iv v15">15</td><td class="iv v11">11</td><td>1208</td><td class="hp">103</td><td>1611</td><td class="hp">120</td><td>2014</td><td class="hp">134</td><td>2820</td><td class="hp">158</td></tr><tr><td class="pct">91.11%</td><td class="iv v15">15</td><td class="iv v14">14</td><td class="iv v12">12</td><td>1207</td><td class="hp">104</td><td>1610</td><td class="hp">120</td><td>2013</td><td class="hp">134</td><td>2818</td><td class="hp">159</td></tr><tr><td class="pct">91.11%</td><td class="iv v14">14</td><td class="iv v15">15</td><td class="iv v12">12</td><td>1207</td><td class="hp">104</td><td>1609</td><td class="hp">120</td><td>2011</td><td class="hp">134</td><td>2816</td><td class="hp">159</td></tr><tr><td class="pct">91.11%</td><td class="iv v15">15</td><td class="iv v13">13</td><td class="iv v13">13</td><td>1206</td><td class="hp">105</td><td>1609</td><td class="hp">121</td><td>2011</td><td class="hp">135</td><td>2815</td><td class="hp">160</td></tr><tr><td class="pct">91.11%</td><td class="iv v14">14</td><td class="iv v14">14</td><td class="iv v13">13</td><td>1206</td><td class="hp">105</td><td>1607</td><td class="hp">121</td><td>2010</td><td class="hp">135</td><td>2814</td><td class="hp">160</td></tr><tr><td class="pct">91.11%</td><td class="iv v15">15</td><td class="iv v12">12</td><td class="iv v14">14</td><td>1205</td><td class="hp">105</td><td>1607</td><td class="hp">121</td><td>2009</td><td class="hp">136</td><td>2813</td><td class="hp">161</td></tr><tr><td class="pct">91.11%</td><td class="iv v15">15</td><td class="iv v11">11</td><td class="iv v15">15</td><td>1204</td><td class="hp">106</td><td>1606</td><td class="hp">122</td><td>2008</td><td class="hp">136</td><td>2811</td><td class="hp">162</td></tr><tr><td class="pct">91.11%</td><td class="iv v14">14</td><td class="iv v13">13</td><td class="iv v14">14</td><td>1205</td><td class="hp">105</td><td>1606</td><td class="hp">121</td><td>2008</td><td class="hp">136</td><td>2811</td><td class="hp">161</td></tr><tr><td class="pct">91.11%</td><td class="iv v13">13</td><td class="iv v15">15</td><td class="iv v13">13</td><td>1205</td><td class="hp">105</td><td>1606</td><td class="hp">121</td><td>2008</td><td class="hp">135</td><td>2811</td><td class="hp">160</td></tr><tr><td class="pct">91.11%</td><td class="iv v14">14</td><td class="iv v12">12</td><td class="iv v15">15</td><td>1204</td><td class="hp">106</td><td>1605</td><td class="hp">122</td><td>2006</td><td class="hp">136</td><td>2809</td><td class="hp">162</td></tr><tr><td class="pct">91.11%</td><td class="iv v13">13</td><td class="iv v14">14</td><td class="iv v14">14</td><td>1204</td><td class="hp">105</td><td>1605</td><td class="hp">121</td><td>2007</td><td class="hp">136</td><td>2809</td><td class="hp">161</td></tr><tr><td class="pct">91.11%</td><td class="iv v13">13</td><td class="iv v13">13</td><td class="iv v15">15</td><td>1203</td><td class="hp">106</td><td>1604</td><td class="hp">122</td><td>2005</td><td class="hp">136</td><td>2807</td><td class="hp">162</td></tr><tr><td class="pct">91.11%</td><td class="iv v12">12</td><td class="iv v15">15</td><td class="iv v14">14</td><td>1203</td><td class="hp">105</td><td>1604</td><td class="hp">121</td><td>2005</td><td class="hp">136</td><td>2807</td><td class="hp">161</td></tr><tr><td class="pct">91.11%</td><td class="iv v12">12</td><td class="iv v14">14</td><td class="iv v15">15</td><td>1202</td><td class="hp">106</td><td>1603</td><td class="hp">122</td><td>2004</td><td class="hp">136</td><td>2805</td><td class="hp">162</td></tr><tr><td class="pct">91.11%</td><td class="iv v11">11</td><td class="iv v15">15</td><td class="iv v15">15</td><td>1201</td><td class="hp">106</td><td>1601</td><td class="hp">122</td><td>2002</td><td class="hp">136</td><td>2803</td><td class="hp">162</td></tr></tbody></table></div>
+    <div class="iv-legend">
+      <span><i style="background:#e63946"></i>15</span>
+      <span><i style="background:#2b6cb0"></i>14</span>
+      <span><i style="background:#2f9e57"></i>13</span>
+      <span><i style="background:#d98324"></i>12</span>
+      <span><i style="background:#8a8f98"></i>11</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>火焰雞 全等級 CP 對照表（Lv1～Lv50）</h2>
+    <p class="foot-t" style="margin:0 0 12px">火焰雞（#257）基礎數值 攻擊 240／防禦 141／耐力 190。
+       <strong>100% IV</strong>（15/15/15）為該等級 CP 上限，<strong>0% IV</strong>（0/0/0）為下限。</p>
+    <div class="tbl-wrap">
+      <table class="cp">
+        <caption>火焰雞 各等級 CP（100% IV / 0% IV）</caption>
+        <thead><tr><th>等級</th><th>100% IV</th><th>0% IV</th><th>說明</th></tr></thead>
+        <tbody><tr class=""><th scope="row">Lv1</th><td class="mx">40</td><td class="mn">34</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv2</th><td class="mx">126</td><td class="mn">108</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv3</th><td class="mx">212</td><td class="mn">182</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv4</th><td class="mx">298</td><td class="mn">256</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv5</th><td class="mx">384</td><td class="mn">330</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv6</th><td class="mx">470</td><td class="mn">404</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv7</th><td class="mx">556</td><td class="mn">479</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv8</th><td class="mx">642</td><td class="mn">553</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv9</th><td class="mx">728</td><td class="mn">627</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv10</th><td class="mx">814</td><td class="mn">701</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv11</th><td class="mx">895</td><td class="mn">771</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv12</th><td class="mx">976</td><td class="mn">841</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv13</th><td class="mx">1058</td><td class="mn">911</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv14</th><td class="mx">1139</td><td class="mn">981</td><td class="nt"></td></tr><tr class="key"><th scope="row">Lv15</th><td class="mx">1220</td><td class="mn">1051</td><td class="nt">🔬 田野調查 · 🤝 小隊合作</td></tr><tr class=""><th scope="row">Lv16</th><td class="mx">1302</td><td class="mn">1121</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv17</th><td class="mx">1383</td><td class="mn">1191</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv18</th><td class="mx">1464</td><td class="mn">1261</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv19</th><td class="mx">1546</td><td class="mn">1331</td><td class="nt"></td></tr><tr class="key"><th scope="row">Lv20</th><td class="mx">1627</td><td class="mn">1401</td><td class="nt">⚔️ 團體戰（無天氣加成）· 🥚 孵化的蛋</td></tr><tr class=""><th scope="row">Lv21</th><td class="mx">1708</td><td class="mn">1472</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv22</th><td class="mx">1790</td><td class="mn">1542</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv23</th><td class="mx">1871</td><td class="mn">1612</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv24</th><td class="mx">1953</td><td class="mn">1682</td><td class="nt"></td></tr><tr class="key"><th scope="row">Lv25</th><td class="mx">2034</td><td class="mn">1752</td><td class="nt">☀️ 團體戰（天氣加成）</td></tr><tr class=""><th scope="row">Lv26</th><td class="mx">2115</td><td class="mn">1822</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv27</th><td class="mx">2197</td><td class="mn">1892</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv28</th><td class="mx">2278</td><td class="mn">1962</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv29</th><td class="mx">2360</td><td class="mn">2033</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv30</th><td class="mx">2441</td><td class="mn">2103</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv31</th><td class="mx">2482</td><td class="mn">2138</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv32</th><td class="mx">2522</td><td class="mn">2173</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv33</th><td class="mx">2563</td><td class="mn">2208</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv34</th><td class="mx">2604</td><td class="mn">2243</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv35</th><td class="mx">2644</td><td class="mn">2278</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv36</th><td class="mx">2685</td><td class="mn">2313</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv37</th><td class="mx">2726</td><td class="mn">2348</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv38</th><td class="mx">2766</td><td class="mn">2383</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv39</th><td class="mx">2807</td><td class="mn">2418</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv40</th><td class="mx">2848</td><td class="mn">2453</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv41</th><td class="mx">2884</td><td class="mn">2484</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv42</th><td class="mx">2920</td><td class="mn">2515</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv43</th><td class="mx">2957</td><td class="mn">2547</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv44</th><td class="mx">2994</td><td class="mn">2579</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv45</th><td class="mx">3031</td><td class="mn">2611</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv46</th><td class="mx">3068</td><td class="mn">2643</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv47</th><td class="mx">3106</td><td class="mn">2675</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv48</th><td class="mx">3143</td><td class="mn">2708</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv49</th><td class="mx">3181</td><td class="mn">2740</td><td class="nt"></td></tr><tr class=""><th scope="row">Lv50</th><td class="mx">3219</td><td class="mn">2773</td><td class="nt"></td></tr><tr class="bb"><th scope="row">Lv51</th><td class="mx">3258</td><td class="mn">2806</td><td class="nt">⭐ 最佳夥伴加成</td></tr></tbody>
+      </table>
+    </div>
+    <p class="foot-t">Lv51 為最佳夥伴狀態下的等級上限；一般強化上限為 Lv50。資料來源為 Pokémon GO GAME_MASTER。</p>
+  </div>
+
+  <div class="card">
+    <h2>火焰雞 屬性與剋制</h2>
+    <div class="matchup">
+      <div class="mg"><span class="mlab">弱點</span><span class="chip wk">水 <em>×1.6</em></span><span class="chip wk">地面 <em>×1.6</em></span><span class="chip wk">飛行 <em>×1.6</em></span><span class="chip wk">超能力 <em>×1.6</em></span></div>
+      <div class="mg"><span class="mlab">抗性</span><span class="chip rs">蟲 <em>×0.39</em></span><span class="chip rs">火 <em>×0.63</em></span><span class="chip rs">草 <em>×0.63</em></span><span class="chip rs">冰 <em>×0.63</em></span><span class="chip rs">惡 <em>×0.63</em></span><span class="chip rs">鋼 <em>×0.63</em></span></div>
+    </div>
+    <p class="note">用 <strong>水</strong>系招式打 火焰雞 效果最好；牠怕 水、地面、飛行、超能力，對 蟲、火、草、冰 則有抗性。 天氣為 <strong>晴朗、陰天</strong> 時，火焰雞 的招式會加成、被捕捉時 CP 也較高。</p>
+  </div>
+
+  <div class="card">
+    <h2>火焰雞 角色定位與推薦招式</h2>
+    <p class="role">火焰雞 的數值偏 <strong>高攻攻擊手</strong>（攻擊 240／防禦 141／耐力 190）。攻擊數值突出，適合在團體戰擔任輸出。</p>
+    <ul class="moves"><li><span class="k">推薦招式</span><span class="v">火花 ＋ 波導彈／爆炸烈焰 <em>（依高級聯盟排名）</em></span></li><li><span class="k">好友距離</span><span class="v">3 公里</span></li></ul>
+  </div>
+
+  <div class="card">
+    <h2>火焰雞 對戰聯盟表現</h2>
+    <div class="league"><div class="lrow"><span class="lname">高級聯盟</span><span class="lbar"><i style="width:83.6%"></i></span><span class="lrk"><b>#181</b> / 841 · 83.6 分</span></div><div class="lrow"><span class="lname">超級聯盟</span><span class="lbar"><i style="width:82.3%"></i></span><span class="lrk"><b>#244</b> / 1143 · 82.3 分</span></div></div>
+    <p class="note">在對戰聯盟中，火焰雞 於 <strong>高級聯盟</strong> 最實用（第 181 名／共 841，評分 83.6）。</p>
+  </div>
+
+  <div class="card related">
+    <h2>相關寶可夢</h2>
+    <p><strong>圖鑑相鄰：</strong>上一隻 <a href="../../?tab=cp-checker-app&mon=力壯雞">力壯雞</a>　·　下一隻 <a href="../../?tab=cp-checker-app&mon=水躍魚">水躍魚</a></p>
+    <p><strong>互動查詢：</strong>在工具裡即時查 <a href="../../?tab=cp-checker-app&mon=火焰雞">火焰雞</a> 的完整資料。</p>
+  </div>
+
+  <div style="text-align:center;margin-top:8px">
+    <a class="cta" href="../../?tab=cp-checker-app&mon=火焰雞">開啟互動 CP 查詢工具 →</a>
+  </div>
+
+  <p class="pagefoot"><a href="../../">Pokémon Go 工具箱</a> · IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢</p>
+</div>
+
+<a class="fab" href="../../?tab=cp-checker-app" aria-label="搜尋其他寶可夢">🔍 <span>搜尋寶可夢</span></a>
+</body>
+</html>

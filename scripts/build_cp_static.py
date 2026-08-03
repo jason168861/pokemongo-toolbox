@@ -173,7 +173,7 @@ def _json_block(txt, name):
 _RANK_SRC = open(os.path.join(ROOT, "data", "pokemon_data_and_rankings.js"), encoding="utf-8").read()
 POKEDEX = _json_block(_RANK_SRC, "POKEDEX")
 PDX_BY_NAME = {_norm(d["name"]): d for d in POKEDEX}
-LEAGUE_ZH = {"great": "特級聯盟", "ultra": "超級聯盟", "master": "大師聯盟"}
+LEAGUE_ZH = {"great": "超級聯盟", "ultra": "高級聯盟", "master": "大師聯盟"}
 RANKS = {}
 for _lg, _var in (("great", "POKEMON_RANKINGS_1500"), ("ultra", "POKEMON_RANKINGS_2500"), ("master", "POKEMON_RANKINGS_10000")):
     _arr = _json_block(_RANK_SRC, _var)
@@ -268,10 +268,10 @@ MANUAL_ENRICH = {
                   ("對戰 PvP", "龍尾 ＋ 廣域破壞／畫龍點睛 <em>（皆為菁英招式）</em>"),
                   ("好友距離", "20 公里")],
         "leagues": [("大師聯盟", 76, "#96", 405, "76.3"),
-                    ("超級聯盟", 43, "#361", 841, "77.8"),
-                    ("特級聯盟", 39, "#445", 1143, "77.2")],
+                    ("高級聯盟", 43, "#361", 841, "77.8"),
+                    ("超級聯盟", 39, "#445", 1143, "77.2")],
         "league_note": ("烈空坐在對戰中更適合<strong>大師聯盟</strong> —— 這裡沒有 CP 上限，牠不必刻意壓等。"
-                        "在超級與特級聯盟因體質偏脆、CP 又常超標，表現只算普通，一般不是首選。"),
+                        "在高級與超級聯盟因體質偏脆、CP 又常超標，表現只算普通，一般不是首選。"),
     }
 }
 
@@ -282,6 +282,7 @@ def get_enrich(name, p):
 TARGETS = [
     "烈空坐",
     "雷公", "雷吉艾斯", "雷吉斯奇魯", "由克希", "露奈雅拉", "轟擂金剛猩", "騎拉帝納 (起源形態)",
+    "火焰雞", "烈咬陸鯊", "波士可多拉",
 ]
 
 CSS = """
