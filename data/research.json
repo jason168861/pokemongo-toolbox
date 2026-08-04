@@ -1,5 +1,105 @@
 [
   {
+    "category": "Summer Marathon: Arctic Embers Tasks",
+    "tasks": [
+      {
+        "description": "探索 2 公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小火馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm77.icon.png",
+            "isShiny": true,
+            "maxCp": "727",
+            "minCp": "683"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "熔岩蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm218.icon.png",
+            "isShiny": true,
+            "maxCp": "383",
+            "minCp": "351"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "雪笠怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm459.icon.png",
+            "isShiny": true,
+            "maxCp": "497",
+            "minCp": "460"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你冰",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm582.icon.png",
+            "isShiny": true,
+            "maxCp": "443",
+            "minCp": "409"
+          }
+        ]
+      },
+      {
+        "description": "拜訪 10 個寶可補給站",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小火馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm77.icon.png",
+            "isShiny": true,
+            "maxCp": "727",
+            "minCp": "683"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "熔岩蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm218.icon.png",
+            "isShiny": true,
+            "maxCp": "383",
+            "minCp": "351"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "雪笠怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm459.icon.png",
+            "isShiny": true,
+            "maxCp": "497",
+            "minCp": "460"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你冰",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm582.icon.png",
+            "isShiny": true,
+            "maxCp": "443",
+            "minCp": "409"
+          }
+        ]
+      },
+      {
+        "description": "拜訪1個從未去過的寶可補給站",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Choose Your Path: Fairy Trail Tasks",
     "tasks": [
       {
