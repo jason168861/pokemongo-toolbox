@@ -1006,7 +1006,9 @@ async function drawBaseTo(x,lay,SC,offY){
     for(let i=0;i<s.items.length;i++){
       const row=(i/EC)|0, rw=s.rows[row];
       const cx=PAD+GAP+(i%EC)*(S+GAP), cy=s.panelY+GAP+rw.y;
-      if(cy+S+rw.noteH<visTop || cy>visBot) continue;   // 不在此段 → 跳過
+      // 不在此段 → 跳過。留 16 的邊界餘裕:卡片陰影(blur 8/offsetY 3)會溢出卡片外,
+      // 剛好卡在分段接縫上的卡片若被整個略過,接縫處會少一條陰影
+      if(cy+S+rw.noteH<visTop-16 || cy>visBot+16) continue;
       await drawCard(x,cx,cy,s.items[i],T,rw.noteH,s.col);
     }
   }
@@ -1025,14 +1027,23 @@ let baseBusy=false,baseAgain=false;
 // 大清單時 canvas 面積會超過瀏覽器(尤其 iOS ~16M px)上限而變空白 → 依總高度自動降解析度
 function scaleFor(H){ const MAX = window.innerWidth<700 ? 5e6 : 14e6;   // 手機記憶體較緊,面積上限壓低避免拖曳時被回收成空白
   return Math.min(2, Math.sqrt(MAX/(LAYW*Math.max(H,1)))); }
+const isMobileExport=()=> window.innerWidth<700 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 // 下載用:比預覽更清晰。下載 canvas 是一次性產生 blob(不像預覽會長時間保留、拖曳時被回收),
 // 可用到接近瀏覽器上限的解析度;仍以「面積」與「單邊」雙上限保護,避免超限變空白。
-function scaleForExport(H){
-  const mob = window.innerWidth<700 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  const MAXAREA = mob ? 1.6e7 : 6e7;     // 面積上限:手機≈iOS 16M px 內, 桌機更寬鬆
-  const MAXSIDE = mob ? 8192  : 16384;   // 單邊像素上限
+// tiled=true 代表走分塊+串流編碼路徑:整張圖從來不會同時存在於一個 canvas 或一塊記憶體裡,
+//   限制的是「一塊」而不是「一張」→ 面積上限可以放寬很多,手機才不會比電腦糊一半。
+//   (手機的 1.6e7 是照 iOS canvas 面積上限抓的,那條限制在分塊路徑上根本碰不到。)
+function scaleForExport(H,tiled){
+  const mob = isMobileExport();
+  // 分塊路徑刻意不分手機/桌機:串流編碼後記憶體峰值只跟「一塊」有關,原本壓低手機的理由已經不存在。
+  // 剩下的限制是「這張 PNG 還開得起來、傳得出去嗎」,那在手機和電腦上其實差不多。
+  // (所以同樣隻數下手機若還是比較糊,原因只剩每排數量:手機預設 5 欄 → 圖又窄又長,先撞到高度上限。)
+  const MAXAREA = tiled ? 1.2e8 : (mob ? 1.6e7 : 6e7);   // 單張 canvas 才受 iOS ~16M px 面積上限
+  const MAXSIDE = mob ? 8192  : 16384;                   // canvas 單邊像素上限
   let sc = Math.min(3, Math.sqrt(MAXAREA/(LAYW*Math.max(H,1))));   // 理想最高 3 倍
-  sc = Math.min(sc, MAXSIDE/LAYW, MAXSIDE/Math.max(H,1));          // 不超過單邊上限
+  sc = Math.min(sc, MAXSIDE/LAYW);                                 // 寬度:分塊時每塊仍是 W 寬,照樣受限
+  // 高度:分塊時 canvas 只有 TILE 高,不受 canvas 單邊上限;改用 32768(各家影像解碼器都吃得下的保守值)
+  sc = Math.min(sc, (tiled ? 32768 : MAXSIDE)/Math.max(H,1));
   return Math.max(0.5, sc);
 }
 // 偵測「降採樣」:iOS/手機 canvas 超過 GPU backing store 上限時,不會報錯也不一定空白,
@@ -1219,7 +1230,9 @@ function drawTextsTo(x,SC,offY){
    把整張切成多個高度安全(不會被 iOS 降採樣)的水平段分別繪製,取像素後自己組成 PNG。
    壓縮用瀏覽器內建 CompressionStream('deflate'=zlib),不需外部函式庫。 */
 const _crcTable=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0;}return t;})();
-function _crc32(bytes){let c=0xFFFFFFFF;for(let i=0;i<bytes.length;i++)c=_crcTable[(c^bytes[i])&0xFF]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
+// CRC32 可分次累積 → IDAT 的檢查碼不必等到拿到完整壓縮結果才算
+function _crc32Up(c,bytes){for(let i=0;i<bytes.length;i++)c=_crcTable[(c^bytes[i])&0xFF]^(c>>>8);return c>>>0;}
+function _crc32(bytes){return (_crc32Up(0xFFFFFFFF,bytes)^0xFFFFFFFF)>>>0;}
 function _u32(n){return new Uint8Array([(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255]);}
 function _pngChunk(type,data){
   const body=new Uint8Array(4+data.length);
@@ -1227,51 +1240,82 @@ function _pngChunk(type,data){
   body.set(data,4);
   return [_u32(data.length), body, _u32(_crc32(body))];
 }
-async function _deflate(bytes){
+// 串流 PNG 編碼器:一段一段餵進 deflate,全程不保留整張 RGBA。
+// 舊版要先湊出 W*H*4 的 rgba,再整份複製一次加 filter byte → 峰值 2×W·H·4(1.6e7 px 就吃掉 128MB),
+// 這也是手機面積上限被壓到 1.6e7 的真正原因。改成串流後峰值只跟「一塊」有關(與總高度無關),
+// 手機才敢把解析度拉到跟電腦同級。
+function createPNGStream(w,h){
   const cs=new CompressionStream('deflate');   // zlib 格式(PNG IDAT 需要)
-  const wr=cs.writable.getWriter(); wr.write(bytes); wr.close();
-  const rd=cs.readable.getReader(), chunks=[]; let len=0;
-  for(;;){ const {done,value}=await rd.read(); if(done)break; chunks.push(value); len+=value.length; }
-  const out=new Uint8Array(len); let o=0; for(const c of chunks){ out.set(c,o); o+=c.length; }
-  return out;
+  const wr=cs.writable.getWriter(), rd=cs.readable.getReader();
+  const IDAT=new Uint8Array([73,68,65,84]);
+  const chunks=[]; let clen=0, crc=_crc32Up(0xFFFFFFFF,IDAT), rows=0, dead=null;
+  // 一邊寫一邊讀:不同時抽走輸出的話,write() 會因為背壓一直不 resolve
+  const pump=(async()=>{ for(;;){ const {done,value}=await rd.read(); if(done)break;
+    chunks.push(value); clen+=value.length; crc=_crc32Up(crc,value); } })().catch(e=>{dead=dead||e;});
+  const stride=w*4;
+  return {
+    // 寫入一段(th 列)的 RGBA;每列前置 1 個 filter byte(0=None)
+    async addTile(data,th){
+      if(dead) throw dead;
+      // 每塊都配新的 buffer:CompressionStream 不保證 write() 完成後就不再讀這塊記憶體,
+      // 重用同一塊會被下一段覆寫掉還沒壓完的資料(實測會壞圖,只有單塊時看不出來)。
+      // 舊 buffer 立刻可回收,峰值仍只有一兩塊,與整張高度無關。
+      const buf=new Uint8Array((stride+1)*th);
+      for(let y=0;y<th;y++){ buf[y*(stride+1)]=0; buf.set(data.subarray(y*stride,(y+1)*stride), y*(stride+1)+1); }
+      rows+=th;
+      await wr.ready; await wr.write(buf);
+    },
+    async finish(){
+      if(rows!==h) throw new Error('PNG 列數不符:'+rows+'/'+h);
+      await wr.close(); await pump; if(dead) throw dead;
+      const ihdr=new Uint8Array(13);
+      ihdr.set(_u32(w),0); ihdr.set(_u32(h),4); ihdr[8]=8; ihdr[9]=6;   // 8-bit, color type 6 = RGBA
+      const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),
+        ..._pngChunk('IHDR',ihdr),
+        _u32(clen), IDAT, ...chunks, _u32((crc^0xFFFFFFFF)>>>0),   // IDAT 直接由壓縮輸出拼起,不再合併成一大塊
+        ..._pngChunk('IEND',new Uint8Array(0))];
+      return new Blob(parts,{type:'image/png'});
+    },
+    cancel(e){ try{ wr.abort(e); }catch(_){} try{ rd.cancel(); }catch(_){} }
+  };
 }
+// 保留:小圖/其他呼叫端仍可一次給整張 RGBA
 async function encodePNG(rgba,w,h){
-  const stride=w*4, raw=new Uint8Array((stride+1)*h);   // 每列前置 1 個 filter byte(0=None)
-  for(let y=0;y<h;y++){ raw[y*(stride+1)]=0; raw.set(rgba.subarray(y*stride,(y+1)*stride), y*(stride+1)+1); }
-  const comp=await _deflate(raw);
-  const ihdr=new Uint8Array(13);
-  ihdr.set(_u32(w),0); ihdr.set(_u32(h),4); ihdr[8]=8; ihdr[9]=6;   // 8-bit, color type 6 = RGBA
-  const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),
-    ..._pngChunk('IHDR',ihdr), ..._pngChunk('IDAT',comp), ..._pngChunk('IEND',new Uint8Array(0))];
-  return new Blob(parts,{type:'image/png'});
+  const s=createPNGStream(w,h);
+  try{ await s.addTile(rgba,h); return await s.finish(); }
+  catch(e){ s.cancel(e); throw e; }
 }
-// 分塊繪製 → 拼成完整 RGBA → 編碼 PNG。每段高度 TILE(device px)遠低於任何裝置上限,故不降採樣。
+// 分塊繪製 → 每畫完一段就直接壓進 PNG。每段高度 TILE(device px)遠低於任何裝置上限,故不降採樣。
 async function exportTiledBlob(lay,SC){
   const W=Math.round(LAYW*SC), H=Math.round(lay.H*SC), TILE=1024;
-  const rgba=new Uint8Array(W*H*4);
+  const png=createPNGStream(W,H);
   const tc=document.createElement('canvas'); tc.width=W;
-  for(let y0=0;y0<H;y0+=TILE){
-    const th=Math.min(TILE,H-y0); tc.height=th;
-    const x=tc.getContext('2d'); x.clearRect(0,0,W,th);
-    await drawBaseTo(x,lay,SC,y0); drawImagesTo(x,SC,y0); drawTextsTo(x,SC,y0);
-    rgba.set(x.getImageData(0,0,W,th).data, y0*W*4);
-  }
+  try{
+    for(let y0=0;y0<H;y0+=TILE){
+      const th=Math.min(TILE,H-y0); tc.height=th;
+      const x=tc.getContext('2d'); x.clearRect(0,0,W,th);
+      await drawBaseTo(x,lay,SC,y0); drawImagesTo(x,SC,y0); drawTextsTo(x,SC,y0);
+      await png.addTile(x.getImageData(0,0,W,th).data, th);
+    }
+  }catch(e){ png.cancel(e); tc.width=tc.height=1; throw e; }
   tc.width=tc.height=1;   // 釋放小 canvas
-  return encodePNG(rgba,W,H);
+  return png.finish();
 }
 // 產生匯出圖並回傳 Blob(下載/分享/複製共用)
 async function renderExportBlob(){
   const lay=computeLayout(); reconcile(lay);
-  const total=LIST.want.length+LIST.have.length;
   const cv=$('#cv');
-  const canTile = typeof CompressionStream!=='undefined';
-  if(canTile && (total>100 || lay.H>3600)){
-    let SC=scaleForExport(lay.H);
-    const cap=1.6e8; let px=LAYW*SC*lay.H*SC; if(px*4>cap) SC*=Math.sqrt(cap/(px*4));
-    SC=Math.max(0.6,Math.min(3,SC));
-    try{ return await exportTiledBlob(lay,SC); }catch(e){ console.warn('分塊輸出失敗,改用一般方式', e); }
+  const scPlain=scaleForExport(lay.H,false);
+  // 舊版只在 >100 隻才分塊,但手機單張 canvas 大約 30 隻就開始降解析度(電腦約 160 隻),
+  // 中間那段就是「愈多愈糊、而且手機糊得比電腦快」的來源。
+  // 改成:只要分塊能給到更高倍率就走分塊,門檻自動跟著版面走。
+  if(typeof CompressionStream!=='undefined'){
+    const SC=scaleForExport(lay.H,true);
+    if(SC>scPlain+1e-6){
+      try{ return await exportTiledBlob(lay,SC); }catch(e){ console.warn('分塊輸出失敗,改用一般方式', e); }
+    }
   }
-  let SC=scaleForExport(lay.H), x=cv.getContext('2d');
+  let SC=scPlain, x=cv.getContext('2d');
   for(let tries=0; tries<7; tries++){
     cv.width=Math.round(LAYW*SC); cv.height=Math.round(lay.H*SC); x=cv.getContext('2d');
     if(sharpEnough(x,cv.width,cv.height)) break;
