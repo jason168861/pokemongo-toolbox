@@ -1073,13 +1073,21 @@ let baseBusy=false,baseAgain=false;
 // 大清單時 canvas 面積會超過瀏覽器(尤其 iOS ~16M px)上限而變空白 → 依總高度自動降解析度
 function scaleFor(H){ const MAX = window.innerWidth<700 ? 5e6 : 14e6;   // 手機記憶體較緊,面積上限壓低避免拖曳時被回收成空白
   return Math.min(2, Math.sqrt(MAX/(LAYW*Math.max(H,1)))); }
-const isMobileExport=()=> window.innerWidth<700 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+/* iPadOS 13+ 的 Safari 預設送出「桌面版」UA(字串裡沒有 iPad,長得跟 Mac 一樣),
+   而且 iPad 的 innerWidth 通常 ≥700 → 只看 UA 或寬度會把 iPad 判成電腦,
+   結果 iPad 不跳存圖卡(下載只會進「檔案」App,永遠到不了相簿),還會套到桌機的 canvas 面積上限。
+   補抓方式:Mac 的 UA + 有多點觸控 —— 真的 Mac 沒有觸控螢幕,maxTouchPoints 是 0。 */
+const isIOSExport=()=> /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+  ((/Macintosh|Mac OS X/i.test(navigator.userAgent)||navigator.platform==='MacIntel') && navigator.maxTouchPoints>1);
 // iOS 與 Android 的分享表行為差很多,文案不能共用:
 //   iOS   分享表「本身」就有「儲存影像」→ 按下去確實會進相簿
 //   Android 分享匣只是把圖交給別的 App(LINE、雲端硬碟…),沒有內建的「存到相簿」動作;
-//           要進相簿反而是走「下載檔案」,存到 Download 後相簿的「裝置中的資料夾」就看得到
-const isIOSExport=()=> /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-  (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);   // iPadOS 會偽裝成 Mac
+//           要進相簿反而是走「下載檔案」,存到 Download 後會被 MediaStore 索引,相簿就看得到
+const isAndroidExport=()=> /Android/i.test(navigator.userAgent);
+// 記憶體較緊的裝置 → 決定 canvas 面積上限(窄視窗的桌機也一併保守處理,沒壞處)
+const isMobileExport=()=> isIOSExport() || isAndroidExport() || window.innerWidth<700;
+// 是否走「存圖結果卡」:只看作業系統,不看視窗寬度 —— 桌機把視窗縮窄不該變成手機流程
+const isTouchMobileOS=()=> isIOSExport() || isAndroidExport();
 // 下載用:比預覽更清晰。下載 canvas 是一次性產生 blob(不像預覽會長時間保留、拖曳時被回收),
 // 可用到接近瀏覽器上限的解析度;仍以「面積」與「單邊」雙上限保護,避免超限變空白。
 // tiled=true 代表走分塊+串流編碼路徑:整張圖從來不會同時存在於一個 canvas 或一塊記憶體裡,
@@ -1435,7 +1443,7 @@ async function downloadPNG(btn){
   try{
     const blob=await renderExportBlob(p=>showBusy(tr('share_wait')+' '+Math.round(p*100)+'%'));
     if(!blob){ await saveCanvas($('#cv'), tr('fname')+'.png'); return; }   // 極舊瀏覽器後備
-    if(!isMobileExport()){ await saveBlob(blob, tr('fname')+'.png'); return; }   // 電腦:維持原本直接下載
+    if(!isTouchMobileOS()){ await saveBlob(blob, tr('fname')+'.png'); return; }   // 電腦:維持原本直接下載
     // 手機:跳結果卡。順手記下原尺寸給卡片顯示(此時 lay 已由 renderExportBlob 算過,重算很便宜)
     const lay=computeLayout(), SC=Math.max(scaleForExport(lay.H,false),scaleForExport(lay.H,true));
     showSaveSheet(blob, Math.round(LAYW*SC), Math.round(lay.H*SC));
