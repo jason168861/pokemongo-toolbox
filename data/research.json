@@ -1,5 +1,79 @@
 [
   {
+    "category": "Choose Your Path: Venom and Vines Tasks",
+    "tasks": [
+      {
+        "description": "打敗1個GO火箭隊手下",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "毛球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm48.icon.png",
+            "isShiny": true,
+            "maxCp": "430",
+            "minCp": "396"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偽螳草",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm753.icon.png",
+            "isShiny": true,
+            "maxCp": "317",
+            "minCp": "288"
+          }
+        ]
+      },
+      {
+        "description": "投出 5 次Nice",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "毛球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm48.icon.png",
+            "isShiny": true,
+            "maxCp": "430",
+            "minCp": "396"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偽螳草",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm753.icon.png",
+            "isShiny": true,
+            "maxCp": "317",
+            "minCp": "288"
+          }
+        ]
+      },
+      {
+        "description": "探索 1 公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "毛球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm48.icon.png",
+            "isShiny": true,
+            "maxCp": "430",
+            "minCp": "396"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偽螳草",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm753.icon.png",
+            "isShiny": true,
+            "maxCp": "317",
+            "minCp": "288"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Summer Marathon: Arctic Embers Tasks",
     "tasks": [
       {
@@ -94,80 +168,6 @@
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
             "name": "神奇糖果 ×1",
             "quantity": "×1"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "Choose Your Path: Venom and Vines Tasks",
-    "tasks": [
-      {
-        "description": "打敗1個GO火箭隊手下",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "毛球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm48.icon.png",
-            "isShiny": true,
-            "maxCp": "430",
-            "minCp": "396"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "偽螳草",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm753.icon.png",
-            "isShiny": true,
-            "maxCp": "317",
-            "minCp": "288"
-          }
-        ]
-      },
-      {
-        "description": "投出 5 次Nice",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "毛球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm48.icon.png",
-            "isShiny": true,
-            "maxCp": "430",
-            "minCp": "396"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "偽螳草",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm753.icon.png",
-            "isShiny": true,
-            "maxCp": "317",
-            "minCp": "288"
-          }
-        ]
-      },
-      {
-        "description": "探索 1 公里",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "毛球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm48.icon.png",
-            "isShiny": true,
-            "maxCp": "430",
-            "minCp": "396"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "偽螳草",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm753.icon.png",
-            "isShiny": true,
-            "maxCp": "317",
-            "minCp": "288"
           }
         ]
       }
