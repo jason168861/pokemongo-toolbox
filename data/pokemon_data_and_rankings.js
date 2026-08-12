@@ -2990,6 +2990,24 @@ const POKEDEX = [
     }
   },
   {
+    "id": "starmie_mega",
+    "dexNumber": 121,
+    "name": "Starmie (Mega)",
+    "stats": {
+      "atk": 276,
+      "def": 229,
+      "sta": 155
+    },
+    "types": [
+      "water",
+      "psychic"
+    ],
+    "family": {
+      "id": "staryu",
+      "stage": 2
+    }
+  },
+  {
     "id": "mr_mime",
     "dexNumber": 122,
     "name": "魔牆人偶",
@@ -4132,7 +4150,7 @@ const POKEDEX = [
   {
     "id": "lanturnw",
     "dexNumber": 171,
-    "name": "電燈怪",
+    "name": "Lanturn",
     "stats": {
       "atk": 146,
       "def": 137,
@@ -7681,7 +7699,7 @@ const POKEDEX = [
   {
     "id": "cradily_b",
     "dexNumber": 346,
-    "name": "搖籃百合",
+    "name": "Cradily",
     "stats": {
       "atk": 152,
       "def": 194,
@@ -16809,7 +16827,7 @@ const POKEDEX = [
   {
     "id": "golisopodsh",
     "dexNumber": 768,
-    "name": "具甲武者",
+    "name": "Golisopod",
     "stats": {
       "atk": 218,
       "def": 226,
@@ -25013,7 +25031,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 100000
   },
   {
-    "name": "搖籃百合",
+    "name": "Cradily",
     "score": 85.9,
     "dex": 346,
     "type1": "岩石",
@@ -26377,7 +26395,7 @@ const POKEMON_RANKINGS_1500 = [
     "thirdMoveCost": 50000
   },
   {
-    "name": "具甲武者",
+    "name": "Golisopod",
     "score": 83.9,
     "dex": 768,
     "type1": "蟲",
