@@ -1559,18 +1559,57 @@ async function downloadPNG(btn){
 }
 // 一鍵分享(手機系統分享表)/複製到剪貼簿(電腦直接貼)
 // 產生「目前這組清單」的短連結:資料存雲端拿一個短 id,連結只帶 ?s=<id>,乾淨不長
+// 最後手段:隱藏 textarea + execCommand。非安全來源(http 區網測試)沒有 navigator.clipboard,
+// 只剩這條路。iOS 需要 readonly + setSelectionRange,否則會彈出鍵盤並把畫面放大。
+function copyByExecCommand(text){
+  try{
+    const ta=document.createElement('textarea');
+    ta.value=text; ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;border:0;padding:0';
+    document.body.appendChild(ta);
+    ta.select(); ta.setSelectionRange(0,text.length);
+    const ok=document.execCommand('copy');
+    ta.remove(); return ok;
+  }catch(e){ return false; }
+}
 async function shareLink(){
   const s=curSet(); if(!s.data.want.length && !s.data.have.length){ alert(tr('list_empty')); return; }
   if(!window.__tlShare){ alert(tr('share_need_cloud')); return; }
   const btn=$('#setShare'), old=btn?btn.textContent:''; if(btn){ btn.disabled=true; btn.textContent='… '+tr('share_wait'); }
-  try{
-    if($('#canfly')) s.data.canfly=$('#canfly').checked; if($('#qrToggle')) s.data.qr=$('#qrToggle').checked;
+  if($('#canfly')) s.data.canfly=$('#canfly').checked; if($('#qrToggle')) s.data.qr=$('#qrToggle').checked;
+
+  // ⚠ 這裡「不可以」先 await 取連結再複製:存雲端是一趟網路往返,
+  //   等它回來時使用者手勢的授權早就過期,iOS Safari 會擋掉剪貼簿寫入(NotAllowedError),
+  //   結果只能退回 prompt 讓使用者自己框選 —— 那正是手機上遇到的狀況。
+  //   改成先啟動、不等待,把 Promise 交給 ClipboardItem(Safari/Chrome 都支援),
+  //   write() 就能在手勢當下同步呼叫,內容稍後才解析。
+  const urlP=(async()=>{
     const id=await window.__tlShare.save({v:2, sets:[{id:s.id, name:s.name, data:s.data}]});
-    const url=location.origin+location.pathname+'?s='+id;   // 只帶一個參數,不加 lang 等後綴
+    return location.origin+location.pathname+'?s='+id;   // 只帶一個參數,不加 lang 等後綴
+  })();
+  urlP.catch(()=>{});   // 先掛一個 handler,避免下面還沒接到就被判定為未處理的 rejection
+
+  const finish=()=>{ if(btn){ btn.disabled=false; btn.textContent=old; } };
+  try{
+    if(navigator.clipboard && navigator.clipboard.write && window.ClipboardItem){
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/plain': urlP.then(u=>new Blob([u],{type:'text/plain'})) })]);
+      await urlP;                       // 連結真的取到了才報「已複製」
+      toast(tr('link_copied')); finish(); return;
+    }
+    throw new Error('no ClipboardItem');
+  }catch(e){
+    // 走到這裡有兩種可能:瀏覽器不支援 ClipboardItem,或雲端存檔失敗
+    let url;
+    try{ url=await urlP; }
+    catch(e2){ console.error('取得分享連結失敗', e2); alert(tr('share_fail')); finish(); return; }
     try{ await navigator.clipboard.writeText(url); toast(tr('link_copied')); }
-    catch(_){ prompt(tr('link_copied'), url); }
-  }catch(e){ console.error(e); alert(tr('share_fail')); }
-  finally{ if(btn){ btn.disabled=false; btn.textContent=old; } }
+    catch(_){
+      if(copyByExecCommand(url)) toast(tr('link_copied'));
+      else prompt(tr('link_copied'), url);   // 真的都不行才要使用者自己框選
+    }
+    finish();
+  }
 }
 function toast(msg){
   let t=$('#toast'); if(!t){ t=document.createElement('div'); t.id='toast'; document.body.appendChild(t); }
