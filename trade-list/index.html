@@ -1049,6 +1049,10 @@ function rrPath(x,rx,ry,w,h,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+w,ry,r
 // 掃描出不透明範圍的 bounding box(以比例 0~1 快取),繪製時只取主體 → 寶可夢顯示更大。
 const _bboxCache=new Map(); let _trimCv=null;
 const MAXUP=1.4;   // 去邊後最大放大倍率(相對來源主體像素):太小的主體不硬撐到填滿,避免放大到模糊
+// MAXUP 的換算基準(固定值,不隨實際輸出倍率變動)。調大→寶可夢變小,調小→變大並填滿卡片。
+// 1.2 = 主體平均佔去邊方框 81%,等同「手機製圖預覽」與更早之前匯出圖的觀感。
+// 參考:1.0→85%、1.4→76%、2.0→61%(桌機小清單預覽的舊觀感)、2.5→50%
+const MAXUP_REF=1.2;
 // maxScan=掃描解析度。匯出用預設 96(誤差約 1% 邊長),那是要下載的成品;
 // 網格預覽改用 64 —— 實測 96px 每張 2.35ms、64px 只要 0.42ms,而誤差只有 2% 格寬(格子才 72~108px,看不出來)。
 // 差別很有感:滑過 2500 張時,96px 光這件事就吃掉 6 秒主執行緒,是捲動卡頓的最大宗。
@@ -1085,9 +1089,12 @@ function drawMon(x,m,key,dx0,dy0,box){
   if(!bb){ x.drawImage(m,dx0,dy0,box,box); return; }
   const iw=m.naturalWidth||m.width, ih=m.naturalHeight||m.height;
   const sx=bb.x*iw, sy=bb.y*ih, sw=bb.w*iw, sh=bb.h*ih;
-  const SC=(x.getTransform&&x.getTransform().a)||1;            // 目前整體縮放(匯出解析度)
-  // contain,但放大不超過來源主體像素的 MAXUP 倍(小主體就不硬撐到填滿)→ 不模糊
-  const sc=Math.min(box/sw, box/sh, MAXUP/SC), dw=sw*sc, dh=sh*sc;
+  // contain,但小主體不硬撐到填滿(避免放大到模糊)。
+  // ⚠ 這個上限必須用「固定基準」算,不能用當下的 x.getTransform().a(實際輸出倍率):
+  //    那會讓寶可夢的大小跟著輸出解析度跑 —— 預覽走 scaleFor(≤2)、匯出走 scaleForExport(≤3),
+  //    同一張圖在製圖畫面和存檔裡就會差三成以上(實測 61% vs 42% 方框寬)。
+  //    版面是版面、解析度是解析度,兩者不該耦合。
+  const sc=Math.min(box/sw, box/sh, MAXUP/MAXUP_REF), dw=sw*sc, dh=sh*sc;
   // 靠下:主體底邊貼齊方框底部(方框本身已內縮 ins,所以不會頂到卡片邊)
   x.drawImage(m, sx,sy,sw,sh, dx0+(box-dw)/2, dy0+(box-dh), dw, dh);
 }
