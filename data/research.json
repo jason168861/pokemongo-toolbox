@@ -1,5 +1,89 @@
 [
   {
+    "category": "Nickit Community Day Tasks",
+    "tasks": [
+      {
+        "description": "捕捉3隻偷兒狐",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偷兒狐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm827.icon.png",
+            "isShiny": false,
+            "maxCp": "306",
+            "minCp": "278"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Nickit Community Day - Special backgrounds Tasks",
+    "tasks": [
+      {
+        "description": "Catch 5 Pokemon while in a Party",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偷兒狐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm827.icon.png",
+            "isShiny": false,
+            "maxCp": "306",
+            "minCp": "278"
+          }
+        ]
+      },
+      {
+        "description": "Catch 50 Pokemon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偷兒狐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm827.icon.png",
+            "isShiny": false,
+            "maxCp": "306",
+            "minCp": "278"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Choose Your Path: Venom and Vines Tasks",
     "tasks": [
       {
