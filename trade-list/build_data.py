@@ -23,9 +23,11 @@ UA = {"User-Agent": "Mozilla/5.0 build"}
 ADDR_URL = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon%20-%20256x256/Addressable%20Assets"
 BULBA_API = "https://bulbapedia.bulbagarden.net/w/api.php"
 scraper = cloudscraper.create_scraper()
-# Mega / Primal 是不可交換的暫時形態 → 背卡與 sprite 一律不列
-# \b 是必要的:寶可夢中心「メガ東京」的卡叫 PokemonCenter MegaTokyo,沒有詞界會被當成 Mega 進化誤殺。
-EXCLUDE_BG = re.compile(r'\b(?:Mega|Primal)\b', re.I)
+# Mega / Primal 是不可交換的暫時形態 → sprite 一律不列。
+# 背卡則「不」依卡名排除:像「GO Mega Evolution」這張,wiki 列的是普通型態的
+# 妙蛙花/噴火龍/路卡利歐(0003、0006、0448…而非 0003M、0006MX),那些都能交換,
+# 只因卡名有 Mega 就整張砍掉是誤殺。真正的 Mega 專屬卡(如 GO Fest 2026 Mega Mewtwo
+# 只列 0150MX/0150MY)會因為型態全被濾掉而自然清空,不必額外用名字判斷。
 EXCLUDE_FORM = re.compile(r'MEGA|PRIMAL')
 
 def get_json(u):
@@ -327,6 +329,31 @@ def tidy_mons(entries, final=False):
             o.pop("wiki", None); o.pop("ckey", None)
     return out
 
+def clean_cell(s):
+    """把 wiki 表格欄位轉成純文字。卡名不一定是純文字 —— 例如
+    「[[Mega Evolution]]{{tt|*|As of August 31, 2026, …}}」,
+    直接用正則抓會抓到提示框內容當卡名。"""
+    def tpl(m):
+        parts = [p.strip() for p in m.group(1).split('|')]
+        args = [p for p in parts[1:] if p and '=' not in p]
+        if not args: return ''
+        if parts[0].lower() == 'tt': return args[0]       # {{tt|顯示|提示}} → 顯示
+        # 其餘遊戲類模板的顯示名是最後一個參數,但結尾常掛一個複數字尾:
+        #   {{game3|Gold and Silver|Gold Version|s}} → Gold Version(不是 s)
+        #   {{game|Black and White|s|Black Version}} → Black Version
+        while len(args) > 1 and len(args[-1]) <= 2 and args[-1].islower():
+            args.pop()
+        return args[-1]
+    for _ in range(3):                                    # 巢狀模板:由內而外反覆代換
+        s, n = re.subn(r'\{\{([^{}]*)\}\}', tpl, s)
+        if not n: break
+    s = re.sub(r'\[\[[^\]|]*\|([^\]]*)\]\]', r'\1', s)    # [[目標|顯示]] → 顯示
+    s = re.sub(r'\[\[([^\]]*)\]\]', r'\1', s)             # [[目標]] → 目標
+    s = re.sub(r"'{2,}", '', s)                           # 粗體/斜體
+    s = re.sub(r'<[^>]*>', '', s)                         # HTML 標籤
+    s = re.sub(r'\s+', ' ', s).strip()
+    return s.rstrip('*').strip()                          # 去掉註腳星號({{tt|*|…}} 留下的)
+
 def section(title):
     head = "===" + title + "==="
     i = wt.find(head)
@@ -345,9 +372,9 @@ for kind, title in [("location", "Locations"), ("special", "Special")]:
             # 卡片名在圖片那格的「下一格」:跳過 |100px]] 收尾,再取下一個 | 欄位。
             after = block[img.end():]
             after = after[after.find("\n"):] if "\n" in after else ""
-            nm = re.search(r"\|\s*(?:rowspan=\d+\s*\|)?\s*([^\n|{\[]+?)\s*(?:\n|$)", after)
+            nm = re.search(r"\|\s*(?:rowspan=\d+\s*\|)?\s*([^\n]*)", after)
             cur = {"type": kind, "image_name": img.group(1).strip(),
-                   "name": nm.group(1).strip() if nm else "", "pokemon": []}
+                   "name": clean_cell(nm.group(1)) if nm else "", "pokemon": []}
             rows.append(cur)
         if cur is not None:
             cur["pokemon"] += parse_mons(block)
@@ -539,7 +566,7 @@ for r in rows:
     bg_untradable += len(r["pokemon"]) - len(keep); r["pokemon"] = keep
 
 json.dump({str(k): v for k, v in sorted(pokemon.items())}, open(os.path.join(HERE, "data", "pokemon.json"), "w", encoding="utf-8"), ensure_ascii=False)
-rows = [r for r in rows if r["pokemon"] and not EXCLUDE_BG.search(r["image_name"])]  # 另排除 Mega 專屬卡
+rows = [r for r in rows if r["pokemon"]]   # 只留還有可交換寶可夢的卡(Mega 專屬卡會在此自然清空)
 json.dump(rows, open(os.path.join(HERE, "data", "backgrounds.json"), "w", encoding="utf-8"), ensure_ascii=False)
 combos = sum(len(r["pokemon"]) for r in rows)
 print(f"寶可夢 {len(pokemon)} / 變體 {sum(len(p['variants']) for p in pokemon.values())} / 超極巨化 {sum(1 for p in pokemon.values() if p['gigantamax'])}")
