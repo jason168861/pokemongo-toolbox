@@ -368,6 +368,10 @@
     #edTop #dl svg{width:22px;height:22px}
     #dl .dlTxt{display:inline;margin-left:7px;font-size:15px;font-weight:800}
   }
+  /* nowrap + flex:none:窄螢幕上工具列有 7 個控制項,不擋一下「完成」會被擠成「完 / 成」兩行,
+     整條工具列跟著從 40px 長到 62px。要讓的是中間那排圖示鈕,不是這兩顆有字的。 */
+  #edDone,#dl{white-space:nowrap;flex:none}
+  #edTop .edUR{min-width:0;flex-shrink:1}
   #edDone{display:inline-flex;align-items:center;gap:5px}
   #edDone svg{width:17px;height:17px;display:block}
   #edTop button:disabled{opacity:.38}
@@ -396,7 +400,10 @@
   .colsCtl .btn{min-width:40px;padding:7px 12px;font-size:17px;line-height:1;font-weight:800}
   .colsCtl .btn:disabled{opacity:.4;cursor:default}
   #colsVal{min-width:26px;text-align:center;font-weight:800;font-size:16px;color:var(--fg)}
-  #edBottom .edRow .btn{flex:1;padding:11px 8px;font-size:14px;font-weight:700}
+  /* flex:1 的 basis 是 0 → 五顆按鈕硬擠同一列,窄螢幕上「亮晶晶首飾」會被壓成一個字一列(實測 114px 高)。
+     改成照內容寬度排、禁止斷行,放不下就換到下一列 —— 寧可兩列,也不要每顆都讀不完整。 */
+  #edBottom .edRow .btn{flex:1 1 auto;min-width:-webkit-fit-content;min-width:fit-content;
+                        white-space:nowrap;padding:11px 10px;font-size:14px;font-weight:700}
   #edBottom .edColorBox{flex:none}
   .edUR{display:flex;gap:6px}
   #edSize{width:100%;margin-bottom:8px}
@@ -415,9 +422,11 @@
   body.editmode #editPanel{position:fixed;inset:0;z-index:200;margin:0;border:0;border-radius:0;
         background:var(--bg);display:flex;flex-direction:column;padding:8px;overflow:hidden}
   body.editmode #edTop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none;margin-bottom:4px}
-  body.editmode #edBottom{display:block;flex:none;margin-top:6px}
+  /* flex:0 1 auto + max-height:控制項再多也只吃掉固定比例,剩下的自己捲,預覽圖不會被擠扁 */
+  body.editmode #edBottom{display:block;flex:0 1 auto;margin-top:6px;overflow-y:auto;overscroll-behavior:contain}
+  body.editmode #edBottom>.switch{margin:6px 0 0;font-size:13px}
+  body.editmode #trainerRow{margin:8px 0 2px}
   body.editmode #enterEdit{display:none}
-  body.editmode #flyRow{flex:none;margin:0 0 4px;font-size:13px}
   /* 圖片顯示大小由縮放滑桿控制(JS 設定 #baseCv 的 style.width);超出時捲動 */
   body.editmode #editor{flex:1 1 auto;min-height:0;display:block;overflow:auto;margin:0}
   body.editmode #edStage{position:relative;display:block;width:-webkit-fit-content;width:fit-content;max-width:none;margin:0 auto}
@@ -432,6 +441,25 @@
   /* 手機:避免點輸入框時自動放大(iOS 會在字級<16px時放大);停用快速點兩下放大 */
   body{touch-action:manipulation}
   @media(max-width:700px){ input,textarea,select,.li .note,#q{font-size:16px} }
+  /* ===== 手機版製圖畫面:優先把高度留給預覽圖 =====
+     改版前實測(工具列+三排開關在上、控制區在下):
+       390×780 預覽只剩 292px(37%)、360×640 只剩 130px(20%)。
+     開關與訓練家代碼已移到預覽下方,這裡再把控制區限高 → 預覽保證拿得到一半以上。 */
+  @media (max-width:700px){
+    body.editmode #edBottom{max-height:38vh}
+    body.editmode #editor{min-height:34vh}
+    #zoomHint{display:none}                       /* 滑桿長什麼樣就代表什麼,提示字在手機是純浪費 */
+    #edSize{margin-bottom:4px}
+    .edThemesWrap{margin:6px 0 2px}
+    .edThemes{gap:6px;padding:2px 2px 4px}
+    .edThemes img{width:38px;height:38px}
+    .edThemes button{border-radius:9px}
+    /* 手機改用三欄網格:flex 會讓落單那一列的按鈕撐滿整條(實測「字體/底色」被拉到 288px,
+       旁邊的「顏色」才 80px,看起來很怪)。等寬網格排起來整齊,最後一格空著也無所謂。 */
+    #edBottom .edRow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+    #edBottom .edRow .btn,#edBottom .edRow .edColorBox{width:100%;min-width:0;justify-content:center}
+    #edBottom .edRow .btn{padding:10px 6px;font-size:13px}
+  }
   body.editmode #selPanel,body.editmode #listPanel{display:none}
   /* 一開始只顯示清單;按「開始製圖」進入編輯模式才出現編輯/預覽面板 */
   body:not(.editmode) #editPanel{display:none}
@@ -549,17 +577,13 @@
         <button id="enterEdit">✏️ <span id="enterEditTxt">編輯文字</span></button>
         <button class="btn" id="dlList" onclick="downloadPNG(this)">⬇ 下載 PNG</button>
       </div>
-      <label class="switch" id="flyRow"><input type="checkbox" id="canfly"><span class="track"></span><span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
-      <label class="switch" id="qrRow"><input type="checkbox" id="qrToggle"><span class="track"></span><span id="qrLabel">📷 在圖片加上推廣 QR</span></label>
-      <div class="edFieldRow" id="trainerRow">
-        <input type="text" id="trainerLabel" maxlength="24" placeholder="標題">
-        <input type="text" id="trainerCode" inputmode="numeric" maxlength="14" placeholder="1234 5678 9012">
-      </div>
-
       <div id="editor">
         <div id="edStage"><canvas id="baseCv"></canvas><div id="txtLayer"></div></div>
       </div>
 
+      <!-- 控制項一律排在預覽下面,而且照「多常用」排序:縮放 → 風格 → 每排數量 → 加東西 →
+           設定一次就不會再動的(能飛 / QR / 訓練家代碼)。手機上這一區高度有上限、可自行捲動,
+           所以再多控制項也不會把預覽圖擠扁 —— 之前開關排在預覽上面,360×640 只剩 20% 給圖。 -->
       <div id="edBottom">
         <div class="edHint" id="zoomHint">↔ 拖曳調整畫面大小</div>
         <input type="range" id="edSize" min="0" max="100" value="0" title="縮放(左=整張顯示、中=符合寬度、右=放大)">
@@ -573,6 +597,12 @@
           <button class="btn g" id="luckyAdd"><img src="assets/lucky_friend_icon.png" alt=""><span id="luckyAddTxt">亮晶晶首飾</span></button>
           <button class="btn g" id="edStyle" title="切換字體與底色" disabled>🅰 字體/底色</button>
           <span class="edColorBox"><input type="color" id="edColor" title="文字顏色" disabled><span id="edColorLabel">顏色</span></span>
+        </div>
+        <label class="switch" id="flyRow"><input type="checkbox" id="canfly"><span class="track"></span><span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
+        <label class="switch" id="qrRow"><input type="checkbox" id="qrToggle"><span class="track"></span><span id="qrLabel">📷 在圖片加上推廣 QR</span></label>
+        <div class="edFieldRow" id="trainerRow">
+          <input type="text" id="trainerLabel" maxlength="24" placeholder="標題">
+          <input type="text" id="trainerCode" inputmode="numeric" maxlength="14" placeholder="1234 5678 9012">
         </div>
         <input type="file" id="imgFile" accept="image/*" style="display:none">
       </div>
