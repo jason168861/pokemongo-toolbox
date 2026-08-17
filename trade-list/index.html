@@ -434,13 +434,18 @@
   /* overflow-x:hidden 不能省:CSS 規定只要有一軸不是 visible,另一軸的 visible 就會被算成 auto,
      所以單寫 overflow-y:auto 會讓整區連帶可以左右滑(實測 scrollWidth 比 clientWidth 多 4px)。
      裡面的樣式縮圖列是各自獨立的元素,照樣能橫向捲,不受這裡影響。 */
-  body.editmode #edBottom{display:block;flex:0 1 auto;margin-top:6px;
+  /* flex:0 0 auto —— 不准縮。原本是 0 1 auto(可縮),放大預覽時整個控制區會被擠掉:
+     實測桌機拉到最大時從 301px 被壓成 91px,手機 296→173px。 */
+  body.editmode #edBottom{display:block;flex:0 0 auto;max-height:52vh;margin-top:6px;
         overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
   body.editmode #edBottom>.switch{margin:6px 0 0;font-size:13px}
   body.editmode #trainerRow{margin:8px 0 2px}
   body.editmode #enterEdit{display:none}
   /* 圖片顯示大小由縮放滑桿控制(JS 設定 #baseCv 的 style.width);超出時捲動 */
-  body.editmode #editor{flex:1 1 auto;min-height:0;display:block;overflow:auto;margin:0}
+  /* flex-basis 要是 0 不能是 auto:auto 會拿「內容高度」當基準,而縮放滑桿正是在改內容高度,
+     於是拉滑桿就會回過頭改變版面分配、把下面擠掉。basis:0 讓這一區單純吃剩下的空間,
+     放大後的畫布由它自己的 overflow:auto 捲動,與版面無關。 */
+  body.editmode #editor{flex:1 1 0%;min-height:0;display:block;overflow:auto;margin:0}
   body.editmode #edStage{position:relative;display:block;width:-webkit-fit-content;width:fit-content;max-width:none;margin:0 auto}
   body.editmode #baseCv{display:block;height:auto;max-width:none;max-height:none}   /* width 由 JS 以 inline style 設定 */
   /* 全螢幕文字輸入 */
