@@ -19,6 +19,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 IMG = os.path.join(HERE, "assets", "img")
 BGD = os.path.join(HERE, "assets", "bg")
 os.makedirs(IMG, exist_ok=True); os.makedirs(BGD, exist_ok=True)
+POGO_ASSETS = os.environ.get("POGO_ASSETS", os.path.join(os.path.dirname(os.path.dirname(HERE)), "pogo_assets"))
+
+# 匯出圖樣式(skin)用的官方素材:屬性徽章當浮水印、屬性場景當頁首橫幅、隊徽當隊伍樣式的浮水印。
+# 徽章檔名是 badge enum(GAME_MASTER 的 BADGE_TYPE_*:18=一般 … 35=妖精),照順序對應。
+TYPE_ORDER = ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel",
+              "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy"]
+TEAMS = {"team_blue": "mystic", "team_red": "valor", "team_yellow": "instinct"}
 
 def dl(url, path, no_referer=False, force=False, tries=3):
     if os.path.exists(path) and not force and os.path.getsize(path) > 0:
@@ -107,6 +114,7 @@ def main():
     print(f"\n完成:ok {ok} / 已存在跳過 {skip} / 失敗 {err}", flush=True)
     print("已寫出 data/pokemon.local.json 與 data/backgrounds.local.json", flush=True)
     make_thumbs()
+    make_style_assets()
     make_trim()
 
 def make_thumbs():
@@ -131,6 +139,48 @@ def make_thumbs():
     gen("assets/img", "assets/thumb", 128)     # 網格/清單用小縮圖
     gen("assets/bg", "assets/bgthumb", 220)    # 網格/清單用背卡縮圖
     gen("assets/bg", "assets/bgexp", 384)      # 匯出 PNG 用中尺寸背卡(原圖動輒 500KB+,卡片只畫 264px)
+
+
+def make_style_assets():
+    """匯出圖樣式用的官方素材,從本機 PokeMiners clone 轉存成小 WebP。
+
+    來源(POGO_ASSETS 底下):
+      Images/Badges/Types/Badge_18..35.png      → assets/type/badge_<屬性>.webp   屬性徽章(浮水印)
+      Images/Type Backgrounds/details_type_bg_* → assets/type/bg_<屬性>.webp      屬性場景(頁首橫幅)
+      Images/Pokestops and Gyms/team_*.png      → assets/team/<隊伍>.webp         隊徽(浮水印)
+
+    原圖加起來約 1.8MB,但都只拿來當低透明度的裝飾 —— 縮到 256/320px 存 WebP 後不到 1/3,
+    而且前端只有選到那個樣式時才會下載。
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        print("(略過樣式素材:未安裝 Pillow)", flush=True); return
+    src_badge = os.path.join(POGO_ASSETS, "Images", "Badges", "Types")
+    src_tbg   = os.path.join(POGO_ASSETS, "Images", "Type Backgrounds")
+    src_team  = os.path.join(POGO_ASSETS, "Images", "Pokestops and Gyms")
+    if not os.path.isdir(src_badge):
+        print(f"(略過樣式素材:找不到 {src_badge},請設 POGO_ASSETS)", flush=True); return
+    dst_t = os.path.join(HERE, "assets", "type"); os.makedirs(dst_t, exist_ok=True)
+    dst_m = os.path.join(HERE, "assets", "team"); os.makedirs(dst_m, exist_ok=True)
+
+    def conv(src, out, size, q):
+        if not os.path.exists(src): return None
+        im = Image.open(src).convert("RGBA")
+        im.thumbnail((size, size), Image.LANCZOS)
+        im.save(out, "WEBP", quality=q, method=6)
+        return os.path.getsize(out)
+
+    total = n = 0
+    for i, t in enumerate(TYPE_ORDER):
+        s = conv(os.path.join(src_badge, f"Badge_{18+i}.png"), os.path.join(dst_t, f"badge_{t}.webp"), 256, 84)
+        if s: total += s; n += 1
+        s = conv(os.path.join(src_tbg, f"details_type_bg_{t}.png"), os.path.join(dst_t, f"bg_{t}.webp"), 256, 76)
+        if s: total += s; n += 1
+    for f, team in TEAMS.items():
+        s = conv(os.path.join(src_team, f + ".png"), os.path.join(dst_m, f"{team}.webp"), 320, 84)
+        if s: total += s; n += 1
+    print(f"樣式素材 assets/type + assets/team:{n} 檔 / {total//1024} KB", flush=True)
 
 
 def make_trim():

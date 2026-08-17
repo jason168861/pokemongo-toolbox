@@ -380,9 +380,17 @@
   #trainerRow #trainerCode{flex:1 1 160px}
   .edThemesWrap{display:flex;align-items:center;gap:8px;margin:8px 0 4px}
   .edThemesLabel{font-size:12px;color:var(--mut);flex:none}
-  .edThemes{display:flex;gap:8px;flex-wrap:wrap}
-  .edThemes button{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+  /* 圖片風格選擇器:分類籤 + 橫向捲動的縮圖列(樣式有三十幾種,不能用會換行的色點) */
+  .edSkinCats{display:flex;gap:6px;overflow-x:auto;min-width:0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .edSkinCats::-webkit-scrollbar{display:none}
+  .edSkinCats button{flex:none;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;
+                     border:1px solid var(--line);background:var(--cellbg);color:var(--mut);cursor:pointer;font-family:inherit}
+  .edSkinCats button.on{background:var(--acc2);border-color:var(--acc2);color:#fff}
+  .edThemes{display:flex;gap:8px;overflow-x:auto;padding:3px 2px 5px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .edThemes button{flex:none;width:auto;height:auto;padding:0;line-height:0;background:transparent;
+                   border:2px solid var(--line);border-radius:11px;cursor:pointer;overflow:hidden}
   .edThemes button.on{border-color:#fff;box-shadow:0 0 0 2px var(--acc2)}
+  .edThemes img{display:block;width:44px;height:44px;border-radius:8px;-webkit-user-drag:none}
   /* 每排數量 stepper */
   .colsCtl{display:inline-flex;align-items:center;gap:12px}
   .colsCtl .btn{min-width:40px;padding:7px 12px;font-size:17px;line-height:1;font-weight:800}
@@ -555,7 +563,8 @@
       <div id="edBottom">
         <div class="edHint" id="zoomHint">↔ 拖曳調整畫面大小</div>
         <input type="range" id="edSize" min="0" max="100" value="0" title="縮放(左=整張顯示、中=符合寬度、右=放大)">
-        <div class="edThemesWrap"><span class="edThemesLabel" id="edThemesLabel">配色</span><div class="edThemes" id="edThemes"></div></div>
+        <div class="edThemesWrap"><span class="edThemesLabel" id="edThemesLabel">圖片風格</span><div class="edSkinCats" id="edSkinCats"></div></div>
+        <div class="edThemes" id="edThemes"></div>
         <div class="edThemesWrap" id="colsRow"><span class="edThemesLabel" id="colsLabel">每排數量</span>
           <div class="colsCtl"><button class="btn g" id="colsMinus" title="減少">−</button><span id="colsVal">5</span><button class="btn g" id="colsPlus" title="增加">＋</button></div></div>
         <div class="edRow">
@@ -670,6 +679,265 @@ const DEFONT='"Arial Black","Microsoft JhengHei",sans-serif';
 const FONTS=[['font_game',DEFONT],['font_hei','"Microsoft JhengHei","PingFang TC",sans-serif'],['font_impact','Impact,"Microsoft JhengHei",sans-serif'],['font_round','"Segoe UI","Microsoft JhengHei",sans-serif'],['font_serif','Georgia,"Microsoft JhengHei",serif']];
 const WEIGHTS=[['w_normal',400],['w_med',600],['w_bold',700],['w_black',900]];
 
+/* ---------- 匯出圖樣式(skin) ----------
+   THEME 管「網頁介面」,SKIN 管「匯出圖底圖」,兩者分開存 —— 這樣才能一邊用淺色介面、
+   一邊做火屬性的深色圖。頁首的「風格」下拉會同時換掉兩者(維持原本的操作感);
+   製圖畫面的樣式選擇器只換 SKIN。
+
+   一個 skin = 原本的 exp 配色(panel/cardbg/line/title/sec1…)+ 底圖規格:
+     grad  多個色停;angle 用 CSS 慣例(180=由上而下,亦為預設)
+     blobs [x, y, r, 色] 光暈,單位一律是「圖寬」(連 y 也是)→ 清單長短不影響頂部構圖
+     fx    圖樣,可給一個或一陣列;每種都是週期性或以固定種子產生
+     vig   暗角強度 0~1
+   ⚠ 底圖的每一筆都必須只由「版面座標」決定。分塊輸出時每塊會各自呼叫一次 paintBackdrop,
+     只要摻進 Math.random() 或 canvas 尺寸,接縫處的花紋就會對不起來。 */
+const SK_DARK={panel:'rgba(8,10,20,0.46)',cardbg:'#161a2b',line:'rgba(255,255,255,0.16)',tOut:'#ffffff',
+               sec1:'#5ce39a',sec2:'#ffd45e',fly:'#8ab8ff',foot:'#ccd3e8'};
+const SK_LIGHT={panel:'rgba(255,255,255,0.88)',cardbg:'#ffffff',line:'rgba(0,0,0,0)',tOut:'#ffffff',
+                sec1:'#12703a',sec2:'#7a5410',fly:'#2b5fa8',foot:'#414a63'};
+const SKINS={};
+// shadow:預設文字要不要加陰影。新樣式的底圖有花紋又常有明暗漸層,標題/區塊標籤純色會吃字;
+// 經典六款不經過 defSkin(直接沿用 THEMES[].exp),所以拿不到這個旗標,外觀維持原樣。
+function defSkin(key,nm,cat,o){ SKINS[key]=Object.assign({shadow:1},o.light?SK_LIGHT:SK_DARK,o,{nm,cat,key}); }
+// 經典六款 = 原本主題的 exp 配色,一個位元組都不改 → 舊使用者存過的圖不會變樣
+for(const [k,ik] of THEME_LIST) SKINS[k]=Object.assign({nm:ik,cat:'classic',key:k},THEMES[k].exp);
+
+/* — 漸層 — */
+defSkin('aurora','st_aurora','grad',{
+  grad:['#03101c','#072436','#0d3a44','#06202f'],angle:172,
+  blobs:[[0.22,0.10,0.52,'rgba(64,224,180,0.30)'],[0.74,0.05,0.46,'rgba(120,110,255,0.28)'],[0.50,0.34,0.40,'rgba(60,180,255,0.16)']],
+  fx:[{k:'waves',size:150,amp:26,freq:2.4,color:'rgba(120,255,220,0.10)',lw:2.4},
+      {k:'particles',shape:'dot',n:14,size:6,color:'rgba(200,255,240,0.45)',seed:21}],
+  vig:0.30,title:'#7ef2c8',fly:'#8ad8ff',sec1:'#6ff0b0',sec2:'#ffe071',line:'rgba(110,240,210,0.42)',cardbg:'#0d2130'});
+defSkin('sunset','st_sunset','grad',{
+  grad:['#1a1038','#5c2360','#c04a4a','#f08a4b','#ffc078'],angle:176,
+  blobs:[[0.50,0.16,0.62,'rgba(255,190,120,0.30)']],
+  fx:[{k:'rays',n:16,w:0.055,cy:0.02,color:'rgba(255,220,170,0.07)'},
+      {k:'particles',shape:'dot',n:10,size:7,color:'rgba(255,230,190,0.35)',seed:9}],
+  vig:0.26,title:'#ffe3ad',fly:'#ffd08a',sec1:'#9dffc4',sec2:'#fff0a8',line:'rgba(255,200,150,0.45)',cardbg:'#2a1636',foot:'#ffe0cc'});
+defSkin('midnight','st_midnight','grad',{
+  grad:['#04050d','#0a0f26','#111536','#06070f'],angle:180,
+  blobs:[[0.30,0.12,0.50,'rgba(80,90,220,0.22)'],[0.80,0.42,0.42,'rgba(140,80,220,0.16)']],
+  fx:[{k:'particles',shape:'star',n:22,size:9,color:'rgba(215,225,255,0.55)',seed:4},
+      {k:'particles',shape:'dot',n:34,size:3.2,color:'rgba(190,205,255,0.40)',seed:77}],
+  vig:0.34,title:'#a9c2ff',fly:'#8fb4ff',line:'rgba(150,170,255,0.35)',cardbg:'#12162c'});
+defSkin('candy','st_candy','grad',{light:1,
+  grad:['#ffe6f2','#f0e2ff','#dcf3ff','#e8fff2'],angle:150,
+  blobs:[[0.18,0.10,0.42,'rgba(255,160,205,0.45)'],[0.82,0.20,0.44,'rgba(150,200,255,0.40)']],
+  fx:[{k:'dots',size:46,r:3.4,color:'rgba(255,255,255,0.70)'},
+      {k:'particles',shape:'star',n:12,size:11,color:'rgba(255,255,255,0.85)',seed:33}],
+  title:'#9c2f78',fly:'#3f6fbf',line:'rgba(160,120,190,0.35)',panel:'rgba(255,255,255,0.82)',foot:'#5a4a66'});
+defSkin('vapor','st_vapor','grad',{
+  grad:['#2b0a52','#6d1f8f','#c33a86','#f77f8e','#ffd3a3'],angle:178,
+  blobs:[[0.50,0.12,0.55,'rgba(255,120,200,0.26)']],
+  fx:[{k:'grid',size:74,bold:4,color:'rgba(255,255,255,0.10)',color2:'rgba(120,255,240,0.26)',lw:1},
+      {k:'scan',size:9,color:'rgba(255,255,255,0.05)'}],
+  vig:0.24,title:'#ffe873',fly:'#7ff5e6',sec1:'#8effc9',sec2:'#ffe873',line:'rgba(255,140,220,0.50)',cardbg:'#2b1145'});
+defSkin('mono','st_mono','grad',{light:1,
+  grad:['#f7f8fa','#e6e9ef','#d7dbe3'],angle:160,
+  fx:[{k:'diag',size:110,w:0.34,ang:-45,color:'rgba(0,0,0,0.035)'}],
+  title:'#1d2230',fly:'#3a4560',line:'rgba(0,0,0,0.10)',panel:'rgba(255,255,255,0.90)',foot:'#39404f'});
+
+/* — 科技 — */
+defSkin('cyber','st_cyber','tech',{
+  grad:['#03020c','#080520','#0e0730','#04030e'],angle:178,
+  blobs:[[0.16,0.08,0.50,'rgba(0,220,255,0.20)'],[0.86,0.30,0.46,'rgba(255,0,160,0.18)']],
+  fx:[{k:'grid',size:56,bold:5,color:'rgba(0,229,255,0.10)',color2:'rgba(0,229,255,0.30)',lw:1},
+      {k:'scan',size:7,color:'rgba(0,229,255,0.045)'},
+      {k:'particles',shape:'bit',n:10,size:16,color:'rgba(0,255,220,0.35)',seed:12}],
+  vig:0.34,title:'#00e5ff',fly:'#ff3fae',sec1:'#39ff9a',sec2:'#ffd400',line:'rgba(0,229,255,0.55)',cardbg:'#0a1024',foot:'#9fe8f5'});
+defSkin('circuit','st_circuit','tech',{
+  grad:['#020f0b','#04180f','#031309'],angle:180,
+  blobs:[[0.50,0.10,0.55,'rgba(40,200,120,0.16)']],
+  fx:[{k:'circuit',size:76,color:'rgba(70,240,160,0.20)',color2:'rgba(120,255,190,0.50)',lw:1.6,r:3.4},
+      {k:'scan',size:10,color:'rgba(120,255,190,0.035)'}],
+  vig:0.32,title:'#4dffb0',fly:'#8affd0',sec1:'#7dffb8',sec2:'#ffe066',line:'rgba(70,240,160,0.45)',cardbg:'#07200f',foot:'#a8e8c6'});
+defSkin('holo','st_holo','tech',{
+  grad:['#080d2b','#16266b','#2f2382','#0b1236'],angle:168,
+  blobs:[[0.20,0.08,0.50,'rgba(0,255,230,0.20)'],[0.60,0.16,0.46,'rgba(180,90,255,0.22)'],[0.90,0.34,0.40,'rgba(255,110,190,0.16)']],
+  fx:[{k:'scan',size:6,color:'rgba(190,240,255,0.06)'},
+      {k:'dots',size:40,r:2.2,color:'rgba(180,235,255,0.12)'},
+      {k:'waves',size:190,amp:34,freq:1.6,color:'rgba(150,255,255,0.10)',lw:3}],
+  vig:0.28,title:'#a9f0ff',fly:'#ff9ce8',sec1:'#7dffd0',sec2:'#ffe98a',line:'rgba(150,220,255,0.50)',cardbg:'#111a44'});
+defSkin('matrix','st_matrix','tech',{
+  grad:['#000704','#01150a','#000a05'],angle:180,
+  fx:[{k:'particles',shape:'bit',n:26,size:22,color:'rgba(60,255,130,0.28)',seed:5},
+      {k:'particles',shape:'bit',n:8,size:30,color:'rgba(160,255,200,0.50)',seed:15},
+      {k:'scan',size:8,color:'rgba(60,255,130,0.04)'}],
+  vig:0.40,title:'#4dff88',fly:'#9dffbe',sec1:'#6dff9e',sec2:'#d8ff6d',line:'rgba(60,255,130,0.42)',cardbg:'#04140a',foot:'#a6e8bd'});
+defSkin('carbon','st_carbon','tech',{
+  grad:['#101116','#1b1d24','#0d0e12'],angle:168,
+  fx:[{k:'hex',size:34,color:'rgba(255,255,255,0.055)',lw:1.4},
+      {k:'diag',size:120,w:0.30,ang:-45,color:'rgba(255,255,255,0.028)'}],
+  vig:0.30,title:'#eef1f7',fly:'#7fd0ff',sec1:'#59e08c',sec2:'#ffcf4d',line:'rgba(255,255,255,0.22)',cardbg:'#1a1d25',foot:'#bcc2cf'});
+
+/* — 屬性 — */
+defSkin('t_normal','ty_normal','type',{
+  grad:['#3a382f','#6d685a','#96907f'],angle:165,
+  fx:[{k:'diag',size:96,w:0.36,ang:-45,color:'rgba(255,255,255,0.055)'}],
+  vig:0.24,title:'#fff4dc',fly:'#ffe9c0',sec1:'#8bf0b0',sec2:'#ffe07a',line:'rgba(255,255,255,0.28)',cardbg:'#2f2d26',
+  mark:{src:'assets/type/badge_normal.webp',op:0.22,size:0.58,x:0.88,y:0.24,rot:-0.22,tile:0.075,tsize:0.115,n:3,seed:311},
+  banner:'assets/type/bg_normal.webp',bannerOp:0.42});
+defSkin('t_fire','ty_fire','type',{
+  grad:['#25070a','#701a10','#b8380f','#e8641a'],angle:172,
+  blobs:[[0.50,0.14,0.60,'rgba(255,150,40,0.28)']],
+  fx:[{k:'particles',shape:'ember',n:24,size:11,color:'rgba(255,170,60,0.55)',color2:'rgba(255,240,190,0.90)',seed:2}],
+  vig:0.30,title:'#ffb45c',fly:'#ff8a3d',sec1:'#7cf0ae',sec2:'#ffe07a',line:'rgba(255,140,60,0.50)',cardbg:'#2a1009',foot:'#ffd7bd',
+  mark:{src:'assets/type/badge_fire.webp',op:0.16,size:0.58,x:0.88,y:0.24,rot:-0.11,tile:0.054,tsize:0.115,n:3,seed:328},
+  banner:'assets/type/bg_fire.webp',bannerOp:0.30});
+defSkin('t_water','ty_water','type',{
+  grad:['#03182f','#08386a','#0e63a6','#1288c4'],angle:172,
+  blobs:[[0.28,0.12,0.50,'rgba(80,200,255,0.22)']],
+  fx:[{k:'waves',size:130,amp:22,freq:2.6,color:'rgba(160,235,255,0.13)',lw:2.6},
+      {k:'particles',shape:'bubble',n:18,size:16,color:'rgba(200,245,255,0.45)',seed:6}],
+  vig:0.28,title:'#8fdcff',fly:'#66c8ff',line:'rgba(120,215,255,0.50)',cardbg:'#0a2540',
+  mark:{src:'assets/type/badge_water.webp',op:0.16,size:0.58,x:0.88,y:0.24,rot:0.0,tile:0.054,tsize:0.115,n:3,seed:345},
+  banner:'assets/type/bg_water.webp',bannerOp:0.34});
+defSkin('t_grass','ty_grass','type',{
+  grad:['#07200e','#11441c','#1d692c','#2a8a38'],angle:170,
+  blobs:[[0.70,0.12,0.50,'rgba(120,230,110,0.20)']],
+  fx:[{k:'particles',shape:'leaf',n:22,size:20,color:'rgba(150,240,120,0.35)',seed:8},
+      {k:'dots',size:54,r:2.6,color:'rgba(190,255,170,0.07)'}],
+  vig:0.28,title:'#9bee72',fly:'#7fe38f',sec1:'#b6ff8e',sec2:'#ffe27a',line:'rgba(140,240,120,0.45)',cardbg:'#0d2b13',
+  mark:{src:'assets/type/badge_grass.webp',op:0.15,size:0.58,x:0.88,y:0.24,rot:0.11,tile:0.051,tsize:0.115,n:3,seed:362},
+  banner:'assets/type/bg_grass.webp',bannerOp:0.34});
+defSkin('t_electric','ty_electric','type',{
+  grad:['#1e1802','#4a3a04','#7d6408','#a8880c'],angle:172,
+  blobs:[[0.50,0.10,0.55,'rgba(255,230,60,0.22)']],
+  fx:[{k:'grid',size:60,bold:5,color:'rgba(255,235,120,0.08)',color2:'rgba(255,225,60,0.22)',lw:1},
+      {k:'particles',shape:'spark',n:16,size:26,color:'rgba(255,240,120,0.55)',seed:14}],
+  vig:0.30,title:'#ffe23d',fly:'#fff07a',sec1:'#7cf0ae',sec2:'#fff3a0',line:'rgba(255,225,80,0.50)',cardbg:'#241d05',foot:'#ffeec2',
+  mark:{src:'assets/type/badge_electric.webp',op:0.15,size:0.58,x:0.88,y:0.24,rot:0.22,tile:0.051,tsize:0.115,n:3,seed:379},
+  banner:'assets/type/bg_electric.webp',bannerOp:0.30});
+defSkin('t_ice','ty_ice','type',{
+  grad:['#0a2c3e','#155d78','#2a8fa8','#6fc8d8'],angle:170,
+  blobs:[[0.30,0.10,0.50,'rgba(190,245,255,0.25)']],
+  fx:[{k:'particles',shape:'flake',n:20,size:20,color:'rgba(230,250,255,0.55)',seed:16},
+      {k:'particles',shape:'shard',n:10,size:16,color:'rgba(200,240,255,0.28)',seed:26}],
+  vig:0.22,title:'#d7f6ff',fly:'#a8ecff',sec1:'#7bf0b4',sec2:'#ffe98a',line:'rgba(210,245,255,0.55)',cardbg:'#0f3a4e',
+  mark:{src:'assets/type/badge_ice.webp',op:0.16,size:0.58,x:0.88,y:0.24,rot:-0.22,tile:0.054,tsize:0.115,n:3,seed:396},
+  banner:'assets/type/bg_ice.webp',bannerOp:0.40});
+defSkin('t_fighting','ty_fighting','type',{
+  grad:['#260808','#631613','#96301f','#c04a2a'],angle:174,
+  fx:[{k:'diag',size:80,w:0.42,ang:-45,color:'rgba(255,255,255,0.06)'},
+      {k:'cracks',n:5,color:'rgba(255,190,150,0.16)',lw:2.6,seed:19}],
+  vig:0.30,title:'#ffa585',fly:'#ff8f6a',line:'rgba(255,160,120,0.45)',cardbg:'#2b0f0b',
+  mark:{src:'assets/type/badge_fighting.webp',op:0.20,size:0.58,x:0.88,y:0.24,rot:-0.11,tile:0.068,tsize:0.115,n:3,seed:413},
+  banner:'assets/type/bg_fighting.webp',bannerOp:0.38});
+defSkin('t_poison','ty_poison','type',{
+  grad:['#1a0630','#3f0f57','#63207c','#8a2e9c'],angle:172,
+  blobs:[[0.60,0.14,0.50,'rgba(210,90,255,0.22)']],
+  fx:[{k:'particles',shape:'bubble',n:20,size:20,color:'rgba(225,140,255,0.42)',seed:23},
+      {k:'bokeh',n:2,color:'rgba(180,60,255,0.14)',seed:31}],
+  vig:0.30,title:'#e28cff',fly:'#c46bff',line:'rgba(210,120,255,0.45)',cardbg:'#210a33',
+  mark:{src:'assets/type/badge_poison.webp',op:0.17,size:0.58,x:0.88,y:0.24,rot:0.0,tile:0.058,tsize:0.115,n:3,seed:430},
+  banner:'assets/type/bg_poison.webp',bannerOp:0.34});
+defSkin('t_ground','ty_ground','type',{
+  grad:['#241705','#523712','#7d5722','#a67a3a'],angle:170,
+  fx:[{k:'cracks',n:6,color:'rgba(60,36,10,0.30)',lw:3,seed:41},
+      {k:'dots',size:38,r:2.4,color:'rgba(255,230,180,0.07)'}],
+  vig:0.28,title:'#ffd694',fly:'#f0b264',sec1:'#8cf0b4',sec2:'#ffe9a0',line:'rgba(255,210,150,0.40)',cardbg:'#2c1d09',
+  mark:{src:'assets/type/badge_ground.webp',op:0.22,size:0.58,x:0.88,y:0.24,rot:0.11,tile:0.075,tsize:0.115,n:3,seed:447},
+  banner:'assets/type/bg_ground.webp',bannerOp:0.40});
+defSkin('t_flying','ty_flying','type',{
+  grad:['#0c1a3c','#27498c','#5b86c8','#a8c8ea'],angle:172,
+  blobs:[[0.24,0.10,0.50,'rgba(255,255,255,0.22)'],[0.78,0.26,0.42,'rgba(255,255,255,0.16)']],
+  fx:[{k:'waves',size:170,amp:30,freq:1.8,color:'rgba(255,255,255,0.12)',lw:3},
+      {k:'particles',shape:'dot',n:14,size:6,color:'rgba(255,255,255,0.40)',seed:52}],
+  vig:0.22,title:'#e4efff',fly:'#ffffff',sec1:'#6fe6a0',sec2:'#ffd76a',line:'rgba(255,255,255,0.45)',cardbg:'#15254a',
+  mark:{src:'assets/type/badge_flying.webp',op:0.16,size:0.58,x:0.88,y:0.24,rot:0.22,tile:0.054,tsize:0.115,n:3,seed:464},
+  banner:'assets/type/bg_flying.webp',bannerOp:0.44});
+defSkin('t_psychic','ty_psychic','type',{
+  grad:['#26062f','#560f52','#8a1a6b','#b82a72'],angle:172,
+  blobs:[[0.30,0.10,0.50,'rgba(255,110,210,0.24)'],[0.80,0.34,0.44,'rgba(140,90,255,0.20)']],
+  fx:[{k:'bokeh',n:2,color:'rgba(255,140,230,0.14)',seed:61},
+      {k:'dots',size:44,r:2.6,color:'rgba(255,220,255,0.10)'},
+      {k:'particles',shape:'ring',n:12,size:26,color:'rgba(255,190,255,0.34)',seed:62}],
+  vig:0.30,title:'#ff9fe0',fly:'#d99bff',line:'rgba(255,150,230,0.45)',cardbg:'#2c0c35',
+  mark:{src:'assets/type/badge_psychic.webp',op:0.17,size:0.58,x:0.88,y:0.24,rot:-0.22,tile:0.058,tsize:0.115,n:3,seed:481},
+  banner:'assets/type/bg_psychic.webp',bannerOp:0.32});
+defSkin('t_bug','ty_bug','type',{
+  grad:['#141e08','#2c3f0f','#48631a','#648629'],angle:170,
+  fx:[{k:'hex',size:40,color:'rgba(200,240,120,0.10)',lw:1.4},
+      {k:'particles',shape:'dot',n:16,size:7,color:'rgba(210,255,140,0.35)',seed:71}],
+  vig:0.28,title:'#c8ee5a',fly:'#a8e05a',sec1:'#9cff9c',sec2:'#ffe98a',line:'rgba(200,240,120,0.42)',cardbg:'#1b2a0c',
+  mark:{src:'assets/type/badge_bug.webp',op:0.17,size:0.58,x:0.88,y:0.24,rot:-0.11,tile:0.058,tsize:0.115,n:3,seed:498},
+  banner:'assets/type/bg_bug.webp',bannerOp:0.34});
+defSkin('t_rock','ty_rock','type',{
+  grad:['#1e1811','#413528','#635240','#847059'],angle:168,
+  fx:[{k:'cracks',n:8,color:'rgba(30,22,14,0.35)',lw:3.4,seed:81},
+      {k:'particles',shape:'shard',n:12,size:26,color:'rgba(255,240,215,0.10)',seed:82}],
+  vig:0.30,title:'#ecd6ab',fly:'#d8bb8a',line:'rgba(240,220,190,0.35)',cardbg:'#282018',
+  mark:{src:'assets/type/badge_rock.webp',op:0.22,size:0.58,x:0.88,y:0.24,rot:0.0,tile:0.075,tsize:0.115,n:3,seed:515},
+  banner:'assets/type/bg_rock.webp',bannerOp:0.42});
+defSkin('t_ghost','ty_ghost','type',{
+  grad:['#0d0820','#221347','#38206b','#150d2c'],angle:174,
+  blobs:[[0.36,0.12,0.50,'rgba(150,110,255,0.22)']],
+  fx:[{k:'bokeh',n:3,color:'rgba(170,140,255,0.13)',seed:91},
+      {k:'particles',shape:'ring',n:10,size:30,color:'rgba(200,180,255,0.26)',seed:92}],
+  vig:0.36,title:'#c5abff',fly:'#a88fff',line:'rgba(180,150,255,0.42)',cardbg:'#1a1235',
+  mark:{src:'assets/type/badge_ghost.webp',op:0.19,size:0.58,x:0.88,y:0.24,rot:0.11,tile:0.065,tsize:0.115,n:3,seed:532},
+  banner:'assets/type/bg_ghost.webp',bannerOp:0.34});
+defSkin('t_dragon','ty_dragon','type',{
+  grad:['#0b0a2c','#221a5e','#3d2288','#5a2fa0'],angle:172,
+  blobs:[[0.70,0.12,0.52,'rgba(140,110,255,0.22)']],
+  fx:[{k:'hex',size:52,color:'rgba(170,150,255,0.09)',lw:1.5},
+      {k:'particles',shape:'spark',n:12,size:28,color:'rgba(190,170,255,0.40)',seed:101}],
+  vig:0.30,title:'#b0a4ff',fly:'#8f7dff',sec1:'#7cf0c0',sec2:'#ffd76a',line:'rgba(170,150,255,0.45)',cardbg:'#141138',
+  mark:{src:'assets/type/badge_dragon.webp',op:0.17,size:0.58,x:0.88,y:0.24,rot:0.22,tile:0.058,tsize:0.115,n:3,seed:549},
+  banner:'assets/type/bg_dragon.webp',bannerOp:0.32});
+defSkin('t_dark','ty_dark','type',{
+  grad:['#050508','#131318','#232330','#0a0a0f'],angle:176,
+  blobs:[[0.50,0.18,0.55,'rgba(120,110,150,0.14)']],
+  fx:[{k:'particles',shape:'dot',n:20,size:5,color:'rgba(200,200,225,0.22)',seed:111},
+      {k:'diag',size:130,w:0.30,ang:-45,color:'rgba(255,255,255,0.03)'}],
+  vig:0.40,title:'#c9c9dc',fly:'#9d9dc0',line:'rgba(200,200,230,0.30)',cardbg:'#15151d',
+  mark:{src:'assets/type/badge_dark.webp',op:0.22,size:0.58,x:0.88,y:0.24,rot:-0.22,tile:0.075,tsize:0.115,n:3,seed:566},
+  banner:'assets/type/bg_dark.webp',bannerOp:0.38});
+defSkin('t_steel','ty_steel','type',{
+  grad:['#171b21','#2c343e','#48545f','#6b7a88'],angle:168,
+  fx:[{k:'grid',size:48,bold:4,color:'rgba(220,235,255,0.07)',color2:'rgba(220,235,255,0.16)',lw:1},
+      {k:'diag',size:150,w:0.22,ang:-45,color:'rgba(255,255,255,0.05)'}],
+  vig:0.28,title:'#dbe8f5',fly:'#a8c8e0',line:'rgba(220,235,255,0.40)',cardbg:'#20262e',
+  mark:{src:'assets/type/badge_steel.webp',op:0.20,size:0.58,x:0.88,y:0.24,rot:-0.11,tile:0.068,tsize:0.115,n:3,seed:583},
+  banner:'assets/type/bg_steel.webp',bannerOp:0.40});
+defSkin('t_fairy','ty_fairy','type',{light:1,
+  grad:['#ffe0ee','#ffc4de','#f5a8cf','#e88fc0'],angle:160,
+  blobs:[[0.24,0.10,0.44,'rgba(255,255,255,0.50)'],[0.80,0.24,0.40,'rgba(190,160,255,0.30)']],
+  fx:[{k:'particles',shape:'star',n:16,size:14,color:'rgba(255,255,255,0.80)',seed:121},
+      {k:'dots',size:44,r:3,color:'rgba(255,255,255,0.40)'}],
+  title:'#95205f',fly:'#7a2fa8',line:'rgba(190,100,150,0.35)',panel:'rgba(255,255,255,0.85)',foot:'#6b3350',
+  mark:{src:'assets/type/badge_fairy.webp',op:0.20,size:0.58,x:0.88,y:0.24,rot:0.0,tile:0.068,tsize:0.115,n:3,seed:600},
+  banner:'assets/type/bg_fairy.webp',bannerOp:0.44});
+
+/* — 隊伍 — */
+defSkin('mystic','st_mystic','team',{
+  grad:['#020f26','#083264','#0d57a8','#1478d0'],angle:172,
+  blobs:[[0.50,0.13,0.58,'rgba(90,200,255,0.24)']],
+  fx:[{k:'waves',size:150,amp:24,freq:2.2,color:'rgba(170,235,255,0.12)',lw:2.6},
+      {k:'particles',shape:'flake',n:12,size:18,color:'rgba(210,245,255,0.35)',seed:131}],
+  vig:0.30,title:'#7cc4ff',fly:'#a8dcff',line:'rgba(120,205,255,0.50)',cardbg:'#07203f',
+  mark:{src:'assets/team/mystic.webp',op:0.17,size:0.66,x:0.5,y:0.36,rot:0,tile:0.058,tsize:0.13,n:3,seed:911}});
+defSkin('valor','st_valor','team',{
+  grad:['#220306','#6b0c14','#a81a1e','#d43a2a'],angle:172,
+  blobs:[[0.50,0.13,0.58,'rgba(255,120,60,0.24)']],
+  fx:[{k:'particles',shape:'ember',n:20,size:12,color:'rgba(255,160,80,0.50)',color2:'rgba(255,240,200,0.90)',seed:141},
+      {k:'diag',size:110,w:0.28,ang:-45,color:'rgba(255,255,255,0.045)'}],
+  vig:0.30,title:'#ff9d84',fly:'#ffbf9a',sec1:'#87f0b4',sec2:'#ffdf80',line:'rgba(255,140,110,0.48)',cardbg:'#2a0a0c',
+  mark:{src:'assets/team/valor.webp',op:0.17,size:0.66,x:0.5,y:0.36,rot:0,tile:0.058,tsize:0.13,n:3,seed:934}});
+defSkin('instinct','st_instinct','team',{
+  grad:['#221802','#5c4304','#96700a','#c99b10'],angle:172,
+  blobs:[[0.50,0.13,0.58,'rgba(255,225,90,0.24)']],
+  fx:[{k:'particles',shape:'spark',n:15,size:28,color:'rgba(255,240,140,0.50)',seed:151},
+      {k:'grid',size:64,bold:5,color:'rgba(255,235,140,0.06)',color2:'rgba(255,225,80,0.18)',lw:1}],
+  vig:0.30,title:'#ffe066',fly:'#fff0a8',sec1:'#8cf0b8',sec2:'#fffbe6',line:'rgba(255,225,110,0.48)',cardbg:'#2a2005',foot:'#ffeec8',
+  mark:{src:'assets/team/instinct.webp',op:0.16,size:0.66,x:0.5,y:0.36,rot:0,tile:0.054,tsize:0.13,n:3,seed:957}});
+
+const SKIN_CATS=[['classic','stc_classic'],['grad','stc_grad'],['tech','stc_tech'],['type','stc_type'],['team','stc_team']]
+  .map(([id,nm])=>({id,nm,keys:Object.keys(SKINS).filter(k=>SKINS[k].cat===id)}));
+let SKIN='neon';
+const EXP=()=>SKINS[SKIN]||SKINS.neon;   // 目前匯出圖配色(取代舊的 THEMES[THEME].exp)
+
 /* ---------- 多國語言 ---------- */
 const LANGS=[['zh','繁中'],['en','English'],['ja','日本語'],['ko','한국어'],['fr','Français'],['de','Deutsch'],['es','Español']];
 const I18N={
@@ -680,8 +948,53 @@ const I18N={
  fr:{font_game:'Jeu gras',font_hei:'Sans',font_impact:'Impact',font_round:'Arrondi',font_serif:'Serif',w_normal:'Normal',w_med:'Moyen',w_bold:'Gras',w_black:'Extra-gras',app:"Générateur de liste d'échange Pokémon GO",fname:'liste-echange',theme:'Thème',th_neon:'Néon sombre',th_warm:'Chaud',th_light:'Clair',tab_mon:'Pokémon (tous)',tab_bg:'Fonds',search_mon:'Nom ou numéro',search_bg:'Pokémon ou fond',f_normal:'Normal',f_shiny:'Chromatique',f_dmax:'Dynamax',f_gmax:'Gigamax',f_cos:'Forme/Costume',only:'Filtrer',f_sel:'Sélection',f_lego:'Légendaire',combos_unit:'combos',bg_unit:'combos',mons:'Pokémon',seg_want:'Vers Recherche',seg_have:'Vers Échange',canfly:'Peut voler (CAN FLY)',want:'Je recherche',have:'Je propose',empty:'Cliquez les vignettes',start:"C'est fait, créer l'image",sort:'Trier par numéro',clear:'Vider la liste',download:'Télécharger PNG',addtext:'Ajouter texte',reset:'Réinit. texte',back:'Retour',edit_title:'Image (glisser/éditer texte)',edit_hint:'Cliquez un texte → glissez ; éditez en dessous.',text_content:'Texte',del:'Supprimer',outline:'Contour',confirm_clear:'Vider toute la liste ?',list_empty:'Liste vide',edit_empty:'Liste vide — ajoutez des Pokémon',export_foot:"Liste d'échange Pokémon GO",newtext:"Texte",set_add:'Nouvelle liste',set_rename:'Renommer',set_dup:'Dupliquer',set_del:'Supprimer',set_delall:'Tout supprimer',clear_side:'Tout vider',sec_add:'Ajouter',set_default:'Liste',home:'Boîte à outils',auth_login:'Connexion',auth_logout:'Se déconnecter',auth_synced:'Synchronisé dans le cloud',auth_guest:'Non connecté · enregistré dans ce navigateur',qr_toggle:"Ajouter un QR promo à l'image",scan_hint:'Scannez pour créer votre liste',sets_title:'Mes listes',set_hint:'Cliquez un nom pour changer · glissez pour réordonner',set_prompt:'Nom de la liste :',set_confirm_del:'Supprimer « {n} » ?',set_confirm_delall:'Supprimer les {n} listes ? Action irréversible.',set_keep_one:'Gardez au moins une liste',note_ph:'Note',pick_title:'Choisir les Pokémon à ajouter',pick_done:'✓ Terminé',edit_photo:'Éditer le texte',done:'Terminé',t_style:'Police/Fond',t_color:'Couleur',th_ocean:'Océan',th_sakura:'Sakura',th_forest:'Forêt',zoom_hint:'Glissez pour zoomer la vue',scheme:'Couleurs',per_row:'Par ligne',pick_hint:'👆 Touchez pour sélectionner · ↔ glissez pour en choisir plusieurs',intro_title:'👋 Bienvenue',intro_1:'Touchez « ✏️ Ajouter » pour choisir des Pokémon (glissez pour en choisir plusieurs)',intro_2:'Touchez « 🎨 Créer l’image » pour éditer texte et couleurs, puis télécharger',intro_ok:'C’est parti',share_list:'Lien de partage',link_copied:'Lien copié — envoyez-le à votre partenaire',share_fail:'Échec du partage, réessayez',share_wait:'Génération',share_need_cloud:'Le partage nécessite le cloud (non configuré)',import_ok:'Liste partagée chargée',import_bad:'Lien invalide ou expiré',trainer_label_def:'Code de Dresseur',trainer_code_ph:'1234 5678 9012',img_add:'🖼 Insérer image',save_title:'Image prête',save_hint:'« Enregistrer dans Photos » va directement dans votre album ; « Télécharger le fichier » enregistre dans l’app Fichiers.',save_hint2:'« Télécharger le fichier » enregistre dans l’app Fichiers ; ouvrez-le puis choisissez « Enregistrer l’image » pour l’ajouter à votre album.',save_photos:'📲 Enregistrer dans Photos',save_dl:'⬇ Télécharger le fichier',mix_open:'Combinaison libre',mix_step1:'Pokémon',mix_step2:'Marqueur (un seul)',mix_step3:'Fond (facultatif)',mix_none:'Aucun',mix_purified:'Purifié',mix_nobg:'Sans fond',mix_search_bg:'Rechercher un fond…',mix_hint:'Créez les combinaisons absentes des données : choisissez un Pokémon, puis marqueur et fond (facultatifs)',mix_more:'{n} de plus — affinez avec la recherche',mix_added:'Ajouté à la liste',mix_dup:'Cette combinaison est déjà dans la liste',reset_pick:'Réinitialiser',lbl_form:'Forme',lbl_costume:'Costume',lbl_bg:'Fond',tip_collapse:'Réduire/développer',tip_fith:'Image entière (hauteur)',tip_fitw:'Ajuster la largeur (défilement)',tip_undo:'Annuler',tip_redo:'Rétablir',tip_zoom:'Zoom (gauche = entier, droite = agrandir)',tip_minus:'Diminuer',tip_plus:'Augmenter',trainer_label_ph:'Libellé',lucky_add:'Bibelot Chance',save_share:'📤 Partager l’image',save_hint3:'« Partager l’image » transmet le fichier à une autre app ; le partage Android n’a pas d’enregistrement intégré. Pour la galerie, utilisez « Télécharger le fichier » puis Dossiers de l’appareil → Download.'},
  de:{font_game:'Spiel-Fett',font_hei:'Serifenlos',font_impact:'Impact',font_round:'Rund',font_serif:'Serife',w_normal:'Normal',w_med:'Mittel',w_bold:'Fett',w_black:'Extrafett',app:'Pokémon GO Tauschlisten-Generator',fname:'tauschliste',theme:'Design',th_neon:'Dunkel Neon',th_warm:'Warm',th_light:'Hell',tab_mon:'Pokémon (alle)',tab_bg:'Hintergründe',search_mon:'Name oder Nummer',search_bg:'Pokémon oder Hintergrund',f_normal:'Normal',f_shiny:'Schillernd',f_dmax:'Dynamax',f_gmax:'Gigadynamax',f_cos:'Form/Kostüm',only:'Filter',f_sel:'Gewählt',f_lego:'Legendär',combos_unit:'Kombis',bg_unit:'Kombis',mons:'Pokémon',seg_want:'Zu Gesucht',seg_have:'Zu Biete',canfly:'Kann fliegen (CAN FLY)',want:'Gesucht',have:'Biete',empty:'Vorschaubilder anklicken',start:'Fertig — Bild erstellen',sort:'Nach Nummer sortieren',clear:'Liste leeren',download:'PNG speichern',addtext:'Text hinzufügen',reset:'Text zurücksetzen',back:'Zurück',edit_title:'Bild (Text ziehen/bearbeiten)',edit_hint:'Text anklicken → ziehen; unten bearbeiten.',text_content:'Text',del:'Löschen',outline:'Umriss',confirm_clear:'Ganze Liste leeren?',list_empty:'Liste ist leer',edit_empty:'Liste leer — erst Pokémon hinzufügen',export_foot:'Pokémon GO Tauschliste',newtext:'Text',set_add:'Neue Liste',set_rename:'Umbenennen',set_dup:'Duplizieren',set_del:'Liste löschen',set_delall:'Alle löschen',clear_side:'Alle leeren',sec_add:'Hinzufügen',set_default:'Liste',home:'Werkzeugkasten',auth_login:'Anmelden',auth_logout:'Abmelden',auth_synced:'Mit Cloud synchronisiert',auth_guest:'Nicht angemeldet · in diesem Browser gespeichert',qr_toggle:'Promo-QR zum Bild hinzufügen',scan_hint:'Scannen und eigene Liste erstellen',sets_title:'Meine Listen',set_hint:'Namen anklicken zum Wechseln · ziehen zum Sortieren',set_prompt:'Listenname:',set_confirm_del:'„{n}" löschen?',set_confirm_delall:'Alle {n} Listen löschen? Kann nicht rückgängig gemacht werden.',set_keep_one:'Mindestens eine Liste behalten',note_ph:'Notiz',pick_title:'Pokémon zum Hinzufügen wählen',pick_done:'✓ Fertig',edit_photo:'Text bearbeiten',done:'Fertig',t_style:'Schrift/Hintergrund',t_color:'Farbe',th_ocean:'Ozean',th_sakura:'Sakura',th_forest:'Wald',zoom_hint:'Ziehen zum Zoomen',scheme:'Farben',per_row:'Pro Reihe',pick_hint:'👆 Tippen zum Wählen · ↔ seitlich wischen für Mehrfachauswahl',intro_title:'👋 Willkommen',intro_1:'Auf „✏️ Hinzufügen" tippen, um Pokémon zu wählen (seitlich wischen für mehrere)',intro_2:'Auf „🎨 Bild erstellen" tippen zum Bearbeiten und Herunterladen',intro_ok:'Los geht’s',share_list:'Teilen-Link',link_copied:'Link kopiert — an den Tauschpartner senden',share_fail:'Teilen fehlgeschlagen, bitte erneut',share_wait:'Wird erstellt',share_need_cloud:'Teilen benötigt Cloud (nicht eingerichtet)',import_ok:'Geteilte Liste geladen',import_bad:'Ungültiger oder abgelaufener Link',trainer_label_def:'Trainercode',trainer_code_ph:'1234 5678 9012',img_add:'🖼 Bild einfügen',save_title:'Bild fertig',save_hint:'„In Fotos sichern“ legt es direkt in dein Album; „Datei herunterladen“ speichert in der Dateien-App.',save_hint2:'„Datei herunterladen“ speichert in der Dateien-App. Dort öffnen und „Bild sichern“ wählen, um es ins Album zu legen.',save_photos:'📲 In Fotos sichern',save_dl:'⬇ Datei herunterladen',mix_open:'Freie Kombination',mix_step1:'Pokémon',mix_step2:'Markierung (eine)',mix_step3:'Hintergrund (optional)',mix_none:'Keine',mix_purified:'Erlöst',mix_nobg:'Ohne Hintergrund',mix_search_bg:'Hintergrund suchen…',mix_hint:'Baue Kombinationen, die in den Daten fehlen: Pokémon wählen, Markierung und Hintergrund optional',mix_more:'{n} weitere — mit der Suche eingrenzen',mix_added:'Zur Liste hinzugefügt',mix_dup:'Diese Kombination ist bereits in der Liste',reset_pick:'Zurücksetzen',lbl_form:'Form',lbl_costume:'Kostüm',lbl_bg:'Hintergrund',tip_collapse:'Ein-/ausklappen',tip_fith:'Ganzes Bild (Höhe)',tip_fitw:'Breite anpassen (scrollen)',tip_undo:'Rückgängig',tip_redo:'Wiederholen',tip_zoom:'Zoom (links = ganz, rechts = größer)',tip_minus:'Verringern',tip_plus:'Erhöhen',trainer_label_ph:'Bezeichnung',lucky_add:'Glücks-Klimbim',save_share:'📤 Bild teilen',save_hint3:'„Bild teilen“ übergibt die Datei an eine andere App; Androids Teilen-Menü hat kein eigenes Speichern. Für die Galerie „Datei herunterladen“ nutzen und unter Geräteordner → Download suchen.'},
  es:{font_game:'Juego negrita',font_hei:'Sans',font_impact:'Impact',font_round:'Redondeada',font_serif:'Serif',w_normal:'Normal',w_med:'Media',w_bold:'Negrita',w_black:'Extranegrita',app:'Generador de lista de intercambio Pokémon GO',fname:'lista-intercambio',theme:'Tema',th_neon:'Neón oscuro',th_warm:'Cálido',th_light:'Claro',tab_mon:'Pokémon (todos)',tab_bg:'Fondos',search_mon:'Nombre o número',search_bg:'Pokémon o fondo',f_normal:'Normal',f_shiny:'Variocolor',f_dmax:'Dinamax',f_gmax:'Gigamax',f_cos:'Forma/Disfraz',only:'Filtrar',f_sel:'Elegidos',f_lego:'Legendario',combos_unit:'combos',bg_unit:'combos',mons:'Pokémon',seg_want:'A Busco',seg_have:'A Ofrezco',canfly:'Puede volar (CAN FLY)',want:'Busco',have:'Ofrezco',empty:'Toca las miniaturas',start:'Listo — crear imagen',sort:'Ordenar por número',clear:'Vaciar lista',download:'Descargar PNG',addtext:'Añadir texto',reset:'Restablecer texto',back:'Volver',edit_title:'Imagen (arrastrar/editar texto)',edit_hint:'Toca un texto → arrastra; edita abajo.',text_content:'Texto',del:'Eliminar',outline:'Contorno',confirm_clear:'¿Vaciar toda la lista?',list_empty:'La lista está vacía',edit_empty:'Lista vacía — añade Pokémon primero',export_foot:'Lista de intercambio Pokémon GO',newtext:'Texto',set_add:'Nueva lista',set_rename:'Renombrar',set_dup:'Duplicar',set_del:'Eliminar lista',set_delall:'Eliminar todo',clear_side:'Vaciar',sec_add:'Añadir',set_default:'Lista',home:'Herramientas',auth_login:'Entrar',auth_logout:'Cerrar sesión',auth_synced:'Sincronizado en la nube',auth_guest:'Sin iniciar sesión · guardado en este navegador',qr_toggle:'Añadir QR promo a la imagen',scan_hint:'Escanea para crear tu lista',sets_title:'Mis listas',set_hint:'Toca un nombre para cambiar · arrastra para ordenar',set_prompt:'Nombre de la lista:',set_confirm_del:'¿Eliminar «{n}»?',set_confirm_delall:'¿Eliminar las {n} listas? No se puede deshacer.',set_keep_one:'Mantén al menos una lista',note_ph:'Nota',pick_title:'Elige Pokémon para añadir',pick_done:'✓ Listo',edit_photo:'Editar texto',done:'Listo',t_style:'Fuente/Fondo',t_color:'Color',th_ocean:'Océano',th_sakura:'Sakura',th_forest:'Bosque',zoom_hint:'Arrastra para ampliar la vista',scheme:'Colores',per_row:'Por fila',pick_hint:'👆 Toca para seleccionar · ↔ desliza para elegir varios',intro_title:'👋 Bienvenido',intro_1:'Toca «✏️ Añadir» para elegir Pokémon (desliza para elegir varios)',intro_2:'Toca «🎨 Crear imagen» para editar texto y colores, luego descargar',intro_ok:'Entendido',share_list:'Enlace para compartir',link_copied:'Enlace copiado — envíaselo a tu compañero',share_fail:'Error al compartir, inténtalo de nuevo',share_wait:'Generando',share_need_cloud:'Compartir requiere la nube (no configurado)',import_ok:'Lista compartida cargada',import_bad:'Enlace no válido o caducado',trainer_label_def:'Código de Entrenador',trainer_code_ph:'1234 5678 9012',img_add:'🖼 Insertar imagen',save_title:'Imagen lista',save_hint:'«Guardar en Fotos» lo pone directamente en tu álbum; «Descargar archivo» lo guarda en la app Archivos.',save_hint2:'«Descargar archivo» lo guarda en la app Archivos. Ábrelo allí y elige «Guardar imagen» para añadirlo al álbum.',save_photos:'📲 Guardar en Fotos',save_dl:'⬇ Descargar archivo',mix_open:'Combinación libre',mix_step1:'Pokémon',mix_step2:'Marca (elige una)',mix_step3:'Fondo (opcional)',mix_none:'Ninguna',mix_purified:'Purificado',mix_nobg:'Sin fondo',mix_search_bg:'Buscar fondos…',mix_hint:'Crea combinaciones que los datos no cubren: elige un Pokémon; marca y fondo son opcionales',mix_more:'{n} más — acota con la búsqueda',mix_added:'Añadido a la lista',mix_dup:'Esa combinación ya está en la lista',reset_pick:'Restablecer',lbl_form:'Forma',lbl_costume:'Disfraz',lbl_bg:'Fondo',tip_collapse:'Contraer/expandir',tip_fith:'Imagen completa (altura)',tip_fitw:'Ajustar al ancho (desplazar)',tip_undo:'Deshacer',tip_redo:'Rehacer',tip_zoom:'Zoom (izq. = completo, der. = ampliar)',tip_minus:'Reducir',tip_plus:'Aumentar',trainer_label_ph:'Etiqueta',lucky_add:'Recuerdo Suerte',save_share:'📤 Compartir imagen',save_hint3:'«Compartir imagen» entrega el archivo a otra app; el menú de Android no guarda por sí solo. Para la galería usa «Descargar archivo» y búscalo en Carpetas del dispositivo → Download.'}};
+// 匯出圖樣式的名稱另外放:上面每個語系都是一整行的大物件,樣式一多會難以維護,
+// 而且這批字串(屬性名/分類名)彼此獨立、改一個不必碰到別的。tr() 兩邊都會找。
+const I18N_ST={
+ zh:{skin:'圖片風格',stc_classic:'經典',stc_grad:'漸層',stc_tech:'科技',stc_type:'屬性',stc_team:'隊伍',
+     st_aurora:'極光',st_sunset:'夕陽',st_midnight:'午夜',st_candy:'糖果',st_vapor:'蒸氣波',st_mono:'極簡',
+     st_cyber:'賽博霓虹',st_circuit:'電路板',st_holo:'全息',st_matrix:'資料流',st_carbon:'碳纖維',
+     st_mystic:'神秘隊',st_valor:'勇氣隊',st_instinct:'直覺隊',
+     ty_normal:'一般',ty_fire:'火',ty_water:'水',ty_grass:'草',ty_electric:'電',ty_ice:'冰',ty_fighting:'格鬥',ty_poison:'毒',ty_ground:'地面',
+     ty_flying:'飛行',ty_psychic:'超能力',ty_bug:'蟲',ty_rock:'岩石',ty_ghost:'幽靈',ty_dragon:'龍',ty_dark:'惡',ty_steel:'鋼',ty_fairy:'妖精'},
+ en:{skin:'Image style',stc_classic:'Classic',stc_grad:'Gradient',stc_tech:'Tech',stc_type:'Type',stc_team:'Team',
+     st_aurora:'Aurora',st_sunset:'Sunset',st_midnight:'Midnight',st_candy:'Candy',st_vapor:'Vaporwave',st_mono:'Minimal',
+     st_cyber:'Cyber Neon',st_circuit:'Circuit',st_holo:'Hologram',st_matrix:'Data Stream',st_carbon:'Carbon',
+     st_mystic:'Mystic',st_valor:'Valor',st_instinct:'Instinct',
+     ty_normal:'Normal',ty_fire:'Fire',ty_water:'Water',ty_grass:'Grass',ty_electric:'Electric',ty_ice:'Ice',ty_fighting:'Fighting',ty_poison:'Poison',ty_ground:'Ground',
+     ty_flying:'Flying',ty_psychic:'Psychic',ty_bug:'Bug',ty_rock:'Rock',ty_ghost:'Ghost',ty_dragon:'Dragon',ty_dark:'Dark',ty_steel:'Steel',ty_fairy:'Fairy'},
+ ja:{skin:'画像スタイル',stc_classic:'定番',stc_grad:'グラデ',stc_tech:'テック',stc_type:'タイプ',stc_team:'チーム',
+     st_aurora:'オーロラ',st_sunset:'夕焼け',st_midnight:'ミッドナイト',st_candy:'キャンディ',st_vapor:'ヴェイパー',st_mono:'ミニマル',
+     st_cyber:'サイバー',st_circuit:'サーキット',st_holo:'ホログラム',st_matrix:'データ',st_carbon:'カーボン',
+     st_mystic:'ミスティック',st_valor:'ヴァーラー',st_instinct:'インスティンクト',
+     ty_normal:'ノーマル',ty_fire:'ほのお',ty_water:'みず',ty_grass:'くさ',ty_electric:'でんき',ty_ice:'こおり',ty_fighting:'かくとう',ty_poison:'どく',ty_ground:'じめん',
+     ty_flying:'ひこう',ty_psychic:'エスパー',ty_bug:'むし',ty_rock:'いわ',ty_ghost:'ゴースト',ty_dragon:'ドラゴン',ty_dark:'あく',ty_steel:'はがね',ty_fairy:'フェアリー'},
+ ko:{skin:'이미지 스타일',stc_classic:'클래식',stc_grad:'그라데이션',stc_tech:'테크',stc_type:'타입',stc_team:'팀',
+     st_aurora:'오로라',st_sunset:'노을',st_midnight:'미드나이트',st_candy:'캔디',st_vapor:'베이퍼웨이브',st_mono:'미니멀',
+     st_cyber:'사이버',st_circuit:'서킷',st_holo:'홀로그램',st_matrix:'데이터',st_carbon:'카본',
+     st_mystic:'미스틱',st_valor:'발러',st_instinct:'인스팅트',
+     ty_normal:'노말',ty_fire:'불꽃',ty_water:'물',ty_grass:'풀',ty_electric:'전기',ty_ice:'얼음',ty_fighting:'격투',ty_poison:'독',ty_ground:'땅',
+     ty_flying:'비행',ty_psychic:'에스퍼',ty_bug:'벌레',ty_rock:'바위',ty_ghost:'고스트',ty_dragon:'드래곤',ty_dark:'악',ty_steel:'강철',ty_fairy:'페어리'},
+ fr:{skin:"Style d'image",stc_classic:'Classique',stc_grad:'Dégradé',stc_tech:'Tech',stc_type:'Type',stc_team:'Équipe',
+     st_aurora:'Aurore',st_sunset:'Coucher de soleil',st_midnight:'Minuit',st_candy:'Bonbon',st_vapor:'Vaporwave',st_mono:'Minimal',
+     st_cyber:'Cyber néon',st_circuit:'Circuit',st_holo:'Hologramme',st_matrix:'Flux de données',st_carbon:'Carbone',
+     st_mystic:'Sagesse',st_valor:'Bravoure',st_instinct:'Intuition',
+     ty_normal:'Normal',ty_fire:'Feu',ty_water:'Eau',ty_grass:'Plante',ty_electric:'Électrik',ty_ice:'Glace',ty_fighting:'Combat',ty_poison:'Poison',ty_ground:'Sol',
+     ty_flying:'Vol',ty_psychic:'Psy',ty_bug:'Insecte',ty_rock:'Roche',ty_ghost:'Spectre',ty_dragon:'Dragon',ty_dark:'Ténèbres',ty_steel:'Acier',ty_fairy:'Fée'},
+ de:{skin:'Bildstil',stc_classic:'Klassisch',stc_grad:'Verlauf',stc_tech:'Tech',stc_type:'Typ',stc_team:'Team',
+     st_aurora:'Polarlicht',st_sunset:'Sonnenuntergang',st_midnight:'Mitternacht',st_candy:'Bonbon',st_vapor:'Vaporwave',st_mono:'Minimal',
+     st_cyber:'Cyber-Neon',st_circuit:'Schaltkreis',st_holo:'Hologramm',st_matrix:'Datenstrom',st_carbon:'Karbon',
+     st_mystic:'Weisheit',st_valor:'Wagemut',st_instinct:'Intuition',
+     ty_normal:'Normal',ty_fire:'Feuer',ty_water:'Wasser',ty_grass:'Pflanze',ty_electric:'Elektro',ty_ice:'Eis',ty_fighting:'Kampf',ty_poison:'Gift',ty_ground:'Boden',
+     ty_flying:'Flug',ty_psychic:'Psycho',ty_bug:'Käfer',ty_rock:'Gestein',ty_ghost:'Geist',ty_dragon:'Drache',ty_dark:'Unlicht',ty_steel:'Stahl',ty_fairy:'Fee'},
+ es:{skin:'Estilo de imagen',stc_classic:'Clásico',stc_grad:'Degradado',stc_tech:'Tecno',stc_type:'Tipo',stc_team:'Equipo',
+     st_aurora:'Aurora',st_sunset:'Atardecer',st_midnight:'Medianoche',st_candy:'Caramelo',st_vapor:'Vaporwave',st_mono:'Minimal',
+     st_cyber:'Cíber neón',st_circuit:'Circuito',st_holo:'Holograma',st_matrix:'Flujo de datos',st_carbon:'Carbono',
+     st_mystic:'Sabiduría',st_valor:'Valor',st_instinct:'Instinto',
+     ty_normal:'Normal',ty_fire:'Fuego',ty_water:'Agua',ty_grass:'Planta',ty_electric:'Eléctrico',ty_ice:'Hielo',ty_fighting:'Lucha',ty_poison:'Veneno',ty_ground:'Tierra',
+     ty_flying:'Volador',ty_psychic:'Psíquico',ty_bug:'Bicho',ty_rock:'Roca',ty_ghost:'Fantasma',ty_dragon:'Dragón',ty_dark:'Siniestro',ty_steel:'Acero',ty_fairy:'Hada'}};
 let LANG='zh',NAMES={};
-function tr(k){return (I18N[LANG]&&I18N[LANG][k])||I18N.en[k]||k;}
+function tr(k){return (I18N[LANG]&&I18N[LANG][k])||(I18N_ST[LANG]&&I18N_ST[LANG][k])||I18N.en[k]||I18N_ST.en[k]||k;}
 // 卡片的 tag 一律以中文字面值儲存(buildThumbs 與雲端/localStorage 的舊資料都是),顯示時才翻譯。
 // 少了這層轉換,韓文/英文介面的 tooltip 會直接跳出「極巨化」「淨化」等中文。
 const TAG_KEY={'極巨化':'f_dmax','超極巨化':'f_gmax','淨化':'mix_purified'};
@@ -731,7 +1044,7 @@ function applyStaticI18n(){
   const T=tr;
   $('#appTitle').textContent='🔴 '+T('app'); document.title=T('app'); $('#themeLabel').textContent=T('theme');
   $('#themeSel').innerHTML=THEME_LIST.map(([k,ik])=>`<option value="${k}">${T(ik)}</option>`).join(''); $('#themeSel').value=THEME;
-  $('#zoomHint').textContent='↔ '+T('zoom_hint'); $('#edThemesLabel').textContent=T('scheme'); buildThemeSwatches();
+  $('#zoomHint').textContent='↔ '+T('zoom_hint'); $('#edThemesLabel').textContent=T('skin'); buildThemeSwatches();
   $('#colsLabel').textContent=T('per_row'); updateColsUI();
   $('#tMon').textContent=T('tab_mon'); $('#tBg').textContent=T('tab_bg');
   $('#fNormal').textContent=T('f_normal'); $('#fShiny').textContent='✨ '+T('f_shiny'); $('#fDmax').textContent=T('f_dmax'); $('#fGmax').textContent=T('f_gmax'); $('#fCos').textContent=T('f_cos');
@@ -882,6 +1195,8 @@ async function boot(){
   $('#txtEditDone').onclick=()=>{ $('#txtEditOverlay').classList.remove('on'); _editingT=null; };
   window.addEventListener('resize',layoutTexts);
   applyTheme(localStorage.getItem('bgtoolTheme')||'neon');
+  // 匯出圖樣式另外存:選了「火」不會因為介面主題是「深色霓虹」而在重整後被蓋回去
+  applySkin(localStorage.getItem('bgtoolSkin')||THEME);
   applyStaticI18n();
   // 還原上次的清單(未登入時的本機暫存;登入後 Firebase 會覆蓋)。舊格式會自動遷移成多組。
   try{ const s=localStorage.getItem(LS_KEY); if(s) adoptSets(migrate(JSON.parse(s))); }catch(e){}
@@ -893,11 +1208,82 @@ async function boot(){
   render();
   renderBase();   // 還原清單後即時畫出匯出預覽(PNG 區)
 }
-function buildThemeSwatches(){
+/* ---------- 圖片風格選擇器 ---------- */
+let SKIN_CAT='classic';
+// 縮圖直接用同一支 paintBackdrop 畫,所見即所得 —— 手刻 CSS 漸層代表縮圖遲早會跟實際輸出對不上。
+// 以 1000×1000 的版面比例繪製再縮到 44px:花紋的相對大小與真圖一致(等於看真圖最上面那一塊)。
+// 存的是 dataURL 不是 canvas 元素:canvas 的 cloneNode 只複製屬性、不複製畫布內容(複製出來是空白的)
+const _skinThumbs=new Map();
+const SKIN_THUMB=44;
+function skinThumbURL(k){
+  if(_skinThumbs.has(k)) return _skinThumbs.get(k);
+  const D=Math.min(2,window.devicePixelRatio||1), V=1000, S=SKINS[k];
+  const cv=document.createElement('canvas');
+  cv.width=cv.height=Math.round(SKIN_THUMB*D);
+  const x=cv.getContext('2d');
+  x.setTransform(cv.width/V,0,0,cv.width/V,0,0);
+  x.beginPath(); x.rect(0,0,V,V); x.clip();
+  paintBackdrop(x,S,V,V,0,V,true);   // mini:不畫浮水印,縮圖上要疊在最上層才看得見
+  const mk=S.mark&&imgNow(S.mark.src);
+  if(mk){
+    // 有官方徽章/隊徽的樣式(屬性、隊伍):44px 下「哪一個屬性」比「版面長怎樣」重要得多,
+    // 所以徽章放大擺中間、幾乎不透明,底下只留一條 sec1/sec2 色帶交代文字色。
+    const w=V*0.66, h=w*(mk.naturalHeight||1)/(mk.naturalWidth||1);
+    x.save(); x.shadowColor='rgba(0,0,0,0.45)'; x.shadowBlur=V*0.05; x.globalAlpha=0.95;
+    x.drawImage(mk,(V-w)/2,V*0.44-h/2,w,h); x.restore();
+    x.fillStyle=S.sec1; rrPath(x,140,840,320,80,40); x.fill();
+    x.fillStyle=S.sec2; rrPath(x,540,840,320,80,40); x.fill();
+  }else{
+    // 其餘樣式:疊一個縮小版的「標題 + 面板 + 兩張卡 + 兩條區塊標籤」,
+    // 一眼看得出面板/卡片/文字色而不只是背景
+    x.fillStyle=S.title; rrPath(x,300,140,400,90,45); x.fill();
+    x.fillStyle=S.panel; rrPath(x,80,330,840,560,70); x.fill();
+    x.fillStyle=S.cardbg;
+    rrPath(x,160,420,270,270,50); x.fill(); rrPath(x,570,420,270,270,50); x.fill();
+    x.fillStyle=S.sec1; rrPath(x,160,760,270,70,35); x.fill();
+    x.fillStyle=S.sec2; rrPath(x,570,760,270,70,35); x.fill();
+  }
+  const u=cv.toDataURL('image/png'); _skinThumbs.set(k,u); return u;
+}
+function skinThumb(k){
+  const im=new Image(); im.src=skinThumbURL(k); im.alt='';
+  im.width=im.height=SKIN_THUMB; im.draggable=false; return im;
+}
+function renderSkinSwatches(){
   const box=$('#edThemes'); if(!box)return; box.innerHTML='';
-  for(const [k,ik] of THEME_LIST){ const b=document.createElement('button');
-    b.style.background=THEMES[k].ui.bg; b.title=tr(ik); b.dataset.k=k;
-    if(k===THEME)b.classList.add('on'); b.onclick=()=>applyTheme(k); box.appendChild(b); }
+  const cat=SKIN_CATS.find(c=>c.id===SKIN_CAT)||SKIN_CATS[0];
+  for(const k of cat.keys){
+    const b=document.createElement('button'); b.type='button'; b.dataset.k=k;
+    b.title=tr(SKINS[k].nm); b.setAttribute('aria-label',b.title);
+    b.appendChild(skinThumb(k));
+    if(k===SKIN)b.classList.add('on');
+    b.onclick=()=>applySkin(k);
+    box.appendChild(b);
+  }
+  const on=box.querySelector('button.on'); if(on&&on.scrollIntoView) on.scrollIntoView({block:'nearest',inline:'nearest'});
+  // 徽章/隊徽是圖檔,第一次畫縮圖時可能還沒載到 → 到齊後把這一類重畫一次。
+  // 只載「目前展開的分類」,不是一進來就把 39 張素材全抓下來。
+  const need=[].concat(...cat.keys.map(k=>skinAssets(SKINS[k])));
+  if(need.length && !need.every(imgReady)){
+    Promise.all(need.map(loadImg)).then(()=>{
+      if(SKIN_CAT!==cat.id) return;          // 使用者已經切走了就別亂重畫
+      for(const k of cat.keys) _skinThumbs.delete(k);
+      renderSkinSwatches();                  // 第二趟 need.every(imgReady) 為真 → 不會再排一次
+    });
+  }
+}
+function buildThemeSwatches(){
+  const cats=$('#edSkinCats'); if(!cats)return; cats.innerHTML='';
+  const cur=SKIN_CATS.find(c=>c.keys.includes(SKIN)); if(cur)SKIN_CAT=cur.id;   // 開起來就停在目前樣式那一類
+  for(const c of SKIN_CATS){
+    const b=document.createElement('button'); b.type='button'; b.textContent=tr(c.nm); b.dataset.c=c.id;
+    if(c.id===SKIN_CAT)b.classList.add('on');
+    b.onclick=()=>{ SKIN_CAT=c.id;
+      cats.querySelectorAll('button').forEach(e=>e.classList.toggle('on',e.dataset.c===c.id));
+      renderSkinSwatches(); };
+    cats.appendChild(b);
+  }
+  renderSkinSwatches();
 }
 // 把主題色套到整個網頁介面(CSS 變數)
 function syncUITheme(){
@@ -906,13 +1292,19 @@ function syncUITheme(){
   const map={'--bg':u.bg,'--card':u.card,'--line':u.line,'--fg':u.fg,'--mut':u.mut,'--acc':u.acc,'--acc2':u.acc2,'--want':u.want,'--have':u.have,'--cellbg':u.cellbg};
   for(const p in map) R.setProperty(p,map[p]);
 }
+// 頁首的「風格」= 網頁介面主題,並把匯出圖一起換成同名樣式(維持原本一個下拉換全部的手感)
 function applyTheme(k){
   if(!THEMES[k])k='neon'; THEME=k; $('#themeSel').value=k;
-  document.querySelectorAll('#edThemes button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
-  // 編輯圖片時切換配色 → 只換「匯出圖(主體)」的配色;不動網頁介面、也不覆蓋介面主題偏好
-  if(!document.body.classList.contains('editmode')){ syncUITheme(); localStorage.setItem('bgtoolTheme',k); }
-  // 主題色套到「未被手動改色」的預設文字
-  const T=THEMES[k].exp;
+  syncUITheme(); try{ localStorage.setItem('bgtoolTheme',k); }catch(e){}
+  applySkin(k);
+}
+// 製圖畫面的樣式選擇器 = 只換匯出圖;網頁介面不動(才能用淺色介面做深色的圖)
+function applySkin(k){
+  if(!SKINS[k])k='neon'; SKIN=k;
+  try{ localStorage.setItem('bgtoolSkin',k); }catch(e){}
+  const box=$('#edThemes'); if(box) box.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+  // 樣式色套到「未被手動改色」的預設文字
+  const T=EXP();
   for(const t of TEXTS){ if(t.autoColor){ if(t.id==='title')t.color=T.title; else if(t.id==='canfly')t.color=T.fly; else if(t.id==='lab-want')t.color=T.sec1; else if(t.id==='lab-have')t.color=T.sec2; else if(t.id==='foot'||t.id==='trainer')t.color=T.foot; } }
   renderBase();
 }
@@ -984,8 +1376,9 @@ function computeLayout(){
     if(!(tt&&tt.moved) && LAYW/2+tW/2 > qrLeft-QR_GAP) qrPush=QR_TOP+qrCardH()+QR_GAP-32;
   }
   const fly=$('#canfly').checked;
-  const secs=[{key:'want',items:LIST.want,col:THEMES[THEME].exp.sec1,def:'🟢 '+tr('want')},
-              {key:'have',items:LIST.have,col:THEMES[THEME].exp.sec2,def:'🟡 '+tr('have')}].filter(s=>s.items.length);
+  const EX=EXP();
+  const secs=[{key:'want',items:LIST.want,col:EX.sec1,def:'🟢 '+tr('want')},
+              {key:'have',items:LIST.have,col:EX.sec2,def:'🟡 '+tr('have')}].filter(s=>s.items.length);
   let top=140+(fly?46:0)+qrPush;
   let y=top; const S2=[];
   for(const s of secs){
@@ -1006,10 +1399,10 @@ function computeLayout(){
   return {fly,secs:S2,H,top,cols:EC,qrPush,trainerY,hasTrainer};
 }
 function defaultTexts(lay){
-  const T=THEMES[THEME].exp,list=[],qp=lay.qrPush||0;
-  list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:32+qp,size:62,color:T.title,weight:900,font:DEFONT,outline:false,autoColor:true});
-  if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:114+qp,size:32,color:T.fly,weight:900,font:DEFONT,outline:false,autoColor:true});
-  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:66,color:s.col,weight:900,font:DEFONT,outline:false,bg:0,autoColor:true,autoSize:true});
+  const T=EXP(),list=[],qp=lay.qrPush||0;
+  list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:32+qp,size:62,color:T.title,weight:900,font:DEFONT,outline:false,shadow:!!T.shadow,autoColor:true});
+  if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:114+qp,size:32,color:T.fly,weight:900,font:DEFONT,outline:false,shadow:!!T.shadow,autoColor:true});
+  for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:66,color:s.col,weight:900,font:DEFONT,outline:false,shadow:!!T.shadow,bg:0,autoColor:true,autoSize:true});
   return list;
 }
 function reconcile(lay){
@@ -1018,11 +1411,12 @@ function reconcile(lay){
   const def=defaultTexts(lay);
   // 標題一定存在;LAYW 會隨每排數量/內容改變 → 未手動移動的置中文字重新置中,避免跑位
   const ti=byId('title'); if(!ti) TEXTS.push(def.find(d=>d.id==='title'));
-  else { if(!ti.moved){ ti.cx=LAYW/2; ti.y=32+(lay.qrPush||0); } if(ti.autoSize!==false) ti.size=fitTextSize(ti.text,62,LAYW-2*PAD); }
+  else { if(!ti.moved){ ti.cx=LAYW/2; ti.y=32+(lay.qrPush||0); }
+         if(ti.autoSize!==false){ ti.size=fitTextSize(ti.text,62,LAYW-2*PAD); ti.shadow=!!EXP().shadow; } }
   // canfly 依開關
   if(lay.fly && !byId('canfly')) TEXTS.push(def.find(d=>d.id==='canfly'));
   if(!lay.fly) TEXTS=TEXTS.filter(t=>t.id!=='canfly');
-  const cf=byId('canfly'); if(cf && !cf.moved){ cf.cx=LAYW/2; cf.y=114+(lay.qrPush||0); }
+  const cf=byId('canfly'); if(cf){ if(!cf.moved){ cf.cx=LAYW/2; cf.y=114+(lay.qrPush||0); } if(cf.autoSize!==false) cf.shadow=!!EXP().shadow; }
   // 區塊標籤:有該區才有,沒手動移動就跟著版面
   for(const key of ['want','have']){
     const has=lay.secs.some(s=>s.key===key);
@@ -1052,9 +1446,17 @@ function loadImg(s){
   const key=cdn(s);
   if(_imgCache.has(key)) return _imgCache.get(key);
   const p=new Promise(r=>{const i=new Image();i.crossOrigin='anonymous';i.referrerPolicy='no-referrer';
-    i.onload=()=>r(i); i.onerror=()=>{_imgCache.delete(key);r(null);}; i.src=key;});
+    i.onload=()=>{_imgDone.set(key,i);r(i);}; i.onerror=()=>{_imgCache.delete(key);r(null);}; i.src=key;});
   _imgCache.set(key,p); return p;
 }
+// 已解析的圖(url→Image)。底圖引擎 paintBackdrop 是同步的,不能 await,
+// 所以繪製前先由 preloadSkin() 把該樣式用到的圖抓進來,這裡再同步取。
+const _imgDone=new Map();
+const imgNow=s=>s?(_imgDone.get(cdn(s))||null):null;
+const imgReady=s=>!!imgNow(s);
+// 一個樣式會用到的官方素材:屬性徽章/隊徽(浮水印)與屬性場景(頁首橫幅)
+function skinAssets(T){ const a=[]; if(T&&T.mark)a.push(T.mark.src); if(T&&T.banner)a.push(T.banner); return a.filter(Boolean); }
+function preloadSkin(T){ return Promise.all(skinAssets(T).map(loadImg)); }
 // 匯出用中尺寸背卡縮圖(~384px webp,原圖背卡動輒 500KB+);縮圖缺失時自動退回原圖
 function expOf(u){ return (u&&u.startsWith('assets/bg/')) ? 'assets/bgexp/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp') : u; }
 function loadExport(u){ const e=expOf(u); if(e===u) return loadImg(u); return loadImg(e).then(im=>im||loadImg(u)); }
@@ -1163,13 +1565,250 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
     x.restore();
   }
 }
+/* ---------- 底圖引擎:漸層 + 光暈 + 圖樣 + 暗角 ----------
+   全部只吃「版面座標」與 skin 規格,不看 canvas 尺寸、不用 Math.random() →
+   同一張圖無論一次畫完還是分成十塊畫,每塊算出來的花紋位置都一樣,接縫看不出來。
+   尺寸一律以 U=W/1000 為單位,換每排數量時花紋粗細才會等比例跟著走。 */
+function seedRand(s){ let t=(s>>>0)+0x9E3779B9;
+  return ()=>{ t=(t+0x6D2B79F5)>>>0; let r=Math.imul(t^(t>>>15),1|t); r=(r+Math.imul(r^(r>>>7),61|r))^r; return ((r^(r>>>14))>>>0)/4294967296; }; }
+// rgba(…) → 同色但全透明。徑向漸層若直接淡出到白色透明,邊緣會浮一圈白暈
+const fade=c=>String(c).replace(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)[^)]*\)/,'rgba($1,$2,$3,0)');
+// CSS 慣例的角度:0=往上、90=往右、180=往下(預設,與舊版的縱向漸層一致)
+function gradOf(x,W,H,cols,angDeg){
+  const a=(angDeg==null?180:angDeg)*Math.PI/180, dx=Math.sin(a), dy=-Math.cos(a);
+  const L=Math.abs(W*dx)+Math.abs(H*dy);
+  const g=x.createLinearGradient(W/2-dx*L/2, H/2-dy*L/2, W/2+dx*L/2, H/2+dy*L/2);
+  const n=cols.length; for(let i=0;i<n;i++) g.addColorStop(n<2?0:i/(n-1), cols[i]);
+  return g;
+}
+function drawParticle(x,f,s){
+  const c=f.color||'rgba(255,255,255,0.5)';
+  switch(f.shape){
+    case 'star':   x.fillStyle=c; x.beginPath();
+      for(let i=0;i<8;i++){ const a=i*Math.PI/4, r=(i%2)?s*0.16:s*0.6; const px=Math.cos(a)*r, py=Math.sin(a)*r; i?x.lineTo(px,py):x.moveTo(px,py); }
+      x.closePath(); x.fill(); break;
+    case 'flake':  x.strokeStyle=c; x.lineWidth=Math.max(0.6,s*0.10); x.lineCap='round'; x.beginPath();
+      for(let i=0;i<3;i++){ const a=i*Math.PI/3, hx=Math.cos(a)*s*0.5, hy=Math.sin(a)*s*0.5; x.moveTo(-hx,-hy); x.lineTo(hx,hy); }
+      x.stroke(); break;
+    case 'spark':  x.strokeStyle=c; x.lineWidth=Math.max(0.8,s*0.13); x.lineJoin='round'; x.lineCap='round';
+      x.beginPath(); x.moveTo(-s*0.30,-s*0.60); x.lineTo(s*0.12,-s*0.10); x.lineTo(-s*0.12,s*0.05); x.lineTo(s*0.30,s*0.60); x.stroke(); break;
+    case 'leaf':   x.fillStyle=c; x.beginPath(); x.ellipse(0,0,s*0.50,s*0.22,0,0,6.2832); x.fill(); break;
+    case 'bubble': x.strokeStyle=c; x.lineWidth=Math.max(0.6,s*0.09); x.beginPath(); x.arc(0,0,s*0.50,0,6.2832); x.stroke();
+      x.fillStyle=c; x.beginPath(); x.arc(-s*0.16,-s*0.16,s*0.09,0,6.2832); x.fill(); break;
+    case 'ring':   x.strokeStyle=c; x.lineWidth=Math.max(0.6,s*0.10); x.beginPath(); x.arc(0,0,s*0.45,0,6.2832); x.stroke(); break;
+    case 'bit':    x.fillStyle=c; x.fillRect(-s*0.07,-s*0.60,s*0.14,s*1.20); break;
+    case 'shard':  x.fillStyle=c; x.beginPath(); x.moveTo(0,-s*0.55); x.lineTo(s*0.42,s*0.40); x.lineTo(-s*0.42,s*0.40); x.closePath(); x.fill(); break;
+    case 'ember':  x.fillStyle=c; x.beginPath(); x.arc(0,0,s*0.50,0,6.2832); x.fill();
+      if(f.color2){ x.fillStyle=f.color2; x.beginPath(); x.arc(0,0,s*0.22,0,6.2832); x.fill(); } break;
+    default:       x.fillStyle=c; x.beginPath(); x.arc(0,0,s*0.50,0,6.2832); x.fill();
+  }
+}
+function paintFx(x,f,W,H,vTop,vBot){
+  const U=W/1000;
+  switch(f.k){
+    case 'grid':{
+      const st=(f.size||64)*U, bold=f.bold||5;
+      x.lineWidth=(f.lw||1)*U*1.2; x.strokeStyle=f.color||'rgba(255,255,255,0.10)'; x.beginPath();
+      for(let i=0;i*st<=W;i++){ if(i%bold===0)continue; x.moveTo(i*st,vTop); x.lineTo(i*st,vBot); }
+      for(let j=Math.floor(vTop/st);j*st<=vBot;j++){ if(j%bold===0)continue; x.moveTo(0,j*st); x.lineTo(W,j*st); }
+      x.stroke();
+      if(f.color2){
+        x.strokeStyle=f.color2; x.lineWidth=(f.lw||1)*U*2; x.beginPath();
+        for(let i=0;i*st<=W;i+=bold){ x.moveTo(i*st,vTop); x.lineTo(i*st,vBot); }
+        for(let j=Math.ceil(vTop/st/bold)*bold;j*st<=vBot;j+=bold){ x.moveTo(0,j*st); x.lineTo(W,j*st); }
+        x.stroke();
+      }
+      break; }
+    case 'scan':{
+      const st=(f.size||8)*U, h=Math.max(0.6,(f.lw||1)*U*1.5);
+      x.fillStyle=f.color||'rgba(255,255,255,0.05)';
+      for(let j=Math.floor(vTop/st);j*st<=vBot;j++) x.fillRect(0,j*st,W,h);
+      break; }
+    case 'diag':{
+      // 繞原點旋轉再畫直條 → 週期性只跟版面座標有關,分塊也對得上
+      const st=(f.size||90)*U, bw=(f.w==null?0.5:f.w)*st, ang=(f.ang==null?-45:f.ang)*Math.PI/180;
+      const c=Math.cos(ang), s=Math.sin(ang);
+      let u0=Infinity,u1=-Infinity,v0=Infinity,v1=-Infinity;
+      for(const p of [[0,vTop],[W,vTop],[0,vBot],[W,vBot]]){
+        const u=p[0]*c+p[1]*s, v=-p[0]*s+p[1]*c;   // 版面座標 → 旋轉後的繪圖座標
+        if(u<u0)u0=u; if(u>u1)u1=u; if(v<v0)v0=v; if(v>v1)v1=v;
+      }
+      x.rotate(ang); x.fillStyle=f.color||'rgba(255,255,255,0.06)';
+      for(let u=Math.floor(u0/st)*st;u<=u1;u+=st) x.fillRect(u,v0,bw,v1-v0);
+      break; }
+    case 'dots':{
+      const st=(f.size||48)*U, r=(f.r||3)*U;
+      x.fillStyle=f.color||'rgba(255,255,255,0.10)';
+      for(let j=Math.floor(vTop/st);j*st<=vBot;j++){
+        const gy=j*st, off=(j%2)?st/2:0;
+        for(let gx=off;gx<=W;gx+=st){ x.beginPath(); x.arc(gx,gy,r,0,6.2832); x.fill(); }
+      }
+      break; }
+    case 'hex':{
+      const R=(f.size||46)*U, hStep=R*1.5, vStep=R*1.7320508;
+      x.strokeStyle=f.color||'rgba(255,255,255,0.09)'; x.lineWidth=(f.lw||1.2)*U; x.beginPath();
+      for(let i=0;i*hStep<=W+R;i++){
+        const cx0=i*hStep, off=(i%2)?vStep/2:0;
+        for(let j=Math.floor((vTop-off)/vStep)-1;j*vStep+off<=vBot+R;j++){
+          const cy0=j*vStep+off;
+          for(let k=0;k<6;k++){ const a=k*Math.PI/3; const px=cx0+R*Math.cos(a), py=cy0+R*Math.sin(a); k?x.lineTo(px,py):x.moveTo(px,py); }
+          x.closePath();
+        }
+      }
+      x.stroke(); break; }
+    case 'waves':{
+      const st=(f.size||120)*U, amp=(f.amp||18)*U, freq=f.freq||3, step=W/40;
+      x.strokeStyle=f.color||'rgba(255,255,255,0.10)'; x.lineWidth=(f.lw||2)*U; x.beginPath();
+      for(let j=Math.floor(vTop/st)-1;j*st<=vBot+st;j++){
+        const y0=j*st, ph=j*1.3;
+        for(let px=0;px<=W;px+=step){ const py=y0+Math.sin(px/W*Math.PI*2*freq+ph)*amp; px?x.lineTo(px,py):x.moveTo(px,py); }
+      }
+      x.stroke(); break; }
+    case 'rays':{
+      const cy0=W*(f.cy==null?-0.15:f.cy);
+      if(vTop>W*1.6) break;                       // 只在頂部一帶,往下就沒了
+      const cx0=W*(f.cx==null?0.5:f.cx), L=W*2.4, n=f.n||14, w=f.w||0.06;
+      x.fillStyle=f.color||'rgba(255,255,255,0.06)';
+      for(let i=0;i<n;i++){
+        const a=(i/n)*Math.PI*2+(f.rot||0);
+        x.beginPath(); x.moveTo(cx0,cy0);
+        x.lineTo(cx0+Math.cos(a-w)*L, cy0+Math.sin(a-w)*L);
+        x.lineTo(cx0+Math.cos(a+w)*L, cy0+Math.sin(a+w)*L);
+        x.closePath(); x.fill();
+      }
+      break; }
+    case 'circuit':{
+      const st=(f.size||70)*U, j0=Math.floor(vTop/st)-1, cols=Math.ceil(W/st);
+      x.strokeStyle=f.color||'rgba(80,255,180,0.22)'; x.lineWidth=(f.lw||1.6)*U; x.lineCap='round'; x.lineJoin='round';
+      x.beginPath();
+      for(let j=j0;j*st<=vBot;j++) for(let i=0;i<=cols;i++){
+        const r=seedRand((i*73856093)^(j*19349663))(), cx0=i*st, cy0=j*st;
+        if(r<0.34){ x.moveTo(cx0,cy0); x.lineTo(cx0+st,cy0); }
+        else if(r<0.68){ x.moveTo(cx0,cy0); x.lineTo(cx0,cy0+st); }
+        else { x.moveTo(cx0,cy0); x.lineTo(cx0+st*0.5,cy0); x.lineTo(cx0+st*0.5,cy0+st*0.5); x.lineTo(cx0+st,cy0+st*0.5); }
+      }
+      x.stroke();
+      x.fillStyle=f.color2||f.color||'rgba(120,255,190,0.5)';
+      for(let j=j0;j*st<=vBot;j++) for(let i=0;i<=cols;i++){
+        if(seedRand((i*83492791)^(j*29943829))()<0.22){ x.beginPath(); x.arc(i*st,j*st,(f.r||3.2)*U,0,6.2832); x.fill(); }
+      }
+      break; }
+    case 'cracks':{
+      const band=W*0.9, n=f.n||7;
+      x.strokeStyle=f.color||'rgba(0,0,0,0.18)'; x.lineWidth=(f.lw||2)*U; x.lineCap='round';
+      for(let i=Math.max(0,Math.floor(vTop/band)-1);i*band<=vBot;i++){
+        const rnd=seedRand(i*15485863+(f.seed||5)); x.beginPath();
+        for(let k=0;k<n;k++){
+          let px=rnd()*W, py=i*band+rnd()*band, a=rnd()*6.2832;
+          x.moveTo(px,py);
+          for(let seg=0;seg<4;seg++){ a+=(rnd()-0.5)*1.4; const L=W*(0.04+rnd()*0.08); px+=Math.cos(a)*L; py+=Math.sin(a)*L; x.lineTo(px,py); }
+        }
+        x.stroke();
+      }
+      break; }
+    case 'bokeh':{
+      const band=W, n=f.n||3, col=f.color||'rgba(255,255,255,0.14)', col0=fade(col);
+      for(let i=Math.max(0,Math.floor(vTop/band)-1);i*band<=vBot;i++){
+        const rnd=seedRand(i*7919+(f.seed||11));
+        for(let k=0;k<n;k++){
+          const px=rnd()*W, py=i*band+rnd()*band, r=W*(0.10+rnd()*0.22);
+          if(py+r<vTop||py-r>vBot) continue;
+          const g=x.createRadialGradient(px,py,0,px,py,r);
+          g.addColorStop(0,col); g.addColorStop(1,col0);
+          x.fillStyle=g; x.fillRect(px-r,py-r,r*2,r*2);
+        }
+      }
+      break; }
+    case 'particles':{
+      const band=W*0.7, n=f.n||18, base=(f.size||10)*U;
+      for(let i=Math.max(0,Math.floor(vTop/band)-1);i*band<=vBot;i++){
+        const rnd=seedRand(i*104729+(f.seed||3));
+        for(let k=0;k<n;k++){
+          const px=rnd()*W, py=i*band+rnd()*band, s=base*(0.45+rnd()*1.1), a=rnd()*6.2832;
+          if(py<vTop-base*2||py>vBot+base*2) continue;
+          x.save(); x.translate(px,py); x.rotate(a); drawParticle(x,f,s); x.restore();
+        }
+      }
+      break; }
+  }
+}
+// 頁首橫幅:官方的屬性場景圖鋪滿頂部一帶,下緣淡出接回漸層。
+// 淡出是用「一條一條畫、逐條降 alpha」做的 —— 遮罩式作法要另外配一塊與目的地同尺寸的離屏 canvas,
+// 而這支函式在分塊輸出時每塊都會跑一次。原圖只有 256px,但本來就是模糊的場景,放大看不出破綻。
+function drawBanner(x,im,W,H,vTop,op){
+  const bh=Math.min(W*0.34,H*0.62);
+  if(vTop>=bh) return;
+  const iw=im.naturalWidth||im.width, ih=im.naturalHeight||im.height;
+  if(!iw||!ih) return;
+  const sc=Math.max(W/iw,bh/ih), dw=iw*sc, dh=ih*sc, dx=(W-dw)/2, dy=(bh-dh)/2;
+  const N=36, FADE=0.45, A=(op==null?0.6:op);
+  x.save(); x.beginPath(); x.rect(0,0,W,bh); x.clip();
+  for(let i=0;i<N;i++){
+    const t=(i+0.5)/N, a=A*(t<1-FADE?1:Math.max(0,(1-t)/FADE));
+    if(a<=0.004) continue;
+    x.save(); x.beginPath(); x.rect(0,bh*i/N,W,bh/N+0.6); x.clip();
+    x.globalAlpha=a; x.drawImage(im,dx,dy,dw,dh); x.restore();
+  }
+  x.restore();
+}
+// 大浮水印:屬性徽章 / 隊徽。x 是圖寬比例,y 與 size 的單位一律是「圖寬」→ 清單長短不影響構圖
+function drawMark(x,im,W,m,vTop,vBot){
+  const iw=im.naturalWidth||im.width, ih=im.naturalHeight||im.height; if(!iw||!ih) return;
+  const w=W*(m.size||0.5), h=w*ih/iw, cy=W*(m.y==null?0.30:m.y);
+  if(cy+h/2<vTop||cy-h/2>vBot) return;
+  x.save(); x.globalAlpha=m.op==null?0.13:m.op;
+  x.translate(W*(m.x==null?0.82:m.x),cy); if(m.rot)x.rotate(m.rot);
+  x.drawImage(im,-w/2,-h/2,w,h); x.restore();
+}
+// 重複的小浮水印:長清單往下捲時也一直有東西,不會只有頂部有裝飾
+function drawMarkTiles(x,im,W,vTop,vBot,m){
+  const iw=im.naturalWidth||im.width, ih=im.naturalHeight||im.height; if(!iw||!ih) return;
+  const band=W*0.85, n=m.n||3, base=W*(m.tsize||0.12);
+  for(let i=Math.max(0,Math.floor(vTop/band)-1);i*band<=vBot;i++){
+    const rnd=seedRand(i*2654435761+(m.seed||7));
+    for(let k=0;k<n;k++){
+      const px=rnd()*W, py=i*band+rnd()*band, w=base*(0.7+rnd()*0.7), rot=(rnd()-0.5)*0.9;
+      if(py<vTop-base||py>vBot+base) continue;
+      const h=w*ih/iw;
+      x.save(); x.globalAlpha=m.tile; x.translate(px,py); x.rotate(rot);
+      x.drawImage(im,-w/2,-h/2,w,h); x.restore();
+    }
+  }
+}
+function paintBackdrop(x,T,W,H,vTop,vBot,mini){
+  x.save();
+  x.fillStyle=gradOf(x,W,H,T.grad||['#101322','#1b2038'],T.angle);
+  x.fillRect(0,vTop,W,vBot-vTop);
+  const bn=imgNow(T.banner); if(bn) drawBanner(x,bn,W,H,vTop,T.bannerOp);
+  for(const b of (T.blobs||[])){
+    const bx=b[0]*W, by=b[1]*W, br=b[2]*W;
+    if(by+br<vTop||by-br>vBot) continue;
+    const g=x.createRadialGradient(bx,by,0,bx,by,br);
+    g.addColorStop(0,b[3]); g.addColorStop(1,fade(b[3]));
+    x.fillStyle=g; x.fillRect(bx-br,by-br,br*2,br*2);
+  }
+  const mk=!mini && T.mark && imgNow(T.mark.src);
+  if(mk){ drawMark(x,mk,W,T.mark,vTop,vBot); if(T.mark.tile) drawMarkTiles(x,mk,W,vTop,vBot,T.mark); }
+  const fxs=T.fx?(Array.isArray(T.fx)?T.fx:[T.fx]):[];
+  for(const f of fxs){ x.save(); paintFx(x,f,W,H,vTop,vBot); x.restore(); }
+  if(T.vig){
+    const v=T.vig, ew=W*0.34, eh=Math.min(H*0.25,W*0.45), mk=(x0,y0,x1,y1,a)=>{
+      const g=x.createLinearGradient(x0,y0,x1,y1); g.addColorStop(0,'rgba(0,0,0,'+a+')'); g.addColorStop(1,'rgba(0,0,0,0)'); return g; };
+    x.fillStyle=mk(0,0,ew,0,v);       x.fillRect(0,vTop,ew,vBot-vTop);
+    x.fillStyle=mk(W,0,W-ew,0,v);     x.fillRect(W-ew,vTop,ew,vBot-vTop);
+    if(vTop<eh){ x.fillStyle=mk(0,0,0,eh,v*0.8); x.fillRect(0,0,W,eh); }
+    if(vBot>H-eh){ x.fillStyle=mk(0,H,0,H-eh,v*0.8); x.fillRect(0,H-eh,W,eh); }
+  }
+  x.restore();
+}
 // offY:此次繪製要往上平移的 device 像素(分塊輸出時,只把某一水平段畫進 canvas)。預設 0=整張。
 async function drawBaseTo(x,lay,SC,offY){
   offY=offY||0;
-  const T=THEMES[THEME].exp,W=LAYW,H=lay.H;
+  const T=EXP(),W=LAYW,H=lay.H;
   const visTop=offY/SC, visBot=(offY+x.canvas.height)/SC;   // 此段對應的版面(layout)y 範圍,超出者略過不畫以加速
   x.setTransform(SC,0,0,SC,0,-offY);
-  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,T.grad[0]);g.addColorStop(1,T.grad[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
+  await preloadSkin(T);   // 浮水印/橫幅是同步畫的,圖得先在快取裡(第二塊之後即時返回)
+  paintBackdrop(x,T,W,H,visTop,Math.min(visBot,H));
   // 先平行啟動本次要用的所有圖片下載(填入快取);下面的 draw 迴圈再逐張命中 → 平行載入、漸進顯示,不再一張等一張
   for(const s of lay.secs) for(const c of s.items){ loadImg(c.url); if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
   const EC=lay.cols||effCols();
@@ -1289,7 +1928,7 @@ function styleText(d,t,sc){   // 套用外觀到現有 div(不重建,供拖曳/�
   d.style.background=''; d.style.padding=''; d.style.borderRadius=''; d.style.webkitTextStroke=''; d.style.color=t.color; d.style.textShadow='';
   if(t.bg===1){ d.style.background=t.color; d.style.color=contrast(t.color); d.style.padding='0.06em 0.26em'; d.style.borderRadius='0.16em'; }
   else if(t.bg===2){ d.style.background='rgba(0,0,0,.45)'; d.style.padding='0.06em 0.26em'; d.style.borderRadius='0.16em'; }
-  if(t.outline){ d.style.webkitTextStroke=Math.max(1,t.size*sc*0.06)+'px '+THEMES[THEME].exp.tOut; }
+  if(t.outline){ d.style.webkitTextStroke=Math.max(1,t.size*sc*0.06)+'px '+EXP().tOut; }
   if(t.shadow){ d.style.textShadow='0 '+Math.max(1,t.size*sc*0.05)+'px '+Math.max(2,t.size*sc*0.10)+'px rgba(0,0,0,.55)'; }
   d.style.transform=(t.align==='center'?'translateX(-50%) ':'')+((t.rot)?'rotate('+t.rot+'rad)':'');
 }
@@ -1377,7 +2016,7 @@ function cycleStyle(t){ t._si=((t._si||0)+1)%STYLES.length; const s=STYLES[t._si
   t.bg=s.bg; t.outline=s.outline; t.font=FONTS[s.fi][1]; t.autoSize=false; }   // 手動切換樣式 → 不再自動覆蓋描邊
 function addText(){
   snapshot();
-  const b=SEL||{size:46,color:THEMES[THEME].exp.title,weight:900,font:DEFONT};
+  const b=SEL||{size:46,color:EXP().title,weight:900,font:DEFONT};
   const t={id:'u'+Date.now(),text:tr('newtext'),align:'center',cx:LAYW/2,y:computeLayout().top-70,
            size:b.size,color:b.color,weight:b.weight||900,font:b.font||DEFONT,outline:false,rot:0,bg:0,_si:0,edited:true};
   TEXTS.push(t); select(t);
@@ -1406,7 +2045,7 @@ function drawTextsTo(x,SC,offY){
     const padX=h*0.26, padY=h*0.13;
     if(t.bg===1){ rrPath(x,-w/2-padX,-h/2-padY,w+2*padX,h+2*padY,h*0.18); x.fillStyle=t.color; x.fill(); x.fillStyle=contrast(t.color); x.fillText(t.text,0,0); }
     else if(t.bg===2){ rrPath(x,-w/2-padX,-h/2-padY,w+2*padX,h+2*padY,h*0.18); x.fillStyle='rgba(0,0,0,.45)'; x.fill(); x.fillStyle=t.color; x.fillText(t.text,0,0); }
-    else { if(t.outline){ x.lineJoin='round'; x.lineWidth=Math.max(3,t.size*0.12); x.strokeStyle=THEMES[THEME].exp.tOut; x.strokeText(t.text,0,0); }
+    else { if(t.outline){ x.lineJoin='round'; x.lineWidth=Math.max(3,t.size*0.12); x.strokeStyle=EXP().tOut; x.strokeText(t.text,0,0); }
       if(t.shadow){ x.shadowColor='rgba(0,0,0,0.55)'; x.shadowBlur=Math.max(2,t.size*0.10); x.shadowOffsetY=Math.max(1,t.size*0.05); }
       x.fillStyle=t.color; x.fillText(t.text,0,0); }
     x.restore();

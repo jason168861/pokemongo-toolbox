@@ -1,7 +1,7 @@
 # 寶可夢 GO 交易清單產生器
 
 瀏覽所有寶可夢組合(異色 / 型態 / 造型 / 公母 / 極巨化 / 超極巨化 / 活動背卡),
-分成「想要」與「可換」兩欄,匯出成一張可分享的圖片。支援 7 種語言。
+分成「想要」與「可換」兩欄,匯出成一張可分享的圖片(38 種底圖樣式)。支援 7 種語言。
 
 ## 檔案
 - `index.html` — 前端(優先讀 `data/*.local.json`;沒有才退回遠端網址)
@@ -12,6 +12,7 @@
 - `assets/img/` — 寶可夢 sprite(`pm*` 來自 PokeMiners、`wiki_*` 見下方「造型」說明)
 - `assets/bg/` — 背卡圖
 - `assets/badge_*.png` — 極巨化 / 超極巨化徽章
+- `assets/type/`、`assets/team/` — 匯出圖樣式用的官方屬性徽章 / 屬性場景 / 隊徽
 
 ## 需求
 ```bash
@@ -54,6 +55,7 @@ python preview.py                     # 4) 本機確認後再 commit
 | 哪些 form 屬於「造型」 | GAME_MASTER `formSettings.isCostume` |
 | 可否極巨化 | [Bulbapedia](https://bulbapedia.bulbagarden.net/) `Dynamax (GO)` |
 | 背卡 + 可用寶可夢(含異色 / 極巨化 / 暗影,進化型明列) | Bulbapedia `Background (GO)` |
+| 屬性徽章 / 屬性場景 / 隊徽(匯出圖樣式用) | PokeMiners `Images/Badges/Types`、`Images/Type Backgrounds`、`Images/Pokestops and Gyms` |
 | 背卡補充(Bulbapedia 未收錄的卡或物種) | [Pokémon GO Wiki (Fandom)](https://pokemongo.fandom.com/) `Backgrounds` |
 
 兩個 wiki 都是透過官方 `api.php` 讀取,並在批次之間節流。
@@ -76,6 +78,54 @@ wiki 用的是自家代號(Bulbapedia `0025Willow`、Fandom `ci=Pikachu willow`)
 
 跑 `build_data.py` 結尾會印**健檢**:MSP 標籤總數 vs 解析數、三層各命中幾筆、
 對不到的後綴清單。來源哪天改格式,這裡會立刻現形。
+
+## 匯出圖樣式(skin)
+
+製圖畫面下方的「圖片風格」有 38 種底圖,分五類:
+**經典**(6,原本的主題配色)/ **漸層**(6)/ **科技**(5)/ **屬性**(18 種寶可夢屬性)/ **隊伍**(3)。
+
+介面主題(`THEME`,頁首的「風格」下拉)與匯出圖樣式(`SKIN`)是**兩個獨立的設定**,
+分別存在 `bgtoolTheme` 與 `bgtoolSkin` —— 所以可以用淺色介面做一張火屬性的深色圖。
+頁首的下拉會同時換掉兩者(維持原本一個下拉換全部的手感);製圖畫面的選擇器只換匯出圖。
+
+一個 skin = 原本的配色欄位(`panel` / `cardbg` / `line` / `title` / `sec1` / `sec2` / `fly` / `foot`)
+加上底圖規格,全部定義在 `index.html` 的 `SKINS`:
+
+| 欄位 | 說明 |
+|------|------|
+| `grad` + `angle` | 多色停漸層;角度用 CSS 慣例(180 = 由上而下,預設) |
+| `blobs` | `[x, y, r, 色]` 光暈。單位一律是**圖寬**(連 `y` 也是)→ 清單長短不影響頂部構圖 |
+| `fx` | 圖樣,可給一個或一陣列。`grid` `scan` `diag` `dots` `hex` `waves` `rays` `circuit` `cracks` `bokeh` `particles`(`particles` 再以 `shape` 選 `star`/`flake`/`spark`/`leaf`/`bubble`/`ring`/`bit`/`shard`/`ember`) |
+| `banner` + `bannerOp` | 頁首橫幅圖(官方屬性場景),鋪滿頂部 0.34 個圖寬,下緣淡出接回漸層 |
+| `mark` | 浮水印(官方屬性徽章 / 隊徽):`{src, op, size, x, y, rot, tile, tsize, n, seed}`。`tile` 有值就再沿整張圖散落小的,長清單往下捲才不會只有頂部有裝飾 |
+| `vig` | 暗角強度 0~1 |
+| `shadow` | 預設文字(標題 / CAN FLY / 區塊標籤)要不要加陰影;新樣式一律開,底圖有花紋時純色字才不會被吃掉 |
+
+### 官方素材
+
+屬性與隊伍樣式用的是遊戲本身的圖,由 `fetch_assets.py` 的 `make_style_assets()`
+從本機 PokeMiners clone(`POGO_ASSETS`)轉存成小 WebP,共 39 檔約 270KB:
+
+| 來源 | 產出 | 用途 |
+|------|------|------|
+| `Images/Badges/Types/Badge_18..35.png` | `assets/type/badge_<屬性>.webp` | 屬性徽章 → 浮水印 + 選擇器縮圖的識別圖示 |
+| `Images/Type Backgrounds/details_type_bg_*.png` | `assets/type/bg_<屬性>.webp` | 屬性場景 → 頁首橫幅 |
+| `Images/Pokestops and Gyms/team_{blue,red,yellow}.png` | `assets/team/{mystic,valor,instinct}.webp` | 隊徽 → 浮水印 |
+
+徽章檔名是 GAME_MASTER 的 badge enum(`BADGE_TYPE_NORMAL`=18 … `BADGE_TYPE_FAIRY`=35),
+`TYPE_ORDER` 就是照這個順序對應的 —— 來源哪天插新檔進去,這裡要跟著改。
+
+前端只在選到該樣式時才下載對應的圖(選擇器也只預載「目前展開的那一類」)。
+`paintBackdrop` 是同步的,所以 `drawBaseTo` 會先 `await preloadSkin(T)` 把圖抓進快取,
+再由 `imgNow()` 同步取用 —— 少了這步,浮水印在預覽看得到、匯出時卻會漏掉。
+
+⚠ 加新樣式時,底圖的每一筆都必須只由**版面座標**決定。匯出走分塊路徑時,
+每一塊會各自呼叫一次 `paintBackdrop`,只要摻進 `Math.random()` 或看 canvas 尺寸,
+接縫處的花紋就會對不起來 —— 所以隨機類圖樣一律用 `seedRand(帶號)`,
+種子只能來自「第幾個帶狀區塊 / 第幾格」這種絕對位置。
+尺寸則一律以 `U = W/1000` 為單位,換每排數量時花紋粗細才會等比例跟著走。
+
+經典六款直接沿用 `THEMES[].exp`,不經過底圖引擎的任何新欄位 → 舊使用者存過的圖不會變樣。
 
 ## 圖片顯示
 
