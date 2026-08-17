@@ -1111,7 +1111,10 @@ function applyStaticI18n(){
   const A=(id,attr,val)=>{ const e=$('#'+id); if(e) e.setAttribute(attr,val); };
   A('tgWant','title',T('tip_collapse')); A('tgHave','title',T('tip_collapse'));
   A('fitH','title',T('tip_fith'));       A('fitW','title',T('tip_fitw'));
-  A('edUndo','title',T('tip_undo'));     A('edRedo','title',T('tip_redo'));
+  // 有實體鍵盤才把快捷鍵寫進 tooltip(手機沒有 hover,寫了也看不到,反而是噪音)
+  const KB=matchMedia('(hover:hover) and (pointer:fine)').matches, MAC=/Mac|iPad|iPhone/.test(navigator.platform||navigator.userAgent);
+  const SC=k=>KB?'  ('+(MAC?'⌘':'Ctrl+')+k+')':'';
+  A('edUndo','title',T('tip_undo')+SC('Z')); A('edRedo','title',T('tip_redo')+SC('Y'));
   A('txtReset','title',T('reset'));      A('dl','title',T('download'));
   A('edSize','title',T('tip_zoom'));     A('colsMinus','title',T('tip_minus'));
   A('colsPlus','title',T('tip_plus'));   A('edStyle','title',T('t_style'));
@@ -1211,6 +1214,20 @@ async function boot(){
   $('#enterEdit').onclick=()=>setMode('edit');
   $('#edDone').onclick=()=>{ if(document.body.classList.contains('editmode')) history.back(); else setMode('select'); };
   $('#edUndo').onclick=undo; $('#edRedo').onclick=redo;
+  /* 鍵盤的上一步/下一步(電腦版)。只在製圖模式下接管,而且游標在輸入欄位裡時一律放行 ——
+     訓練家代碼、全螢幕改字那些是 <input>/<textarea>,那裡的 Ctrl+Z 該由瀏覽器自己處理,
+     搶過來會變成「想復原打錯的字,結果整張圖被還原」。
+     Ctrl+Y 與 Ctrl+Shift+Z 都收(前者是 Windows 慣例、後者是 Mac / 多數繪圖軟體的慣例);
+     Mac 用 Cmd,所以看 metaKey。 */
+  window.addEventListener('keydown',e=>{
+    if(!document.body.classList.contains('editmode')) return;
+    if(!(e.ctrlKey||e.metaKey) || e.altKey) return;
+    const t=e.target;
+    if(t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    const k=e.key.toLowerCase();
+    if(k==='z' && !e.shiftKey)      { e.preventDefault(); undo(); }
+    else if(k==='y' || (k==='z' && e.shiftKey)) { e.preventDefault(); redo(); }
+  });
   $('#fitH').onclick=()=>{ $('#edSize').value=0; applyZoom(); };    // 整張顯示(最小)
   $('#fitW').onclick=()=>{ $('#edSize').value=50; applyZoom(); };   // 符合寬度(中間)
   $('#txtAdd').onclick=addText;
