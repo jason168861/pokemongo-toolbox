@@ -406,12 +406,20 @@
                         white-space:nowrap;padding:11px 10px;font-size:14px;font-weight:700}
   #edBottom .edColorBox{flex:none}
   .edUR{display:flex;gap:6px}
-  #edSize{width:100%;margin-bottom:8px}
+  /* 瀏覽器給 input[type=range] 的預設 margin 是左右各 2px,配上 width:100% 就會多撐出 4px,
+     那正是整個控制區浮出橫向捲動的來源(overflow-x:hidden 只是把它裁掉,沒解決根本) */
+  #edSize{width:100%;margin:0 0 8px;box-sizing:border-box}
   .edRow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .edColorBox{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--fg);
               border:1px solid var(--line);border-radius:8px;padding:4px 8px 4px 4px;background:var(--cellbg)}
   .edColorBox input[type=color]{width:34px;height:30px;border:1px solid var(--line);border-radius:7px;padding:2px;background:var(--cellbg);cursor:pointer}
   .edColorBox input[type=color]:disabled{opacity:.4}
+  /* 沒點到圖上的文字時這兩個是不能用的。原本只有 #edTop 底下的按鈕有 disabled 樣式,
+     #edStyle 在 #edBottom 裡所以完全看不出被停用(實測 opacity 仍是 1);
+     顏色那顆也只有色塊變淡,「顏色」兩個字照樣是亮的。 */
+  #edBottom .btn:disabled{opacity:.4;cursor:default}
+  #edBottom .btn:disabled:hover{filter:none}
+  .edColorBox.off{opacity:.4;cursor:default}
   .txt .h{position:absolute;width:26px;height:26px;border-radius:50%;background:#fff;color:#222;
           display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;
           box-shadow:0 1px 5px #0009;z-index:6;touch-action:none;cursor:pointer}
@@ -423,7 +431,11 @@
         background:var(--bg);display:flex;flex-direction:column;padding:8px;overflow:hidden}
   body.editmode #edTop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none;margin-bottom:4px}
   /* flex:0 1 auto + max-height:控制項再多也只吃掉固定比例,剩下的自己捲,預覽圖不會被擠扁 */
-  body.editmode #edBottom{display:block;flex:0 1 auto;margin-top:6px;overflow-y:auto;overscroll-behavior:contain}
+  /* overflow-x:hidden 不能省:CSS 規定只要有一軸不是 visible,另一軸的 visible 就會被算成 auto,
+     所以單寫 overflow-y:auto 會讓整區連帶可以左右滑(實測 scrollWidth 比 clientWidth 多 4px)。
+     裡面的樣式縮圖列是各自獨立的元素,照樣能橫向捲,不受這裡影響。 */
+  body.editmode #edBottom{display:block;flex:0 1 auto;margin-top:6px;
+        overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
   body.editmode #edBottom>.switch{margin:6px 0 0;font-size:13px}
   body.editmode #trainerRow{margin:8px 0 2px}
   body.editmode #enterEdit{display:none}
@@ -596,7 +608,7 @@
           <button class="btn g" id="imgAdd">🖼 插入圖片</button>
           <button class="btn g" id="luckyAdd"><img src="assets/lucky_friend_icon.png" alt=""><span id="luckyAddTxt">亮晶晶首飾</span></button>
           <button class="btn g" id="edStyle" title="切換字體與底色" disabled>🅰 字體/底色</button>
-          <span class="edColorBox"><input type="color" id="edColor" title="文字顏色" disabled><span id="edColorLabel">顏色</span></span>
+          <span class="edColorBox off"><input type="color" id="edColor" title="文字顏色" disabled><span id="edColorLabel">顏色</span></span>
         </div>
         <label class="switch" id="flyRow"><input type="checkbox" id="canfly"><span class="track"></span><span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
         <label class="switch" id="qrRow"><input type="checkbox" id="qrToggle"><span class="track"></span><span id="qrLabel">📷 在圖片加上推廣 QR</span></label>
@@ -1352,6 +1364,7 @@ function setMode(m){
     SEL=null;                                   // 離開編輯 → 清掉選取虛線框
     document.body.classList.remove('editmode');
   }
+  syncTools();   // 「字體/底色」「顏色」的可用狀態跟著 SEL 走,進出模式都要對得上
   requestAnimationFrame(()=>{ renderBase();     // 版面寬度變了,重新排版
     if(m==='select') $('#listPanel').scrollIntoView({behavior:'smooth',block:'start'}); });   // 完成編輯 → 回到清單(編輯面板已收起)
 }
@@ -2035,7 +2048,9 @@ function startTransform(e,t,d){   // 右下角把手:拖曳同時縮放+旋轉(�
 function select(t){ SEL=t; layoutTexts(); syncTools(); }
 function syncTools(){
   const isTxt=!!SEL && SEL.type!=='img', col=$('#edColor');   // 圖片圖層沒有文字色/字體樣式
-  if(col){ col.disabled=!isTxt; if(isTxt)col.value=toHex(SEL.color); }
+  if(col){ col.disabled=!isTxt; if(isTxt)col.value=toHex(SEL.color);
+    // 整個色票盒(含「顏色」字樣)一起變淡 —— 只淡化 <input> 的話,旁邊的字看起來還是可以點
+    col.closest('.edColorBox').classList.toggle('off',!isTxt); }
   const st=$('#edStyle'); if(st)st.disabled=!isTxt;
 }
 let _editingT=null;
