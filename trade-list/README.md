@@ -5,6 +5,7 @@
 
 ## 檔案
 - `index.html` — 前端(優先讀 `data/*.local.json`;沒有才退回遠端網址)
+- `alias-editor.html` — 搜尋別名的建檔介面(產出 `data/aliases.json`,見下方「搜尋別名」)
 - `build_data.py` — 重建來源資料
 - `fetch_assets.py` — 把用到的圖存到 `assets/`,並產出 `*.local.json`(本機路徑版)
 - `preview.py` — 本機預覽(關快取,改完重新整理就生效)
@@ -43,6 +44,41 @@ python preview.py                     # 4) 本機確認後再 commit
 `build_data.py` 需要 `POGO_ASSETS` 指到本機的 PokeMiners clone
 (預設與 repo 同層,或設環境變數覆寫)。實際只會用到兩個子目錄:
 `Images/Pokemon - 256x256/Addressable Assets` 與 `Texts/Latest APK/JSON`。
+
+## 搜尋別名
+
+搜尋框比對的是**七種語言的官方名稱**,但社群講的常常是別的詞:舊譯名(乘龍 / 3D龍 / 比雕)、
+造型俗稱(萬聖節、聖誕)、背卡的中文地名(台南、寶可夢中心)、一次要看一整組(三神鳥、關東御三家)。
+這些對照表放在 `data/aliases.json`,搜尋時與官方名稱一起比對;檔案不存在就靜默跳過,搜尋退回原本行為。
+
+因為是子字串比對,**簡稱不必建檔** —— 打「班」本來就找得到「班基拉斯」。
+要建的只有「字面上完全對不到」的詞。
+
+```jsonc
+{"kind":"mon", "terms":["乘龍"],   "targets":["131"],              "note":"舊譯名"}
+{"kind":"form","terms":["萬聖節"], "targets":["HALLOWEEN_2017", …]}          // 型態 / 造型代碼
+{"kind":"bg",  "terms":["台南"],   "targets":["GO Tainan background.png", …]} // 背卡 image_name
+```
+
+一個 `terms` 可以配多個 `targets`(= 群組別名),一筆一行方便看 git diff。
+三個搜尋框(選取網格、自由搭配的寶可夢與背卡)走的是同一套比對。
+
+### 建檔介面
+
+```bash
+python preview.py       # → http://127.0.0.1:8797/alias-editor.html
+```
+
+左邊照「寶可夢 / 型態造型 / 背卡」三個分頁挑目標(有圖、可搜尋、可複選),右邊打別名按 Enter 就建好。
+選多個目標再加詞就是群組別名。另外兩個分頁:**別名總表**可直接改詞/備註、刪整組、合併重複;
+**測試搜尋**用與 `index.html` 相同的邏輯,打一個詞立刻看會篩出什麼,建完馬上驗收。
+
+按「儲存」會 POST 回 `preview.py`,直接覆寫 `data/aliases.json`(舊檔留成 `.bak`)。
+`preview.py` 只接受本機來的請求、只准寫這一個檔、JSON 壞掉就不寫。
+用 `file://` 開或在線上開時寫不了檔,會自動退回「下載檔案」讓你自己覆蓋。
+編到一半沒存會留在 localStorage,下次開自動問要不要接著編;<kbd>Ctrl</kbd>+<kbd>Z</kbd> 復原、<kbd>Ctrl</kbd>+<kbd>S</kbd> 儲存。
+
+`build_data.py` / `fetch_assets.py` **不會碰** `aliases.json` —— 它是純手工維護的,更新資料不會蓋掉。
 
 ## 資料來源
 

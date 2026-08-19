@@ -1072,7 +1072,42 @@ async function loadAllNames(){
   for(const m of maps) for(const dex in m){ (idx[dex]=idx[dex]||[]).push(m[dex]); }
   ALLNAMES={}; for(const dex in idx) ALLNAMES[dex]=idx[dex].join('|').toLowerCase();
 }
-function matchName(dex,q){ return (ALLNAMES[dex]||'').includes(q); }
+/* ===== 別名搜尋 =====
+   官方譯名以外,社群大量使用別的叫法:舊譯名(大比鳥→比雕)、造型俗稱(HALLOWEEN_2025→萬聖節)、
+   背卡的中文地名(GO Tainan→台南)、一次要看一整組(三神鳥)。
+   簡稱不需要建檔 —— 這裡是子字串比對,打「班」本來就找得到「班基拉斯」。
+   對照表放在 data/aliases.json(用 alias-editor.html 這個圖形介面編),
+   這裡攤平成「目標 → 別名字串」三張索引,搜尋時與官方名稱一起比對。
+   檔案不存在 / 壞掉就整個功能靜默停用 —— 搜尋行為退回原本的樣子,不會白畫面。 */
+const ALIAS={mon:{},form:{},bg:{}};
+async function loadAliases(){
+  let d=null;
+  try{ const r=await fetch('data/aliases.json'); if(!r.ok)return; d=await r.json(); }catch(e){ return; }
+  const put=(map,key,terms)=>{ if(!key)return; const k=String(key);
+    map[k]=(map[k]?map[k]+'|':'')+terms.join('|'); };
+  for(const e of ((d&&d.entries)||[])){
+    const map=ALIAS[e&&e.kind]; if(!map)continue;
+    const terms=(e.terms||[]).map(t=>String(t).trim().toLowerCase()).filter(Boolean);
+    if(!terms.length)continue;
+    for(const t of (e.targets||[])) put(map,t,terms);
+  }
+}
+const aliasHit=(map,key,q)=> !!key && (map[key]||'').includes(q);
+function matchName(dex,q){ return (ALLNAMES[dex]||'').includes(q) || aliasHit(ALIAS.mon,dex,q); }
+// 型態 / 造型:代碼本身(ALOLA、HALLOWEEN_2023)與它的別名都能搜
+function matchForm(o,q){
+  const f=o.form,c=o.costume;
+  return (!!f&&(f.toLowerCase().includes(q)||aliasHit(ALIAS.form,f,q)))
+      || (!!c&&(c.toLowerCase().includes(q)||aliasHit(ALIAS.form,c,q)));
+}
+const matchDex=(dex,q)=> String(dex)===q || String(dex).padStart(4,'0')===q;
+// 寶可夢格子(選取網格與自由搭配共用):名稱 / 別名 / 編號 / 型態 / 造型
+function hitMon(o,q){ return matchName(o.dex,q)||matchDex(o.dex,q)||matchForm(o,q); }
+// 背卡:檔名(GO_Taipei_background.png)、wiki 標題(Taipei, Taiwan)、別名(台北)
+function hitBg(imgName,title,q){
+  return (!!imgName&&(imgName.toLowerCase().includes(q)||aliasHit(ALIAS.bg,imgName,q)))
+      || (!!title&&title.toLowerCase().includes(q));
+}
 async function applyLang(lang){
   if(!I18N[lang])lang='en'; LANG=lang; localStorage.setItem('bgtoolLang',lang);
   syncLangMeta(lang, true); $('#langSel').value=lang;
@@ -1161,7 +1196,7 @@ async function boot(){
   $('#langSel').innerHTML=LANGS.map(([c,n])=>`<option value="${c}">${n}</option>`).join('');
   $('#langSel').value=LANG; $('#langSel').onchange=()=>applyLang($('#langSel').value);
   NAMES=await loadNames(LANG);
-  await loadAllNames();
+  await Promise.all([loadAllNames(),loadAliases()]);
   // trim.json 沒有 .local 版本,直接抓;抓不到就讓 trimBBox 退回即時掃描(功能一樣,只是比較慢)
   [POKE,BG,TRIM]=await Promise.all([loadData('pokemon'),loadData('backgrounds'),
     fetch('data/trim.json').then(r=>r.ok?r.json():{}).catch(()=>({}))]);
@@ -2371,10 +2406,11 @@ function monUrl(p,mon,shiny){
 function buildThumbs(){
   THUMBS=[];BGCOMBOS=[];
   for(const p of Object.values(POKE)){
-    for(const v of p.variants) THUMBS.push({url:v.url,dex:p.id,zh:nameOf(p.id),shiny:v.shiny,gender:v.gender,badge:null,tag:'',cos:!!(v.form||v.costume)});
+    // form / costume 一併帶進格子:讓選取網格也能用型態代碼與造型別名搜(自由搭配本來就可以)
+    for(const v of p.variants) THUMBS.push({url:v.url,dex:p.id,zh:nameOf(p.id),shiny:v.shiny,gender:v.gender,badge:null,tag:'',cos:!!(v.form||v.costume),form:v.form||null,costume:v.costume||null});
     if(p.gigantamax){
-      if(p.gigantamax.normal)THUMBS.push({url:p.gigantamax.normal,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeG,tag:'超極巨化',gmax:true});
-      if(p.gigantamax.shiny)THUMBS.push({url:p.gigantamax.shiny,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeG,tag:'超極巨化',gmax:true});
+      if(p.gigantamax.normal)THUMBS.push({url:p.gigantamax.normal,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeG,tag:'超極巨化',gmax:true,form:'GIGANTAMAX',costume:null});
+      if(p.gigantamax.shiny)THUMBS.push({url:p.gigantamax.shiny,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeG,tag:'超極巨化',gmax:true,form:'GIGANTAMAX',costume:null});
     }
     if(p.dynamax_capable){
       const n=baseVar(p,false),s=baseVar(p,true);
@@ -2387,7 +2423,7 @@ function buildThumbs(){
     for(const mon of b.pokemon){
       const dex=mon.dex, p=POKE[dex]; if(!p)continue;
       const un=monUrl(p,mon,false), us=monUrl(p,mon,true);
-      const add=(url,shiny,badge,tag,gm)=>{ if(url)BGCOMBOS.push({url,bg:b.image_url,dex,zh:nameOf(p.id),bgname:b.image_name,badge:badge||null,shiny:!!shiny,tag:tag||'',dmax:tag==='極巨化',gmax:!!gm,purified:tag==='淨化',cos:!!(mon.costume||mon.sprite)}); };
+      const add=(url,shiny,badge,tag,gm)=>{ if(url)BGCOMBOS.push({url,bg:b.image_url,dex,zh:nameOf(p.id),bgname:b.image_name,bgtitle:b.name||'',badge:badge||null,shiny:!!shiny,tag:tag||'',dmax:tag==='極巨化',gmax:!!gm,purified:tag==='淨化',cos:!!(mon.costume||mon.sprite),form:mon.form||null,costume:mon.costume||null}); };
       if(mon.gmax){ if(p.gigantamax){ add(p.gigantamax.normal,false,badgeG,'超極巨化',true); if(mon.shiny) add(p.gigantamax.shiny,true,badgeG,'超極巨化',true);} }
       else if(mon.dynamax){ add(un,false,badgeD,'極巨化'); if(mon.shiny) add(us,true,badgeD,'極巨化'); }
       else if(mon.shadow){ add(un,false,badgeP,'淨化'); if(mon.shiny) add(us,true,badgeP,'淨化'); }
@@ -2448,9 +2484,7 @@ function mixCell(o,sel,isBg){
 }
 function renderMixMons(){
   const q=$('#mixQ').value.trim().toLowerCase(), g=$('#mixMonGrid');
-  const hit=buildMixMons().filter(m=> !q || matchName(m.dex,q) || String(m.dex)===q
-    || String(m.dex).padStart(4,'0')===q
-    || (m.form&&m.form.toLowerCase().includes(q)) || (m.costume&&m.costume.toLowerCase().includes(q)));
+  const hit=buildMixMons().filter(m=> !q || hitMon(m,q));
   g.innerHTML=''; const frag=document.createDocumentFragment(), made=[];
   for(const m of hit.slice(0,MIX_CAP)){
     const d=mixCell(m, MIX.mon&&MIX.mon.url===m.url, false);
@@ -2472,7 +2506,7 @@ function renderMixBgs(){
   g.appendChild(none);
   for(const b of BG){
     if(!b.image_url) continue;
-    if(q && !((b.name||'').toLowerCase().includes(q) || (b.image_name||'').toLowerCase().includes(q))) continue;
+    if(q && !hitBg(b.image_name,b.name,q)) continue;
     const d=mixCell(b, MIX.bg===b.image_url, true);
     d.onclick=()=>{ MIX.bg=b.image_url; renderMixBgs(); syncMix(); };
     g.appendChild(d);
@@ -2560,14 +2594,14 @@ function render(){
       if(normal&&!FILT.fNormal)return false; if(c.shiny&&!FILT.fShiny)return false;
       if(c.dmax&&!FILT.fDmax)return false; if(c.gmax&&!FILT.fGmax)return false;
       if(FILT.fSelected&&!inTarget(c))return false; if(FILT.fLego&&!c.legendary)return false;
-      if(q&&!(matchName(c.dex,q)||c.bgname.toLowerCase().includes(q)||String(c.dex)===q))return false; return true;});
+      if(q&&!(hitMon(c,q)||hitBg(c.bgname,c.bgtitle,q)))return false; return true;});
     $('#gcount').textContent=`${FILTERED.length} ${tr('bg_unit')}`;
   }else{
     FILTERED=THUMBS.filter(t=>{const normal=!t.shiny&&!t.cos&&!t.dmax&&!t.gmax;
       if(normal&&!FILT.fNormal)return false; if(t.gmax&&!FILT.fGmax)return false; if(t.dmax&&!FILT.fDmax)return false;
       if(t.shiny&&!FILT.fShiny)return false; if(t.cos&&!FILT.fCos)return false;
       if(FILT.fSelected&&!inTarget(t))return false; if(FILT.fLego&&!t.legendary)return false;
-      if(q&&!(matchName(t.dex,q)||String(t.dex)===q||String(t.dex).padStart(4,'0')===q))return false; return true;});
+      if(q&&!hitMon(t,q))return false; return true;});
     $('#gcount').textContent=`${FILTERED.length} ${tr('combos_unit')}`;
   }
   appendBatch(); pumpBatches(); const sc=$('#gridWrap'); sc.onscroll=pumpBatches;

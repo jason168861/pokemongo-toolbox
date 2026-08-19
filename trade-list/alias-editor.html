@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>別名建檔 — 交易清單搜尋</title>
+<!--
+  交易清單的搜尋別名維護工具。產出 data/aliases.json,index.html 讀它。
+
+  搭配 preview.py 用:
+      python preview.py       → http://127.0.0.1:8797/alias-editor.html
+  按「儲存」會 POST 回 preview.py 直接覆蓋 data/aliases.json(舊檔留成 .bak)。
+  用 file:// 開或放到線上時寫不了檔,會自動退回「下載檔案」。
+
+  資料格式(一筆一行,方便 git diff):
+      {"kind":"mon","terms":["乘龍"],"targets":["131"],"note":"舊譯名"}
+      kind=mon  → targets 是圖鑑編號字串
+      kind=form → 型態 / 造型代碼(ALOLA、HALLOWEEN_2025…)
+      kind=bg   → 背卡的 image_name(有空格的那個,不是檔案路徑)
+-->
+<style>
+:root{
+  --bg:#0f1220; --bg2:#151a2e; --card:#1a1f36; --line:#2b3153; --fg:#eef0fb; --mut:#9aa3c7;
+  --acc:#7b5cff; --acc2:#e0276c; --ok:#2f9e57; --warn:#f0c850; --cell:#0d1024;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#0f1220,#191540);color:var(--fg);
+  font:14px/1.5 system-ui,"Segoe UI","Noto Sans TC",sans-serif;min-height:100vh}
+h1{font-size:17px;margin:0}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--fg);
+  border-radius:8px;padding:6px 12px}
+button:hover{border-color:var(--acc)}
+button.pri{background:var(--acc);border-color:var(--acc)}
+button.pri:hover{filter:brightness(1.15)}
+button.danger:hover{border-color:var(--acc2);color:#ff9dbb}
+button:disabled{opacity:.45;cursor:default}
+input,textarea{font:inherit;background:var(--cell);color:var(--fg);border:1px solid var(--line);
+  border-radius:8px;padding:6px 10px;outline:none}
+input:focus,textarea:focus{border-color:var(--acc)}
+a{color:#a99bff}
+
+header{position:sticky;top:0;z-index:20;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  padding:10px 14px;background:rgba(15,18,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .sp{flex:1}
+#state{font-size:12px;color:var(--mut)}
+#state.dirty{color:var(--warn)}
+#state.saved{color:#7fe0a5}
+
+.tabs{display:flex;gap:6px;padding:10px 14px 0;flex-wrap:wrap}
+.tabs button{border-radius:10px 10px 0 0;border-bottom-color:transparent}
+.tabs button.on{background:var(--card);border-color:var(--acc);border-bottom-color:var(--card);color:#fff}
+
+.banner{margin:10px 14px 0;padding:9px 12px;border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:8px;background:rgba(240,200,80,.07);font-size:13px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.banner.hide{display:none}
+
+main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:14px;padding:14px;align-items:start}
+@media(max-width:980px){main{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.side{position:sticky;top:62px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sub{color:var(--mut);font-size:12px}
+.hr{height:1px;background:var(--line);margin:10px 0}
+
+/* 目標網格 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px;
+  max-height:calc(100vh - 260px);overflow:auto;padding:2px}
+.grid.bg{grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}
+.tile{position:relative;background:var(--cell);border:1px solid var(--line);border-radius:10px;padding:6px;
+  cursor:pointer;text-align:center;overflow:hidden}
+.tile:hover{border-color:var(--acc)}
+.tile.on{border-color:var(--acc2);box-shadow:0 0 0 1px var(--acc2) inset}
+.tile img{width:100%;height:64px;object-fit:contain;display:block;image-rendering:auto}
+.grid.bg .tile img{height:56px;object-fit:cover;border-radius:6px}
+.tile .nm{font-size:12px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .id{font-size:10px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .n{position:absolute;top:4px;right:4px;background:var(--acc);color:#fff;border-radius:20px;
+  font-size:10px;padding:1px 6px;font-weight:700}
+.tile .al{font-size:10px;color:#b7f5cf;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 別名 chip */
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--cell);border:1px solid var(--line);
+  border-radius:20px;padding:3px 6px 3px 10px;font-size:12px}
+.chip b{font-weight:600}
+.chip x{cursor:pointer;color:var(--mut);padding:0 4px;border-radius:20px;font-style:normal}
+.chip x:hover{color:#ff9dbb;background:rgba(224,39,108,.15)}
+.chip.grp{border-color:var(--acc)}
+.selchip{background:rgba(123,92,255,.14);border-color:var(--acc)}
+
+.tgt{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)}
+.tgt:last-child{border-bottom:0}
+.tgt img{width:38px;height:38px;object-fit:contain;background:var(--cell);border-radius:8px;flex:0 0 auto}
+.tgt .tn{font-size:12px;margin-bottom:4px}
+.tgt .body{min-width:0;flex:1}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-weight:600;font-size:12px;position:sticky;top:0;background:var(--card)}
+tr:hover td{background:rgba(123,92,255,.05)}
+.kbadge{font-size:11px;padding:1px 7px;border-radius:20px;border:1px solid var(--line);color:var(--mut);
+  white-space:nowrap;display:inline-block}
+td button{white-space:nowrap;padding:5px 10px}
+.kbadge.mon{color:#8fd6ff;border-color:#2b4a63}
+.kbadge.form{color:#ffcf8f;border-color:#5f4a2b}
+.kbadge.bg{color:#c7b0ff;border-color:#443063}
+
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#000c;color:#fff;
+  padding:9px 16px;border-radius:20px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:60;
+  border:1px solid var(--line);max-width:90vw;text-align:center}
+#toast.on{opacity:1}
+.hidden{display:none!important}
+.stats{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut)}
+.stats b{color:var(--fg);font-size:15px;display:block}
+kbd{background:var(--cell);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;
+  padding:0 5px;font-size:11px;font-family:inherit}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏷 別名建檔</h1>
+  <span class="sub">→ data/aliases.json</span>
+  <span id="state">載入中…</span>
+  <span class="sp"></span>
+  <button id="btnUndo" title="復原(Ctrl+Z)" disabled>↺ 復原</button>
+  <button id="btnImport">⤒ 匯入</button>
+  <button id="btnExport">⤓ 下載</button>
+  <button class="pri" id="btnSave">💾 儲存</button>
+  <input type="file" id="fileIn" accept=".json,application/json" class="hidden">
+</header>
+
+<div class="banner hide" id="draftBar">
+  <span id="draftMsg"></span>
+  <button class="pri" id="draftLoad">載入草稿</button>
+  <button id="draftDrop">丟棄</button>
+</div>
+<div class="banner hide" id="warnBar"><span id="warnMsg"></span></div>
+
+<div class="tabs" id="tabs">
+  <button data-t="mon" class="on">寶可夢</button>
+  <button data-t="form">型態 / 造型</button>
+  <button data-t="bg">背卡</button>
+  <button data-t="list">📋 別名總表</button>
+  <button data-t="test">🔎 測試搜尋</button>
+</div>
+
+<!-- ===== 挑目標 → 給別名 ===== -->
+<main id="viewPick">
+  <div class="panel">
+    <div class="row">
+      <input id="q" placeholder="搜尋目標…" style="flex:1;min-width:180px">
+      <button id="fHas" data-on="0">有別名</button>
+      <button id="fNone" data-on="0">沒別名</button>
+      <span class="sub" id="gcount"></span>
+    </div>
+    <div class="sub" style="margin:8px 0 6px">點格子選取(可複選)．<kbd>Shift</kbd>+點 選取範圍．選多個再加別名 = 一個詞叫出一整組</div>
+    <div class="grid" id="grid"></div>
+    <div class="sub" id="more" style="margin-top:8px"></div>
+  </div>
+
+  <div class="panel side">
+    <div class="row"><b id="selTitle">尚未選取</b><span class="sp"></span>
+      <button id="selClear" class="hidden">清除選取</button></div>
+    <div class="chips" id="selChips" style="margin-top:8px;max-height:132px;overflow:auto"></div>
+    <div class="hr"></div>
+    <div class="row">
+      <input id="termIn" placeholder="輸入別名,逗號分隔" style="flex:1;min-width:150px" disabled>
+      <button class="pri" id="termAdd" disabled>＋ 加入</button>
+    </div>
+    <input id="noteIn" placeholder="備註(選填,例:舊譯名)" style="width:100%;margin-top:8px" disabled>
+    <div class="sub" style="margin-top:6px">按 <kbd>Enter</kbd> 直接加入。選多個目標時會建成一組共用別名。</div>
+    <div class="hr"></div>
+    <div class="sub">目前的別名</div>
+    <div id="selDetail" style="margin-top:6px;max-height:46vh;overflow:auto"></div>
+  </div>
+</main>
+
+<!-- ===== 別名總表 ===== -->
+<main id="viewList" class="hidden" style="grid-template-columns:minmax(0,1fr)">
+  <div class="panel">
+    <div class="row">
+      <input id="lq" placeholder="搜尋別名 / 目標…" style="flex:1;min-width:200px">
+      <span class="sub" id="lcount"></span>
+      <span class="sp"></span>
+      <button id="mergeDup" class="hidden">合併重複的詞</button>
+    </div>
+    <div class="hr"></div>
+    <div style="max-height:calc(100vh - 210px);overflow:auto">
+      <table><thead><tr>
+        <th style="width:82px">類型</th><th style="width:28%">別名(可直接改)</th>
+        <th>目標</th><th style="width:150px">備註</th><th style="width:78px"></th>
+      </tr></thead><tbody id="ltbody"></tbody></table>
+    </div>
+  </div>
+</main>
+
+<!-- ===== 測試搜尋 ===== -->
+<main id="viewTest" class="hidden" style="grid-template-columns:minmax(0,1fr)">
+  <div class="panel">
+    <div class="row">
+      <input id="tq" placeholder="打一個詞,看交易清單會篩出什麼" style="flex:1;min-width:220px">
+      <span class="sub">和 index.html 用同一套比對邏輯(官方名稱 + 別名 + 編號 + 代碼)</span>
+    </div>
+    <div class="hr"></div>
+    <div class="stats" id="tstats"></div>
+    <div id="tres" style="margin-top:10px"></div>
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const LANGS=['zh','en','ja','ko','fr','de','es'];
+const FILE='data/aliases.json';
+
+let POKE={}, BG=[], NAMES={}, ALLNAMES={};          // 來源資料
+let META={version:1,note:''}, ENTRIES=[];           // 別名檔內容
+let TARGETS={mon:[],form:[],bg:[]}, TMAP={mon:new Map(),form:new Map(),bg:new Map()};
+let KIND='mon', SEL=[], LAST=null, DIRTY=false, HIST=[];
+let CAP=300;
+
+const norm=s=>String(s==null?'':s).trim().toLowerCase();
+const toast=(m,ms=2000)=>{const t=$('#toast');t.textContent=m;t.classList.add('on');
+  clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('on'),ms);};
+function thumb(u){ if(!u)return '';
+  if(u.startsWith('assets/img/'))return 'assets/thumb/'+u.slice(11).replace(/\.png$/i,'.webp');
+  if(u.startsWith('assets/bg/'))return 'assets/bgthumb/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp');
+  return u; }
+
+/* ===== 載入 ===== */
+async function jget(p,fallback){ try{const r=await fetch(p,{cache:'no-store'}); if(r.ok)return await r.json(); }catch(e){} return fallback; }
+async function loadData(name){
+  const a=await jget('data/'+name+'.local.json',null);
+  return a || await jget('data/'+name+'.json',null);
+}
+async function boot(){
+  const [poke,bg,...names]=await Promise.all([loadData('pokemon'),loadData('backgrounds'),
+    ...LANGS.map(l=>jget('data/names/'+l+'.json',{}))]);
+  if(!poke||!bg){ $('#state').textContent='✗ 讀不到 data/,請用 python preview.py 開這一頁'; return; }
+  POKE=poke; BG=bg; NAMES=names[0]||{};
+  ALLNAMES={}; for(const m of names) for(const d in m) ALLNAMES[d]=(ALLNAMES[d]?ALLNAMES[d]+'|':'')+m[d];
+  for(const d in ALLNAMES) ALLNAMES[d]=ALLNAMES[d].toLowerCase();
+  buildTargets();
+  const f=await jget(FILE,null);
+  if(f){ META={version:f.version||1,note:f.note||''}; ENTRIES=(f.entries||[]).map(clean).filter(Boolean); }
+  reindex();
+  checkDraft();
+  bindUI();
+  // 只有 preview.py 開的才寫得回檔案;其他情況先講清楚,免得編完一大堆才發現存不了
+  if(!/^(127\.0\.0\.1|localhost|\[::1\])$/.test(location.hostname)){
+    $('#warnMsg').innerHTML='這一頁不是由 <code>preview.py</code> 提供的,「儲存」只能下載檔案。'
+      +'要直接存回 <code>data/aliases.json</code> 請在 trade-list 資料夾執行 <code>python preview.py</code>。';
+    $('#warnBar').classList.remove('hide');
+  }
+  setKind('mon'); mark(false);
+}
+function clean(e){
+  if(!e||!TARGETS[e.kind])return null;
+  const terms=[...new Set((e.terms||[]).map(norm).filter(Boolean))];
+  const targets=[...new Set((e.targets||[]).map(String).filter(Boolean))];
+  if(!terms.length||!targets.length)return null;
+  const o={kind:e.kind,terms,targets}; if(e.note)o.note=String(e.note); return o;
+}
+
+/* 三種目標各自攤成一份清單:{key,label,sub,img,hay} */
+function buildTargets(){
+  const mon=[];
+  for(const p of Object.values(POKE)){
+    const base=p.variants.find(v=>!v.shiny&&!v.form&&!v.costume&&!v.gender)||p.variants[0]||{};
+    mon.push({key:String(p.id),label:NAMES[p.id]||p.zh||('#'+p.id),sub:'#'+p.id,img:thumb(base.url),
+              hay:(ALLNAMES[p.id]||'')+'|'+p.id});
+  }
+  mon.sort((a,b)=>+a.key-+b.key);
+
+  // 型態 / 造型的搜尋要能打寶可夢名稱:建檔時想的是「皮卡丘的萬聖節」,不是 HALLOWEEN_2017。
+  // → 把「有這個代碼的寶可夢」的各語言名稱一起塞進 hay,順便顯示在格子上。
+  const seen=new Map();
+  const put=(code,kind,url,dex)=>{ if(!code)return;
+    const o=seen.get(code)||{key:code,label:code,sub:kind,img:thumb(url),dex:[]};
+    if(!o.dex.includes(dex))o.dex.push(dex);
+    if(!o.img)o.img=thumb(url); seen.set(code,o); };
+  for(const p of Object.values(POKE)){
+    for(const v of p.variants){ if(v.shiny)continue;
+      if(v.form)put(v.form,'型態',v.url,p.id); if(v.costume)put(v.costume,'造型',v.url,p.id); }
+    if(p.gigantamax&&p.gigantamax.normal)put('GIGANTAMAX','型態',p.gigantamax.normal,p.id);
+  }
+  const monNames=ds=>ds.map(d=>NAMES[d]||('#'+d));
+  const form=[...seen.values()].map(o=>{
+    const ns=monNames(o.dex);
+    return {key:o.key,label:o.key,img:o.img,full:ns.join('、'),
+      sub:o.sub+' · '+(ns.length<=2?ns.join('、'):ns.length+' 隻:'+ns.slice(0,2).join('、')+'…'),
+      hay:(o.key+'|'+o.dex.map(d=>ALLNAMES[d]||'').join('|')).toLowerCase()};
+  }).sort((a,b)=>a.key<b.key?-1:1);
+
+  // 背卡同理:打「皮卡丘」要找得到有皮卡丘的卡
+  const bg=BG.filter(b=>b.image_url).map(b=>{
+    const ds=[...new Set((b.pokemon||[]).map(m=>m.dex))];
+    return {key:b.image_name,label:b.name||b.image_name,
+      sub:b.image_name.replace(/\.(png|jpe?g|webp)$/i,''),img:thumb(b.image_url),
+      full:monNames(ds).join('、'),
+      hay:(b.image_name+'|'+(b.name||'')+'|'+ds.map(d=>ALLNAMES[d]||'').join('|')).toLowerCase()};
+  });
+
+  TARGETS={mon,form,bg};
+  for(const k of ['mon','form','bg']) TMAP[k]=new Map(TARGETS[k].map(t=>[t.key,t]));
+}
+
+/* ===== 索引 ===== */
+let BY={mon:new Map(),form:new Map(),bg:new Map()};   // key -> [entry…]
+function reindex(){
+  BY={mon:new Map(),form:new Map(),bg:new Map()};
+  for(const e of ENTRIES) for(const t of e.targets){
+    const m=BY[e.kind]; if(!m)continue; (m.get(t)||m.set(t,[]).get(t)).push(e);
+  }
+}
+const termsOf=k=>(BY[KIND].get(k)||[]).flatMap(e=>e.terms);
+
+/* ===== 變更 / 復原 ===== */
+function snapshot(){ HIST.push(JSON.stringify(ENTRIES)); if(HIST.length>60)HIST.shift(); $('#btnUndo').disabled=false; }
+function undo(){ if(!HIST.length)return; ENTRIES=JSON.parse(HIST.pop());
+  $('#btnUndo').disabled=!HIST.length; reindex(); mark(true); drawAll(); toast('已復原'); }
+function mark(dirty){
+  DIRTY=dirty; const s=$('#state');
+  s.className=dirty?'dirty':'saved';
+  s.textContent=(dirty?'● 有未儲存的變更 · ':'✓ 已同步 · ')+ENTRIES.length+' 組 / '
+    +ENTRIES.reduce((n,e)=>n+e.terms.length,0)+' 個詞';
+  if(dirty)saveDraft();
+}
+function saveDraft(){ try{ localStorage.setItem('aliasDraft',JSON.stringify({t:Date.now(),entries:ENTRIES})); }catch(e){} }
+function checkDraft(){
+  let d=null; try{ d=JSON.parse(localStorage.getItem('aliasDraft')||'null'); }catch(e){}
+  if(!d||!d.entries||JSON.stringify(d.entries)===JSON.stringify(ENTRIES))return;
+  $('#draftMsg').textContent='偵測到上次沒存檔的草稿('+new Date(d.t).toLocaleString()+','
+    +d.entries.length+' 組),要接著編嗎?';
+  $('#draftBar').classList.remove('hide');
+  $('#draftLoad').onclick=()=>{ ENTRIES=d.entries.map(clean).filter(Boolean); reindex();
+    $('#draftBar').classList.add('hide'); mark(true); drawAll(); };
+  $('#draftDrop').onclick=()=>{ localStorage.removeItem('aliasDraft'); $('#draftBar').classList.add('hide'); };
+}
+
+/* ===== 加 / 刪別名 ===== */
+function addTerms(kind,targets,rawTerms,note){
+  const terms=[...new Set(rawTerms.map(norm).filter(Boolean))];
+  if(!terms.length||!targets.length)return 0;
+  snapshot();
+  let added=0;
+  if(targets.length===1){
+    const k=targets[0];
+    // 單一目標:併進「只指向它」的那一組,沒有就開一組 —— 避免同一隻長出一堆單詞條目
+    let e=ENTRIES.find(x=>x.kind===kind&&x.targets.length===1&&x.targets[0]===k);
+    if(!e){ e={kind,terms:[],targets:[k]}; if(note)e.note=note; ENTRIES.push(e); }
+    else if(note&&!e.note)e.note=note;
+    for(const t of terms) if(!e.terms.includes(t)){ e.terms.push(t); added++; }
+  }else{
+    const e={kind,terms,targets:[...targets]}; if(note)e.note=note;
+    ENTRIES.push(e); added=terms.length;
+  }
+  ENTRIES=ENTRIES.filter(e=>e.terms.length&&e.targets.length);
+  reindex(); mark(true);
+  return added;
+}
+// 只解掉「這個目標的這個詞」,同組其他目標 / 其他詞都要留著 → 必要時把該組拆開
+function unlink(kind,target,term){
+  snapshot();
+  for(const e of [...ENTRIES]){
+    if(e.kind!==kind||!e.terms.includes(term)||!e.targets.includes(target))continue;
+    if(e.targets.length===1) e.terms=e.terms.filter(t=>t!==term);
+    else if(e.terms.length===1) e.targets=e.targets.filter(t=>t!==target);
+    else{ e.targets=e.targets.filter(t=>t!==target);
+          ENTRIES.push({kind,terms:e.terms.filter(t=>t!==term),targets:[target],...(e.note?{note:e.note}:{})}); }
+  }
+  ENTRIES=ENTRIES.filter(e=>e.terms.length&&e.targets.length);
+  reindex(); mark(true);
+}
+
+/* ===== 挑目標畫面 ===== */
+function setKind(k){
+  KIND=k; SEL=[]; LAST=null;
+  $$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===k));
+  $('#viewPick').classList.toggle('hidden',!['mon','form','bg'].includes(k));
+  $('#viewList').classList.toggle('hidden',k!=='list');
+  $('#viewTest').classList.toggle('hidden',k!=='test');
+  if(k==='list'){ drawList(); return; }
+  if(k==='test'){ drawTest(); return; }
+  $('#q').placeholder=k==='mon'?'搜尋寶可夢…名稱或編號'
+    :k==='form'?'搜尋型態 / 造型…代碼或寶可夢名稱(例:HALLOWEEN、皮卡丘)'
+    :'搜尋背卡…地名、檔名或卡上的寶可夢';
+  $('#q').value=''; drawGrid(); drawSel();
+}
+function visibleTargets(){
+  const q=norm($('#q').value), has=$('#fHas').dataset.on==='1', none=$('#fNone').dataset.on==='1';
+  return TARGETS[KIND].filter(t=>{
+    const n=(BY[KIND].get(t.key)||[]).length;
+    if(has&&!n)return false; if(none&&n)return false;
+    if(!q)return true;
+    return t.hay.includes(q) || t.label.toLowerCase().includes(q) || termsOf(t.key).some(x=>x.includes(q));
+  });
+}
+function drawGrid(){
+  const list=visibleTargets(), g=$('#grid');
+  g.className='grid'+(KIND==='bg'?' bg':'');
+  g.innerHTML='';
+  const frag=document.createDocumentFragment();
+  for(const t of list.slice(0,CAP)){
+    const terms=termsOf(t.key);
+    const d=document.createElement('div');
+    d.className='tile'+(SEL.includes(t.key)?' on':'');
+    d.title=t.key+(t.full?'\n'+t.full:'');
+    d.innerHTML=`<img loading="lazy" src="${t.img}" alt="" onerror="this.style.visibility='hidden'">`
+      +`<div class="nm">${esc(t.label)}</div><div class="id">${esc(t.sub)}</div>`
+      +(terms.length?`<div class="al" title="${esc(terms.join('、'))}">🏷 ${esc(terms.join('、'))}</div>`
+                    :`<div class="al" style="color:#5c648c">—</div>`)
+      +(terms.length?`<span class="n">${terms.length}</span>`:'');
+    d.onclick=ev=>pick(t.key,ev.shiftKey,list);
+    frag.appendChild(d);
+  }
+  g.appendChild(frag);
+  $('#gcount').textContent=list.length+' 個目標';
+  $('#more').textContent=list.length>CAP?`只顯示前 ${CAP} 個,請用搜尋縮小範圍(還有 ${list.length-CAP} 個)`:'';
+}
+function pick(key,range,list){
+  if(range&&LAST!=null){
+    const ks=list.map(t=>t.key), a=ks.indexOf(LAST), b=ks.indexOf(key);
+    if(a>=0&&b>=0){ for(const k of ks.slice(Math.min(a,b),Math.max(a,b)+1)) if(!SEL.includes(k))SEL.push(k); }
+  }else{
+    const i=SEL.indexOf(key); if(i>=0)SEL.splice(i,1); else SEL.push(key);
+  }
+  LAST=key; drawGrid(); drawSel();
+}
+function drawSel(){
+  const n=SEL.length;
+  $('#selTitle').textContent=n?`已選 ${n} 個目標`:'尚未選取';
+  $('#selClear').classList.toggle('hidden',!n);
+  $('#termIn').disabled=$('#termAdd').disabled=$('#noteIn').disabled=!n;
+  $('#selChips').innerHTML=SEL.map(k=>{const t=TMAP[KIND].get(k)||{label:k};
+    return `<span class="chip selchip"><b>${esc(t.label)}</b><x data-k="${esc(k)}">✕</x></span>`;}).join('');
+  $$('#selChips x').forEach(x=>x.onclick=()=>{ SEL=SEL.filter(k=>k!==x.dataset.k); drawGrid(); drawSel(); });
+
+  const box=$('#selDetail');
+  if(!n){ box.innerHTML='<div class="sub">先在左邊點選目標,右邊就能加別名。</div>'; return; }
+  box.innerHTML=SEL.map(k=>{
+    const t=TMAP[KIND].get(k)||{label:k,img:''}, es=BY[KIND].get(k)||[];
+    const chips=es.flatMap(e=>e.terms.map(term=>
+      `<span class="chip${e.targets.length>1?' grp':''}" title="${e.targets.length>1?'群組:共 '+e.targets.length+' 個目標':''}">`
+      +`<b>${esc(term)}</b>${e.targets.length>1?'<span class="sub">×'+e.targets.length+'</span>':''}`
+      +`<x data-k="${esc(k)}" data-t="${esc(term)}">✕</x></span>`)).join('');
+    return `<div class="tgt"><img loading="lazy" src="${t.img}" alt="" onerror="this.style.visibility='hidden'">`
+      +`<div class="body"><div class="tn">${esc(t.label)} <span class="sub">${esc(t.sub||'')}</span></div>`
+      +`<div class="chips">${chips||'<span class="sub">還沒有別名</span>'}</div></div></div>`;
+  }).join('');
+  $$('#selDetail x').forEach(x=>x.onclick=()=>{ unlink(KIND,x.dataset.k,x.dataset.t); drawGrid(); drawSel(); });
+}
+function commitTerms(){
+  const raw=$('#termIn').value, note=$('#noteIn').value.trim();
+  const terms=raw.split(/[,、\n]+/).map(s=>s.trim()).filter(Boolean);
+  if(!terms.length||!SEL.length)return;
+  const n=addTerms(KIND,SEL,terms,note);
+  $('#termIn').value='';
+  toast(n?`加了 ${n} 個詞到 ${SEL.length} 個目標`:'這些詞已經有了');
+  drawGrid(); drawSel();
+}
+
+/* ===== 別名總表 ===== */
+function dupTerms(){
+  const seen=new Map();
+  for(const e of ENTRIES) for(const t of e.terms){ const k=e.kind+' '+t; seen.set(k,(seen.get(k)||0)+1); }
+  return new Set([...seen].filter(([,n])=>n>1).map(([k])=>k));
+}
+function drawList(){
+  const q=norm($('#lq').value), dups=dupTerms();
+  const rows=ENTRIES.map((e,i)=>({e,i})).filter(({e})=>!q||e.terms.some(t=>t.includes(q))
+    ||e.targets.some(k=>{const t=TMAP[e.kind].get(k); return k.toLowerCase().includes(q)||(t&&t.label.toLowerCase().includes(q));}));
+  const kn={mon:'寶可夢',form:'型態造型',bg:'背卡'};
+  $('#ltbody').innerHTML=rows.map(({e,i})=>{
+    const names=e.targets.map(k=>{const t=TMAP[e.kind].get(k); return t?t.label:k+' ⚠';});
+    const shown=names.slice(0,8).join('、')+(names.length>8?` …等 ${names.length} 個`:'');
+    const bad=e.terms.some(t=>dups.has(e.kind+' '+t));
+    return `<tr data-i="${i}">
+      <td><span class="kbadge ${e.kind}">${kn[e.kind]}</span></td>
+      <td><input class="tin" data-i="${i}" value="${esc(e.terms.join('、'))}" style="width:100%">
+          ${bad?'<div class="sub" style="color:#f0c850">⚠ 同名詞出現在別組</div>':''}</td>
+      <td><span class="sub">${esc(shown)}</span></td>
+      <td><input class="nin" data-i="${i}" value="${esc(e.note||'')}" style="width:100%"></td>
+      <td><button class="danger del" data-i="${i}">刪除</button></td></tr>`;
+  }).join('')||'<tr><td colspan="5" class="sub">沒有符合的項目</td></tr>';
+  $('#lcount').textContent=rows.length+' / '+ENTRIES.length+' 組';
+  $('#mergeDup').classList.toggle('hidden',!dups.size);
+  $('#mergeDup').textContent=`合併重複的詞(${dups.size})`;
+  $$('#ltbody .tin').forEach(inp=>inp.onchange=()=>{
+    const e=ENTRIES[+inp.dataset.i];
+    const terms=[...new Set(inp.value.split(/[,、\n]+/).map(norm).filter(Boolean))];
+    snapshot();
+    if(!terms.length) ENTRIES.splice(+inp.dataset.i,1); else e.terms=terms;
+    reindex(); mark(true); drawList();
+  });
+  $$('#ltbody .nin').forEach(inp=>inp.onchange=()=>{
+    snapshot(); const e=ENTRIES[+inp.dataset.i];
+    if(inp.value.trim())e.note=inp.value.trim(); else delete e.note; mark(true);
+  });
+  $$('#ltbody .del').forEach(b=>b.onclick=()=>{
+    snapshot(); ENTRIES.splice(+b.dataset.i,1); reindex(); mark(true); drawList();
+  });
+}
+// 同一個 kind 底下同名的詞併成一組(目標取聯集)—— 手動加的時候很容易長出兩組一樣的詞
+function mergeDuplicates(){
+  snapshot();
+  const out=[], idx=new Map();
+  for(const e of ENTRIES){
+    const key=e.kind+' '+[...e.terms].sort().join('');
+    const hit=idx.get(key);
+    if(hit){ hit.targets=[...new Set([...hit.targets,...e.targets])]; if(!hit.note&&e.note)hit.note=e.note; }
+    else{ const c={...e,terms:[...e.terms],targets:[...e.targets]}; idx.set(key,c); out.push(c); }
+  }
+  const before=ENTRIES.length; ENTRIES=out; reindex(); mark(true); drawList();
+  toast(before===out.length?'沒有可以合併的(重複的詞分屬不同組合)':`合併了 ${before-out.length} 組`);
+}
+
+/* ===== 測試搜尋:比對邏輯要和 index.html 一致 ===== */
+function aliasStr(kind,key){ return (BY[kind].get(key)||[]).flatMap(e=>e.terms).join('|'); }
+function drawTest(){
+  const q=norm($('#tq').value);
+  if(!q){ $('#tstats').innerHTML='<span>輸入一個詞看看…</span>'; $('#tres').innerHTML=''; return; }
+  const hit={
+    mon:TARGETS.mon.filter(t=>(ALLNAMES[t.key]||'').includes(q)||aliasStr('mon',t.key).includes(q)
+        ||t.key===q||t.key.padStart(4,'0')===q),
+    form:TARGETS.form.filter(t=>t.key.toLowerCase().includes(q)||aliasStr('form',t.key).includes(q)),
+    bg:TARGETS.bg.filter(t=>t.key.toLowerCase().includes(q)||aliasStr('bg',t.key).includes(q)
+        ||t.label.toLowerCase().includes(q)),
+  };
+  $('#tstats').innerHTML=[['寶可夢',hit.mon.length],['型態/造型',hit.form.length],['背卡',hit.bg.length]]
+    .map(([k,n])=>`<span><b>${n}</b>${k}</span>`).join('');
+  const sec=(title,arr)=>!arr.length?'':`<div class="hr"></div><div class="sub">${title}(${arr.length})</div>`
+    +`<div class="chips" style="margin-top:6px">`
+    +arr.slice(0,120).map(t=>`<span class="chip"><b>${esc(t.label)}</b><span class="sub">${esc(t.sub||'')}</span></span>`).join('')
+    +(arr.length>120?`<span class="sub">…等 ${arr.length} 個</span>`:'')+`</div>`;
+  $('#tres').innerHTML=sec('寶可夢',hit.mon)+sec('型態 / 造型',hit.form)+sec('背卡',hit.bg)
+    +(hit.mon.length+hit.form.length+hit.bg.length?'':'<div class="hr"></div><div class="sub">這個詞現在什麼都篩不到 —— 到上面的分頁把它建進去。</div>');
+}
+
+/* ===== 存檔 ===== */
+function serialize(){
+  const J=JSON.stringify;
+  const order={mon:0,form:1,bg:2};
+  const list=[...ENTRIES].sort((a,b)=>order[a.kind]-order[b.kind]);
+  const body=list.map(e=>{const o={kind:e.kind,terms:e.terms,targets:e.targets}; if(e.note)o.note=e.note; return '  '+J(o);});
+  return '{\n'+[' "version": '+J(META.version||1),
+    ' "updated": '+J(new Date().toISOString().slice(0,10)),
+    ' "note": '+J(META.note||'交易清單搜尋用的別名表,用 alias-editor.html 編。')].join(',\n')
+    +',\n "entries": [\n'+body.join(',\n')+'\n ]\n}\n';
+}
+function download(text){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));
+  a.download='aliases.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+async function save(){
+  const text=serialize();
+  try{
+    const r=await fetch('/__save?f='+encodeURIComponent(FILE),
+      {method:'POST',headers:{'Content-Type':'application/json'},body:text});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok) throw new Error(j.error||('HTTP '+r.status));
+    localStorage.removeItem('aliasDraft'); mark(false);
+    toast('✔ 已寫回 '+FILE+'(舊檔備份為 aliases.json.bak)',3000);
+  }catch(err){
+    // 沒有 preview.py(file:// 或線上版)→ 退回下載,自己覆蓋過去
+    download(text);
+    $('#warnMsg').textContent='寫不回檔案('+err.message+')→ 已改成下載 aliases.json,請自行覆蓋到 trade-list/data/。'
+      +' 想直接存檔請用:python preview.py 開這一頁。';
+    $('#warnBar').classList.remove('hide');
+  }
+}
+
+/* ===== 綁定 ===== */
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function drawAll(){ if(KIND==='list')drawList(); else if(KIND==='test')drawTest(); else{drawGrid();drawSel();} }
+function bindUI(){
+  $$('#tabs button').forEach(b=>b.onclick=()=>setKind(b.dataset.t));
+  $('#q').oninput=()=>drawGrid();
+  for(const id of ['fHas','fNone']) $('#'+id).onclick=()=>{
+    const b=$('#'+id); b.dataset.on=b.dataset.on==='1'?'0':'1';
+    b.classList.toggle('pri',b.dataset.on==='1');
+    if(b.dataset.on==='1'){ const o=$('#'+(id==='fHas'?'fNone':'fHas')); o.dataset.on='0'; o.classList.remove('pri'); }
+    drawGrid();
+  };
+  $('#selClear').onclick=()=>{ SEL=[]; drawGrid(); drawSel(); };
+  $('#termAdd').onclick=commitTerms;
+  $('#termIn').onkeydown=e=>{ if(e.key==='Enter')commitTerms(); };
+  $('#lq').oninput=()=>drawList();
+  $('#mergeDup').onclick=mergeDuplicates;
+  $('#tq').oninput=()=>drawTest();
+  $('#btnSave').onclick=save;
+  $('#btnExport').onclick=()=>download(serialize());
+  $('#btnUndo').onclick=undo;
+  $('#btnImport').onclick=()=>$('#fileIn').click();
+  $('#fileIn').onchange=async e=>{
+    const f=e.target.files[0]; if(!f)return;
+    try{ const d=JSON.parse(await f.text());
+      snapshot(); META={version:d.version||1,note:d.note||META.note};
+      ENTRIES=(d.entries||[]).map(clean).filter(Boolean);
+      reindex(); mark(true); drawAll(); toast('已匯入 '+ENTRIES.length+' 組');
+    }catch(err){ toast('匯入失敗:'+err.message,3000); }
+    e.target.value='';
+  };
+  addEventListener('keydown',e=>{
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!/^(INPUT|TEXTAREA)$/.test(e.target.tagName)){ e.preventDefault(); undo(); }
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){ e.preventDefault(); save(); }
+  });
+  addEventListener('beforeunload',e=>{ if(DIRTY){ e.preventDefault(); e.returnValue=''; } });
+}
+boot();
+</script>
+</body>
+</html>
