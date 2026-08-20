@@ -163,6 +163,25 @@ wiki 用的是自家代號(Bulbapedia `0025Willow`、Fandom `ci=Pikachu willow`)
 
 經典六款直接沿用 `THEMES[].exp`,不經過底圖引擎的任何新欄位 → 舊使用者存過的圖不會變樣。
 
+## 匯出圖的品牌頁尾
+
+圖的最底部固定有一條 `● pogokit.com/t` + 一行副標,由 `drawBrand()` 畫。
+**保證不會擋到任何東西**,靠兩件事:
+
+1. `computeLayout()` 把 `BRAND_H` 加進總高 → 卡片 / 區塊標籤 / 訓練家代碼都排不進這一段
+2. 畫在 `drawBaseTo()` 的最後 → 使用者的貼圖與文字一律疊在它上面,最壞情況是被蓋住
+
+墨色**不直接用 skin 的 `foot`**:foot 是配整張圖的,而頁尾這條的背景是漸層最後一個色停
+(再被暗角壓暗)。`vapor` / `sunset` 就是「深色系 foot + 淺色底部」→ 淺字配淺底會糊掉。
+`drawBrand` 先算頁尾實際亮度,對比不足才換近黑 / 近白,夠的話保留 skin 原色。
+字距是逐字排的(`drawTracked`)—— `ctx.letterSpacing` 在舊 Safari / Firefox 沒有。
+
+`pogokit.com/t` 是短網址:看圖的人得用手打。它是 repo 根目錄的 `t/index.html`,
+一頁轉址到 `/trade-list/`,並且**把 `?s=` 與 `?lang=` 一起帶過去** —— 少了這步
+`pogokit.com/t?s=xxx` 這種分享連結會變成打不開的死連結。GitHub Pages 沒有伺服器端 rewrite,
+所以網址列最後會停在 `/trade-list/`(正規網址);那一頁掛 `noindex` + canonical,不會跟本頁搶排名。
+改 `BRAND_URL` 時記得對應的轉址頁要存在。
+
 ## 圖片顯示
 
 sprite 四周常有一圈透明 padding。前端會掃描出主體的 bounding box,

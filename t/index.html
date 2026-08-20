@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- 交換清單的短網址:pogokit.com/t → /trade-list/
+     匯出圖的頁尾印的是這個短網址(見 trade-list/index.html 的 BRAND_URL)——
+     看圖的人要用手打,少 10 個字差很多。
+
+     GitHub Pages 是純靜態、沒有伺服器端 rewrite,所以這裡只能轉址,
+     網址列最後會停在 /trade-list/(正規網址,對 SEO 也比較乾淨)。
+
+     ⚠ 一定要把 search 與 hash 帶過去:分享連結是 ?s=xxx、語言是 ?lang=xx,
+       丟掉的話 pogokit.com/t?s=xxx 就變成打不開清單的死連結。 -->
+<title>Pokémon GO 交換清單產生器 — pogokit.com</title>
+<link rel="canonical" href="https://pogokit.com/trade-list/">
+<meta name="robots" content="noindex,follow">
+<script>
+  // replace 而不是 assign:按上一頁時直接回到來源頁,不會又被這一頁彈回去
+  location.replace('/trade-list/' + location.search + location.hash);
+</script>
+<!-- 沒有 JS 時的退路(帶不了 query,但至少進得去) -->
+<meta http-equiv="refresh" content="0;url=/trade-list/">
+<style>
+  html,body{height:100%}
+  body{margin:0;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,#0f1220,#191540);color:#eef0fb;
+    font:15px/1.7 system-ui,"Segoe UI","Noto Sans TC",sans-serif;text-align:center}
+  a{color:#a99bff}
+</style>
+</head>
+<body>
+  <div>
+    <p>前往 Pokémon GO 交換清單產生器…</p>
+    <p><a href="/trade-list/">如果沒有自動跳轉，請點這裡</a></p>
+  </div>
+</body>
+</html>
