@@ -117,8 +117,6 @@
     /* 手機:「只看」這一組(只看/已選/傳說)自己一行,不跟前面的篩選擠在一起 */
     .fbreak{display:block;flex-basis:100%;height:0;margin:0}
     .fdiv{border-left:0;margin-left:0;padding-left:0}
-    /* 手機:雌性 ♀ 圖標稍微上移,避免底部被裁掉顯示不完整 */
-    .cell .gn{bottom:6px;line-height:1.1}
   }
   .chip.scope{border-style:dashed}
   .chip.scope.on{background:var(--acc);color:#fff;border-color:transparent;border-style:solid}
@@ -169,8 +167,8 @@
   .mixCard img.m{position:absolute;inset:0;margin:auto;width:88%;height:88%;object-fit:contain;z-index:2}
   .mixCard .bd{position:absolute;right:3px;top:3px;width:32%;height:32%;object-fit:contain;z-index:3}
   .mixCard .sh{position:absolute;left:4px;top:2px;font-size:13px;z-index:3}
-  .mixCard .gn{position:absolute;left:4px;bottom:3px;font-size:13px;line-height:1;z-index:3;
-               color:#ff9ec7;text-shadow:0 0 2px #000,0 1px 2px #000}
+  .mixCard .gn{position:absolute;left:4px;bottom:3px;width:15px;height:15px;z-index:3;
+               color:#ff9ec7;filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 1px 1px #000)}
   .mixInfo{font-size:13px;color:var(--mut);line-height:1.6;min-width:0}
   .mixInfo b{display:block;font-size:15px;color:var(--fg);margin-bottom:2px}
   .mixStep{margin-bottom:14px}
@@ -203,7 +201,9 @@
   .cell .bd{position:absolute;right:2px;top:2px;width:32%;height:32%;object-fit:contain;z-index:3}
   .cell .sh{position:absolute;left:3px;top:2px;font-size:11px;z-index:3}
   .li .sh{position:absolute;left:4%;top:2%;font-size:12px;z-index:3}
-  .cell .gn{position:absolute;left:3px;bottom:3px;font-size:12px;line-height:1;z-index:3;color:#ff9ec7;text-shadow:0 0 2px #000,0 1px 2px #000}
+  .cell .gn{position:absolute;left:3px;bottom:3px;width:13px;height:13px;z-index:3;color:#ff9ec7;
+            filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 1px 1px #000)}
+  .gn.male{color:#8fc7ff}
   .cell .ok{position:absolute;right:3px;bottom:2px;z-index:4;font-size:12px;color:#7dffb0}
   .seg{display:flex;gap:6px;margin-bottom:8px}
   .seg button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--cellbg);color:var(--fg);cursor:pointer;font:inherit}
@@ -282,12 +282,15 @@
   .li .bd{position:absolute;right:5%;top:5%;width:28%;height:28%;z-index:3}
   /* 性別鈕:符號本身就是按鈕 —— 結果顯示在哪裡,就在哪裡操作。
      未設定時淡淡的,設定後才亮起來(手機沒有 hover,所以不能只靠 hover 才看得到) */
-  .li .gn{position:absolute;left:2px;bottom:2px;z-index:4;min-width:18px;height:18px;padding:0 3px;
-          border-radius:9px;background:#000b;border:1px solid #fff3;color:#ff9ec7;
-          font-size:11px;font-weight:700;line-height:15px;text-align:center;cursor:pointer}
-  .li .gn.male{color:#8fc7ff}
-  .li .gn.off{color:#cfd6ee;opacity:.42;font-weight:400}
+  .li .gn{position:absolute;left:2px;bottom:2px;z-index:4;width:20px;height:20px;padding:3px;
+          border-radius:50%;background:#000b;border:1px solid #fff3;color:#ff9ec7;cursor:pointer;
+          display:flex;align-items:center;justify-content:center}
+  .li .gn>svg{width:100%;height:100%;display:block}
+  .li .gn.male{color:#8fc7ff}   /* 要寫在這裡:與 .li .gn 同權重,靠後面才蓋得過 */
+  .li .gn.off{color:#cfd6ee;opacity:.45}
   .li .gn:hover{opacity:1;border-color:#fff8}
+  /* 觸控裝置把點擊區放大:20px 對手指來說太小,而卡片本身有空間 */
+  @media(pointer:coarse){ .li .gn{width:25px;height:25px;padding:4px} }
   .li .card .del{position:absolute;right:2px;bottom:2px;z-index:4;width:18px;height:18px;padding:0;border-radius:50%;background:#000b;border:1px solid #fff5;color:#fff;cursor:pointer;font-size:11px;line-height:1}
   .li .note{display:block;width:100%;margin-top:3px;box-sizing:border-box;font-size:10px;padding:2px 4px;line-height:1.25;
             border:1px solid var(--line);border-radius:6px;background:var(--cellbg);color:var(--fg);text-align:center;cursor:text;
@@ -1564,10 +1567,49 @@ function preloadSkin(T){ return Promise.all(skinAssets(T).map(loadImg)); }
 function expOf(u){ return (u&&u.startsWith('assets/bg/')) ? 'assets/bgexp/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp') : u; }
 function loadExport(u){ const e=expOf(u); if(e===u) return loadImg(u); return loadImg(e).then(im=>im||loadImg(u)); }
 // 網格/清單用小縮圖(WebP)加速;匯出仍用原圖高解析。皆走 cdn()。
+/* ===== 性別符號 =====
+   一律用向量畫,不用 ♀ / ♂ / ⚥ 這三個字。手機上它們常落到別的字型,那些字型的
+   ascent 比較大 → 在固定高度的框裡基線被壓下去,看起來往下偏,嚴重時底部被裁掉。
+   (原本 .cell .gn 有一條「手機把 ♀ 往上移」的 media query 就是在補這個,已經拿掉)
+   改成路徑之後位置只由座標決定,任何裝置、任何字型設定都一樣。 */
+const GN_PATH={
+  none:  '<circle cx="12" cy="12" r="4.6"/>',
+  female:'<circle cx="12" cy="9" r="4.2"/><path d="M12 13.2V21M9 18h6"/>',
+  male:  '<circle cx="10" cy="14" r="4.2"/><path d="M13 11l6.5-6.5M14.5 4.5H20V10"/>'
+};
+function gnSvg(g,cls){
+  const k=g==='female'?'female':g==='male'?'male':'none';
+  return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"`
+    +` stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GN_PATH[k]}</svg>`;
+}
+// 網格 / 自由搭配的小角標:沒指定性別就不顯示(那裡是「這張圖是什麼」,不是可切換的狀態)
+const gnMark=g=>g==='female'||g==='male' ? gnSvg(g,'gn'+(g==='male'?' male':'')) : '';
 function thumbOf(u){ if(!u)return u;
   if(u.startsWith('assets/img/'))return cdn('assets/thumb/'+u.slice(11).replace(/\.png$/i,'.webp'));
   if(u.startsWith('assets/bg/'))return cdn('assets/bgthumb/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp'));
   return u; }
+/* 匯出圖的性別符號:和 GN_PATH 同一組座標,用 canvas 路徑畫。
+   理由同上 —— 原本用 fillText('♀') 的話,手機沒有指定的字型就會 fallback,
+   同一份清單在手機和電腦上輸出的符號位置/大小會不一樣。路徑畫就到處都一致。 */
+function drawGender(x,g,cx,cy,S){
+  const D=S*0.2, u=D/24, ox=cx+S*0.04, oy=cy+S*0.96-D;   // 24×24 方框的左上角
+  const P=(px,py)=>[ox+px*u, oy+py*u];
+  x.save();
+  x.strokeStyle = g==='female' ? '#ff8ec2' : '#8fc7ff';
+  x.lineWidth=Math.max(1.2,2.2*u); x.lineCap='round'; x.lineJoin='round';
+  x.shadowColor='rgba(0,0,0,.6)'; x.shadowBlur=Math.max(1,S*0.014);
+  x.beginPath();
+  if(g==='female'){
+    x.arc(...P(12,9),4.2*u,0,7);
+    x.moveTo(...P(12,13.2)); x.lineTo(...P(12,21));
+    x.moveTo(...P(9,18));    x.lineTo(...P(15,18));
+  }else{
+    x.arc(...P(10,14),4.2*u,0,7);
+    x.moveTo(...P(13,11));    x.lineTo(...P(19.5,4.5));
+    x.moveTo(...P(14.5,4.5)); x.lineTo(...P(20,4.5)); x.lineTo(...P(20,10));
+  }
+  x.stroke(); x.restore();
+}
 function rrPath(x,rx,ry,w,h,r){x.beginPath();x.moveTo(rx+r,ry);x.arcTo(rx+w,ry,rx+w,ry+h,r);x.arcTo(rx+w,ry+h,rx,ry+h,r);x.arcTo(rx,ry+h,rx,ry,r);x.arcTo(rx,ry,rx+w,ry,r);x.closePath();}
 // 自動去透明邊:很多寶可夢 icon 圖檔四周有一圈透明 padding,主體只佔中央。
 // 掃描出不透明範圍的 bounding box(以比例 0~1 快取),繪製時只取主體 → 寶可夢顯示更大。
@@ -1655,7 +1697,7 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
   if(T.line&&!/,\s*0\)$/.test(T.line)){x.strokeStyle=T.line;x.lineWidth=2;rrPath(x,cx,cy,S,S,S*0.16);x.stroke();}
   if(c.badge){const b=await loadImg(c.badge);if(b)x.drawImage(b,cx+S*0.63,cy+S*0.04,S*0.33,S*0.33);}
   if(c.shiny){x.textAlign='left';x.font=Math.round(S*0.2)+'px "Segoe UI Emoji","Microsoft JhengHei"';x.fillText('✨',cx+S*0.04,cy+S*0.24);}
-  if(c.gender==='female'||c.gender==='male'){x.fillStyle=c.gender==='female'?'#ff8ec2':'#8fc7ff';x.font='700 '+Math.round(S*0.16)+'px "Microsoft JhengHei",sans-serif';x.fillText(c.gender==='female'?'♀':'♂',cx+S*0.05,cy+S*0.95);}
+  if(c.gender==='female'||c.gender==='male') drawGender(x,c.gender,cx,cy,S);
   if(c.note && noteH){   // 附加文字:畫在整張卡片「下方」,不擋圖(支援多行)
     x.save();
     const lines=String(c.note).split('\n');
@@ -2543,7 +2585,7 @@ function mixCell(o,sel,isBg){
     ? `<img class="cbg" loading="lazy" decoding="async" src="${thumbOf(o.image_url)}">`
     : `<img class="m big" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(o.url)}">`
       + (o.shiny?'<span class="sh">✨</span>':'')
-      + (o.gender==='female'?'<span class="gn">♀</span>':o.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':'');
+      + gnMark(o.gender);
   d.title = isBg ? (o.name||o.image_name) : (nameOf(o.dex)+(o.form?' · '+o.form:'')+(o.costume?' · '+o.costume:'')+(o.shiny?' ✨':''));
   return d;
 }
@@ -2594,7 +2636,7 @@ function syncMix(){
     + (m?`<img class="m" crossorigin="anonymous" src="${thumbOf(m.url)}">`:'')
     + (bd.img?`<img class="bd" src="${cdn(bd.img)}">`:'')
     + (m&&m.shiny?'<span class="sh">✨</span>':'')
-    + (m&&m.gender==='female'?'<span class="gn">♀</span>':m&&m.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':'');
+    + (m?gnMark(m.gender):'');
   const im=card.querySelector('img.m'); if(im)hookTrim(im,!!MIX.bg,card.clientWidth||104);
   const bgName=MIX.bg?(BG.find(b=>b.image_url===MIX.bg)||{}).name:null;
   $('#mixInfo').innerHTML = m
@@ -2718,7 +2760,7 @@ function appendBatch(){
     const it=FILTERED[i];const on=inTarget(it);const d=document.createElement('div');d.className=on?'cell added':'cell';
     d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${thumbOf(it.bg)}">`:''}
       <img class="m${it.bg?'':' big'}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
-      ${it.shiny?'<span class="sh">✨</span>':''}${it.gender==='female'?'<span class="gn">♀</span>':''}${it.gender==='male'?'<span class="gn" style="color:#8fc7ff">♂</span>':''}${on?'<span class="ok">✓</span>':''}`;
+      ${it.shiny?'<span class="sh">✨</span>':''}${gnMark(it.gender)}${on?'<span class="ok">✓</span>':''}`;
     d.title=(it.zh||'')+(it.tag?'('+tagLabel(it.tag)+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' '+tr('f_shiny'):'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
     frag.appendChild(d); made.push(d);
@@ -2997,7 +3039,7 @@ function drawLists(){
       // 性別鈕:大多數物種公母同圖,交易時卻常有人指定 → 加完之後在卡片上點一下就能標
       const gn=document.createElement('button'); gn.title=tr('gender_tip');
       const syncGn=()=>{ gn.className='gn'+(c.gender==='male'?' male':c.gender==='female'?'':' off');
-        gn.textContent=c.gender==='female'?'♀':c.gender==='male'?'♂':'⚥'; };
+        gn.innerHTML=gnSvg(c.gender); };
       syncGn();
       gn.onpointerdown=e=>e.stopPropagation();   // 不觸發卡片拖曳
       gn.onclick=e=>{ e.stopPropagation(); cycleGender(k,c,d) && syncGn(); };
