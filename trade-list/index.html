@@ -282,15 +282,17 @@
   .li .bd{position:absolute;right:5%;top:5%;width:28%;height:28%;z-index:3}
   /* 性別鈕:符號本身就是按鈕 —— 結果顯示在哪裡,就在哪裡操作。
      未設定時淡淡的,設定後才亮起來(手機沒有 hover,所以不能只靠 hover 才看得到) */
-  .li .gn{position:absolute;left:2px;bottom:2px;z-index:4;width:20px;height:20px;padding:3px;
-          border-radius:50%;background:#000b;border:1px solid #fff3;color:#ff9ec7;cursor:pointer;
+  .li .gn{position:absolute;left:2px;bottom:2px;z-index:4;width:23px;height:23px;padding:3px;
+          border-radius:50%;background:#000d;border:1px solid #ffffff40;color:#ff9ec7;cursor:pointer;
           display:flex;align-items:center;justify-content:center}
   .li .gn>svg{width:100%;height:100%;display:block}
   .li .gn.male{color:#8fc7ff}   /* 要寫在這裡:與 .li .gn 同權重,靠後面才蓋得過 */
-  .li .gn.off{color:#cfd6ee;opacity:.58}   /* ⚥ 筆畫多,太淡在小尺寸會糊成一團 */
-  .li .gn:hover{opacity:1;border-color:#fff8}
-  /* 觸控裝置把點擊區放大:20px 對手指來說太小,而卡片本身有空間 */
-  @media(pointer:coarse){ .li .gn{width:25px;height:25px;padding:4px} }
+  /* 「未設定」用顏色區分(灰 vs 粉/藍),不用淡化 —— 這個圖示本來筆畫就細,
+     再降透明度就得盯著看才找得到。灰色已經足夠表達「還沒指定」。 */
+  .li .gn.off{color:#e3e8f7}
+  .li .gn:hover{border-color:#fffc;background:#000}
+  /* 觸控裝置再放大一點:手指比游標粗,而卡片本身有空間 */
+  @media(pointer:coarse){ .li .gn{width:27px;height:27px;padding:4px} }
   .li .card .del{position:absolute;right:2px;bottom:2px;z-index:4;width:18px;height:18px;padding:0;border-radius:50%;background:#000b;border:1px solid #fff5;color:#fff;cursor:pointer;font-size:11px;line-height:1}
   .li .note{display:block;width:100%;margin-top:3px;box-sizing:border-box;font-size:10px;padding:2px 4px;line-height:1.25;
             border:1px solid var(--line);border-radius:6px;background:var(--cellbg);color:var(--fg);text-align:center;cursor:text;
@@ -1582,7 +1584,8 @@ const GN_PATH={
 };
 function gnSvg(g,cls){
   const k=g==='female'?'female':g==='male'?'male':'none';
-  return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"`
+  // 2.6:在 16px 上換算成 1.7px 的筆畫。再細就得盯著看才分得出圓和箭頭
+  return `<svg class="${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"`
     +` stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GN_PATH[k]}</svg>`;
 }
 // 網格 / 自由搭配的小角標:沒指定性別就不顯示(那裡是「這張圖是什麼」,不是可切換的狀態)
