@@ -287,7 +287,7 @@
           display:flex;align-items:center;justify-content:center}
   .li .gn>svg{width:100%;height:100%;display:block}
   .li .gn.male{color:#8fc7ff}   /* 要寫在這裡:與 .li .gn 同權重,靠後面才蓋得過 */
-  .li .gn.off{color:#cfd6ee;opacity:.45}
+  .li .gn.off{color:#cfd6ee;opacity:.58}   /* ⚥ 筆畫多,太淡在小尺寸會糊成一團 */
   .li .gn:hover{opacity:1;border-color:#fff8}
   /* 觸控裝置把點擊區放大:20px 對手指來說太小,而卡片本身有空間 */
   @media(pointer:coarse){ .li .gn{width:25px;height:25px;padding:4px} }
@@ -1573,7 +1573,10 @@ function loadExport(u){ const e=expOf(u); if(e===u) return loadImg(u); return lo
    (原本 .cell .gn 有一條「手機把 ♀ 往上移」的 media query 就是在補這個,已經拿掉)
    改成路徑之後位置只由座標決定,任何裝置、任何字型設定都一樣。 */
 const GN_PATH={
-  none:  '<circle cx="12" cy="12" r="4.6"/>',
+  /* 未指定 = ⚥(雌雄同體符號):圓 + 右上箭頭 + 下方十字,一眼看出「公母都可以」。
+     筆畫比另外兩個多,在 20px 的鈕裡容易糊 → 撐滿整個 24 格,能大就大 */
+  none:  '<circle cx="10.8" cy="12.8" r="4.3"/>'
+        +'<path d="M14 9.6 20 3.6M15 3.6h5v5M10.8 17.1v5.3M8 20h5.6"/>',
   female:'<circle cx="12" cy="9" r="4.2"/><path d="M12 13.2V21M9 18h6"/>',
   male:  '<circle cx="10" cy="14" r="4.2"/><path d="M13 11l6.5-6.5M14.5 4.5H20V10"/>'
 };
