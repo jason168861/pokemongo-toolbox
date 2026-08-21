@@ -1435,7 +1435,7 @@ const PAD=40,S=164,GAP=16,NOTELH=30;   // NOTELH=備註每行高度
    兩層加起來 = 任何情況下都不會擋到別的東西。 */
 // 印短網址:看圖的人是用手打的。/t 是 repo 根目錄的一頁轉址(見 ../t/index.html),
 // 會帶著 ?s= / ?lang= 轉到 /trade-list/ —— 動這個字串時記得那一頁也要在。
-const BRAND_URL='pogokit.com/t', BRAND_H=112;
+const BRAND_URL='pogokit.com/t', BRAND_H=104;
 let _measCtx=null;   // 離屏量測文字寬度(給標題避讓/QR 卡片大小用)
 function measureText(text,font){ if(!_measCtx)_measCtx=document.createElement('canvas').getContext('2d'); _measCtx.font=font; return _measCtx.measureText(text).width; }
 // 依內容自動縮字:文字太寬(超出圖寬)時縮小,不會超出邊界
@@ -1473,7 +1473,8 @@ function computeLayout(){
               {key:'have',items:LIST.have,col:EX.sec2,def:'🟡 '+tr('have')}].filter(s=>s.items.length);
   let top=140+(fly?46:0);
   let y=top; const S2=[];
-  for(const s of secs){
+  for(let i=0;i<secs.length;i++){
+    const s=secs[i];
     const nrows=rowsOf(s.items.length), rows=[]; let yoff=0;
     for(let r=0;r<nrows;r++){   // 每排的備註高度只看「這一排」有沒有備註 → 沒備註的排不會被撐開
       let lines=0;
@@ -1482,13 +1483,15 @@ function computeLayout(){
       rows.push({y:yoff, noteH:nh}); yoff += S+nh+GAP;
     }
     const ph=yoff+GAP;
-    S2.push({...s,labelY:y,panelY:y+80,ph,rows}); y=y+80+ph+30;   // 80:給放大的區塊標題留空間
+    // 80:給放大的區塊標題留空間。30 是「區塊之間」的間距,最後一塊不加 ——
+    // 它下面接的是頁尾,那邊自己有留白,兩個疊起來就是一大片空白
+    S2.push({...s,labelY:y,panelY:y+80,ph,rows}); y=y+80+ph+(i<secs.length-1?30:0);
   }
-  let H=Math.max(y+50,240);
+  let H=Math.max(y,190);
   const hasTrainer=!!(LIST.trainer&&LIST.trainer.trim());
-  const trainerY=H+6;                       // 訓練家代碼:放在內容的最底部
-  if(hasTrainer) H=trainerY+64;
-  const brandY=H; H+=BRAND_H;               // 品牌頁尾:誰都排不進來的保留區(見 BRAND_H 的說明)
+  const trainerY=H+40;                      // 訓練家代碼:放在內容的最底部
+  if(hasTrainer) H=trainerY+58;
+  const brandY=H+28; H=brandY+BRAND_H;      // 品牌頁尾:誰都排不進來的保留區(見 BRAND_H 的說明)
   return {fly,secs:S2,H,top,cols:EC,trainerY,hasTrainer,brandY};
 }
 function defaultTexts(lay){
@@ -1934,7 +1937,7 @@ function drawTracked(x,chars,cx,cy,tr){
    構圖全部由版面座標決定(分塊輸出時每塊各畫一次也會完全一致),
    顏色一律取自 skin 的 foot / title,所以 38 種底圖都合得起來。 */
 function drawBrand(x,T,W,y0){
-  const cy=y0+46, maxW=W-2*PAD;   // 46:讓「網址+副標」這一組在 BRAND_H 裡上下留白接近相等
+  const cy=y0+40, maxW=W-2*PAD;   // 40:讓「網址+副標」這一組在 BRAND_H 裡上下留白接近相等
   /* 墨色不能直接拿 skin 的 foot:foot 是配「整張圖」的,而頁尾這一條的背景是
      漸層的最後一個色停(再被暗角壓暗一點)。vapor 這種「深色 foot 配淺色底部」的
      組合會糊成一片 → 先算頁尾實際亮度,foot 對比不夠就換成近黑/近白。 */
