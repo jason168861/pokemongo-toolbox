@@ -1435,7 +1435,7 @@ const PAD=40,S=164,GAP=16,NOTELH=30;   // NOTELH=備註每行高度
    兩層加起來 = 任何情況下都不會擋到別的東西。 */
 // 印短網址:看圖的人是用手打的。/t 是 repo 根目錄的一頁轉址(見 ../t/index.html),
 // 會帶著 ?s= / ?lang= 轉到 /trade-list/ —— 動這個字串時記得那一頁也要在。
-const BRAND_URL='pogokit.com/t', BRAND_H=62;
+const BRAND_URL='pogokit.com/t', BRAND_H=92;
 let _measCtx=null;   // 離屏量測文字寬度(給標題避讓/QR 卡片大小用)
 function measureText(text,font){ if(!_measCtx)_measCtx=document.createElement('canvas').getContext('2d'); _measCtx.font=font; return _measCtx.measureText(text).width; }
 // 依內容自動縮字:文字太寬(超出圖寬)時縮小,不會超出邊界
@@ -1933,19 +1933,17 @@ function drawTracked(x,chars,cx,cy,tr){
   let px=cx-trackedW(x,chars,tr)/2;
   for(const c of chars){ const w=x.measureText(c).width; x.fillText(c,px+w/2,cy); px+=w+tr; }
 }
-/* 品牌頁尾:兩側細線 +「● pogokit.com/t │ 副標」,全部排在同一行。
-   排成一行不只是為了好看:上下堆疊的版本光文字就佔 83px 高,而這一整條是
-   加在圖的總高上的 —— 清單只有幾隻時,那塊空白比卡片還顯眼。
+/* 品牌頁尾:兩側細線 +「● pogokit.com/t」,下面一行副標。
    構圖全部由版面座標決定(分塊輸出時每塊各畫一次也會完全一致),
    顏色一律取自 skin 的 foot / title,所以 38 種底圖都合得起來。 */
 function drawBrand(x,T,W,y0){
-  const cy=y0+BRAND_H/2, maxW=W-2*PAD;
+  const cy=y0+34, maxW=W-2*PAD;   // 34:讓「網址+副標」這一組在 BRAND_H 裡上下留白接近相等
   /* 墨色不能直接拿 skin 的 foot:foot 是配「整張圖」的,而頁尾這一條的背景是
      漸層的最後一個色停(再被暗角壓暗一點)。vapor 這種「深色 foot 配淺色底部」的
      組合會糊成一片 → 先算頁尾實際亮度,foot 對比不夠就換成近黑/近白。 */
   let bl=lum((T.grad&&T.grad[T.grad.length-1])||'#101322');
   if(T.vig){ const eh=Math.min((y0+BRAND_H)*0.25,W*0.45);
-    bl*=1-T.vig*0.8*Math.max(0,1-BRAND_H/2/Math.max(eh,1)); }
+    bl*=1-T.vig*0.8*Math.max(0,1-(BRAND_H-34)/Math.max(eh,1)); }
   const safe=bl>150?'#12151f':'#f2f5ff';
   const foot  = Math.abs(lum(T.foot||safe)-bl)>=85 ? (T.foot||safe) : safe;
   const accent= Math.abs(lum(T.title||foot)-bl)>=70 ? (T.title||foot) : foot;
@@ -1957,16 +1955,19 @@ function drawBrand(x,T,W,y0){
   /* 先用基準字級量一次,再用「一個縮放係數」把整組等比例縮到塞得下。
      逐項各縮各的會讓圓點、間距、副標的比例跑掉;窄圖(每排 3 隻)與德文副標
      都會走到這條路。 */
-  const F=30, UTRK=1.6, TTRK=0.6;
+  const F=30, UTRK=1.6, TTRK=0.8;
   x.font=`900 ${F}px ${DEFONT}`;                  const uw0=trackedW(x,url,UTRK);
   x.font=`700 ${Math.round(F*0.62)}px ${DEFONT}`; const tw0=tag.length?trackedW(x,tag,TTRK):0;
-  const dot0=F*0.2, gap0=F*0.46, sep0=F*0.66;     // 圓點半徑 / 圓點到網址 / 分隔線左右
-  const total0=dot0*2+gap0+uw0+(tw0?sep0*2+tw0:0);
-  const k=Math.min(1,maxW*0.94/total0);
-  const fs=F*k, ts=Math.round(F*0.62*k), dotR=dot0*k, dotGap=gap0*k, sep=sep0*k, total=total0*k;
+  const dot0=F*0.2, gap0=F*0.46;                  // 圓點半徑 / 圓點到網址
+  const lock0=dot0*2+gap0+uw0;                    // 上面那行(圓點 + 網址)
+  // 兩行取比較寬的那行來算縮放:德文副標比網址還長,只看網址會爆出去
+  const k=Math.min(1,maxW*0.94/Math.max(lock0,tw0));
+  const fs=F*k, ts=Math.round(F*0.62*k), dotR=dot0*k, dotGap=gap0*k, lockW=lock0*k;
+  const left=W/2-lockW/2;
+  const wordCx=left+dotR*2+dotGap+(uw0*k)/2;   // 網址本身的中心:圓點只掛在左邊,副標要對齊「字」才不會看起來偏掉
 
   // 兩側細線:往外淡出,靠中間才有顏色 —— 不會在花俏底圖上變成一條突兀的硬線
-  const gap=total/2+26*k, lw=Math.max(1.4,W*0.0016);
+  const gap=lockW/2+26*k, lw=Math.max(1.4,W*0.0016);
   for(const dir of [-1,1]){
     const xi=W/2+dir*gap, xo=W/2+dir*(maxW/2);
     if(Math.abs(xo-xi)<12) continue;                // 圖太窄就不畫線,只留中間的字
@@ -1978,23 +1979,15 @@ function drawBrand(x,T,W,y0){
   // 淺色字配深色陰影、深色字配白色暈開 —— 兩種底圖都讀得清楚
   x.shadowColor=lightOnDark?'rgba(0,0,0,.5)':'rgba(255,255,255,.6)';
   x.shadowBlur=Math.max(3,fs*0.18);
-  let px=W/2-total/2;
-  x.beginPath(); x.arc(px+dotR,cy,dotR,0,7); x.fillStyle=accent; x.fill();
-  px+=dotR*2+dotGap;
+  x.beginPath(); x.arc(left+dotR,cy,dotR,0,7); x.fillStyle=accent; x.fill();
   x.font=`900 ${fs}px ${DEFONT}`; x.fillStyle=foot;
-  drawTracked(x,url,px+(uw0*k)/2,cy,UTRK*k);
-  px+=uw0*k;
+  drawTracked(x,url,wordCx,cy,UTRK*k);
 
-  if(tw0){
-    // 分隔線:細直線比「·」穩,不必賭字體有沒有那個字符,也不會因語言而位移
-    px+=sep;
-    x.fillStyle=rgba(foot,.42);
-    x.fillRect(px-lw/2,cy-fs*0.36,Math.max(1.2,lw),fs*0.72);
-    px+=sep;
+  if(tw0){                                          // 副標:小一號、淡一點,做出主副層次
     x.font=`700 ${ts}px ${DEFONT}`;
-    x.shadowBlur=Math.max(3,ts*0.3);              // 副標細又淡,在花紋底圖上最先被吃掉
+    x.shadowBlur=Math.max(3,ts*0.3);                // 副標細又淡,在花紋底圖上最先被吃掉
     x.fillStyle=rgba(foot,.82);
-    drawTracked(x,tag,px+(tw0*k)/2,cy,TTRK*k);
+    drawTracked(x,tag,wordCx,cy+fs*0.55+ts*0.9,TTRK*k);
   }
   x.restore();
 }
