@@ -3,9 +3,14 @@
 # 工作流程名稱
 name: Build and Deploy Site
 
+# 同時只跑一個部署。cancel-in-progress 一定要是 false ——
+# 這是 GitHub Pages 官方範本的建議:排隊中的 run 可以被略過(只留最新的),
+# 但「進行中的正式部署」不能砍。連續推送時砍掉跑到一半的部署,
+# 有機會讓網站停在不完整的狀態(這個 repo 已經出現過三次卡在 Deploy to GitHub Pages)。
+# 整包網站有 200MB,每次都要重傳,更沒有理由中途打斷它。
 concurrency:
   group: pages-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 # 觸發條件
 on:
