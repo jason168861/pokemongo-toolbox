@@ -439,6 +439,9 @@ def build(name):
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
 <script src="../../js/zh-search.js"></script>
 <script src="../../js/analytics.js"></script>
+<!-- 全站瀏覽計數：config.js 是 CI 產生的，沒有的話計數器會自己停用（不會報錯） -->
+<script src="../../config.js"></script>
+<script src="../../js/pageview-counter.js" defer></script>
 <link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
