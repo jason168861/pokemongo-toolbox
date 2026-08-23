@@ -71,11 +71,15 @@ def main():
                 if p["gigantamax"].get(k): sprite_urls.add(p["gigantamax"][k])
 
     # 背卡條目裡對不到本機 sprite 的造型,用 wiki 原圖(一樣存到本機)
+    # ⚠ bg_overrides.json 可以把 sprite 直接指到本機檔(assets/img/pm133.…),那種不是網址:
+    #   下載會噴 "unknown url type",而且下面的 local 化還會再加一次 wiki_ 前綴,
+    #   變成 assets/img/wiki_pm133.… 這種不存在的路徑 → 前端直接破圖(實測 22 筆)。
+    is_local = lambda u: isinstance(u, str) and u.startswith("assets/")
     wiki_urls = set()
     for b in bg:
         for m in b.get("pokemon", []):
             for k in ("sprite", "sprite_shiny"):
-                if m.get(k): wiki_urls.add(m[k])
+                if m.get(k) and not is_local(m[k]): wiki_urls.add(m[k])
 
     jobs = []  # (url, path, no_referer, force)
     for u in sprite_urls:
@@ -107,7 +111,9 @@ def main():
         if b.get("image_url"): b["image_url"] = "assets/bg/" + bg_local(b["image_url"])
         for m in b.get("pokemon", []):
             for k in ("sprite", "sprite_shiny"):
-                if m.get(k): m[k] = "assets/img/" + wiki_sprite_local(m[k])
+                # 已經是本機路徑的(bg_overrides 指定的)不能再包一層 wiki_,見上方 is_local 的說明
+                if m.get(k) and not str(m[k]).startswith("assets/"):
+                    m[k] = "assets/img/" + wiki_sprite_local(m[k])
 
     json.dump(pk, open(os.path.join(HERE, "data", "pokemon.local.json"), "w", encoding="utf-8"), ensure_ascii=False)
     json.dump(bg, open(os.path.join(HERE, "data", "backgrounds.local.json"), "w", encoding="utf-8"), ensure_ascii=False)
@@ -154,7 +160,9 @@ def localize_raw_bg():
         if b.get("image_url"): b["image_url"] = "assets/bg/" + bg_local(b["image_url"])
         for m in b.get("pokemon", []):
             for k in ("sprite", "sprite_shiny"):
-                if m.get(k): m[k] = "assets/img/" + wiki_sprite_local(m[k])
+                # 已經是本機路徑的(bg_overrides 指定的)不能再包一層 wiki_,見上方 is_local 的說明
+                if m.get(k) and not str(m[k]).startswith("assets/"):
+                    m[k] = "assets/img/" + wiki_sprite_local(m[k])
     json.dump(bg, open(os.path.join(HERE, "data", "backgrounds.raw.local.json"), "w", encoding="utf-8"),
               ensure_ascii=False)
     print("已寫出 data/backgrounds.raw.local.json(bg-editor 用的未修正版)", flush=True)
@@ -172,8 +180,11 @@ def find_dupe_bgs():
         from PIL import Image
     except ImportError:
         return
-    # 要用 .local 那份:它的 image_url 才是本機路徑(backgrounds.json 存的是遠端網址)
-    p_local = os.path.join(HERE, "data", "backgrounds.local.json")
+    # 用 raw 那份(套用人工修正之前):隱藏掉重複卡之後,正式檔裡就沒有重複了,
+    # 拿正式檔算會得到 0 組 —— 但編輯器仍需要知道哪些是一組,將來要還原才有提示。
+    # 要 .local 版本,它的 image_url 才是本機路徑(非 local 的存的是遠端網址)。
+    p_local = os.path.join(HERE, "data", "backgrounds.raw.local.json")
+    if not os.path.exists(p_local): p_local = os.path.join(HERE, "data", "backgrounds.local.json")
     if not os.path.exists(p_local): return
     bg = json.load(open(p_local, encoding="utf-8"))
 
