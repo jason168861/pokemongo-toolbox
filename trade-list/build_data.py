@@ -56,6 +56,15 @@ gm_tradable = {}    # dex → {form 代碼(基本型為 None): True/False/None};
 # 近年的造型(WCS_2024、GOTOUR_2026_A、ROCK_STAR…)在檔名裡是寫成 form 而非 costume,
 # 只有 GAME_MASTER 的 formSettings.isCostume 分得出來。抓下來,parse() 時把它們歸回 costume。
 gm_costume = {}; gm_real = {}
+# (dex, form) → 直接進化成的 {(dex, form)}。要帶 form 才對得起來:
+# 阿羅拉小拉達進化成阿羅拉拉達,不是普通拉達。見下方 _descendants / 背卡補進化型。
+evo_next = {}
+
+def _formcode(species, form):
+    """GM 的 form 是「物種_型態」(RATTATA_ALOLA);切掉物種前綴,基本型與 _NORMAL 一律當成 None,
+    才對得上背卡資料裡 form 留空的寫法。"""
+    if form.startswith(species + "_"): form = form[len(species) + 1:]
+    return None if form in ("", "NORMAL") else form
 
 def _trad(ps):
     """單一型態的 isTradable。GM 對某些型態根本沒寫這個欄位,不能一律當成 False ——
@@ -75,6 +84,15 @@ for e in gm:
         if ps.get("pokemonClass") in ("POKEMON_CLASS_LEGENDARY", "POKEMON_CLASS_MYTHIC", "POKEMON_CLASS_ULTRA_BEAST"): lego_dex.add(dex)
         sp, f = ps.get("pokemonId", ""), ps.get("form") or ""
         gm_tradable.setdefault(dex, {})[f[len(sp) + 1:] if f.startswith(sp + "_") else (f or None)] = _trad(ps)
+        # 進化分支。超級進化走的是 temporaryEvolution 欄位,不會有 "evolution",所以自然被排除;
+        # 鐵面忍者(不是 evolutionBranch,是進化時額外生成的)也因此不會被算進來,正好。
+        _src = (dex, _formcode(sp, f))
+        for _b in (ps.get("evolutionBranch") or []):
+            _t = _b.get("evolution") or ""
+            _td = name2dex.get(_t)
+            if not _td: continue
+            _tgt = (_td, _formcode(_t, _b.get("form") or ""))
+            if _tgt != _src: evo_next.setdefault(_src, set()).add(_tgt)
     fm = re.fullmatch(r"FORMS_V(\d+)_POKEMON_(.+)", tid)
     fs = e.get("data", {}).get("formSettings")
     if fm and fs:
@@ -552,6 +570,64 @@ except Exception as ex:
 
 for r in rows: r["pokemon"] = tidy_mons(r["pokemon"], final=True)   # 收尾:拿掉中間欄位 wiki/ckey
 
+# ---- 背卡的進化型補完 ----
+# 遊戲裡「異色」與「背卡」都會跟著進化保留:抓到一隻有背卡的異色初階,進化之後就是一隻
+# 有背卡的異色進化型。但兩個 wiki 都只記錄「活動當下抓得到什麼」,於是有兩種缺漏:
+#   (1) 進化型有列出來,卻沒跟著標 shiny=yes  → 補旗標
+#   (2) 進化型整隻沒被列出來(皮卡丘在卡上、雷丘不在) → 補條目
+# 兩種都會讓使用者在挑選畫面找不到,以為那個組合換不到。
+#
+# 判斷來源是 GM 的 evolutionBranch(型態感知),幾個必要的界線:
+#   * 祖先有「造型」的一律不傳。NOEVOLVE 造型根本不能進化;而且進化後的造型 sprite 多半
+#     也不存在。⚠ 光看 costume 欄位不夠 —— 造型代碼對不到本機 sprite 時,costume 會留空、
+#     改用 wiki 原圖(sprite 欄位),那些其實也是造型(GO0025Leaf = 戴小茂帽子的皮卡丘)。
+#     兩個欄位都要擋,只擋 costume 會多生出 160 筆錯的。
+#   * 新條目只帶 shiny,不帶 dynamax / gmax / shadow —— 那三個是「活動當下開放什麼」,
+#     不是進化能繼承的東西。
+#   * 目標型態必須真的有對應的本機 sprite,否則前端會破圖。
+#   * 要跑在「拿掉不可交換變體」之前:那一步會把 pokemon[].variants 砍掉,
+#     砍完再問「這隻有沒有這個型態 / 有沒有異色」會得到錯的答案。
+def _descendants(dex, form, seen=None):
+    seen = set() if seen is None else seen
+    out = set()
+    for t in evo_next.get((dex, form), ()):
+        if t in seen: continue
+        seen.add(t); out.add(t); out |= _descendants(t[0], t[1], seen)
+    return out
+
+def _plain_variant(dex, form):
+    """該型態有沒有「非造型、非公母專屬」的本機 sprite;回傳 (有沒有, 有沒有異色)。"""
+    vs = [v for v in pokemon.get(dex, {}).get("variants", [])
+          if (v["form"] or None) == form and not v["costume"] and not v["gender"]]
+    return bool(vs), any(v["shiny"] for v in vs)
+
+evo_shiny_n = evo_added_n = 0
+for r in rows:
+    listed = {(m["dex"], m.get("form")) for m in r["pokemon"]}
+    reach = {}                                   # (dex, form) → 祖先裡是否有異色
+    for m in r["pokemon"]:
+        if m.get("costume") or m.get("sprite"): continue      # 造型不外傳(見上方說明)
+        for t in _descendants(m["dex"], m.get("form")):
+            reach[t] = reach.get(t, False) or bool(m["shiny"])
+    # (1) 已經在卡上的 → 只補異色旗標
+    for m in r["pokemon"]:
+        k = (m["dex"], m.get("form"))
+        if not m["shiny"] and reach.get(k) and _plain_variant(*k)[1]:
+            m["shiny"] = True; evo_shiny_n += 1
+    # (2) 不在卡上的 → 補條目
+    for (dex, form), sh in sorted(reach.items(), key=lambda kv: (kv[0][0], str(kv[0][1]))):
+        if (dex, form) in listed: continue
+        ok, has_shiny = _plain_variant(dex, form)
+        if not ok: continue
+        e = {"dex": dex, "shiny": sh and has_shiny, "dynamax": False, "shadow": False, "gmax": False}
+        if form: e["form"] = form
+        r["pokemon"].append(e); evo_added_n += 1
+    # 只重新排序,不能再呼叫 tidy_mons —— 它會再去重一次,而此時 ckey 已經被 final=True 拿掉了,
+    # 「只差在 ckey 的造型條目」會被當成重複而併掉(實測會少 47 筆造型)。
+    # 新條目是照 listed 檢查過才 append 的,本來就不會撞。
+    r["pokemon"].sort(key=lambda x: (x["dex"], str(x.get("form")), str(x.get("costume")),
+                                     x["gmax"], x["dynamax"], x["shadow"]))
+
 # ---- 拿掉不可交換的變體(型態解析都做完了,現在才刪才不會影響上面的 form 比對)----
 untradable_n = 0
 for _p in pokemon.values():
@@ -564,6 +640,90 @@ bg_untradable = 0
 for r in rows:
     keep = [m for m in r["pokemon"] if tradable(m["dex"], m.get("form"))]
     bg_untradable += len(r["pokemon"]) - len(keep); r["pokemon"] = keep
+
+# 套用人工修正「之前」的樣子,另存一份給 bg-editor 用。
+# ⚠ 少了這一步,編輯器會拿套用後的結果再疊一次 ops —— 條目的 key 早就變了
+#   (133||||||GO0133Explorer.png → 133||MAY_2023||||),於是既有修正在畫面上全部對不到、
+#   看起來像沒生效。編輯器的模型必須是「原始資料 + ops」,那就得看得到原始資料。
+# 空卡先濾掉,與正式輸出的卡片集合一致(不然編輯器會列出永遠不會存在的卡)
+json.dump([r for r in rows if r["pokemon"]],
+          open(os.path.join(HERE, "data", "backgrounds.raw.json"), "w", encoding="utf-8"), ensure_ascii=False)
+
+# ---- 人工修正:套用 data/bg_overrides.json ----
+# 這支程式每次都把 backgrounds.json 整份重寫,所以直接改產出檔會被下一次 update.py 蓋掉。
+# 人工修正一律寫在獨立的疊加檔裡(跟 aliases.json 一樣不會被重建碰到),在最後套上去。
+# 放在最後 = 人工的判斷最大:連「不可交換」的過濾都已經跑完了,你說要留就留。
+# 用 bg-editor.html 編輯這個檔。
+def _spr_key(s):
+    """sprite 欄位正規化成「同一個名字」。
+    ⚠ 這裡的兩端看到的值不一樣:build_data 手上的 rows 存的是遠端網址
+    (…/GO0133Explorer.png),但 bg-editor 讀的是 backgrounds.local.json,
+    fetch_assets 已經把它換成本機檔名(assets/img/wiki_GO0133Explorer.png)。
+    不統一的話 key 對不起來,人工修正會全部靜靜失效(實測 178 筆有 137 筆對不到)。
+    → 去路徑、去 wiki_ 前綴,再套 fetch_assets.wiki_sprite_local 的同一套字元替換。"""
+    if not s: return ""
+    # Fandom 的網址是 .../images/3/37/Eevee_explorer.png/revision/latest?cb=… ——
+    # 直接取最後一段會拿到「latest?cb=…」,而且 cb 每次都不一樣。
+    # 這段抽檔名的規則與 fetch_assets.wiki_sprite_local() 相同,兩邊才會得到同一個名字。
+    m = re.search(r"/images/[0-9a-f/]+/([^/]+\.(?:png|jpg|jpeg|webp))/revision", s, re.I)
+    n = m.group(1) if m else s.split("?")[0].rsplit("/", 1)[-1]
+    if n.startswith("wiki_"): n = n[5:]
+    return re.sub(r"[^A-Za-z0-9._-]", "_", n)
+
+def bg_key(m):
+    """條目在一張卡裡的識別碼。要能跨重建保持一致 → 只用會被寫進 JSON 的欄位。"""
+    return "|".join([str(m["dex"]), m.get("form") or "", m.get("costume") or "",
+                     *("1" if m.get(k) else "" for k in ("gmax", "dynamax", "shadow")),
+                     _spr_key(m.get("sprite"))])
+
+def norm_op_key(k):
+    """舊的 op 可能存了本機檔名版本的 key,比對前一起正規化(不必改既有的 overrides 檔)。"""
+    p = str(k or "").split("|")
+    if len(p) == 7: p[6] = _spr_key(p[6])
+    return "|".join(p)
+
+ov_removed = ov_set = ov_added = ov_miss = ov_card = 0
+ov_missed = []      # 對不到目標的 op,健檢時列出來 —— 不然只有一個數字,不知道要去改哪筆
+_ovp = os.path.join(HERE, "data", "bg_overrides.json")
+if os.path.exists(_ovp):
+    _ov = json.load(open(_ovp, encoding="utf-8"))
+    by_name = {r["image_name"]: r for r in rows}
+    _drop = set()
+    for op in _ov.get("ops", []):
+        r = by_name.get(op.get("card"))
+        if not r:                                 # 卡不見了(來源改名/移除)→ 記一筆,不要靜靜吞掉
+            ov_miss += 1; ov_missed.append((op.get("card"), "整張卡不在了", op.get("key") or "")); continue
+        # ---- 卡片層級:同一張卡被 Bulbapedia 與 Fandom 各收一次 ----
+        # 兩份的寶可夢清單常互有對方沒有的(春櫻:3 筆 vs 2 筆,只重疊 1),
+        # 所以預設是「合併」不是「刪掉」—— 先把條目搬過去,再把這張整個丟掉。
+        if op.get("op") in ("mergeCard", "hideCard"):
+            if op["op"] == "mergeCard":
+                dst = by_name.get(op.get("into"))
+                if not dst: ov_miss += 1; continue
+                dst["pokemon"] = tidy_mons(dst["pokemon"] + r["pokemon"], final=True)
+            _drop.add(op["card"]); ov_card += 1
+            continue
+        if op.get("op") == "add":
+            mon = {"dex": 0, "shiny": False, "dynamax": False, "shadow": False, "gmax": False}
+            mon.update(op.get("mon") or {})
+            r["pokemon"].append(mon); ov_added += 1
+            continue
+        want = norm_op_key(op.get("key"))
+        hit = [m for m in r["pokemon"] if bg_key(m) == want]
+        if not hit:                                # 條目不見了(來源已修好?)→ 同上
+            ov_miss += 1; ov_missed.append((op.get("card"), "找不到這個條目", want)); continue
+        for m in hit:
+            if op.get("op") == "remove":
+                r["pokemon"].remove(m); ov_removed += 1
+            else:
+                for k, v in (op.get("fields") or {}).items():
+                    if v is None: m.pop(k, None)
+                    else: m[k] = v
+                ov_set += 1
+    rows = [r for r in rows if r["image_name"] not in _drop]
+    for r in rows:
+        r["pokemon"].sort(key=lambda x: (x["dex"], str(x.get("form")), str(x.get("costume")),
+                                         x["gmax"], x["dynamax"], x["shadow"]))
 
 json.dump({str(k): v for k, v in sorted(pokemon.items())}, open(os.path.join(HERE, "data", "pokemon.json"), "w", encoding="utf-8"), ensure_ascii=False)
 rows = [r for r in rows if r["pokemon"]]   # 只留還有可交換寶可夢的卡(Mega 專屬卡會在此自然清空)
@@ -581,6 +741,11 @@ print(f"[健檢] Bulbapedia MSP 標籤 {STAT['msp_total']} / 成功解析 {STAT[
 print(f"[健檢] 後綴解析:型態 {STAT['form']} / 對到本機造型 {STAT['costume']} / 走 wiki 原圖 {STAT['wiki']}")
 print(f"[健檢] 產出帶造型的背卡條目 {_cos} 筆(本機 sprite) + {_spr} 筆(wiki 原圖)")
 print(f"[健檢] 不可交換而排除:sprite {untradable_n} 個變體 / 背卡 {bg_untradable} 筆(依 GM isTradable)")
+print(f"[健檢] 背卡進化型補完:補異色旗標 {evo_shiny_n} 筆 / 補整筆條目 {evo_added_n} 筆(依 GM evolutionBranch)")
+print(f"[健檢] 人工修正(bg_overrides.json):刪 {ov_removed} / 改 {ov_set} / 加 {ov_added} / 整張卡 {ov_card}"
+      + (f"  ⚠ 對不到目標 {ov_miss} 筆(來源可能已變動,請用 bg-editor.html 檢查)" if ov_miss else ""))
+for _c, _why, _k in ov_missed[:10]:
+    print(f"          · {_c[:44]:46s} {_why}  {_k}")
 if STAT["unmapped"]:
     top = sorted(STAT["unmapped"].items(), key=lambda kv: -kv[1])[:15]
     print(f"[健檢] 對不到本機 sprite 的後綴 {len(STAT['unmapped'])} 種(已用 wiki 原圖,非錯誤):")

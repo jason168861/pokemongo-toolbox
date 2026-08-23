@@ -111,6 +111,7 @@ def main():
 
     json.dump(pk, open(os.path.join(HERE, "data", "pokemon.local.json"), "w", encoding="utf-8"), ensure_ascii=False)
     json.dump(bg, open(os.path.join(HERE, "data", "backgrounds.local.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    localize_raw_bg()
     print(f"\n完成:ok {ok} / 已存在跳過 {skip} / 失敗 {err}", flush=True)
     print("已寫出 data/pokemon.local.json 與 data/backgrounds.local.json", flush=True)
     make_thumbs()
@@ -139,6 +140,73 @@ def make_thumbs():
     gen("assets/img", "assets/thumb", 128)     # 網格/清單用小縮圖
     gen("assets/bg", "assets/bgthumb", 220)    # 網格/清單用背卡縮圖
     gen("assets/bg", "assets/bgexp", 384)      # 匯出 PNG 用中尺寸背卡(原圖動輒 500KB+,卡片只畫 264px)
+    find_dupe_bgs()
+
+
+def localize_raw_bg():
+    """把 build_data 存的「套用人工修正之前」那份也換成本機路徑,給 bg-editor 讀。
+    編輯器的模型是「原始資料 + ops」,只有拿到原始資料,既有的修正才對得到目標、
+    畫面上才看得到「已改」。用不到的圖不必下載 —— 這裡出現的圖與正式那份完全一樣。"""
+    src = os.path.join(HERE, "data", "backgrounds.raw.json")
+    if not os.path.exists(src): return
+    bg = json.load(open(src, encoding="utf-8"))
+    for b in bg:
+        if b.get("image_url"): b["image_url"] = "assets/bg/" + bg_local(b["image_url"])
+        for m in b.get("pokemon", []):
+            for k in ("sprite", "sprite_shiny"):
+                if m.get(k): m[k] = "assets/img/" + wiki_sprite_local(m[k])
+    json.dump(bg, open(os.path.join(HERE, "data", "backgrounds.raw.local.json"), "w", encoding="utf-8"),
+              ensure_ascii=False)
+    print("已寫出 data/backgrounds.raw.local.json(bg-editor 用的未修正版)", flush=True)
+
+
+def find_dupe_bgs():
+    """找出「同一張卡被兩個來源各收一次」的配對,寫成 data/bg_dupes.json 給 bg-editor 用。
+
+    不能用卡名判斷 —— 大阪有 6 張不同的卡、巴黎有 4 張,名字都一樣。
+    改比對圖本身:16×16 灰階平均雜湊,漢明距離 ≤1 才算同一張(實測距離 4 以上就開始出現
+    「神秘隊 vs 直覺隊」這種同版型不同色的誤判)。
+    只給提示,不自動合併 —— 兩份的寶可夢清單常互有對方沒有的,要合誰進誰得人來決定。
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        return
+    # 要用 .local 那份:它的 image_url 才是本機路徑(backgrounds.json 存的是遠端網址)
+    p_local = os.path.join(HERE, "data", "backgrounds.local.json")
+    if not os.path.exists(p_local): return
+    bg = json.load(open(p_local, encoding="utf-8"))
+
+    def ahash(path, n=16):
+        im = Image.open(path).convert("L").resize((n, n), Image.LANCZOS)
+        px = list(im.getdata()); avg = sum(px) / len(px)
+        return sum(1 << i for i, v in enumerate(px) if v > avg)
+
+    H = {}
+    for b in bg:
+        p = os.path.join(HERE, (b.get("image_url") or "").replace("/", os.sep))
+        if b.get("image_url") and os.path.exists(p):
+            try: H[b["image_name"]] = ahash(p)
+            except Exception: pass
+    names = list(H); pairs = []
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            if bin(H[names[i]] ^ H[names[j]]).count("1") <= 1:
+                pairs.append(sorted((names[i], names[j])))
+    # 兩兩配對接成群組(A=B、B=C → A、B、C 同一組)
+    parent = {n: n for n in names}
+    def find(x):
+        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
+        return x
+    for a, b2 in pairs: parent[find(a)] = find(b2)
+    groups = {}
+    for a, b2 in pairs: groups.setdefault(find(a), set()).update((a, b2))
+    out = sorted([sorted(g) for g in groups.values()])
+    path = os.path.join(HERE, "data", "bg_dupes.json")
+    json.dump({"note": "圖幾乎相同的背卡(平均雜湊距離 ≤1),多半是 Bulbapedia 與 Fandom 各收一次。"
+                       "只是提示,合併與否請用 bg-editor.html 決定。",
+               "groups": out}, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"重複背卡偵測 data/bg_dupes.json:{len(out)} 組 / 共 {sum(len(g) for g in out)} 張", flush=True)
 
 
 def make_style_assets():

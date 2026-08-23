@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>背卡修正 — 交易清單</title>
+<!--
+  背卡資料的人工修正工具。產出 data/bg_overrides.json,由 build_data.py 在最後套用。
+
+  ⚠ 為什麼是「疊加檔」而不是直接改 backgrounds.json:
+     build_data.py 每次都把 backgrounds.json 整份重寫,直接改產出檔的話,
+     下一次 python update.py 就沒了。修正寫在獨立的檔案裡才留得住。
+
+  搭配 preview.py 用:
+      python preview.py   → http://127.0.0.1:8797/bg-editor.html
+  按「儲存」會 POST 回 preview.py 覆寫 data/bg_overrides.json(舊檔留成 .bak)。
+  存完要看到效果,得重跑 python build_data.py && python fetch_assets.py。
+
+  三種操作:
+    刪除  來源列錯的寶可夢
+    改    欄位(異色/極巨化/淨化、型態、造型、指定圖片網址)
+    新增  來源漏掉的組合(用下方「自由搭配」挑)
+-->
+<style>
+:root{
+  --bg:#0f1220; --card:#1a1f36; --line:#2b3153; --fg:#eef0fb; --mut:#9aa3c7;
+  --acc:#7b5cff; --acc2:#e0276c; --warn:#f0c850; --cell:#0d1024; --ok:#2f9e57;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#0f1220,#191540);color:var(--fg);
+  font:14px/1.5 system-ui,"Segoe UI","Noto Sans TC",sans-serif;min-height:100vh}
+h1{font-size:17px;margin:0}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--fg);
+  border-radius:8px;padding:6px 12px}
+button:hover{border-color:var(--acc)}
+button.pri{background:var(--acc);border-color:var(--acc)}
+button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+button.danger:hover{border-color:var(--acc2);color:#ff9dbb}
+button:disabled{opacity:.45;cursor:default}
+input,select{font:inherit;background:var(--cell);color:var(--fg);border:1px solid var(--line);
+  border-radius:8px;padding:6px 10px;outline:none}
+input:focus,select:focus{border-color:var(--acc)}
+a{color:#a99bff}
+
+header{position:sticky;top:0;z-index:20;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  padding:10px 14px;background:rgba(15,18,32,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .sp{flex:1}
+#state{font-size:12px;color:var(--mut)}
+#state.dirty{color:var(--warn)}
+#state.saved{color:#7fe0a5}
+.banner{margin:10px 14px 0;padding:9px 12px;border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:8px;background:rgba(240,200,80,.07);font-size:13px}
+.banner.hide{display:none}
+.banner code{background:#0007;padding:1px 5px;border-radius:4px}
+
+main{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;padding:14px;align-items:start}
+@media(max-width:900px){main{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.side{position:sticky;top:62px;max-height:calc(100vh - 76px);display:flex;flex-direction:column}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sub{color:var(--mut);font-size:12px}
+.hr{height:1px;background:var(--line);margin:10px 0}
+
+/* 卡片清單 */
+#cardList{overflow:auto;margin-top:8px;flex:1}
+.cardItem{display:flex;gap:8px;align-items:center;padding:6px;border-radius:8px;cursor:pointer;border:1px solid transparent}
+.cardItem:hover{background:rgba(123,92,255,.08)}
+.cardItem.on{border-color:var(--acc);background:rgba(123,92,255,.14)}
+.cardItem img{width:52px;height:30px;object-fit:cover;border-radius:5px;flex:0 0 auto;background:var(--cell)}
+.cardItem .t{min-width:0;font-size:12px}
+.cardItem .t b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cardItem .n{margin-left:auto;font-size:11px;color:var(--mut);white-space:nowrap}
+.cardItem .edited{color:var(--warn);font-weight:700}
+
+/* 條目網格 */
+/* --w/--h 由右上角的尺寸鈕切換(存 localStorage)。預設「中」—— 小尺寸看造型細節太吃力 */
+.mons{--w:190px;--h:118px;display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--w),1fr));gap:10px;margin-top:10px}
+.mon{position:relative;background:var(--cell);border:1px solid var(--line);border-radius:10px;padding:7px;text-align:center}
+.mon.removed{opacity:.35;border-style:dashed}
+.mon.patched{border-color:var(--warn)}
+.mon.added{border-color:var(--ok)}
+/* 一筆 shiny=true 的條目 = 前端的「一般 + 異色」兩格 → 這裡就並排畫兩張,
+   不然只畫異色圖會讓人以為一般版不存在。並排也讓「兩張長一樣」一眼看得出來。 */
+.mon .pic{height:var(--h);display:flex;gap:4px}
+.mon .pic .slot{position:relative;flex:1;min-width:0}
+.mon .pic .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:7px;opacity:.75}
+/* max 128px = 縮圖的原始尺寸,再放大只會糊 */
+.mon .pic .m{position:absolute;inset:0;margin:auto;width:86%;height:86%;max-width:128px;max-height:128px;object-fit:contain;z-index:2}
+.mon .pic .lbl{position:absolute;left:4px;top:2px;font-size:10px;z-index:3;color:#fff;text-shadow:0 1px 2px #000,0 0 3px #000}
+.mon .nm{font-size:13px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mon .meta{font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:15px}
+.mon .flags{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-top:5px}
+.mon .flags span{font-size:10px;padding:1px 6px;border-radius:20px;border:1px solid var(--line);color:var(--mut)}
+.mon .flags span.on{color:#fff;border-color:var(--acc);background:rgba(123,92,255,.25)}
+.mon .acts{display:flex;gap:5px;justify-content:center;margin-top:6px}
+.mon .acts button{padding:3px 11px;font-size:12px;border-radius:6px}
+.mon .tag{position:absolute;top:3px;left:3px;font-size:9px;padding:1px 5px;border-radius:20px;z-index:3}
+.mon .tag.w{background:var(--warn);color:#000}
+.mon .tag.g{background:var(--ok);color:#fff}
+.mon .tag.r{background:var(--acc2);color:#fff}
+
+/* 編輯面板 */
+/* 編輯面板黏在視窗頂端(標題列下方):條目一多就要往下捲,不該為了按「套用」再捲回最上面。
+   底色要不透明,否則下面的格子會透出來。 */
+#edit{position:sticky;top:56px;z-index:12;margin-top:10px;border:1px solid var(--acc);border-radius:10px;
+      padding:10px;background:#1b2039;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+#edit.hide{display:none}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;margin-top:8px}
+.fgrid label{font-size:11px;color:var(--mut);display:block;margin-bottom:2px}
+.fgrid input,.fgrid select{width:100%}
+/* 即時預覽:改下拉/路徑就重算,不必按「套用」才看得到結果 */
+/* 預覽格放大到 160×124:縮圖原始就是 128px,這個尺寸剛好讓寶可夢接近原尺寸、不會糊 */
+#edPrev{display:flex;gap:12px;align-items:flex-start;margin-top:10px;flex-wrap:wrap}
+#edPrev .pv{position:relative;width:160px;height:124px;flex:0 0 auto;border-radius:8px;overflow:hidden;
+            background:var(--cell);border:1px solid var(--line)}
+#edPrev .pv .bgi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7}
+#edPrev .pv .mm{position:absolute;inset:0;margin:auto;width:88%;height:88%;max-width:128px;max-height:128px;object-fit:contain;z-index:2}
+#edPrev .pv .cap{position:absolute;left:5px;top:2px;font-size:11px;z-index:3;color:#fff;text-shadow:0 1px 2px #000,0 0 3px #000}
+#edPrev .info{font-size:12px;color:var(--mut);line-height:1.8;min-width:0;flex:1}
+#edPrev .info b{color:var(--fg);font-weight:600}
+#edPrev .info .warn{color:var(--warn)}
+/* 型態/造型的縮圖列。原生 <select> 塞不了圖,又不想自己重寫一個下拉(鍵盤、定位都要顧),
+   所以下拉留著、底下再補一排可捲的縮圖。皮卡丘有 89 個造型,橫捲剛好。 */
+.optstrip{display:flex;gap:7px;overflow-x:auto;padding:7px 2px 4px;margin-top:5px}
+.optstrip .oc{flex:0 0 auto;width:100px;text-align:center;background:var(--cell);border:1px solid var(--line);
+  border-radius:8px;padding:4px;cursor:pointer}
+.optstrip .oc:hover{border-color:var(--acc)}
+.optstrip .oc.on{border-color:var(--acc2);box-shadow:0 0 0 1px var(--acc2) inset}
+/* max 128px:縮圖原始尺寸,再放大只會糊 */
+.optstrip .oc img{width:100%;height:76px;max-height:128px;object-fit:contain;display:block}
+.optstrip .oc .c{font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.optstrip .oc .c.w{color:var(--warn)}
+.optstrip .lb{flex:0 0 auto;align-self:center;font-size:11px;color:var(--mut);padding-right:2px}
+/* 圖片路徑:前綴固定寫死在框裡,只要貼檔名 */
+.pathin{display:flex;align-items:center;background:var(--cell);border:1px solid var(--line);border-radius:8px}
+.pathin:focus-within{border-color:var(--acc)}
+.pathin>span{font-size:11px;color:var(--mut);padding-left:8px;white-space:nowrap;user-select:none}
+.pathin>input{border:0;background:transparent;flex:1;min-width:0;padding-left:2px}
+
+/* 自由搭配 */
+#mixMask{position:fixed;inset:0;background:#000b;z-index:40;display:none;align-items:center;justify-content:center;padding:14px}
+#mixMask.on{display:flex}
+.mixBox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;width:min(880px,96vw);max-height:92vh;display:flex;flex-direction:column}
+.mixGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:7px;overflow:auto;max-height:42vh;margin-top:8px}
+.mixCell{background:var(--cell);border:1px solid var(--line);border-radius:8px;padding:4px;cursor:pointer;text-align:center}
+.mixCell:hover{border-color:var(--acc)}
+.mixCell.on{border-color:var(--acc2);box-shadow:0 0 0 1px var(--acc2) inset}
+.mixCell img{width:100%;height:52px;object-fit:contain}
+.mixCell .l{font-size:9px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#000c;color:#fff;
+  padding:9px 16px;border-radius:20px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:60;
+  border:1px solid var(--line);max-width:90vw;text-align:center}
+#toast.on{opacity:1}
+.hidden{display:none!important}
+kbd{background:var(--cell);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;font-size:11px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🗂 背卡修正</h1>
+  <span class="sub">→ data/bg_overrides.json</span>
+  <span id="state">載入中…</span>
+  <span class="sp"></span>
+  <button id="btnUndo" title="復原(Ctrl+Z)" disabled>↺ 復原</button>
+  <button id="btnExport">⤓ 下載</button>
+  <button class="pri" id="btnSave">💾 儲存</button>
+</header>
+
+<div class="banner hide" id="warnBar"><span id="warnMsg"></span></div>
+<div class="banner" id="infoBar">
+  改的是<b>疊加檔</b>,不是 <code>backgrounds.json</code> —— 後者每次 <code>update.py</code> 都會整份重寫。
+  存檔後要跑 <code>python build_data.py</code> 再 <code>python fetch_assets.py</code> 才會反映到網站上。
+</div>
+
+<main>
+  <div class="panel side">
+    <div class="row">
+      <input id="cq" placeholder="搜尋背卡…" style="flex:1;min-width:120px">
+    </div>
+    <div class="row" style="margin-top:6px">
+      <button id="fEdited" data-on="0" style="font-size:12px;padding:4px 9px">只看已修改</button>
+      <button id="fSame" data-on="0" style="font-size:12px;padding:4px 9px" title="異色圖跟一般圖是同一張(造型對不到本機 sprite)">只看有同圖</button>
+      <button id="fDup" data-on="0" style="font-size:12px;padding:4px 9px" title="圖幾乎一樣的卡,多半是兩個來源各收一次">只看重複</button>
+      <span class="sub" id="ccount"></span>
+    </div>
+    <div id="cardList"></div>
+  </div>
+
+  <div class="panel">
+    <div class="row">
+      <b id="cardName">選一張背卡</b>
+      <span class="sp"></span>
+      <span class="sub">大小</span>
+      <span id="sizes"><button data-s="s">小</button><button data-s="m">中</button><button data-s="l">大</button></span>
+      <button id="btnAdd" disabled>＋ 自由搭配加入</button>
+      <button id="btnResetCard" class="danger" disabled>↺ 還原這張卡</button>
+    </div>
+    <div class="row" id="dupBar" style="margin-top:8px;display:none"></div>
+    <div class="sub" id="cardMeta" style="margin-top:4px"></div>
+    <div id="edit" class="hide"></div>
+    <div class="mons" id="mons"></div>
+  </div>
+</main>
+
+<div id="mixMask">
+  <div class="mixBox">
+    <div class="row"><b>自由搭配 — 挑一隻加進這張卡</b><span class="sp"></span><button id="mixClose">✕</button></div>
+    <div class="row" style="margin-top:8px">
+      <input id="mixQ" placeholder="搜尋…名稱、編號、型態代碼" style="flex:1">
+      <span class="sub" id="mixCount"></span>
+    </div>
+    <div class="mixGrid" id="mixGrid"></div>
+    <div class="hr"></div>
+    <div class="row">
+      <span class="sub">旗標:</span>
+      <button class="mixF" data-f="shiny">✨ 異色</button>
+      <button class="mixF" data-f="dynamax">極巨化</button>
+      <button class="mixF" data-f="gmax">超極巨化</button>
+      <button class="mixF" data-f="shadow">淨化</button>
+      <span class="sp"></span>
+      <span class="sub" id="mixPick">尚未選取</span>
+      <button class="pri" id="mixAdd" disabled>加入</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const FILE='data/bg_overrides.json';
+let BG=[], POKE={}, NAMES={}, ALLNAMES={}, BGALIAS={};   // BGALIAS:沿用 aliases.json,這裡也能用「首爾」搜
+let DUPES={};   // image_name → 同一張卡的其他檔名(由 fetch_assets.py 比對圖片產生)
+let OPS=[], META={version:1,note:''}, DIRTY=false, HIST=[], CUR=null, EDIT=null;
+let MIX={mon:null,flags:{}};
+const LANGS=['zh','en','ja','ko','fr','de','es'];
+
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toast=(m,ms=2200)=>{const t=$('#toast');t.textContent=m;t.classList.add('on');
+  clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('on'),ms);};
+const nameOf=d=>NAMES[d]||('#'+d);
+/* 圖片路徑:輸入框只收檔名,前綴由這裡補。含 / 或 http 開頭的照原樣用(要指到別的目錄時) */
+const IMGDIR='assets/img/';
+const shortPath=p=> (p||'').startsWith(IMGDIR) ? p.slice(IMGDIR.length) : (p||'');
+const fullPath=v=>{ v=(v||'').trim(); if(!v) return null;
+  return (/^(https?:|data:)/.test(v)||v.includes('/')) ? v : IMGDIR+v; };
+function thumb(u){ if(!u)return '';
+  if(u.startsWith('assets/img/'))return 'assets/thumb/'+u.slice(11).replace(/\.png$/i,'.webp');
+  if(u.startsWith('assets/bg/'))return 'assets/bgthumb/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp');
+  return u; }
+
+/* ===== 條目識別碼:必須與 build_data.py 的 bg_key() 完全一致 =====
+   ⚠ sprite 一定要正規化:這一頁讀的是 backgrounds.local.json(本機檔名 wiki_GO0133Explorer.png),
+   build_data.py 手上卻是遠端網址(…/GO0133Explorer.png)。不統一的話寫出去的 key 對不到,
+   人工修正會全部靜靜失效。 */
+const sprKey=s=>{ if(!s) return '';
+  // Fandom 網址是 .../images/3/37/Eevee_explorer.png/revision/latest?cb=… ,
+  // 直接取最後一段會拿到會變動的 latest?cb=… → 與 fetch_assets 用同一條規則抽檔名
+  s=String(s);
+  const m=s.match(/\/images\/[0-9a-f/]+\/([^/]+\.(?:png|jpe?g|webp))\/revision/i);
+  let n=m?m[1]:s.split('?')[0].split('/').pop();
+  if(n.startsWith('wiki_')) n=n.slice(5);
+  return n.replace(/[^A-Za-z0-9._-]/g,'_'); };
+function bgKey(m){
+  return [String(m.dex), m.form||'', m.costume||'',
+          m.gmax?'1':'', m.dynamax?'1':'', m.shadow?'1':'',
+          sprKey(m.sprite)].join('|');
+}
+// 既有 overrides 檔裡的舊 key(存了本機檔名版)一起正規化,不必手動改檔
+const normKey=k=>{ const p=String(k||'').split('|');
+  if(p.length===7) p[6]=sprKey(p[6]);
+  return p.join('|'); };
+/* ===== 圖片解析:與 index.html 的 monUrl() 同一套規則 ===== */
+function baseVar(p,shiny){return p.variants.find(v=>!!v.shiny===shiny&&!v.form&&!v.costume&&!v.gender)||p.variants.find(v=>!!v.shiny===shiny)||null;}
+function formVar(p,f,shiny){return p.variants.find(v=>v.form===f&&!!v.shiny===shiny&&!v.costume&&!v.gender)||p.variants.find(v=>v.form===f&&!!v.shiny===shiny)||baseVar(p,shiny);}
+function costVar(p,c,shiny){return p.variants.find(v=>v.costume===c&&!!v.shiny===shiny&&!v.gender)||p.variants.find(v=>v.costume===c&&!!v.shiny===shiny)||baseVar(p,shiny);}
+function monUrl(m,shiny){
+  if(m.sprite) return (shiny&&m.sprite_shiny)||m.sprite;
+  const p=POKE[m.dex]; if(!p) return '';
+  const v=m.costume?costVar(p,m.costume,shiny):(m.form?formVar(p,m.form,shiny):baseVar(p,shiny));
+  return v&&v.url;
+}
+
+/* ===== 載入 ===== */
+async function jget(p,f){ try{const r=await fetch(p,{cache:'no-store'}); if(r.ok)return await r.json(); }catch(e){} return f; }
+const loadData=async n=> (await jget('data/'+n+'.local.json',null)) || await jget('data/'+n+'.json',null);
+async function boot(){
+  /* ⚠ 一定要讀「套用人工修正之前」那份(backgrounds.raw.*)。
+     backgrounds.local.json 已經是套用後的結果,拿它再疊一次 ops 會對不到目標 ——
+     條目的 key 早就被自己的修正改掉了(133||||||GO0133Explorer.png → 133||MAY_2023||||),
+     畫面上會看起來像「我的修正都不見了」。 */
+  const [bg,poke,...ns]=await Promise.all([
+    jget('data/backgrounds.raw.local.json',null).then(r=>r||jget('data/backgrounds.raw.json',null))
+      .then(r=>r||loadData('backgrounds')),
+    loadData('pokemon'), ...LANGS.map(l=>jget('data/names/'+l+'.json',{}))]);
+  if(!bg||!poke){ $('#state').textContent='✗ 讀不到 data/,請用 python preview.py 開這一頁'; return; }
+  BG=bg.filter(b=>b.image_url); POKE=poke; NAMES=ns[0]||{};
+  ALLNAMES={}; for(const m of ns) for(const d in m) ALLNAMES[d]=((ALLNAMES[d]||'')+'|'+m[d]);
+  for(const d in ALLNAMES) ALLNAMES[d]=ALLNAMES[d].toLowerCase();
+  const f=await jget(FILE,null);
+  if(f){ META={version:f.version||1,note:f.note||''};
+    OPS=(f.ops||[]).filter(o=>o&&o.card).map(o=>o.key?{...o,key:normKey(o.key)}:o); }
+  // 重複卡提示(圖幾乎一樣 = 兩個來源各收一次)
+  const dp=await jget('data/bg_dupes.json',null);
+  for(const g of ((dp&&dp.groups)||[])) for(const n of g) DUPES[n]=g.filter(x=>x!==n);
+  // 沿用別名表:在這裡也能用「首爾」「台南」找卡,不必記英文卡名
+  const al=await jget('data/aliases.json',null);
+  for(const e of ((al&&al.entries)||[])){
+    if(e.kind!=='bg')continue;
+    const t=(e.terms||[]).map(s=>String(s).toLowerCase()).join('|');
+    for(const k of (e.targets||[])) BGALIAS[k]=(BGALIAS[k]?BGALIAS[k]+'|':'')+t;
+  }
+  if(!/^(127\.0\.0\.1|localhost|\[::1\])$/.test(location.hostname)){
+    $('#warnMsg').innerHTML='這一頁不是由 <code>preview.py</code> 提供的,「儲存」只能下載檔案。';
+    $('#warnBar').classList.remove('hide');
+  }
+  bindUI(); drawCards(); mark(false);
+}
+
+/* ===== 疊加檔的運算 ===== */
+const opsOf=card=>OPS.filter(o=>o.card===card);
+const editedCards=()=>new Set(OPS.map(o=>o.card));
+// 已被合併掉 / 隱藏的卡:不再顯示成「還在的重複對象」
+const droppedCards=()=>new Set(OPS.filter(o=>o.op==='mergeCard'||o.op==='hideCard').map(o=>o.card));
+// 把疊加檔套到某張卡上,得到「最後會長什麼樣」——與 build_data.py 的套用順序一致
+function resolved(card){
+  const src=(BG.find(b=>b.image_name===card)||{pokemon:[]}).pokemon.slice();
+  // 被合併進來的卡:它的條目也要一起顯示(與 build_data.py 的 mergeCard 一致)
+  for(const o of OPS) if(o.op==='mergeCard'&&o.into===card){
+    const from=BG.find(b=>b.image_name===o.card);
+    if(from) for(const m of from.pokemon) if(!src.some(x=>bgKey(x)===bgKey(m))) src.push(m);
+  }
+  const out=src.map(m=>({...m, _key:bgKey(m), _st:''}));
+  for(const o of opsOf(card)){
+    if(o.op==='add'){ const m={dex:0,shiny:false,dynamax:false,shadow:false,gmax:false,...(o.mon||{})};
+      out.push({...m,_key:bgKey(m),_st:'added',_op:o}); continue; }
+    for(const m of out){
+      if(m._key!==o.key||m._st==='added') continue;
+      if(o.op==='remove'){ m._st='removed'; m._op=o; }
+      else { for(const [k,v] of Object.entries(o.fields||{})){ if(v===null) delete m[k]; else m[k]=v; }
+             m._st='patched'; m._op=o; }
+    }
+  }
+  return out;
+}
+function snapshot(){ HIST.push(JSON.stringify(OPS)); if(HIST.length>60)HIST.shift(); $('#btnUndo').disabled=false; }
+function undo(){ if(!HIST.length)return; OPS=JSON.parse(HIST.pop()); $('#btnUndo').disabled=!HIST.length;
+  mark(true); drawCards(); drawMons(); toast('已復原'); }
+function mark(d){ DIRTY=d; const s=$('#state'); s.className=d?'dirty':'saved';
+  s.textContent=(d?'● 有未儲存的變更 · ':'✓ 已同步 · ')+OPS.length+' 筆修正 / '+editedCards().size+' 張卡';
+  if(d)try{localStorage.setItem('bgOvDraft',JSON.stringify(OPS));}catch(e){} }
+
+/* ===== 左側卡片清單 ===== */
+// 這張卡上有沒有「異色圖 = 一般圖」的條目(造型對不到本機 sprite 的後遺症)
+function sameImgCount(card){
+  return resolved(card).filter(m=>m._st!=='removed'&&m.shiny&&monUrl(m,true)===monUrl(m,false)).length;
+}
+function drawCards(){
+  const q=$('#cq').value.trim().toLowerCase(), only=$('#fEdited').dataset.on==='1',
+        onlySame=$('#fSame').dataset.on==='1', onlyDup=$('#fDup').dataset.on==='1', ed=editedCards();
+  const list=BG.filter(b=>{
+    if(only&&!ed.has(b.image_name))return false;
+    if(onlySame&&!sameImgCount(b.image_name))return false;
+    if(onlyDup&&!(DUPES[b.image_name]||[]).some(n=>!droppedCards().has(n)))return false;
+    if(!q)return true;
+    return (b.image_name+' '+(b.name||'')).toLowerCase().includes(q)
+        || (BGALIAS[b.image_name]||'').includes(q)
+        || b.pokemon.some(m=>(ALLNAMES[m.dex]||'').includes(q));
+  });
+  $('#ccount').textContent=list.length+' / '+BG.length+' 張';
+  // 重畫會把 #cardList 的捲動位置清成 0 —— 點下面的卡片時整份清單會跳回最上面。
+  // 先記下來,填完再放回去。(搜尋讓清單變短時,瀏覽器會自動夾到合法範圍)
+  const box=$('#cardList'), keepTop=box.scrollTop;
+  box.innerHTML=list.map(b=>{
+    const n=opsOf(b.image_name).length, sm=sameImgCount(b.image_name);
+    return `<div class="cardItem${CUR===b.image_name?' on':''}" data-c="${esc(b.image_name)}">
+      <img loading="lazy" src="${thumb(b.image_url)}" alt="">
+      <div class="t"><b>${esc(b.name||b.image_name)}</b>
+        <span class="sub">${esc(b.image_name.replace(/\.(png|jpe?g|webp)$/i,''))}</span></div>
+      <span class="n" title="條目數${n?' · 已修正 '+n+' 筆':''}${sm?' · 異色圖與一般圖相同 '+sm+' 筆':''}">${b.pokemon.length}${
+        n?' <span class="edited">✎'+n+'</span>':''}${
+        sm?' <span style="color:var(--warn)">同'+sm+'</span>':''}</span></div>`;
+  }).join('')||'<div class="sub" style="padding:8px">沒有符合的卡</div>';
+  box.scrollTop=keepTop;
+  $$('#cardList .cardItem').forEach(d=>d.onclick=()=>{ CUR=d.dataset.c; EDIT=null; drawCards(); drawMons(); });
+}
+
+/* ===== 右側條目 ===== */
+function drawMons(){
+  const b=BG.find(x=>x.image_name===CUR);
+  $('#btnAdd').disabled=!b; $('#btnResetCard').disabled=!b||!opsOf(CUR).length;
+  if(!b){ $('#cardName').textContent='選一張背卡'; $('#cardMeta').textContent=''; $('#mons').innerHTML=''; return; }
+  const list=resolved(CUR);
+  $('#cardName').textContent=b.name||b.image_name;
+  drawDupBar();
+  // 講清楚「條目」與「前端格子」不是一比一:一筆 shiny=true 會展開成一般 + 異色兩格
+  const live=list.filter(m=>m._st!=='removed');
+  $('#cardMeta').innerHTML=esc(b.image_name)+' · 原始 '+b.pokemon.length+' 筆 · 修正後 '+live.length
+    +' 筆 <span style="color:var(--mut)">(挑選畫面會展開成 '
+    +(live.length+live.filter(m=>m.shiny).length)+' 格:一筆可異色 = 一般 + 異色兩格)</span>';
+  $('#mons').innerHTML=list.map((m,i)=>{
+    const tag=m._st==='removed'?'<span class="tag r">已刪</span>'
+             :m._st==='patched'?'<span class="tag w">已改</span>'
+             :m._st==='added'?'<span class="tag g">新增</span>':'';
+    const sameImg=m.shiny&&monUrl(m,true)===monUrl(m,false);
+    const slot=(sh,lbl)=>`<div class="slot"><img class="bgimg" src="${thumb(b.image_url)}" alt="">
+        <img class="m" loading="lazy" src="${thumb(monUrl(m,sh))}" onerror="this.style.visibility='hidden'">
+        ${lbl?`<span class="lbl">${lbl}</span>`:''}</div>`;
+    return `<div class="mon ${m._st}" data-i="${i}">${tag}
+      <div class="pic">${slot(false,m.shiny?'一般':'')}${m.shiny?slot(true,'✨'):''}</div>
+      <div class="nm">${esc(nameOf(m.dex))}</div>
+      <div class="meta" title="${esc([m.form,m.costume,(m.sprite||'').split('/').pop()].filter(Boolean).join(' · '))}">${
+        esc([m.form,m.costume,m.sprite?'wiki圖':''].filter(Boolean).join('·')||'—')}</div>
+      <div class="flags">
+        <span class="${m.shiny?'on':''}">✨</span><span class="${m.dynamax?'on':''}">極</span>
+        <span class="${m.gmax?'on':''}">超</span><span class="${m.shadow?'on':''}">淨</span>
+        ${sameImg?'<span class="on" style="border-color:var(--warn);color:var(--warn)" title="異色圖與一般圖相同">同圖</span>':''}
+      </div>
+      <div class="acts">
+        <button data-a="edit">改</button>
+        <button data-a="${m._st==='removed'||m._st==='added'?'undo':'del'}" class="danger">${m._st==='removed'?'還原':m._st==='added'?'移除':'刪'}</button>
+      </div></div>`;
+  }).join('');
+  $$('#mons .mon').forEach(d=>{
+    const m=list[+d.dataset.i];
+    d.querySelectorAll('.acts button').forEach(btn=>btn.onclick=()=>{
+      const a=btn.dataset.a;
+      if(a==='edit'){ EDIT=m; drawEdit(); }
+      else if(a==='del'){ snapshot(); OPS.push({card:CUR,op:'remove',key:m._key}); after(); }
+      else { snapshot(); OPS=OPS.filter(o=>o!==m._op); after(); }
+    });
+  });
+  drawEdit();
+}
+function after(){ mark(true); drawCards(); drawMons(); }
+
+/* 重複卡:同一張卡被 Bulbapedia 與 Fandom 各收一次(圖幾乎一模一樣)。
+   預設動作是「合併」不是「刪除」—— 兩份的寶可夢清單常互有對方沒有的
+   (春櫻:3 筆 vs 2 筆,只重疊 1;長崎則是 Fandom 那份比較完整),直接刪會掉資料。 */
+function drawDupBar(){
+  const bar=$('#dupBar'); if(!bar) return;
+  const dropped=droppedCards();
+  const mine=OPS.find(o=>(o.op==='mergeCard'||o.op==='hideCard')&&o.card===CUR);
+  const others=(DUPES[CUR]||[]).filter(n=>!dropped.has(n));
+  if(!mine&&!others.length){ bar.style.display='none'; return; }
+  bar.style.display='';
+  if(mine){
+    bar.innerHTML=`<span style="color:var(--warn)">⚠ 這張卡已標記為${
+      mine.op==='mergeCard'?'合併到「'+esc(nameOfCard(mine.into))+'」':'隱藏'}(重建後不會出現)</span>`
+      +`<button id="dupUndo">取消</button>`;
+    $('#dupUndo').onclick=()=>{ snapshot(); OPS=OPS.filter(o=>o!==mine); after(); };
+    return;
+  }
+  const n=resolved(CUR).filter(m=>m._st!=='removed').length;
+  bar.innerHTML=`<span class="sub">🔁 圖幾乎相同的卡(多半是另一個來源收的同一張):</span>`
+    +others.map(o=>{
+      const cnt=(BG.find(b=>b.image_name===o)||{pokemon:[]}).pokemon.length;
+      return `<span class="sub" style="color:var(--fg)">${esc(nameOfCard(o))}</span>
+        <span class="sub">(${cnt} 筆)</span>
+        <button data-o="${esc(o)}" data-a="pull">把它併進這張</button>
+        <button data-o="${esc(o)}" data-a="push">把這張併進它</button>`;
+    }).join('')
+    +`<span class="sp"></span><button class="danger" data-a="hide">只隱藏這張(不合併)</button>`;
+  bar.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{
+    snapshot();
+    const a=btn.dataset.a, o=btn.dataset.o;
+    if(a==='pull')      OPS.push({card:o,   op:'mergeCard', into:CUR});   // 對方併進來,對方消失
+    else if(a==='push'){OPS.push({card:CUR, op:'mergeCard', into:o}); }   // 這張併過去,這張消失
+    else                OPS.push({card:CUR, op:'hideCard'});
+    after();
+  });
+}
+const nameOfCard=n=>{ const b=BG.find(x=>x.image_name===n); return b?(b.name||n):n; };
+
+/* ===== 欄位編輯 ===== */
+function drawEdit(){
+  const box=$('#edit');
+  if(!EDIT){ box.classList.add('hide'); return; }
+  box.classList.remove('hide');
+  const m=EDIT, p=POKE[m.dex]||{variants:[]};
+  const forms=[...new Set(p.variants.map(v=>v.form).filter(Boolean))].sort();
+  const coss =[...new Set(p.variants.map(v=>v.costume).filter(Boolean))].sort();
+  const opt=(arr,cur)=>['<option value="">(無)</option>']
+    .concat(arr.map(v=>`<option value="${esc(v)}"${v===cur?' selected':''}>${esc(v)}</option>`)).join('');
+  box.innerHTML=`<div class="row"><b>改「${esc(nameOf(m.dex))}」</b>
+      <span class="sub">${esc(m._key)}</span><span class="sp"></span>
+      <button id="edClose">收起</button></div>
+    <div class="fgrid">
+      <div><label>型態 form</label><select id="fForm">${opt(forms,m.form)}</select></div>
+      <div><label>造型 costume</label><select id="fCos">${opt(coss,m.costume)}</select></div>
+      <div><label>指定圖片(一般)</label>
+        <div class="pathin"><span>${IMGDIR}</span>
+        <input id="fSprite" list="spList" value="${esc(shortPath(m.sprite))}" placeholder="留空=用型態/造型自動判斷"></div></div>
+      <div><label>指定圖片(異色)</label>
+        <div class="pathin"><span>${IMGDIR}</span>
+        <input id="fSpriteS" list="spList" value="${esc(shortPath(m.sprite_shiny))}" placeholder="留空=沿用一般圖 + ✨"></div></div>
+    </div>
+    ${optStrip(p,'form',m.form)}${optStrip(p,'costume',m.costume)}
+    <datalist id="spList">${
+      // 這隻寶可夢在本機有的所有 sprite 檔名 → 打幾個字就能自動完成,不必手抄
+      (p.variants||[]).map(v=>`<option value="${esc(shortPath(v.url))}">`).join('')}</datalist>
+    <div id="edPrev"></div>
+    <div class="row" style="margin-top:8px">
+      ${['shiny:✨ 異色','dynamax:極巨化','gmax:超極巨化','shadow:淨化'].map(s=>{const[k,l]=s.split(':');
+        return `<button class="ff${m[k]?' on':''}" data-k="${k}">${l}</button>`;}).join('')}
+      <span class="sp"></span><button class="pri" id="edApply">套用</button>
+    </div>
+    <div class="sub" style="margin-top:6px">造型選好之後把「指定圖片」清空,就會改用本機的造型 sprite(含專屬異色圖)。</div>`;
+  const flags={shiny:!!m.shiny,dynamax:!!m.dynamax,gmax:!!m.gmax,shadow:!!m.shadow};
+  box.querySelectorAll('.ff').forEach(b=>b.onclick=()=>{ flags[b.dataset.k]=!flags[b.dataset.k];
+    b.classList.toggle('on',flags[b.dataset.k]); if(b.dataset.k==='shiny')edPreview(flags); });
+  for(const id of ['fForm','fCos','fSprite','fSpriteS'])
+    $('#'+id).addEventListener('input',()=>edPreview(flags));
+  // 點縮圖 = 選那個代碼。指定圖片會蓋過型態/造型,所以順手清空 ——
+  // 不然點了縮圖預覽卻沒反應,會以為壞掉
+  box.querySelectorAll('.optstrip .oc').forEach(d=>d.onclick=()=>{
+    const sel=$(d.dataset.k==='costume'?'#fCos':'#fForm');
+    sel.value=d.dataset.v;
+    d.parentNode.querySelectorAll('.oc').forEach(x=>x.classList.toggle('on',x===d));
+    if(d.dataset.v && ($('#fSprite').value||$('#fSpriteS').value)){
+      $('#fSprite').value=''; $('#fSpriteS').value=''; toast('已清空「指定圖片」,改用'+(d.dataset.k==='costume'?'造型':'型態')+'解析');
+    }
+    edPreview(flags);
+  });
+  edPreview(flags);
+  $('#edClose').onclick=()=>{ EDIT=null; drawEdit(); };
+  $('#edApply').onclick=()=>{
+    const src=(BG.find(b=>b.image_name===CUR).pokemon.find(x=>bgKey(x)===m._key))||{};
+    const want={form:$('#fForm').value||null, costume:$('#fCos').value||null,
+                sprite:fullPath($('#fSprite').value), sprite_shiny:fullPath($('#fSpriteS').value), ...flags};
+    const fields={};
+    for(const [k,v] of Object.entries(want)){
+      const base=(m._st==='added') ? (m[k]??null) : (src[k]??null);
+      if((v??null)!==(base??null)) fields[k]=v;
+    }
+    snapshot();
+    if(m._st==='added'){ Object.assign(m._op.mon, Object.fromEntries(
+        Object.entries(want).filter(([k,v])=>v!==null&&v!==false||['shiny','dynamax','gmax','shadow'].includes(k)))); }
+    else{
+      OPS=OPS.filter(o=>!(o.card===CUR&&o.key===m._key&&o.op==='set'));
+      if(Object.keys(fields).length) OPS.push({card:CUR,op:'set',key:m._key,fields});
+    }
+    EDIT=null; after(); toast('已套用(記得儲存)');
+  };
+}
+
+/* 型態 / 造型的縮圖列。每格順便標出「選這個會不會讓一般與異色配到不同版本」——
+   來源常有缺圖(伊布的 MAY_2023 就少了「一般 + 無性別」那張),選之前先看得到就不會踩到。 */
+function optStrip(p,kind,cur){
+  const codes=[...new Set(p.variants.map(v=>v[kind]).filter(Boolean))].sort();
+  if(!codes.length) return '';
+  const pick=(code,shiny)=> code ? (kind==='costume'?costVar(p,code,shiny):formVar(p,code,shiny))
+                                 : baseVar(p,shiny);
+  const cell=(code,label)=>{
+    const n=pick(code,false), s=pick(code,true);
+    const bad=n&&s&&((n.costume||null)!==(s.costume||null)||(n.form||null)!==(s.form||null)
+                     ||(n.gender||null)!==(s.gender||null));
+    return `<div class="oc${(cur||'')===(code||'')?' on':''}" data-k="${kind}" data-v="${esc(code||'')}"
+      title="${esc(code||'(無)')}${bad?' — ⚠ 一般與異色會配到不同版本':''}">
+      <img loading="lazy" src="${thumb(n&&n.url)}" onerror="this.style.visibility='hidden'">
+      <div class="c${bad?' w':''}">${bad?'⚠':''}${esc(label)}</div></div>`;
+  };
+  return `<div class="optstrip"><span class="lb">${kind==='costume'?'造型':'型態'}</span>`
+    +cell('','(無)')+codes.map(c=>cell(c,c)).join('')+'</div>';
+}
+
+/* 即時預覽:用「現在框裡的值」重算一次 monUrl,不必按套用。
+   順便把兩張圖各自解析到哪個變體寫出來 —— 一般與異色配到不同造型/公母是很難用肉眼發現的
+   (例:伊布的 MAY_2023 在來源被拆成 MAY_2023 與 May_2023,選下拉會配出一母一無性別)。 */
+function edPreview(flags){
+  const box=$('#edPrev'); if(!box||!EDIT) return;
+  const m=EDIT, b=BG.find(x=>x.image_name===CUR)||{}, p=POKE[m.dex]||{variants:[]};
+  const tmp={dex:m.dex, form:$('#fForm').value||null, costume:$('#fCos').value||null,
+             sprite:fullPath($('#fSprite').value), sprite_shiny:fullPath($('#fSpriteS').value)};
+  const un=monUrl(tmp,false), us=monUrl(tmp,true), shiny=!!(flags&&flags.shiny);
+  const vOf=u=>p.variants.find(v=>v.url===u)||null;
+  const vn=vOf(un), vs=vOf(us);
+  const desc=(u,v)=>!u?'<span class="warn">解析不到圖</span>'
+    : v?esc([v.costume&&'造型 '+v.costume, v.form&&'型態 '+v.form,
+             v.gender==='female'?'母版':v.gender==='male'?'公版':''].filter(Boolean).join(' · ')||'基本圖')
+      : '<span class="warn">不在本機變體清單裡</span>('+esc((u||'').split('/').pop())+')';
+  const warn=[];
+  if(shiny&&un&&un===us) warn.push('異色圖與一般圖是同一張 —— 前端只會多蓋一顆 ✨');
+  if(shiny&&vn&&vs&&((vn.costume||null)!==(vs.costume||null)||(vn.form||null)!==(vs.form||null)
+      ||(vn.gender||null)!==(vs.gender||null)))
+    warn.push('一般與異色解析到<b>不同版本</b>,兩張圖會對不起來');
+  const pv=(u,cap)=>`<div class="pv"><img class="bgi" src="${thumb(b.image_url)}" alt="">
+    <img class="mm" src="${thumb(u)}" onerror="this.style.visibility='hidden'"><span class="cap">${cap}</span></div>`;
+  box.innerHTML=pv(un,'一般')+(shiny?pv(us,'✨'):'')
+    +`<div class="info"><div>一般:<b>${desc(un,vn)}</b></div>`
+    +(shiny?`<div>異色:<b>${desc(us,vs)}</b></div>`:'<div>未勾異色 → 前端只有一格</div>')
+    +warn.map(w=>`<div class="warn">⚠ ${w}</div>`).join('')+'</div>';
+}
+
+/* ===== 自由搭配 ===== */
+let MIXLIST=null;
+function buildMixList(){
+  if(MIXLIST) return MIXLIST;
+  MIXLIST=[];
+  for(const p of Object.values(POKE))
+    for(const v of p.variants){
+      if(v.shiny||v.gender) continue;      // 異色用旗標表示;公母不進背卡資料
+      MIXLIST.push({dex:p.id,form:v.form||null,costume:v.costume||null,url:v.url,
+        hay:((ALLNAMES[p.id]||'')+'|'+p.id+'|'+(v.form||'')+'|'+(v.costume||'')).toLowerCase()});
+    }
+  return MIXLIST;
+}
+function drawMix(){
+  const q=$('#mixQ').value.trim().toLowerCase();
+  const hit=buildMixList().filter(m=>!q||m.hay.includes(q));
+  $('#mixCount').textContent=hit.length+' 個';
+  $('#mixGrid').innerHTML=hit.slice(0,240).map((m,i)=>`
+    <div class="mixCell${MIX.mon&&MIX.mon.url===m.url?' on':''}" data-i="${i}">
+      <img loading="lazy" src="${thumb(m.url)}" alt="">
+      <div class="l">${esc(nameOf(m.dex))}</div>
+      <div class="l">${esc(m.form||m.costume||'')}</div></div>`).join('');
+  $$('#mixGrid .mixCell').forEach(d=>d.onclick=()=>{ MIX.mon=hit[+d.dataset.i]; drawMix(); syncMix(); });
+  syncMix();
+}
+function syncMix(){
+  $('#mixPick').textContent=MIX.mon?nameOf(MIX.mon.dex)+(MIX.mon.form?' ['+MIX.mon.form+']':'')
+    +(MIX.mon.costume?' ['+MIX.mon.costume+']':''):'尚未選取';
+  $('#mixAdd').disabled=!MIX.mon;
+}
+
+/* ===== 存檔 ===== */
+function serialize(){
+  const J=JSON.stringify;
+  const body=OPS.map(o=>{
+    const x={card:o.card,op:o.op};
+    if(o.op==='add') x.mon=o.mon;
+    else if(o.op==='mergeCard') x.into=o.into;
+    else if(o.op==='hideCard'){ /* 只有 card + op */ }
+    else { x.key=o.key; if(o.fields)x.fields=o.fields; }
+    return '  '+J(x);
+  });
+  return '{\n'+[' "version": '+J(META.version||1),
+    ' "updated": '+J(new Date().toISOString().slice(0,10)),
+    ' "note": '+J(META.note||'背卡資料的人工修正,用 bg-editor.html 編。')].join(',\n')
+    +',\n "ops": [\n'+body.join(',\n')+'\n ]\n}\n';
+}
+function download(t){ const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));
+  a.download='bg_overrides.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); }
+async function save(){
+  const text=serialize();
+  try{
+    const r=await fetch('/__save?f='+encodeURIComponent(FILE),
+      {method:'POST',headers:{'Content-Type':'application/json'},body:text});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok) throw new Error(j.error||('HTTP '+r.status));
+    try{localStorage.removeItem('bgOvDraft');}catch(e){}
+    mark(false); toast('✔ 已寫回 '+FILE+' —— 記得跑 build_data.py + fetch_assets.py',3800);
+  }catch(err){
+    download(text);
+    $('#warnMsg').innerHTML='寫不回檔案('+esc(err.message)+')→ 已改成下載,請自行覆蓋到 trade-list/data/。';
+    $('#warnBar').classList.remove('hide');
+  }
+}
+
+const SIZES={s:['132px','82px'],m:['190px','118px'],l:['268px','168px']};
+function setSize(k){
+  if(!SIZES[k])k='m';
+  const [w,h]=SIZES[k], g=$('#mons');
+  g.style.setProperty('--w',w); g.style.setProperty('--h',h);
+  $$('#sizes button').forEach(b=>b.classList.toggle('on',b.dataset.s===k));
+  try{ localStorage.setItem('bgOvSize',k); }catch(e){}
+}
+function bindUI(){
+  $$('#sizes button').forEach(b=>b.onclick=()=>setSize(b.dataset.s));
+  let sz='m'; try{ sz=localStorage.getItem('bgOvSize')||'m'; }catch(e){}
+  setSize(sz);
+  $('#cq').oninput=drawCards;
+  for(const id of ['fEdited','fSame','fDup']) $('#'+id).onclick=()=>{ const b=$('#'+id);
+    b.dataset.on=b.dataset.on==='1'?'0':'1'; b.classList.toggle('on',b.dataset.on==='1'); drawCards(); };
+  $('#btnResetCard').onclick=()=>{ if(!CUR)return; snapshot(); OPS=OPS.filter(o=>o.card!==CUR); after(); toast('已還原這張卡'); };
+  $('#btnAdd').onclick=()=>{ MIX={mon:null,flags:{}}; $$('.mixF').forEach(b=>b.classList.remove('on'));
+    $('#mixQ').value=''; $('#mixMask').classList.add('on'); drawMix(); };
+  $('#mixClose').onclick=()=>$('#mixMask').classList.remove('on');
+  $('#mixMask').addEventListener('click',e=>{ if(e.target===$('#mixMask'))$('#mixMask').classList.remove('on'); });
+  $('#mixQ').oninput=drawMix;
+  $$('.mixF').forEach(b=>b.onclick=()=>{ MIX.flags[b.dataset.f]=!MIX.flags[b.dataset.f];
+    b.classList.toggle('on',!!MIX.flags[b.dataset.f]); });
+  $('#mixAdd').onclick=()=>{
+    if(!MIX.mon||!CUR)return;
+    const mon={dex:MIX.mon.dex, shiny:!!MIX.flags.shiny, dynamax:!!MIX.flags.dynamax,
+               gmax:!!MIX.flags.gmax, shadow:!!MIX.flags.shadow};
+    if(MIX.mon.form)mon.form=MIX.mon.form; if(MIX.mon.costume)mon.costume=MIX.mon.costume;
+    if(resolved(CUR).some(x=>x._st!=='removed'&&bgKey(x)===bgKey(mon))){ toast('這張卡已經有一樣的組合了'); return; }
+    snapshot(); OPS.push({card:CUR,op:'add',mon}); $('#mixMask').classList.remove('on'); after(); toast('已加入');
+  };
+  $('#btnSave').onclick=save;
+  $('#btnExport').onclick=()=>download(serialize());
+  $('#btnUndo').onclick=undo;
+  addEventListener('keydown',e=>{
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!/^(INPUT|SELECT)$/.test(e.target.tagName)){ e.preventDefault(); undo(); }
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){ e.preventDefault(); save(); }
+    if(e.key==='Escape')$('#mixMask').classList.remove('on');
+  });
+  addEventListener('beforeunload',e=>{ if(DIRTY){ e.preventDefault(); e.returnValue=''; } });
+}
+boot();
+</script>
+</body>
+</html>

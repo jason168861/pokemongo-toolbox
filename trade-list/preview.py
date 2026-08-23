@@ -26,7 +26,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 C = lambda s, c: f"\033[{c}m{s}\033[0m"
 
 # alias-editor.html 可以寫回的檔。白名單寫死,避免這支預覽伺服器變成任意寫檔的洞
-SAVABLE = {"data/aliases.json"}
+SAVABLE = {"data/aliases.json", "data/bg_overrides.json"}
 MAX_SAVE = 4 * 1024 * 1024
 
 
@@ -145,6 +145,7 @@ def main():
     if a.lan and (ip := lan_ip()):
         print(f"    區網(手機):http://{ip}:{port}/index.html")
     print(f"    別名建檔:http://127.0.0.1:{port}/alias-editor.html(可直接存回 data/aliases.json)")
+    print(f"    背卡修正:http://127.0.0.1:{port}/bg-editor.html(可直接存回 data/bg_overrides.json)")
     print("  改完 index.html 或 data/*.json → 直接重新整理(已關快取)")
     print(f"  {C('Ctrl+C 結束', '90')}")
     print("=" * 56)

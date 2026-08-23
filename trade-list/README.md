@@ -80,6 +80,79 @@ python preview.py       # → http://127.0.0.1:8797/alias-editor.html
 
 `build_data.py` / `fetch_assets.py` **不會碰** `aliases.json` —— 它是純手工維護的,更新資料不會蓋掉。
 
+## 背卡資料的人工修正
+
+兩個 wiki 的資料會有錯(列錯寶可夢、漏掉組合、造型對不到圖、同一張卡被兩邊各收一次)。
+但 `build_data.py` 每次都把 `data/backgrounds.json` **整份重寫**,直接改產出檔的話,
+下一次 `update.py` 就沒了 —— 所以修正寫在獨立的 `data/bg_overrides.json`,重建時在最後套上去
+(跟 `aliases.json` 一樣不會被重建碰到)。
+
+### 修改流程
+
+```bash
+python preview.py          # 1) 開 http://127.0.0.1:8797/bg-editor.html 改,按「儲存」
+python build_data.py       # 2) 重新套用修正(會重抓 wiki,需要 cloudscraper)
+python fetch_assets.py     # 3) 補圖 + 產出 .local.json
+python preview.py          # 4) 開 index.html 確認實際效果
+git add trade-list/data trade-list/assets && git commit && git push
+```
+
+⚠ **只按「儲存」網站不會變** —— 那只寫了 `bg_overrides.json`,要跑完 2、3 才會反映到
+`backgrounds.json`。`python update.py` 會一次做完 2、3(順便 pull PokeMiners)。
+
+改完看健檢那行確認有生效:
+
+```
+[健檢] 人工修正(bg_overrides.json):刪 11 / 改 164 / 加 2 / 整張卡 0
+```
+
+對不到目標的會逐筆印出來(來源改了、或條目已被上游修好),**不會靜靜失效**。
+
+### 三個檔的關係
+
+| 檔案 | 誰寫 | 誰讀 |
+|------|------|------|
+| `backgrounds.raw.json` / `.raw.local.json` | `build_data` / `fetch_assets` | **bg-editor**(套用修正「之前」的樣子) |
+| `bg_overrides.json` | **bg-editor**(你) | `build_data` |
+| `backgrounds.json` / `.local.json` | `build_data` / `fetch_assets` | 網站前端 |
+
+⚠ bg-editor **一定要讀 raw 那份**。它的模型是「原始資料 + ops」,若拿套用後的結果再疊一次,
+條目的 key 早就被自己的修正改掉了(`133||||||GO0133Explorer.png` → `133||MAY_2023||||`),
+既有修正會全部對不到、畫面上看起來像「我的修正都不見了」。
+
+`key` = `dex|form|costume|gmax|dynamax|shadow|sprite檔名`,由條目自己算出來、跨重建一致
+(1907 筆條目,同一張卡內沒有重複)。sprite 那段要正規化:兩端看到的值不一樣
+(遠端網址 vs 本機檔名 `wiki_` 前綴,Fandom 還帶會變動的 `/revision/latest?cb=…`),
+`_spr_key()` 與 bg-editor 的 `sprKey()` 用同一套規則,不然會有八成的修正對不到。
+
+修正放在**最後**套用是刻意的:連「不可交換」的過濾都跑完了才輪到它,人工的判斷最大。
+
+### 編輯器能做什麼
+
+左邊選卡(可用 `aliases.json` 的別名搜,打「首爾」就找得到 Seoul),三個篩選:
+**只看已修改 / 只看有同圖 / 只看重複**。右邊每個條目可以:
+
+- **刪** 來源列錯的 · **改** 型態、造型、四個旗標、指定圖片 · **用自由搭配補**來源漏掉的
+- 改下拉或路徑會**即時預覽**解析出來的「一般 + 異色」兩張圖,並在配對不一致時警告
+- 型態/造型底下有**縮圖列**,每格先標好「選這個會不會配到不同版本」
+- 指定圖片只要貼檔名(`assets/img/` 是固定前綴),有該物種的檔名自動完成
+
+**重複卡**:同一張卡被 Bulbapedia 與 Fandom 各收一次,由 `fetch_assets.py` 比對圖片
+(16×16 平均雜湊,距離 ≤1)產出 `data/bg_dupes.json`。不能用卡名判斷 —— 大阪有 6 張不同的卡。
+預設動作是**合併**不是刪除,因為兩份常互有對方沒有的(春櫻 3 筆 vs 2 筆只重疊 1)。
+
+橘色的「**同N**」是「異色圖與一般圖是同一張」:造型對不到本機 sprite 時會退回 wiki 原圖,
+而 wiki 沒有異色版。修法是把 costume 指到正確的本機代碼、再把「指定圖片」清空。
+(原本 89 筆 / 28 張卡,目前剩 1 筆。)
+
+### 刪掉的東西會不會影響既有使用者
+
+**不會。** 清單存的是加入當下的快照(`{url, bg, zh, shiny, dex…}`),繪製與匯出都直接讀
+`c.url` / `c.bg`,**從頭到尾不查 `backgrounds.json`**;載入時的 `normSetData()` 也不拿背卡資料過濾。
+而且 `fetch_assets.py` 從不刪檔,舊的圖仍在 repo 裡,不會 404。
+實測:三個現在資料裡已不存在的組合,清單與匯出圖都照樣完整畫出、零破圖。
+唯一的差別是對方若「重新去挑選畫面找同一個組合」會找不到。
+
 ## 資料來源
 
 感謝以下社群專案與 wiki:
