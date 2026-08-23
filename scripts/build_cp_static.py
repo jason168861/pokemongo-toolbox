@@ -437,6 +437,7 @@ def build(name):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../../js/analytics.js"></script>
 <link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">

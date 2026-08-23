@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../js/analytics.js"></script>
 <link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
 <link rel="apple-touch-icon" href="../img/masterball.png">
 <title>Pokémon GO Trade List Maker – 交換清單產生器 (Shiny・Forms・Backgrounds)</title>
@@ -1420,6 +1421,8 @@ function applySkin(k){
 
 function setMode(m){
   if(m==='edit' && !LIST.want.length && !LIST.have.length){ alert(tr('edit_empty')); return; }
+  // 漏斗第二關:選好了、開始製圖。只送清單長度,不送內容
+  if(m==='edit'&&window.track) track('start_edit',{want:LIST.want.length,have:LIST.have.length,lang:LANG});
   document.body.classList.remove('picking');   // 進入製圖前先收起選取面板
   if(m==='edit'){
     // 電腦版:少於 100 隻用最小(整張顯示),否則約 1/8 位置;手機維持約 1/4
@@ -2405,6 +2408,9 @@ async function downloadPNG(btn){
   if(!LIST.want.length&&!LIST.have.length){alert(tr('list_empty'));return;}
   if(_dlBusy) return;   // 連點兩下會同時跑兩份匯出 → 手機必掛
   _dlBusy=true;
+  // 漏斗的終點 —— 下載才算真的完成。順便看 skin / 每排數量有沒有人在調
+  if(window.track) track('download_png',{skin:SKIN,cols:COLS,lang:LANG,
+    total:LIST.want.length+LIST.have.length});
   const b=(btn&&btn.tagName)?btn:null;
   if(b){ b.disabled=true; b.style.opacity='.55'; }
   showBusy(tr('share_wait')+'…');
@@ -2437,6 +2443,8 @@ function copyByExecCommand(text){
 async function shareLink(){
   const s=curSet(); if(!s.data.want.length && !s.data.have.length){ alert(tr('list_empty')); return; }
   if(!window.__tlShare){ alert(tr('share_need_cloud')); return; }
+  // ⚠ 只送「有人按了分享」這件事,絕不能送 ?s= 的 id —— 那把連結本身洩出去了
+  if(window.track) track('share_link',{total:s.data.want.length+s.data.have.length});
   const btn=$('#setShare'), old=btn?btn.textContent:''; if(btn){ btn.disabled=true; btn.textContent='… '+tr('share_wait'); }
   if($('#canfly')) s.data.canfly=$('#canfly').checked;
 
@@ -2626,6 +2634,7 @@ function renderMixMons(){
   MIXHIT=buildMixMons().filter(m=> !q || hitMon(m,q));
   $('#mixMonGrid').innerHTML=''; mixShown=0;
   mixAppendBatch(); mixPump();
+  if(window.trackNoResult) trackNoResult('mix', q, MIXHIT.length);
 }
 function renderMixBgs(){
   const q=$('#mixBgQ').value.trim().toLowerCase(), g=$('#mixBgGrid');
@@ -2742,6 +2751,8 @@ function render(){
     $('#gcount').textContent=`${FILTERED.length} ${tr('combos_unit')}`;
   }
   appendBatch(); pumpBatches(); const sc=$('#gridWrap'); sc.onscroll=pumpBatches;
+  // 打了字卻找不到東西 → 回報,拿來補 data/aliases.json。只送搜尋詞,不碰其他欄位
+  if(window.trackNoResult) trackNoResult(TAB==='bg'?'bg':'mon', q, FILTERED.length);
 }
 // 捲動到底才補 → 一定看得到空白等待。改成「永遠比可視範圍多渲染兩螢幕」,而且一個 frame 只補一批:
 // 提早補所以不必等,單批有上限所以不會一次做完 300 格把畫面卡住。
