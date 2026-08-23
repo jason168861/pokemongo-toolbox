@@ -1050,17 +1050,64 @@ a.tab-button {
     font-size: .9rem;
     color: #6b7280;
 }
-/* 導覽與卡片上的「主打」標示 */
-#docs-app .home-card-hot { outline: 2px solid rgba(224, 39, 108, .35); outline-offset: -2px; }
-#docs-app .home-card-flag {
-    display: inline-block;
-    margin-left: 6px;
-    padding: 1px 8px;
-    border-radius: 999px;
-    background: #fde7ef;
-    color: #b31852;
-    font-size: .72rem;
-    font-weight: 700;
-    vertical-align: middle;
+/* 熱門功能裡的主打卡片。
+   靜態外框在一整排卡片裡其實不太跳得出來，改成三個很輕的動態效果疊在一起：
+   會流動的漸層外框、每隔幾秒掃過去的反光、還有慢慢起伏的光暈。
+   外框用「兩層 background + background-clip」做，不用 z-index -1 的偽元素 ——
+   卡片 hover 時會 translateY，一有 transform 就產生堆疊脈絡，墊在後面的偽元素
+   會被自己的背景蓋掉。 */
+#docs-app .home-card-hot {
+    position: relative;
+    overflow: hidden;                     /* 關住掃過去的反光，不要溢出圓角 */
+    border: 2px solid transparent;
+    background-image:
+        linear-gradient(180deg, #fff, #fff6f9),                       /* 內層：卡片本體 */
+        linear-gradient(115deg, #e0276c, #7b5cff, #e0276c, #7b5cff);  /* 外層：漸層邊框 */
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    background-size: auto, 300% 100%;
+    animation: hotEdge 7s linear infinite, hotGlow 3.4s ease-in-out infinite;
+}
+#docs-app .home-card-hot:hover {
+    border-color: transparent;            /* 蓋掉 .home-card:hover 的 border-color */
+}
+/* 每隔幾秒掃過一次的反光。整段動畫只有 12% 在移動，其餘時間是靜止的，
+   才不會變成一直在閃的廣告 banner。 */
+#docs-app .home-card-hot::after {
+    content: '';
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* 卡片底色本來就接近白色，白色反光完全看不出來 —— 改用品牌色的淡色帶 */
+    background: linear-gradient(105deg,
+        transparent 34%, rgba(224, 39, 108, .16) 46%,
+        rgba(123, 92, 255, .16) 54%, transparent 66%);
+    transform: translateX(-120%);
+    animation: hotSheen 5.5s ease-in-out infinite;
+}
+/* 圖示自己也輕輕浮動，眼睛比較容易被帶過去 */
+#docs-app .home-card-hot .home-card-icon {
+    background: linear-gradient(135deg, #fde7ef, #ede9ff);
+    animation: hotBob 3.4s ease-in-out infinite;
+}
+@keyframes hotEdge { to   { background-position: 0 0, 300% 0; } }
+@keyframes hotSheen {
+    0%, 62%  { transform: translateX(-120%); }
+    74%, 100% { transform: translateX(120%); }
+}
+@keyframes hotGlow {
+    0%, 100% { box-shadow: 0 0 0 rgba(224, 39, 108, 0); }
+    50%      { box-shadow: 0 6px 22px rgba(224, 39, 108, .28); }
+}
+@keyframes hotBob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+}
+/* 會暈車、或把系統設成「減少動態效果」的人，只留下靜態的漸層外框 */
+@media (prefers-reduced-motion: reduce) {
+    #docs-app .home-card-hot,
+    #docs-app .home-card-hot .home-card-icon { animation: none; }
+    #docs-app .home-card-hot::after { display: none; }
 }
 .app-nav .tab-button-hot { font-weight: 700; }

@@ -365,10 +365,15 @@ document.addEventListener('DOMContentLoaded', () => {
             && Array.prototype.some.call(appContents, c => c.id === id);
     }
 
+    // ?hl=en 之類的語言覆寫（index.html 的首頁翻譯用）要留在網址上，
+    // 不然一重新整理就變回瀏覽器語言，沒辦法拿來檢查外國訪客看到的畫面。
+    const HL = new URLSearchParams(location.search).get('hl');
+
     function navigateTo(targetAppId, replace) {
-        const url = targetAppId === 'docs-app'
+        const keep = HL ? (targetAppId === 'docs-app' ? '?hl=' : '&hl=') + encodeURIComponent(HL) : '';
+        const url = (targetAppId === 'docs-app'
             ? window.location.pathname
-            : window.location.pathname + '?tab=' + targetAppId;
+            : window.location.pathname + '?tab=' + targetAppId) + keep;
         if (replace) {
             history.replaceState({ tab: targetAppId }, '', url);
         } else {

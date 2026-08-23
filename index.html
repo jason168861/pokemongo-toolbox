@@ -299,7 +299,6 @@
                       lead: "Pick what you want and what you can offer, then export one shareable image. Shiny, costumes, Dynamax and event backgrounds included — 38 image styles, 7 languages. No install, no sign-up.",
                       cta: "🔴 Make a trade list",
                       cardTitle: "Trade List Maker",
-                      flag: "7 languages",
                       cardText: "Pick Pokémon and backgrounds, export one image.",
                       nav: "🔴 Trade List Maker",
                       note: "Heads up: the trade list is fully translated. The other tools on this site are Chinese-only, because the game data they show (raids, research tasks) is Chinese." },
@@ -308,7 +307,6 @@
                       lead: "欲しいポケモンと出せるポケモンを選ぶだけで、共有用の画像が1枚できます。色違い・コスチューム・ダイマックス・背景カードに対応。38種類のデザイン、7言語。インストール不要・ログイン不要。",
                       cta: "🔴 交換リストを作る",
                       cardTitle: "交換リストメーカー",
-                      flag: "7言語対応",
                       cardText: "ポケモンと背景を選んで画像を1枚書き出し。",
                       nav: "🔴 交換リストメーカー",
                       note: "※ 交換リストは多言語対応です。他のツールは表示する内容（レイド・フィールドリサーチ）が中国語のため、中国語のみとなります。" },
@@ -317,7 +315,6 @@
                       lead: "원하는 포켓몬과 줄 수 있는 포켓몬을 고르면 공유용 이미지 한 장이 완성됩니다. 이로치·코스튬·다이맥스·배경 카드 지원, 38가지 스타일, 7개 언어. 설치도 로그인도 필요 없습니다.",
                       cta: "🔴 교환 목록 만들기",
                       cardTitle: "교환 목록 메이커",
-                      flag: "7개 언어",
                       cardText: "포켓몬과 배경을 골라 이미지 한 장으로.",
                       nav: "🔴 교환 목록 메이커",
                       note: "※ 교환 목록은 다국어를 지원합니다. 다른 도구는 표시하는 게임 정보(레이드·필드 리서치)가 중국어라 중국어만 제공됩니다." },
@@ -326,7 +323,6 @@
                       lead: "Choisissez ce que vous cherchez et ce que vous proposez, puis exportez une seule image à partager. Shiny, costumes, Dynamax et fonds d’événement inclus — 38 styles, 7 langues. Sans installation ni compte.",
                       cta: "🔴 Créer une liste",
                       cardTitle: "Générateur de liste d’échange",
-                      flag: "7 langues",
                       cardText: "Choisissez Pokémon et fonds, exportez une image.",
                       nav: "🔴 Liste d’échange",
                       note: "À noter : la liste d’échange est traduite. Les autres outils sont uniquement en chinois, car les données de jeu qu’ils affichent le sont aussi." },
@@ -335,7 +331,6 @@
                       lead: "Wähle, was du suchst und was du anbieten kannst — heraus kommt ein einzelnes Bild zum Teilen. Mit Shiny, Kostümen, Dynamax und Event-Hintergründen, 38 Stile, 7 Sprachen. Ohne Installation, ohne Anmeldung.",
                       cta: "🔴 Tauschliste erstellen",
                       cardTitle: "Tauschlisten-Generator",
-                      flag: "7 Sprachen",
                       cardText: "Pokémon und Hintergründe wählen, Bild exportieren.",
                       nav: "🔴 Tauschlisten-Generator",
                       note: "Hinweis: Die Tauschliste ist übersetzt. Die übrigen Tools gibt es nur auf Chinesisch, weil auch die angezeigten Spieldaten chinesisch sind." },
@@ -344,12 +339,14 @@
                       lead: "Elige lo que buscas y lo que puedes ofrecer, y exporta una sola imagen para compartir. Incluye variocolor, disfraces, Dinamax y fondos de evento — 38 estilos, 7 idiomas. Sin instalar nada ni registrarte.",
                       cta: "🔴 Crear lista de intercambio",
                       cardTitle: "Generador de listas de intercambio",
-                      flag: "7 idiomas",
                       cardText: "Elige Pokémon y fondos, exporta una imagen.",
                       nav: "🔴 Lista de intercambio",
                       note: "Nota: la lista de intercambio está traducida. El resto de herramientas están solo en chino, porque los datos del juego que muestran también lo están." }
             };
-            var langs = navigator.languages || [navigator.language || ''];
+            // ?hl=en / ?hl=ja … 可以強制指定語言，用來檢查外國訪客看到的畫面
+            //（?hl=zh 就會回到中文版）。沒帶這個參數時才看瀏覽器語言。
+            var force = new URLSearchParams(location.search).get('hl');
+            var langs = force ? [force] : (navigator.languages || [navigator.language || '']);
             var pick = null;
             for (var i = 0; i < langs.length && !pick; i++) {
                 var c = String(langs[i]).toLowerCase();
@@ -385,7 +382,7 @@
             <div class="home-grid">
                 <a class="home-card home-card-hot" href="trade-list/">
                     <span class="home-card-icon">🔴</span>
-                    <span class="home-card-title"><span data-i18n="cardTitle">交易清單產生器</span> <span class="home-card-flag" data-i18n="flag">7 種語言</span></span>
+                    <span class="home-card-title" data-i18n="cardTitle">交易清單產生器</span>
                     <span class="home-card-text" data-i18n="cardText">選寶可夢與背卡，一鍵做出交易清單圖片。</span>
                 </a>
                 <!-- 地圖暫時下架
