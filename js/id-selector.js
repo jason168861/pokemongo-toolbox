@@ -122,7 +122,7 @@ export function initializeIdSelector() {
     
     function handleSearch() {
         selectAllShownButton.style.display = 'none';
-        const rawInput = searchInput.value.toLowerCase();
+        const rawInput = zhLower(searchInput.value);   // 繁簡通用
         const searchTerms = rawInput.split(',').map(term => term.trim()).filter(term => term.length > 0);
         const allPokemonCards = pokemonContainer.querySelectorAll('.pokemon-card');
         
@@ -132,7 +132,7 @@ export function initializeIdSelector() {
                 return;
             }
             const pokemonId = card.dataset.id;
-            const pokemonName = card.dataset.name.toLowerCase();
+            const pokemonName = zhLower(card.dataset.name);
             const isMatch = searchTerms.some(term => isNaN(term) ? pokemonName.includes(term) : pokemonId === term);
             card.style.display = isMatch ? 'flex' : 'none';
         });

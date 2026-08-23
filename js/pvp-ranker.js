@@ -305,13 +305,13 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
     
     // --- [修正] 還原原始的搜尋建議邏輯 ---
     function showSuggestions() {
-        const query = pokemonInput.value.toLowerCase();
+        const query = zhLower(pokemonInput.value);   // 繁簡通用
         if (query.length < 1) {
             // 當輸入為空時，顯示所有寶可夢（或一個預設列表）
             updateSearchSuggestions(POKEDEX);
         } else {
             const matchedPokemons = POKEDEX.filter(p => 
-                p.name.toLowerCase().includes(query) ||
+                zhLower(p.name).includes(query) ||
                 p.id.toLowerCase().includes(query) ||
                 p.dexNumber.toString() === query ||
                 (p.aliases && p.aliases.includes(query))

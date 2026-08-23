@@ -403,7 +403,7 @@ export function initializeCpChecker() {
         return allPokemonData.find(p => String(p.id) === s)
             || allPokemonData.find(p => p.name.toLowerCase() === s)
             || allPokemonData.find(p => (p.alt || '').toLowerCase() === s)   // 改名前的舊 ?mon= 連結
-            || allPokemonData.find(p => p.name.toLowerCase().includes(s)) || null;
+            || allPokemonData.find(p => zhLower(p.name).includes(s)) || null;
     }
     // 把目前查詢反映到網址列（可分享/可被收錄）並更新標題、描述、canonical
     function syncMonUrlSeo(query) {
@@ -460,8 +460,8 @@ export function initializeCpChecker() {
     function matchesQuery(p, query) {
         if (!query) return true;
         return !isNaN(query) ? String(p.id) === query
-                             : (p.name.toLowerCase().includes(query)
-                                || (p.alt || '').toLowerCase().includes(query));
+                             : (zhLower(p.name).includes(query)
+                                || zhLower(p.alt || '').includes(query));
     }
 
     function buildCards(indices) {
@@ -470,8 +470,8 @@ export function initializeCpChecker() {
             const pokemon = allPokemonData[i];
             const pokemonCard = document.createElement('div');
             pokemonCard.className = 'pokemon-card';
-            pokemonCard.dataset.name = pokemon.name.toLowerCase();
-            pokemonCard.dataset.alt = (pokemon.alt || '').toLowerCase();   // 改名前的舊名（?mon= 舊連結用）
+            pokemonCard.dataset.name = zhLower(pokemon.name);
+            pokemonCard.dataset.alt = zhLower(pokemon.alt || '');   // 改名前的舊名（?mon= 舊連結用）
             pokemonCard.dataset.id = pokemon.id;
             pokemonCard.dataset.idx = i;   // 對回 allPokemonData（同 dex 的地區形態 id 會重複，不能用 id 反查）
             pokemonCard.innerHTML = `
@@ -544,7 +544,7 @@ export function initializeCpChecker() {
     searchInput.addEventListener('focus', ensureAllCards);
     searchInput.addEventListener('input', () => {
         ensureAllCards();   // 深連結進來時 DOM 裡只有幾張卡，要先補齊才能搜尋
-        const query = searchInput.value.trim().toLowerCase();
+        const query = zhLower(searchInput.value.trim());   // 繁簡通用:兩邊都正規化成簡體再比
         filterResults(query);
         // 根據輸入框是否有值來顯示/隱藏按鈕
         clearBtn.style.display = searchInput.value ? 'block' : 'none';
@@ -566,7 +566,7 @@ export function initializeCpChecker() {
         }
     });
     searchInput.addEventListener('input', (event) => {
-        const query = event.target.value.trim().toLowerCase();
+        const query = zhLower(event.target.value.trim());
         filterResults(query);
     });
     // 網址帶 ?mon= → 只建立那幾張卡（Googlebot 看到的就是這個精簡版）；

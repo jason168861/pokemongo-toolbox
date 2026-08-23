@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../js/zh-search.js"></script>
 <script src="../js/analytics.js"></script>
 <link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
 <link rel="apple-touch-icon" href="../img/masterball.png">
@@ -1082,7 +1083,7 @@ async function loadAllNames(){
   const maps=await Promise.all(LANGS.map(([c])=>loadNames(c)));
   const idx={};
   for(const m of maps) for(const dex in m){ (idx[dex]=idx[dex]||[]).push(m[dex]); }
-  ALLNAMES={}; for(const dex in idx) ALLNAMES[dex]=idx[dex].join('|').toLowerCase();
+  ALLNAMES={}; for(const dex in idx) ALLNAMES[dex]=zhLower(idx[dex].join('|'));   // 繁簡通用:索引也正規化
 }
 /* ===== 別名搜尋 =====
    官方譯名以外,社群大量使用別的叫法:舊譯名(大比鳥→比雕)、造型俗稱(HALLOWEEN_2025→萬聖節)、
@@ -1099,7 +1100,8 @@ async function loadAliases(){
     map[k]=(map[k]?map[k]+'|':'')+terms.join('|'); };
   for(const e of ((d&&d.entries)||[])){
     const map=ALIAS[e&&e.kind]; if(!map)continue;
-    const terms=(e.terms||[]).map(t=>String(t).trim().toLowerCase()).filter(Boolean);
+    // 別名也要正規化 —— 你建的是繁體(「乘龍」),使用者可能打簡體(「乘龙」)
+    const terms=(e.terms||[]).map(t=>zhLower(String(t).trim())).filter(Boolean);
     if(!terms.length)continue;
     for(const t of (e.targets||[])) put(map,t,terms);
   }
@@ -1118,7 +1120,7 @@ function hitMon(o,q){ return matchName(o.dex,q)||matchDex(o.dex,q)||matchForm(o,
 // 背卡:檔名(GO_Taipei_background.png)、wiki 標題(Taipei, Taiwan)、別名(台北)
 function hitBg(imgName,title,q){
   return (!!imgName&&(imgName.toLowerCase().includes(q)||aliasHit(ALIAS.bg,imgName,q)))
-      || (!!title&&title.toLowerCase().includes(q));
+      || (!!title&&zhLower(title).includes(q));
 }
 async function applyLang(lang){
   if(!I18N[lang])lang='en'; LANG=lang; localStorage.setItem('bgtoolLang',lang);
@@ -2630,14 +2632,14 @@ function mixPump(){
   requestAnimationFrame(step);
 }
 function renderMixMons(){
-  const q=$('#mixQ').value.trim().toLowerCase();
+  const q=zhLower($('#mixQ').value.trim());
   MIXHIT=buildMixMons().filter(m=> !q || hitMon(m,q));
   $('#mixMonGrid').innerHTML=''; mixShown=0;
   mixAppendBatch(); mixPump();
   if(window.trackNoResult) trackNoResult('mix', q, MIXHIT.length);
 }
 function renderMixBgs(){
-  const q=$('#mixBgQ').value.trim().toLowerCase(), g=$('#mixBgGrid');
+  const q=zhLower($('#mixBgQ').value.trim()), g=$('#mixBgGrid');
   g.innerHTML='';
   const none=document.createElement('div'); none.className='cell'+(MIX.bg?'':' sel');
   none.style.cssText='display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--mut);text-align:center';
@@ -2734,7 +2736,7 @@ function inTarget(c){return LIST[TARGET].some(x=>keyOf(x)===keyOf(c));}
 function inAnyList(c){return LIST.want.some(x=>keyOf(x)===keyOf(c))||LIST.have.some(x=>keyOf(x)===keyOf(c));}
 function render(){
   const g=$('#grid');g.innerHTML='';shown=0;
-  const q=$('#q').value.trim().toLowerCase();
+  const q=zhLower($('#q').value.trim());
   if(TAB==='bg'){
     FILTERED=BGCOMBOS.filter(c=>{const normal=!c.shiny&&!c.dmax&&!c.gmax;   // 淨化算「一般」
       if(normal&&!FILT.fNormal)return false; if(c.shiny&&!FILT.fShiny)return false;

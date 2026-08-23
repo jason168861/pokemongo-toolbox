@@ -184,7 +184,7 @@ function highlightMatches(container, searchTerm) {
 
 // --- 【修改】搜尋與過濾邏輯，加入高亮處理 ---
 function filterAndRender() {
-    const searchTerm = searchInput.value.toLowerCase().trim();
+    const searchTerm = zhLower(searchInput.value).trim();   // 繁簡通用
     const searchInside = includeAllCheckbox.checked;
     const allCardElements = container.querySelectorAll('.research-card');
     const noResultsMessage = container.querySelector('.no-results');
@@ -215,7 +215,7 @@ function filterAndRender() {
     allResearches.forEach(research => {
         if (!research || !research.title) return;
         let isMatch = false;
-        const lowerCaseTitle = research.title.toLowerCase();
+        const lowerCaseTitle = zhLower(research.title);
 
         if (lowerCaseTitle.includes(searchTerm)) {
             isMatch = true;
@@ -223,11 +223,11 @@ function filterAndRender() {
         else if (searchInside) {
             isMatch = research.steps.some(step =>
                 (step.tasks && step.tasks.some(task =>
-                    (task.description && task.description.toLowerCase().includes(searchTerm)) ||
-                    (task.reward && task.reward.text && task.reward.text.toLowerCase().includes(searchTerm))
+                    (task.description && zhLower(task.description).includes(searchTerm)) ||
+                    (task.reward && task.reward.text && zhLower(task.reward.text).includes(searchTerm))
                 )) ||
                 (step.total_rewards && step.total_rewards.some(reward =>
-                    (reward.text && reward.text.toLowerCase().includes(searchTerm))
+                    (reward.text && zhLower(reward.text).includes(searchTerm))
                 ))
             );
         }
