@@ -14,8 +14,8 @@
     <link rel="apple-touch-icon" href="img/masterball.png">
 
     <!-- ===== SEO 基本標籤 ===== -->
-    <title>Pokémon Go 工具箱｜IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢</title>
-    <meta name="description" content="Pokémon GO 玩家的一站式中文工具箱：IV100 滿值 CP 查詢、PvP 各聯盟 IV 排名、寶可夢編號篩選器、遊戲內搜尋篩選指令大全、當期團體戰頭目、孵蛋列表與田野調查任務，資料每日更新。">
+    <title>Pokémon Go 交易清單產生器 Trade List Maker｜IV100 CP、PvP 排名與搜尋指令｜Pokémon Go 工具箱</title>
+    <meta name="description" content="免費製作 Pokémon GO 交易清單圖片（Trade List Maker，支援 7 種語言）：選好想要與可換的寶可夢，一鍵產生分享圖。另有 IV100 滿值 CP 查詢、PvP 各聯盟 IV 排名、寶可夢編號篩選器、遊戲內搜尋篩選指令大全、當期團體戰頭目、孵蛋列表與田野調查任務，資料每日更新。">
     <meta name="keywords" content="Pokémon GO,寶可夢,CP查詢,IV100,PvP排名,搜尋指令,篩選指令,團體戰,孵蛋,田野調查,特殊調查,編號篩選">
     <meta name="author" content="Pokémon Go 工具箱">
     <meta name="robots" content="index, follow">
@@ -24,8 +24,8 @@
     <!-- ===== Open Graph（Facebook / LINE 分享預覽）===== -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Pokémon Go 工具箱">
-    <meta property="og:title" content="Pokémon Go 工具箱｜CP、PvP、搜尋指令、團體戰查詢">
-    <meta property="og:description" content="IV100 CP 查詢、PvP IV 排名、搜尋篩選指令大全、當期團體戰與孵蛋列表，Pokémon GO 玩家必備中文工具。">
+    <meta property="og:title" content="Pokémon Go 交易清單產生器 Trade List Maker｜Pokémon Go 工具箱">
+    <meta property="og:description" content="一鍵做出交易清單分享圖，支援 7 種語言。另有 IV100 CP 查詢、PvP IV 排名、搜尋篩選指令大全、當期團體戰與孵蛋列表，Pokémon GO 玩家必備中文工具。">
     <meta property="og:url" content="https://pogokit.com/">
     <meta property="og:locale" content="zh_TW">
     <meta property="og:image" content="https://cdn.leekduck.com/assets/img/pokemon_icons/pm150.fA.icon.png">
@@ -54,7 +54,7 @@
         // 白名單：對不上就什麼都不做，交回 main.js 走原本流程退回首頁
         var TABS = ['cp-checker-app', 'pvp-ranker-app', 'id-selector-app', 'search-filters-app',
                     'raids-app', 'eggs-app', 'research-app', 'special-research-app',
-                    'info-hub-app', 'map-app'];
+                    'info-hub-app'];   // 地圖暫時下架
         if (TABS.indexOf(tab) === -1) return;
 
         // --- 1. canonical / og:url 改成本頁自己的網址 ---
@@ -107,12 +107,14 @@
       "applicationCategory": "GameApplication",
       "operatingSystem": "Web",
       "inLanguage": "zh-Hant",
-      "description": "Pokémon GO 中文工具箱：IV100 CP 查詢、PvP IV 排名、搜尋篩選指令、團體戰、孵蛋與田野調查查詢。",
+      "description": "Pokémon GO 交易清單產生器（7 種語言）與中文工具箱:IV100 CP 查詢、PvP IV 排名、搜尋篩選指令、團體戰、孵蛋與田野調查查詢。",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TWD" }
     }
     </script>
 
-    <!-- 補給站/道館地圖頁的 FAQ 結構化資料 -->
+    <!-- 地圖暫時下架：這段是地圖頁的 FAQ 結構化資料，功能關掉的期間不能留著，
+         不然 Google 會對一個進不去的功能顯示 FAQ 複合式搜尋結果。
+         重新開啟時把下面整段的註解拿掉即可。
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -131,6 +133,7 @@
       ]
     }
     </script>
+    -->
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/cp-checker.css">
@@ -145,11 +148,15 @@
     <link rel="stylesheet" href="css/special-research.css">
     <link rel="stylesheet" href="css/info-hub.css">
 
-    <!-- 地圖：Leaflet + S2 幾何（供補給站/道館地圖使用） -->
+    <!-- 地圖暫時下架（Leaflet + S2 幾何，供補給站/道館地圖使用）。
+         這兩支是同步載入的外部腳本，會擋住首次繪製，下架期間沒有頁面用得到。
+         要重新開啟：取消下面四行的註解，並清空 js/main.js 的 DISABLED_TABS。 -->
+    <!--
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/map-app.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/s2geometry.js"></script>
+    -->
 
     <!-- 入場動畫（放最後以覆蓋舊的 loading 樣式） -->
     <link rel="stylesheet" href="css/intro.css">
@@ -223,6 +230,7 @@
             <div class="sub-links mega-menu">
                 <div class="mega-col">
                     <div class="mega-heading">常用查詢</div>
+                    <a class="tab-button tab-button-hot" href="trade-list/" data-i18n="nav">🔴 交易清單產生器</a>
                     <a class="tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">IV100 CP 查詢</a>
                     <a class="tab-button" data-target="pvp-ranker-app" href="?tab=pvp-ranker-app">PvP IV 排名查詢</a>
                     <a class="tab-button" data-target="id-selector-app" href="?tab=id-selector-app">寶可夢編號篩選器</a>
@@ -235,8 +243,9 @@
                     <a class="tab-button" data-target="research-app" href="?tab=research-app">田野調查任務</a>
                     <a class="tab-button" data-target="special-research-app" href="?tab=special-research-app">特殊調查</a>
                     <a class="tab-button" data-target="info-hub-app" href="?tab=info-hub-app">特別資訊</a>
+                    <!-- 地圖暫時下架
                     <a class="tab-button" data-target="map-app" href="?tab=map-app">補給站/道館地圖</a>
-                    <a class="tab-button" href="trade-list/">🔴 交易清單產生器</a>
+                    -->
                 </div>
             </div>
         </div>
@@ -263,17 +272,110 @@
     <div class="main-container">
 <div id="docs-app" class="app-content active">
     <div class="container home-container">
-        <section class="home-hero">
+        <!-- 主打交易清單:站名是靠它傳出去的(匯出圖底部印 pogokit.com/t),
+             搜尋進來的人第一眼要先看到它。文字會依瀏覽器語言切換 —— 很多外國人
+             是從別人分享的清單圖找過來的,看到滿頁中文會不知道點哪裡。 -->
+        <section class="home-hero home-hero-tl">
             <div class="home-hero-copy">
-                <p class="home-eyebrow">Pokémon GO 中文工具箱</p>
-                <h1>查 CP、算排名、看地圖，一站搞定</h1>
-                <p class="home-lead">IV100 CP 查詢、PvP IV 排名、全台補給站/道館地圖、團體戰與孵蛋列表——台灣玩家常用的查詢工具全部集中在這裡，免安裝、免登入，打開就能用。</p>
+                <p class="home-eyebrow" data-i18n="eyebrow">Pokémon GO 交易清單產生器</p>
+                <h1 data-i18n="h1">做一張交易清單，貼出去就能換</h1>
+                <p class="home-lead" data-i18n="lead">選好想要與可換的寶可夢，一鍵產生清單圖片。支援異色、造型、極巨化與活動背卡，38 種圖片風格，7 種語言。免安裝、免登入。</p>
                 <div class="home-actions">
-                    <button class="home-primary-action tab-button" data-target="map-app">🗺️ 開啟補給站/道館地圖</button>
-                    <button class="home-secondary-action tab-button" data-target="cp-checker-app">IV100 CP 查詢</button>
+                    <a class="home-primary-action" href="trade-list/" data-i18n="cta">🔴 開始製作交易清單</a>
+                    <button class="home-secondary-action tab-button" data-target="cp-checker-app" data-cn-only>💯 IV100 CP 查詢</button>
                 </div>
+                <p class="home-lead home-tl-note" data-i18n="note" hidden></p>
             </div>
         </section>
+        <script>
+        /* 首頁只翻譯這一塊 hero —— 其餘工具吃的是中文遊戲資料(團體戰、田野調查…),
+           翻了介面也看不懂內容,反而更難用。交易清單本身有完整的 7 語系,
+           所以這裡的任務只是「把外國訪客順利送過去」。
+           語言判斷與 trade-list 的 detectLang() 同一套規則,兩邊行為才一致。 */
+        (function () {
+            var T = {
+                en: { eyebrow: "Pokémon GO Trade List Maker",
+                      h1: "Build a trade list, share it, get your trade",
+                      lead: "Pick what you want and what you can offer, then export one shareable image. Shiny, costumes, Dynamax and event backgrounds included — 38 image styles, 7 languages. No install, no sign-up.",
+                      cta: "🔴 Make a trade list",
+                      cardTitle: "Trade List Maker",
+                      flag: "7 languages",
+                      cardText: "Pick Pokémon and backgrounds, export one image.",
+                      nav: "🔴 Trade List Maker",
+                      note: "Heads up: the trade list is fully translated. The other tools on this site are Chinese-only, because the game data they show (raids, research tasks) is Chinese." },
+                ja: { eyebrow: "ポケモンGO 交換リストメーカー",
+                      h1: "交換リストを作って、そのまま共有",
+                      lead: "欲しいポケモンと出せるポケモンを選ぶだけで、共有用の画像が1枚できます。色違い・コスチューム・ダイマックス・背景カードに対応。38種類のデザイン、7言語。インストール不要・ログイン不要。",
+                      cta: "🔴 交換リストを作る",
+                      cardTitle: "交換リストメーカー",
+                      flag: "7言語対応",
+                      cardText: "ポケモンと背景を選んで画像を1枚書き出し。",
+                      nav: "🔴 交換リストメーカー",
+                      note: "※ 交換リストは多言語対応です。他のツールは表示する内容（レイド・フィールドリサーチ）が中国語のため、中国語のみとなります。" },
+                ko: { eyebrow: "포켓몬 GO 교환 목록 메이커",
+                      h1: "교환 목록을 만들어 그대로 공유하세요",
+                      lead: "원하는 포켓몬과 줄 수 있는 포켓몬을 고르면 공유용 이미지 한 장이 완성됩니다. 이로치·코스튬·다이맥스·배경 카드 지원, 38가지 스타일, 7개 언어. 설치도 로그인도 필요 없습니다.",
+                      cta: "🔴 교환 목록 만들기",
+                      cardTitle: "교환 목록 메이커",
+                      flag: "7개 언어",
+                      cardText: "포켓몬과 배경을 골라 이미지 한 장으로.",
+                      nav: "🔴 교환 목록 메이커",
+                      note: "※ 교환 목록은 다국어를 지원합니다. 다른 도구는 표시하는 게임 정보(레이드·필드 리서치)가 중국어라 중국어만 제공됩니다." },
+                fr: { eyebrow: "Générateur de liste d’échange Pokémon GO",
+                      h1: "Créez une liste d’échange et partagez-la",
+                      lead: "Choisissez ce que vous cherchez et ce que vous proposez, puis exportez une seule image à partager. Shiny, costumes, Dynamax et fonds d’événement inclus — 38 styles, 7 langues. Sans installation ni compte.",
+                      cta: "🔴 Créer une liste",
+                      cardTitle: "Générateur de liste d’échange",
+                      flag: "7 langues",
+                      cardText: "Choisissez Pokémon et fonds, exportez une image.",
+                      nav: "🔴 Liste d’échange",
+                      note: "À noter : la liste d’échange est traduite. Les autres outils sont uniquement en chinois, car les données de jeu qu’ils affichent le sont aussi." },
+                de: { eyebrow: "Pokémon GO Tauschlisten-Generator",
+                      h1: "Tauschliste erstellen und direkt teilen",
+                      lead: "Wähle, was du suchst und was du anbieten kannst — heraus kommt ein einzelnes Bild zum Teilen. Mit Shiny, Kostümen, Dynamax und Event-Hintergründen, 38 Stile, 7 Sprachen. Ohne Installation, ohne Anmeldung.",
+                      cta: "🔴 Tauschliste erstellen",
+                      cardTitle: "Tauschlisten-Generator",
+                      flag: "7 Sprachen",
+                      cardText: "Pokémon und Hintergründe wählen, Bild exportieren.",
+                      nav: "🔴 Tauschlisten-Generator",
+                      note: "Hinweis: Die Tauschliste ist übersetzt. Die übrigen Tools gibt es nur auf Chinesisch, weil auch die angezeigten Spieldaten chinesisch sind." },
+                es: { eyebrow: "Generador de listas de intercambio de Pokémon GO",
+                      h1: "Crea tu lista de intercambio y compártela",
+                      lead: "Elige lo que buscas y lo que puedes ofrecer, y exporta una sola imagen para compartir. Incluye variocolor, disfraces, Dinamax y fondos de evento — 38 estilos, 7 idiomas. Sin instalar nada ni registrarte.",
+                      cta: "🔴 Crear lista de intercambio",
+                      cardTitle: "Generador de listas de intercambio",
+                      flag: "7 idiomas",
+                      cardText: "Elige Pokémon y fondos, exporta una imagen.",
+                      nav: "🔴 Lista de intercambio",
+                      note: "Nota: la lista de intercambio está traducida. El resto de herramientas están solo en chino, porque los datos del juego que muestran también lo están." }
+            };
+            var langs = navigator.languages || [navigator.language || ''];
+            var pick = null;
+            for (var i = 0; i < langs.length && !pick; i++) {
+                var c = String(langs[i]).toLowerCase();
+                if (c.indexOf('zh') === 0) return;          // 中文訪客 → 保持原本的中文 hero
+                if (T[c.slice(0, 2)]) pick = c.slice(0, 2);
+            }
+            var t = T[pick || 'en'];
+            /* 這段腳本在 DOM 中間,底下的卡片還沒被解析到 —— 一定要等 DOM 完成。
+               翻的東西只有兩處:hero,以及「本身就有多語系」的交易清單與地圖。
+               其餘工具吃的是中文遊戲資料,翻了介面也看不懂內容,反而更難用。 */
+            var apply = function () {
+                // 只有中文才有的工具（例:IV100 CP 查詢）對外國訪客直接藏起來,
+                // 免得點進去看到一片中文
+                document.querySelectorAll('[data-cn-only]').forEach(function (el) { el.hidden = true; });
+                document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                    var v = t[el.dataset.i18n];
+                    if (!v) return;
+                    el.textContent = v;
+                    el.lang = pick || 'en';                 // 頁面主體仍是 zh-Hant,只標這幾處
+                    if (el.dataset.i18n === 'note') el.hidden = false;
+                });
+            };
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
+            else apply();
+        })();
+        </script>
 
         <section class="home-section">
             <div class="home-section-header">
@@ -281,16 +383,18 @@
                 <p>先從最常用的工具開始。</p>
             </div>
             <div class="home-grid">
+                <a class="home-card home-card-hot" href="trade-list/">
+                    <span class="home-card-icon">🔴</span>
+                    <span class="home-card-title"><span data-i18n="cardTitle">交易清單產生器</span> <span class="home-card-flag" data-i18n="flag">7 種語言</span></span>
+                    <span class="home-card-text" data-i18n="cardText">選寶可夢與背卡，一鍵做出交易清單圖片。</span>
+                </a>
+                <!-- 地圖暫時下架
                 <a class="home-card tab-button" data-target="map-app" href="?tab=map-app">
                     <span class="home-card-icon">🗺️</span>
-                    <span class="home-card-title">補給站/道館地圖</span>
-                    <span class="home-card-text">全台位置、S2 網格、40/80m 範圍圈與最佳站位排名。</span>
+                    <span class="home-card-title" data-i18n="mapTitle">補給站/道館地圖</span>
+                    <span class="home-card-text" data-i18n="mapText">全台位置、S2 網格、40/80m 範圍圈與最佳站位排名。</span>
                 </a>
-                <a class="home-card" href="trade-list/">
-                    <span class="home-card-icon">🔴</span>
-                    <span class="home-card-title">交易清單產生器</span>
-                    <span class="home-card-text">選寶可夢與背卡，一鍵做出交易清單圖片。</span>
-                </a>
+                -->
                 <a class="home-card tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">
                     <span class="home-card-icon">💯</span>
                     <span class="home-card-title">IV100 CP 查詢</span>
@@ -347,10 +451,12 @@
             <details>
                 <summary>顯示完整功能說明</summary>
                 <div class="home-docs-copy">
-                    <p>這個工具箱整合了查詢、篩選、地圖與資訊整理功能。若你只是想快速找到入口，上方卡片就夠了。</p>
+                    <p>這個工具箱整合了查詢、篩選與資訊整理功能。若你只是想快速找到入口，上方卡片就夠了。</p>
                     <ul>
                         <li>IV100 CP、PvP 排名、編號篩選可以快速進入常用查詢。</li>
+                        <!-- 地圖暫時下架
                         <li>補給站/道館地圖涵蓋全台 21 萬個以上地點，支援 S2 網格（L14 道館格／L17 補給站格）、地點搜尋、定位範圍圈，還能依縣市查詢 80 公尺內道館最多、40 公尺內補給站最多的最佳站位排名。</li>
+                        -->
                         <li>團體戰、孵蛋、田野調查與特殊調查提供當期資料。</li>
                         <li>搜尋指令頁整理了遊戲內常用的篩選語法。</li>
                     </ul>

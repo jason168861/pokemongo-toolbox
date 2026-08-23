@@ -36,7 +36,6 @@ import { initializeFilterBuilder } from './filter-builder.js';
 import { initializeSpecialResearchApp } from './special-research.js'; // <-- 【新增】
 import { initializeInfoHubApp } from './info-hub.js'; // <-- 【新增】
 import { initializePvpRanker } from './pvp-ranker.js';
-import { initializeMapApp } from './map-app.js';
 
 document.addEventListener('DOMContentLoaded', () => {
         const app = initializeApp(window.firebaseConfig); // 假設您的 config 在 window 上
@@ -202,9 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 搜尋結果有各自明確的標題與摘要（而不是全部顯示同一段主頁文字）。
     const SITE_BASE = 'https://pogokit.com/';
     const TAB_SEO = {
+        // 首頁的標題要跟 index.html <head> 裡寫死的那份一致 —— 這裡會在載入後蓋掉它，
+        // 兩邊不同步的話 Google 抓到的會是這一份。交易清單是最多人搜的功能，
+        // 而且很多人是從別人分享的清單圖找過來（圖底部印 pogokit.com/t），所以放最前面，
+        // 英文關鍵字也直接寫進去，外國人搜 trade list 才對得上。
         'docs-app': {
-            title: 'Pokémon Go 工具箱｜IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢',
-            desc: 'Pokémon GO 玩家的一站式中文工具箱：IV100 CP 查詢、PvP IV 排名、編號篩選器、搜尋篩選指令、團體戰、孵蛋與田野調查，資料每日更新。'
+            title: 'Pokémon Go 交易清單產生器 Trade List Maker｜IV100 CP、PvP 排名與搜尋指令｜Pokémon Go 工具箱',
+            desc: '免費製作 Pokémon GO 交易清單圖片（Trade List Maker，支援 7 種語言）：選好想要與可換的寶可夢，一鍵產生分享圖。另有 IV100 CP 查詢、PvP IV 排名、編號篩選器、搜尋篩選指令、團體戰、孵蛋與田野調查，資料每日更新。'
         },
         'cp-checker-app': {
             // 避免使用括號：Google 改寫標題時容易從括號中間截斷，變成「25 等）｜…」
@@ -331,8 +334,10 @@ document.addEventListener('DOMContentLoaded', () => {
             initializeInfoHubApp();
             infoHubAppInitialized = true;
         } else if (targetAppId === 'map-app' && !mapAppInitialized) {
-            initializeMapApp();
             mapAppInitialized = true;
+            // 動態載入：map-app.js 有 51KB，靜態 import 會讓每個頁面都下載它。
+            // 這支同時依賴 index.html 載入的 Leaflet (L) 與 s2geometry (S2)。
+            import('./map-app.js').then(m => m.initializeMapApp());
         }
 
         // 地圖分頁：捲動位置會沿用上一個分頁，若已往下捲會看不到地圖上方的
@@ -349,8 +354,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 【SEO 改版】改用 ?tab= 查詢參數當網址（Google 會視為不同頁面收錄），
     // 取代原本的 #hash（hash 不會被當成獨立網址）。
+    /* 暫時下架的分頁。markup、CSS、JS、資料全部留著，只是進不去 ——
+       ?tab=map-app 會被當成無效網址退回首頁，導覽與首頁卡片也拿掉了。
+       要重新開啟：把這個陣列清空，並把 index.html 兩處標了「地圖暫時下架」的
+       註解取消（<head> 的 Leaflet/S2 載入、導覽列連結、首頁卡片）。 */
+    const DISABLED_TABS = ['map-app'];
+
     function isValidTab(id) {
-        return id && Array.prototype.some.call(appContents, c => c.id === id);
+        return id && DISABLED_TABS.indexOf(id) === -1
+            && Array.prototype.some.call(appContents, c => c.id === id);
     }
 
     function navigateTo(targetAppId, replace) {
@@ -448,21 +460,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelector('.nav-links');
     const tabButtonsInMenu = navLinks.querySelectorAll('.tab-button');
 
-    // 當漢堡按鈕被點擊時
+    /* ---- 手機版選單 ------------------------------------------------------
+       高度不能寫死成 calc(100vh - 50px)：手機瀏覽器的 100vh 是「網址列收起來
+       之後」的高度，網址列還在時算出來的選單比實際可視範圍高，最後幾項會被推
+       到螢幕外面且捲不到。改成開啟當下量「選單頂端到視窗底部」的真實距離。 */
+    const headerBar = document.querySelector('.site-header-main');
+    function sizeMenu() {
+        // 量表頭的下緣，不要量選單自己 —— 選單收合時帶著 translateY(-8px)，
+        // 量到的位置會比實際展開後高 8px。
+        const top = headerBar ? headerBar.getBoundingClientRect().bottom : 52;
+        // 底部留 8px，才看得出「下面還有東西可以捲」
+        document.documentElement.style.setProperty(
+            '--menu-max-h', Math.max(160, window.innerHeight - top - 8) + 'px');
+    }
+
+    function setMenu(open) {
+        if (open) sizeMenu();            // 先量再開，避免開啟動畫期間高度跳動
+        navLinks.classList.toggle('is-open', open);
+        hamburgerButton.classList.toggle('is-active', open);
+        hamburgerButton.setAttribute('aria-expanded', String(open));
+        // 背景遮罩 + 鎖住頁面捲動，都掛在這個 class 上（只在手機的斷點內生效）
+        document.documentElement.classList.toggle('nav-open', open);
+    }
+    const closeMenu = () => { if (navLinks.classList.contains('is-open')) setMenu(false); };
+
     hamburgerButton.addEventListener('click', () => {
-        // 切換選單的展開/收合狀態
-        navLinks.classList.toggle('is-open');
-        // 切換漢堡按鈕自身的 "X" 狀態
-        hamburgerButton.classList.toggle('is-active');
-        // 更新 aria 屬性，有助於無障礙閱讀
-        const isExpanded = navLinks.classList.contains('is-open');
-        hamburgerButton.setAttribute('aria-expanded', isExpanded);
-        // 打開選單時，預設把所有群組都展開
-        if (isExpanded) {
-            document.querySelectorAll('.nav-group').forEach(group => {
-                group.classList.add('is-expanded');
-            });
-        }
+        setMenu(!navLinks.classList.contains('is-open'));
+    });
+    // 點選單以外的地方（含背景遮罩）就關掉 —— 手機上沒有這個會覺得選單「黏住」
+    document.addEventListener('click', (e) => {
+        if (!navLinks.classList.contains('is-open')) return;
+        if (navLinks.contains(e.target) || hamburgerButton.contains(e.target)) return;
+        closeMenu();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    // 轉螢幕方向／網址列收合都會改變可視高度，重新量一次
+    window.addEventListener('resize', () => {
+        if (navLinks.classList.contains('is-open')) sizeMenu();
     });
     const groupTitles = document.querySelectorAll('.nav-group .group-title');
 
@@ -580,15 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.addEventListener('click', skip);
     })();
     // 當選單中的任何一個頁籤按鈕被點擊時，自動收合選單
-    tabButtonsInMenu.forEach(button => {
-        button.addEventListener('click', () => {
-            if (navLinks.classList.contains('is-open')) {
-                navLinks.classList.remove('is-open');
-                hamburgerButton.classList.remove('is-active');
-                hamburgerButton.setAttribute('aria-expanded', 'false');
-            }
-        });
-    });
+    tabButtonsInMenu.forEach(button => button.addEventListener('click', closeMenu));
     const desktopSubmenuButtons = document.querySelectorAll('.nav-group .sub-links .tab-button');
 
     desktopSubmenuButtons.forEach(button => {

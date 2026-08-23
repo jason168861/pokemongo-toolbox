@@ -290,6 +290,7 @@ a.tab-button {
     background: linear-gradient(180deg, #ffffff, #f8fafc);
     border: 1px solid #e5e7eb;
     text-align: left;
+    text-decoration: none;   /* 真連結的卡片(非 tab-button)預設會有底線 */
     transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
@@ -616,45 +617,75 @@ a.tab-button {
     .hamburger-button.is-active span:nth-child(2) { opacity: 0; transform: translateX(20px); }
     .hamburger-button.is-active span:nth-child(3) { transform: rotate(-45deg); }
 
+    /* 手機選單。
+       以前是 max-height 0 → calc(100vh - 50px) 的動畫，有兩個問題：
+       1. 100vh 在手機上是「網址列收起來之後」的高度。網址列還在時，算出來的
+          選單比真正看得到的範圍高，最後幾項會掉到螢幕外而且捲不到。
+          改由 JS 量出真實可視高度寫進 --menu-max-h（見 main.js 的 sizeMenu()）。
+       2. max-height 動畫的視覺速度取決於「設定值」而不是「內容高度」，內容一多
+          就會先慢後快、看起來卡卡的。改成用 opacity + transform 淡入下滑，
+          這兩個屬性走合成器，不會觸發重新排版。 */
     .nav-links {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         background: var(--card-background, white);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, .16);
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.1s ease-in-out;
+        max-height: var(--menu-max-h, 70vh);
+        overflow-y: auto;
+        overscroll-behavior: contain;   /* 選單捲到底時不要帶著後面的頁面一起捲 */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
     }
-    
-    .nav-links.is-open { 
-        /* 將固定的 500px 改為動態計算的高度 */
-        /* 100vh 是指螢幕總高度，減去 50px 是為了不遮擋頂部導覽列 */
-        max-height: calc(100vh - 50px); 
 
-        /* 當內容超出時，顯示垂直捲軸 */
-        overflow-y: auto; 
+    .nav-links.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: opacity .2s ease, transform .2s ease, visibility 0s;
     }
+
+    /* 背景遮罩：讓選單看起來是浮在頁面上，也給「點旁邊關閉」一個明確的目標。
+       z-index 要低於 .site-header-main 的 2000，選單和漢堡鈕才會在遮罩之上。 */
+    html.nav-open body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 1500;
+        background: rgba(15, 23, 42, .38);
+        animation: navScrimIn .2s ease;
+    }
+    /* ⚠ 這裡不要加 html{overflow:hidden} 的捲動鎖。表頭是 position:sticky，
+       一旦把 html 設成 overflow:hidden，sticky 就失效、表頭會彈回文件頂端，
+       連帶把定位在它底下的選單一起帶出畫面（實測 top 從 48 變成 -347）。
+       選單自己的 overscroll-behavior: contain 已經擋掉「捲到底帶動背景」，
+       而點到選單外面本來就會關閉，剩下的影響很小。 */
 
     .nav-links .tab-button {
         width: 100%;
         text-align: center;
-        padding: 10px;
+        padding: 13px 10px;
         border-bottom: 1px solid var(--border-color, #eee);
     }
-    
+
     .nav-links .tab-button::after { display: none; }
-    
+
     .nav-links .tab-button.active {
         background-color: var(--primary-color, #0075BE);
         color: white;
     }
-
+    /* 點下去要有反應，不然在手機上完全沒有回饋 */
+    .nav-links .tab-button:active { background-color: #eef2f7; }
+    .nav-links .tab-button.active:active { background-color: #0068a8; }
 }
+
+@keyframes navScrimIn { from { opacity: 0; } to { opacity: 1; } }
 
 #loading-overlay {
     position: fixed;
@@ -968,9 +999,18 @@ a.tab-button {
     }
 }
 
-/* 手機：分區堆疊，分類標題當小節標 */
+/* 手機：分區堆疊，分類標題當小節標。
+   這裡不再做手風琴 —— 只有「功能選單」一個群組，而且打開選單時本來就會把它
+   全部展開，那層 max-height: 0 → 1600px 的動畫只是疊在外層的淡入上互相打架。
+   「功能選單」這個標題也藏起來：底下已經有「常用查詢／遊戲資訊」兩個小節標，
+   留著只是多一列要捲的東西。 */
 @media (max-width: 768px) {
-    .nav-group.is-expanded .sub-links.mega-menu { max-height: 1600px; }
+    .nav-group .group-title { display: none; }
+    .nav-group .sub-links,
+    .nav-group .sub-links.mega-menu {
+        max-height: none;
+        overflow: visible;
+    }
     .mega-heading {
         padding: 12px 15px 6px; font-size: 13px; font-weight: 800;
         color: #98a2b3; letter-spacing: .06em;
@@ -989,3 +1029,38 @@ a.tab-button {
         font-size: 16px !important;
     }
 }
+
+/* ---- 首頁:主打交易清單 ----------------------------------------------------
+   站名是靠交易清單傳出去的(匯出圖底部印 pogokit.com/t),搜尋進來的人第一眼
+   要先看到它,所以 hero 換成它、導覽與卡片也移到第一位並加標示。 */
+#docs-app .home-hero-tl .home-hero-copy {
+    background: radial-gradient(circle at top left, rgba(224, 39, 108, .14), transparent 48%), #fff;
+}
+#docs-app .home-hero-tl .home-eyebrow { color: #e0276c; }
+#docs-app .home-hero-tl .home-primary-action {
+    background: linear-gradient(135deg, #e0276c, #7b5cff);
+    text-decoration: none;
+    display: inline-block;
+}
+/* 非中文訪客才顯示的說明(其他工具只有中文)—— 語氣要像提醒,不要像警告 */
+#docs-app .home-tl-note {
+    margin: 18px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid #e5e7eb;
+    font-size: .9rem;
+    color: #6b7280;
+}
+/* 導覽與卡片上的「主打」標示 */
+#docs-app .home-card-hot { outline: 2px solid rgba(224, 39, 108, .35); outline-offset: -2px; }
+#docs-app .home-card-flag {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: #fde7ef;
+    color: #b31852;
+    font-size: .72rem;
+    font-weight: 700;
+    vertical-align: middle;
+}
+.app-nav .tab-button-hot { font-weight: 700; }
