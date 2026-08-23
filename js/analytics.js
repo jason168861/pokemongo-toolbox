@@ -8,7 +8,7 @@
       那些是使用者的個資 / 私人內容。track() 有一層 clean() 擋掉數字串,
       但真正的防線是「呼叫端不要把那些欄位傳進來」。
 */
-window.GA_ID = '';   // ← 填這裡,例:'G-ABCD123XYZ'
+window.GA_ID = 'G-TXSLDX2J4X';   // GA4「pogokit」資源的評估 ID
 
 (function () {
   const ID = window.GA_ID;
