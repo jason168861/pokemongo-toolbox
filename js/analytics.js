@@ -25,6 +25,25 @@ window.GA_ID = 'G-TXSLDX2J4X';   // GA4「pogokit」資源的評估 ID
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   window.gtag = gtag;
+
+  /* 同意聲明模式(Consent Mode)的預設值。
+     ⚠ 一定要在 config 之前送出,否則第一個 pageview 已經帶著 cookie 出去了。
+
+     只對 EEA + 英國 + 瑞士預設「拒絕」——GA4 在這個狀態下不寫 cookie,改送不含識別碼的
+     訊號。沒列到的地區(台灣、日本、美國…)維持預設的「允許」,不影響主要客群的數字。
+     使用者在同意橫幅按下之後,CMP 會再送一次 'update' 把狀態改掉。
+     wait_for_update:給 CMP 500ms 的時間先表態,免得搶在它前面就用預設值送出。
+
+     橫幅本身不在這裡 —— 是 AdSense →「隱私權與訊息」建立的 Funding Choices,
+     發布後會自動注入並負責送 update。這裡只負責「在它出現之前不要亂寫 cookie」。 */
+  var EEA = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT',
+             'LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB','CH'];
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    region: EEA, wait_for_update: 500
+  });
+
   gtag('js', new Date());
   gtag('config', ID);
 
