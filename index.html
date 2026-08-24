@@ -54,7 +54,7 @@
         // 白名單：對不上就什麼都不做，交回 main.js 走原本流程退回首頁
         var TABS = ['cp-checker-app', 'pvp-ranker-app', 'id-selector-app', 'search-filters-app',
                     'raids-app', 'eggs-app', 'research-app', 'special-research-app',
-                    'info-hub-app'];   // 地圖暫時下架
+                    'info-hub-app'];   // 地圖暫時下架；特別資訊已移到 /stardust/
         if (TABS.indexOf(tab) === -1) return;
 
         // --- 1. canonical / og:url 改成本頁自己的網址 ---
@@ -242,7 +242,7 @@
                     <a class="tab-button" data-target="eggs-app" href="?tab=eggs-app">孵蛋列表</a>
                     <a class="tab-button" data-target="research-app" href="?tab=research-app">田野調查任務</a>
                     <a class="tab-button" data-target="special-research-app" href="?tab=special-research-app">特殊調查</a>
-                    <a class="tab-button" data-target="info-hub-app" href="?tab=info-hub-app">特別資訊</a>
+                    <a class="tab-button" href="stardust/">星星沙子怎麼賺</a>
                     <!-- 地圖暫時下架
                     <a class="tab-button" data-target="map-app" href="?tab=map-app">補給站/道館地圖</a>
                     -->
@@ -442,10 +442,10 @@
                     <span class="home-card-title">搜尋指令</span>
                     <span class="home-card-text">整理遊戲內篩選語法小抄。</span>
                 </a>
-                <a class="home-card tab-button" data-target="info-hub-app" href="?tab=info-hub-app">
-                    <span class="home-card-icon">ℹ️</span>
-                    <span class="home-card-title">特別資訊</span>
-                    <span class="home-card-text">快速查補充型資訊。</span>
+                <a class="home-card" href="stardust/">
+                    <span class="home-card-icon">✨</span>
+                    <span class="home-card-title">星星沙子怎麼賺</span>
+                    <span class="home-card-text">各種來源、加成怎麼疊，以及給最多的寶可夢。</span>
                 </a>
             </div>
         </section>

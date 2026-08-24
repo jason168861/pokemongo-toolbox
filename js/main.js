@@ -358,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
        ?tab=map-app 會被當成無效網址退回首頁，導覽與首頁卡片也拿掉了。
        要重新開啟：把這個陣列清空，並把 index.html 兩處標了「地圖暫時下架」的
        註解取消（<head> 的 Leaflet/S2 載入、導覽列連結、首頁卡片）。 */
-    const DISABLED_TABS = ['map-app'];
+    const DISABLED_TABS = ['map-app', 'info-hub-app'];
 
     function isValidTab(id) {
         return id && DISABLED_TABS.indexOf(id) === -1

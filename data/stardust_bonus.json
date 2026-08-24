@@ -1,0 +1,149 @@
+{
+ "note": "捕捉時可獲得較多星星沙子的寶可夢。js/info-hub.js 與 scripts/build_stardust_page.py 共用這一份，不要各留一份。",
+ "pokemon": [
+  {
+   "name": "派拉斯",
+   "dex": 46,
+   "stardust": 500,
+   "form": null
+  },
+  {
+   "name": "派拉斯特",
+   "dex": 47,
+   "stardust": 700,
+   "form": null
+  },
+  {
+   "name": "喵喵",
+   "dex": 52,
+   "stardust": 500,
+   "form": null
+  },
+  {
+   "name": "阿羅拉 喵喵",
+   "dex": 52,
+   "stardust": 750,
+   "form": "ALOLA"
+  },
+  {
+   "name": "貓老大",
+   "dex": 53,
+   "stardust": 700,
+   "form": null
+  },
+  {
+   "name": "阿羅拉 貓老大",
+   "dex": 53,
+   "stardust": 950,
+   "form": "ALOLA"
+  },
+  {
+   "name": "大舌貝",
+   "dex": 90,
+   "stardust": 1000,
+   "form": null
+  },
+  {
+   "name": "刺甲貝",
+   "dex": 91,
+   "stardust": 1200,
+   "form": null
+  },
+  {
+   "name": "海星星",
+   "dex": 120,
+   "stardust": 750,
+   "form": null
+  },
+  {
+   "name": "寶石海星",
+   "dex": 121,
+   "stardust": 950,
+   "form": null
+  },
+  {
+   "name": "信使鳥",
+   "dex": 225,
+   "stardust": 500,
+   "form": null
+  },
+  {
+   "name": "蘑蘑菇",
+   "dex": 285,
+   "stardust": 500,
+   "form": null
+  },
+  {
+   "name": "斗笠菇",
+   "dex": 286,
+   "stardust": 700,
+   "form": null
+  },
+  {
+   "name": "勾魂眼",
+   "dex": 302,
+   "stardust": 750,
+   "form": null
+  },
+  {
+   "name": "風鈴鈴",
+   "dex": 358,
+   "stardust": 1000,
+   "form": null
+  },
+  {
+   "name": "三蜜蜂",
+   "dex": 415,
+   "stardust": 750,
+   "form": null
+  },
+  {
+   "name": "蜂女王",
+   "dex": 416,
+   "stardust": 950,
+   "form": null
+  },
+  {
+   "name": "差不多娃娃",
+   "dex": 531,
+   "stardust": 2100,
+   "form": null
+  },
+  {
+   "name": "破破袋",
+   "dex": 568,
+   "stardust": 750,
+   "form": null
+  },
+  {
+   "name": "灰塵山",
+   "dex": 569,
+   "stardust": 950,
+   "form": null
+  },
+  {
+   "name": "哎呀球菇",
+   "dex": 590,
+   "stardust": 500,
+   "form": null
+  },
+  {
+   "name": "敗露球菇",
+   "dex": 591,
+   "stardust": 700,
+   "form": null
+  },
+  {
+   "name": "睡睡菇",
+   "dex": 755,
+   "stardust": 500,
+   "form": null
+  },
+  {
+   "name": "燈罩夜菇",
+   "dex": 756,
+   "stardust": 700,
+   "form": null
+  }
+ ]
+}
