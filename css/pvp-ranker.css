@@ -483,3 +483,17 @@
         max-height: calc(100vh - 90px);
     }
 }
+/* 說明區要閃開浮動的查詢面板。
+   #pvp-controls 是 position:fixed 貼在右上（桌機 360px + 16px 邊距），
+   不讓路的話文字右半邊會被蓋住、整段變成讀不完的斷句。
+   手機版面板本來就會蓋住大半個畫面（結果卡片也一樣），
+   使用者是靠收合鈕處理的，這裡不另外硬擠。 */
+@media (min-width: 768px) {
+    #pvp-ranker-app .tool-guide {
+        /* 面板實測從右緣佔到約 425px（width 360 + 左右 padding + 邊距 + 捲軸），
+           不是單純的 360+16，所以留 490 才有餘裕。 */
+        max-width: min(760px, calc(100vw - 490px));
+        margin-left: 0;
+        margin-right: auto;
+    }
+}

@@ -642,6 +642,48 @@
                 </div>
                 <button type="button" id="pvp-controls-toggle" aria-label="開啟查詢條件">⚙ 調整條件</button>
                 <div id="results-container" class="hidden"></div>
+
+                <!-- 說明放在結果容器「之後」：#results-container 預設是 hidden，
+                     所以剛進頁面時這段就在條件面板底下、看得到；
+                     一旦查出結果，結果會出現在它上方自然把它往下推，不擋路。 -->
+                <section class="tool-guide">
+                    <h2>PvP 的 IV 和打道館完全是兩回事</h2>
+
+                    <p>大部分人第一次看到這個工具會很意外：<strong>排名第一的 IV 幾乎都不是 15/15/15</strong>。
+                    這不是資料有問題，而是對戰聯盟的規則使然。</p>
+
+                    <h3>為什麼 100% 反而不是最好的</h3>
+
+                    <p>超級聯盟與高級聯盟各有 CP 上限（<strong>1500</strong> 與 <strong>2500</strong>），
+                    超過就不能出賽。在上限之內，你會希望把寶可夢養到能養的最高等級 ——
+                    等級越高，三圍的實際數值越高。</p>
+
+                    <p>問題是<strong>攻擊值對 CP 的影響最大</strong>。同一隻寶可夢，攻擊 IV 越高，
+                    CP 就越早撞到上限、能養的等級就越低。反過來說，
+                    <strong>攻擊低一點的個體可以養得更高，換到更多的防禦與體力</strong>，
+                    在同樣的 1500 CP 額度下反而更耐打、能多撐一輪。</p>
+
+                    <p>所以在有 CP 上限的聯盟裡，理想的個體通常是
+                    <strong>低攻擊、高防禦、高體力</strong>。100% 因為攻擊也是滿的，
+                    往往排在幾百名之外。</p>
+
+                    <h3>什麼時候 100% 才是對的</h3>
+
+                    <p><strong>大師聯盟沒有 CP 上限</strong>，能養多高就多高，這時三圍全滿就是最好。
+                    打團體戰、道館同理 —— 沒有上限，攻擊越高越好。
+                    想查那個用途的數值，請看
+                    <a class="tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">IV100 CP 查詢</a>。</p>
+
+                    <h3>怎麼用這一頁</h3>
+
+                    <p>輸入寶可夢名稱，填進手上那隻的三項 IV 與目前等級，
+                    就會算出牠在各聯盟的排名，以及該聯盟第一名的 IV 是多少。
+                    <strong>排名數字越小越好</strong>，前幾十名之內的個體都算相當堪用 ——
+                    不必非要第一名，差距通常很小。</p>
+
+                    <p class="tool-guide-note">排名依各聯盟的 CP 上限計算，
+                    數值可能隨遊戲平衡調整而變動。</p>
+                </section>
             </div>
         </div>
 
@@ -660,6 +702,28 @@
                     </div>
                 </footer>
             </header>
+
+            <!-- 說明放在輸出框之後、寶可夢格線之前。格線很長，放後面等於沒人看得到。
+                 內容刻意寫短，不要把格線推出首屏。 -->
+            <section class="tool-guide id-guide">
+                <h2>產生出來的編號要怎麼用</h2>
+
+                <p>Pokémon GO 的搜尋框可以直接吃<strong>用逗號隔開的圖鑑編號</strong>。
+                把這裡複製到的字串貼進遊戲的搜尋框，倉庫就只會留下那幾隻 ——
+                想一次挑出散在各處的特定寶可夢時，這比一隻一隻找快得多。</p>
+
+                <p>常見用途是<strong>整理倉庫</strong>：想清理某幾個家族、
+                或把某次活動要用的寶可夢集中看，先在這裡勾好、複製、貼上就好，
+                不必記得誰是幾號。</p>
+
+                <p>編號還能跟其他條件<strong>疊起來用</strong>：
+                <code>,</code> 是「或」、<code>&amp;</code> 是「且」。
+                例如 <code>1,4,7&amp;4*</code> 表示「這三個編號之中、而且是 100% IV 的」。
+                可用的條件語法整理在<a class="tab-button" data-target="search-filters-app" href="?tab=search-filters-app">搜尋篩選指令</a>那一頁。</p>
+
+                <p class="tool-guide-note">遊戲的搜尋字串有長度上限，
+                選太多編號時可能會被截斷 —— 分批貼上即可。</p>
+            </section>
             <main>
                 <div class="search-container">
                     <div class="input-wrapper">
