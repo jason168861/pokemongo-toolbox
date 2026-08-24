@@ -2,4 +2,8 @@ User-agent: *
 Allow: /
 
 Sitemap: https://pogokit.com/sitemap.xml
-Sitemap: https://pogokit.com/sitemap-cp.xml
+# 審查期間暫時不主動提交 sitemap-cp.xml。
+# 它列的 1079 個 ?mon= 網址內容高度相似，容易被當成大量自動產生的頁面。
+# 移除 sitemap 不會讓已收錄的網址消失（sitemap 只是探索提示），
+# 要恢復時把下一行的註解拿掉即可，另外記得在 Search Console 重新提交。
+# Sitemap: https://pogokit.com/sitemap-cp.xml

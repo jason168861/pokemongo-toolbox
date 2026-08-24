@@ -1,0 +1,61 @@
+/* 只補這一頁需要的樣式，版面骨架沿用 ../backgrounds/style.css。
+   兩頁長得一致，之後要再開內容頁也直接接上去。 */
+
+.page section { margin-bottom: 8px; }
+
+code {
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: #eef1f6;
+    font-size: .92em;
+}
+
+.mlist {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 8px;
+}
+
+.mlist li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+
+.mlist img { width: 44px; height: 44px; object-fit: contain; flex: none; }
+.mlist .noimg { width: 44px; text-align: center; color: #cbd5e1; flex: none; }
+
+.mlist .dex {
+    color: var(--muted);
+    font-size: .82rem;
+    font-variant-numeric: tabular-nums;
+    flex: none;
+}
+.mlist .nm { font-weight: 600; }
+
+.mlist .note {
+    margin-left: auto;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: .74rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* 型態限制那組沒有圖，改成一行一筆比較好讀 */
+.mlist.plain { grid-template-columns: 1fr; }
+.mlist.plain .note { white-space: normal; }
+
+@media (max-width: 560px) {
+    .mlist { grid-template-columns: 1fr; }
+    .mlist .note { margin-left: 0; }
+}
