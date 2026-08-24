@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-08-19",
+ "updated": "2026-08-23",
  "note": "交易清單搜尋用的別名表。請用 alias-editor.html 編輯(手改也可以,格式很單純)。 kind=mon → targets 是圖鑑編號;kind=form → 型態/造型代碼;kind=bg → 背卡的 image_name。",
  "entries": [
   {"kind":"mon","terms":["奇異種子"],"targets":["1"],"note":"舊譯名"},
@@ -32,6 +32,8 @@
   {"kind":"mon","terms":["三神鳥","傳說鳥"],"targets":["144","145","146"],"note":"群組"},
   {"kind":"mon","terms":["三聖獸","傳說狗"],"targets":["243","244","245"],"note":"群組"},
   {"kind":"mon","terms":["伊布家族"],"targets":["133","134","135","136","196","197","470","471","700"],"note":"群組"},
+  {"kind":"mon","terms":["劍王"],"targets":["888"]},
+  {"kind":"mon","terms":["盾王"],"targets":["889"]},
   {"kind":"form","terms":["阿羅拉"],"targets":["ALOLA"],"note":"地區型態"},
   {"kind":"form","terms":["伽勒爾","加勒爾"],"targets":["GALARIAN","GALARIAN_STANDARD","GALARIAN_ZEN"],"note":"地區型態"},
   {"kind":"form","terms":["洗翠"],"targets":["HISUIAN"],"note":"地區型態"},
@@ -70,6 +72,8 @@
   {"kind":"form","terms":["高調"],"targets":["AMPED"]},
   {"kind":"form","terms":["低調"],"targets":["LOW_KEY"]},
   {"kind":"form","terms":["裝甲超夢"],"targets":["A"]},
+  {"kind":"form","terms":["劍王"],"targets":["CROWNED_SWORD"]},
+  {"kind":"form","terms":["盾王"],"targets":["CROWNED_SHIELD"]},
   {"kind":"bg","terms":["台灣","臺灣"],"targets":["GO Tainan background.png","GO New Taipei City background.png","Location Background Taipei Childrens Amusement Park.png","Location Background Tainan 2026.png","Location Background Taipei Floral Picnic 2026.png"]},
   {"kind":"bg","terms":["台南","臺南"],"targets":["GO Tainan background.png","Location Background Tainan 2026.png"]},
   {"kind":"bg","terms":["台北","臺北"],"targets":["GO New Taipei City background.png","Location Background Taipei Childrens Amusement Park.png","Location Background Taipei Floral Picnic 2026.png"]},
