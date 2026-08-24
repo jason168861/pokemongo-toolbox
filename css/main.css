@@ -1163,3 +1163,8 @@ a.tab-button {
 }
 /* 編號篩選器的格線很長，說明擠在輸出框和格線之間，要更緊湊 */
 .id-guide { margin-bottom: 18px; }
+
+/* 工具說明裡的條列 */
+.tool-guide-list { margin: 0 0 10px; padding-left: 20px; }
+.tool-guide-list li { margin-bottom: 8px; font-size: 14.5px; }
+.tool-guide-list li b { color: #1c1e21; }
