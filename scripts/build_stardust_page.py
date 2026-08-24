@@ -15,8 +15,11 @@ import json, os, re, html
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(HERE, "stardust")
 OUT = os.path.join(OUT_DIR, "index.html")
-SPRITE = ("https://cdn.jsdelivr.net/gh/PokeMiners/pogo_assets/"
-          "Images/Pokemon%20-%20256x256/Addressable%20Assets/")
+# 圖示用本機的（跟 /backgrounds/、/tradable/ 一致）。
+# 舊的「特別資訊」分頁是直接連 jsDelivr 的 CDN，但這 24 張本機都有，
+# 沒必要為了它們多一個外部相依 —— CDN 掛了整頁的圖就沒了。
+TL = os.path.join(HERE, "trade-list")
+SPRITE = "../trade-list/assets/img/"
 
 e = html.escape
 
@@ -62,6 +65,9 @@ def load():
 
 def sprite(m):
     fn = f"pm{m['dex']}" + (f".f{m['form']}" if m.get("form") else "") + ".icon.png"
+    if not os.path.exists(os.path.join(TL, "assets", "img", fn)):
+        raise SystemExit(f"找不到圖示 {fn}（{m['name']}）——"
+                         f"跑過 trade-list/fetch_assets.py 了嗎？")
     return SPRITE + fn
 
 
