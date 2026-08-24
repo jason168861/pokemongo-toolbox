@@ -257,7 +257,7 @@ def build():
   <p>資料整理自社群維基並經人工核對，非官方資料，可能有誤或未即時更新。</p>
   <p>本站為非官方同人工具，與 Pokémon GO／Niantic 無隸屬關係。
      Pokémon 及其商標為 &copy;1995-2026 Nintendo, Creatures, GAME FREAK 所有。</p>
-  <p><a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="../">回工具箱</a></p>
+  <p><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="../">回工具箱</a></p>
 </footer>
 
 <script src="filter.js" defer></script>

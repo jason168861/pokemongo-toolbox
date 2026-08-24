@@ -277,7 +277,7 @@ def build():
   <p>交換限制依遊戲設定檔（GAME_MASTER）判定，非官方資料，可能與遊戲內當下狀態有落差。</p>
   <p>本站為非官方同人工具，與 Pokémon GO／Niantic 無隸屬關係。
      Pokémon 及其商標為 &copy;1995-2026 Nintendo, Creatures, GAME FREAK 所有。</p>
-  <p><a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="../">回工具箱</a></p>
+  <p><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="../">回工具箱</a></p>
 </footer>
 </body>
 </html>
