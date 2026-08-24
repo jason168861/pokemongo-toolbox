@@ -454,3 +454,59 @@
 }
 #cp-checker-app .mon-related a.mon-link:hover { background: #eaf2fd; text-decoration: underline; }
 #cp-checker-app .mon-related .mon-cur { color: #1c1e21; font-weight: 800; }
+
+/* --- 「這些數字怎麼用」說明 ---------------------------------------------
+   刻意放在查詢結果的下方。上方的 L15/L20/L25 對照與結果要維持一眼看到，
+   說明文字往下推的話就本末倒置了 —— 想看原理的人自然會捲。 */
+#cp-checker-app .cp-guide {
+    max-width: 760px;
+    margin: 18px auto 22px;
+    padding: 18px 20px;
+    background: #fbfcfd;
+    border: 1px solid #e6e8eb;
+    border-radius: 12px;
+    line-height: 1.85;
+    color: #3a3b3c;
+}
+#cp-checker-app .cp-guide h2 {
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: #1c1e21;
+}
+#cp-checker-app .cp-guide h3 {
+    font-size: 15px;
+    margin: 20px 0 6px;
+    color: #1c1e21;
+}
+#cp-checker-app .cp-guide { line-height: 1.8; }
+#cp-checker-app .cp-guide p { margin: 0 0 10px; font-size: 14.5px; }
+
+#cp-checker-app .cp-guide-list {
+    margin: 0 0 12px;
+    padding-left: 20px;
+}
+#cp-checker-app .cp-guide-list li { margin-bottom: 8px; font-size: 15px; }
+/* 等級標籤沿用上方對照的顏色，兩邊要對得起來 */
+#cp-checker-app .cp-guide-list li b { color: #1c1e21; }
+
+#cp-checker-app .cp-guide a { color: #1877f2; }
+/* 這個連結是 .tab-button，會吃到全站導覽的按鈕樣式，蓋回一般連結的樣子 */
+#cp-checker-app .cp-guide a.tab-button {
+    display: inline;
+    padding: 0;
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: none;
+    text-decoration: underline;
+}
+#cp-checker-app .cp-guide a.tab-button::after { display: none; }
+
+#cp-checker-app .cp-guide-note {
+    margin-top: 20px;
+    color: #606770;
+    font-size: 13.5px;
+}
+
+/* 這一頁的 .container 只有 600px 寬，分兩欄每欄剩 238px，
+   換行變多、高度幾乎沒省到，所以維持單欄，改用「精簡內容」來控制高度。 */

@@ -528,6 +528,13 @@ export function initializeCpChecker() {
         } else {
                 statusMessage.textContent = `資料載入成功！共 ${allPokemonData.length} 筆資料。`;
         }
+        // 有在搜尋時把「這些數字怎麼用」收起來。
+        // 那段說明放在對照表與結果之間（放結果下面等於沒有 —— 預設 1079 張卡片，
+        // 整頁高十幾萬 px）。但使用者一旦開始查，就不該讓他捲過一整屏文字才看到 CP。
+        // 沒輸入時＝剛進頁面的瀏覽狀態，說明就該看得到。
+        const guide = document.querySelector('#cp-checker-app .cp-guide');
+        if (guide) guide.hidden = !!query;
+
         // 鎖定到單一寶可夢時，補上牠的全等級 CP 表（這是每個 ?mon= 網址的主要獨立內容）
         const lockedMon = resolveOne(query, visibleIdx);
         renderLevelTable(lockedMon);

@@ -517,6 +517,45 @@
                         <span class="cp-legend-desc">☀️ 團體戰（天氣加成）</span>
                     </div>
                 </div>
+
+                <!-- 說明放在 L15/L20/L25 對照之後、結果之前。
+                     放結果「下面」等於沒有 —— 預設會列出 1079 張卡片，
+                     整頁高 15 萬 px，沒有人會捲到底。對照表仍在最上方，
+                     欄位的意義一眼就看得到，這段只是把它講完整。 -->
+                <section class="cp-guide">
+                    <h2>這些數字怎麼用</h2>
+
+                    <p>每隻寶可夢都有三個看不見的個體值（IV）：<strong>攻擊、防禦、耐力</strong>，各自 0 到 15，
+                    三項都滿就是俗稱的「100%」。上面列的，就是各隻寶可夢在這三個等級下
+                    <strong>剛好 100% 時會顯示的 CP</strong>。</p>
+
+                    <h3>為什麼只看 15、20、25 這三個等級</h3>
+
+                    <p>因為這幾種來源的寶可夢是<strong>固定等級</strong>出現的，捕捉畫面上的 CP 只取決於 IV。
+                    等級固定，CP 就和 IV 一一對應 —— 看到的 CP 剛好等於表上的數字，那隻就是 100%，
+                    <strong>不用先抓下來再檢定</strong>。</p>
+
+                    <ul class="cp-guide-list">
+                        <li><b>15 等</b>：田野調查、小隊合作的獎勵寶可夢。</li>
+                        <li><b>20 等</b>：團體戰獎勵（沒有天氣加成）、孵化出來的蛋。</li>
+                        <li><b>25 等</b>：有天氣加成的團體戰獎勵 —— 捕捉畫面外圈會有天氣圖示，
+                            看到就要改對 25 等那欄。</li>
+                    </ul>
+
+                    <p>野外遇到的寶可夢等級隨機，所以這張表對牠們沒用。這也是為什麼團體戰打完那一刻
+                    值得先看一眼 CP：<strong>那是少數能在丟球前就知道 IV 的場合</strong>。</p>
+
+                    <h3>100% 一定比較好嗎？不一定</h3>
+
+                    <p>打團體戰、道館沒有 CP 上限，攻擊越高越好，100% 確實接近最佳解。
+                    但 <strong>PvP 的超級／高級聯盟有 CP 上限（1500／2500）</strong>，
+                    同樣的 CP 額度下，攻擊低一點、防禦與耐力高一點的個體往往更耐打 ——
+                    100% 反而常常不是最好的選擇。找 PvP 用的個體請改看
+                    <a class="tab-button" data-target="pvp-ranker-app" href="?tab=pvp-ranker-app">PvP IV 排名</a>。</p>
+
+                    <p class="cp-guide-note">已經抓到、想反推 IV 的話，可以用下面的
+                    <strong>CP 反查 IV 組合</strong>。本頁 CP 由遊戲能力值資料計算，與遊戲內一致。</p>
+                </section>
                 <div id="resultsContainer"></div>
                 <!-- CP 反查 IV：鎖定單一寶可夢時，輸入 CP（可選 HP）列出所有可能的等級與 IV 組合 -->
                 <section id="cpReverse" class="cp-reverse" hidden>
@@ -535,6 +574,7 @@
                 </section>
                 <!-- 鎖定單一寶可夢時（含 ?mon= 深連結）由 cp-checker.js 填入全等級 CP 表 -->
                 <section id="cpLevelTable" class="lv-table-section" hidden></section>
+
              </div>
         </div>
 
