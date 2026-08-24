@@ -1,0 +1,220 @@
+/* 背卡一覽。獨立樣式表 —— 這頁不吃主站的 main.css（那份是給 SPA 用的，
+   夾帶一堆分頁相關規則，對一個純內容頁來說是負擔）。 */
+:root {
+    --ink: #111827;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --brand: #e0276c;
+    --brand2: #7b5cff;
+    --bg: #f6f7fb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.75 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+}
+
+a { color: #0f5cc0; }
+
+/* ---- 頂欄 ---- */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+}
+.topbar .home { text-decoration: none; font-weight: 600; color: var(--muted); }
+.topbar .home:hover { color: var(--ink); }
+.topbar .cta {
+    padding: 7px 15px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--brand), var(--brand2));
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* ---- 版面 ---- */
+main { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
+
+.page > h1 {
+    font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+    line-height: 1.3;
+    margin: 8px 0 18px;
+}
+
+.page h2 {
+    font-size: 1.35rem;
+    margin: 44px 0 14px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+}
+
+.lede { font-size: 1.08rem; color: #374151; }
+.caveat { color: var(--muted); font-size: .94rem; }
+
+.notes { padding-left: 1.2em; }
+.notes li { margin-bottom: 10px; }
+
+/* ---- 數字帶 ---- */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 26px 0 8px;
+}
+.stats > div {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 10px;
+    text-align: center;
+}
+.stats b { display: block; font-size: 1.6rem; line-height: 1.2; }
+.stats span { font-size: .82rem; color: var(--muted); }
+
+/* ---- 搜尋與篩選 ---- */
+.controls { margin: 18px 0 10px; }
+#q {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;   /* iOS 低於 16px 聚焦時會自動放大整頁 */
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+}
+#q:focus { outline: 2px solid var(--brand2); outline-offset: 1px; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.f {
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--muted);
+    font: inherit;
+    font-size: .9rem;
+    cursor: pointer;
+}
+.f:hover { border-color: #c9cfda; }
+.f.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+.count { color: var(--muted); font-size: .9rem; margin: 12px 0; }
+.empty { text-align: center; color: var(--muted); padding: 40px 0; }
+
+/* ---- 背卡卡片 ---- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    align-items: start;   /* 不要被同一列最高的卡片拉長 */
+    gap: 16px;
+}
+
+.bgcard {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.bgshot {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;   /* 少了這行 aspect-ratio 會被裡面的圖撐開，變回原圖比例 */
+    background: #eef1f6;
+}
+.bgshot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.bgbody { padding: 14px 15px 16px; }
+.bgbody h3 { margin: 0 0 6px; font-size: 1.02rem; line-height: 1.45; }
+
+.meta { margin: 0 0 10px; font-size: .84rem; color: var(--muted); }
+.kind {
+    display: inline-block;
+    margin-right: 6px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: .76rem;
+}
+.kind-special { background: #ede9ff; color: #4c34c7; }
+.kind-location { background: #e6f2ff; color: #0f5cc0; }
+
+.mons { list-style: none; margin: 0; padding: 0; }
+.mons li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    border-top: 1px solid #f2f4f7;
+}
+.mons li:first-child { border-top: 0; }
+.mons img { width: 40px; height: 40px; object-fit: contain; flex: none; }
+.noimg { width: 40px; text-align: center; color: #cbd5e1; flex: none; }
+.mon-name { flex: 1; font-size: .92rem; }
+
+.tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.tag {
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: .72rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.tag-shiny { background: #fff3cd; color: #a06a00; }
+
+/* ---- 結尾行動呼籲 ---- */
+.bigcta {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 13px 26px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--brand), var(--brand2));
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.foot {
+    border-top: 1px solid var(--line);
+    padding: 22px 16px 40px;
+    color: var(--muted);
+    font-size: .84rem;
+    text-align: center;
+}
+.foot p { margin: 6px 0; max-width: 760px; margin-inline: auto; }
+
+@media (max-width: 560px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: 1fr; }
+}
+
+/* 寶可夢很多的背卡（隊伍主題那幾張有 120 隻以上）把其餘收在這裡。
+   用 <details> 而不是砍掉 —— 內容留在 HTML 裡，搜尋引擎跟頁內搜尋都還讀得到。 */
+.more { margin-top: 4px; }
+.more summary {
+    cursor: pointer;
+    padding: 7px 0 3px;
+    color: #0f5cc0;
+    font-size: .88rem;
+    font-weight: 600;
+}
+.more summary:hover { text-decoration: underline; }
+.more[open] summary { margin-bottom: 2px; }

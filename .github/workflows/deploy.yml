@@ -86,6 +86,19 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # 步驟 5.5: 打包前把「只有建置時才需要」的東西拿掉。
+      # upload-pages-artifact 的 path 是 '.'，等於整個 repo 都會變成公開網址 ——
+      # 實測 /trade-list/preview.py、/trade-list/bg-editor.html、
+      # /trade-list/data/*.raw.local.json 全都回 200。這些對訪客沒有用，
+      # 編輯器還需要 preview.py 的 /__save 端點才能運作，放上線也是壞的。
+      - name: Remove build-only files
+        run: |
+          rm -rf scripts
+          rm -f trade-list/*.py
+          rm -f trade-list/alias-editor.html trade-list/bg-editor.html
+          rm -f trade-list/data/*.raw.json trade-list/data/*.raw.local.json
+          rm -f cp-similarity-report.html
+
       # 步驟 6: 將網站檔案 (包含剛抓到的新資料) 打包
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
