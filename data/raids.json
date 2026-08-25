@@ -1,206 +1,95 @@
 {
-    "lastUpdated": "2026年8月25日16時",
+    "lastUpdated": "2026年8月26日00時",
     "bosses": [
         {
-            "name": "Tatsugiri (Curly)",
-            "englishName": "Tatsugiri (Curly)",
-            "tier": "1-Star Raids",
-            "canBeShiny": false,
-            "types": [
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                },
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1494,
-                    "max": 1569
-                },
-                "boosted": {
-                    "min": 1868,
-                    "max": 1962
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                },
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm978.fCURLY.icon.png"
-        },
-        {
-            "name": "Tatsugiri (Droopy)",
-            "englishName": "Tatsugiri (Droopy)",
-            "tier": "1-Star Raids",
-            "canBeShiny": false,
-            "types": [
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                },
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1494,
-                    "max": 1569
-                },
-                "boosted": {
-                    "min": 1868,
-                    "max": 1962
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                },
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm978.fDROOPY.icon.png"
-        },
-        {
-            "name": "Tatsugiri (Stretchy)",
-            "englishName": "Tatsugiri (Stretchy)",
-            "tier": "1-Star Raids",
-            "canBeShiny": false,
-            "types": [
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                },
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1494,
-                    "max": 1569
-                },
-                "boosted": {
-                    "min": 1868,
-                    "max": 1962
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                },
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm978.fSTRETCHY.icon.png"
-        },
-        {
-            "name": "Psyduck with a swim ring",
-            "englishName": "Psyduck with a swim ring",
+            "name": "洗翠 千針魚",
+            "englishName": "Hisuian Qwilfish",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 585,
-                    "max": 632
-                },
-                "boosted": {
-                    "min": 731,
-                    "max": 790
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm54.fSWIM_2025.icon.png"
-        },
-        {
-            "name": "Lapras wearing a Scarf",
-            "englishName": "Lapras wearing a Scarf",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                },
-                {
-                    "name": "ice",
-                    "image": "https://leekduck.com/assets/img/types/ice.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1435,
-                    "max": 1509
-                },
-                "boosted": {
-                    "min": 1794,
-                    "max": 1886
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm131.fCOSTUME_2020.icon.png"
-        },
-        {
-            "name": "洗翠 大劍鬼",
-            "englishName": "Hisuian Samurott",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                },
                 {
                     "name": "dark",
                     "image": "https://leekduck.com/assets/img/types/dark.png"
+                },
+                {
+                    "name": "poison",
+                    "image": "https://leekduck.com/assets/img/types/poison.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1525,
-                    "max": 1601
+                    "min": 1155,
+                    "max": 1220
                 },
                 "boosted": {
-                    "min": 1907,
-                    "max": 2001
+                    "min": 1444,
+                    "max": 1526
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "fog",
+                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
+                },
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm211.fHISUIAN.icon.png"
+        },
+        {
+            "name": "醜醜魚",
+            "englishName": "Feebas",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "water",
+                    "image": "https://leekduck.com/assets/img/types/water.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 132,
+                    "max": 157
+                },
+                "boosted": {
+                    "min": 165,
+                    "max": 196
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm349.icon.png"
+        },
+        {
+            "name": "磨牙彩皮魚",
+            "englishName": "Bruxish",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "water",
+                    "image": "https://leekduck.com/assets/img/types/water.png"
+                },
+                {
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1295,
+                    "max": 1365
+                },
+                "boosted": {
+                    "min": 1620,
+                    "max": 1707
                 }
             },
             "boostedWeather": [
@@ -209,11 +98,77 @@
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 },
                 {
-                    "name": "fog",
-                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm503.fHISUIAN.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm779.icon.png"
+        },
+        {
+            "name": "破破舵輪",
+            "englishName": "Dhelmise",
+            "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "ghost",
+                    "image": "https://leekduck.com/assets/img/types/ghost.png"
+                },
+                {
+                    "name": "grass",
+                    "image": "https://leekduck.com/assets/img/types/grass.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1608,
+                    "max": 1685
+                },
+                "boosted": {
+                    "min": 2010,
+                    "max": 2107
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "fog",
+                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
+                },
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm781.icon.png"
+        },
+        {
+            "name": "毛崖蟹",
+            "englishName": "Klawf",
+            "tier": "3-Star Raids",
+            "canBeShiny": false,
+            "types": [
+                {
+                    "name": "rock",
+                    "image": "https://leekduck.com/assets/img/types/rock.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1304,
+                    "max": 1373
+                },
+                "boosted": {
+                    "min": 1630,
+                    "max": 1716
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm950.icon.png"
         },
         {
             "name": "吃吼霸",
