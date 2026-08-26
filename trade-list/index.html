@@ -260,15 +260,33 @@
   .sec{margin-top:12px}.sec h3{margin:0 0 6px;font-size:13px;display:flex;align-items:center;gap:6px}
   .sec.want h3{color:var(--want)} .sec.have h3{color:var(--have)}
   /* 可收合的區塊標題 */
+  /* 整條標題是一顆按鈕（箭頭＋文字＋數量都包在裡面）。
+     原本只有那顆 26px 的小箭頭和文字各自可點，沒有任何「這裡可以按」的視覺提示，
+     幾乎沒有人發現可以收合 —— 手機更是連 hover 都沒有可以暗示。 */
+  .secHead{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:8px;
+           margin:0 0 0 -6px;padding:4px 10px 4px 6px;border-radius:12px;
+           background:transparent;border:1px solid transparent;color:inherit;font:inherit;text-align:left;
+           cursor:pointer;-webkit-tap-highlight-color:transparent;
+           transition:background .15s,border-color .15s}
+  .secHead:hover{background:color-mix(in srgb,currentColor 10%,transparent);
+                 border-color:color-mix(in srgb,currentColor 28%,transparent)}
+  .secHead:active{background:color-mix(in srgb,currentColor 18%,transparent)}
+  .secHead:focus-visible{outline:2px solid currentColor;outline-offset:2px}
   .secToggle{flex:none;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
-             border-radius:8px;background:var(--cellbg);border:1px solid var(--line);color:inherit;cursor:pointer;
-             font-size:11px;line-height:1;transition:transform .3s cubic-bezier(.4,0,.2,1),background .15s,border-color .15s}
-  .secToggle:hover{border-color:currentColor;background:color-mix(in srgb,currentColor 12%,var(--cellbg))}
-  .secToggle:active{transform:scale(.9)}
-  .secLab{cursor:pointer;user-select:none;font-size:16px;font-weight:800}
+             border-radius:8px;color:inherit;
+             background:color-mix(in srgb,currentColor 18%,var(--cellbg));
+             border:1px solid color-mix(in srgb,currentColor 45%,transparent);
+             font-size:13px;line-height:1;transition:transform .3s cubic-bezier(.4,0,.2,1),background .15s,border-color .15s}
+  .secHead:hover .secToggle{border-color:currentColor;background:color-mix(in srgb,currentColor 16%,var(--cellbg))}
+  .secHead:active .secToggle{transform:scale(.9)}
+  .secLab{user-select:none;font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   @media(min-width:900px){ .secLab{font-size:21px} }
   .sec.collapsed .secToggle{transform:rotate(-90deg)}
-  .sec.collapsed .secToggle:active{transform:rotate(-90deg) scale(.9)}
+  .sec.collapsed .secHead:active .secToggle{transform:rotate(-90deg) scale(.9)}
+  /* 收合之後底下整塊消失，很容易被當成「這裡本來就沒東西」。
+     讓標題留一個淡底色，看得出來是被收起來、不是空的。 */
+  .sec.collapsed .secHead{background:color-mix(in srgb,currentColor 12%,transparent);
+                          border-color:color-mix(in srgb,currentColor 30%,transparent)}
   /* 平滑展開/收合(grid 0fr↔1fr) */
   .secBody{display:grid;grid-template-rows:1fr;transition:grid-template-rows .32s cubic-bezier(.4,0,.2,1),opacity .25s ease}
   .secBody>.list{min-height:0;overflow:hidden}
@@ -582,10 +600,10 @@
         <button class="btn g" id="sortBtn">↕ 依編號排序</button>
         <button class="btn g" id="clr">清空清單</button>
       </div>
-      <div class="sec want"><h3><button class="secToggle" id="tgWant" onclick="toggleSec('want')" title="收合/展開" aria-expanded="true">▾</button><span class="secLab" id="labWant" onclick="toggleSec('want')">🟢 我想要的</span> <span class="sub" id="cW">0</span>
+      <div class="sec want"><h3><button class="secHead" id="tgWant" onclick="toggleSec('want')" title="收合/展開" aria-expanded="true"><span class="secToggle">▾</span><span class="secLab" id="labWant">🟢 我想要的</span><span class="sub" id="cW">0</span></button>
         <span class="secBtns"><button class="editSec want" id="addWant" onclick="openPicker('want')">✏️ 加入</button><button class="editSec danger" id="clrWant" onclick="clearSide('want')">🗑 全部刪除</button></span></h3>
         <div class="secBody"><div class="list" id="listW"><div class="empty">點 ✏️ 加入寶可夢</div></div></div></div>
-      <div class="sec have"><h3><button class="secToggle" id="tgHave" onclick="toggleSec('have')" title="收合/展開" aria-expanded="true">▾</button><span class="secLab" id="labHave" onclick="toggleSec('have')">🟡 我能提供的</span> <span class="sub" id="cH">0</span>
+      <div class="sec have"><h3><button class="secHead" id="tgHave" onclick="toggleSec('have')" title="收合/展開" aria-expanded="true"><span class="secToggle">▾</span><span class="secLab" id="labHave">🟡 我能提供的</span><span class="sub" id="cH">0</span></button>
         <span class="secBtns"><button class="editSec have" id="addHave" onclick="openPicker('have')">✏️ 加入</button><button class="editSec danger" id="clrHave" onclick="clearSide('have')">🗑 全部刪除</button></span></h3>
         <div class="secBody"><div class="list" id="listH"><div class="empty">點 ✏️ 加入寶可夢</div></div></div></div>
       <div class="toolbar" id="startBar">
