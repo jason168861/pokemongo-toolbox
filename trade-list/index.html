@@ -289,12 +289,13 @@
                           border-color:color-mix(in srgb,currentColor 30%,transparent)}
   /* 平滑展開/收合(grid 0fr↔1fr) */
   .secBody{display:grid;grid-template-rows:1fr;transition:grid-template-rows .32s cubic-bezier(.4,0,.2,1),opacity .25s ease}
-  /* 清單自己捲，不要把下面的區塊一路推出畫面。
-     選了十幾隻之後「我能提供的」會被擠到很下面，要捲很久才看得到 ——
-     兩個區塊的標題應該隨時都在畫面上。內容不多時 max-height 不會生效，
-     看起來跟以前一樣。 */
+  /* 清單自己捲，避免選很多之後整頁被拉得很長、下面的區塊要捲很久才看得到。
+     上限放得寬（一般使用幾乎碰不到），只在項目真的很多時才開始內捲；
+     內容不多時 max-height 不會生效，看起來跟以前一樣。
+     扣固定值而不是純用 vh：上方工具列高度是固定的，不會隨視窗縮放，
+     純 vh 在矮螢幕上會算得太寬。 */
   .secBody>.list{min-height:0;overflow-y:auto;overflow-x:hidden;padding-right:2px;
-                 max-height:clamp(180px, calc(100vh - 475px), 560px)}
+                 max-height:clamp(260px, calc(100vh - 300px), 800px)}
   /* 收合動畫期間不要讓捲軸閃一下 */
   .sec.collapsed .secBody>.list{overflow:hidden}
   .sec.collapsed .secBody{grid-template-rows:0fr;opacity:0}
