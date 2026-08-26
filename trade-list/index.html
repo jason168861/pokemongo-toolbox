@@ -293,7 +293,8 @@
      選了十幾隻之後「我能提供的」會被擠到很下面，要捲很久才看得到 ——
      兩個區塊的標題應該隨時都在畫面上。內容不多時 max-height 不會生效，
      看起來跟以前一樣。 */
-  .secBody>.list{min-height:0;overflow-y:auto;overflow-x:hidden;max-height:34vh;padding-right:2px}
+  .secBody>.list{min-height:0;overflow-y:auto;overflow-x:hidden;padding-right:2px;
+                 max-height:clamp(180px, calc(100vh - 475px), 560px)}
   /* 收合動畫期間不要讓捲軸閃一下 */
   .sec.collapsed .secBody>.list{overflow:hidden}
   .sec.collapsed .secBody{grid-template-rows:0fr;opacity:0}
@@ -3026,6 +3027,28 @@ function moveItem(k,from,to,node,ref){
 }
 function clearSide(k){ if(!LIST[k].length)return; if(!confirm(tr('confirm_clear')))return; LIST[k]=[]; drawLists(); render(); renderBase(); }
 function noteGrow(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,64)+'px'; }
+// 拖曳時靠近清單上下緣就自動捲動。
+// 清單有自己的捲動區(max-height),沒有這段的話項目一多就沒辦法把卡片拖到
+// 目前看不到的位置 —— 得先放手、手動捲、再拖一次。
+let autoScrollRAF=null;
+function stopAutoScroll(){ if(autoScrollRAF){ cancelAnimationFrame(autoScrollRAF); autoScrollRAF=null; } }
+document.addEventListener('pointerup',stopAutoScroll,true);
+document.addEventListener('pointercancel',stopAutoScroll,true);
+window.addEventListener('blur',stopAutoScroll);
+function dragAutoScroll(box,clientY){
+  stopAutoScroll();
+  if(!box || box.scrollHeight<=box.clientHeight) return;   // 根本不能捲就不用理
+  const EDGE=60, MAX=16;                                   // 感應範圍與每格最大捲動量
+  const r=box.getBoundingClientRect();
+  let v=0;
+  if(clientY<r.top+EDGE)         v=-MAX*Math.min(1,(r.top+EDGE-clientY)/EDGE);
+  else if(clientY>r.bottom-EDGE) v= MAX*Math.min(1,(clientY-(r.bottom-EDGE))/EDGE);
+  if(!v) return;
+  // 手指停在邊緣不動時也要繼續捲,所以用 rAF 自己跑,不是靠 pointermove 驅動
+  const step=()=>{ box.scrollTop+=v; autoScrollRAF=requestAnimationFrame(step); };
+  autoScrollRAF=requestAnimationFrame(step);
+}
+
 // pointer-based 清單拖曳排序:桌機移動即拖;手機長按 200ms 才拖(拖之前可正常捲動)。
 let liDragActive=false;
 document.addEventListener('touchmove',e=>{ if(liDragActive && e.cancelable) e.preventDefault(); },{passive:false});
@@ -3039,6 +3062,7 @@ function liDrag(d,k,i){
       if(!active){ const far=Math.hypot(ev.clientX-sx,ev.clientY-sy)>10;
         if(far){ if(touch){ clearTimeout(hold); cleanup(); return; } begin(); } else return; }
       if(ev.cancelable)ev.preventDefault();
+      dragAutoScroll(d.parentNode,ev.clientY);
       const el=document.elementFromPoint(ev.clientX,ev.clientY),li=el&&el.closest('.li'); clearIns();
       if(li&&li!==d&&li.parentNode===d.parentNode){ const r=li.getBoundingClientRect();
         li.classList.add((ev.clientX-r.left)>r.width/2?'insa':'insb'); } };
@@ -3050,7 +3074,7 @@ function liDrag(d,k,i){
           r=li.getBoundingClientRect(),after=(ev.clientX-r.left)>r.width/2,
           ref=after?li.nextSibling:li; moveItem(k,from,after?idx+1:idx,d,ref); } }
       cleanup(); };
-    function cleanup(){ clearTimeout(hold); liDragActive=false; dragK=null; dragIdx=null;
+    function cleanup(){ clearTimeout(hold); stopAutoScroll(); liDragActive=false; dragK=null; dragIdx=null;
       d.removeEventListener('pointermove',move); d.removeEventListener('pointerup',up); d.removeEventListener('pointercancel',up); }
     d.addEventListener('pointermove',move); d.addEventListener('pointerup',up); d.addEventListener('pointercancel',up);
   });
