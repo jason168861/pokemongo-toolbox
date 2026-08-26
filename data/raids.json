@@ -1,9 +1,38 @@
 {
-    "lastUpdated": "2026年8月26日00時",
+    "lastUpdated": "2026年8月26日09時",
     "bosses": [
         {
-            "name": "洗翠 千針魚",
-            "englishName": "Hisuian Qwilfish",
+            "name": "Pikachu wearing a Cosmog-themed spacesuit",
+            "englishName": "Pikachu wearing a Cosmog-themed spacesuit",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 493,
+                    "max": 536
+                },
+                "boosted": {
+                    "min": 616,
+                    "max": 670
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fPXP_2026.icon.png"
+        },
+        {
+            "name": "搗蛋小妖",
+            "englishName": "Impidimp",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
@@ -12,18 +41,18 @@
                     "image": "https://leekduck.com/assets/img/types/dark.png"
                 },
                 {
-                    "name": "poison",
-                    "image": "https://leekduck.com/assets/img/types/poison.png"
+                    "name": "fairy",
+                    "image": "https://leekduck.com/assets/img/types/fairy.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1155,
-                    "max": 1220
+                    "min": 421,
+                    "max": 461
                 },
                 "boosted": {
-                    "min": 1444,
-                    "max": 1526
+                    "min": 526,
+                    "max": 576
                 }
             },
             "boostedWeather": [
@@ -36,168 +65,7 @@
                     "image": "https://leekduck.com/assets/img/weather/cloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm211.fHISUIAN.icon.png"
-        },
-        {
-            "name": "醜醜魚",
-            "englishName": "Feebas",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 132,
-                    "max": 157
-                },
-                "boosted": {
-                    "min": 165,
-                    "max": 196
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm349.icon.png"
-        },
-        {
-            "name": "磨牙彩皮魚",
-            "englishName": "Bruxish",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                },
-                {
-                    "name": "psychic",
-                    "image": "https://leekduck.com/assets/img/types/psychic.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1295,
-                    "max": 1365
-                },
-                "boosted": {
-                    "min": 1620,
-                    "max": 1707
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm779.icon.png"
-        },
-        {
-            "name": "破破舵輪",
-            "englishName": "Dhelmise",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "ghost",
-                    "image": "https://leekduck.com/assets/img/types/ghost.png"
-                },
-                {
-                    "name": "grass",
-                    "image": "https://leekduck.com/assets/img/types/grass.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1608,
-                    "max": 1685
-                },
-                "boosted": {
-                    "min": 2010,
-                    "max": 2107
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "fog",
-                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
-                },
-                {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm781.icon.png"
-        },
-        {
-            "name": "毛崖蟹",
-            "englishName": "Klawf",
-            "tier": "3-Star Raids",
-            "canBeShiny": false,
-            "types": [
-                {
-                    "name": "rock",
-                    "image": "https://leekduck.com/assets/img/types/rock.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1304,
-                    "max": 1373
-                },
-                "boosted": {
-                    "min": 1630,
-                    "max": 1716
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "partly cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm950.icon.png"
-        },
-        {
-            "name": "吃吼霸",
-            "englishName": "Dondozo",
-            "tier": "3-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1633,
-                    "max": 1712
-                },
-                "boosted": {
-                    "min": 2041,
-                    "max": 2140
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm977.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm859.icon.png"
         },
         {
             "name": "露奈雅拉",
