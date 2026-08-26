@@ -257,13 +257,13 @@
   .switch input:checked ~ .track::after{transform:translateX(17px)}
   .switch input:focus-visible ~ .track{outline:2px solid var(--acc);outline-offset:2px}
   .switch:has(input:checked){background:color-mix(in srgb,var(--acc2) 15%,var(--cellbg));border-color:var(--acc2)}
-  .sec{margin-top:12px}.sec h3{margin:0 0 6px;font-size:13px;display:flex;align-items:center;gap:6px}
+  .sec{margin-top:12px}.sec h3{margin:0 0 6px;font-size:13px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
   .sec.want h3{color:var(--want)} .sec.have h3{color:var(--have)}
   /* 可收合的區塊標題 */
   /* 整條標題是一顆按鈕（箭頭＋文字＋數量都包在裡面）。
      原本只有那顆 26px 的小箭頭和文字各自可點，沒有任何「這裡可以按」的視覺提示，
      幾乎沒有人發現可以收合 —— 手機更是連 hover 都沒有可以暗示。 */
-  .secHead{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:8px;
+  .secHead{flex:1 0 auto;display:flex;align-items:center;gap:8px;
            margin:0 0 0 -6px;padding:4px 10px 4px 6px;border-radius:12px;
            background:transparent;border:1px solid transparent;color:inherit;font:inherit;text-align:left;
            cursor:pointer;-webkit-tap-highlight-color:transparent;
@@ -279,7 +279,7 @@
              font-size:13px;line-height:1;transition:transform .3s cubic-bezier(.4,0,.2,1),background .15s,border-color .15s}
   .secHead:hover .secToggle{border-color:currentColor;background:color-mix(in srgb,currentColor 16%,var(--cellbg))}
   .secHead:active .secToggle{transform:scale(.9)}
-  .secLab{user-select:none;font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .secLab{user-select:none;font-size:16px;font-weight:800;white-space:nowrap}
   @media(min-width:900px){ .secLab{font-size:21px} }
   .sec.collapsed .secToggle{transform:rotate(-90deg)}
   .sec.collapsed .secHead:active .secToggle{transform:rotate(-90deg) scale(.9)}
