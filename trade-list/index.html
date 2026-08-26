@@ -310,10 +310,12 @@
   /* 格子寬度改由 --cell 控制，使用者可切換 小/中/大。
      「中」就是以前的尺寸（手機 84px、電腦 104px），預設值不變。 */
   .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--cell,84px),1fr));gap:8px;min-height:40px}
-  body.cell-s{--cell:58px} body.cell-m{--cell:84px} body.cell-l{--cell:116px}
+  /* --gn 是性別圖標的大小，要跟著格子一起縮放 ——
+     固定 23px 的話，「小」的格子只有 58px 寬，圖標會佔掉快一半。 */
+  body.cell-s{--cell:58px;--gn:17px} body.cell-m{--cell:84px;--gn:23px} body.cell-l{--cell:116px;--gn:26px}
   /* 電腦版整體放大一級。必須寫在基準值「之後」——同權重時後面的才會贏。 */
   @media(min-width:900px){
-    body.cell-s{--cell:72px} body.cell-m{--cell:104px} body.cell-l{--cell:148px}
+    body.cell-s{--cell:72px;--gn:19px} body.cell-m{--cell:104px;--gn:23px} body.cell-l{--cell:148px;--gn:28px}
   }
   .li{position:relative;cursor:grab}.li.dragging{opacity:.35}
   .li.insb::before{content:'';position:absolute;left:-6px;top:0;bottom:0;width:4px;background:var(--acc2);border-radius:2px;z-index:6}
@@ -327,7 +329,8 @@
   .li .bd{position:absolute;right:5%;top:5%;width:28%;height:28%;z-index:3}
   /* 性別鈕:符號本身就是按鈕 —— 結果顯示在哪裡,就在哪裡操作。
      未設定時淡淡的,設定後才亮起來(手機沒有 hover,所以不能只靠 hover 才看得到) */
-  .li .gn{position:absolute;left:2px;bottom:2px;z-index:4;width:23px;height:23px;padding:3px;
+  .li .gn{position:absolute;left:2px;bottom:2px;z-index:4;
+          width:var(--gn,23px);height:var(--gn,23px);padding:calc(var(--gn,23px)*.13);
           border-radius:50%;background:#000d;border:1px solid #ffffff40;color:#ff9ec7;cursor:pointer;
           display:flex;align-items:center;justify-content:center}
   .li .gn>svg{width:100%;height:100%;display:block}
@@ -337,7 +340,9 @@
   .li .gn.off{color:#e3e8f7}
   .li .gn:hover{border-color:#fffc;background:#000}
   /* 觸控裝置再放大一點:手指比游標粗,而卡片本身有空間 */
-  @media(pointer:coarse){ .li .gn{width:27px;height:27px;padding:4px} }
+  /* 觸控裝置再放大一點:手指比游標粗。用等比而不是固定 +4px ——
+     固定量對「小」的比例太重(17→21 等於加了 24%),小格子會被圖標佔掉太多。 */
+  @media(pointer:coarse){ .li .gn{width:calc(var(--gn,23px)*1.15);height:calc(var(--gn,23px)*1.15)} }
   .li .card .del{position:absolute;right:2px;bottom:2px;z-index:4;width:18px;height:18px;padding:0;border-radius:50%;background:#000b;border:1px solid #fff5;color:#fff;cursor:pointer;font-size:11px;line-height:1}
   .li .note{display:block;width:100%;margin-top:3px;box-sizing:border-box;font-size:10px;padding:2px 4px;line-height:1.25;
             border:1px solid var(--line);border-radius:6px;background:var(--cellbg);color:var(--fg);text-align:center;cursor:text;
@@ -2766,16 +2771,19 @@ function toggleSec(k){ const sec=document.querySelector('.sec.'+k); if(!sec)retu
   try{ localStorage.setItem('tlCollapse_'+k, c?'1':'0'); }catch(e){} }
 /* 圖片大小：小/中/大。只改 --cell（格子最小寬度），排數由 auto-fill 自己算，
    所以窄螢幕選「小」就能一排多塞幾隻。「中」等於改版前的尺寸。 */
-function setCellSize(v){
+function setCellSize(v,persist){
   if(!['s','m','l'].includes(v)) v='m';
   document.body.classList.remove('cell-s','cell-m','cell-l');
   document.body.classList.add('cell-'+v);
   for(const b of document.querySelectorAll('.szBtn')) b.classList.toggle('on', b.dataset.sz===v);
-  try{ localStorage.setItem('tlCellSize', v); }catch(e){}
+  if(persist!==false){ try{ localStorage.setItem('tlCellSize', v); }catch(e){} }
 }
 function restoreCellSize(){
-  let v='m'; try{ v=localStorage.getItem('tlCellSize')||'m'; }catch(e){}
-  setCellSize(v);
+  let v=null; try{ v=localStorage.getItem('tlCellSize'); }catch(e){}
+  if(['s','m','l'].includes(v)){ setCellSize(v); return; }
+  // 沒選過 → 手機預設「小」(一排 5 隻,一眼看得到整體)、電腦預設「中」。
+  // 這個自動判斷不寫進 localStorage,否則使用者根本沒選就被鎖住偏好。
+  setCellSize(window.innerWidth<=700?'s':'m', false);
 }
 function restoreCollapse(){ for(const k of ['want','have']){
   let v=null; try{ v=localStorage.getItem('tlCollapse_'+k); }catch(e){}
