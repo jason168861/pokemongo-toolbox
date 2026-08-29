@@ -1,5 +1,56 @@
 [
   {
+    "category": "[San Francisco] 2026 Pokémon World Championships Tasks",
+    "tasks": [
+      {
+        "description": "強化寶可夢 6 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "World Championships 2026 Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2026.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "World Championships 2026 Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fWCS_2026.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      },
+      {
+        "description": "拜訪 3 個寶可補給站",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a Cosmog-themed spacesuit",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fPXP_2026.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a Cosmog-themed spacesuit",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fPXP_2026.icon.png",
+            "isShiny": true,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "PokémonXP & 2026 Worlds Tasks",
     "tasks": [
       {
