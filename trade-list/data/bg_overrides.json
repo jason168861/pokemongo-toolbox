@@ -1,242 +1,1980 @@
 {
  "version": 1,
- "updated": "2026-08-23",
+ "updated": "2026-08-29",
  "note": "背卡資料的人工修正。build_data.py 每次都把 backgrounds.json 整份重寫,所以修正要放在這裡才不會被 update.py 蓋掉。請用 bg-editor.html 編輯。op: remove=刪掉這筆 / set=改欄位(值給 null 代表刪掉該欄位) / add=補一筆來源沒有的。key 由 dex|form|costume|gmax|dynamax|shadow|sprite檔名 組成。",
  "ops": [
-  {"card":"GO Tainan background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"sprite":"assets/img/pm134.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm134.cMAY_2023.s.icon.png","shiny":true}},
-  {"card":"GO Tainan background.png","op":"set","key":"135||||||GO0135Explorer.png","fields":{"sprite":"assets/img/pm135.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm135.cMAY_2023.s.icon.png","shiny":true}},
-  {"card":"GO Tainan background.png","op":"set","key":"136||||||GO0136Explorer.png","fields":{"sprite":"assets/img/pm136.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm136.cMAY_2023.s.icon.png","shiny":true}},
-  {"card":"GO Tainan background.png","op":"set","key":"196||||||GO0196Explorer.png","fields":{"sprite":"assets/img/pm196.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm196.cMAY_2023.s.icon.png","shiny":true}},
-  {"card":"GO Tainan background.png","op":"set","key":"197||||||GO0197Explorer.png","fields":{"sprite":"assets/img/pm197.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm197.cMAY_2023.s.icon.png","shiny":true}},
-  {"card":"GO Tainan background.png","op":"set","key":"470||||||GO0470Explorer.png","fields":{"sprite":"assets/img/pm470.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm470.cMAY_2023.s.icon.png","shiny":true}},
-  {"card":"GO Tainan background.png","op":"set","key":"700||||||GO0700Explorer.png","fields":{"sprite":"assets/img/pm700.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm700.cMAY_2023.s.icon.png","shiny":true}},
-  {"card":"GO Tainan background.png","op":"set","key":"471||||||GO0471Explorer.png","fields":{"sprite":"assets/img/pm471.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm471.cMAY_2023.s.icon.png","shiny":true}},
-  {"card":"GO Tainan background.png","op":"set","key":"133||||||GO0133Explorer.png","fields":{"sprite":"assets/img/pm133.cMAY_2023.g2.icon.png","sprite_shiny":"assets/img/pm133.cMAY_2023.g2.s.icon.png"}},
-  {"card":"GO Seoul background.png","op":"set","key":"136||||||GO0136Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Seoul background.png","op":"set","key":"135||||||GO0135Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Seoul background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Seoul background.png","op":"set","key":"133||||||GO0133Explorer.png","fields":{"costume":"MAY_2023","sprite":null}},
-  {"card":"GO Seoul background.png","op":"set","key":"196||||||GO0196Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Seoul background.png","op":"set","key":"197||||||GO0197Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Seoul background.png","op":"set","key":"470||||||GO0470Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Seoul background.png","op":"set","key":"471||||||GO0471Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Seoul background.png","op":"set","key":"700||||||GO0700Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Mexico City background.png","op":"set","key":"133||||||GO0133Explorer.png","fields":{"costume":"MAY_2023","sprite":null}},
-  {"card":"GO Mexico City background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Mexico City background.png","op":"set","key":"135||||||GO0135Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Mexico City background.png","op":"set","key":"136||||||GO0136Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Mexico City background.png","op":"set","key":"196||||||GO0196Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Mexico City background.png","op":"set","key":"197||||||GO0197Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Mexico City background.png","op":"set","key":"470||||||GO0470Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Mexico City background.png","op":"set","key":"471||||||GO0471Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Mexico City background.png","op":"set","key":"700||||||GO0700Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Barcelona background.png","op":"set","key":"133||||||GO0133Explorer.png","fields":{"costume":"MAY_2023","sprite":null}},
-  {"card":"GO Barcelona background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Barcelona background.png","op":"set","key":"135||||||GO0135Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Barcelona background.png","op":"set","key":"136||||||GO0136Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Barcelona background.png","op":"set","key":"196||||||GO0196Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Barcelona background.png","op":"set","key":"197||||||GO0197Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Barcelona background.png","op":"set","key":"470||||||GO0470Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Barcelona background.png","op":"set","key":"471||||||GO0471Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Barcelona background.png","op":"set","key":"700||||||GO0700Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Jakarta background.png","op":"set","key":"133||||||GO0133Explorer.png","fields":{"costume":"MAY_2023","sprite":null}},
-  {"card":"GO Jakarta background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Jakarta background.png","op":"set","key":"135||||||GO0135Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Jakarta background.png","op":"set","key":"136||||||GO0136Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Jakarta background.png","op":"set","key":"196||||||GO0196Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Jakarta background.png","op":"set","key":"197||||||GO0197Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Jakarta background.png","op":"set","key":"470||||||GO0470Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Jakarta background.png","op":"set","key":"471||||||GO0471Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Jakarta background.png","op":"set","key":"700||||||GO0700Explorer.png","fields":{"costume":"MAY_2023","sprite":null,"shiny":true}},
-  {"card":"GO Osaka Go Fest 2025 background.png","op":"set","key":"888||||||","fields":{"form":"HERO"}},
-  {"card":"GO Osaka Go Fest 2025 background.png","op":"set","key":"889||||||","fields":{"form":"HERO"}},
-  {"card":"GO Jersey City background.png","op":"set","key":"888||||||","fields":{"form":"HERO"}},
-  {"card":"GO Jersey City background.png","op":"set","key":"889||||||","fields":{"form":"HERO"}},
-  {"card":"GO Wormhole background.png","op":"remove","key":"794||||||"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"795||||||"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"796||||||"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"797||||||"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"805||||||"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"806||||||"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"798||||||"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"799||||||"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"800||||||"},
-  {"card":"GO Paris background.png","op":"set","key":"888||||||","fields":{"form":"HERO"}},
-  {"card":"GO Paris background.png","op":"set","key":"889||||||","fields":{"form":"HERO"}},
-  {"card":"GO Valor background.png","op":"set","key":"1||||||GO0001V20.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"2||||||GO0002Jul2025.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"2||||||GO0002Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"3||||||GO0003Jul2025.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"3||||||GO0003Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"5||||||GO0005Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"6||||||GO0006Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"8||||||GO0008Jul2023.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"8||||||GO0008Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"9||||||GO0009Jul2023.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"9||||||GO0009Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"25||||||GO0025Leaf.png","fields":{"costume":"GOTOUR_2026_A_02","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"25||||||GO0025Red.png","fields":{"costume":"GOTOUR_2026_A","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"form":"ANNIVERSARY_2026","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"88||||||GO0088Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"78||SPRING_2023_VALOR||||","fields":{"shiny":true}},
-  {"card":"GO Valor background.png","op":"set","key":"89||||||GO0089Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null,"shiny":true}},
-  {"card":"GO Instinct background.png","op":"set","key":"1||||||GO0001V20.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"2||||||GO0002Jul2025.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"2||||||GO0002Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"3||||||GO0003Jul2025.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"3||||||GO0003Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"5||||||GO0005Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"6||||||GO0006Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"8||||||GO0008Jul2023.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"8||||||GO0008Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"9||||||GO0009Jul2023.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"9||||||GO0009Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"25||||||GO0025Leaf.png","fields":{"costume":"GOTOUR_2026_A_02","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"25||||||GO0025Red.png","fields":{"costume":"GOTOUR_2026_A","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"form":"ANNIVERSARY_2026","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"88||||||GO0088Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"89||||||GO0089Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null,"shiny":true}},
-  {"card":"GO Instinct background.png","op":"set","key":"466||SPRING_2023_INSTINCT||||","fields":{"shiny":true}},
-  {"card":"GO Mystic background.png","op":"set","key":"1||||||GO0001V20.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"2||||||GO0002Jul2025.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"2||||||GO0002Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"3||||||GO0003Jul2025.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"3||||||GO0003Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"5||||||GO0005Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"6||||||GO0006Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"8||||||GO0008Jul2023.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"8||||||GO0008Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"9||||||GO0009Jul2023.png","fields":{"costume":"JAN_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"9||||||GO0009Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"25||||||GO0025Leaf.png","fields":{"costume":"GOTOUR_2026_A_02","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"25||||||GO0025Red.png","fields":{"costume":"GOTOUR_2026_A","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"form":"ANNIVERSARY_2026","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"89||||||GO0089Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null,"shiny":true}},
-  {"card":"GO Mystic background.png","op":"set","key":"88||||||GO0088Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null}},
-  {"card":"GO N background.png","op":"set","key":"521||||||GO0521_f.png","fields":{"sprite":"assets/img/pm521.g2.icon.png","sprite_shiny":"assets/img/pm521.g2.s.icon.png"}},
-  {"card":"GO Black Version background.png","op":"set","key":"25||||||GO0025GoTour2025Hilbert.png","fields":{"costume":"GOTOUR_2025_A","sprite":null}},
-  {"card":"GO Black Version background.png","op":"set","key":"25||||||GO0025GoTour2025Hilda.png","fields":{"costume":"GOTOUR_2025_A_02","sprite":null}},
-  {"card":"GO Black Version background.png","op":"set","key":"25||||||GO0025GoTour2025Nate.png","fields":{"costume":"GOTOUR_2025_B","sprite":null}},
-  {"card":"GO Black Version background.png","op":"set","key":"25||||||GO0025GoTour2025Rosa.png","fields":{"costume":"GOTOUR_2025_B_02","sprite":null}},
-  {"card":"GO White Version background.png","op":"set","key":"25||||||GO0025GoTour2025Hilbert.png","fields":{"costume":"GOTOUR_2025_A","sprite":null}},
-  {"card":"GO White Version background.png","op":"set","key":"25||||||GO0025GoTour2025Hilda.png","fields":{"costume":"GOTOUR_2025_A_02","sprite":null}},
-  {"card":"GO White Version background.png","op":"set","key":"25||||||GO0025GoTour2025Nate.png","fields":{"costume":"GOTOUR_2025_B","sprite":null}},
-  {"card":"GO White Version background.png","op":"set","key":"25||||||GO0025GoTour2025Rosa.png","fields":{"costume":"GOTOUR_2025_B_02","sprite":null}},
-  {"card":"GO Shield background.png","op":"set","key":"889|CROWNED_SHIELD|||||","fields":{"shiny":true}},
-  {"card":"GO Shield background.png","op":"set","key":"889||||||","fields":{"form":"HERO"}},
-  {"card":"GO Sword background.png","op":"set","key":"888||||||","fields":{"form":"HERO"}},
-  {"card":"GO Sword background.png","op":"set","key":"888|CROWNED_SWORD|||||","fields":{"shiny":true}},
-  {"card":"GO 9th Anniversary background.png","op":"set","key":"999||||||GO0999Anniversary9.png","fields":{"costume":"COIN_A1","sprite":null}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"521||||1||GO0521_f.png","fields":{"sprite":"assets/img/pm521.g2.icon.png","sprite_shiny":"assets/img/pm521.g2.s.icon.png"}},
-  {"card":"GO Concierge background.png","op":"set","key":"54||||||GO0054SwimRing.png","fields":{"form":"SWIM_2025","sprite":null}},
-  {"card":"GO Wild Area 2025 background.png","op":"set","key":"760||||||GO0760Cape.png","fields":{"costume":"WILDAREA_2025","sprite":null}},
-  {"card":"GO 2026 Community Day background.png","op":"set","key":"916||||||GO0916f.png","fields":{"sprite":null}},
-  {"card":"GO Gold Version background.png","op":"set","key":"25||||||GO0025Ethan.png","fields":{"costume":"GOTOUR_2026_B","sprite":null}},
-  {"card":"GO Gold Version background.png","op":"set","key":"25||||||GO0025Lyra.png","fields":{"costume":"GOTOUR_2026_B_02","sprite":null}},
-  {"card":"GO Silver Version background.png","op":"set","key":"25||||||GO0025Ethan.png","fields":{"costume":"GOTOUR_2026_B","sprite":null}},
-  {"card":"GO Silver Version background.png","op":"set","key":"25||||||GO0025Lyra.png","fields":{"costume":"GOTOUR_2026_B_02","sprite":null}},
-  {"card":"GO Ruby Version background.png","op":"set","key":"25||||||GO0025GoTour2023Brendan.png","fields":{"costume":"GOTOUR_2023_HAT","sprite":null}},
-  {"card":"GO Sapphire Version background.png","op":"set","key":"25||||||GO0025GoTour2023Brendan.png","fields":{"costume":"GOTOUR_2023_HAT","sprite":null}},
-  {"card":"GO Sapphire Version background.png","op":"set","key":"25||||||GO0025GoTour2023May.png","fields":{"costume":"GOTOUR_2023_BANDANA","sprite":null}},
-  {"card":"GO Ruby Version background.png","op":"set","key":"25||||||GO0025GoTour2023May.png","fields":{"costume":"GOTOUR_2023_BANDANA","sprite":null}},
-  {"card":"GO Diamond Version background.png","op":"set","key":"25||||||GO0025GoTour2024Akari.png","fields":{"costume":"GOTOUR_2024_B_02","sprite":null}},
-  {"card":"GO Diamond Version background.png","op":"set","key":"25||||||GO0025GoTour2024Dawn.png","fields":{"costume":"GOTOUR_2024_A_02","sprite":null}},
-  {"card":"GO Diamond Version background.png","op":"set","key":"25||||||GO0025GoTour2024Lucas.png","fields":{"costume":"GOTOUR_2024_A","sprite":null}},
-  {"card":"GO Pearl Version background.png","op":"set","key":"25||||||GO0025GoTour2024Akari.png","fields":{"costume":"GOTOUR_2024_B_02","sprite":null}},
-  {"card":"GO Pearl Version background.png","op":"set","key":"25||||||GO0025GoTour2024Dawn.png","fields":{"costume":"GOTOUR_2024_A_02","sprite":null}},
-  {"card":"GO Pearl Version background.png","op":"set","key":"25||||||GO0025GoTour2024Lucas.png","fields":{"costume":"GOTOUR_2024_A","sprite":null}},
-  {"card":"GO Pearl Version background.png","op":"set","key":"25||||||GO0025GoTour2024Rei.png","fields":{"costume":"GOTOUR_2024_B","sprite":null}},
-  {"card":"GO X background.png","op":"set","key":"25||||||GO0025GoTour2026Calem.png","fields":{"costume":"GOTOUR_2026_C","sprite":null}},
-  {"card":"GO X background.png","op":"set","key":"25||||||GO0025GoTour2026Serena.png","fields":{"costume":"GOTOUR_2026_C_02","sprite":null}},
-  {"card":"GO Y background.png","op":"set","key":"25||||||GO0025GoTour2026Calem.png","fields":{"costume":"GOTOUR_2026_C","sprite":null}},
-  {"card":"GO Y background.png","op":"set","key":"25||||||GO0025GoTour2026Serena.png","fields":{"costume":"GOTOUR_2026_C_02","sprite":null}},
-  {"card":"GO Y background.png","op":"set","key":"681||||||","fields":{"shiny":true}},
-  {"card":"GO X background.png","op":"set","key":"681||||||","fields":{"shiny":true}},
-  {"card":"GO Festival of Colors background.png","op":"set","key":"25||||||GO0025Saree.png","fields":{"costume":"DIWALI_2024","sprite":null}},
-  {"card":"GO Pokopia background.png","op":"set","key":"132||||||GO0132PokopiaCap.png","fields":{"costume":"SPRING_2026_B","sprite":null}},
-  {"card":"GO Pokopia background.png","op":"set","key":"132||||||GO0132PokopiaHat.png","fields":{"costume":"SPRING_2026_A","sprite":null}},
-  {"card":"GO Arraia background.png","op":"set","key":"128|PALDEA_AQUA|||||","fields":{"shiny":true}},
-  {"card":"GO 10th Anniversary background.png","op":"set","key":"999||||||GO0999Anniversary10.png","fields":{"costume":"COIN_A1","sprite":null}},
-  {"card":"GO Road of Legends background.png","op":"set","key":"888||||||","fields":{"form":"HERO"}},
-  {"card":"GO Road of Legends background.png","op":"set","key":"888|CROWNED_SWORD|||||","fields":{"shiny":true}},
-  {"card":"GO Road of Legends background.png","op":"set","key":"889|CROWNED_SHIELD|||||","fields":{"shiny":true}},
-  {"card":"GO Road of Legends background.png","op":"set","key":"889||||||","fields":{"form":"HERO"}},
-  {"card":"Location Background Hong Kong.png","op":"set","key":"133||||||Eevee_explorer.png","fields":{"costume":"MAY_2023","sprite":null,"sprite_shiny":null}},
-  {"card":"Location Background São Paulo.png","op":"set","key":"133||||||Eevee_explorer.png","fields":{"costume":"MAY_2023","sprite":null,"sprite_shiny":null}},
-  {"card":"Location Background Singapore.png","op":"set","key":"133||||||Eevee_explorer.png","fields":{"costume":"MAY_2023","sprite":null,"sprite_shiny":null}},
-  {"card":"Location Background Mumbai.png","op":"set","key":"133||||||Eevee_explorer.png","fields":{"costume":"MAY_2023","sprite":null,"sprite_shiny":null}},
-  {"card":"Location Background Milan.png","op":"set","key":"133||||||Eevee_explorer.png","fields":{"costume":"MAY_2023","sprite":null,"sprite_shiny":null}},
-  {"card":"Location Background Santiago.png","op":"set","key":"133||||||Eevee_explorer.png","fields":{"costume":"MAY_2023","sprite":null,"sprite_shiny":null}},
-  {"card":"Location Background SpringBlossom2025.png","op":"set","key":"585||||||","fields":{"shiny":true}},
-  {"card":"Location Background Osaka GOFest 2025.png","op":"set","key":"888||||||","fields":{"form":"HERO","shiny":true}},
-  {"card":"Location Background Osaka GOFest 2025.png","op":"set","key":"889||||||","fields":{"form":"HERO","shiny":true}},
-  {"card":"Location Background Taipei Floral Picnic 2026.png","op":"set","key":"585||||||","fields":{"shiny":true}},
-  {"card":"Special Background GoWildArea2024.png","op":"set","key":"849||||||","fields":{"shiny":true}},
-  {"card":"Special Background GOFest 2025 Sword.png","op":"set","key":"888||||||","fields":{"form":"HERO","shiny":true}},
-  {"card":"Special Background GOFest 2025 Sword.png","op":"add","mon":{"dex":888,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"CROWNED_SWORD"}},
-  {"card":"Special Background GOFest 2025 Shield.png","op":"set","key":"889||||||","fields":{"form":"HERO","shiny":true}},
-  {"card":"Special Background GOFest 2025 Shield.png","op":"add","mon":{"dex":889,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"CROWNED_SHIELD"}},
-  {"card":"Special Background Max Finale.png","op":"set","key":"849||||||","fields":{"shiny":true}},
-  {"card":"Special Background GOFest 2025 Shield.png","op":"hideCard"},
-  {"card":"Location Card Jeju.png","op":"hideCard"},
-  {"card":"Location Background MLB Miami Marlins.png","op":"hideCard"},
-  {"card":"Location Background MLB Seattle Mariners.png","op":"hideCard"},
-  {"card":"Location Background SpringBlossom2025.png","op":"set","key":"25||SPRING_2023||||","fields":{"costume":"APRIL_2020_NOEVOLVE"}},
-  {"card":"Location Background SpringBlossom2025.png","op":"hideCard"},
-  {"card":"Location Background Expo2025 Pikachu.png","op":"hideCard"},
-  {"card":"Location Background Expo2025 Starters.png","op":"hideCard"},
-  {"card":"GO Osaka Go Fest 2025 background.png","op":"set","key":"812|||1|||","fields":{"shiny":true}},
-  {"card":"Location Background Osaka GOFest 2025.png","op":"hideCard"},
-  {"card":"Location Background MLB Cleveland Guardians.png","op":"hideCard"},
-  {"card":"GO Nagasaki background.png","op":"hideCard"},
-  {"card":"GO Wormhole background.png","op":"remove","key":"793||||||"},
-  {"card":"GO Radiance background.png","op":"hideCard"},
-  {"card":"GO Umbra background.png","op":"hideCard"},
-  {"card":"Special Background GoWildArea2024.png","op":"hideCard"},
-  {"card":"Special Background DecCD2024.png","op":"hideCard"},
-  {"card":"GO Community Day December 2024 background.png","op":"set","key":"474||||||","fields":{"shiny":true}},
-  {"card":"GO N background.png","op":"set","key":"525||||||","fields":{"shiny":true}},
-  {"card":"GO N background.png","op":"set","key":"526||||||","fields":{"shiny":true}},
-  {"card":"Special Background Enigma.png","op":"hideCard"},
-  {"card":"GO Fest 2025 background.png","op":"hideCard"},
-  {"card":"Special Background GOFest 2025 Sword.png","op":"hideCard"},
-  {"card":"GO Dark Skies background.png","op":"set","key":"856||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"857||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"858||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"810||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"811||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"812||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"812|||1|||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"813||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"814||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"815||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"815|||1|||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"816||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"817||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"818||||1||","fields":{"shiny":true}},
-  {"card":"GO Dark Skies background.png","op":"set","key":"818|||1|||","fields":{"shiny":true}},
-  {"card":"Special Background Max Finale.png","op":"hideCard"},
-  {"card":"GO Tales of Transformation background.png","op":"set","key":"671||||||","fields":{"shiny":true}},
-  {"card":"GO Tales of Transformation background.png","op":"set","key":"670||||||","fields":{"shiny":true}},
-  {"card":"Special Background Observatory Exhibition Tour.png","op":"hideCard"},
-  {"card":"Special Background Wild Area Global 2025.png","op":"hideCard"},
-  {"card":"Special Background Silver.png","op":"hideCard"},
-  {"card":"Special Background Ruby.png","op":"hideCard"},
-  {"card":"Special Background Sapphire.png","op":"hideCard"},
-  {"card":"GO Diamond Version background.png","op":"set","key":"25||||||GO0025GoTour2024Rei.png","fields":{"costume":"GOTOUR_2024_B","sprite":null}},
-  {"card":"Special Background Diamond.png","op":"hideCard"},
-  {"card":"Special Background Pearl.png","op":"hideCard"},
-  {"card":"Special Background Mega.png","op":"hideCard"},
-  {"card":"Special Background Festival of Colors 2026.png","op":"hideCard"},
-  {"card":"Special Background LEGO.png","op":"hideCard"},
-  {"card":"Special Background 10th Anniversary Mewtwo.png","op":"hideCard"},
-  {"card":"GO Instinct background.png","op":"set","key":"125||SPRING_2023_INSTINCT||||","fields":{"shiny":true}},
-  {"card":"GO Delightful Days background.png","op":"set","key":"812|||1|||","fields":{"shiny":true}},
-  {"card":"GO Delightful Days background.png","op":"set","key":"784||||||","fields":{"shiny":true}},
-  {"card":"GO Delightful Days background.png","op":"set","key":"818|||1|||","fields":{"shiny":true}},
-  {"card":"GO Delightful Days background.png","op":"set","key":"815|||1|||","fields":{"shiny":true}},
-  {"card":"GO Delightful Days background.png","op":"set","key":"783||||||","fields":{"shiny":true}},
-  {"card":"GO Jersey City background.png","op":"set","key":"815|||1|||","fields":{"shiny":true}},
-  {"card":"GO Paris background.png","op":"set","key":"818|||1|||","fields":{"shiny":true}}
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "134||||||GO0134Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm134.cMAY_2023.icon.png",
+    "sprite_shiny": "assets/img/pm134.cMAY_2023.s.icon.png",
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "135||||||GO0135Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm135.cMAY_2023.icon.png",
+    "sprite_shiny": "assets/img/pm135.cMAY_2023.s.icon.png",
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "136||||||GO0136Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm136.cMAY_2023.icon.png",
+    "sprite_shiny": "assets/img/pm136.cMAY_2023.s.icon.png",
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "196||||||GO0196Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm196.cMAY_2023.icon.png",
+    "sprite_shiny": "assets/img/pm196.cMAY_2023.s.icon.png",
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "197||||||GO0197Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm197.cMAY_2023.icon.png",
+    "sprite_shiny": "assets/img/pm197.cMAY_2023.s.icon.png",
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "470||||||GO0470Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm470.cMAY_2023.icon.png",
+    "sprite_shiny": "assets/img/pm470.cMAY_2023.s.icon.png",
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "700||||||GO0700Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm700.cMAY_2023.icon.png",
+    "sprite_shiny": "assets/img/pm700.cMAY_2023.s.icon.png",
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "471||||||GO0471Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm471.cMAY_2023.icon.png",
+    "sprite_shiny": "assets/img/pm471.cMAY_2023.s.icon.png",
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tainan background.png",
+   "op": "set",
+   "key": "133||||||GO0133Explorer.png",
+   "fields": {
+    "sprite": "assets/img/pm133.cMAY_2023.g2.icon.png",
+    "sprite_shiny": "assets/img/pm133.cMAY_2023.g2.s.icon.png"
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "136||||||GO0136Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "135||||||GO0135Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "134||||||GO0134Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "133||||||GO0133Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "196||||||GO0196Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "197||||||GO0197Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "470||||||GO0470Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "471||||||GO0471Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Seoul background.png",
+   "op": "set",
+   "key": "700||||||GO0700Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "133||||||GO0133Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "134||||||GO0134Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "135||||||GO0135Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "136||||||GO0136Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "196||||||GO0196Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "197||||||GO0197Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "470||||||GO0470Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "471||||||GO0471Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mexico City background.png",
+   "op": "set",
+   "key": "700||||||GO0700Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "133||||||GO0133Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "134||||||GO0134Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "135||||||GO0135Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "136||||||GO0136Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "196||||||GO0196Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "197||||||GO0197Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "470||||||GO0470Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "471||||||GO0471Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Barcelona background.png",
+   "op": "set",
+   "key": "700||||||GO0700Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "133||||||GO0133Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "134||||||GO0134Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "135||||||GO0135Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "136||||||GO0136Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "196||||||GO0196Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "197||||||GO0197Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "470||||||GO0470Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "471||||||GO0471Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jakarta background.png",
+   "op": "set",
+   "key": "700||||||GO0700Explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Osaka Go Fest 2025 background.png",
+   "op": "set",
+   "key": "888||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Osaka Go Fest 2025 background.png",
+   "op": "set",
+   "key": "889||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Jersey City background.png",
+   "op": "set",
+   "key": "888||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Jersey City background.png",
+   "op": "set",
+   "key": "889||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "794||||||"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "795||||||"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "796||||||"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "797||||||"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "805||||||"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "806||||||"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "798||||||"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "799||||||"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "800||||||"
+  },
+  {
+   "card": "GO Paris background.png",
+   "op": "set",
+   "key": "888||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Paris background.png",
+   "op": "set",
+   "key": "889||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "1||||||GO0001V20.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "2||||||GO0002Jul2025.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "2||||||GO0002Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "3||||||GO0003Jul2025.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "3||||||GO0003Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "5||||||GO0005Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "6||||||GO0006Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "8||||||GO0008Jul2023.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "8||||||GO0008Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "9||||||GO0009Jul2023.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "9||||||GO0009Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "25||||||GO0025Leaf.png",
+   "fields": {
+    "costume": "GOTOUR_2026_A_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "25||||||GO0025Red.png",
+   "fields": {
+    "costume": "GOTOUR_2026_A",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "25||||||GO0025Willow.png",
+   "fields": {
+    "form": "ANNIVERSARY_2026",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "88||||||GO0088Party.png",
+   "fields": {
+    "costume": "ANNIVERSARY_2024",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "78||SPRING_2023_VALOR||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Valor background.png",
+   "op": "set",
+   "key": "89||||||GO0089Party.png",
+   "fields": {
+    "costume": "ANNIVERSARY_2024",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "1||||||GO0001V20.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "2||||||GO0002Jul2025.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "2||||||GO0002Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "3||||||GO0003Jul2025.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "3||||||GO0003Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "5||||||GO0005Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "6||||||GO0006Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "8||||||GO0008Jul2023.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "8||||||GO0008Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "9||||||GO0009Jul2023.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "9||||||GO0009Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "25||||||GO0025Leaf.png",
+   "fields": {
+    "costume": "GOTOUR_2026_A_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "25||||||GO0025Red.png",
+   "fields": {
+    "costume": "GOTOUR_2026_A",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "25||||||GO0025Willow.png",
+   "fields": {
+    "form": "ANNIVERSARY_2026",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "88||||||GO0088Party.png",
+   "fields": {
+    "costume": "ANNIVERSARY_2024",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "89||||||GO0089Party.png",
+   "fields": {
+    "costume": "ANNIVERSARY_2024",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "466||SPRING_2023_INSTINCT||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "1||||||GO0001V20.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "2||||||GO0002Jul2025.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "2||||||GO0002Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "3||||||GO0003Jul2025.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "3||||||GO0003Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "5||||||GO0005Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "6||||||GO0006Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "8||||||GO0008Jul2023.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "8||||||GO0008Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "9||||||GO0009Jul2023.png",
+   "fields": {
+    "costume": "JAN_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "9||||||GO0009Visor.png",
+   "fields": {
+    "costume": "SPRING_2020_NOEVOLVE",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "25||||||GO0025Leaf.png",
+   "fields": {
+    "costume": "GOTOUR_2026_A_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "25||||||GO0025Red.png",
+   "fields": {
+    "costume": "GOTOUR_2026_A",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "25||||||GO0025Willow.png",
+   "fields": {
+    "form": "ANNIVERSARY_2026",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "89||||||GO0089Party.png",
+   "fields": {
+    "costume": "ANNIVERSARY_2024",
+    "sprite": null,
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Mystic background.png",
+   "op": "set",
+   "key": "88||||||GO0088Party.png",
+   "fields": {
+    "costume": "ANNIVERSARY_2024",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO N background.png",
+   "op": "set",
+   "key": "521||||||GO0521_f.png",
+   "fields": {
+    "sprite": "assets/img/pm521.g2.icon.png",
+    "sprite_shiny": "assets/img/pm521.g2.s.icon.png"
+   }
+  },
+  {
+   "card": "GO Black Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2025Hilbert.png",
+   "fields": {
+    "costume": "GOTOUR_2025_A",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Black Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2025Hilda.png",
+   "fields": {
+    "costume": "GOTOUR_2025_A_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Black Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2025Nate.png",
+   "fields": {
+    "costume": "GOTOUR_2025_B",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Black Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2025Rosa.png",
+   "fields": {
+    "costume": "GOTOUR_2025_B_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO White Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2025Hilbert.png",
+   "fields": {
+    "costume": "GOTOUR_2025_A",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO White Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2025Hilda.png",
+   "fields": {
+    "costume": "GOTOUR_2025_A_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO White Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2025Nate.png",
+   "fields": {
+    "costume": "GOTOUR_2025_B",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO White Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2025Rosa.png",
+   "fields": {
+    "costume": "GOTOUR_2025_B_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Shield background.png",
+   "op": "set",
+   "key": "889|CROWNED_SHIELD|||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Shield background.png",
+   "op": "set",
+   "key": "889||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Sword background.png",
+   "op": "set",
+   "key": "888||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Sword background.png",
+   "op": "set",
+   "key": "888|CROWNED_SWORD|||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO 9th Anniversary background.png",
+   "op": "set",
+   "key": "999||||||GO0999Anniversary9.png",
+   "fields": {
+    "costume": "COIN_A1",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "521||||1||GO0521_f.png",
+   "fields": {
+    "sprite": "assets/img/pm521.g2.icon.png",
+    "sprite_shiny": "assets/img/pm521.g2.s.icon.png"
+   }
+  },
+  {
+   "card": "GO Concierge background.png",
+   "op": "set",
+   "key": "54||||||GO0054SwimRing.png",
+   "fields": {
+    "form": "SWIM_2025",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Wild Area 2025 background.png",
+   "op": "set",
+   "key": "760||||||GO0760Cape.png",
+   "fields": {
+    "costume": "WILDAREA_2025",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO 2026 Community Day background.png",
+   "op": "set",
+   "key": "916||||||GO0916f.png",
+   "fields": {
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Gold Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025Ethan.png",
+   "fields": {
+    "costume": "GOTOUR_2026_B",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Gold Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025Lyra.png",
+   "fields": {
+    "costume": "GOTOUR_2026_B_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Silver Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025Ethan.png",
+   "fields": {
+    "costume": "GOTOUR_2026_B",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Silver Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025Lyra.png",
+   "fields": {
+    "costume": "GOTOUR_2026_B_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Ruby Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2023Brendan.png",
+   "fields": {
+    "costume": "GOTOUR_2023_HAT",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Sapphire Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2023Brendan.png",
+   "fields": {
+    "costume": "GOTOUR_2023_HAT",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Sapphire Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2023May.png",
+   "fields": {
+    "costume": "GOTOUR_2023_BANDANA",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Ruby Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2023May.png",
+   "fields": {
+    "costume": "GOTOUR_2023_BANDANA",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Diamond Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2024Akari.png",
+   "fields": {
+    "costume": "GOTOUR_2024_B_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Diamond Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2024Dawn.png",
+   "fields": {
+    "costume": "GOTOUR_2024_A_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Diamond Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2024Lucas.png",
+   "fields": {
+    "costume": "GOTOUR_2024_A",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Pearl Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2024Akari.png",
+   "fields": {
+    "costume": "GOTOUR_2024_B_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Pearl Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2024Dawn.png",
+   "fields": {
+    "costume": "GOTOUR_2024_A_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Pearl Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2024Lucas.png",
+   "fields": {
+    "costume": "GOTOUR_2024_A",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Pearl Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2024Rei.png",
+   "fields": {
+    "costume": "GOTOUR_2024_B",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO X background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2026Calem.png",
+   "fields": {
+    "costume": "GOTOUR_2026_C",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO X background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2026Serena.png",
+   "fields": {
+    "costume": "GOTOUR_2026_C_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Y background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2026Calem.png",
+   "fields": {
+    "costume": "GOTOUR_2026_C",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Y background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2026Serena.png",
+   "fields": {
+    "costume": "GOTOUR_2026_C_02",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Y background.png",
+   "op": "set",
+   "key": "681||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO X background.png",
+   "op": "set",
+   "key": "681||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Festival of Colors background.png",
+   "op": "set",
+   "key": "25||||||GO0025Saree.png",
+   "fields": {
+    "costume": "DIWALI_2024",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Pokopia background.png",
+   "op": "set",
+   "key": "132||||||GO0132PokopiaCap.png",
+   "fields": {
+    "costume": "SPRING_2026_B",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Pokopia background.png",
+   "op": "set",
+   "key": "132||||||GO0132PokopiaHat.png",
+   "fields": {
+    "costume": "SPRING_2026_A",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Arraia background.png",
+   "op": "set",
+   "key": "128|PALDEA_AQUA|||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO 10th Anniversary background.png",
+   "op": "set",
+   "key": "999||||||GO0999Anniversary10.png",
+   "fields": {
+    "costume": "COIN_A1",
+    "sprite": null
+   }
+  },
+  {
+   "card": "GO Road of Legends background.png",
+   "op": "set",
+   "key": "888||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "GO Road of Legends background.png",
+   "op": "set",
+   "key": "888|CROWNED_SWORD|||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Road of Legends background.png",
+   "op": "set",
+   "key": "889|CROWNED_SHIELD|||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Road of Legends background.png",
+   "op": "set",
+   "key": "889||||||",
+   "fields": {
+    "form": "HERO"
+   }
+  },
+  {
+   "card": "Location Background Hong Kong.png",
+   "op": "set",
+   "key": "133||||||Eevee_explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "sprite_shiny": null
+   }
+  },
+  {
+   "card": "Location Background São Paulo.png",
+   "op": "set",
+   "key": "133||||||Eevee_explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "sprite_shiny": null
+   }
+  },
+  {
+   "card": "Location Background Singapore.png",
+   "op": "set",
+   "key": "133||||||Eevee_explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "sprite_shiny": null
+   }
+  },
+  {
+   "card": "Location Background Mumbai.png",
+   "op": "set",
+   "key": "133||||||Eevee_explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "sprite_shiny": null
+   }
+  },
+  {
+   "card": "Location Background Milan.png",
+   "op": "set",
+   "key": "133||||||Eevee_explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "sprite_shiny": null
+   }
+  },
+  {
+   "card": "Location Background Santiago.png",
+   "op": "set",
+   "key": "133||||||Eevee_explorer.png",
+   "fields": {
+    "costume": "MAY_2023",
+    "sprite": null,
+    "sprite_shiny": null
+   }
+  },
+  {
+   "card": "Location Background SpringBlossom2025.png",
+   "op": "set",
+   "key": "585||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "Location Background Osaka GOFest 2025.png",
+   "op": "set",
+   "key": "888||||||",
+   "fields": {
+    "form": "HERO",
+    "shiny": true
+   }
+  },
+  {
+   "card": "Location Background Osaka GOFest 2025.png",
+   "op": "set",
+   "key": "889||||||",
+   "fields": {
+    "form": "HERO",
+    "shiny": true
+   }
+  },
+  {
+   "card": "Location Background Taipei Floral Picnic 2026.png",
+   "op": "set",
+   "key": "585||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "Special Background GoWildArea2024.png",
+   "op": "set",
+   "key": "849||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "Special Background GOFest 2025 Sword.png",
+   "op": "set",
+   "key": "888||||||",
+   "fields": {
+    "form": "HERO",
+    "shiny": true
+   }
+  },
+  {
+   "card": "Special Background GOFest 2025 Sword.png",
+   "op": "add",
+   "mon": {
+    "dex": 888,
+    "shiny": true,
+    "dynamax": false,
+    "gmax": false,
+    "shadow": false,
+    "form": "CROWNED_SWORD"
+   }
+  },
+  {
+   "card": "Special Background GOFest 2025 Shield.png",
+   "op": "set",
+   "key": "889||||||",
+   "fields": {
+    "form": "HERO",
+    "shiny": true
+   }
+  },
+  {
+   "card": "Special Background GOFest 2025 Shield.png",
+   "op": "add",
+   "mon": {
+    "dex": 889,
+    "shiny": true,
+    "dynamax": false,
+    "gmax": false,
+    "shadow": false,
+    "form": "CROWNED_SHIELD"
+   }
+  },
+  {
+   "card": "Special Background Max Finale.png",
+   "op": "set",
+   "key": "849||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "Special Background GOFest 2025 Shield.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Location Card Jeju.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Location Background MLB Miami Marlins.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Location Background MLB Seattle Mariners.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Location Background SpringBlossom2025.png",
+   "op": "set",
+   "key": "25||SPRING_2023||||",
+   "fields": {
+    "costume": "APRIL_2020_NOEVOLVE"
+   }
+  },
+  {
+   "card": "Location Background SpringBlossom2025.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Location Background Expo2025 Pikachu.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Location Background Expo2025 Starters.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Osaka Go Fest 2025 background.png",
+   "op": "set",
+   "key": "812|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "Location Background Osaka GOFest 2025.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Location Background MLB Cleveland Guardians.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Nagasaki background.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Wormhole background.png",
+   "op": "remove",
+   "key": "793||||||"
+  },
+  {
+   "card": "GO Radiance background.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Umbra background.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background GoWildArea2024.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background DecCD2024.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Community Day December 2024 background.png",
+   "op": "set",
+   "key": "474||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO N background.png",
+   "op": "set",
+   "key": "525||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO N background.png",
+   "op": "set",
+   "key": "526||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "Special Background Enigma.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Fest 2025 background.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background GOFest 2025 Sword.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "856||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "857||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "858||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "810||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "811||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "812||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "812|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "813||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "814||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "815||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "815|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "816||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "817||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "818||||1||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Dark Skies background.png",
+   "op": "set",
+   "key": "818|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "Special Background Max Finale.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Tales of Transformation background.png",
+   "op": "set",
+   "key": "671||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Tales of Transformation background.png",
+   "op": "set",
+   "key": "670||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "Special Background Observatory Exhibition Tour.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background Wild Area Global 2025.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background Silver.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background Ruby.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background Sapphire.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Diamond Version background.png",
+   "op": "set",
+   "key": "25||||||GO0025GoTour2024Rei.png",
+   "fields": {
+    "costume": "GOTOUR_2024_B",
+    "sprite": null
+   }
+  },
+  {
+   "card": "Special Background Diamond.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background Pearl.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background Mega.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background Festival of Colors 2026.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background LEGO.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "Special Background 10th Anniversary Mewtwo.png",
+   "op": "hideCard"
+  },
+  {
+   "card": "GO Instinct background.png",
+   "op": "set",
+   "key": "125||SPRING_2023_INSTINCT||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Delightful Days background.png",
+   "op": "set",
+   "key": "812|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Delightful Days background.png",
+   "op": "set",
+   "key": "784||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Delightful Days background.png",
+   "op": "set",
+   "key": "818|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Delightful Days background.png",
+   "op": "set",
+   "key": "815|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Delightful Days background.png",
+   "op": "set",
+   "key": "783||||||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Jersey City background.png",
+   "op": "set",
+   "key": "815|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "GO Paris background.png",
+   "op": "set",
+   "key": "818|||1|||",
+   "fields": {
+    "shiny": true
+   }
+  },
+  {
+   "card": "lc Wcs2026 sanFrancisco.png",
+   "op": "addCard",
+   "type": "location",
+   "name": "San Francisco, California, USA",
+   "image_url": "assets/bg/lc_Wcs2026_sanFrancisco.png"
+  },
+  {
+   "card": "lc Wcs2026 sanFrancisco.png",
+   "op": "add",
+   "mon": {
+    "dex": 384,
+    "shiny": true,
+    "dynamax": false,
+    "gmax": false,
+    "shadow": false
+   }
+  },
+  {
+   "card": "lc Wcs2026 sanFrancisco.png",
+   "op": "add",
+   "mon": {
+    "dex": 25,
+    "shiny": true,
+    "dynamax": false,
+    "gmax": false,
+    "shadow": false,
+    "form": "PXP_2026"
+   }
+  },
+  {
+   "card": "lc Wcs2026 sanFrancisco.png",
+   "op": "add",
+   "mon": {
+    "dex": 25,
+    "shiny": true,
+    "dynamax": false,
+    "gmax": false,
+    "shadow": false,
+    "form": "WCS_2026"
+   }
+  }
  ]
 }

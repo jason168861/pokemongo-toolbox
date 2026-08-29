@@ -434,6 +434,20 @@ if _miss:
 #   型態 → resolve_form();造型 → resolve_costume();都對不到 → 用 Fandom 自己的 File:<ci>.png(含 <ci> shiny.png)。
 #   (共用工具 resolve_form / resolve_costume / name_to_dex / _has_shiny / _nrm 已在 Bulbapedia 前定義。)
 
+def fandom_image_urls(names):
+    """File:<名稱> → 圖片網址。定義在模組層級是因為套用 bg_overrides 的
+    addCard 時也要用(那段在 Fandom 的 try 之外,巢狀定義在那裡讀不到)。"""
+    names = sorted(names); out = {}
+    for k in range(0, len(names), 40):
+        ttl = "|".join("File:" + urllib.parse.quote(x.replace(" ", "_")) for x in names[k:k + 40])
+        q = get_json(f"https://pokemongo.fandom.com/api.php?action=query&titles={ttl}&prop=imageinfo&iiprop=url&format=json")
+        for pg in q["query"]["pages"].values():
+            ii = pg.get("imageinfo")
+            if ii: out[pg["title"].replace("File:", "").replace("_", " ")] = ii[0]["url"]
+        time.sleep(0.2)
+    return out
+
+
 FILE_RE = re.compile(r'\[\[File:([A-Za-z][^\]\|]+?\.png)')
 MONI_RE = re.compile(r'\{\{I\|([^\|\}]+)((?:\|[^}]*?))?\}\}')
 fandom_need = set()          # 需要向 Fandom 問網址的 ci 圖名
@@ -514,17 +528,6 @@ try:
         return fwt[i: i + len(title) + m.start()] if m else fwt[i:]
     fboth = (fandom_rows(_fsec("List of Location Backgrounds"), "location")
              + fandom_rows(_fsec("List of Special Backgrounds"), "special"))
-    def fandom_image_urls(names):
-        names = sorted(names); out = {}
-        for k in range(0, len(names), 40):
-            ttl = "|".join("File:" + urllib.parse.quote(x.replace(" ", "_")) for x in names[k:k + 40])
-            q = get_json(f"https://pokemongo.fandom.com/api.php?action=query&titles={ttl}&prop=imageinfo&iiprop=url&format=json")
-            for pg in q["query"]["pages"].values():
-                ii = pg.get("imageinfo")
-                if ii: out[pg["title"].replace("File:", "").replace("_", " ")] = ii[0]["url"]
-            time.sleep(0.2)
-        return out
-
     # 第三層:對不到本機 sprite 的造型 → Fandom 的 File:<ci>.png,異色另有 File:<ci> shiny.png
     csm = fandom_image_urls({f"{ci}.png" for ci in fandom_need} | {f"{ci} shiny.png" for ci in fandom_need})
     for r in fboth:
@@ -682,14 +685,47 @@ def norm_op_key(k):
     if len(p) == 7: p[6] = _spr_key(p[6])
     return "|".join(p)
 
-ov_removed = ov_set = ov_added = ov_miss = ov_card = 0
+ov_removed = ov_set = ov_added = ov_miss = ov_card = ov_new = 0
 ov_missed = []      # 對不到目標的 op,健檢時列出來 —— 不然只有一個數字,不知道要去改哪筆
 _ovp = os.path.join(HERE, "data", "bg_overrides.json")
 if os.path.exists(_ovp):
     _ov = json.load(open(_ovp, encoding="utf-8"))
     by_name = {r["image_name"]: r for r in rows}
     _drop = set()
+
+    # ---- 先處理 addCard:來源還沒收錄的卡 ----
+    # Fandom 上寶可夢欄還寫 TBA 的新卡,fandom_rows() 會因為 entries 是空的而整列跳過,
+    # 於是這張卡連 raw 都進不去 —— 想先手動建起來就得靠這個 op。
+    # 必須跑在其他 op「之前」:後面的 add/set 才找得到這張卡,
+    # bg_overrides.json 裡的順序也就不用講究。
+    _new = [op for op in _ov.get("ops", []) if op.get("op") == "addCard" and op.get("card")]
+    if _new:
+        # 有自己填 image_url 的就不用問 Fandom —— 可以是網址,也可以是
+        # assets/bg/xxx.png(自己把圖複製進來的)。後者 fetch_assets 會用
+        # 同一套 is_local 判斷跳過下載。
+        _is_local = lambda u: isinstance(u, str) and u.startswith("assets/")
+        _want = {op["card"] for op in _new if not op.get("image_url")}
+        try:
+            _urls = fandom_image_urls(_want) if _want else {}
+        except Exception as ex:                      # 沒網路/API 變動時不要讓整包重建掛掉
+            print(f"⚠ addCard 取圖網址失敗:{ex}", file=sys.stderr); _urls = {}
+        for op in _new:
+            nm = op["card"]
+            if nm in by_name:
+                # 來源後來自己收錄了 → 不要再建一張同名的,否則變成兩張重複卡
+                ov_miss += 1; ov_missed.append((nm, "來源已收錄,addCard 略過", "")); continue
+            url = op.get("image_url") or _urls.get(nm)
+            if not url:
+                ov_miss += 1; ov_missed.append((nm, "addCard 找不到圖片網址", "")); continue
+            if _is_local(url) and not os.path.exists(os.path.join(HERE, url)):
+                # 指到本機但檔案不在 → 現在講清楚,不要等到網站上才發現是破圖
+                ov_miss += 1; ov_missed.append((nm, f"addCard 的圖不存在:{url}", "")); continue
+            r = {"type": op.get("type") or "location", "source": "manual",
+                 "image_name": nm, "name": op.get("name") or "", "image_url": url, "pokemon": []}
+            rows.append(r); by_name[nm] = r; ov_new += 1
+
     for op in _ov.get("ops", []):
+        if op.get("op") == "addCard": continue        # 上面那輪處理過了
         r = by_name.get(op.get("card"))
         if not r:                                 # 卡不見了(來源改名/移除)→ 記一筆,不要靜靜吞掉
             ov_miss += 1; ov_missed.append((op.get("card"), "整張卡不在了", op.get("key") or "")); continue
@@ -742,7 +778,7 @@ print(f"[健檢] 後綴解析:型態 {STAT['form']} / 對到本機造型 {STAT['
 print(f"[健檢] 產出帶造型的背卡條目 {_cos} 筆(本機 sprite) + {_spr} 筆(wiki 原圖)")
 print(f"[健檢] 不可交換而排除:sprite {untradable_n} 個變體 / 背卡 {bg_untradable} 筆(依 GM isTradable)")
 print(f"[健檢] 背卡進化型補完:補異色旗標 {evo_shiny_n} 筆 / 補整筆條目 {evo_added_n} 筆(依 GM evolutionBranch)")
-print(f"[健檢] 人工修正(bg_overrides.json):刪 {ov_removed} / 改 {ov_set} / 加 {ov_added} / 整張卡 {ov_card}"
+print(f"[健檢] 人工修正(bg_overrides.json):刪 {ov_removed} / 改 {ov_set} / 加 {ov_added} / 整張卡 {ov_card} / 新建卡 {ov_new}"
       + (f"  ⚠ 對不到目標 {ov_miss} 筆(來源可能已變動,請用 bg-editor.html 檢查)" if ov_miss else ""))
 for _c, _why, _k in ov_missed[:10]:
     print(f"          · {_c[:44]:46s} {_why}  {_k}")

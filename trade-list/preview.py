@@ -34,6 +34,22 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=HERE, **kw)
 
+    # index.html 會載入幾支放在上一層的檔（../js/zh-search.js 等），瀏覽器解析後
+    # 會變成 /js/zh-search.js 這種根路徑，而這個伺服器的根是 trade-list/ → 404。
+    # zh-search.js 尤其致命：boot() 一開始就呼叫 zhLower()，載不到整頁就沒資料。
+    # 這裡只對固定幾個路徑往上一層找，其餘維持原本的行為。
+    _PARENT = ("/js/", "/img/", "/css/", "/data/names/")
+    _PARENT_FILES = ("/config.js",)
+
+    def translate_path(self, path):
+        p = path.split("?", 1)[0].split("#", 1)[0]
+        if p.startswith(self._PARENT) or p in self._PARENT_FILES:
+            rel = p.lstrip("/").replace("/", os.sep)
+            cand = os.path.join(os.path.dirname(HERE), rel)
+            if os.path.exists(cand):
+                return cand
+        return super().translate_path(path)
+
     def _json(self, code, obj):
         body = json.dumps(obj, ensure_ascii=False).encode("utf-8")
         self.send_response(code)

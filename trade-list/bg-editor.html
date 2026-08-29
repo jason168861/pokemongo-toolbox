@@ -185,6 +185,9 @@ kbd{background:var(--cell);border:1px solid var(--line);border-bottom-width:2px;
       <button id="fSame" data-on="0" style="font-size:12px;padding:4px 9px" title="異色圖跟一般圖是同一張(造型對不到本機 sprite)">只看有同圖</button>
       <button id="fDup" data-on="0" style="font-size:12px;padding:4px 9px" title="圖幾乎一樣的卡,多半是兩個來源各收一次">只看重複</button>
       <span class="sub" id="ccount"></span>
+      <span class="sp" style="flex:1"></span>
+      <button id="btnNewCard" style="font-size:12px;padding:4px 9px"
+              title="來源還沒收錄的卡(例如 Fandom 上寶可夢還寫 TBA 的新卡)">＋ 新增卡片</button>
     </div>
     <div id="cardList"></div>
   </div>
@@ -297,12 +300,15 @@ async function boot(){
       .then(r=>r||loadData('backgrounds')),
     loadData('pokemon'), ...LANGS.map(l=>jget('data/names/'+l+'.json',{}))]);
   if(!bg||!poke){ $('#state').textContent='✗ 讀不到 data/,請用 python preview.py 開這一頁'; return; }
+  // 手動新增的卡(_new)還沒有圖片網址 —— 那要等下次 build_data 去 Fandom 解析,
+  // 所以這裡只濾來源資料,不能把它們一起濾掉。
   BG=bg.filter(b=>b.image_url); POKE=poke; NAMES=ns[0]||{};
   ALLNAMES={}; for(const m of ns) for(const d in m) ALLNAMES[d]=((ALLNAMES[d]||'')+'|'+m[d]);
   for(const d in ALLNAMES) ALLNAMES[d]=ALLNAMES[d].toLowerCase();
   const f=await jget(FILE,null);
   if(f){ META={version:f.version||1,note:f.note||''};
     OPS=(f.ops||[]).filter(o=>o&&o.card).map(o=>o.key?{...o,key:normKey(o.key)}:o); }
+  syncNewCards();
   // 重複卡提示(圖幾乎一樣 = 兩個來源各收一次)
   const dp=await jget('data/bg_dupes.json',null);
   for(const g of ((dp&&dp.groups)||[])) for(const n of g) DUPES[n]=g.filter(x=>x!==n);
@@ -475,6 +481,46 @@ function drawDupBar(){
 }
 const nameOfCard=n=>{ const b=BG.find(x=>x.image_name===n); return b?(b.name||n):n; };
 
+/* ===== 手動新增卡片 =====
+   來源還沒收錄的卡(Fandom 上寶可夢欄還寫 TBA 的新卡),build_data 的 fandom_rows()
+   會因為那一列解析不出寶可夢而整列跳過,連 raw 都不會有 —— 所以清單裡找不到、沒得編。
+   這裡用 addCard 這個 op 先把卡建起來,再用「自由搭配」往裡面加寶可夢。
+   編輯器的模型一律是「原始資料 + ops」,所以這些卡也要在載入時補回 BG。 */
+function syncNewCards(){
+  for(const o of OPS){
+    if(o.op!=='addCard'||!o.card) continue;
+    if(BG.some(b=>b.image_name===o.card)) continue;   // 來源後來自己收錄了
+    BG.push({type:o.type||'location', source:'manual', image_name:o.card,
+             name:o.name||'', image_url:o.image_url||'', pokemon:[], _new:true});
+  }
+}
+function newCard(){
+  // 兩種來源都收：
+  //   1) Wiki 檔名（Location Background San Francisco.png）→ 重建時去 Fandom 解析網址
+  //   2) 本機路徑（assets/bg/xxx.png）→ 圖自己複製進去，重建時原樣保留、不下載
+  const raw=(prompt('Wiki 檔名，或已放好的本機路徑：\n' +
+                    '  Location Background San Francisco.png\n' +
+                    '  assets/bg/My_Card.png')||'').trim();
+  if(!raw) return;
+  const local=/^assets\//i.test(raw);
+  if(!/\.(png|jpe?g|webp)$/i.test(raw)) return alert('要包含副檔名，例如 .png');
+  // 卡片的識別碼一律用檔名本身；本機路徑另外存進 image_url
+  const file=local ? raw.split('/').pop().replace(/_/g,' ')
+                   : raw.replace(/^File:/i,'').replace(/_/g,' ');
+  if(BG.some(b=>b.image_name===file)) return alert('這張卡已經在清單裡了');
+  const name=(prompt('顯示名稱（例：San Francisco, California, USA）')||'').trim();
+  const type=confirm('這是「地區背卡」嗎？\n確定＝地區、取消＝特殊')?'location':'special';
+  const op={card:file, op:'addCard', type, name};
+  if(local) op.image_url=raw;
+  snapshot();
+  OPS.push(op);
+  BG.push({type, source:'manual', image_name:file, name,
+           image_url:local?raw:'', pokemon:[], _new:true});
+  CUR=file; EDIT=null; after();
+  toast(local ? '已建立，接著用「＋ 自由搭配加入」放寶可夢進去'
+              : '已建立，圖片網址會在下次重建時去 Fandom 解析');
+}
+
 /* ===== 欄位編輯 ===== */
 function drawEdit(){
   const box=$('#edit');
@@ -634,6 +680,13 @@ function serialize(){
     if(o.op==='add') x.mon=o.mon;
     else if(o.op==='mergeCard') x.into=o.into;
     else if(o.op==='hideCard'){ /* 只有 card + op */ }
+    // addCard 要把整張卡的描述一起存下來 —— 這是白名單式的序列化，
+    // 漏掉就只剩 card+op，重建時沒有圖片網址可用，卡片會整張消失。
+    else if(o.op==='addCard'){
+      x.type=o.type||'location';
+      if(o.name) x.name=o.name;
+      if(o.image_url) x.image_url=o.image_url;
+    }
     else { x.key=o.key; if(o.fields)x.fields=o.fields; }
     return '  '+J(x);
   });
@@ -676,7 +729,15 @@ function bindUI(){
   $('#cq').oninput=drawCards;
   for(const id of ['fEdited','fSame','fDup']) $('#'+id).onclick=()=>{ const b=$('#'+id);
     b.dataset.on=b.dataset.on==='1'?'0':'1'; b.classList.toggle('on',b.dataset.on==='1'); drawCards(); };
-  $('#btnResetCard').onclick=()=>{ if(!CUR)return; snapshot(); OPS=OPS.filter(o=>o.card!==CUR); after(); toast('已還原這張卡'); };
+  $('#btnNewCard').onclick=newCard;
+  $('#btnResetCard').onclick=()=>{ if(!CUR)return; snapshot();
+    // 手動新增的卡沒有「原始狀態」可以還原 —— 拿掉 addCard 就等於刪掉整張。
+    // 光清 OPS 不夠:那張卡是 newCard()/syncNewCards() 自己 push 進 BG 的,
+    // 不一起移除的話畫面上會留一張沒有任何 op 撐著的幽靈卡。
+    const isNew=OPS.some(o=>o.card===CUR&&o.op==='addCard');
+    OPS=OPS.filter(o=>o.card!==CUR);
+    if(isNew){ BG=BG.filter(b=>b.image_name!==CUR); CUR=null; EDIT=null; }
+    after(); toast(isNew?'已刪掉這張手動新增的卡':'已還原這張卡'); };
   $('#btnAdd').onclick=()=>{ MIX={mon:null,flags:{}}; $$('.mixF').forEach(b=>b.classList.remove('on'));
     $('#mixQ').value=''; $('#mixMask').classList.add('on'); drawMix(); };
   $('#mixClose').onclick=()=>$('#mixMask').classList.remove('on');

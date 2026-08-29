@@ -87,7 +87,9 @@ def main():
     for u in wiki_urls:
         jobs.append((u, os.path.join(IMG, wiki_sprite_local(u)), True, False))
     for b in bg:
-        if b.get("image_url"):
+        # bg_overrides 的 addCard 可以直接指到 assets/bg/ 裡已經放好的圖(自己下載好複製進來的)。
+        # 那種不是網址,拿去 dl() 一定失敗 —— 跟 sprite 覆寫同一套 is_local 慣例,直接跳過。
+        if b.get("image_url") and not is_local(b["image_url"]):
             jobs.append((b["image_url"], os.path.join(BGD, bg_local(b["image_url"])), True, True))  # 背卡一律重抓
 
     print(f"要處理:{len(sprite_urls)} sprite + {len(wiki_urls)} wiki 造型圖 + {len(bg)} 背卡 = {len(jobs)} 檔", flush=True)
