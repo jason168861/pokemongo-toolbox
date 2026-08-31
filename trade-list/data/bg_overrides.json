@@ -240,8 +240,8 @@
   {"card":"GO Paris background.png","op":"set","key":"818|||1|||","fields":{"shiny":true}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"addCard","type":"location","name":"San Francisco, California, USA","image_url":"assets/bg/lc_Wcs2026_sanFrancisco.png"},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":384,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
-  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"PXP_2026"}},
-  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"WCS_2026"}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"PXP_2026","costume":"PXP_2026"}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"WCS_2026","costume":"WCS_2026"}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":87,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":99,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":103,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"ALOLA"}},
@@ -272,6 +272,10 @@
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":319,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":323,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":870,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
-  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":428,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}}
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":428,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":365,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":264,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":910,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":911,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}}
  ]
 }
