@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-08-23",
+ "updated": "2026-08-31",
  "note": "交易清單搜尋用的別名表。請用 alias-editor.html 編輯(手改也可以,格式很單純)。 kind=mon → targets 是圖鑑編號;kind=form → 型態/造型代碼;kind=bg → 背卡的 image_name。",
  "entries": [
   {"kind":"mon","terms":["奇異種子"],"targets":["1"],"note":"舊譯名"},
@@ -129,6 +129,7 @@
   {"kind":"bg","terms":["曠野地帶"],"targets":["Special Background Wild Area Global 2025.png"]},
   {"kind":"bg","terms":["蟲洞"],"targets":["GO Wormhole background.png"]},
   {"kind":"bg","terms":["dna"],"targets":["GO Fest 2026 Mewtwo background.png"]},
-  {"kind":"bg","terms":["蟲洞"],"targets":["Special Background GoFest2024 Wormhole.png"]}
+  {"kind":"bg","terms":["蟲洞"],"targets":["Special Background GoFest2024 Wormhole.png"]},
+  {"kind":"bg","terms":["舊金山"],"targets":["lc Wcs2026 sanFrancisco.png"]}
  ]
 }

@@ -28,26 +28,64 @@ def load():
         bgs = json.load(f)
     with open(os.path.join(TL, "data", "pokemon.local.json"), encoding="utf-8") as f:
         mons = json.load(f)
-    return bgs, mons
+    # 型態/造型的中文標籤。站上本來就有一份（主站的圖鑑清單），沿用它，
+    # 才不會在頁面上出現 ALOLA、WCS_2026 這種原始代碼。
+    labels = {}
+    with open(os.path.join(HERE, "data", "pokedex_manifest.json"), encoding="utf-8") as f:
+        for mon in json.load(f)["pokemon"]:
+            for v in mon["variants"]:
+                if not v.get("label"):
+                    continue
+                if v.get("form"):
+                    labels.setdefault((mon["dex"], "f", v["form"]), v["label"])
+                if v.get("costume"):
+                    labels.setdefault((mon["dex"], "c", v["costume"]), v["label"])
+    return bgs, mons, labels
 
 
-def sprite(mons, dex, shiny):
-    """找這隻寶可夢的「一般型態」圖示。
+def sprite(mons, p):
+    """依這一筆條目的 form / costume 找對應的圖。
 
-    優先順序：form/costume 都沒有的 → 沒有 costume 的第一個。
-    後者是給蒼響那種「預設就有 form 代碼」的寶可夢用的（HERO_OF_MANY_BATTLES），
-    不留這層 fallback 的話牠們會整隻抓不到圖。
+    ⚠ 以前一律抓基本型，結果阿羅拉椰蛋樹畫成關都的、同一張卡上兩隻不同造型的
+    皮卡丘長得一模一樣 —— 看起來像資料錯了，其實是這裡沒把 form/costume 傳進來。
+
+    一覽頁一律顯示一般色（異色用旁邊的標籤表示），所以只找 shiny=False 的變體。
+    對不到就退回基本型：寧可圖不夠精準，也不要整隻消失。
     """
-    ent = mons.get(str(dex))
+    ent = mons.get(str(p["dex"]))
     if not ent:
         return None, None
-    want = bool(shiny)
-    plain = [v for v in ent["variants"]
-             if bool(v.get("shiny")) == want and not v.get("costume")]
-    if not plain:
+    # 來源自帶的圖（wiki 原圖或人工指定的 sprite）最優先
+    if p.get("sprite"):
+        return ent.get("zh"), p["sprite"]
+    form = p.get("form") or None
+    costume = p.get("costume") or None
+    ok = lambda v: not v.get("shiny")
+    exact = [v for v in ent["variants"] if ok(v)
+             and (v.get("form") or None) == form and (v.get("costume") or None) == costume]
+    if not exact and costume:          # 只對到造型（form 是同義欄位時常兩邊都填）
+        exact = [v for v in ent["variants"] if ok(v) and (v.get("costume") or None) == costume]
+    if not exact and form:             # 只對到型態
+        exact = [v for v in ent["variants"] if ok(v) and (v.get("form") or None) == form]
+    if not exact:                      # 都對不到 → 基本型
+        exact = [v for v in ent["variants"] if ok(v) and not v.get("costume")]
+    if not exact:
         return ent.get("zh"), None
-    best = next((v for v in plain if not v.get("form") and not v.get("gender")), plain[0])
+    best = next((v for v in exact if not v.get("gender")), exact[0])
     return ent.get("zh"), best.get("url")
+
+
+def variant_label(labels, p):
+    """型態/造型的中文標籤。manifest 沒收錄的（新造型）就把代碼整理一下當標籤，
+    有標總比讓兩隻皮卡丘看起來一模一樣好。"""
+    for kind, key in (("c", p.get("costume")), ("f", p.get("form"))):
+        if not key:
+            continue
+        lab = labels.get((p["dex"], kind, key))
+        if lab:
+            return lab
+        return key.replace("_", " ")   # 保留原本大小寫：PXP/WCS 是縮寫，.title() 會變成 Pxp
+    return ""
 
 
 def display_name(bg):
@@ -66,14 +104,18 @@ def display_name(bg):
     return re.sub(r"[_\s]+", " ", n).strip() or bg["image_name"]
 
 
-def card_html(bg, mons):
+def card_html(bg, mons, labels):
     """一張背卡：背景圖 + 上面看得到的寶可夢（含有沒有異色）。"""
     rows = []
     shiny_n = 0
     for p in bg["pokemon"]:
-        zh, url = sprite(mons, p["dex"], False)
+        zh, url = sprite(mons, p)
         if not zh:
             continue
+        # 同一張卡上可能有同一隻的多個造型（皮卡丘 PXP_2026 / WCS_2026），
+        # 不標出來的話會變成兩筆看起來一模一樣的東西
+        vlab = variant_label(labels, p)
+        disp = f"{zh}（{vlab}）" if vlab else zh
         tags = []
         if p.get("shiny"):
             shiny_n += 1
@@ -84,9 +126,9 @@ def card_html(bg, mons):
             tags.append('<span class="tag">超極巨化</span>')
         if p.get("shadow"):
             tags.append('<span class="tag">暗影</span>')
-        img = (f'<img src="{e(ASSET_PREFIX + url)}" alt="{e(zh)}" width="48" height="48" loading="lazy" decoding="async">'
+        img = (f'<img src="{e(ASSET_PREFIX + url)}" alt="{e(disp)}" width="48" height="48" loading="lazy" decoding="async">'
                if url else '<span class="noimg">—</span>')
-        rows.append(f'<li>{img}<span class="mon-name">{e(zh)}</span>'
+        rows.append(f'<li>{img}<span class="mon-name">{e(disp)}</span>'
                     f'<span class="tags">{"".join(tags)}</span></li>')
 
     # 隊伍主題那幾張有 120 隻以上,全部攤開會把整個 grid 列撐到六千多 px。
@@ -161,7 +203,7 @@ PROSE_NOTES = """
 
 
 def build():
-    bgs, mons = load()
+    bgs, mons, labels = load()
     bgs = sorted(bgs, key=lambda b: (b["type"] != "special", display_name(b).lower()))
     n_loc = sum(1 for b in bgs if b["type"] == "location")
     n_spe = len(bgs) - n_loc
@@ -170,7 +212,7 @@ def build():
     # 所以「有異色」沒有資訊量,「還沒有異色」的例外才是使用者真正想知道的。
     n_noshiny = sum(1 for b in bgs for p in b["pokemon"] if not p.get("shiny"))
 
-    cards = "\n".join(card_html(b, mons) for b in bgs)
+    cards = "\n".join(card_html(b, mons, labels) for b in bgs)
     desc = (f"Pokémon GO 活動背卡完整一覽:{len(bgs)} 張背卡（{n_loc} 張地區、{n_spe} 張特殊），"
             f"列出每張背卡會出現哪些寶可夢、哪些有異色，並可直接做成交換清單。")
 
@@ -271,7 +313,7 @@ def build():
     print(f"已寫出 backgrounds/index.html（{os.path.getsize(OUT):,} bytes）")
     print(f"  背卡 {len(bgs)} 張:地區 {n_loc}、特殊 {n_spe}")
     print(f"  寶可夢組合 {n_combo:,} 個,其中 {n_noshiny} 個目前沒有異色")
-    miss = sum(1 for b in bgs for p in b["pokemon"] if not sprite(mons, p["dex"], False)[1])
+    miss = sum(1 for b in bgs for p in b["pokemon"] if not sprite(mons, p)[1])
     if miss:
         print(f"  ⚠ 有 {miss} 個寶可夢找不到圖示（會顯示成 —）")
     print("  ⚠ 別忘了補 PROSE_TOP / PROSE_NOTES 裡標「請補上」的段落 —— 那才是這頁的價值")

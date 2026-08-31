@@ -224,3 +224,8 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
 }
 .more summary:hover { text-decoration: underline; }
 .more[open] summary { margin-bottom: 2px; }
+
+/* 搜尋/篩選是用 el.hidden 隱藏卡片的，但 .bgcard 自己宣告了 display:flex，
+   會蓋過瀏覽器預設的 [hidden]{display:none}（UA 樣式權重最低）——
+   結果是計數變了、卡片卻一張都沒少，看起來像「搜尋沒反應」。 */
+.bgcard[hidden] { display: none; }
