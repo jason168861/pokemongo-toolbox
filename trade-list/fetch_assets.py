@@ -26,6 +26,13 @@ POGO_ASSETS = os.environ.get("POGO_ASSETS", os.path.join(os.path.dirname(os.path
 TYPE_ORDER = ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel",
               "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy"]
 TEAMS = {"team_blue": "mystic", "team_red": "valor", "team_yellow": "instinct"}
+# 球種標記用的球圖示。GO 會記錄捕捉時用的球,交易時有人會指定 → 卡片上可以標。
+# 來源與屬性徽章同一個 PokeMiners clone(Images/Items/*_sprite.png)。
+# 「wildball」是 Niantic 的內部檔名,玩家看到的名字是 Safari Ball(Safari Zone 活動用),
+# 所以輸出檔名用 safari —— 對到前端的 BALL_SEQ。
+BALLS = {"pokeball": "poke", "greatball": "great", "ultraball": "ultra",
+         "premierball": "premier", "wildball": "safari",
+         "masterball": "master", "beastball": "beast"}
 
 def dl(url, path, no_referer=False, force=False, tries=3):
     if os.path.exists(path) and not force and os.path.getsize(path) > 0:
@@ -261,7 +268,26 @@ def make_style_assets():
     for f, team in TEAMS.items():
         s = conv(os.path.join(src_team, f + ".png"), os.path.join(dst_m, f"{team}.webp"), 320, 84)
         if s: total += s; n += 1
-    print(f"樣式素材 assets/type + assets/team:{n} 檔 / {total//1024} KB", flush=True)
+
+    # 球:各檔原圖尺寸不一(186~195px)且四周留白不等,直接縮會大小不一。
+    # 先去透明邊、補成正方形再縮 → 六顆在卡片上看起來才一樣大。
+    src_ball = os.path.join(POGO_ASSETS, "Images", "Items")
+    dst_b = os.path.join(HERE, "assets", "ball"); os.makedirs(dst_b, exist_ok=True)
+    for f, ball in BALLS.items():
+        src = os.path.join(src_ball, f + "_sprite.png")
+        if not os.path.exists(src): 
+            print(f"  (找不到 {src})", flush=True); continue
+        im = Image.open(src).convert("RGBA")
+        bb = im.getbbox()
+        if bb: im = im.crop(bb)
+        side = max(im.size)
+        sq = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+        sq.paste(im, ((side - im.width) // 2, (side - im.height) // 2))
+        sq = sq.resize((128, 128), Image.LANCZOS)
+        out = os.path.join(dst_b, f"{ball}.webp")
+        sq.save(out, "WEBP", quality=88, method=6)
+        total += os.path.getsize(out); n += 1
+    print(f"樣式素材 assets/type + assets/team + assets/ball:{n} 檔 / {total//1024} KB", flush=True)
 
 
 def make_trim():
