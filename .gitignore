@@ -2,3 +2,7 @@ config.js
 *.local.md
 *.json.bak
 
+
+# Python 執行時產生的快取，不該進版控
+__pycache__/
+*.pyc

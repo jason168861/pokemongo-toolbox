@@ -40,7 +40,18 @@ def load():
                     labels.setdefault((mon["dex"], "f", v["form"]), v["label"])
                 if v.get("costume"):
                     labels.setdefault((mon["dex"], "c", v["costume"]), v["label"])
-    return bgs, mons, labels
+    # 背卡別名（aliases.json 的 kind=bg）。交易清單的搜尋本來就吃這份，
+    # 這一頁不讀的話，同樣打「舊金山」在那邊找得到、在這邊卻是 0 筆。
+    alias = {}
+    ap = os.path.join(TL, "data", "aliases.json")
+    if os.path.exists(ap):
+        with open(ap, encoding="utf-8") as f:
+            for ent in json.load(f).get("entries", []):
+                if ent.get("kind") != "bg":
+                    continue
+                for t in ent.get("targets", []):
+                    alias[t] = alias.get(t, "") + " " + " ".join(ent.get("terms", []))
+    return bgs, mons, labels, alias
 
 
 def sprite(mons, p):
@@ -104,7 +115,7 @@ def display_name(bg):
     return re.sub(r"[_\s]+", " ", n).strip() or bg["image_name"]
 
 
-def card_html(bg, mons, labels):
+def card_html(bg, mons, labels, alias):
     """一張背卡：背景圖 + 上面看得到的寶可夢（含有沒有異色）。"""
     rows = []
     shiny_n = 0
@@ -145,7 +156,7 @@ def card_html(bg, mons, labels):
     kind = "特殊背卡" if bg["type"] == "special" else "地區背卡"
     title = display_name(bg)
     # 搜尋用的字串:名稱 + 全部寶可夢中文名,一次比對就好
-    hay = " ".join([title, kind] + re.findall(r'class="mon-name">([^<]+)<', "".join(rows)))
+    hay = " ".join([title, kind, alias.get(bg["image_name"], "")] + re.findall(r'class="mon-name">([^<]+)<', "".join(rows)))
     return f'''      <article class="bgcard" data-kind="{bg['type']}" data-noshiny="{1 if shiny_n < len(rows) else 0}" data-q="{e(hay.lower())}">
         <div class="bgshot">
           <img src="{e(ASSET_PREFIX + bg['image_url'])}" alt="{e(title)}背卡" loading="lazy" decoding="async">
@@ -203,7 +214,7 @@ PROSE_NOTES = """
 
 
 def build():
-    bgs, mons, labels = load()
+    bgs, mons, labels, alias = load()
     bgs = sorted(bgs, key=lambda b: (b["type"] != "special", display_name(b).lower()))
     n_loc = sum(1 for b in bgs if b["type"] == "location")
     n_spe = len(bgs) - n_loc
@@ -212,7 +223,7 @@ def build():
     # 所以「有異色」沒有資訊量,「還沒有異色」的例外才是使用者真正想知道的。
     n_noshiny = sum(1 for b in bgs for p in b["pokemon"] if not p.get("shiny"))
 
-    cards = "\n".join(card_html(b, mons, labels) for b in bgs)
+    cards = "\n".join(card_html(b, mons, labels, alias) for b in bgs)
     desc = (f"Pokémon GO 活動背卡完整一覽:{len(bgs)} 張背卡（{n_loc} 張地區、{n_spe} 張特殊），"
             f"列出每張背卡會出現哪些寶可夢、哪些有異色，並可直接做成交換清單。")
 
