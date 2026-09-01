@@ -196,6 +196,16 @@ def find_dupe_bgs():
     if not os.path.exists(p_local): p_local = os.path.join(HERE, "data", "backgrounds.local.json")
     if not os.path.exists(p_local): return
     bg = json.load(open(p_local, encoding="utf-8"))
+    # 但手工新建的卡(bg-editor 的「新增卡片」)只存在於套用修正「之後」的檔案,raw 沒有它 ——
+    # 不補進來的話它永遠進不了比對名單。上游後來若也收了同一張卡,兩邊都不會被列進
+    # bg_dupes.json,而 bg-editor 的合併那條 bar 正是看 bg_dupes.json 才顯示的,
+    # 結果就是「圖一模一樣的兩張卡並存,而且沒有任何地方能把它們合起來」。
+    p_fin = os.path.join(HERE, "data", "backgrounds.local.json")
+    if os.path.exists(p_fin):
+        seen = {b.get("image_name") for b in bg}
+        for b in json.load(open(p_fin, encoding="utf-8")):
+            if b.get("image_name") not in seen:
+                bg.append(b); seen.add(b.get("image_name"))
 
     def ahash(path, n=16):
         im = Image.open(path).convert("L").resize((n, n), Image.LANCZOS)

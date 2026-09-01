@@ -283,6 +283,7 @@
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":303,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":127,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":380,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
-  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":381,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}}
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":381,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"Location Background San Francisco.png","op":"hideCard"}
  ]
 }
