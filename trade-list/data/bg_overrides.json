@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-08-31",
+ "updated": "2026-09-01",
  "note": "背卡資料的人工修正。build_data.py 每次都把 backgrounds.json 整份重寫,所以修正要放在這裡才不會被 update.py 蓋掉。請用 bg-editor.html 編輯。op: remove=刪掉這筆 / set=改欄位(值給 null 代表刪掉該欄位) / add=補一筆來源沒有的。key 由 dex|form|costume|gmax|dynamax|shadow|sprite檔名 組成。",
  "ops": [
   {"card":"GO Tainan background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"sprite":"assets/img/pm134.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm134.cMAY_2023.s.icon.png","shiny":true}},
@@ -275,6 +275,14 @@
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":428,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":264,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":910,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
-  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":911,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}}
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":911,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":181,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":65,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":80,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":302,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":303,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":127,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":380,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc Wcs2026 sanFrancisco.png","op":"add","mon":{"dex":381,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}}
  ]
 }
