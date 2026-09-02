@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026年9月2日11時",
+    "lastUpdated": "2026年9月2日20時",
     "bosses": [
         {
             "name": "迷你龍",
@@ -241,33 +241,41 @@
             "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm766.icon.png"
         },
         {
-            "name": "超級 列陣兵",
-            "englishName": "Mega Falinks",
+            "name": "超級 盔甲鳥",
+            "englishName": "Mega Skarmory",
             "tier": "Mega Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "fighting",
-                    "image": "https://leekduck.com/assets/img/types/fighting.png"
+                    "name": "steel",
+                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                },
+                {
+                    "name": "flying",
+                    "image": "https://leekduck.com/assets/img/types/flying.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1278,
-                    "max": 1347
+                    "min": 1139,
+                    "max": 1204
                 },
                 "boosted": {
-                    "min": 1598,
-                    "max": 1683
+                    "min": 1424,
+                    "max": 1506
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                },
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm870.fMEGA.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm227.fMEGA.icon.png"
         },
         {
             "name": "超級 拉帝亞斯",
