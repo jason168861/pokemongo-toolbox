@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>特殊調查攻略｜Pokémon Go 工具箱</title>
+<meta name="description" content="Pokémon GO 特殊調查逐階段任務內容與獎勵整理，可釘選正在進行的調查，登入後跨裝置同步。">
+<link rel="canonical" href="https://pogokit.com/special-research/">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="特殊調查攻略｜Pokémon Go 工具箱">
+<meta property="og:description" content="Pokémon GO 特殊調查逐階段任務內容與獎勵整理，可釘選正在進行的調查，登入後跨裝置同步。">
+<meta property="og:url" content="https://pogokit.com/special-research/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../js/analytics.js"></script>
+<script src="../config.js"></script>
+<script src="../js/pageview-counter.js" defer></script>
+<script src="../js/zh-search.js"></script>
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/special-research.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"特殊調查攻略","description":"Pokémon GO 特殊調查逐階段任務內容與獎勵整理，可釘選正在進行的調查，登入後跨裝置同步。","url":"https://pogokit.com/special-research/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"Pokémon Go 工具箱","url":"https://pogokit.com/"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://pogokit.com/"},{"@type":"ListItem","position":2,"name":"特殊調查攻略","item":"https://pogokit.com/special-research/"}]}}
+</script>
+</head>
+<body>
+<header class="site-header-main">
+     <a class="site-brand" href="../" aria-label="Pokémon Go 工具箱 首頁">
+       <span class="site-brand-mark">🧰</span><span class="site-brand-name">Pokémon Go 工具箱</span>
+     </a>
+     <div id="auth-container">
+        <span id="user-info" style="display: none;"></span>
+        <button id="auth-button">登入</button>
+        <span class="auth-help" tabindex="0" role="button" aria-label="登入說明">?
+            <span class="auth-help-tip">
+                <b>登入能做什麼？</b>
+                <p>用 Google 帳號登入後，以下設定會存到雲端，換手機或瀏覽器也不會不見、還能跨裝置同步：</p>
+                <ul>
+                    <li><b>編號篩選器</b>：你勾選的寶可夢</li>
+                    <li><b>特殊調查</b>：你釘選的任務</li>
+                </ul>
+                <p class="auth-help-note">不登入也能正常使用所有查詢功能，只是這些設定不會被記住。</p>
+            </span>
+        </span>
+    </div>
+<nav class="app-nav">
+    <button class="hamburger-button" aria-label="開啟選單" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- 導覽項目用 <a href> 而非 <button>：才能右鍵/中鍵「在新分頁開啟」，
+         左鍵點擊由 main.js 攔截改走 SPA 切換（不重新載入頁面） -->
+    <div class="nav-links">
+        <a class="tab-button" href="../">功能說明</a>
+
+        <div class="nav-group mega-group">
+            <button class="group-title">功能選單</button>
+            <div class="sub-links mega-menu">
+                <div class="mega-col">
+                    <div class="mega-heading">常用查詢</div>
+                    <a class="tab-button tab-button-hot" href="../trade-list/" data-i18n="nav">🔴 交易清單產生器</a>
+                    <a class="tab-button" data-target="cp-checker-app" href="../?tab=cp-checker-app">IV100 CP 查詢</a>
+                    <a class="tab-button" href="../pvp-ranker/">PvP IV 排名查詢</a>
+                    <a class="tab-button" href="../id-selector/">寶可夢編號篩選器</a>
+                    <a class="tab-button" href="../search-filters/">搜尋篩選指令</a>
+                </div>
+                <div class="mega-col">
+                    <div class="mega-heading">遊戲資訊</div>
+                    <a class="tab-button" href="../raids/">團體戰列表</a>
+                    <a class="tab-button" href="../eggs/">孵蛋列表</a>
+                    <a class="tab-button" href="../research/">田野調查任務</a>
+                    <a class="tab-button active" href="../special-research/">特殊調查</a>
+                    <a class="tab-button" href="../stardust/">星星沙子怎麼賺</a>
+                    <!-- 地圖暫時下架
+                    <a class="tab-button" data-target="map-app" href="../?tab=map-app">補給站/道館地圖</a>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
+</header>
+    <div class="main-container">
+<div id="special-research-app" class="app-content active">
+            <h1>Pokémon GO 特殊調查任務列表</h1>
+            <div id="search-wrapper">
+                <input type="text" id="special-search-input" placeholder="搜尋特殊調查名稱...">    <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
+            </div>
+                
+                    <div class="search-options">
+            <label for="search-include-all">
+                <input type="checkbox" id="search-include-all" checked>
+                <span>包含任務及獎勵內容</span>
+            </label>
+        </div>
+                <p class="sr-hint">預設只比對調查名稱。勾起「包含任務及獎勵內容」之後，
+                   連每一階的任務條件和獎勵也會一起搜 ——
+                   想反查「哪個調查會給某隻寶可夢」時要勾這個。
+                   常看的調查可以點卡片上的圖釘固定在最前面，登入後會跟著帳號走。</p>
+                <!-- 機制說明放在列表「之前」：列表有 2.6 萬 px 高，放後面等於沒有。
+                     有輸入查詢時會自動收起（見 special-research.js 的 filterAndRender），
+                     使用者一開始查就不必捲過這段。 -->
+                <section class="tool-guide">
+                    <h2>特殊調查跟田野調查差在哪</h2>
+
+                    <p>兩個名字很像，但拿到的方式和急迫性完全不同。</p>
+
+                    <ul class="tool-guide-list">
+                        <li><b>田野調查</b>：轉補給站拿到，一次一個，做完就沒了。
+                            內容每期換，<a class="tab-button" href="../research/">當期任務看這裡</a>。</li>
+                        <li><b>特殊調查</b>：由劇情或活動發放，<strong>分成好幾個階段</strong>，
+                            每完成一階才會解鎖下一階。領到之後就留在調查清單裡。</li>
+                    </ul>
+
+                    <h3>不用急著做完</h3>
+
+                    <p>特殊調查領到之後<strong>不會因為活動結束就消失</strong>，可以慢慢做。
+                    真正有期限的是「能不能領到」——
+                    活動限定的調查過了發放期間就拿不到了，但已經在你清單裡的那些不受影響。</p>
+
+                    <p>所以遇到活動限定的特殊調查，<strong>先領起來再說</strong>，
+                    什麼時候做完都可以。</p>
+
+                    <h3>為什麼要先查流程</h3>
+
+                    <p>特殊調查是一階一階解鎖的，遊戲裡看不到後面幾階要做什麼。
+                    先知道整條流程，可以省下不少白工 ——
+                    例如某一階要求「進化 3 隻」或「走 10 公里」，就能提前把糖果和距離準備好，
+                    不必卡在那裡才開始湊。獎勵也一樣：知道最後給什麼，才好判斷值不值得排進度。</p>
+
+                    <p class="tool-guide-note">本頁整理各調查的完整階段與獎勵，實際內容以遊戲內顯示為準。</p>
+                </section>
+                <div id="special-research-container"> <p style="text-align:center; font-size: 1.2em;">正在載入資料，請稍候...</p>
+            </div>
+
+        </div>
+    </div>
+    <footer class="site-footer">
+        <p>&copy; <span id="copyright-year"></span> Pokémon Go 工具箱. All rights reserved by their respective owners.</p>
+        <p>This website is an unofficial fan-made tool, is not officially affiliated with Pokémon GO, and is intended to fall under Fair Use doctrine, similar to any other informational site such as a wiki.</p>
+        <p>Pokémon and its trademarks are &copy;1995-2025 Nintendo, Creatures, and GAME FREAK.</p>
+        <p>All images and names owned and trademarked by Nintendo, Niantic, The Pokémon Company, and GAME FREAK are property of their respective owners.</p>
+        <p class="footer-links"><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a></p>
+    </footer>
+
+<script type="module">
+import { initUserAuth } from '../js/user-data.js';
+import { initializeSpecialResearchApp } from '../js/special-research.js';
+document.getElementById('copyright-year').textContent = new Date().getFullYear();
+initUserAuth();
+initializeSpecialResearchApp();
+</script>
+<script src="../js/site-nav.js" defer></script>
+</body>
+</html>

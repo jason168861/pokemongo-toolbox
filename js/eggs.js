@@ -1,9 +1,10 @@
+const SHINY_ICON = new URL('../img/shiny.svg', import.meta.url);  // 獨立工具頁在子目錄，路徑要相對於這個模組
 export function initializeEggsApp() {
     // 檢查第一個容器，防止重複初始化
     const checkContainer = document.getElementById('egg-list-2km');
     if (!checkContainer || checkContainer.innerHTML !== '') return;
 
-    fetch('data/eggs.json')
+    fetch(new URL('../data/eggs.json', import.meta.url))
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -39,7 +40,7 @@ export function initializeEggsApp() {
                 const listItem = document.createElement('li');
                 listItem.className = 'egg-list-item';
                 
-                const shinyIconHtml = pokemon.isShiny ? `<img class="shiny-icon" src="./img/shiny.svg" alt="shiny"/>` : '';
+                const shinyIconHtml = pokemon.isShiny ? `<img class="shiny-icon" src="${SHINY_ICON}" alt="shiny"/>` : '';
                 
                 listItem.innerHTML = `
                     <div class="egg-list-img egg${pokemon.eggDistance}km">

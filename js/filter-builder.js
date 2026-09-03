@@ -1,8 +1,8 @@
 // 篩選指令產生器：多組設定 → 組出遊戲內搜尋框可貼上的篩選指令
 // 儲存：一律寫 localStorage；已登入時另外同步到 Firebase users/{uid}/filterBuilder/sets
-import { saveDataForCurrentUser } from './main.js';
+import { saveDataForCurrentUser } from './user-data.js';
 
-const IMG = 'img/';
+const IMG = new URL('../img/', import.meta.url);  // 獨立頁在子目錄，用模組相對路徑
 const LS = 'filterBuilderSets';
 const CLOUD_PATH = 'filterBuilder/sets';
 
@@ -373,7 +373,7 @@ export function initializeFilterBuilder() {
   if (goto) goto.onclick = () => {
     const tab = document.querySelector('.tab-button[data-target="id-selector-app"]');
     if (tab) { tab.click(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    else window.location.href = '?tab=id-selector-app';
+    else window.location.href = '../id-selector/';
   };
 
   // 組合管理

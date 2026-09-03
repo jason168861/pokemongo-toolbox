@@ -1,6 +1,6 @@
 // 在 id-selector.js 中，替換整個 initializeIdSelector 函式
 
-import { saveDataForCurrentUser } from './main.js';
+import { saveDataForCurrentUser } from './user-data.js';
 
 export function initializeIdSelector() {
     const pokemonContainer = document.getElementById('pokemon-container');

@@ -1,3 +1,4 @@
+const SHINY_ICON = new URL('../img/shiny.svg', import.meta.url);  // 獨立工具頁在子目錄，路徑要相對於這個模組
 export function initializeRaidsApp() {
     // 透過檢查第一個容器來防止重複初始化
     const checkContainer = document.getElementById('raid-tier-1');
@@ -10,7 +11,7 @@ export function initializeRaidsApp() {
         'Mega Raids': 'raid-mega'
     };
 
-    fetch('data/raids.json')
+    fetch(new URL('../data/raids.json', import.meta.url))
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -39,7 +40,7 @@ export function initializeRaidsApp() {
                     card.className = 'raid-card';
 
                     // 如果可以成為異色，則顯示異色圖示
-                    const shinyIconHtml = boss.canBeShiny ? `<img class="shiny-icon" src="./img/shiny.svg" alt="可為異色"/>` : '';
+                    const shinyIconHtml = boss.canBeShiny ? `<img class="shiny-icon" src="${SHINY_ICON}" alt="可為異色"/>` : '';
 
                     // 產生屬性圖示的 HTML
                     const typesHtml = boss.types.map(type =>

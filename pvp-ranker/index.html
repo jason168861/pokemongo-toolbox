@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PvP IV 排名查詢｜Pokémon Go 工具箱</title>
+<meta name="description" content="查詢 Pokémon GO 對戰聯盟中各寶可夢的 IV 排名：輸入寶可夢就能看到超級聯盟、高級聯盟的最佳 IV 組合、對應 CP 與等級。">
+<link rel="canonical" href="https://pogokit.com/pvp-ranker/">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="PvP IV 排名查詢｜Pokémon Go 工具箱">
+<meta property="og:description" content="查詢 Pokémon GO 對戰聯盟中各寶可夢的 IV 排名：輸入寶可夢就能看到超級聯盟、高級聯盟的最佳 IV 組合、對應 CP 與等級。">
+<meta property="og:url" content="https://pogokit.com/pvp-ranker/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../js/analytics.js"></script>
+<script src="../config.js"></script>
+<script src="../js/pageview-counter.js" defer></script>
+<script src="../js/zh-search.js"></script>
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/pvp-ranker.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"PvP IV 排名查詢","description":"查詢 Pokémon GO 對戰聯盟中各寶可夢的 IV 排名：輸入寶可夢就能看到超級聯盟、高級聯盟的最佳 IV 組合、對應 CP 與等級。","url":"https://pogokit.com/pvp-ranker/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"Pokémon Go 工具箱","url":"https://pogokit.com/"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://pogokit.com/"},{"@type":"ListItem","position":2,"name":"PvP IV 排名查詢","item":"https://pogokit.com/pvp-ranker/"}]}}
+</script>
+</head>
+<body>
+<header class="site-header-main">
+     <a class="site-brand" href="../" aria-label="Pokémon Go 工具箱 首頁">
+       <span class="site-brand-mark">🧰</span><span class="site-brand-name">Pokémon Go 工具箱</span>
+     </a>
+     <div id="auth-container">
+        <span id="user-info" style="display: none;"></span>
+        <button id="auth-button">登入</button>
+        <span class="auth-help" tabindex="0" role="button" aria-label="登入說明">?
+            <span class="auth-help-tip">
+                <b>登入能做什麼？</b>
+                <p>用 Google 帳號登入後，以下設定會存到雲端，換手機或瀏覽器也不會不見、還能跨裝置同步：</p>
+                <ul>
+                    <li><b>編號篩選器</b>：你勾選的寶可夢</li>
+                    <li><b>特殊調查</b>：你釘選的任務</li>
+                </ul>
+                <p class="auth-help-note">不登入也能正常使用所有查詢功能，只是這些設定不會被記住。</p>
+            </span>
+        </span>
+    </div>
+<nav class="app-nav">
+    <button class="hamburger-button" aria-label="開啟選單" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- 導覽項目用 <a href> 而非 <button>：才能右鍵/中鍵「在新分頁開啟」，
+         左鍵點擊由 main.js 攔截改走 SPA 切換（不重新載入頁面） -->
+    <div class="nav-links">
+        <a class="tab-button" href="../">功能說明</a>
+
+        <div class="nav-group mega-group">
+            <button class="group-title">功能選單</button>
+            <div class="sub-links mega-menu">
+                <div class="mega-col">
+                    <div class="mega-heading">常用查詢</div>
+                    <a class="tab-button tab-button-hot" href="../trade-list/" data-i18n="nav">🔴 交易清單產生器</a>
+                    <a class="tab-button" data-target="cp-checker-app" href="../?tab=cp-checker-app">IV100 CP 查詢</a>
+                    <a class="tab-button active" href="../pvp-ranker/">PvP IV 排名查詢</a>
+                    <a class="tab-button" href="../id-selector/">寶可夢編號篩選器</a>
+                    <a class="tab-button" href="../search-filters/">搜尋篩選指令</a>
+                </div>
+                <div class="mega-col">
+                    <div class="mega-heading">遊戲資訊</div>
+                    <a class="tab-button" href="../raids/">團體戰列表</a>
+                    <a class="tab-button" href="../eggs/">孵蛋列表</a>
+                    <a class="tab-button" href="../research/">田野調查任務</a>
+                    <a class="tab-button" href="../special-research/">特殊調查</a>
+                    <a class="tab-button" href="../stardust/">星星沙子怎麼賺</a>
+                    <!-- 地圖暫時下架
+                    <a class="tab-button" data-target="map-app" href="../?tab=map-app">補給站/道館地圖</a>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
+</header>
+    <div class="main-container">
+<div id="pvp-ranker-app" class="app-content active">
+            <div class="container">
+                <h1>Pokémon Go PvP IV 排名查詢器</h1>
+                <div class="controls" id="pvp-controls">
+                    <div class="controls-header">
+                        <span class="controls-header-title">查詢條件(可收合、移動)</span>
+                        <button type="button" id="pvp-controls-close" aria-label="收合條件面板">&minus;</button>
+                    </div>
+                    <div class="search-container">
+                        <label for="pokemon-input">輸入寶可夢名稱或編號</label>
+                        <input type="text" id="pokemon-input" placeholder="例如：妙蛙種子 或 1" autocomplete="off">
+                        <span id="clear-btn" class="clear-button hidden">&times;</span>
+                        <div id="search-results"></div>
+                    </div>
+
+                    <div class="iv-inputs">
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="atk-iv">攻擊 (ATK)</label>
+                                <select id="atk-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="atk">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="atk-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="def-iv">防禦 (DEF)</label>
+                                <select id="def-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="def">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="def-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="hp-iv">體力 (HP)</label>
+                                <select id="hp-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="hp">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="hp-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="current-stats-inputs">
+                        <div>
+                            <label for="current-level">目前等級: <span id="current-level-value">20</span></label>
+                            <input type="range" id="current-level" min="1" max="51" step="0.5" value="20">
+                        </div>
+                        <div>
+                            <label>目前CP</label>
+                            <span id="current-cp-display" class="cp-display">-</span>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="pvp-controls-toggle" aria-label="開啟查詢條件">⚙ 調整條件</button>
+                <div id="results-container" class="hidden"></div>
+
+                <!-- 說明放在結果容器「之後」：#results-container 預設是 hidden，
+                     所以剛進頁面時這段就在條件面板底下、看得到；
+                     一旦查出結果，結果會出現在它上方自然把它往下推，不擋路。 -->
+                <section class="tool-guide">
+                    <h2>PvP 的 IV 和打道館完全是兩回事</h2>
+
+                    <p>大部分人第一次看到這個工具會很意外：<strong>排名第一的 IV 幾乎都不是 15/15/15</strong>。
+                    這不是資料有問題，而是對戰聯盟的規則使然。</p>
+
+                    <h3>為什麼 100% 反而不是最好的</h3>
+
+                    <p>超級聯盟與高級聯盟各有 CP 上限（<strong>1500</strong> 與 <strong>2500</strong>），
+                    超過就不能出賽。在上限之內，你會希望把寶可夢養到能養的最高等級 ——
+                    等級越高，三圍的實際數值越高。</p>
+
+                    <p>問題是<strong>攻擊值對 CP 的影響最大</strong>。同一隻寶可夢，攻擊 IV 越高，
+                    CP 就越早撞到上限、能養的等級就越低。反過來說，
+                    <strong>攻擊低一點的個體可以養得更高，換到更多的防禦與體力</strong>，
+                    在同樣的 1500 CP 額度下反而更耐打、能多撐一輪。</p>
+
+                    <p>所以在有 CP 上限的聯盟裡，理想的個體通常是
+                    <strong>低攻擊、高防禦、高體力</strong>。100% 因為攻擊也是滿的，
+                    往往排在幾百名之外。</p>
+
+                    <h3>什麼時候 100% 才是對的</h3>
+
+                    <p><strong>大師聯盟沒有 CP 上限</strong>，能養多高就多高，這時三圍全滿就是最好。
+                    打團體戰、道館同理 —— 沒有上限，攻擊越高越好。
+                    想查那個用途的數值，請看
+                    <a class="tab-button" data-target="cp-checker-app" href="../?tab=cp-checker-app">IV100 CP 查詢</a>。</p>
+
+                    <h3>怎麼用這一頁</h3>
+
+                    <p>輸入寶可夢名稱，填進手上那隻的三項 IV 與目前等級，
+                    就會算出牠在各聯盟的排名，以及該聯盟第一名的 IV 是多少。
+                    <strong>排名數字越小越好</strong>，前幾十名之內的個體都算相當堪用 ——
+                    不必非要第一名，差距通常很小。</p>
+
+                    <p class="tool-guide-note">排名依各聯盟的 CP 上限計算，
+                    數值可能隨遊戲平衡調整而變動。</p>
+                </section>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <p>&copy; <span id="copyright-year"></span> Pokémon Go 工具箱. All rights reserved by their respective owners.</p>
+        <p>This website is an unofficial fan-made tool, is not officially affiliated with Pokémon GO, and is intended to fall under Fair Use doctrine, similar to any other informational site such as a wiki.</p>
+        <p>Pokémon and its trademarks are &copy;1995-2025 Nintendo, Creatures, and GAME FREAK.</p>
+        <p>All images and names owned and trademarked by Nintendo, Niantic, The Pokémon Company, and GAME FREAK are property of their respective owners.</p>
+        <p class="footer-links"><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a></p>
+    </footer>
+<script src="../data/precomputed_pokemon_cp.js"></script>
+<script src="../data/pokemon_translation_map.js"></script>
+<script src="../data/pokemon_names_from_api.js"></script>
+<script src="../data/pokemon_data_and_rankings.js"></script>
+<script src="../data/pokemon_images.js"></script>
+<script src="../js/pvp-logic.js"></script>
+<script type="module">
+import { initializePvpRanker } from '../js/pvp-ranker.js';
+document.getElementById('copyright-year').textContent = new Date().getFullYear();
+initializePvpRanker();
+</script>
+<script src="../js/site-nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>團體戰頭目列表｜Pokémon Go 工具箱</title>
+<meta name="description" content="Pokémon GO 當期團體戰頭目一覽：各星級頭目、屬性剋制、捕捉時的滿 IV CP（含天氣加成），每日更新。">
+<link rel="canonical" href="https://pogokit.com/raids/">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="團體戰頭目列表｜Pokémon Go 工具箱">
+<meta property="og:description" content="Pokémon GO 當期團體戰頭目一覽：各星級頭目、屬性剋制、捕捉時的滿 IV CP（含天氣加成），每日更新。">
+<meta property="og:url" content="https://pogokit.com/raids/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../js/analytics.js"></script>
+<script src="../config.js"></script>
+<script src="../js/pageview-counter.js" defer></script>
+<script src="../js/zh-search.js"></script>
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/raids.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"團體戰頭目列表","description":"Pokémon GO 當期團體戰頭目一覽：各星級頭目、屬性剋制、捕捉時的滿 IV CP（含天氣加成），每日更新。","url":"https://pogokit.com/raids/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"Pokémon Go 工具箱","url":"https://pogokit.com/"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://pogokit.com/"},{"@type":"ListItem","position":2,"name":"團體戰頭目列表","item":"https://pogokit.com/raids/"}]}}
+</script>
+</head>
+<body>
+<header class="site-header-main">
+     <a class="site-brand" href="../" aria-label="Pokémon Go 工具箱 首頁">
+       <span class="site-brand-mark">🧰</span><span class="site-brand-name">Pokémon Go 工具箱</span>
+     </a>
+     <div id="auth-container">
+        <span id="user-info" style="display: none;"></span>
+        <button id="auth-button">登入</button>
+        <span class="auth-help" tabindex="0" role="button" aria-label="登入說明">?
+            <span class="auth-help-tip">
+                <b>登入能做什麼？</b>
+                <p>用 Google 帳號登入後，以下設定會存到雲端，換手機或瀏覽器也不會不見、還能跨裝置同步：</p>
+                <ul>
+                    <li><b>編號篩選器</b>：你勾選的寶可夢</li>
+                    <li><b>特殊調查</b>：你釘選的任務</li>
+                </ul>
+                <p class="auth-help-note">不登入也能正常使用所有查詢功能，只是這些設定不會被記住。</p>
+            </span>
+        </span>
+    </div>
+<nav class="app-nav">
+    <button class="hamburger-button" aria-label="開啟選單" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- 導覽項目用 <a href> 而非 <button>：才能右鍵/中鍵「在新分頁開啟」，
+         左鍵點擊由 main.js 攔截改走 SPA 切換（不重新載入頁面） -->
+    <div class="nav-links">
+        <a class="tab-button" href="../">功能說明</a>
+
+        <div class="nav-group mega-group">
+            <button class="group-title">功能選單</button>
+            <div class="sub-links mega-menu">
+                <div class="mega-col">
+                    <div class="mega-heading">常用查詢</div>
+                    <a class="tab-button tab-button-hot" href="../trade-list/" data-i18n="nav">🔴 交易清單產生器</a>
+                    <a class="tab-button" data-target="cp-checker-app" href="../?tab=cp-checker-app">IV100 CP 查詢</a>
+                    <a class="tab-button" href="../pvp-ranker/">PvP IV 排名查詢</a>
+                    <a class="tab-button" href="../id-selector/">寶可夢編號篩選器</a>
+                    <a class="tab-button" href="../search-filters/">搜尋篩選指令</a>
+                </div>
+                <div class="mega-col">
+                    <div class="mega-heading">遊戲資訊</div>
+                    <a class="tab-button active" href="../raids/">團體戰列表</a>
+                    <a class="tab-button" href="../eggs/">孵蛋列表</a>
+                    <a class="tab-button" href="../research/">田野調查任務</a>
+                    <a class="tab-button" href="../special-research/">特殊調查</a>
+                    <a class="tab-button" href="../stardust/">星星沙子怎麼賺</a>
+                    <!-- 地圖暫時下架
+                    <a class="tab-button" data-target="map-app" href="../?tab=map-app">補給站/道館地圖</a>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
+</header>
+    <div class="main-container">
+<div id="raids-app" class="app-content active">
+            <div class="page-content">
+                <div class="header-page">
+                    <h1 class="page-title">當期團體戰頭目列表</h1>
+                    <div class="page-date">最後更新：</div>
+                </div>
+                <p>這些是 Pokémon GO 目前活動中的團體戰頭目。</p>
+
+                <!-- 機制說明。刻意只寫「不會過期」的部分 ——
+                     頭目每期都換，但規則不會，這樣就不必每期跟著改。 -->
+                <section class="tool-guide">
+                    <h2>看團體戰列表之前先知道這些</h2>
+
+                    <h3>星級代表什麼</h3>
+                    <ul class="tool-guide-list">
+                        <li><b>1 星</b>：一般寶可夢，通常一個人就能打完。適合拿來清每日免費入場券。</li>
+                        <li><b>3 星</b>：強度中等，看隊伍配得好不好，有機會單人完成。</li>
+                        <li><b>5 星傳說</b>：傳說寶可夢，需要組隊。這是傳說寶可夢最主要的取得管道，
+                            頭目會定期輪換。</li>
+                        <li><b>超級團體戰</b>：打贏後可以捕捉該寶可夢，
+                            <strong>同時還會拿到超級能量</strong> ——
+                            能量是用來讓自己的寶可夢超級進化的，跟捕捉到的那隻分開算。</li>
+                    </ul>
+
+                    <h3>抓的時候等級是固定的 —— 所以能先看 CP</h3>
+
+                    <p>團體戰打贏後進入捕捉畫面時，那隻寶可夢的等級是<strong>固定</strong>的：
+                    一般情況是 20 等，<strong>有天氣加成時是 25 等</strong>。
+                    等級固定的話，你看到的 CP 就只取決於 IV ——
+                    也就是說<strong>丟球前就能知道是不是 100%</strong>，不必抓了再檢定。</p>
+
+                    <p>對照表在 <a class="tab-button" data-target="cp-checker-app" href="../?tab=cp-checker-app">IV100 CP 查詢</a>：
+                    看到的 CP 剛好等於表上 20 等（或 25 等）的數字，那隻就是滿 IV。</p>
+
+                    <h3>天氣加成怎麼看</h3>
+
+                    <p>捕捉畫面的寶可夢外圈會出現天氣圖示，出現就代表這場有加成。
+                    有加成時頭目等級提高到 25 等，CP 比較高，<strong>要改對 25 等那一欄</strong>，
+                    別拿 20 等的數字去比，會白白放掉一隻 100%。</p>
+
+                    <p class="tool-guide-note">頭目每期輪換，本頁資料每天自動更新，
+                    實際內容以遊戲內顯示為準。</p>
+                </section>
+
+                <hr/>
+
+                <h2>1星團體戰</h2>
+                <div class="raid-tier-container" id="raid-tier-1"></div>
+                <hr/>
+
+                <h2>3星團體戰</h2>
+                <div class="raid-tier-container" id="raid-tier-3"></div>
+                <hr/>
+
+                <h2>5星傳說團體戰</h2>
+                <div class="raid-tier-container" id="raid-tier-5"></div>
+                <hr/>
+
+                <h2>超級團體戰</h2>
+                <div class="raid-tier-container" id="raid-mega"></div>
+            </div>
+                <p class="src-note">資料來源：<a href="https://leekduck.com/raids/" target="_blank" rel="noopener noreferrer">Leek Duck</a></p>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <p>&copy; <span id="copyright-year"></span> Pokémon Go 工具箱. All rights reserved by their respective owners.</p>
+        <p>This website is an unofficial fan-made tool, is not officially affiliated with Pokémon GO, and is intended to fall under Fair Use doctrine, similar to any other informational site such as a wiki.</p>
+        <p>Pokémon and its trademarks are &copy;1995-2025 Nintendo, Creatures, and GAME FREAK.</p>
+        <p>All images and names owned and trademarked by Nintendo, Niantic, The Pokémon Company, and GAME FREAK are property of their respective owners.</p>
+        <p class="footer-links"><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a></p>
+    </footer>
+
+<script type="module">
+import { initializeRaidsApp } from '../js/raids.js';
+document.getElementById('copyright-year').textContent = new Date().getFullYear();
+initializeRaidsApp();
+</script>
+<script src="../js/site-nav.js" defer></script>
+</body>
+</html>

@@ -404,7 +404,7 @@ export function initializeCpChecker() {
                 + ' 名、評分 ' + best.row.score + '）。那個聯盟有 CP ' + best.lg.cap
                 + ' 的上限，攻擊值越高就越早撞到上限、能養的等級越低 —— 所以這一隻'
                 + '<strong>不該追 100%</strong>，攻擊低、防禦與體力高的個體反而更耐打。'
-                + '想知道手上那隻排第幾，可以用 <a class="tab-button" data-target="pvp-ranker-app" href="?tab=pvp-ranker-app">PvP IV 排名</a> 查。';
+                + '想知道手上那隻排第幾，可以用 <a class="tab-button" href="../pvp-ranker/">PvP IV 排名</a> 查。';
         } else {
             verdict = esc(p.name) + ' 在<strong>大師聯盟</strong>表現最好（第 ' + best.rank
                 + ' 名、評分 ' + best.row.score + '），而大師聯盟沒有 CP 上限 —— 這種情況'

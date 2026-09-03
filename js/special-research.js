@@ -1,5 +1,5 @@
 // js/special-research.js (優化後版本)
-import { saveDataForCurrentUser } from './main.js';
+import { saveDataForCurrentUser } from './user-data.js';
     let allResearches = [];
 let container = null; // container 也提升，讓所有函式都能存取
 let searchInput = null;
@@ -514,7 +514,7 @@ export function initializeSpecialResearchApp() {
     // 這個函式會接收從 Firebase 讀取到的釘選標題陣列
 
     // Fetch 資料的主流程保持不變
-fetch('data/special_research.json')
+fetch(new URL('../data/special_research.json', import.meta.url))
         .then(response => {
             if (!response.ok) throw new Error('無法載入 JSON 檔案');
             return response.json();

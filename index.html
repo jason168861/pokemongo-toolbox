@@ -51,10 +51,23 @@
         var p = new URLSearchParams(location.search);
         var tab = p.get('tab') || location.hash.slice(1);
         var mon = p.get('mon');
+
+        // --- 0. 已經拆成獨立目錄的分頁：舊的 ?tab= 網址轉過去 ---
+        // GitHub Pages 沒有伺服器端轉址可用，只能在這裡做。用 replace() 不留
+        // 歷史紀錄，不然按上一頁會被彈回來。這段要放在最前面：後面那些
+        // canonical／注入樣式的事情，轉走的話都不必做了。
+        var MOVED = {
+            'raids-app': 'raids', 'eggs-app': 'eggs', 'research-app': 'research',
+            'special-research-app': 'special-research', 'search-filters-app': 'search-filters',
+            'id-selector-app': 'id-selector', 'pvp-ranker-app': 'pvp-ranker'
+        };
+        if (MOVED[tab]) {
+            location.replace(location.origin + '/' + MOVED[tab] + '/');
+            return;
+        }
+
         // 白名單：對不上就什麼都不做，交回 main.js 走原本流程退回首頁
-        var TABS = ['cp-checker-app', 'pvp-ranker-app', 'id-selector-app', 'search-filters-app',
-                    'raids-app', 'eggs-app', 'research-app', 'special-research-app',
-                    'info-hub-app'];   // 地圖暫時下架；特別資訊已移到 /stardust/
+        var TABS = ['cp-checker-app', 'info-hub-app'];   // 其餘都已拆成獨立目錄
         if (TABS.indexOf(tab) === -1) return;
 
         // --- 1. canonical / og:url 改成本頁自己的網址 ---
@@ -147,15 +160,7 @@
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/cp-checker.css">
-    <link rel="stylesheet" href="css/id-selector.css">
-    <link rel="stylesheet" href="css/research.css">
-    <link rel="stylesheet" href="css/eggs.css">
-    <link rel="stylesheet" href="css/raids.css">
-    <link rel="stylesheet" href="css/pvp-ranker.css"> 
     <link rel="stylesheet" href="css/level-up.css">
-    <link rel="stylesheet" href="css/search-filters.css">
-    <link rel="stylesheet" href="css/filter-builder.css">
-    <link rel="stylesheet" href="css/special-research.css">
     <link rel="stylesheet" href="css/info-hub.css">
 
     <!-- 地圖暫時下架（Leaflet + S2 幾何，供補給站/道館地圖使用）。
@@ -245,16 +250,16 @@
                     <div class="mega-heading">常用查詢</div>
                     <a class="tab-button tab-button-hot" href="trade-list/" data-i18n="nav">🔴 交易清單產生器</a>
                     <a class="tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">IV100 CP 查詢</a>
-                    <a class="tab-button" data-target="pvp-ranker-app" href="?tab=pvp-ranker-app">PvP IV 排名查詢</a>
-                    <a class="tab-button" data-target="id-selector-app" href="?tab=id-selector-app">寶可夢編號篩選器</a>
-                    <a class="tab-button" data-target="search-filters-app" href="?tab=search-filters-app">搜尋篩選指令</a>
+                    <a class="tab-button" href="pvp-ranker/">PvP IV 排名查詢</a>
+                    <a class="tab-button" href="id-selector/">寶可夢編號篩選器</a>
+                    <a class="tab-button" href="search-filters/">搜尋篩選指令</a>
                 </div>
                 <div class="mega-col">
                     <div class="mega-heading">遊戲資訊</div>
-                    <a class="tab-button" data-target="raids-app" href="?tab=raids-app">團體戰列表</a>
-                    <a class="tab-button" data-target="eggs-app" href="?tab=eggs-app">孵蛋列表</a>
-                    <a class="tab-button" data-target="research-app" href="?tab=research-app">田野調查任務</a>
-                    <a class="tab-button" data-target="special-research-app" href="?tab=special-research-app">特殊調查</a>
+                    <a class="tab-button" href="raids/">團體戰列表</a>
+                    <a class="tab-button" href="eggs/">孵蛋列表</a>
+                    <a class="tab-button" href="research/">田野調查任務</a>
+                    <a class="tab-button" href="special-research/">特殊調查</a>
                     <a class="tab-button" href="stardust/">星星沙子怎麼賺</a>
                     <!-- 地圖暫時下架
                     <a class="tab-button" data-target="map-app" href="?tab=map-app">補給站/道館地圖</a>
@@ -410,7 +415,7 @@
                     <span class="home-card-title">IV100 CP 查詢</span>
                     <span class="home-card-text">快速查等級 15 / 20 / 25 的 CP。</span>
                 </a>
-                <a class="home-card tab-button" data-target="pvp-ranker-app" href="?tab=pvp-ranker-app">
+                <a class="home-card tab-button" href="pvp-ranker/">
                     <span class="home-card-icon">🏆</span>
                     <span class="home-card-title">PvP IV 排名</span>
                     <span class="home-card-text">找出各聯盟前段班寶可夢。</span>
@@ -425,32 +430,32 @@
                     <span class="home-card-title">哪些寶可夢不能交換</span>
                     <span class="home-card-text">22 隻換不到，以及常被誤會的例外。</span>
                 </a>
-                <a class="home-card tab-button" data-target="id-selector-app" href="?tab=id-selector-app">
+                <a class="home-card tab-button" href="id-selector/">
                     <span class="home-card-icon">🔢</span>
                     <span class="home-card-title">編號篩選器</span>
                     <span class="home-card-text">勾選後直接產生搜尋編號。</span>
                 </a>
-                <a class="home-card tab-button" data-target="raids-app" href="?tab=raids-app">
+                <a class="home-card tab-button" href="raids/">
                     <span class="home-card-icon">⚔️</span>
                     <span class="home-card-title">團體戰列表</span>
                     <span class="home-card-text">查看當期頭目與天氣加成。</span>
                 </a>
-                <a class="home-card tab-button" data-target="eggs-app" href="?tab=eggs-app">
+                <a class="home-card tab-button" href="eggs/">
                     <span class="home-card-icon">🥚</span>
                     <span class="home-card-title">孵蛋列表</span>
                     <span class="home-card-text">一眼看懂各距離蛋池。</span>
                 </a>
-                <a class="home-card tab-button" data-target="research-app" href="?tab=research-app">
+                <a class="home-card tab-button" href="research/">
                     <span class="home-card-icon">📋</span>
                     <span class="home-card-title">田野調查</span>
                     <span class="home-card-text">精選獎勵與所有任務可切換。</span>
                 </a>
-                <a class="home-card tab-button" data-target="special-research-app" href="?tab=special-research-app">
+                <a class="home-card tab-button" href="special-research/">
                     <span class="home-card-icon">⭐</span>
                     <span class="home-card-title">特殊調查</span>
                     <span class="home-card-text">搜尋任務流程與獎勵內容。</span>
                 </a>
-                <a class="home-card tab-button" data-target="search-filters-app" href="?tab=search-filters-app">
+                <a class="home-card tab-button" href="search-filters/">
                     <span class="home-card-icon">🔍</span>
                     <span class="home-card-title">搜尋指令</span>
                     <span class="home-card-text">整理遊戲內篩選語法小抄。</span>
@@ -482,18 +487,18 @@
                 <h3>查數值、找個體</h3>
                 <p><a href="?tab=cp-checker-app">IV100 CP 查詢</a>可以查每隻寶可夢在各等級滿 IV 的 CP，
                    用來判斷團體戰捕捉或研究獎勵值不值得花球。
-                   <a href="?tab=pvp-ranker-app">PvP IV 排名</a>則是反過來，
+                   <a href="pvp-ranker/">PvP IV 排名</a>則是反過來，
                    找出在各聯盟表現最好的 IV 組合 —— PvP 要的個體跟打道館完全不同，
                    不是 100% 就最好。</p>
 
                 <h3>在遊戲裡快速篩選</h3>
-                <p><a href="?tab=id-selector-app">編號篩選器</a>勾一勾就產生可以直接貼進遊戲搜尋框的字串，
-                   不用自己打一長串編號。<a href="?tab=search-filters-app">搜尋篩選指令</a>則整理了
+                <p><a href="id-selector/">編號篩選器</a>勾一勾就產生可以直接貼進遊戲搜尋框的字串，
+                   不用自己打一長串編號。<a href="search-filters/">搜尋篩選指令</a>則整理了
                    遊戲內常用的語法，例如怎麼一次篩出可進化、可交換或特定屬性的寶可夢。</p>
 
                 <h3>當期活動資料</h3>
-                <p><a href="?tab=raids-app">團體戰</a>、<a href="?tab=eggs-app">孵蛋列表</a>、
-                   <a href="?tab=research-app">田野調查</a>與<a href="?tab=special-research-app">特殊調查</a>
+                <p><a href="raids/">團體戰</a>、<a href="eggs/">孵蛋列表</a>、
+                   <a href="research/">田野調查</a>與<a href="special-research/">特殊調查</a>
                    整理當期內容，每天自動更新，頁面上都標有最後更新時間。</p>
 
                 <h3>整理型的參考資料</h3>
@@ -564,7 +569,7 @@
                     但 <strong>PvP 的超級／高級聯盟有 CP 上限（1500／2500）</strong>，
                     同樣的 CP 額度下，攻擊低一點、防禦與耐力高一點的個體往往更耐打 ——
                     100% 反而常常不是最好的選擇。找 PvP 用的個體請改看
-                    <a class="tab-button" data-target="pvp-ranker-app" href="?tab=pvp-ranker-app">PvP IV 排名</a>。</p>
+                    <a class="tab-button" href="pvp-ranker/">PvP IV 排名</a>。</p>
 
                     <p class="cp-guide-note">已經抓到、想反推 IV 的話，可以用下面的
                     <strong>CP 反查 IV 組合</strong>。本頁 CP 由遊戲能力值資料計算，與遊戲內一致。</p>
@@ -591,418 +596,19 @@
              </div>
         </div>
 
-        <div id="pvp-ranker-app" class="app-content">
-            <div class="container">
-                <h1>Pokémon Go PvP IV 排名查詢器</h1>
-                <div class="controls" id="pvp-controls">
-                    <div class="controls-header">
-                        <span class="controls-header-title">查詢條件(可收合、移動)</span>
-                        <button type="button" id="pvp-controls-close" aria-label="收合條件面板">&minus;</button>
-                    </div>
-                    <div class="search-container">
-                        <label for="pokemon-input">輸入寶可夢名稱或編號</label>
-                        <input type="text" id="pokemon-input" placeholder="例如：妙蛙種子 或 1" autocomplete="off">
-                        <span id="clear-btn" class="clear-button hidden">&times;</span>
-                        <div id="search-results"></div>
-                    </div>
+        <!-- PvP IV 排名查詢 已拆成獨立目錄 /pvp-ranker/（見 scripts/build_tool_pages.py）。
+     舊的 pvp-ranker/ 網址由 <head> 的 MOVED 表轉過去。 -->
 
-                    <div class="iv-inputs">
-                        <div class="iv-control">
-                            <div class="iv-label-select">
-                                <label for="atk-iv">攻擊 (ATK)</label>
-                                <select id="atk-iv"></select>
-                            </div>
-                            <div class="iv-slider" data-iv="atk">
-                                <div class="iv-slider-track">
-                                    <div class="iv-slider-progress" id="atk-progress"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="iv-control">
-                            <div class="iv-label-select">
-                                <label for="def-iv">防禦 (DEF)</label>
-                                <select id="def-iv"></select>
-                            </div>
-                            <div class="iv-slider" data-iv="def">
-                                <div class="iv-slider-track">
-                                    <div class="iv-slider-progress" id="def-progress"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="iv-control">
-                            <div class="iv-label-select">
-                                <label for="hp-iv">體力 (HP)</label>
-                                <select id="hp-iv"></select>
-                            </div>
-                            <div class="iv-slider" data-iv="hp">
-                                <div class="iv-slider-track">
-                                    <div class="iv-slider-progress" id="hp-progress"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="current-stats-inputs">
-                        <div>
-                            <label for="current-level">目前等級: <span id="current-level-value">20</span></label>
-                            <input type="range" id="current-level" min="1" max="51" step="0.5" value="20">
-                        </div>
-                        <div>
-                            <label>目前CP</label>
-                            <span id="current-cp-display" class="cp-display">-</span>
-                        </div>
-                    </div>
-                </div>
-                <button type="button" id="pvp-controls-toggle" aria-label="開啟查詢條件">⚙ 調整條件</button>
-                <div id="results-container" class="hidden"></div>
-
-                <!-- 說明放在結果容器「之後」：#results-container 預設是 hidden，
-                     所以剛進頁面時這段就在條件面板底下、看得到；
-                     一旦查出結果，結果會出現在它上方自然把它往下推，不擋路。 -->
-                <section class="tool-guide">
-                    <h2>PvP 的 IV 和打道館完全是兩回事</h2>
-
-                    <p>大部分人第一次看到這個工具會很意外：<strong>排名第一的 IV 幾乎都不是 15/15/15</strong>。
-                    這不是資料有問題，而是對戰聯盟的規則使然。</p>
-
-                    <h3>為什麼 100% 反而不是最好的</h3>
-
-                    <p>超級聯盟與高級聯盟各有 CP 上限（<strong>1500</strong> 與 <strong>2500</strong>），
-                    超過就不能出賽。在上限之內，你會希望把寶可夢養到能養的最高等級 ——
-                    等級越高，三圍的實際數值越高。</p>
-
-                    <p>問題是<strong>攻擊值對 CP 的影響最大</strong>。同一隻寶可夢，攻擊 IV 越高，
-                    CP 就越早撞到上限、能養的等級就越低。反過來說，
-                    <strong>攻擊低一點的個體可以養得更高，換到更多的防禦與體力</strong>，
-                    在同樣的 1500 CP 額度下反而更耐打、能多撐一輪。</p>
-
-                    <p>所以在有 CP 上限的聯盟裡，理想的個體通常是
-                    <strong>低攻擊、高防禦、高體力</strong>。100% 因為攻擊也是滿的，
-                    往往排在幾百名之外。</p>
-
-                    <h3>什麼時候 100% 才是對的</h3>
-
-                    <p><strong>大師聯盟沒有 CP 上限</strong>，能養多高就多高，這時三圍全滿就是最好。
-                    打團體戰、道館同理 —— 沒有上限，攻擊越高越好。
-                    想查那個用途的數值，請看
-                    <a class="tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">IV100 CP 查詢</a>。</p>
-
-                    <h3>怎麼用這一頁</h3>
-
-                    <p>輸入寶可夢名稱，填進手上那隻的三項 IV 與目前等級，
-                    就會算出牠在各聯盟的排名，以及該聯盟第一名的 IV 是多少。
-                    <strong>排名數字越小越好</strong>，前幾十名之內的個體都算相當堪用 ——
-                    不必非要第一名，差距通常很小。</p>
-
-                    <p class="tool-guide-note">排名依各聯盟的 CP 上限計算，
-                    數值可能隨遊戲平衡調整而變動。</p>
-                </section>
-            </div>
-        </div>
-
-        <div id="id-selector-app" class="app-content">
-            <header>
-                <h1>寶可夢編號篩選器</h1>
-                <p>點擊圖片來選擇或取消選擇寶可夢。</p>
-                <p class="combo-tip">💡 產生的編號可以和<a href="?tab=search-filters-app" class="tab-button combo-tip-link" data-target="search-filters-app">搜尋篩選指令</a>組合使用，例如「<code>1,4,7&amp;4*</code>」＝ 只顯示這些編號中 IV 100 的寶可夢。</p>
-                <footer>
-                    <div id="output-container">
-                        <div class="output-header">
-                            <h3>已選擇的寶可夢編號：</h3>
-                            <button id="copy-button" title="一鍵複製所有編號">複製</button>
-                        </div>
-                        <code id="selected-ids"></code>
-                    </div>
-                </footer>
-            </header>
-
-            <!-- 說明放在輸出框之後、寶可夢格線之前。格線很長，放後面等於沒人看得到。
-                 內容刻意寫短，不要把格線推出首屏。 -->
-            <section class="tool-guide id-guide">
-                <h2>產生出來的編號要怎麼用</h2>
-
-                <p>Pokémon GO 的搜尋框可以直接吃<strong>用逗號隔開的圖鑑編號</strong>。
-                把這裡複製到的字串貼進遊戲的搜尋框，倉庫就只會留下那幾隻 ——
-                想一次挑出散在各處的特定寶可夢時，這比一隻一隻找快得多。</p>
-
-                <p>常見用途是<strong>整理倉庫</strong>：想清理某幾個家族、
-                或把某次活動要用的寶可夢集中看，先在這裡勾好、複製、貼上就好，
-                不必記得誰是幾號。</p>
-
-                <p>編號還能跟其他條件<strong>疊起來用</strong>：
-                <code>,</code> 是「或」、<code>&amp;</code> 是「且」。
-                例如 <code>1,4,7&amp;4*</code> 表示「這三個編號之中、而且是 100% IV 的」。
-                可用的條件語法整理在<a class="tab-button" data-target="search-filters-app" href="?tab=search-filters-app">搜尋篩選指令</a>那一頁。</p>
-
-                <p class="tool-guide-note">遊戲的搜尋字串有長度上限，
-                選太多編號時可能會被截斷 —— 分批貼上即可。</p>
-            </section>
-            <main>
-                <div class="search-container">
-                    <div class="input-wrapper">
-                        <input type="search" id="idSearchInput" placeholder="依編號或名稱搜尋寶可夢...">
-                        <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
-                    </div>
-                </div>
+        <!-- 寶可夢編號篩選器 已拆成獨立目錄 /id-selector/（見 scripts/build_tool_pages.py）。
+     舊的 id-selector/ 網址由 <head> 的 MOVED 表轉過去。 -->
         
-<div class="controls-container">
-    <fieldset class="control-fieldset">
-        <legend>分類篩選</legend>
-        <div class="filter-group">
-            <button id="select-starters">御三家</button>
-            <label><input type="checkbox" id="include-starter-evolutions"> 包含進化型態</label>
-        </div>
-        <div class="filter-group">
-            <button id="select-pseudos">準神</button>
-            <label><input type="checkbox" id="include-pseudo-evolutions"> 包含進化型態</label>
-        </div>
-        <div class="filter-group">
-            <button id="select-mega">可超級進化</button>
-            <label><input type="checkbox" id="include-mega-evolutions"> 包含進化型態</label>
-        </div>
-    </fieldset>
-
-    <fieldset class="control-fieldset">
-        <legend>PvP 排名篩選</legend>
-        <div class="filter-group pvp-filter-group">
-            <select id="pvp-league-select">
-                <option value="1500">超級聯盟</option>
-                <option value="2500">高級聯盟</option>
-                <option value="10000">大師聯盟</option>
-            </select>
-            <label for="pvp-rank-limit">前</label>
-            <input type="number" id="pvp-rank-limit" value="100" min="1" max="500">
-            <label for="pvp-rank-limit">名</label>
-            <button id="filter-pvp-rank">篩選</button>
-        </div>
-        <div class="filter-group">
-            <label>
-                <input type="checkbox" id="include-pvp-evolutions"> 顯示進化/退化型態
-            </label>
-        </div>
-        </fieldset>
-
-    <fieldset class="control-fieldset">
-        <legend>批次操作</legend>
-        <div class="action-buttons">
-            <button id="select-evolved">勾選所有進化型態</button>
-            <button id="select-all-shown" style="display:none;">全選當前顯示</button>
-            <button id="show-all">顯示全部</button>
-            <button id="clear-all">清除所有選擇</button>
-        </div>
-    </fieldset>
-</div>
-                <div id="pokemon-container" class="pokemon-grid"></div>
-            </main>
-        </div>
+        <!-- 田野調查任務 已拆成獨立目錄 /research/（見 scripts/build_tool_pages.py）。
+     舊的 research/ 網址由 <head> 的 MOVED 表轉過去。 -->
         
-        <div id="research-app" class="app-content">
-            <header>
-                <h1>當前田野調查任務</h1>
-                <div class="tabs">
-                    <input type="radio" id="less-option" name="reward-toggle" checked>
-                    <label class="tab" for="less-option">精選獎勵</label>
-                    <input type="radio" id="all-option" name="reward-toggle">
-                    <label class="tab" for="all-option">所有獎勵</label>
-                    <span class="glider"></span>
-                </div>
-                <p class="research-hint">「精選獎勵」只列出獎勵是寶可夢的任務，
-                   平常想找特定寶可夢看這個就夠；「所有獎勵」連給道具、星塵的任務也一起列出來，
-                   想把任務清乾淨或湊研究突破印章時比較有用。</p>
-            </header>
-            <main id="research-container">
-                <div id="left-column" class="research-column"></div>
-                <div id="right-column" class="research-column"></div>
-            </main>
-
-                <!-- 機制說明。跟團體戰/孵蛋一樣只寫「不會過期」的部分——
-                     任務每期都換，規則不換，這樣就不必每期跟著改。 -->
-                <section class="tool-guide">
-                    <h2>田野調查怎麼運作</h2>
-
-                    <p>轉補給站的轉盤就會拿到田野調查任務。任務可以放著不做，不想要也可以直接丟棄。</p>
-
-                    <p><strong>但丟掉之後回頭轉同一個補給站，當天還是會拿到同一個任務。</strong>
-                    每個補給站當天的任務是固定的，重轉不會換內容 ——
-                    所以想找特定獎勵時，要做的是<strong>換補給站</strong>，不是在同一個站重轉。
-                    這也是為什麼補給站密集的地方湊任務比較快。</p>
-
-                    <h3>獎勵是寶可夢的話，等級固定 15</h3>
-
-                    <p>任務獎勵遇到的寶可夢<strong>固定是 15 等</strong>。等級固定的話，
-                    捕捉畫面上的 CP 就只取決於 IV —— 也就是說<strong>丟球前就能知道是不是 100%</strong>。</p>
-
-                    <p>對照表在 <a class="tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">IV100 CP 查詢</a>：
-                    看到的 CP 剛好等於表上 15 等那一欄的數字，那隻就是滿 IV。
-                    這跟團體戰的 20／25 等是同一個道理，只是換一欄看。</p>
-
-                    <h3>研究突破</h3>
-
-                    <p>每天完成的<strong>第一個</strong>任務會給一個印章，集滿之後可以領研究突破的獎勵。
-                    印章一天最多拿一個，所以要湊的話得連續幾天每天至少完成一個 ——
-                    這也是為什麼「所有獎勵」那個分頁有用：想快點拿到印章時，
-                    挑最容易完成的任務就好，不必管獎勵是什麼。</p>
-
-                    <h3>任務會隨活動更換</h3>
-
-                    <p>田野調查的內容會隨季節與活動整批更新，有些任務只在特定期間出現。
-                    所以看到想要的獎勵，通常就是那一期的事。</p>
-
-                    <p class="tool-guide-note">本頁資料每天更新，實際內容以遊戲內顯示為準。</p>
-                </section>
-
-                <p class="src-note">資料來源：<a href="https://leekduck.com/research/" target="_blank" rel="noopener noreferrer">Leek Duck</a></p> 
-        </div>
-        
-        <div id="eggs-app" class="app-content">
-            <div class="page-content">
-                <div class="header-page">
-                    <h1 class="page-title">當期蛋池孵化列表</h1>
-                    <div class="page-date">最後更新：</div>
-                </div>
-                <p>這些是 Pokémon GO 目前「快樂每一天」季節中所有可能的孵化寶可夢。</p>
-
-                <!-- 機制說明。同樣只寫「不會過期」的部分 —— 蛋池每季換，規則不換。 -->
-                <section class="tool-guide">
-                    <h2>看蛋池之前先知道這些</h2>
-
-                    <h3>距離越長，裡面的東西越稀有</h3>
-
-                    <p>蛋分成 2、5、7、10、12 公里幾種，走的距離越長，孵出稀有寶可夢的機會越高。
-                    所以孵蛋器有限時，優先把長距離的蛋放進去通常比較划算 ——
-                    一顆 2 公里蛋和一顆 10 公里蛋各佔一個孵蛋器，但期望值差很多。</p>
-
-                    <h3>不同距離的蛋來源不一樣</h3>
-                    <ul class="tool-guide-list">
-                        <li><b>2、5、10 公里</b>：轉補給站或道館取得。</li>
-                        <li><b>7 公里</b>：開禮物才會拿到，補給站轉不出來 ——
-                            好友送的禮物，以及路線終點跟夥伴交換的友情禮物，
-                            這兩種的蛋池內容不同，本頁分開列出。</li>
-                        <li><b>12 公里</b>：打贏火箭隊首領取得。</li>
-                        <li><b>時時刻刻冒險獎勵</b>：每週結算會另外給蛋，內容和同距離的一般蛋不同，
-                            本頁分開列出。</li>
-                    </ul>
-
-                    <p>這代表<strong>想孵某一種蛋，得先確定拿得到</strong>。
-                    例如想要 7 公里蛋池裡的寶可夢，就得多開禮物；
-                    想要 12 公里的，就得去打火箭隊首領。</p>
-
-                    <h3>孵出來的等級是固定的 —— 可以先看 CP</h3>
-
-                    <p>蛋孵出來的寶可夢固定是 <strong>20 等</strong>。
-                    跟團體戰一樣，等級固定的話 CP 就只取決於 IV，
-                    所以孵出來的當下看一眼 CP，對照
-                    <a class="tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">IV100 CP 查詢</a>
-                    的 20 等那一欄，就知道是不是 100%。</p>
-
-                    <h3>蛋池會整季換</h3>
-
-                    <p>蛋池不是固定的，會隨季節與活動更換，
-                    某些寶可夢只在特定期間才進得了蛋池。
-                    所以看到想要的，通常就是那一季的事。</p>
-
-                    <p class="tool-guide-note">本頁資料每天自動更新，
-                    實際內容以遊戲內顯示為準。</p>
-                </section>
-
-                <hr/>
-                
-                <h2>2 公里蛋</h2>
-                <ul class="egg-list-flex" id="egg-list-2km"></ul>
-                <hr/>
-                
-                <h2>5 公里蛋</h2>
-                <ul class="egg-list-flex" id="egg-list-5km"></ul>
-                
-                <h2>5 公里蛋 (冒險同步獎勵)</h2>
-                <p>此類蛋可從每週的「時時刻刻冒險」獎勵中獲得。</p>
-                <ul class="egg-list-flex" id="egg-list-5km-sync"></ul>
-                <hr/>
-                
-                <h2>7 公里蛋</h2>
-                <ul class="egg-list-flex" id="egg-list-7km"></ul>
-
-                <h2>7 公里蛋 (路線禮物)</h2>
-                <p>此類蛋可從路線終點交換夥伴「馬特奧」的友情禮物中獲得。</p>
-                <ul class="egg-list-flex" id="egg-list-7km-route"></ul>
-                <hr/>
-
-                <h2>10 公里蛋</h2>
-                <ul class="egg-list-flex" id="egg-list-10km"></ul>
-                
-                <h2>10 公里蛋 (冒險同步獎勵)</h2>
-                <p>此類蛋可從每週的「時時刻刻冒險」獎勵中獲得。</p>
-                <ul class="egg-list-flex" id="egg-list-10km-sync"></ul>
-                <hr/>
-                
-                <h2>12 公里蛋</h2>
-                <ul class="egg-list-flex" id="egg-list-12km"></ul>
-            </div>
-                <p class="src-note">資料來源：<a href="https://leekduck.com/eggs/" target="_blank" rel="noopener noreferrer">Leek Duck</a></p>
-        </div>
-        <div id="raids-app" class="app-content">
-            <div class="page-content">
-                <div class="header-page">
-                    <h1 class="page-title">當期團體戰頭目列表</h1>
-                    <div class="page-date">最後更新：</div>
-                </div>
-                <p>這些是 Pokémon GO 目前活動中的團體戰頭目。</p>
-
-                <!-- 機制說明。刻意只寫「不會過期」的部分 ——
-                     頭目每期都換，但規則不會，這樣就不必每期跟著改。 -->
-                <section class="tool-guide">
-                    <h2>看團體戰列表之前先知道這些</h2>
-
-                    <h3>星級代表什麼</h3>
-                    <ul class="tool-guide-list">
-                        <li><b>1 星</b>：一般寶可夢，通常一個人就能打完。適合拿來清每日免費入場券。</li>
-                        <li><b>3 星</b>：強度中等，看隊伍配得好不好，有機會單人完成。</li>
-                        <li><b>5 星傳說</b>：傳說寶可夢，需要組隊。這是傳說寶可夢最主要的取得管道，
-                            頭目會定期輪換。</li>
-                        <li><b>超級團體戰</b>：打贏後可以捕捉該寶可夢，
-                            <strong>同時還會拿到超級能量</strong> ——
-                            能量是用來讓自己的寶可夢超級進化的，跟捕捉到的那隻分開算。</li>
-                    </ul>
-
-                    <h3>抓的時候等級是固定的 —— 所以能先看 CP</h3>
-
-                    <p>團體戰打贏後進入捕捉畫面時，那隻寶可夢的等級是<strong>固定</strong>的：
-                    一般情況是 20 等，<strong>有天氣加成時是 25 等</strong>。
-                    等級固定的話，你看到的 CP 就只取決於 IV ——
-                    也就是說<strong>丟球前就能知道是不是 100%</strong>，不必抓了再檢定。</p>
-
-                    <p>對照表在 <a class="tab-button" data-target="cp-checker-app" href="?tab=cp-checker-app">IV100 CP 查詢</a>：
-                    看到的 CP 剛好等於表上 20 等（或 25 等）的數字，那隻就是滿 IV。</p>
-
-                    <h3>天氣加成怎麼看</h3>
-
-                    <p>捕捉畫面的寶可夢外圈會出現天氣圖示，出現就代表這場有加成。
-                    有加成時頭目等級提高到 25 等，CP 比較高，<strong>要改對 25 等那一欄</strong>，
-                    別拿 20 等的數字去比，會白白放掉一隻 100%。</p>
-
-                    <p class="tool-guide-note">頭目每期輪換，本頁資料每天自動更新，
-                    實際內容以遊戲內顯示為準。</p>
-                </section>
-
-                <hr/>
-
-                <h2>1星團體戰</h2>
-                <div class="raid-tier-container" id="raid-tier-1"></div>
-                <hr/>
-
-                <h2>3星團體戰</h2>
-                <div class="raid-tier-container" id="raid-tier-3"></div>
-                <hr/>
-
-                <h2>5星傳說團體戰</h2>
-                <div class="raid-tier-container" id="raid-tier-5"></div>
-                <hr/>
-
-                <h2>超級團體戰</h2>
-                <div class="raid-tier-container" id="raid-mega"></div>
-            </div>
-                <p class="src-note">資料來源：<a href="https://leekduck.com/raids/" target="_blank" rel="noopener noreferrer">Leek Duck</a></p>
-        </div>
+        <!-- 孵蛋列表 已拆成獨立目錄 /eggs/（見 scripts/build_tool_pages.py）。
+     舊的 eggs/ 網址由 <head> 的 MOVED 表轉過去。 -->
+        <!-- 團體戰頭目列表 已拆成獨立目錄 /raids/（見 scripts/build_tool_pages.py）。
+     舊的 raids/ 網址由 <head> 的 MOVED 表轉過去。 -->
         <!-- <div id="level-up-app" class="app-content">
             <header>
                 <h1>Pokémon Go 等級挑戰 & 升級條件</h1>
@@ -1018,201 +624,10 @@
             </div>
         </div> -->
 
-<div id="search-filters-app" class="app-content">
-    <div class="container">
-        <h1>Pokémon Go 搜尋篩選指令大全</h1>
-
-        <!-- ===== 篩選指令產生器 ===== -->
-        <div id="filter-builder">
-          <div class="fb-title">🔎 篩選指令產生器</div>
-          <p class="fb-sub">每個條件選「要 / 不要 / 任意」，自動組出遊戲內搜尋框可貼上的指令。</p>
-
-          <div class="fb-card">
-            <div class="fb-h2">篩選組合 <span class="fb-tag">可建立多組</span></div>
-            <p class="fb-cardhint">點名稱切換編輯；點 📋 直接複製該組指令。可拖曳調整順序。<b>登入後會同步到你的帳號</b>，未登入則存在這台瀏覽器。</p>
-            <div class="fb-setbar" id="fb-setbar"></div>
-            <div class="fb-setacts">
-              <button type="button" class="fb-btn fb-primary" id="fb-addSet">＋ 新增組合</button>
-              <button type="button" class="fb-btn" id="fb-renameSet">✎ 重新命名</button>
-              <button type="button" class="fb-btn" id="fb-dupSet">⧉ 複製此組</button>
-              <button type="button" class="fb-btn fb-danger" id="fb-delSet">🗑 刪除此組</button>
-              <button type="button" class="fb-btn fb-danger" id="fb-delAllSets">🧹 全部刪除</button>
-            </div>
-          </div>
-
-          <div class="fb-card">
-            <div class="fb-h2">寶可夢編號 <span class="fb-tag">可與編號篩選器連動</span></div>
-            <p class="fb-cardhint">
-              遊戲的搜尋框可以直接用<b>全國圖鑑編號</b>指定寶可夢，多隻用逗號隔開（<code>1,4,7</code>）、連續範圍用短橫線（<code>1-151</code>＝第一代全部）。
-              編號很難背，所以本站的「<b>寶可夢編號篩選器</b>」可以讓你<b>用點圖片的方式挑寶可夢</b>，自動產生這串編號。
-            </p>
-            <p class="fb-cardhint" style="margin-bottom:10px">
-              👉 到編號篩選器勾選完，<b>回到這裡按「匯入編號篩選器」</b>，就會把你目前勾選的直接帶過來，不必手動複製貼上。
-            </p>
-            <div class="fb-numrow">
-              <input type="text" id="fb-nums" placeholder="貼上編號，例如：1,4,7 或 1-151" inputmode="numeric">
-              <button type="button" class="fb-btn fb-primary" id="fb-importNums">⬇ 匯入編號篩選器</button>
-              <button type="button" class="fb-btn" id="fb-clearNums">清空</button>
-            </div>
-            <p class="fb-hint">
-              還沒挑好？<button type="button" class="fb-link" id="fb-gotoIds">→ 前往「寶可夢編號篩選器」</button>
-              （勾選後回到本頁按匯入即可；已登入的話你的勾選也會被記住）
-            </p>
-          </div>
-
-          <div id="fb-sections"></div>
-        </div>
-        <hr>
-        <!-- ===== 以下為原本的指令說明大全 ===== -->
-
-        <h2>寶可夢搜尋篩選條件</h2>
-
-        <h3>1. 固定字詞</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>搜尋字詞</th>
-                    <th>功能</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>雄性、雌性、性別不明</td><td>分別篩選出「男性、女性、無性別」的寶可夢。</td></tr>
-                <tr><td>異色</td><td>篩選出所有「異色（色違）」寶可夢。</td></tr>
-                <tr><td>亮晶晶</td><td>篩選出所有透過交易獲得的「亮晶晶」寶可夢。</td></tr>
-                <tr><td>傳說的寶可夢</td><td>篩選出所有「神獸」寶可夢。</td></tr>
-                <tr><td>究極異獸</td><td>篩選出所有「究極異獸」寶可夢。</td></tr>
-                <tr><td>幻</td><td>篩選出所有「幻之寶可夢」。</td></tr>
-                <tr><td>特殊</td><td>篩選出所有穿戴特殊裝扮的寶可夢（例如：戴帽子的皮卡丘）。</td></tr>
-                <tr><td>孵化</td><td>篩選出所有從蛋中孵化出來的寶可夢。</td></tr>
-                <tr><td>只限蛋</td><td>篩選出所有「寶寶型態」的寶可夢。</td></tr>
-                <tr><td>進化</td><td>篩選出所有目前「可以進化」的寶可夢。</td></tr>
-                <tr><td>超級進化</td><td>篩選出所有目前「可以超級進化」的寶可夢。</td></tr>
-                <tr><td>交換進化</td><td>篩選出所有可透過交換免除糖果即可進化的寶可夢。</td></tr>
-                <tr><td>道具</td><td>篩選出所有目前可以使用進化道具進化的寶可夢。</td></tr>
-                <tr><td>未登錄</td><td>篩選出所有進化後可以解鎖圖鑑的寶可夢。</td></tr>
-                <tr><td>糖果XL</td><td>篩選出所有使用過 XL 糖果升等的寶可夢。</td></tr>
-                <tr><td>交換</td><td>篩選出所有透過「交換得到」的寶可夢。</td></tr>
-                <tr><td>調查 / Snapshot / 火箭隊</td><td>篩選從「田野調查」、「AR照亂入」或「擊敗火箭隊」獲得的獎勵寶可夢（僅限 2020 年 11 月後）。</td></tr>
-                <tr><td>淨化 / 暗影</td><td>分別篩選出「淨化」或「暗影」寶可夢。</td></tr>
-                <tr><td>防禦者</td><td>篩選出目前正在「佔領道館中」的寶可夢。</td></tr>
-                <tr><td>@天氣</td><td>篩選出當下招式受到「天氣加成」的寶可夢。</td></tr>
-                <tr><td>@特別</td><td>篩選出擁有「絕版招式」的寶可夢。</td></tr>
-            </tbody>
-        </table>
-
-        <h3>2. 名稱、編號及地區</h3>
-        <p><b>名字/暱稱：</b>可直接輸入寶可夢名字或暱稱，例如 <code>百變怪</code>。使用 <code>+</code> 可搜尋整個進化鏈，例如 <code>+快龍</code> 會顯示迷你龍、哈克龍及快龍。</p>
-        <p><b>編號：</b>可輸入全國圖鑑編號。支援範圍搜尋，例如 <code>1-151</code> 代表第一代所有寶可夢。</p>
-        <p><b>地區：</b>可直接輸入地區名稱，例如 <code>關都</code>, <code>城都</code>, <code>豐緣</code> 等。</p>
-
-        <h3>3. 捕捉時間與距離</h3>
-        <p><b>日數：</b>篩選特定時間內捕捉的寶可夢。例如 <code>日數0</code> 是24小時內，<code>日數365-</code> 是超過一年前。</p>
-        <p><b>年：</b>篩選特定年份捕捉的寶可夢，例如 <code>年2016</code>。</p>
-        <p><b>距離：</b>篩選與目前位置相距特定距離的寶可夢。例如 <code>距離100-</code> 代表超過100公里外。</p>
-
-        <h3>4. 屬性與招式</h3>
-        <p><b>屬性：</b>輸入屬性名稱，例如 <code>冰</code>。</p>
-        <p><b>招式：</b>使用 <code>@</code> 前綴。例如 <code>@破壞光線</code> 或 <code>@火</code>。<code>@1</code> 代表普通招式，<code>@2</code> 和 <code>@3</code> 分別代表第一和第二特殊招式。</p>
-
-        <h3>5. CP、HP、IV 及夥伴/超級等級</h3>
-        <p><b>CP/HP：</b>支援範圍搜尋，例如 <code>cp2000-3000</code> 或 <code>hp200-</code>。</p>
-        <p><b>IV 星級：</b>使用 <code>0*</code> 到 <code>4*</code> 來篩選隊長評價星等。</p>
-        <p><b>IV 細項：</b>可篩選攻擊、防禦、HP 的 IV 值，例如 <code>4攻擊&4防禦&4HP</code> 代表完美IV。數字0-4對應IV值0, 1-5, 6-10, 11-14, 15。</p>
-        <p><b>夥伴/超級等級：</b>使用 <code>夥伴0-5</code> 或 <code>超級1-3</code> 來篩選。</p>
-
-        <h3>6. 邏輯運算子</h3>
-        <p><b>或者 (OR)：</b>使用 <code>,</code> 或 <code>;</code>。例如 <code>快龍,班基拉斯</code>。</p>
-        <p><b>而且 (AND)：</b>使用 <code>&</code> 或 <code>|</code>。例如 <code>異色&傳說的寶可夢</code>。</p>
-        <p><b>反向 (NOT)：</b>使用 <code>!</code>。例如 <code>!亮晶晶</code> 會顯示所有非亮晶晶的寶可夢。</p>
-
-        <hr>
-
-        <h2>朋友搜尋篩選條件</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>搜尋字詞</th>
-                    <th>功能</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>互動</td><td>篩選出今天雙方尚未互動的朋友。</td></tr>
-                <tr><td>亮晶晶</td><td>篩選出目前是「亮晶晶好朋友」狀態的朋友。</td></tr>
-                <tr><td>友誼等級0-4</td><td>篩選特定友誼等級的朋友。例如 <code>友誼等級4</code>。</td></tr>
-                <tr><td>暱稱</td><td>搜尋朋友的暱稱。</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- 產生器的固定預覽列（放在 .container 外，避免 position:fixed 受祖先影響；
-         切到其他分頁時整個 #search-filters-app 會 display:none 而自動隱藏） -->
-    <div class="fb-out">
-      <div class="fb-inner">
-        <div id="fb-preview"><span class="fb-ph">在上方選擇條件，這裡會即時產生指令…</span></div>
-        <div class="fb-side">
-          <div class="fb-btns">
-            <button type="button" class="fb-copy" id="fb-copyBtn">📋 複製</button>
-            <button type="button" class="fb-btn" id="fb-resetAll">↺ 重設</button>
-          </div>
-          <span class="fb-count" id="fb-count"></span>
-        </div>
-      </div>
-    </div>
-    <div class="fb-toast" id="fb-toast"></div>
-</div>
-        <div id="special-research-app" class="app-content">
-            <h1>Pokémon GO 特殊調查任務列表</h1>
-            <div id="search-wrapper">
-                <input type="text" id="special-search-input" placeholder="搜尋特殊調查名稱...">    <button class="clear-search-btn" aria-label="清除搜尋內容">&times;</button>
-            </div>
-                
-                    <div class="search-options">
-            <label for="search-include-all">
-                <input type="checkbox" id="search-include-all" checked>
-                <span>包含任務及獎勵內容</span>
-            </label>
-        </div>
-                <p class="sr-hint">預設只比對調查名稱。勾起「包含任務及獎勵內容」之後，
-                   連每一階的任務條件和獎勵也會一起搜 ——
-                   想反查「哪個調查會給某隻寶可夢」時要勾這個。
-                   常看的調查可以點卡片上的圖釘固定在最前面，登入後會跟著帳號走。</p>
-                <!-- 機制說明放在列表「之前」：列表有 2.6 萬 px 高，放後面等於沒有。
-                     有輸入查詢時會自動收起（見 special-research.js 的 filterAndRender），
-                     使用者一開始查就不必捲過這段。 -->
-                <section class="tool-guide">
-                    <h2>特殊調查跟田野調查差在哪</h2>
-
-                    <p>兩個名字很像，但拿到的方式和急迫性完全不同。</p>
-
-                    <ul class="tool-guide-list">
-                        <li><b>田野調查</b>：轉補給站拿到，一次一個，做完就沒了。
-                            內容每期換，<a class="tab-button" data-target="research-app" href="?tab=research-app">當期任務看這裡</a>。</li>
-                        <li><b>特殊調查</b>：由劇情或活動發放，<strong>分成好幾個階段</strong>，
-                            每完成一階才會解鎖下一階。領到之後就留在調查清單裡。</li>
-                    </ul>
-
-                    <h3>不用急著做完</h3>
-
-                    <p>特殊調查領到之後<strong>不會因為活動結束就消失</strong>，可以慢慢做。
-                    真正有期限的是「能不能領到」——
-                    活動限定的調查過了發放期間就拿不到了，但已經在你清單裡的那些不受影響。</p>
-
-                    <p>所以遇到活動限定的特殊調查，<strong>先領起來再說</strong>，
-                    什麼時候做完都可以。</p>
-
-                    <h3>為什麼要先查流程</h3>
-
-                    <p>特殊調查是一階一階解鎖的，遊戲裡看不到後面幾階要做什麼。
-                    先知道整條流程，可以省下不少白工 ——
-                    例如某一階要求「進化 3 隻」或「走 10 公里」，就能提前把糖果和距離準備好，
-                    不必卡在那裡才開始湊。獎勵也一樣：知道最後給什麼，才好判斷值不值得排進度。</p>
-
-                    <p class="tool-guide-note">本頁整理各調查的完整階段與獎勵，實際內容以遊戲內顯示為準。</p>
-                </section>
-                <div id="special-research-container"> <p style="text-align:center; font-size: 1.2em;">正在載入資料，請稍候...</p>
-            </div>
-
-        </div>
+<!-- 搜尋篩選指令大全 已拆成獨立目錄 /search-filters/（見 scripts/build_tool_pages.py）。
+     舊的 search-filters/ 網址由 <head> 的 MOVED 表轉過去。 -->
+        <!-- 特殊調查攻略 已拆成獨立目錄 /special-research/（見 scripts/build_tool_pages.py）。
+     舊的 special-research/ 網址由 <head> 的 MOVED 表轉過去。 -->
         <div id="info-hub-app" class="app-content">
             <div class="container">
                 <h1>特別資訊</h1>

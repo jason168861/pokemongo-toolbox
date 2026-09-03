@@ -1,3 +1,4 @@
+const SHINY_ICON = new URL('../img/shiny.svg', import.meta.url);  // 獨立工具頁在子目錄，路徑要相對於這個模組
 export function initializeResearchApp() {
     const researchAppContainer = document.getElementById('research-app');
     // 防止重複初始化
@@ -16,7 +17,7 @@ export function initializeResearchApp() {
         bubble.className = `reward-bubble ${reward.isFeatured ? 'featured' : ''}`;
         bubble.innerHTML = `
             <img src="${reward.imageUrl}" alt="${reward.name}">
-            ${reward.isShiny ? `<img class="shiny-icon" src="./img/shiny.svg">` : ''}
+            ${reward.isShiny ? `<img class="shiny-icon" src="${SHINY_ICON}">` : ''}
             ${reward.quantity ? `<div class="quantity">${reward.quantity}</div>` : ''}
         `;
         return bubble;
@@ -31,7 +32,7 @@ export function initializeResearchApp() {
             rewardHTML = `
                 <div class="reward-bubble" >
                     <img src="${reward.imageUrl}" alt="${reward.name}">
-                    ${reward.isShiny ? `<img class="shiny-icon" src="./img/shiny.svg">` : ''}
+                    ${reward.isShiny ? `<img class="shiny-icon" src="${SHINY_ICON}">` : ''}
                 </div>
                 <div class="reward-details">
                     <span class="reward-name">${reward.name}</span>
@@ -129,7 +130,7 @@ export function initializeResearchApp() {
             }
     }
 
-    fetch('data/research.json')
+    fetch(new URL('../data/research.json', import.meta.url))
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
