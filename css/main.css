@@ -1168,3 +1168,34 @@ a.tab-button {
 .tool-guide-list { margin: 0 0 10px; padding-left: 20px; }
 .tool-guide-list li { margin-bottom: 8px; font-size: 14.5px; }
 .tool-guide-list li b { color: #1c1e21; }
+
+/* ---- 頁首站名 --------------------------------------------------------------
+   整個網站原本沒有一處寫出自己叫什麼 —— 只有登入鈕和分頁列。
+   對訪客來說少了辨識,對審查來說也少了「這是一個有身分的網站」的訊號。 */
+.site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 10px 6px 0;
+    color: #1c1e21;
+    font-weight: 800;
+    font-size: 16px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex: none;
+}
+.site-brand:hover { color: #0075BE; }
+.site-brand-mark { font-size: 19px; line-height: 1; }
+
+/* 手機:#auth-container 是絕對定位貼在左邊(left:15px),站名要讓開,
+   否則會疊在登入鈕上。字也縮短一點,不然會把漢堡鈕擠掉。 */
+@media (max-width: 768px) {
+    .site-brand { margin-left: 96px; padding-left: 0; font-size: 14px; }
+    .site-brand-mark { font-size: 16px; }
+}
+/* 極窄螢幕:名稱縮短而不是整個藏起來 —— 只剩一個圖示等於還是沒有站名。
+   用 ::after 換掉文字，DOM 裡的完整名稱仍在（爬蟲讀得到）。 */
+@media (max-width: 420px) {
+    .site-brand-name { font-size: 0; }
+    .site-brand-name::after { content: "工具箱"; font-size: 14px; }
+}
