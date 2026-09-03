@@ -1221,3 +1221,13 @@ a.tab-button {
     line-height: 1.7;
     color: #606770;
 }
+
+/* 特殊調查:搜尋選項下方的說明（那個核取方塊和釘選功能不說明的話不會有人用） */
+#special-research-app .sr-hint {
+    max-width: 640px;
+    margin: 10px auto 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #606770;
+}

@@ -1172,8 +1172,46 @@
                 <span>包含任務及獎勵內容</span>
             </label>
         </div>
+                <p class="sr-hint">預設只比對調查名稱。勾起「包含任務及獎勵內容」之後，
+                   連每一階的任務條件和獎勵也會一起搜 ——
+                   想反查「哪個調查會給某隻寶可夢」時要勾這個。
+                   常看的調查可以點卡片上的圖釘固定在最前面，登入後會跟著帳號走。</p>
+                <!-- 機制說明放在列表「之前」：列表有 2.6 萬 px 高，放後面等於沒有。
+                     有輸入查詢時會自動收起（見 special-research.js 的 filterAndRender），
+                     使用者一開始查就不必捲過這段。 -->
+                <section class="tool-guide">
+                    <h2>特殊調查跟田野調查差在哪</h2>
+
+                    <p>兩個名字很像，但拿到的方式和急迫性完全不同。</p>
+
+                    <ul class="tool-guide-list">
+                        <li><b>田野調查</b>：轉補給站拿到，一次一個，做完就沒了。
+                            內容每期換，<a class="tab-button" data-target="research-app" href="?tab=research-app">當期任務看這裡</a>。</li>
+                        <li><b>特殊調查</b>：由劇情或活動發放，<strong>分成好幾個階段</strong>，
+                            每完成一階才會解鎖下一階。領到之後就留在調查清單裡。</li>
+                    </ul>
+
+                    <h3>不用急著做完</h3>
+
+                    <p>特殊調查領到之後<strong>不會因為活動結束就消失</strong>，可以慢慢做。
+                    真正有期限的是「能不能領到」——
+                    活動限定的調查過了發放期間就拿不到了，但已經在你清單裡的那些不受影響。</p>
+
+                    <p>所以遇到活動限定的特殊調查，<strong>先領起來再說</strong>，
+                    什麼時候做完都可以。</p>
+
+                    <h3>為什麼要先查流程</h3>
+
+                    <p>特殊調查是一階一階解鎖的，遊戲裡看不到後面幾階要做什麼。
+                    先知道整條流程，可以省下不少白工 ——
+                    例如某一階要求「進化 3 隻」或「走 10 公里」，就能提前把糖果和距離準備好，
+                    不必卡在那裡才開始湊。獎勵也一樣：知道最後給什麼，才好判斷值不值得排進度。</p>
+
+                    <p class="tool-guide-note">本頁整理各調查的完整階段與獎勵，實際內容以遊戲內顯示為準。</p>
+                </section>
                 <div id="special-research-container"> <p style="text-align:center; font-size: 1.2em;">正在載入資料，請稍候...</p>
             </div>
+
         </div>
         <div id="info-hub-app" class="app-content">
             <div class="container">

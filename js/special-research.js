@@ -186,6 +186,12 @@ function highlightMatches(container, searchTerm) {
 function filterAndRender() {
     const searchTerm = zhLower(searchInput.value).trim();   // 繁簡通用
     const searchInside = includeAllCheckbox.checked;
+
+    // 有在查詢時把「特殊調查跟田野調查差在哪」收起來。
+    // 那段放在列表之前（放後面看不到——列表有 2.6 萬 px 高），
+    // 但使用者一旦開始查，就不該讓他捲過一整段說明才看到結果。
+    const guide = document.querySelector('#special-research-app .tool-guide');
+    if (guide) guide.hidden = !!searchTerm;
     const allCardElements = container.querySelectorAll('.research-card');
     const noResultsMessage = container.querySelector('.no-results');
     let hasResults = false;
