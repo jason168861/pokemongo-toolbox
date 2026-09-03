@@ -344,6 +344,92 @@ export function initializeCpChecker() {
         return fn ? fn(p) : '';
     }
 
+    // ---- 對戰聯盟表現（每個 ?mon= 頁的專屬內容）------------------------------
+    // 這 1079 個網址原本只有一張全等級 CP 表，模板完全一樣，Google 與 AdSense 都
+    // 容易判成「大量重複的資料頁」。這一段用站上既有的排名資料，替每一隻算出
+    // 屬於牠自己的名次、分數、招式與建議 —— 每頁的數字與結論都不同。
+    // ⚠ 排名資料在 data/pokemon_data_and_rankings.js 是用 const 宣告的，
+    //   那不會掛到 globalThis 上（只有 var 會），所以得像既有的 POKEDEX 一樣
+    //   直接用識別字引用，並用 typeof 擋掉檔案沒載到的情況。
+    const LEAGUES = [
+        { name: '超級聯盟', cap: 1500,
+          arr: (typeof POKEMON_RANKINGS_1500  !== 'undefined') ? POKEMON_RANKINGS_1500  : null },
+        { name: '高級聯盟', cap: 2500,
+          arr: (typeof POKEMON_RANKINGS_2500  !== 'undefined') ? POKEMON_RANKINGS_2500  : null },
+        { name: '大師聯盟', cap: null,
+          arr: (typeof POKEMON_RANKINGS_10000 !== 'undefined') ? POKEMON_RANKINGS_10000 : null }
+    ];
+    // 名稱 → {rank, total, row}，只建一次
+    LEAGUES.forEach(lg => {
+        lg.index = new Map();
+        if (!Array.isArray(lg.arr)) return;
+        lg.arr.forEach((r, i) => {
+            if (r && r.name && !lg.index.has(r.name)) {
+                lg.index.set(r.name, { rank: i + 1, total: lg.arr.length, row: r });
+            }
+        });
+    });
+
+    function moveText(row) {
+        if (!row) return '';
+        const mk = (n, elite) => n ? esc(n) + (elite ? '<span class="elite">傳授</span>' : '') : '';
+        const fast = mk(row.fastMove, row.isEliteFast);
+        const ch = [mk(row.chargedMove1, row.isEliteCharged1), mk(row.chargedMove2, row.isEliteCharged2)].filter(Boolean);
+        if (!fast && !ch.length) return '';
+        return fast + (ch.length ? ' ＋ ' + ch.join('、') : '');
+    }
+
+    function pvpAnalysisHtml(p) {
+        const found = [];
+        for (const lg of LEAGUES) {
+            const hit = lg.index.get(p.name);
+            if (hit) found.push({ lg: lg, rank: hit.rank, total: hit.total, row: hit.row });
+        }
+        if (!found.length) return '';
+
+        const rows = found.map(f =>
+            '<tr><th scope="row">' + f.lg.name + '</th>'
+            + '<td>' + (f.lg.cap ? 'CP ' + f.lg.cap : '無上限') + '</td>'
+            + '<td class="rk">#' + f.rank + '<span class="of"> / ' + f.total + '</span></td>'
+            + '<td>' + f.row.score + '</td>'
+            + '<td class="mv">' + (moveText(f.row) || '—') + '</td></tr>').join('');
+
+        // 結論依這一隻自己的數字而定，不是固定文案
+        const best = found.reduce((a, b) => (b.row.score > a.row.score ? b : a));
+        const capped = found.filter(f => f.lg.cap);
+        const bestCapped = capped.length ? capped.reduce((a, b) => (b.row.score > a.row.score ? b : a)) : null;
+        let verdict;
+        if (best.lg.cap) {
+            verdict = esc(p.name) + ' 在<strong>' + best.lg.name + '</strong>表現最好（第 ' + best.rank
+                + ' 名、評分 ' + best.row.score + '）。那個聯盟有 CP ' + best.lg.cap
+                + ' 的上限，攻擊值越高就越早撞到上限、能養的等級越低 —— 所以這一隻'
+                + '<strong>不該追 100%</strong>，攻擊低、防禦與體力高的個體反而更耐打。'
+                + '想知道手上那隻排第幾，可以用 <a class="tab-button" data-target="pvp-ranker-app" href="?tab=pvp-ranker-app">PvP IV 排名</a> 查。';
+        } else {
+            verdict = esc(p.name) + ' 在<strong>大師聯盟</strong>表現最好（第 ' + best.rank
+                + ' 名、評分 ' + best.row.score + '），而大師聯盟沒有 CP 上限 —— 這種情況'
+                + '<strong>三圍越高越好，100% 就是最佳解</strong>，可以直接對照上面的滿 IV CP 判斷。';
+            if (bestCapped) {
+                verdict += '（在有上限的' + bestCapped.lg.name + '只排到第 ' + bestCapped.rank
+                    + ' 名，那邊就不必追 100%。）';
+            }
+        }
+
+        const bd = found[0].row.buddyDistance;
+        const extra = bd ? '<p class="pvp-extra">夥伴距離 ' + bd + ' 公里。</p>' : '';
+
+        return '<section class="mon-pvp">'
+            + '<h2>' + esc(p.name) + ' 在對戰聯盟的表現</h2>'
+            + '<div class="lv-table-wrap"><table class="iv-table pvp-table">'
+            + '<thead><tr><th>聯盟</th><th>CP 上限</th><th>排名</th><th>評分</th><th>建議招式</th></tr></thead>'
+            + '<tbody>' + rows + '</tbody></table></div>'
+            + '<p class="pvp-verdict">' + verdict + '</p>'
+            + extra
+            + '<p class="pvp-note">排名與評分依各聯盟的 CP 上限計算，會隨遊戲平衡調整而變動；'
+            + '標「傳授」的招式需要透過招式學習器取得。</p>'
+            + '</section>';
+    }
+
     function renderLevelTable(p) {
         const box = document.getElementById('cpLevelTable');
         if (!box) return;
@@ -357,7 +443,7 @@ export function initializeCpChecker() {
                   + `<td class="cp-min">${cpAt(p, L, 0)}</td>`
                   + `<td class="lv-note">${note}</td></tr>`;
         }
-        box.innerHTML = `
+        box.innerHTML = pvpAnalysisHtml(p) + `
             <section class="iv-table-block">
               <h2>${p.name} 高 IV CP·HP 對照表（IV 100%～91.1%）</h2>
               <p class="lv-table-intro">

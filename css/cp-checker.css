@@ -535,3 +535,31 @@
     border-color: #1877f2;
     color: #1877f2;
 }
+
+/* ---- ?mon= 頁的對戰聯盟分析 ----------------------------------------------
+   這 1079 個網址原本只有一張全等級 CP 表，模板完全一樣。這一段替每一隻算出
+   自己的名次、招式與建議，讓每一頁有屬於自己的內容。 */
+#cp-checker-app .mon-pvp { margin: 30px 0 8px; }
+#cp-checker-app .mon-pvp h2 { font-size: 18px; margin: 0 0 10px; color: #1c1e21; }
+#cp-checker-app .pvp-table th[scope="row"] { text-align: left; white-space: nowrap; }
+#cp-checker-app .pvp-table .rk { font-weight: 700; font-variant-numeric: tabular-nums; }
+#cp-checker-app .pvp-table .of { color: #8a8f98; font-weight: 400; font-size: .86em; }
+#cp-checker-app .pvp-table .mv { font-size: 13px; line-height: 1.5; }
+#cp-checker-app .pvp-table .elite {
+    display: inline-block; margin-left: 4px; padding: 0 5px;
+    border-radius: 4px; background: #fdf1e0; color: #b45309;
+    font-size: 11px; font-weight: 700;
+}
+#cp-checker-app .pvp-verdict {
+    margin: 14px 0 0; padding: 13px 15px;
+    background: #f7f8fa; border-left: 3px solid #1877f2; border-radius: 0 8px 8px 0;
+    font-size: 14.5px; line-height: 1.8; color: #3a3b3c;
+}
+#cp-checker-app .pvp-verdict a { color: #1877f2; font-weight: 600; text-decoration: underline; }
+#cp-checker-app .pvp-verdict a.tab-button {
+    display: inline; padding: 0; font: inherit; font-weight: 600;
+    background: none; border: none;
+}
+#cp-checker-app .pvp-verdict a.tab-button::after { display: none; }
+#cp-checker-app .pvp-extra { margin: 8px 0 0; font-size: 13.5px; color: #606770; }
+#cp-checker-app .pvp-note { margin: 8px 0 0; font-size: 12.5px; color: #8a8f98; line-height: 1.6; }
