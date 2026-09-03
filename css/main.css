@@ -1211,3 +1211,13 @@ a.tab-button {
     color: #8a8f98;
 }
 .src-note a { color: #606770; }
+
+/* 田野調查:切換鈕下方的一句話說明（那兩個分頁的差別不說明的話看不出來） */
+#research-app .research-hint {
+    max-width: 620px;
+    margin: 12px auto 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #606770;
+}
