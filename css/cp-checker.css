@@ -510,3 +510,28 @@
 
 /* 這一頁的 .container 只有 600px 寬，分兩欄每欄剩 238px，
    換行變多、高度幾乎沒省到，所以維持單欄，改用「精簡內容」來控制高度。 */
+
+/* 樞紐頁的精簡索引。
+   以前這裡是 1079 張完整卡片（5.8 萬字、1084 個 <h2>），整頁 99% 是機器產生的
+   表格，人寫的說明完全被淹沒。改成只列名稱連結：站內連結一個都沒少，
+   但內容量回到正常比例。使用者一碰搜尋框就會換成完整卡片。 */
+#cp-checker-app .cp-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+}
+#cp-checker-app .cp-index a {
+    padding: 5px 11px;
+    border: 1px solid #dddfe2;
+    border-radius: 999px;
+    background: #fff;
+    color: #3a3b3c;
+    font-size: 14px;
+    text-decoration: none;
+    line-height: 1.5;
+}
+#cp-checker-app .cp-index a:hover {
+    border-color: #1877f2;
+    color: #1877f2;
+}

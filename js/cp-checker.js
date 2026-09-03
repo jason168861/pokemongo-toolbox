@@ -492,16 +492,45 @@ export function initializeCpChecker() {
     }
 
     // 使用者要自己搜尋了 → 把剩下的卡片補齊。只做一次。
+    // 樞紐頁（沒有 ?mon=）改成只列名稱連結，不建 1079 張完整卡片。
+    // 完整卡片一張要輸出「名稱＋#編號＋Lv15/20/25 三個 CP」，1079 張加起來是
+    // 5.8 萬字、1084 個 <h2> —— 整頁 99% 是機器產生的表格，人寫的說明被淹沒，
+    // AdSense 兩次都判「缺乏價值的內容」。
+    // 連結一個都沒少（站內連結樞紐的作用完全保留），?mon= 深連結也不受影響；
+    // 使用者一碰搜尋框就會換成完整卡片，操作起來沒有差別。
+    let builtIndex = false;
+    function buildIndexList() {
+        if (builtIndex || builtAll) return;
+        builtIndex = true;
+        const box = document.createElement("div");
+        box.className = "cp-index";
+        const frag = document.createDocumentFragment();
+        allPokemonData.forEach(p => {
+            const a = document.createElement("a");
+            a.className = "mon-link";
+            a.href = monHref(p.name);
+            a.textContent = p.name;
+            frag.appendChild(a);
+        });
+        box.appendChild(frag);
+        resultsContainer.textContent = "";
+        resultsContainer.appendChild(box);
+        statusMessage.textContent = `共 ${allPokemonData.length} 筆資料，輸入名稱或編號即可查詢。`;
+    }
+
     function ensureAllCards() {
         if (builtAll) return;
-        builtAll = true;
+        builtAll = true; builtIndex = false;
         resultsContainer.textContent = '';
         buildCards(allPokemonData.map((_, i) => i));
     }
 
     // 只建立符合這個查詢的卡片（深連結進來、或點站內連結時用）
     function showOnly(query) {
-        const q = (query || '').trim().toLowerCase();
+        // ⚠ 要用 zhLower 而不是 toLowerCase：matchesQuery 比對的是 zhLower(p.name)
+        // （已正規化成簡體）。只做 toLowerCase 的話，?mon=噴火龍 這種繁體深連結
+        // 永遠對不到，那一頁就少了最上面那張 Lv15/20/25 的摘要卡。
+        const q = zhLower((query || '').trim());
         resultsContainer.textContent = '';
         buildCards(allPokemonData.reduce((acc, p, i) => {
             if (matchesQuery(p, q)) acc.push(i);
@@ -578,7 +607,7 @@ export function initializeCpChecker() {
     });
     // 網址帶 ?mon= → 只建立那幾張卡（Googlebot 看到的就是這個精簡版）；
     // 沒帶 → 建立全部 1079 張，這頁是站內連結的樞紐。
-    if (CP_INITIAL_MON) showOnly(CP_INITIAL_MON); else ensureAllCards();
+    if (CP_INITIAL_MON) showOnly(CP_INITIAL_MON); else buildIndexList();   // 樞紐頁只列連結，搜尋時才換成完整卡片
 
     // 站內連結（卡片標題、相關寶可夢）點下去：走原本的即時篩選，不整頁重載。
     // href 仍然是真的網址，所以 Google 照樣把它當連結、使用者也能用中鍵開新分頁。
