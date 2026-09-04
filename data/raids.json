@@ -1,42 +1,63 @@
 {
-    "lastUpdated": "2026年9月4日11時",
+    "lastUpdated": "2026年9月5日02時",
     "bosses": [
         {
-            "name": "超級 寶石海星",
-            "englishName": "Mega Starmie",
+            "name": "超級 Raichu X",
+            "englishName": "Mega Raichu X",
             "tier": "Mega Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "water",
-                    "image": "https://leekduck.com/assets/img/types/water.png"
-                },
-                {
-                    "name": "psychic",
-                    "image": "https://leekduck.com/assets/img/types/psychic.png"
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1404,
-                    "max": 1476
+                    "min": 1180,
+                    "max": 1247
                 },
                 "boosted": {
-                    "min": 1756,
-                    "max": 1846
+                    "min": 1476,
+                    "max": 1558
                 }
             },
             "boostedWeather": [
                 {
                     "name": "rainy",
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/Mega Starmie.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm26.fMEGA_X.icon.png"
+        },
+        {
+            "name": "超級 Raichu Y",
+            "englishName": "Mega Raichu Y",
+            "tier": "Mega Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1180,
+                    "max": 1247
+                },
+                "boosted": {
+                    "min": 1476,
+                    "max": 1558
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm26.fMEGA_Y.icon.png"
         },
         {
             "name": "超級 拉帝亞斯",
