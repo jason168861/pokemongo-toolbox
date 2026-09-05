@@ -1,87 +1,29 @@
 {
-    "lastUpdated": "2026年9月5日11時",
+    "lastUpdated": "2026年9月5日19時",
     "bosses": [
         {
-            "name": "超級 Raichu X",
-            "englishName": "Mega Raichu X",
-            "tier": "Mega Raids",
+            "name": "超級 Mewtwo X",
+            "englishName": "Mega Mewtwo X",
+            "tier": "Super Mega Raids",
             "canBeShiny": true,
             "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1180,
-                    "max": 1247
-                },
-                "boosted": {
-                    "min": 1476,
-                    "max": 1558
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm26.fMEGA_X.icon.png"
-        },
-        {
-            "name": "超級 Raichu Y",
-            "englishName": "Mega Raichu Y",
-            "tier": "Mega Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1180,
-                    "max": 1247
-                },
-                "boosted": {
-                    "min": 1476,
-                    "max": 1558
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm26.fMEGA_Y.icon.png"
-        },
-        {
-            "name": "超級 拉帝亞斯",
-            "englishName": "Mega Latias",
-            "tier": "Mega Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
-                },
                 {
                     "name": "psychic",
                     "image": "https://leekduck.com/assets/img/types/psychic.png"
+                },
+                {
+                    "name": "fighting",
+                    "image": "https://leekduck.com/assets/img/types/fighting.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1921,
-                    "max": 2006
+                    "min": 2294,
+                    "max": 2387
                 },
                 "boosted": {
-                    "min": 2402,
-                    "max": 2507
+                    "min": 2868,
+                    "max": 2984
                 }
             },
             "boostedWeather": [
@@ -90,18 +32,158 @@
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm380.fMEGA.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm150.fMEGA_X.icon.png"
         },
         {
-            "name": "超級 拉帝歐斯",
-            "englishName": "Mega Latios",
+            "name": "超級 大針蜂",
+            "englishName": "Mega Beedrill",
             "tier": "Mega Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "dragon",
-                    "image": "https://leekduck.com/assets/img/types/dragon.png"
+                    "name": "bug",
+                    "image": "https://leekduck.com/assets/img/types/bug.png"
                 },
+                {
+                    "name": "poison",
+                    "image": "https://leekduck.com/assets/img/types/poison.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 994,
+                    "max": 1054
+                },
+                "boosted": {
+                    "min": 1242,
+                    "max": 1318
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                },
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm15.fMEGA.icon.png"
+        },
+        {
+            "name": "超級 大食花",
+            "englishName": "Mega Victreebel",
+            "tier": "Mega Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "grass",
+                    "image": "https://leekduck.com/assets/img/types/grass.png"
+                },
+                {
+                    "name": "poison",
+                    "image": "https://leekduck.com/assets/img/types/poison.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1318,
+                    "max": 1389
+                },
+                "boosted": {
+                    "min": 1648,
+                    "max": 1736
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                },
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm71.fMEGA.icon.png"
+        },
+        {
+            "name": "超級 凱羅斯",
+            "englishName": "Mega Pinsir",
+            "tier": "Mega Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "bug",
+                    "image": "https://leekduck.com/assets/img/types/bug.png"
+                },
+                {
+                    "name": "flying",
+                    "image": "https://leekduck.com/assets/img/types/flying.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1613,
+                    "max": 1690
+                },
+                "boosted": {
+                    "min": 2016,
+                    "max": 2113
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm127.fMEGA.icon.png"
+        },
+        {
+            "name": "超級 暴雪王",
+            "englishName": "Mega Abomasnow",
+            "tier": "Mega Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "grass",
+                    "image": "https://leekduck.com/assets/img/types/grass.png"
+                },
+                {
+                    "name": "ice",
+                    "image": "https://leekduck.com/assets/img/types/ice.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1281,
+                    "max": 1349
+                },
+                "boosted": {
+                    "min": 1601,
+                    "max": 1687
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                },
+                {
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm460.fMEGA.icon.png"
+        },
+        {
+            "name": "Armored Mewtwo",
+            "englishName": "Armored Mewtwo",
+            "tier": "5-Star Raids",
+            "canBeShiny": false,
+            "types": [
                 {
                     "name": "psychic",
                     "image": "https://leekduck.com/assets/img/types/psychic.png"
@@ -109,12 +191,12 @@
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2090,
-                    "max": 2178
+                    "min": 1740,
+                    "max": 1821
                 },
                 "boosted": {
-                    "min": 2613,
-                    "max": 2723
+                    "min": 2175,
+                    "max": 2276
                 }
             },
             "boostedWeather": [
@@ -123,7 +205,7 @@
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm381.fMEGA.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pokemon_icon_pm0150_00_pgo_a.png"
         },
         {
             "name": "暗影 呆呆獸",
