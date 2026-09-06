@@ -739,6 +739,15 @@ if os.path.exists(_ovp):
                 dst["pokemon"] = tidy_mons(dst["pokemon"] + r["pokemon"], final=True)
             _drop.add(op["card"]); ov_card += 1
             continue
+        # ---- 卡片層級:改卡片自己的欄位(目前只用來修卡名) ----
+        # 來源偶爾用內部縮寫當名稱(例如地平線那張叫「HZ」),那個字串會直接
+        # 顯示給使用者,所以要能改。值給 null 代表刪掉該欄位。
+        if op.get("op") == "setCard":
+            for k, v in (op.get("fields") or {}).items():
+                if v is None: r.pop(k, None)
+                else: r[k] = v
+            ov_card += 1
+            continue
         if op.get("op") == "add":
             mon = {"dex": 0, "shiny": False, "dynamax": False, "shadow": False, "gmax": False}
             mon.update(op.get("mon") or {})

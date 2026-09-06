@@ -633,18 +633,20 @@
 </noscript>
 <header>
   <a class="homelink" href="../" id="homeLink">🧰 <span id="homeTxt">工具箱</span></a>
-  <select id="toolJump" class="homelink" onchange="if(this.value){location.href='../?tab='+this.value}">
+  <!-- value 直接放相對網址：這些工具已各自拆成獨立目錄，
+       只有 cp-checker 還留在首頁走 ?tab=。地圖暫時下架，先不列。 -->
+  <select id="toolJump" class="homelink" onchange="if(this.value){location.href=this.value}">
     <option value="">🔀 前往其他工具…</option>
-    <option value="cp-checker-app">IV100 CP 查詢</option>
-    <option value="pvp-ranker-app">PvP IV 排名查詢</option>
-    <option value="id-selector-app">寶可夢編號篩選器</option>
-    <option value="search-filters-app">搜尋篩選指令</option>
-    <option value="raids-app">團體戰列表</option>
-    <option value="eggs-app">孵蛋列表</option>
-    <option value="research-app">田野調查任務</option>
-    <option value="special-research-app">特殊調查</option>
-    <option value="info-hub-app">特別資訊</option>
-    <option value="map-app">補給站/道館地圖</option>
+    <option value="../?tab=cp-checker-app">IV100 CP 查詢</option>
+    <option value="../pvp-ranker/">PvP IV 排名查詢</option>
+    <option value="../id-selector/">寶可夢編號篩選器</option>
+    <option value="../search-filters/">搜尋篩選指令</option>
+    <option value="../raids/">團體戰列表</option>
+    <option value="../eggs/">孵蛋列表</option>
+    <option value="../research/">田野調查任務</option>
+    <option value="../special-research/">特殊調查</option>
+    <option value="../stardust/">星星沙子怎麼賺</option>
+    <option value="../backgrounds/">活動背卡一覽</option>
   </select>
   <span class="authBox">
     <button id="authBtn">登入</button>
