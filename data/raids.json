@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026年9月7日11時",
+    "lastUpdated": "2026年9月7日22時",
     "bosses": [
         {
             "name": "超級 Mewtwo Y",
@@ -31,98 +31,90 @@
             "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm150.fMEGA_Y.icon.png"
         },
         {
-            "name": "超級 大鋼蛇",
-            "englishName": "Mega Steelix",
+            "name": "超級 Raichu Y",
+            "englishName": "Mega Raichu Y",
             "tier": "Mega Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
-                },
-                {
-                    "name": "ground",
-                    "image": "https://leekduck.com/assets/img/types/ground.png"
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1308,
-                    "max": 1379
+                    "min": 1180,
+                    "max": 1247
                 },
                 "boosted": {
-                    "min": 1635,
-                    "max": 1724
+                    "min": 1476,
+                    "max": 1558
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                },
-                {
-                    "name": "sunny",
-                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm208.fMEGA.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm26.fMEGA_Y.icon.png"
         },
         {
-            "name": "超級 盔甲鳥",
-            "englishName": "Mega Skarmory",
+            "name": "超級 勾魂眼",
+            "englishName": "Mega Sableye",
             "tier": "Mega Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                    "name": "dark",
+                    "image": "https://leekduck.com/assets/img/types/dark.png"
                 },
                 {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
+                    "name": "ghost",
+                    "image": "https://leekduck.com/assets/img/types/ghost.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1139,
-                    "max": 1204
+                    "min": 789,
+                    "max": 843
                 },
                 "boosted": {
-                    "min": 1424,
-                    "max": 1506
+                    "min": 986,
+                    "max": 1054
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                    "name": "fog",
+                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm227.fMEGA.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm302.fMEGA.icon.png"
         },
         {
-            "name": "超級 波士可多拉",
-            "englishName": "Mega Aggron",
+            "name": "超級 大嘴娃",
+            "englishName": "Mega Mawile",
             "tier": "Mega Raids",
             "canBeShiny": true,
             "types": [
                 {
                     "name": "steel",
                     "image": "https://leekduck.com/assets/img/types/steel.png"
+                },
+                {
+                    "name": "fairy",
+                    "image": "https://leekduck.com/assets/img/types/fairy.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1636,
-                    "max": 1714
+                    "min": 877,
+                    "max": 934
                 },
                 "boosted": {
-                    "min": 2045,
-                    "max": 2143
+                    "min": 1096,
+                    "max": 1167
                 }
             },
             "boostedWeather": [
@@ -130,41 +122,45 @@
                     "name": "snow",
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 },
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm303.fMEGA.icon.png"
+        },
+        {
+            "name": "超級 差不多娃娃",
+            "englishName": "Mega Audino",
+            "tier": "Mega Raids",
+            "canBeShiny": false,
+            "types": [
+                {
+                    "name": "normal",
+                    "image": "https://leekduck.com/assets/img/types/normal.png"
+                },
+                {
+                    "name": "fairy",
+                    "image": "https://leekduck.com/assets/img/types/fairy.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 901,
+                    "max": 961
+                },
+                "boosted": {
+                    "min": 1127,
+                    "max": 1201
+                }
+            },
+            "boostedWeather": [
                 {
                     "name": "partly cloudy",
                     "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm306.fMEGA.icon.png"
-        },
-        {
-            "name": "超級 冰鬼護",
-            "englishName": "Mega Glalie",
-            "tier": "Mega Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "ice",
-                    "image": "https://leekduck.com/assets/img/types/ice.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1138,
-                    "max": 1203
-                },
-                "boosted": {
-                    "min": 1423,
-                    "max": 1504
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm362.fMEGA.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm531.fMEGA.icon.png"
         },
         {
             "name": "Armored Mewtwo",

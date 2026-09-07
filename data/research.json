@@ -2382,7 +2382,7 @@
             "type": "encounter",
             "name": "偷兒狐",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm827.icon.png",
-            "isShiny": false,
+            "isShiny": true,
             "maxCp": "306",
             "minCp": "278"
           },

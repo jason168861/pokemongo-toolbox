@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年9月7日11時",
+  "lastUpdated": "2026年9月7日22時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -295,7 +295,7 @@
       "name": "雪吞蟲",
       "cpRange": "302",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm872.icon.png",
-      "isShiny": false
+      "isShiny": true
     },
     {
       "eggDistance": 5,
