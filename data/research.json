@@ -2093,11 +2093,38 @@
           {
             "isFeatured": true,
             "type": "encounter",
+            "name": "飛天螳螂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
+            "isShiny": true,
+            "maxCp": "1160",
+            "minCp": "1104"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
             "name": "貓頭夜鷹",
             "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm164.icon.png",
             "isShiny": true,
             "maxCp": "867",
             "minCp": "819"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "樹才怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm185.icon.png",
+            "isShiny": true,
+            "maxCp": "920",
+            "minCp": "871"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "土居忍士",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm290.icon.png",
+            "isShiny": true,
+            "maxCp": "329",
+            "minCp": "299"
           },
           {
             "isFeatured": true,
@@ -2134,6 +2161,15 @@
             "isShiny": true,
             "maxCp": "721",
             "minCp": "676"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "破破袋",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm568.icon.png",
+            "isShiny": true,
+            "maxCp": "428",
+            "minCp": "395"
           },
           {
             "isFeatured": true,
@@ -2458,6 +2494,47 @@
         ]
       },
       {
+        "description": "拜訪 5 個寶可補給站",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "卡蒂狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm58.icon.png",
+            "isShiny": true,
+            "maxCp": "533",
+            "minCp": "495"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 卡蒂狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm58.fHISUIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "566",
+            "minCp": "527"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伽勒爾 呆呆獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm79.fGALARIAN.icon.png",
+            "isShiny": true,
+            "maxCp": "525",
+            "minCp": "487"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "呆呆獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm79.icon.png",
+            "isShiny": true,
+            "maxCp": "525",
+            "minCp": "487"
+          }
+        ]
+      },
+      {
         "description": "為野生寶可夢拍攝1張GO Snapshot照片",
         "rewards": [
           {
@@ -2505,6 +2582,15 @@
             "isShiny": true,
             "maxCp": "897",
             "minCp": "848"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伊布",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm133.icon.png",
+            "isShiny": true,
+            "maxCp": "459",
+            "minCp": "424"
           },
           {
             "isFeatured": true,
