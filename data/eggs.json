@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年9月9日03時",
+  "lastUpdated": "2026年9月9日12時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -300,9 +300,25 @@
     {
       "eggDistance": 5,
       "source": "adventure_sync",
-      "name": "無畏小子",
-      "cpRange": "281",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm236.icon.png",
+      "name": "鈴鐺響",
+      "cpRange": "574",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm433.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "adventure_sync",
+      "name": "小福蛋",
+      "cpRange": "212",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm440.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "adventure_sync",
+      "name": "含羞苞",
+      "cpRange": "489",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm406.icon.png",
       "isShiny": true
     },
     {
@@ -316,9 +332,9 @@
     {
       "eggDistance": 5,
       "source": "adventure_sync",
-      "name": "含羞苞",
-      "cpRange": "489",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm406.icon.png",
+      "name": "無畏小子",
+      "cpRange": "281",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm236.icon.png",
       "isShiny": true
     },
     {
@@ -476,9 +492,17 @@
     {
       "eggDistance": 10,
       "source": "adventure_sync",
-      "name": "寶貝龍",
-      "cpRange": "660",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+      "name": "圓陸鯊",
+      "cpRange": "635",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm443.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 10,
+      "source": "adventure_sync",
+      "name": "毒電嬰",
+      "cpRange": "415",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm848.icon.png",
       "isShiny": true
     },
     {
@@ -487,6 +511,14 @@
       "name": "赤面龍",
       "cpRange": "1561",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm621.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 10,
+      "source": "adventure_sync",
+      "name": "寶貝龍",
+      "cpRange": "660",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
       "isShiny": true
     },
     {
