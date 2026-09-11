@@ -6,3 +6,12 @@ config.js
 # Python 執行時產生的快取，不該進版控
 __pycache__/
 *.pyc
+
+# 社群日「編輯器」與匯入相關：只在本機用，不上傳 GitHub / 不部署
+events/editor/
+events/_template/
+events/README.md
+js/community-day-editor.js
+data/community-day-import.js
+data/cd-names.js
+scripts/build_cd_names.py

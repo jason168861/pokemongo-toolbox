@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>社群日整理總覽｜每月主打寶可夢、時間與加成｜Pokémon Go 工具箱</title>
+<meta name="description" content="Pokémon GO 每月社群日與經典社群日整理總覽：主打寶可夢、活動時間、加成、特色招式與異色情報，一頁掌握本月與歷次社群日。">
+<link rel="canonical" href="https://pogokit.com/events/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="社群日整理總覽｜Pokémon Go 工具箱">
+<meta property="og:description" content="每月社群日與經典社群日的主打寶可夢、時間、加成與異色情報整理。">
+<meta property="og:url" content="https://pogokit.com/events/">
+<link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../js/analytics.js"></script>
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/community-day.css">
+</head>
+<body>
+
+<header class="site-header-main">
+  <a class="site-brand" href="../" aria-label="Pokémon Go 工具箱 首頁">
+    <span class="site-brand-mark">🧰</span><span class="site-brand-name">Pokémon Go 工具箱</span>
+  </a>
+  <div id="auth-container">
+    <span id="user-info" style="display:none;"></span>
+    <button id="auth-button">登入</button>
+  </div>
+  <nav class="app-nav">
+    <button class="hamburger-button" aria-label="開啟選單" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a class="tab-button" href="../">功能說明</a>
+      <div class="nav-group mega-group">
+        <button class="group-title">功能選單</button>
+        <div class="sub-links mega-menu">
+          <div class="mega-col">
+            <div class="mega-heading">常用查詢</div>
+            <a class="tab-button tab-button-hot" href="../trade-list/">🔴 交易清單產生器</a>
+            <a class="tab-button" href="../?tab=cp-checker-app">IV100 CP 查詢</a>
+            <a class="tab-button" href="../pvp-ranker/">PvP IV 排名查詢</a>
+            <a class="tab-button" href="../id-selector/">寶可夢編號篩選器</a>
+            <a class="tab-button" href="../search-filters/">搜尋篩選指令</a>
+          </div>
+          <div class="mega-col">
+            <div class="mega-heading">遊戲資訊</div>
+            <a class="tab-button active" href="./">社群日整理</a>
+            <a class="tab-button" href="../raids/">團體戰列表</a>
+            <a class="tab-button" href="../eggs/">孵蛋列表</a>
+            <a class="tab-button" href="../research/">田野調查任務</a>
+            <a class="tab-button" href="../special-research/">特殊調查</a>
+            <a class="tab-button" href="../stardust/">星星沙子怎麼賺</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="main-container">
+  <div class="cd-hub">
+    <section class="cd-hub-intro">
+      <h1>社群日整理</h1>
+      <p>每月社群日與經典社群日的主打寶可夢、活動時間、加成、特色招式與異色情報整理。點卡片看該場的完整內容與倒數計時。</p>
+    </section>
+    <div id="cd-hub-body" class="cd-hub-groups"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>&copy; <span id="copyright-year"></span> Pokémon Go 工具箱. All rights reserved by their respective owners.</p>
+  <p>This website is an unofficial fan-made tool, is not officially affiliated with Pokémon GO, and is intended to fall under Fair Use doctrine, similar to any other informational site such as a wiki.</p>
+  <p>Pokémon and its trademarks are &copy;1995-2025 Nintendo, Creatures, and GAME FREAK.</p>
+  <p class="footer-links"><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a></p>
+</footer>
+
+<!-- ★★★ 新增一個社群日頁面後，來這裡加一張卡片（複製一段 { ... } 貼上、改內容即可）。
+        slug = 該頁的資料夾名稱。日期會自動排序、狀態（即將/進行中/已結束）會自動計算。 ★★★ -->
+<script>
+window.CD_LIST = [
+  {
+    slug: '26-9-communityday',   // 資料夾名稱（events/ 底下）
+    kind: '經典社群日',           // 「社群日」或「經典社群日」
+    pokemon: '圓陸鯊',
+    types: ['dragon', 'ground'],
+    img: 'https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon%20-%20256x256/Addressable%20Assets/pm443.icon.png',
+    date: '2026-09-12', startHour: 14, endHour: 17
+  }
+  // 下個月再加一筆：
+  // ,{ slug: '2026-10-xxx', kind: '社群日', pokemon: 'OO', types: ['fire'],
+  //    img: '', date: '2026-10-18', startHour: 14, endHour: 17 }
+];
+</script>
+
+<script>
+(function () {
+  var TYPE_COLORS = {
+    normal:'#9a9a80',fire:'#ee8130',water:'#5a90f0',electric:'#eab308',grass:'#5cae4c',
+    ice:'#57c4c4',fighting:'#c22e28',poison:'#a33ea1',ground:'#c99a3e',flying:'#8b7be8',
+    psychic:'#f95587',bug:'#8fa018',rock:'#9c8a2e',ghost:'#6a558f',dragon:'#6f35fc',
+    dark:'#5a4a3f',steel:'#8a8aa8',fairy:'#d685ad'
+  };
+  var WEEK = ['日','一','二','三','四','五','六'];
+  var PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23fff' stroke='%23222' stroke-width='4'/%3E%3Cpath d='M4 50h30a16 16 0 0 1 32 0h30' fill='none' stroke='%23222' stroke-width='4'/%3E%3Cpath d='M4 50a46 46 0 0 1 92 0z' fill='%23e8483f' stroke='%23222' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='12' fill='%23fff' stroke='%23222' stroke-width='4'/%3E%3C/svg%3E";
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function times(e){var p=(e.date||'').split('-');return {s:new Date(+p[0],+p[1]-1,+p[2],e.startHour==null?14:e.startHour),
+    en:new Date(+p[0],+p[1]-1,+p[2],e.endHour==null?17:e.endHour)};}
+  function status(e){var t=times(e),n=new Date();
+    if(n<t.s)return {cls:'soon',txt:'即將登場'};if(n<t.en)return {cls:'live',txt:'進行中'};return {cls:'ended',txt:'已結束'};}
+  function card(e){
+    var c1=TYPE_COLORS[(e.types||[])[0]]||'#e0276c', c2=TYPE_COLORS[(e.types||[])[1]]||c1;
+    var t=times(e), st=status(e);
+    var dateTxt=t.s.getFullYear()+' 年 '+(t.s.getMonth()+1)+' 月 '+t.s.getDate()+' 日（週'+WEEK[t.s.getDay()]+'）';
+    var img=e.img?esc(e.img):PLACEHOLDER;
+    return '<a class="cd-hub-card" href="./'+esc(e.slug)+'/" style="--hc1:'+c1+';--hc2:'+c2+'">'+
+      '<div class="cd-hub-card-top">'+
+        '<span class="cd-hub-badge '+st.cls+'">'+st.txt+'</span>'+
+        '<div class="cd-hub-card-pic"><img src="'+img+'" alt="'+esc(e.pokemon)+'" loading="lazy" onerror="this.onerror=null;this.src=\''+PLACEHOLDER+'\'"></div>'+
+        '<div class="cd-hub-card-h"><span class="cd-hub-kind">'+esc(e.kind||'社群日')+'</span>'+
+          '<div class="cd-hub-card-name">'+esc(e.pokemon||'')+'</div></div>'+
+      '</div>'+
+      '<div class="cd-hub-card-body"><div class="cd-hub-date">'+dateTxt+'</div>'+
+        '<div class="cd-hub-time">'+(e.startHour==null?14:e.startHour)+':00–'+(e.endHour==null?17:e.endHour)+':00 當地時間</div></div>'+
+    '</a>';
+  }
+  function group(title, list){
+    if(!list.length) return '';
+    return '<div><h2 class="cd-hub-gtitle">'+esc(title)+'</h2><div class="cd-hub-grid">'+list.map(card).join('')+'</div></div>';
+  }
+  var body=document.getElementById('cd-hub-body');
+  var all=(window.CD_LIST||[]).slice().sort(function(a,b){return (b.date||'').localeCompare(a.date||'');});
+  if(!all.length){ body.innerHTML='<div class="cd-hub-empty">目前還沒有建立任何社群日頁面。</div>'; }
+  else{
+    var normal=all.filter(function(e){return (e.kind||'').indexOf('經典')===-1;});
+    var classic=all.filter(function(e){return (e.kind||'').indexOf('經典')!==-1;});
+    body.innerHTML = group('社群日', normal) + group('經典社群日', classic);
+  }
+  var yr=document.getElementById('copyright-year'); if(yr) yr.textContent=new Date().getFullYear();
+})();
+</script>
+<script src="../js/site-nav.js" defer></script>
+</body>
+</html>
