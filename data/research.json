@@ -104,7 +104,7 @@
     "category": "Mega Squads - September 11 Tasks",
     "tasks": [
       {
-        "description": "？？？",
+        "description": "捕捉 10 隻惡屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
@@ -114,12 +114,7 @@
             "isShiny": false,
             "maxCp": "529",
             "minCp": "491"
-          }
-        ]
-      },
-      {
-        "description": "？？？",
-        "rewards": [
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -128,12 +123,7 @@
             "isShiny": false,
             "maxCp": "437",
             "minCp": "398"
-          }
-        ]
-      },
-      {
-        "description": "？？？",
-        "rewards": [
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -146,7 +136,57 @@
         ]
       },
       {
-        "description": "？？？",
+        "description": "捕捉10隻纏紅鶴",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy XL.png",
+            "name": "神奇糖果XL ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×10000",
+            "quantity": "×10000"
+          }
+        ]
+      },
+      {
+        "description": "拜訪 3 個寶可補給站",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "球球 ×10",
+            "quantity": "×10"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Razz Berry.png",
+            "name": "蔓莓果 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      },
+      {
+        "description": "孵化1顆蛋",
         "rewards": [
           {
             "isFeatured": true,
@@ -156,12 +196,7 @@
             "isShiny": false,
             "maxCp": "600",
             "minCp": "560"
-          }
-        ]
-      },
-      {
-        "description": "？？？",
-        "rewards": [
+          },
           {
             "isFeatured": true,
             "type": "encounter",
