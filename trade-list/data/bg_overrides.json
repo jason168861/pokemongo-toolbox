@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-09-09",
+ "updated": "2026-09-11",
  "note": "背卡資料的人工修正。build_data.py 每次都把 backgrounds.json 整份重寫,所以修正要放在這裡才不會被 update.py 蓋掉。請用 bg-editor.html 編輯。op: remove=刪掉這筆 / set=改欄位(值給 null 代表刪掉該欄位) / add=補一筆來源沒有的 / setCard=改卡片自己的欄位(例如卡名)。key 由 dex|form|costume|gmax|dynamax|shadow|sprite檔名 組成。",
  "ops": [
   {"card":"GO Tainan background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"sprite":"assets/img/pm134.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm134.cMAY_2023.s.icon.png","shiny":true}},
@@ -287,6 +287,14 @@
   {"card":"lc 2026 jp red.png","op":"addCard","type":"location","name":"jp red","image_url":"assets/bg/lc_2026_jp_red.png"},
   {"card":"lc 2026 jp red.png","op":"add","mon":{"dex":4,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"lc 2026 jp red.png","op":"add","mon":{"dex":5,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
-  {"card":"lc 2026 jp red.png","op":"add","mon":{"dex":6,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}}
+  {"card":"lc 2026 jp red.png","op":"add","mon":{"dex":6,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"lc tpc30th malaysia.png","op":"addCard","type":"location","name":"malaysia","image_url":"assets/bg/lc_tpc30th_malaysia.png"},
+  {"card":"lc tpc30th philippines.png","op":"addCard","type":"location","name":"philippines","image_url":"assets/bg/lc_tpc30th_philippines.png"},
+  {"card":"lc tpc30th singapore.png","op":"addCard","type":"location","name":"singapore","image_url":"assets/bg/lc_tpc30th_singapore.png"},
+  {"card":"lc tpc30th taiwan.png","op":"addCard","type":"location","name":"taiwan","image_url":"assets/bg/lc_tpc30th_taiwan.png"},
+  {"card":"lc tpc30th malaysia.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_MALAYSIA_01"}},
+  {"card":"lc tpc30th philippines.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_PHILIPPINE_01"}},
+  {"card":"lc tpc30th singapore.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_SINGAPORE_01"}},
+  {"card":"lc tpc30th taiwan.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_TAIWAN_01"}}
  ]
 }
