@@ -170,4 +170,19 @@
     <lastmod>2026-08-24</lastmod>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://pogokit.com/events/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/events/26-09-communityday/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/events/26-06-communityday/</loc>
+    <lastmod>2026-09-13</lastmod>
+    <priority>0.5</priority>
+  </url>
 </urlset>
