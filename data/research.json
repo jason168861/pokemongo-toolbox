@@ -211,6 +211,90 @@
     ]
   },
   {
+    "category": "Gible Community Day Classic Tasks",
+    "tasks": [
+      {
+        "description": "捕捉 3 隻圓陸鯊",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "圓陸鯊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm443.icon.png",
+            "isShiny": false,
+            "maxCp": "477",
+            "minCp": "441"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Gible Community Day Classic - Special backgrounds Tasks",
+    "tasks": [
+      {
+        "description": "Catch 5 Pokemon while in a Party",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "圓陸鯊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm443.icon.png",
+            "isShiny": false,
+            "maxCp": "477",
+            "minCp": "441"
+          }
+        ]
+      },
+      {
+        "description": "Catch 50 Pokemon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "圓陸鯊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm443.icon.png",
+            "isShiny": false,
+            "maxCp": "477",
+            "minCp": "441"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
