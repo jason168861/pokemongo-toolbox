@@ -284,15 +284,20 @@
   function renderFieldResearch(ev) {
     if (!has(ev.fieldResearch)) return '';
     var rows = ev.fieldResearch.map(function (f) {
-      var reward = '<div class="cd-fr-rw">' + thumb(f.img, f.reward, 'cd-rw-img') +
-        '<span class="cd-rw-tx">' + (f.reward || '') + '</span>' + cpBadge(f.cp15, 15) + '</div>';
+      // 一個任務可有多種「可能獎勵」；相容舊的單一 reward/img/cp15
+      var rewards = has(f.rewards) ? f.rewards
+        : ((has(f.reward) || has(f.img) || has(f.cp15)) ? [{ text: f.reward, img: f.img, cp15: f.cp15 }] : []);
+      rewards = rewards.filter(function (r) { return has(r) && (has(r.text) || has(r.img)); });
+      var cell = rewards.length
+        ? '<div class="cd-fr-rewards">' + rewards.map(function (r) { return rewardChip(r); }).join('') + '</div>'
+        : '';
       return '<tr><td class="cd-fr-task">' + esc(f.task || '') + '</td>' +
-        '<td class="cd-fr-reward">' + reward + '</td></tr>';
+        '<td class="cd-fr-reward">' + cell + '</td></tr>';
     }).join('');
     return section('field-research', '活動限定田野調查',
-      '<div class="cd-table-wrap"><table class="cd-table"><thead><tr><th>任務</th><th>獎勵</th></tr></thead>' +
+      '<div class="cd-table-wrap"><table class="cd-table"><thead><tr><th>任務</th><th>可能獎勵</th></tr></thead>' +
       '<tbody>' + rows + '</tbody></table></div>',
-      '獎勵寶可夢為 15 等，捕捉畫面看到的 CP 剛好等於下表數字時就是 100% 個體值。');
+      '同一任務可能給出多種獎勵其中之一。獎勵寶可夢為 15 等，捕捉畫面 CP 等於下表數字即為 100% 個體值。');
   }
 
   function renderVerdict(ev) {

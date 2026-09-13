@@ -431,7 +431,7 @@
 .cd-table tbody tr:hover { background: #fafbfd; }
 .cd-fr-task { font-weight: 600; }
 .cd-fr-reward { color: #374151; }
-.cd-fr-rw { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cd-fr-rewards { display: flex; flex-wrap: wrap; gap: 8px; }
 
 /* 值不值得 */
 .cd-verdict {
