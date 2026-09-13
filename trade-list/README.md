@@ -264,6 +264,12 @@ wiki 用的是自家代號(Bulbapedia `0025Willow`、Fandom `ci=Pikachu willow`)
 
 **工具區收合**(`#edToolsToggle` / `setEdTools`)。手機上 `#edBottom` 佔 38vh,
 收起來預覽區從 415px 變 742px(+79%)。狀態存 `tlEdTools`,沒選過預設展開。
+
+第一版的鈕是「灰字 + 1px 細框」,在深色面板上看起來像分隔線,沒人知道可以按。
+現在一次給四個「這是按鈕」的訊號:藥丸外框、強調色的框與字、實心箭頭圓點、浮起的陰影;
+按下去再整顆填滿(手機沒有 hover,`:active` 才是真正會看到的回饋)。
+文字也不再只寫「工具」——那樣收合中與展開中長得一模一樣,看不出按了會發生什麼;
+改成直接講動作(`ed_tools_hide` / `ed_tools_show`),由 `syncEdToolsLabel()` 依狀態切換。
 ⚠ 切換後一定要重跑 `applyZoom()` —— 「整張顯示」是拿 `editor.clientHeight` 算的,
 不重算就會停在舊高度算出來的寬度(實測 60 隻的清單:167px → 299px)。
 
