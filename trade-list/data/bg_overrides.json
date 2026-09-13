@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-09-11",
+ "updated": "2026-09-13",
  "note": "背卡資料的人工修正。build_data.py 每次都把 backgrounds.json 整份重寫,所以修正要放在這裡才不會被 update.py 蓋掉。請用 bg-editor.html 編輯。op: remove=刪掉這筆 / set=改欄位(值給 null 代表刪掉該欄位) / add=補一筆來源沒有的 / setCard=改卡片自己的欄位(例如卡名)。key 由 dex|form|costume|gmax|dynamax|shadow|sprite檔名 組成。",
  "ops": [
   {"card":"GO Tainan background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"sprite":"assets/img/pm134.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm134.cMAY_2023.s.icon.png","shiny":true}},
@@ -295,6 +295,10 @@
   {"card":"lc tpc30th malaysia.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_MALAYSIA_01"}},
   {"card":"lc tpc30th philippines.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_PHILIPPINE_01"}},
   {"card":"lc tpc30th singapore.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_SINGAPORE_01"}},
-  {"card":"lc tpc30th taiwan.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_TAIWAN_01"}}
+  {"card":"lc tpc30th taiwan.png","op":"add","mon":{"dex":25,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"costume":"ANNIVERSARY_2026_TAIWAN_01"}},
+  {"card":"GO Horizons background.png","op":"set","key":"4||||||GO0004Friede.png","fields":{"form":"GOGGLES_2026","sprite":null}},
+  {"card":"GO Horizons background.png","op":"set","key":"5||||||GO0005Friede.png","fields":{"form":"GOGGLES_2026","sprite":null,"shiny":true}},
+  {"card":"GO Horizons background.png","op":"set","key":"6||||||GO0006Friede.png","fields":{"form":"GOGGLES_2026","sprite":null}},
+  {"card":"GO Horizons background.png","op":"set","key":"25||||||GO0025Captain.png","fields":{"costume":"HORIZONS","sprite":null}}
  ]
 }
