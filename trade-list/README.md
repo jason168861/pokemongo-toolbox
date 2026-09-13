@@ -248,6 +248,25 @@ wiki 用的是自家代號(Bulbapedia `0025Willow`、Fandom `ci=Pikachu willow`)
 
 經典六款直接沿用 `THEMES[].exp`,不經過底圖引擎的任何新欄位 → 舊使用者存過的圖不會變樣。
 
+## 製圖畫面的縮放與工具區
+
+**兩指縮放**(`setupPinchZoom`)。刻意不自己另外存一份倍率,而是算出對應的滑桿值、
+改 `#edSize` 再走原本的 `applyZoom()` —— 只有一個真相來源,滑桿與畫面不可能對不起來。
+`zoomSliderFor(w)` 就是 `applyZoom` 的反函式(分段線性,0→50 是「符合高度→符合寬度」,
+50→100 是再放大)。縮放以兩指中點為圓心:記下中點落在畫布上的相對位置,
+縮放後調 `scrollLeft/Top` 把它拉回同一個螢幕座標。
+
+用 touch 事件而不是 pointer —— 文字/貼圖圖層的拖曳已經是 pointer + `setPointerCapture`,
+兩套混在一起會互相吃掉事件。`PINCHING` 旗標讓進行中的圖層拖曳停手,
+否則第二指落下時第一指還在拖著文字跑。
+`body.editmode #editor` 要設 `touch-action:pan-x pan-y`,不然兩指會變成縮放整個網頁
+(viewport 沒有 `user-scalable=no`)。
+
+**工具區收合**(`#edToolsToggle` / `setEdTools`)。手機上 `#edBottom` 佔 38vh,
+收起來預覽區從 415px 變 742px(+79%)。狀態存 `tlEdTools`,沒選過預設展開。
+⚠ 切換後一定要重跑 `applyZoom()` —— 「整張顯示」是拿 `editor.clientHeight` 算的,
+不重算就會停在舊高度算出來的寬度(實測 60 隻的清單:167px → 299px)。
+
 ## 匯出畫質
 
 製圖畫面的「圖片畫質」有三檔,預設**高畫質**:
