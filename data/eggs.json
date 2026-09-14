@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年9月14日21時",
+  "lastUpdated": "2026年9月14日22時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -276,6 +276,22 @@
     {
       "eggDistance": 5,
       "source": "regular",
+      "name": "雪吞蟲",
+      "cpRange": "302",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm872.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "regular",
+      "name": "狗仔包",
+      "cpRange": "563",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm926.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "regular",
       "name": "小卡比獸",
       "cpRange": "1081",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm446.icon.png",
@@ -292,9 +308,33 @@
     {
       "eggDistance": 5,
       "source": "regular",
-      "name": "狗仔包",
-      "cpRange": "563",
-      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm926.icon.png",
+      "name": "偶叫獒",
+      "cpRange": "799",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm942.icon.png",
+      "isShiny": false
+    },
+    {
+      "eggDistance": 5,
+      "source": "regular",
+      "name": "愛管侍 (雄性)",
+      "cpRange": "1396",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm876.fMALE.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "regular",
+      "name": "愛管侍 (雌性)",
+      "cpRange": "1370",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm876.fFEMALE.icon.png",
+      "isShiny": true
+    },
+    {
+      "eggDistance": 5,
+      "source": "regular",
+      "name": "燃燒蟲",
+      "cpRange": "855",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm636.icon.png",
       "isShiny": true
     },
     {
