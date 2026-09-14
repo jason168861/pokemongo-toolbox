@@ -1124,6 +1124,40 @@ a.tab-button {
     .app-nav a.tab-support { font-size: 16px; padding: 12px 16px; }
 }
 
+/* 手機版頁首的「☕ 支持」:直接放在表頭,不收進漢堡選單(要一眼看得到)。
+   位置用站名左邊那塊保留區:.site-brand 在手機有 margin-left:96px,原本是替
+   絕對定位的登入鈕讓位,但 #auth-container 後來被 position:static 覆蓋、實際排在
+   站名右邊,那塊一直是空的。實測 360px/390px 時左側 10~96px 完全沒有元素。
+   .site-header-main 是 position:sticky,本身就是絕對定位的參考框。 */
+.header-support { display: none; }
+@media (max-width: 768px) {
+    .header-support {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 16;
+        max-width: 82px;
+        box-sizing: border-box;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: #ffdd00;   /* Buy Me a Coffee 品牌黃,一眼認得出是贊助 */
+        color: #1c1e21;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.2;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .18);
+    }
+    .header-support:active { filter: brightness(.94); }
+    /* 手機表頭已經有一顆,選單裡就不重複放 */
+    .nav-links .tab-support { display: none; }
+}
+
 /* ---- 工具頁的說明區塊（PvP IV 排名、編號篩選器共用）-------------------
    這些工具原本只有介面、沒有一句話解釋數字代表什麼。
    位置都刻意放在「工具本體之後」，不要把操作區推出首屏。 */
