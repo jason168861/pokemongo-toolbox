@@ -1112,6 +1112,18 @@ a.tab-button {
 }
 .app-nav .tab-button-hot { font-weight: 700; }
 
+/* 導覽列的「支持本站」(Buy Me a Coffee 外部連結)。
+   沿用 .tab-button:手機漢堡選單裡會自動排成跟其他項目一樣的整列。
+   沒有 data-target,main.js 不會攔截(見 main.js「沒有 data-target = 真正跳頁的連結」),照常開新分頁。
+   用琥珀色跟一般分頁區隔,但不做成醒目的色塊 —— 這是同好站,不要搶走工具本身的注意力。 */
+.app-nav a.tab-support { color: #b45309; }
+.app-nav a.tab-support:hover { color: #92400e; }
+.app-nav a.tab-support::after { background-color: #d97706; }
+@media (min-width: 769px) {
+    /* 桌機表頭左邊是站名、右邊是登入,中間放三項會擠 → 這一項字小一點、內距小一點 */
+    .app-nav a.tab-support { font-size: 16px; padding: 12px 16px; }
+}
+
 /* ---- 工具頁的說明區塊（PvP IV 排名、編號篩選器共用）-------------------
    這些工具原本只有介面、沒有一句話解釋數字代表什麼。
    位置都刻意放在「工具本體之後」，不要把操作區推出首屏。 */
