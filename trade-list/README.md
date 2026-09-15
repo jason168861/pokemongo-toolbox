@@ -6,6 +6,8 @@
 ## 檔案
 - `index.html` — 前端(優先讀 `data/*.local.json`;沒有才退回遠端網址)
 - `alias-editor.html` — 搜尋別名的建檔介面(產出 `data/aliases.json`,見下方「搜尋別名」)
+- `gen_special_forms.py` + `data/special_forms.json` — 特殊型態(至尊 / 黃昏岩狗狗)的顯示素材與設定(見下方「特殊型態」)
+- `price-editor.html` + `price-query.js` — 查價搜尋字的規則編輯器與共用組字邏輯(產出 `data/price_search.json`,見下方「查價」)
 - `build_data.py` — 重建來源資料
 - `fetch_assets.py` — 把用到的圖存到 `assets/`,並產出 `*.local.json`(本機路徑版)
 - `preview.py` — 本機預覽(關快取,改完重新整理就生效)
@@ -164,6 +166,98 @@ git add trade-list/data trade-list/assets && git commit && git push
 而且 `fetch_assets.py` 從不刪檔,舊的圖仍在 repo 裡,不會 404。
 實測:三個現在資料裡已不存在的組合,清單與匯出圖都照樣完整畫出、零破圖。
 唯一的差別是對方若「重新去挑選畫面找同一個組合」會找不到。
+
+## 查價(eBay)
+
+交換時常有人拿不對等的籌碼換,所以清單上每張卡的備註旁邊有一顆 **$**,點下去跳出查價浮窗,按「🔍 到 eBay 搜尋」開新分頁。
+
+- 按鈕是 `<a target="_blank">`,打字時即時更新 href,手機點了不會被當成彈出視窗擋掉。
+- **不看已成交**:eBay 的「已成交」篩選要登入才看得到。試過 130point(免登入的成交紀錄),
+  但它的搜尋頁不吃網址參數(搜完網址不變),沒辦法從外部帶入搜尋字,所以拿掉。
+
+### 新功能提示(第一次進站)
+
+舊使用者不會自己發現卡片下多了一顆小小的 $,所以第一次看到時會出現聚光燈:
+畫面變暗、第一張看得到的卡的 $ 亮起來脈動、灑一圈光點,旁邊泡泡寫「新功能:查行情價」,可以按「試試看」直接打開查價。
+
+- 按知道了 / 試試看 / 點其他地方 / <kbd>Esc</kbd> 都算看過,記在 localStorage `tlSeenPriceTip`,之後不再出現。
+  想讓大家再看一次(例如之後又加新功能),換一個 key 名稱即可。
+- 清單是空的、正在選寶可夢或製圖、歡迎視窗或其他浮窗開著 → 先不出;
+  開站完成、歡迎視窗關掉、`drawLists()` 重畫時都會再試一次(`schedulePriceTip`)。
+- 暗幕是挖洞的 `box-shadow`,本身不擋點擊;點擊由 capture 階段的 `pointerdown` 攔,
+  點暗處只收掉提示、那一下不會誤觸底下的按鈕;點到 $ 本身則收掉提示並照常打開查價。
+- 位置每個 animation frame 重算,跟著頁面捲動、清單自己的捲軸、手機轉向走;`prefers-reduced-motion` 時關掉動畫。
+
+### 預設搜尋字(站長維護)
+
+規則在 `data/price_search.json`,用 **`price-editor.html`** 編(`python preview.py` → `/price-editor.html`,按「儲存」直接寫回,舊檔留 `.bak`)。
+組字邏輯在 **`price-query.js`**,`index.html` 與編輯器載入同一支 —— 編輯器預覽的字就是使用者實際搜到的字。
+
+先命中先用:
+
+1. **單一組合**(`combo`):整句指定。鍵 = `編號|shiny|kind|型態造型代碼|背卡 image_name`,只用卡片本身算得出來的欄位 → 使用者清單裡的舊卡也對得到。
+2. **模板**(`template`,預設 `pokemon go {name} {shiny} {kind} {form} {bg}`),各欄位:
+   - `{name}` —— `mon[編號]`,沒設用英文官方名(`data/names/en.json`)
+   - `{shiny}` / `{kind}` —— `words` 的固定用字(異色 / 極巨化 / 超極巨化 / 淨化)
+   - `{form}` —— 先看 `form["編號|代碼"]`(只套用這隻),沒有才用 `form[代碼]`(全部共用),都沒設就**不加**
+     (`JAN_2020_NOEVOLVE` 這種代碼拿去搜只會更糟)。同一個造型代碼常被好幾隻共用、但實際是不同東西
+     (`SPRING_2020_NOEVOLVE` 有 9 隻),所以編輯器的「型態 / 造型」分頁把共用代碼拆成「全部共用」一列 + 每隻各一列;
+     每隻那列設成 `""`(編輯器裡打 `-`)= 就算有共用字,這隻也不加
+   - `{bg}` —— `bg[image_name]`,沒設用「城市 / 活動名 + background」;設成 `""`(編輯器裡打 `-`)= 不加
+   - `{dex}` —— 圖鑑編號
+
+`template` / `words` / `sites` 沒寫進檔案就用 `price-query.js` 的預設,檔案裡只存「有改的」—— 之後調預設時沒改過的會跟著走。
+檔案不存在或壞掉 → 全部用預設,查價照常能用。`build_data.py` / `fetch_assets.py` 不會碰這個檔。
+
+卡片沒存型態/造型代碼,是用 sprite 網址回查 `pokemon.json`(`formCodeOf`);wiki 原圖、超極巨化圖對不到代碼,那種組合要用「單一組合」整句指定。
+編輯器列舉組合的方式與 `buildThumbs` 相同,sprite 選擇(`baseVar` / `formVar` / `costVar` / `monUrl`)也照抄 —— 改其中一邊記得另一邊。
+
+### 使用者自己改
+
+浮窗裡的字可以直接改,存在卡片的 `c.pq`,跟清單一起存本機 / 雲端 / 分享連結;改回跟預設一樣就刪掉這個欄位。改過的卡 $ 鈕會亮起強調色。
+
+$ 鈕刻意放在卡片**外面**(備註同一排):卡片四角已經被性別 / 球 / 複製 / 刪除 / 異色 / 徽章佔滿。
+手機「小」格子的備註是 16px 字、卡寬只有 60px,$ 鈕與內距在 `body.cell-s` 會再收窄,「備註」才不會被擠成兩行。
+
+## 特殊型態(至尊 / 黃昏岩狗狗)
+
+有些型態光看 sprite 分不出來,交換時很容易被當成一般版:
+
+| 型態 | 問題 | 顯示方式 |
+|---|---|---|
+| 至尊洛奇亞 / 至尊鳳王(form `S`) | 跟一般版只差姿勢 | 金色外光暈 + 星光,清單上再加緩慢的呼吸光 |
+| 黃昏岩狗狗(form `DUSK`) | sprite 跟一般岩狗狗**逐像素完全一樣** | 右上角圓形徽章放進化後的黃昏鬃岩狼人(異色對異色) |
+| 黃昏鬃岩狼人(form `DUSK`) | 圖本身就不同 | 只加名稱標籤與搜尋別名 |
+
+遊戲裡的至尊特效是執行時才下載的素材,APK(`_apk_extract`)與 PokeMiners 都找不到,所以光暈是自己畫的。
+
+**設定** `data/special_forms.json`(手動維護,`build_data.py` / `fetch_assets.py` 不會碰):
+
+```jsonc
+{"id":"apex","dex":250,"form":"S","fx":"apex","label":{"zh":"至尊","en":"Apex",…},"aliases":["至尊","apex"]}
+{"id":"dusk","dex":744,"form":"DUSK","badge_evo":{"dex":745,"form":"DUSK"},"label":{…},"aliases":[…]}
+```
+
+一律用 `dex + form` 指定 —— 同一個 form 代碼在別的寶可夢身上可能是別的東西(拉帝亞斯 / 拉帝歐斯也有 `S`)。
+`label` 顯示在格子提示、自由搭配與查價視窗;`aliases` 讓搜尋框打「至尊」「黃昏」「dusk」找得到。
+名稱取自遊戲文字(`Masterwork Research: Apex`、`form_lycanroc_dusk`);遊戲的 `form_apex` 在中日韓等語系被誤譯成「完全形態」,所以沒用那個。
+
+`no_shiny: true` → 遊戲裡沒有異色(至尊洛奇亞 / 鳳王):選取網格、自由搭配、查價編輯器都不列異色版,產生器也不畫;
+`pokemon.json` 本身不動(`build_data.py` 每次重建都會把異色 sprite 列回來),過濾是在顯示端做的。已經在清單裡的舊卡照樣顯示。
+
+**素材** `python gen_special_forms.py`(`--force` 全部重畫;`update.py` 會在 `fetch_assets.py` 之後自動跑,只補缺的):
+
+- `fx: "apex"` → `assets/img/fx_<sprite>.png`(256px,光暈烘進去)+ `assets/thumb/fx_<sprite>.webp`(128px)
+- `badge_evo` → `assets/badge_evo_<進化後 sprite>.png`(128px)
+
+**前端** 以 sprite 檔名對應(卡片只存 url,不存型態代碼)。清單存的仍是**原本的 sprite url**,只有顯示換成
+`dispUrl()` 的特效圖 → 既有清單、分享連結、`keyOf` 比對、查價規則(`formCodeOf` 用 url 回查)全部不受影響。
+素材不存在時(沒跑產生器)`loadSpecialForms()` 用 HEAD 檢查後自動退回原圖、不顯示徽章,不會破圖。
+進化徽章跟極巨化等徽章同一角,兩個都有時排在下面;匯出圖的 `drawCard` 同樣畫。
+
+新增一種:在 `special_forms.json` 加一筆 → 跑 `gen_special_forms.py` → 重新整理。
+只想加標籤 / 搜尋別名(不需要特效)的,不寫 `fx` / `badge_evo` 就好。
+查價用字另外在 `price-editor.html` 的「型態 / 造型」分頁設(例:`250|S` → `apex`、`744|DUSK` → `dusk`)。
 
 ## 資料來源
 

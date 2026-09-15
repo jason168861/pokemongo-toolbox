@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""交易清單一鍵更新:pull PokeMiners → build_data → fetch_assets → 提示 commit。
+"""交易清單一鍵更新:pull PokeMiners → build_data → fetch_assets → gen_special_forms → 提示 commit。
 
 遊戲更新後(新寶可夢/造型/異色/背卡/可極巨化名單…)跑這支就好,不用記順序。
 
@@ -98,6 +98,9 @@ def main():
 
     # 3) 下載圖片 + 產生縮圖
     run("下載圖片/縮圖 fetch_assets.py", [sys.executable, "fetch_assets.py"])
+
+    # 3.5) 特殊型態素材(至尊光暈 / 黃昏進化徽章):要等 sprite 下載好才畫得出來;只補缺的
+    run("特殊型態素材 gen_special_forms.py", [sys.executable, "gen_special_forms.py"], fatal=False)
 
     # 4) 收尾:commit 或提示
     paths = ["trade-list/data", "trade-list/assets"]

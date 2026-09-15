@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
 <script src="../js/zh-search.js"></script>
+<script src="price-query.js"></script>
 <script src="../js/analytics.js"></script>
 <!-- 全站瀏覽計數。defer 讓它排在頁尾那支 config.js 之後執行，才讀得到 firebaseConfig -->
 <script src="../js/pageview-counter.js" defer></script>
@@ -231,6 +232,15 @@
   .cell img.m.big{width:96%;height:96%}   /* 無背卡:放大填滿,減少白邊(與下載圖一致) */
   .cell img.cbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
   .cell .bd{position:absolute;right:2px;top:2px;width:32%;height:32%;object-fit:contain;z-index:3}
+  /* 特殊型態(data/special_forms.json):
+     .fb = 進化徽章(黃昏岩狗狗 → 右上角放黃昏鬃岩狼人);跟極巨化徽章同一角,兩個都有時往下排
+     .fx-apex = 至尊:圖本身已烘好金色光暈與星光(gen_special_forms.py),這裡只加緩慢的呼吸光 */
+  .cell .fb,.mixCard .fb{position:absolute;right:2px;top:2px;width:38%;height:38%;object-fit:contain;z-index:3;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
+  .li .fb{position:absolute;right:4%;top:4%;width:36%;height:36%;z-index:3;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
+  .cell .fb.low,.mixCard .fb.low,.li .fb.low{top:36%}
+  img.fx-apex{animation:fxApex 2.6s ease-in-out infinite}
+  @keyframes fxApex{50%{filter:brightness(1.12) drop-shadow(0 0 5px rgba(255,200,80,.7))}}
+  @media (prefers-reduced-motion:reduce){ img.fx-apex{animation:none} }
   .cell .sh{position:absolute;left:3px;top:2px;font-size:11px;z-index:3}
   .li .sh{position:absolute;left:4%;top:2%;font-size:12px;z-index:3}
   .cell .gn{position:absolute;left:3px;bottom:3px;width:13px;height:13px;z-index:3;color:#ff9ec7;
@@ -479,6 +489,17 @@
   .li .note{display:block;width:100%;margin-top:3px;box-sizing:border-box;font-size:10px;padding:2px 4px;line-height:1.25;
             border:1px solid var(--line);border-radius:6px;background:var(--cellbg);color:var(--fg);text-align:center;cursor:text;
             resize:none;overflow:hidden;font-family:inherit;-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+  /* 備註那一排:備註 + 💲 查價鈕。查價鈕放在卡片「外面」——
+     卡片四角已經被性別/球/複製/刪除/異色/徽章佔滿,小格子再塞一顆就會蓋住寶可夢 */
+  .li .noteRow{display:flex;gap:3px;margin-top:3px;align-items:stretch}
+  .li .noteRow .note{margin-top:0;flex:1;min-width:0;width:auto}
+  .li .pq{flex:none;width:20px;padding:0;border:1px solid var(--line);border-radius:6px;background:var(--cellbg);
+          color:var(--mut);font-size:11px;font-weight:700;line-height:1;cursor:pointer}
+  .li .pq:hover{border-color:var(--acc2);color:var(--acc2)}
+  .li .pq.has{border-color:var(--acc2);color:var(--acc2)}   /* 這張卡的搜尋文字改過 */
+  /* 「小」格子在手機上備註是 16px 字(防 iOS 聚焦放大),60px 寬扣掉 $ 鈕後「備註」會被擠成兩行 → 鈕與內距再收一點 */
+  body.cell-s .li .pq{width:16px}
+  body.cell-s .li .noteRow .note{padding-left:1px;padding-right:1px}
   .li .note::placeholder{color:var(--mut);opacity:.7}
   .li .note:focus{outline:1px solid var(--acc2);border-color:var(--acc2)}
   .li .note.has{border-color:var(--acc2);color:var(--acc2);font-weight:700}
@@ -496,6 +517,52 @@
   .tlSupport:hover{filter:brightness(.95)}
   @media(max-width:480px){ #tlSupportTxt{display:none} .tlSupport{padding:5px 9px} }
   /* 電腦版下載後的贊助浮窗 */
+  /* 查價浮窗 */
+  #priceMask{position:fixed;inset:0;z-index:470;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(6,8,18,.62)}
+  #priceMask.on{display:flex}
+  .priceCard .priceMon{font-size:13px;color:var(--mut);margin:-6px 0 12px}
+  .priceCard label.priceLab{display:block;font-size:13px;color:var(--fg);margin-bottom:6px}
+  .priceCard #priceQ{width:100%;box-sizing:border-box;font-size:15px;padding:9px 10px}
+  .priceCard .priceOpts{display:flex;justify-content:flex-end;margin:8px 0 2px}
+  .priceCard .priceOpts .btn.g{width:auto;font-size:13px;padding:6px 10px}
+  .priceCard a.btn{display:block;box-sizing:border-box;text-align:center;text-decoration:none;margin-top:8px}
+  .priceCard .btn.g#priceClose{margin-top:8px;font-size:14px;padding:10px}
+  .priceCard .priceHint{margin:12px 0 0;font-size:12px;line-height:1.5;color:var(--mut)}
+  /* 新功能提示(查價):挖洞的聚光燈 + 脈動光圈 + 一圈光點 + 指向 $ 的泡泡。
+     聚光燈是 box-shadow 畫的暗幕,本身不吃點擊;點擊改由 JS 在 capture 階段攔(見 showPriceTip) */
+  #ptip{position:fixed;inset:0;z-index:480;display:none;pointer-events:none}
+  #ptip.on{display:block}
+  .ptipSpot{position:fixed;border-radius:10px;box-shadow:0 0 0 200vmax rgba(6,8,18,.74)}
+  #ptip.in .ptipSpot{animation:ptipDim .45s ease-out both}
+  @keyframes ptipDim{from{box-shadow:0 0 0 200vmax rgba(6,8,18,0)}to{box-shadow:0 0 0 200vmax rgba(6,8,18,.74)}}
+  .ptipRing{position:absolute;inset:-5px;border-radius:12px;border:3px solid var(--acc2);animation:ptipPulse 1.4s ease-out infinite}
+  .ptipRing.r2{animation-delay:.7s;border-color:var(--acc)}
+  @keyframes ptipPulse{0%{transform:scale(1);opacity:1}100%{transform:scale(2);opacity:0}}
+  .ptipBurst{position:fixed;width:0;height:0}
+  .ptipBurst i{position:absolute;left:0;top:0;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:#ffd84a;
+               box-shadow:0 0 8px #ffd84a;opacity:0;animation:ptipSpark .95s cubic-bezier(.2,.7,.3,1) forwards}
+  .ptipBurst i:nth-child(3n){background:var(--acc2);box-shadow:0 0 8px var(--acc2)}
+  .ptipBurst i:nth-child(3n+1){background:#7fe0ff;box-shadow:0 0 8px #7fe0ff}
+  @keyframes ptipSpark{0%{transform:translate(0,0) scale(1.2);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+  .ptipBubble{position:fixed;pointer-events:auto;width:min(300px,calc(100vw - 32px));box-sizing:border-box;background:var(--card);color:var(--fg);
+              border:2px solid var(--acc2);border-radius:14px;padding:12px 14px;box-shadow:0 14px 40px #000c}
+  #ptip.in .ptipBubble{animation:ptipPop .5s cubic-bezier(.2,1.4,.4,1) .15s both}
+  @keyframes ptipPop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+  .ptipBubble b{display:block;font-size:16px;margin:6px 0 6px}
+  .ptipBubble p{margin:0 0 12px;font-size:13.5px;line-height:1.55}
+  .ptipBadge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;padding:2px 8px;border-radius:999px;color:#fff;
+             background:linear-gradient(135deg,var(--acc),var(--acc2))}
+  .ptipBtns{display:flex;gap:8px;justify-content:flex-end}
+  .ptipBtns .btn{padding:8px 12px;font-size:14px}
+  .ptipArrow{position:absolute;width:14px;height:14px;background:var(--card);border:2px solid var(--acc2);transform:rotate(45deg)}
+  .ptipBubble.below .ptipArrow{top:-9px;border-right:0;border-bottom:0}
+  .ptipBubble.above .ptipArrow{bottom:-9px;border-left:0;border-top:0}
+  .li .pq.pqGlow{border-color:var(--acc2);color:#fff;background:var(--acc2);animation:pqGlow 1.2s ease-in-out infinite}
+  @keyframes pqGlow{50%{box-shadow:0 0 0 3px rgba(224,39,108,.35),0 0 14px rgba(224,39,108,.8)}}
+  @media (prefers-reduced-motion:reduce){
+    .ptipRing,.li .pq.pqGlow,#ptip.in .ptipSpot,#ptip.in .ptipBubble{animation:none}
+    .ptipBurst{display:none}
+  }
   #supMask{position:fixed;inset:0;z-index:460;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(6,8,18,.62)}
   #supMask.on{display:flex}
   .supCard p{margin:0 0 16px;font-size:14.5px;line-height:1.6;color:var(--fg)}
@@ -914,6 +981,34 @@
   </div>
 </div>
 
+<!-- 查價:預設搜尋字由 price-query.js + data/price_search.json 組出來(站長用 price-editor.html 維護);
+     使用者可再改單張卡,存在 c.pq -->
+<div id="priceMask" role="dialog" aria-modal="true" aria-labelledby="priceTitle">
+  <div class="introCard priceCard">
+    <b id="priceTitle">💲 查價</b>
+    <div class="priceMon" id="priceMon"></div>
+    <label class="priceLab" id="priceLab" for="priceQ">搜尋文字(名稱對不到時可自行修改)</label>
+    <input type="text" id="priceQ" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+    <div class="priceOpts"><button class="btn g" id="priceReset" type="button">復原預設</button></div>
+    <a class="btn" id="priceEbay" href="https://www.ebay.com/" target="_blank" rel="noopener">🔍 到 eBay 搜尋</a>
+    <button class="btn g" id="priceClose" type="button">完成</button>
+    <p class="priceHint" id="priceHint">行情僅供交換參考;修改過的文字會記在這張卡上</p>
+  </div>
+</div>
+
+<!-- 新功能提示:第一次看到 $ 鈕時的聚光燈 + 泡泡,看過就不再出現(localStorage tlSeenPriceTip) -->
+<div id="ptip">
+  <div class="ptipSpot" id="ptipSpot"><span class="ptipRing"></span><span class="ptipRing r2"></span></div>
+  <div class="ptipBurst" id="ptipBurst"></div>
+  <div class="ptipBubble" id="ptipBubble" role="dialog" aria-labelledby="ptipTitle">
+    <span class="ptipArrow" id="ptipArrow"></span>
+    <span class="ptipBadge">NEW</span>
+    <b id="ptipTitle">🎉 新功能:查行情價</b>
+    <p id="ptipBody">怕被用不對等的寶可夢換走?點卡片下方的 $,馬上到 eBay 看這隻的行情。</p>
+    <div class="ptipBtns"><button class="btn g" id="ptipOk" type="button">知道了</button><button class="btn" id="ptipTry" type="button">💲 試試看</button></div>
+  </div>
+</div>
+
 <!-- 電腦:下載完跳這張(手機走下面的結果卡)。每次下載都會出現。 -->
 <div id="supMask" role="dialog" aria-modal="true" aria-labelledby="supTitle">
   <div class="introCard supCard">
@@ -1287,42 +1382,49 @@ const I18N_ST={
      st_aurora:'極光',st_sunset:'夕陽',st_midnight:'午夜',st_candy:'糖果',st_vapor:'蒸氣波',st_mono:'極簡',
      st_cyber:'賽博霓虹',st_circuit:'電路板',st_holo:'全息',st_matrix:'資料流',st_carbon:'碳纖維',
      st_mystic:'神秘隊',st_valor:'勇氣隊',st_instinct:'直覺隊',
+      price_tip:'到 eBay 查行情',price_title:'查價',price_lab:'搜尋文字(名稱對不到時可自行修改)',price_reset:'復原預設',price_ebay:'到 eBay 搜尋',price_hint:'行情僅供交換參考;修改過的文字會記在這張卡上',ptip_title:'🎉 新功能:查行情價',ptip_body:'怕被用不對等的寶可夢換走?點卡片下方的 $,馬上到 eBay 看這隻的行情。',ptip_ok:'知道了',ptip_try:'💲 試試看',
      ty_normal:'一般',ty_fire:'火',ty_water:'水',ty_grass:'草',ty_electric:'電',ty_ice:'冰',ty_fighting:'格鬥',ty_poison:'毒',ty_ground:'地面',
      ty_flying:'飛行',ty_psychic:'超能力',ty_bug:'蟲',ty_rock:'岩石',ty_ghost:'幽靈',ty_dragon:'龍',ty_dark:'惡',ty_steel:'鋼',ty_fairy:'妖精'},
  en:{skin:'Image style',stc_classic:'Classic',stc_grad:'Gradient',stc_tech:'Tech',stc_type:'Type',stc_team:'Team',
      st_aurora:'Aurora',st_sunset:'Sunset',st_midnight:'Midnight',st_candy:'Candy',st_vapor:'Vaporwave',st_mono:'Minimal',
      st_cyber:'Cyber Neon',st_circuit:'Circuit',st_holo:'Hologram',st_matrix:'Data Stream',st_carbon:'Carbon',
      st_mystic:'Mystic',st_valor:'Valor',st_instinct:'Instinct',
+      price_tip:'Check price on eBay',price_title:'Price check',price_lab:"Search text (edit it if the name doesn't match)",price_reset:'Reset',price_ebay:'Search on eBay',price_hint:'For trade reference only; your edits are saved on this card.',ptip_title:'🎉 New: price check',ptip_body:'Worried about an uneven trade? Tap the $ under a card to see what that Pokémon goes for on eBay.',ptip_ok:'Got it',ptip_try:'💲 Try it',
      ty_normal:'Normal',ty_fire:'Fire',ty_water:'Water',ty_grass:'Grass',ty_electric:'Electric',ty_ice:'Ice',ty_fighting:'Fighting',ty_poison:'Poison',ty_ground:'Ground',
      ty_flying:'Flying',ty_psychic:'Psychic',ty_bug:'Bug',ty_rock:'Rock',ty_ghost:'Ghost',ty_dragon:'Dragon',ty_dark:'Dark',ty_steel:'Steel',ty_fairy:'Fairy'},
  ja:{skin:'画像スタイル',stc_classic:'定番',stc_grad:'グラデ',stc_tech:'テック',stc_type:'タイプ',stc_team:'チーム',
      st_aurora:'オーロラ',st_sunset:'夕焼け',st_midnight:'ミッドナイト',st_candy:'キャンディ',st_vapor:'ヴェイパー',st_mono:'ミニマル',
      st_cyber:'サイバー',st_circuit:'サーキット',st_holo:'ホログラム',st_matrix:'データ',st_carbon:'カーボン',
      st_mystic:'ミスティック',st_valor:'ヴァーラー',st_instinct:'インスティンクト',
+      price_tip:'eBayで相場を調べる',price_title:'相場チェック',price_lab:'検索ワード(うまく出ないときは編集)',price_reset:'元に戻す',price_ebay:'eBayで検索',price_hint:'交換の目安です。編集した内容はこのカードに保存されます',ptip_title:'🎉 新機能:相場チェック',ptip_body:'釣り合わない交換が心配?カードの下の $ を押すと、eBayでそのポケモンの相場をすぐ見られます。',ptip_ok:'OK',ptip_try:'💲 試してみる',
      ty_normal:'ノーマル',ty_fire:'ほのお',ty_water:'みず',ty_grass:'くさ',ty_electric:'でんき',ty_ice:'こおり',ty_fighting:'かくとう',ty_poison:'どく',ty_ground:'じめん',
      ty_flying:'ひこう',ty_psychic:'エスパー',ty_bug:'むし',ty_rock:'いわ',ty_ghost:'ゴースト',ty_dragon:'ドラゴン',ty_dark:'あく',ty_steel:'はがね',ty_fairy:'フェアリー'},
  ko:{skin:'이미지 스타일',stc_classic:'클래식',stc_grad:'그라데이션',stc_tech:'테크',stc_type:'타입',stc_team:'팀',
      st_aurora:'오로라',st_sunset:'노을',st_midnight:'미드나이트',st_candy:'캔디',st_vapor:'베이퍼웨이브',st_mono:'미니멀',
      st_cyber:'사이버',st_circuit:'서킷',st_holo:'홀로그램',st_matrix:'데이터',st_carbon:'카본',
      st_mystic:'미스틱',st_valor:'발러',st_instinct:'인스팅트',
+      price_tip:'eBay에서 시세 확인',price_title:'시세 확인',price_lab:'검색어 (결과가 안 맞으면 수정하세요)',price_reset:'기본값으로',price_ebay:'eBay에서 검색',price_hint:'교환 참고용입니다. 수정한 검색어는 이 카드에 저장됩니다',ptip_title:'🎉 새 기능: 시세 확인',ptip_body:'불공평한 교환이 걱정되나요? 카드 아래 $를 누르면 eBay에서 그 포켓몬의 시세를 바로 볼 수 있어요.',ptip_ok:'확인',ptip_try:'💲 사용해 보기',
      ty_normal:'노말',ty_fire:'불꽃',ty_water:'물',ty_grass:'풀',ty_electric:'전기',ty_ice:'얼음',ty_fighting:'격투',ty_poison:'독',ty_ground:'땅',
      ty_flying:'비행',ty_psychic:'에스퍼',ty_bug:'벌레',ty_rock:'바위',ty_ghost:'고스트',ty_dragon:'드래곤',ty_dark:'악',ty_steel:'강철',ty_fairy:'페어리'},
  fr:{skin:"Style d'image",stc_classic:'Classique',stc_grad:'Dégradé',stc_tech:'Tech',stc_type:'Type',stc_team:'Équipe',
      st_aurora:'Aurore',st_sunset:'Coucher de soleil',st_midnight:'Minuit',st_candy:'Bonbon',st_vapor:'Vaporwave',st_mono:'Minimal',
      st_cyber:'Cyber néon',st_circuit:'Circuit',st_holo:'Hologramme',st_matrix:'Flux de données',st_carbon:'Carbone',
      st_mystic:'Sagesse',st_valor:'Bravoure',st_instinct:'Intuition',
+      price_tip:'Voir le prix sur eBay',price_title:'Prix',price_lab:'Texte de recherche (modifiez-le si le nom ne correspond pas)',price_reset:'Réinitialiser',price_ebay:'Rechercher sur eBay',price_hint:'À titre indicatif pour les échanges ; vos modifications sont enregistrées sur cette carte.',ptip_title:'🎉 Nouveau : voir la cote',ptip_body:"Peur d'un échange déséquilibré ? Touchez le $ sous une carte pour voir la cote de ce Pokémon sur eBay.",ptip_ok:"J'ai compris",ptip_try:'💲 Essayer',
      ty_normal:'Normal',ty_fire:'Feu',ty_water:'Eau',ty_grass:'Plante',ty_electric:'Électrik',ty_ice:'Glace',ty_fighting:'Combat',ty_poison:'Poison',ty_ground:'Sol',
      ty_flying:'Vol',ty_psychic:'Psy',ty_bug:'Insecte',ty_rock:'Roche',ty_ghost:'Spectre',ty_dragon:'Dragon',ty_dark:'Ténèbres',ty_steel:'Acier',ty_fairy:'Fée'},
  de:{skin:'Bildstil',stc_classic:'Klassisch',stc_grad:'Verlauf',stc_tech:'Tech',stc_type:'Typ',stc_team:'Team',
      st_aurora:'Polarlicht',st_sunset:'Sonnenuntergang',st_midnight:'Mitternacht',st_candy:'Bonbon',st_vapor:'Vaporwave',st_mono:'Minimal',
      st_cyber:'Cyber-Neon',st_circuit:'Schaltkreis',st_holo:'Hologramm',st_matrix:'Datenstrom',st_carbon:'Karbon',
      st_mystic:'Weisheit',st_valor:'Wagemut',st_instinct:'Intuition',
+      price_tip:'Preis auf eBay prüfen',price_title:'Preischeck',price_lab:'Suchtext (anpassen, wenn der Name nicht passt)',price_reset:'Zurücksetzen',price_ebay:'Auf eBay suchen',price_hint:'Nur als Richtwert für Tausche; Änderungen werden auf dieser Karte gespeichert.',ptip_title:'🎉 Neu: Preischeck',ptip_body:'Angst vor einem unfairen Tausch? Tippe auf das $ unter einer Karte, um den eBay-Preis dieses Pokémon zu sehen.',ptip_ok:'Verstanden',ptip_try:'💲 Ausprobieren',
      ty_normal:'Normal',ty_fire:'Feuer',ty_water:'Wasser',ty_grass:'Pflanze',ty_electric:'Elektro',ty_ice:'Eis',ty_fighting:'Kampf',ty_poison:'Gift',ty_ground:'Boden',
      ty_flying:'Flug',ty_psychic:'Psycho',ty_bug:'Käfer',ty_rock:'Gestein',ty_ghost:'Geist',ty_dragon:'Drache',ty_dark:'Unlicht',ty_steel:'Stahl',ty_fairy:'Fee'},
  es:{skin:'Estilo de imagen',stc_classic:'Clásico',stc_grad:'Degradado',stc_tech:'Tecno',stc_type:'Tipo',stc_team:'Equipo',
      st_aurora:'Aurora',st_sunset:'Atardecer',st_midnight:'Medianoche',st_candy:'Caramelo',st_vapor:'Vaporwave',st_mono:'Minimal',
      st_cyber:'Cíber neón',st_circuit:'Circuito',st_holo:'Holograma',st_matrix:'Flujo de datos',st_carbon:'Carbono',
      st_mystic:'Sabiduría',st_valor:'Valor',st_instinct:'Instinto',
+      price_tip:'Ver precio en eBay',price_title:'Consultar precio',price_lab:'Texto de búsqueda (edítalo si el nombre no coincide)',price_reset:'Restablecer',price_ebay:'Buscar en eBay',price_hint:'Solo como referencia para intercambios; tus cambios se guardan en esta tarjeta.',ptip_title:'🎉 Nuevo: consultar precio',ptip_body:'¿Te preocupa un intercambio desigual? Toca el $ debajo de una carta para ver cuánto vale ese Pokémon en eBay.',ptip_ok:'Entendido',ptip_try:'💲 Probar',
      ty_normal:'Normal',ty_fire:'Fuego',ty_water:'Agua',ty_grass:'Planta',ty_electric:'Eléctrico',ty_ice:'Hielo',ty_fighting:'Lucha',ty_poison:'Veneno',ty_ground:'Tierra',
      ty_flying:'Volador',ty_psychic:'Psíquico',ty_bug:'Bicho',ty_rock:'Roca',ty_ghost:'Fantasma',ty_dragon:'Dragón',ty_dark:'Siniestro',ty_steel:'Acero',ty_fairy:'Hada'}};
 let LANG='zh',NAMES={};
@@ -1388,7 +1490,7 @@ function matchForm(o,q){
 }
 const matchDex=(dex,q)=> String(dex)===q || String(dex).padStart(4,'0')===q;
 // 寶可夢格子(選取網格與自由搭配共用):名稱 / 別名 / 編號 / 型態 / 造型
-function hitMon(o,q){ return matchName(o.dex,q)||matchDex(o.dex,q)||matchForm(o,q); }
+function hitMon(o,q){ return matchName(o.dex,q)||matchDex(o.dex,q)||matchForm(o,q)||matchSpecial(o,q); }
 // 背卡:檔名(GO_Taipei_background.png)、wiki 標題(Taipei, Taiwan)、別名(台北)
 function hitBg(imgName,title,q){
   return (!!imgName&&(imgName.toLowerCase().includes(q)||aliasHit(ALIAS.bg,imgName,q)))
@@ -1428,6 +1530,13 @@ function applyStaticI18n(){
   $('#showBallLabel').textContent=T('show_ball');
   for(const b of document.querySelectorAll('.li .bl')) b.title=T('ball_tip');
   for(const b of document.querySelectorAll('.li .dup')) b.title=T('dup_tip');
+  for(const b of document.querySelectorAll('.li .pq')) b.title=T('price_tip');
+  if($('#priceTitle')){ $('#priceTitle').textContent='💲 '+T('price_title'); $('#priceLab').textContent=T('price_lab');
+    $('#priceReset').textContent=T('price_reset'); $('#priceEbay').textContent='🔍 '+T('price_ebay');
+    $('#priceClose').textContent=T('done'); $('#priceHint').textContent=T('price_hint');
+    if($('#priceMask').classList.contains('on')) syncPriceMon(); }
+  if($('#ptipTitle')){ $('#ptipTitle').textContent=T('ptip_title'); $('#ptipBody').textContent=T('ptip_body');
+    $('#ptipOk').textContent=T('ptip_ok'); $('#ptipTry').textContent=T('ptip_try'); }
   $('#labWant').textContent='🟢 '+T('want'); $('#labHave').textContent='🟡 '+T('have');
   syncEdToolsLabel();
   { const L=$('#qualLabel'); if(L)L.textContent=T('qual_label');
@@ -1498,16 +1607,17 @@ async function boot(){
   // trim.json 沒有 .local 版本,直接抓;抓不到就讓 trimBBox 退回即時掃描(功能一樣,只是比較慢)
   [POKE,BG,TRIM]=await Promise.all([loadData('pokemon'),loadData('backgrounds'),
     fetch('data/trim.json').then(r=>r.ok?r.json():{}).catch(()=>({}))]);
+  await loadSpecialForms();   // 要在 buildThumbs / 第一次畫清單之前:格子與卡片畫的時候就要知道換哪張圖
   buildThumbs();
   $('#q').oninput=()=>{ $('#qClear').style.display=$('#q').value?'':'none'; render(); };
   $('#qClear').onclick=()=>{ $('#q').value=''; $('#qClear').style.display='none'; render(); $('#q').focus(); };
   $('#dl').onclick=function(){ downloadPNG(this); };
   // 存圖結果卡:點遮罩空白處或「完成」都關掉;關掉時才釋放 blob URL
   $('#saveClose').onclick=closeSaveSheet;
-  $('#saveMask').addEventListener('click',e=>{ if(e.target===$('#saveMask')) closeSaveSheet(); });
+  closeOnBackdrop($('#saveMask'),closeSaveSheet);
   // 自由搭配
   $('#mixClose').onclick=closeMix;
-  $('#mixMask').addEventListener('click',e=>{ if(e.target===$('#mixMask')) closeMix(); });
+  closeOnBackdrop($('#mixMask'),closeMix);
   $('#mixAdd').onclick=mixAdd;
   $('#mixReset').onclick=()=>{ MIX={mon:null,badge:'',bg:null};
     $('#mixQ').value=''; $('#mixBgQ').value='';
@@ -1525,10 +1635,11 @@ async function boot(){
   $('#setShare').onclick=shareLink;   // 產生短連結分享/匯入清單
   // 首次進站:顯示一次歡迎提示,看過就記住不再顯示
   $('#supLater').onclick=closeSupportModal;
+  setupPriceModal();
   $('#supBtn').addEventListener('click',()=>setTimeout(closeSupportModal,0));   // 開了贊助頁就順手關掉浮窗
-  $('#supMask').addEventListener('click',e=>{ if(e.target===$('#supMask')) closeSupportModal(); });
-  $('#introOk').onclick=()=>{ $('#introMask').classList.remove('on'); try{localStorage.setItem('tlSeenIntro','1');}catch(e){} };
-  $('#introMask').addEventListener('click',e=>{ if(e.target===$('#introMask')) $('#introOk').click(); });
+  closeOnBackdrop($('#supMask'),closeSupportModal);
+  $('#introOk').onclick=()=>{ $('#introMask').classList.remove('on'); try{localStorage.setItem('tlSeenIntro','1');}catch(e){} schedulePriceTip(); };
+  closeOnBackdrop($('#introMask'),()=>$('#introOk').click());
   try{ if(!localStorage.getItem('tlSeenIntro')) $('#introMask').classList.add('on'); }catch(e){}
   $('#clr').onclick=()=>{ if(!confirm(tr('confirm_clear'))) return;
     undoableListEdit(tr('deleted'), ()=>{ LIST.want=[];LIST.have=[];drawLists();render();renderBase(); }); };
@@ -1613,7 +1724,7 @@ async function boot(){
   // 還原上次的清單(未登入時的本機暫存;登入後 Firebase 會覆蓋)。舊格式會自動遷移成多組。
   try{ const s=localStorage.getItem(LS_KEY); if(s) adoptSets(migrate(JSON.parse(s))); }catch(e){}
   if(!SETS.length){ SETS=[newStarterSet(tr('set_default')+' 1')]; activeSetId=SETS[0].id; bindActiveSet(); }
-  ready=true; bootResolve();
+  ready=true; bootResolve(); schedulePriceTip();
   renderSets();
   drawLists();
   restoreCollapse();   // 還原「我想要的/我能提供的」收合狀態
@@ -2028,10 +2139,14 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
   if(c.bg){const b=await loadExport(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
   // 去透明邊後放大:留一點邊避免蓋到角落的性別/異色標誌;有背卡再小一點以露出背卡
   const ins = c.bg ? 0.09 : 0.07, box = S*(1-2*ins);
-  const m=await loadImg(c.url);if(m)drawMon(x,m,cdn(c.url),cx+S*ins,cy+S*ins,box);
+  const du=dispUrl(c.url), m=await loadImg(du);if(m)drawMon(x,m,cdn(du),cx+S*ins,cy+S*ins,box);
   x.restore();
   if(T.line&&!/,\s*0\)$/.test(T.line)){x.strokeStyle=T.line;x.lineWidth=2;rrPath(x,cx,cy,S,S,S*0.16);x.stroke();}
   if(c.badge){const b=await loadImg(c.badge);if(b)x.drawImage(b,cx+S*0.63,cy+S*0.04,S*0.33,S*0.33);}
+  { const sp=specOf(c.url);   // 特殊型態的進化徽章:右上角;已經有極巨化等徽章就排在它下面
+    if(sp&&sp.badge){ const b=await loadImg(sp.badge);
+      if(b){ const D=S*0.36; x.save(); x.shadowColor='rgba(0,0,0,.5)'; x.shadowBlur=Math.max(1,S*0.02);
+        x.drawImage(b, cx+S*0.96-D, cy+S*(c.badge?0.38:0.03), D, D); x.restore(); } } }
   if(c.shiny){x.textAlign='left';x.font=Math.round(S*0.2)+'px "Segoe UI Emoji","Microsoft JhengHei"';x.fillText('✨',cx+S*0.04,cy+S*0.24);}
   const hasGender = c.gender==='female'||c.gender==='male';
   if(hasGender) drawGender(x,c.gender,cx,cy,S);
@@ -2302,7 +2417,7 @@ async function drawBaseTo(x,lay,SC,offY){
   await preloadSkin(T);   // 浮水印/橫幅是同步畫的,圖得先在快取裡(第二塊之後即時返回)
   paintBackdrop(x,T,W,H,visTop,Math.min(visBot,H));
   // 先平行啟動本次要用的所有圖片下載(填入快取);下面的 draw 迴圈再逐張命中 → 平行載入、漸進顯示,不再一張等一張
-  for(const s of lay.secs) for(const c of s.items){ loadImg(c.url); if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
+  for(const s of lay.secs) for(const c of s.items){ loadImg(dispUrl(c.url)); { const sp=specOf(c.url); if(sp&&sp.badge) loadImg(sp.badge); } if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
   const EC=lay.cols||effCols();
   for(const s of lay.secs){
     if(s.panelY<=visBot && s.panelY+s.ph>=visTop){ x.fillStyle=T.panel;rrPath(x,PAD,s.panelY,W-2*PAD,s.ph,24);x.fill(); }
@@ -2929,8 +3044,142 @@ async function shareLink(){
   }
 }
 // 電腦版下載完不會跳結果卡(直接存檔),改跳贊助浮窗。每次下載都出現(站長的決定)。
+/* ===== 查價(eBay) =====
+   交換時常有人拿不對等的籌碼換 → 每張卡一顆 $,一鍵到 eBay 看行情。
+   預設搜尋字由 price-query.js 依 data/price_search.json 的規則組出來(站長用 price-editor.html 維護);
+   那支檔跟編輯器共用,編輯器預覽的字 = 這裡實際搜的字。
+   使用者還是能對單張卡再改,存在 c.pq,跟著清單存檔 / 雲端 / 分享;改回跟預設一樣就刪掉,
+   之後規則更新時,沒改過的卡會自動吃到新規則。
+   不看「已成交」:eBay 的成交篩選要登入;130point 的搜尋頁不吃網址參數,帶不進搜尋字,所以也不用。 */
+let EN_NAMES=null, PRICE_CFG=null, PRICE_CARD=null, PRICE_NODE=null;
+async function ensurePriceData(){
+  const jobs=[];
+  if(!EN_NAMES) jobs.push((LANG==='en'&&Object.keys(NAMES).length?Promise.resolve(NAMES):loadNames('en'))
+    .then(m=>{ if(Object.keys(m).length) EN_NAMES=m; }));   // 載入失敗先不快取,下次再試
+  if(!PRICE_CFG) jobs.push(fetch('data/price_search.json').then(r=>r.ok?r.json():null).catch(()=>null)
+    .then(d=>{ PRICE_CFG=PriceQuery.normCfg(d); }));        // 沒有這個檔 = 全用 price-query.js 的預設
+  await Promise.all(jobs);
+}
+const priceCfg=()=>PRICE_CFG||PriceQuery.normCfg(null);
+function defaultPriceQuery(c){
+  return PriceQuery.build(c, priceCfg(), {POKE, BG, enName:d=>(EN_NAMES&&EN_NAMES[d])||nameOf(d)});
+}
+function curPriceQuery(){ return $('#priceQ').value.trim()||defaultPriceQuery(PRICE_CARD); }
+function syncPriceLinks(){ $('#priceEbay').href=PriceQuery.siteURL(priceCfg().sites.ebay, curPriceQuery()); }
+function syncPriceMon(){ const c=PRICE_CARD; if(!c) return;
+  $('#priceMon').textContent=nameOf(c.dex)+specSuffix(c.url)+(c.shiny?' ✨':'')+(c.tag?' · '+tagLabel(c.tag):''); }
+async function openPrice(c,node){
+  PRICE_CARD=c; PRICE_NODE=node;
+  await ensurePriceData();
+  syncPriceMon();
+  $('#priceQ').value=c.pq||defaultPriceQuery(c);
+  syncPriceLinks();
+  $('#priceMask').classList.add('on');
+  // 手機上自動聚焦會直接彈鍵盤、蓋掉按鈕 → 只在有實體鍵盤時聚焦
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches) $('#priceQ').select();
+}
+function closePrice(){ $('#priceMask').classList.remove('on'); PRICE_CARD=PRICE_NODE=null; }
+function savePriceQuery(){
+  const c=PRICE_CARD; if(!c) return;
+  const v=$('#priceQ').value.trim();
+  if(!v || v===defaultPriceQuery(c)) delete c.pq; else c.pq=v;
+  const b=PRICE_NODE&&PRICE_NODE.querySelector('.pq'); if(b) b.classList.toggle('has',!!c.pq);
+  persist();
+}
+function setupPriceModal(){
+  $('#priceQ').oninput=()=>{ savePriceQuery(); syncPriceLinks(); };
+  $('#priceQ').onkeydown=e=>{ if(e.key==='Enter'&&!e.isComposing){ e.preventDefault(); $('#priceEbay').click(); } };
+  $('#priceReset').onclick=()=>{ if(!PRICE_CARD) return; $('#priceQ').value=defaultPriceQuery(PRICE_CARD); savePriceQuery(); syncPriceLinks(); };
+  $('#priceEbay').onclick=()=>{ savePriceQuery(); syncPriceLinks();
+    if(window.track) track('price_search',{site:'ebay',custom:!!(PRICE_CARD&&PRICE_CARD.pq)}); };
+  $('#priceClose').onclick=closePrice;
+  closeOnBackdrop($('#priceMask'),closePrice);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('#priceMask').classList.contains('on')) closePrice(); });
+  $('#ptipOk').onclick=()=>closePriceTip(true);
+  $('#ptipTry').onclick=()=>{ const t=PTIP&&PTIP.t; closePriceTip(true); if(t&&t.isConnected) t.click(); };
+}
+/* ===== 新功能提示:查價 =====
+   舊使用者不會自己發現卡片下多了一顆小小的 $ → 第一次進站時,聚光燈打在第一張看得到的卡的 $ 上:
+   畫面變暗、$ 亮起來脈動、灑一圈光點、旁邊泡泡說明,可以直接「試試看」。
+   按知道了 / 試試看 / 點其他地方 / Esc 都算看過(tlSeenPriceTip),之後不再出現。
+   清單是空的、正在選寶可夢或製圖、歡迎視窗或其他浮窗開著 → 先不出,
+   之後清單重畫(drawLists)或歡迎視窗關掉時再試。 */
+let PTIP=null, _ptipTimer=null;
+function seenPriceTip(){ try{ return localStorage.getItem('tlSeenPriceTip')==='1'; }catch(e){ return true; } }   // 讀不到就當看過,免得每次都跳
+function schedulePriceTip(){ if(seenPriceTip()) return; clearTimeout(_ptipTimer); _ptipTimer=setTimeout(maybeShowPriceTip,700); }
+function maybeShowPriceTip(){
+  if(!ready||seenPriceTip()) return;
+  if(PTIP){ if(PTIP.t.isConnected) return; closePriceTip(false); }   // 清單重畫、指著的節點被換掉 → 重新找一顆
+  const B=document.body.classList;
+  if(B.contains('editmode')||B.contains('picking')) return;
+  if(document.querySelector('#introMask.on,#priceMask.on,#mixMask.on,#saveMask.on,#supMask.on,#busyMask.on')) return;
+  const t=[...document.querySelectorAll('#listW .li .pq,#listH .li .pq')].find(b=>b.getClientRects().length);
+  if(t) showPriceTip(t);
+}
+function showPriceTip(t){
+  const root=$('#ptip'), spot=$('#ptipSpot'), bub=$('#ptipBubble'), arrow=$('#ptipArrow'), burst=$('#ptipBurst');
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  t.scrollIntoView({block:'center',behavior:still?'auto':'smooth'});
+  t.classList.add('pqGlow');
+  PTIP={t,raf:0};
+  // 每個 frame 重算位置:跟著頁面捲動、清單自己的捲軸、手機轉向走
+  const place=()=>{
+    if(!PTIP) return;
+    if(!t.isConnected){ closePriceTip(false); schedulePriceTip(); return; }
+    const r=t.getBoundingClientRect(), pad=6, vw=innerWidth, vh=innerHeight;
+    Object.assign(spot.style,{left:(r.left-pad)+'px',top:(r.top-pad)+'px',width:(r.width+pad*2)+'px',height:(r.height+pad*2)+'px'});
+    burst.style.left=(r.left+r.width/2)+'px'; burst.style.top=(r.top+r.height/2)+'px';
+    const bw=bub.offsetWidth, bh=bub.offsetHeight, gap=18;
+    const below=r.bottom+gap+bh<=vh-12 || r.top-gap-bh<12;   // 下面放得下就放下面,不然放上面
+    const left=Math.max(16,Math.min(vw-16-bw, r.left+r.width/2-bw/2));
+    bub.style.left=left+'px'; bub.style.top=Math.max(12, below?r.bottom+gap:r.top-gap-bh)+'px';
+    bub.classList.toggle('below',below); bub.classList.toggle('above',!below);
+    arrow.style.left=Math.max(14,Math.min(bw-30, r.left+r.width/2-left-9))+'px';
+    PTIP.raf=requestAnimationFrame(place);
+  };
+  burst.innerHTML='';
+  if(!still) for(let i=0;i<16;i++){
+    const sp=document.createElement('i'), a=i/16*Math.PI*2, d=40+(i%3)*16;
+    sp.style.setProperty('--dx',(Math.cos(a)*d).toFixed(1)+'px'); sp.style.setProperty('--dy',(Math.sin(a)*d).toFixed(1)+'px');
+    sp.style.animationDelay=(.35+(i%2)*.08)+'s'; burst.appendChild(sp);
+  }
+  root.classList.add('on','in');
+  place();
+  // 暗幕是 box-shadow,不擋點擊 → 在 capture 階段攔:
+  //   點泡泡 → 照常;點到 $ 本身 → 收掉提示,查價照常打開;點其他地方 → 只收掉提示,不讓那一下誤觸底下的東西
+  PTIP.onDown=e=>{
+    if(bub.contains(e.target)) return;
+    if(t.contains(e.target)){ closePriceTip(true); return; }
+    e.preventDefault(); e.stopPropagation(); closePriceTip(true);
+    const eat=ev=>{ ev.preventDefault(); ev.stopPropagation(); };
+    document.addEventListener('click',eat,{capture:true,once:true});
+    setTimeout(()=>document.removeEventListener('click',eat,true),600);
+  };
+  PTIP.onKey=e=>{ if(e.key==='Escape') closePriceTip(true); };
+  document.addEventListener('pointerdown',PTIP.onDown,true);
+  document.addEventListener('keydown',PTIP.onKey,true);
+}
+function closePriceTip(markSeen){
+  if(!PTIP) return;
+  cancelAnimationFrame(PTIP.raf);
+  document.removeEventListener('pointerdown',PTIP.onDown,true);
+  document.removeEventListener('keydown',PTIP.onKey,true);
+  PTIP.t.classList.remove('pqGlow');
+  $('#ptip').classList.remove('on','in'); $('#ptipBurst').innerHTML='';
+  PTIP=null;
+  if(markSeen){ clearTimeout(_ptipTimer); try{ localStorage.setItem('tlSeenPriceTip','1'); }catch(e){} }
+}
 function showSupportModal(){ const m=$('#supMask'); if(m) m.classList.add('on'); }
 function closeSupportModal(){ const m=$('#supMask'); if(m) m.classList.remove('on'); }
+/* 點遮罩空白處關閉浮窗 —— 但只算「按下與放開都在遮罩本身」。
+   只聽 click 的話:在視窗裡框選文字、放開時滑到視窗外,瀏覽器會把 click 發在兩者共同的外層(也就是遮罩)上,
+   e.target===遮罩 成立 → 視窗被誤關。先記住 pointerdown 落在哪裡就不會了。 */
+function closeOnBackdrop(mask,fn){
+  if(!mask) return;
+  let downOnMask=false;
+  mask.addEventListener('pointerdown',e=>{ downOnMask=(e.target===mask); });
+  mask.addEventListener('click',e=>{ const ok=downOnMask&&e.target===mask; downOnMask=false; if(ok) fn(); });
+}
 function toast(msg,act){
   let t=$('#toast'); if(!t){ t=document.createElement('div'); t.id='toast'; document.body.appendChild(t); }
   t.textContent=''; t.classList.toggle('act',!!act);
@@ -2971,11 +3220,54 @@ function monUrl(p,mon,shiny){
   const v=mon.costume?costVar(p,mon.costume,shiny):(mon.form?formVar(p,mon.form,shiny):baseVar(p,shiny));
   return v&&v.url;
 }
+/* ===== 特殊型態:至尊(Apex)/ 黃昏岩狗狗… =====
+   設定在 data/special_forms.json(手動維護),素材由 gen_special_forms.py 產生。
+   以「sprite 檔名」為鍵:卡片只存 url,不存型態代碼,檔名是唯一對得回去的東西 ——
+   而且清單裡存的仍是原本的 sprite url,只有「顯示」換成帶特效的圖 → 既有清單、分享連結、查價規則都不受影響。
+   同一個 form 代碼在別的寶可夢身上可能是別的東西(拉帝亞斯也有 S),所以設定一律是 dex + form。
+   素材不存在(沒跑產生器)就自動退回原圖/不顯示徽章,不會破圖。 */
+let SPECIAL={};
+const fileOf=u=>String(u||'').split('/').pop().split('?')[0];
+function specOf(u){ return SPECIAL[fileOf(u)]||null; }
+function dispUrl(u){ const s=specOf(u); return (s&&s.disp)||u; }
+function specLabel(u){ const s=specOf(u); return s ? (s.label[LANG]||s.label.en||s.label.zh||'') : ''; }
+function specSuffix(u){ const l=specLabel(u); return l?' · '+l:''; }
+function fxCls(u){ const s=specOf(u); return s&&s.fx&&s.disp ? ' fx-'+s.fx : ''; }
+function specBadge(u,low){ const s=specOf(u); return s&&s.badge ? `<img class="fb${low?' low':''}" src="${cdn(s.badge)}" alt="">` : ''; }
+function matchSpecial(o,q){ const s=specOf(o.url); return !!s && s.hay.includes(q); }
+// no_shiny:遊戲裡沒有異色的特殊型態(至尊洛奇亞 / 鳳王)→ 選取網格與自由搭配不列異色版;已在清單裡的舊卡照樣顯示
+function hiddenShiny(v){ const s=v.shiny&&specOf(v.url); return !!(s&&s.noShiny); }
+async function loadSpecialForms(){
+  SPECIAL={};
+  let d=null;
+  try{ const r=await fetch('data/special_forms.json'); if(r.ok) d=await r.json(); }catch(e){}
+  const exists=u=>fetch(cdn(u),{method:'HEAD'}).then(r=>r.ok).catch(()=>false);
+  const checks=[];
+  for(const e of ((d&&d.forms)||[])){
+    const p=POKE[e.dex]; if(!p) continue;
+    for(const v of p.variants){
+      if((v.form||null)!==(e.form||null)) continue;
+      const file=fileOf(v.url);
+      const s={id:e.id||'', fx:e.fx||null, label:e.label||{}, disp:null, badge:null, noShiny:!!e.no_shiny,
+               hay:zhLower([...(e.aliases||[]), ...Object.values(e.label||{})].join('|'))};
+      // 至尊光暈圖只存在本機 assets(遠端 PokeMiners 網址沒有這張)
+      if(e.fx && v.url.startsWith('assets/img/') && !(e.no_shiny&&v.shiny))   // 沒有異色的就不去問異色光暈圖(免得每次開站多一個 404)
+        checks.push(exists('assets/img/fx_'+file).then(ok=>{ if(ok) s.disp='assets/img/fx_'+file; }));
+      if(e.badge_evo){
+        const q=POKE[e.badge_evo.dex];
+        const ev=q&&q.variants.find(x=>(x.form||null)===(e.badge_evo.form||null)&&!!x.shiny===!!v.shiny&&!x.gender);
+        if(ev){ const b='assets/badge_evo_'+fileOf(ev.url); checks.push(exists(b).then(ok=>{ if(ok) s.badge=b; })); }
+      }
+      SPECIAL[file]=s;
+    }
+  }
+  await Promise.all(checks);
+}
 function buildThumbs(){
   THUMBS=[];BGCOMBOS=[];
   for(const p of Object.values(POKE)){
     // form / costume 一併帶進格子:讓選取網格也能用型態代碼與造型別名搜(自由搭配本來就可以)
-    for(const v of p.variants) THUMBS.push({url:v.url,dex:p.id,zh:nameOf(p.id),shiny:v.shiny,gender:v.gender,badge:null,tag:'',cos:!!(v.form||v.costume),form:v.form||null,costume:v.costume||null});
+    for(const v of p.variants) if(!hiddenShiny(v)) THUMBS.push({url:v.url,dex:p.id,zh:nameOf(p.id),shiny:v.shiny,gender:v.gender,badge:null,tag:'',cos:!!(v.form||v.costume),form:v.form||null,costume:v.costume||null});
     if(p.gigantamax){
       if(p.gigantamax.normal)THUMBS.push({url:p.gigantamax.normal,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeG,tag:'超極巨化',gmax:true,form:'GIGANTAMAX',costume:null});
       if(p.gigantamax.shiny)THUMBS.push({url:p.gigantamax.shiny,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeG,tag:'超極巨化',gmax:true,form:'GIGANTAMAX',costume:null});
@@ -3033,7 +3325,7 @@ function buildMixMons(){
   if(MIXMONS) return MIXMONS;
   MIXMONS=[];
   for(const p of Object.values(POKE)){
-    for(const v of p.variants)
+    for(const v of p.variants) if(!hiddenShiny(v))
       MIXMONS.push({url:v.url,dex:p.id,shiny:!!v.shiny,gender:v.gender||null,form:v.form||null,costume:v.costume||null});
     // 超極巨化是另一張圖(不只是加徽章)→ 也列進來讓使用者可以單獨挑
     if(p.gigantamax){
@@ -3047,10 +3339,11 @@ function mixCell(o,sel,isBg){
   const d=document.createElement('div'); d.className='cell'+(sel?' sel':'');
   d.innerHTML = isBg
     ? `<img class="cbg" loading="lazy" decoding="async" src="${thumbOf(o.image_url)}">`
-    : `<img class="m big" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(o.url)}">`
+    : `<img class="m big${fxCls(o.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(dispUrl(o.url))}">`
+      + specBadge(o.url,false)
       + (o.shiny?'<span class="sh">✨</span>':'')
       + gnMark(o.gender);
-  d.title = isBg ? (o.name||o.image_name) : (nameOf(o.dex)+(o.form?' · '+o.form:'')+(o.costume?' · '+o.costume:'')+(o.shiny?' ✨':''));
+  d.title = isBg ? (o.name||o.image_name) : (nameOf(o.dex)+specSuffix(o.url)+(o.form?' · '+o.form:'')+(o.costume?' · '+o.costume:'')+(o.shiny?' ✨':''));
   return d;
 }
 /* 捲到剩兩螢幕就補下一批(與選取網格的 needMore 同一條規則)。
@@ -3124,14 +3417,14 @@ function renderMixBadges(){
 function syncMix(){
   const card=$('#mixCard'), m=MIX.mon, bd=mixBadge();
   card.innerHTML = (MIX.bg?`<img class="cbg" src="${thumbOf(MIX.bg)}">`:'')
-    + (m?`<img class="m" crossorigin="anonymous" src="${thumbOf(m.url)}">`:'')
+    + (m?`<img class="m${fxCls(m.url)}" crossorigin="anonymous" src="${thumbOf(dispUrl(m.url))}">`+specBadge(m.url,!!bd.img):'')
     + (bd.img?`<img class="bd" src="${cdn(bd.img)}">`:'')
     + (m&&m.shiny?'<span class="sh">✨</span>':'')
     + (m?gnMark(m.gender):'');
   const im=card.querySelector('img.m'); if(im)hookTrim(im,!!MIX.bg,card.clientWidth||104);
   const bgName=MIX.bg?(BG.find(b=>b.image_url===MIX.bg)||{}).name:null;
   $('#mixInfo').innerHTML = m
-    ? `<b>${nameOf(m.dex)}${m.shiny?' ✨':''}</b>`
+    ? `<b>${nameOf(m.dex)}${specSuffix(m.url)}${m.shiny?' ✨':''}</b>`
       + [m.form&&(tr('lbl_form')+' '+m.form), m.costume&&(tr('lbl_costume')+' '+m.costume),
          tagLabel(bd.tag), bgName&&(tr('lbl_bg')+' '+bgName)]
         .filter(Boolean).map(t=>`<div>${t}</div>`).join('')
@@ -3256,8 +3549,12 @@ function restoreCollapse(){ for(const k of ['want','have']){
     const tg=document.getElementById(k==='want'?'tgWant':'tgHave'); if(tg)tg.setAttribute('aria-expanded','false'); } } }
 // 點浮層外的暗色背景 → 收起選取面板(點面板內或編輯鈕不會誤關)
 // 手機版:面板左右兩側有縫隙,誤觸會跳離選擇 → 手機只用「✓ 完成」關閉,不因點外面而關;電腦版維持點外面即關
+/* 從選取面板打開的浮層(自由搭配、查價…)是疊在面板上面的延伸,在裡面點不算「點到面板外面」——
+   不排除的話,打開自由搭配後隨便點一下,後面的選取面板就被關掉(而且畫面上看不出來為什麼)。
+   toast 的「復原」鈕、新功能提示同理。 */
+const OVER_PICKER='#mixMask,#priceMask,#saveMask,#supMask,#introMask,#busyMask,#toast,#ptip';
 document.addEventListener('pointerdown',e=>{ if(window.innerWidth<=700)return;
-  if(document.body.classList.contains('picking')&&!e.target.closest('#selPanel')&&!e.target.closest('.editSec')) closePicker(); },true);
+  if(document.body.classList.contains('picking')&&!e.target.closest('#selPanel')&&!e.target.closest('.editSec')&&!e.target.closest(OVER_PICKER)) closePicker(); },true);
 function refreshAdded(){
   for(const d of $('#grid').children){
     const it=d._it; if(!it)continue;
@@ -3324,7 +3621,7 @@ let preloadToken=0;
 function preloadAhead(){
   const my=++preloadToken;                // 換篩選/滾動就取消上一輪
   const start=shown, end=Math.min(shown+AHEAD, FILTERED.length);
-  const urls=[]; for(let k=start;k<end;k++){ const it=FILTERED[k]; if(!it)continue; urls.push(thumbOf(it.url)); if(it.bg)urls.push(thumbOf(it.bg)); }
+  const urls=[]; for(let k=start;k<end;k++){ const it=FILTERED[k]; if(!it)continue; urls.push(thumbOf(dispUrl(it.url))); if(it.bg)urls.push(thumbOf(it.bg)); }
   let i=0, active=0; const MAX=6;
   function pump(){
     if(my!==preloadToken) return;
@@ -3344,9 +3641,9 @@ function appendBatch(){
   for(let i=shown;i<end;i++){
     const it=FILTERED[i];const on=inTarget(it);const d=document.createElement('div');d.className=on?'cell added':'cell';
     d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${thumbOf(it.bg)}">`:''}
-      <img class="m${it.bg?'':' big'}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(it.url)}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}
+      <img class="m${it.bg?'':' big'}${fxCls(it.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(dispUrl(it.url))}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}${specBadge(it.url,!!it.badge)}
       ${it.shiny?'<span class="sh">✨</span>':''}${gnMark(it.gender)}${on?'<span class="ok">✓</span>':''}`;
-    d.title=(it.zh||'')+(it.tag?'('+tagLabel(it.tag)+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' '+tr('f_shiny'):'');
+    d.title=(it.zh||'')+specSuffix(it.url)+(it.tag?'('+tagLabel(it.tag)+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' '+tr('f_shiny'):'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
     frag.appendChild(d); made.push(d);
   }
@@ -3653,7 +3950,7 @@ function cycleGender(k,c,node){
     const urlChanged=cand.url!==c.url;
     c.gender=want; c.url=cand.url;
     if(urlChanged){ const im=node.querySelector('img.m');
-      if(im){ im.src=cdn(c.url); hookTrim(im,!!c.bg); } }
+      if(im){ im.src=cdn(dispUrl(c.url)); hookTrim(im,!!c.bg); } }
     refreshAdded();               // 網格的 ✓ 依 keyOf 判斷,性別變了要跟著更新
     scheduleBase(); persist();
     return true;
@@ -3667,7 +3964,7 @@ function cycleGender(k,c,node){
 function makeCard(k,c,i,box,cnt){
       const d=document.createElement('div');d.className='li';
       d.innerHTML=`<div class="card">${c.bg?`<img class="bg" loading="lazy" decoding="async" src="${thumbOf(c.bg)}" referrerpolicy="no-referrer">`:''}
-        <img class="m${c.bg?'':' big'}" crossorigin="anonymous" loading="lazy" decoding="async" src="${cdn(c.url)}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}
+        <img class="m${c.bg?'':' big'}${fxCls(c.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${cdn(dispUrl(c.url))}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}${specBadge(c.url,!!c.badge)}
         ${c.shiny?'<span class="sh">✨</span>':''}
         <button class="del">✕</button></div>`;
       // 性別鈕:大多數物種公母同圖,交易時卻常有人指定 → 加完之後在卡片上點一下就能標
@@ -3723,7 +4020,13 @@ function makeCard(k,c,i,box,cnt){
           if(!LIST[k].length) box.innerHTML='<div class="empty">'+tr('empty')+'</div>';
           renderSets(); persist(); scheduleBase(); }); };
       liDrag(d,k,i);
-      d.appendChild(ni);
+      const pq=document.createElement('button'); pq.className='pq'+(c.pq?' has':''); pq.type='button';
+      pq.textContent='$'; pq.title=tr('price_tip');
+      pq.onpointerdown=e=>e.stopPropagation();   // 不觸發卡片拖曳
+      pq.onclick=e=>{ e.stopPropagation(); openPrice(c,d); };
+      const row=document.createElement('div'); row.className='noteRow';
+      row.appendChild(ni); row.appendChild(pq);
+      d.appendChild(row);
       return d;
 }
 function drawLists(){
@@ -3739,6 +4042,7 @@ function drawLists(){
   }
   persist();
   renderSets();   // 更新清單膠囊上的數量
+  schedulePriceTip();   // 第一次有卡片時才出新功能提示
 }
 
 /* ===== 清單記錄:登入→雲端(Firebase Realtime DB),未登入→localStorage ===== */

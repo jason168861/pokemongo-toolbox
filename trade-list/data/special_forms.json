@@ -1,0 +1,18 @@
+{
+ "version": 1,
+ "note": "交易清單的特殊型態顯示設定(手動維護,build_data.py / fetch_assets.py 不會碰)。dex+form 對到 pokemon.json 的變體(同一個 form 代碼在別的寶可夢身上可能是別的東西,例:拉帝亞斯也有 S);fx=apex → gen_special_forms.py 產生帶金色光暈與星光的 sprite;badge_evo → 右上角放進化後樣子的圓形徽章(異色對異色);label 顯示在提示、自由搭配與查價視窗;aliases 讓搜尋框找得到;no_shiny=true → 遊戲裡沒有異色,選取網格 / 自由搭配 / 查價編輯器都不列異色版(已在清單裡的舊卡照樣顯示)。改完跑 python gen_special_forms.py。",
+ "forms": [
+  {"id": "apex", "dex": 249, "form": "S", "fx": "apex", "no_shiny": true,
+   "label": {"zh": "至尊", "en": "Apex", "ja": "APEX", "ko": "APEX", "fr": "Apex", "de": "Apex", "es": "Ápex"},
+   "aliases": ["至尊", "apex", "ápex"]},
+  {"id": "apex", "dex": 250, "form": "S", "fx": "apex", "no_shiny": true,
+   "label": {"zh": "至尊", "en": "Apex", "ja": "APEX", "ko": "APEX", "fr": "Apex", "de": "Apex", "es": "Ápex"},
+   "aliases": ["至尊", "apex", "ápex"]},
+  {"id": "dusk", "dex": 744, "form": "DUSK", "badge_evo": {"dex": 745, "form": "DUSK"},
+   "label": {"zh": "黃昏", "en": "Dusk", "ja": "たそがれ", "ko": "황혼", "fr": "Crépusculaire", "de": "Zwielicht", "es": "Crepuscular"},
+   "aliases": ["黃昏", "dusk", "我行我素", "own tempo", "たそがれ", "황혼", "crépusculaire", "zwielicht", "crepuscular"]},
+  {"id": "dusk", "dex": 745, "form": "DUSK",
+   "label": {"zh": "黃昏", "en": "Dusk", "ja": "たそがれ", "ko": "황혼", "fr": "Crépusculaire", "de": "Zwielicht", "es": "Crepuscular"},
+   "aliases": ["黃昏", "dusk", "たそがれ", "황혼", "crépusculaire", "zwielicht", "crepuscular"]}
+ ]
+}

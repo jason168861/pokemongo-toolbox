@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>查價搜尋字 — 交易清單</title>
+<!--
+  交易清單 $ 查價的預設搜尋字維護工具。產出 data/price_search.json,index.html 讀它。
+  組字邏輯在 price-query.js(與 index.html 共用同一支,預覽 = 使用者實際搜到的字)。
+
+  搭配 preview.py 用:
+      python preview.py       → http://127.0.0.1:8797/price-editor.html
+  按「儲存」會 POST 回 preview.py 直接覆蓋 data/price_search.json(舊檔留成 .bak)。
+  用 file:// 開或放到線上時寫不了檔,會自動退回「下載檔案」。
+-->
+<style>
+:root{
+  --bg:#0f1220; --bg2:#151a2e; --card:#1a1f36; --line:#2b3153; --fg:#eef0fb; --mut:#9aa3c7;
+  --acc:#7b5cff; --acc2:#e0276c; --ok:#2f9e57; --warn:#f0c850; --cell:#0d1024;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#0f1220,#191540);color:var(--fg);
+  font:14px/1.5 system-ui,"Segoe UI","Noto Sans TC",sans-serif;min-height:100vh}
+h1{font-size:17px;margin:0}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--fg);
+  border-radius:8px;padding:6px 12px}
+button:hover{border-color:var(--acc)}
+button.pri{background:var(--acc);border-color:var(--acc)}
+button.pri:hover{filter:brightness(1.15)}
+button.danger:hover{border-color:var(--acc2);color:#ff9dbb}
+button:disabled{opacity:.45;cursor:default}
+input,textarea{font:inherit;background:var(--cell);color:var(--fg);border:1px solid var(--line);
+  border-radius:8px;padding:6px 10px;outline:none}
+input:focus,textarea:focus{border-color:var(--acc)}
+input::placeholder{color:#6f78a3}
+a{color:#a99bff}
+code{background:var(--cell);border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:12px}
+
+header{position:sticky;top:0;z-index:20;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  padding:10px 14px;background:rgba(15,18,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .sp{flex:1}
+#state{font-size:12px;color:var(--mut)}
+#state.dirty{color:var(--warn)}
+#state.saved{color:#7fe0a5}
+
+.tabs{display:flex;gap:6px;padding:10px 14px 0;flex-wrap:wrap}
+.tabs button{border-radius:10px 10px 0 0;border-bottom-color:transparent}
+.tabs button.on{background:var(--card);border-color:var(--acc);border-bottom-color:var(--card);color:#fff}
+.tabs button .n{font-size:11px;color:#b7f5cf;margin-left:4px}
+
+.banner{margin:10px 14px 0;padding:9px 12px;border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:8px;background:rgba(240,200,80,.07);font-size:13px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.banner.hide{display:none}
+
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;padding:14px;align-items:start}
+main.one{grid-template-columns:minmax(0,1fr)}
+@media(max-width:980px){main{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sub{color:var(--mut);font-size:12px}
+.hr{height:1px;background:var(--line);margin:12px 0}
+.hidden{display:none!important}
+
+.fields{display:grid;grid-template-columns:130px minmax(0,1fr);gap:8px 10px;align-items:center;margin-top:8px}
+@media(max-width:520px){.fields{grid-template-columns:minmax(0,1fr)}}
+.fields input{width:100%}
+input.wide{width:100%;margin-top:8px}
+.ph{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+
+.tableWrap{max-height:calc(100vh - 250px);overflow:auto;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{color:var(--mut);font-weight:600;font-size:12px;position:sticky;top:0;background:var(--card);z-index:2}
+tr:hover td{background:rgba(123,92,255,.05)}
+/* 圖片大小由 --th 控制(表格上方的滑桿,存 localStorage);背卡分頁用 1.6 倍寬的橫長圖 */
+body{--th:160px}
+td.im{width:calc(var(--th) + 16px)}
+td.im.wide{width:calc(var(--th) * 1.6 + 16px)}
+.thumbs{position:relative;width:var(--th);height:var(--th);border-radius:10px;overflow:hidden;background:var(--cell)}
+.thumbs.wide{width:calc(var(--th) * 1.6)}
+.szCtl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mut);white-space:nowrap}
+.szCtl input{width:140px;padding:0;accent-color:var(--acc)}
+#thVal{min-width:44px;color:var(--fg)}
+.thumbs img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.thumbs img.bgi{object-fit:cover}
+.thumbs img.mi{inset:8%;width:84%;height:84%}
+td .nm{font-size:13px;word-break:break-word}
+td input.val{width:100%;min-width:170px}
+tr.mod input.val{border-color:var(--acc2)}
+/* 型態/造型:同一個代碼好幾隻共用時,「全部共用」列 + 底下每隻各一列 */
+tr.grpHead td{background:rgba(123,92,255,.10);border-top:2px solid var(--acc)}
+tr.grpHead .nm{font-weight:700}
+tr.grpHead .nm::before{content:'共用';font-size:10px;font-weight:700;color:#fff;background:var(--acc);border-radius:20px;padding:1px 7px;margin-right:6px;vertical-align:1px}
+tr.grpItem td:first-child{box-shadow:inset 3px 0 0 var(--acc);padding-left:26px}
+td.pv{font-size:12px;color:#cfd5f5;word-break:break-word;min-width:190px}
+.links{display:flex;gap:12px;margin-top:3px;font-size:12px}
+.kbadge{font-size:11px;padding:1px 7px;border-radius:20px;border:1px solid var(--line);color:var(--mut);white-space:nowrap;display:inline-block}
+.kbadge.mon{color:#8fd6ff;border-color:#2b4a63}
+.kbadge.form{color:#ffcf8f;border-color:#5f4a2b}
+.kbadge.bg{color:#c7b0ff;border-color:#443063}
+.kbadge.combo{color:#9ff0c0;border-color:#2b5f43}
+
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#000c;color:#fff;
+  padding:9px 16px;border-radius:20px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:60;
+  border:1px solid var(--line);max-width:90vw;text-align:center}
+#toast.on{opacity:1}
+</style>
+<script src="price-query.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>💲 查價搜尋字</h1>
+  <span class="sub">→ data/price_search.json</span>
+  <span id="state">載入中…</span>
+  <span class="sp"></span>
+  <button id="btnUndo" title="復原(Ctrl+Z)" disabled>↺ 復原</button>
+  <button id="btnImport">⤒ 匯入</button>
+  <button id="btnExport">⤓ 下載</button>
+  <button class="pri" id="btnSave">💾 儲存</button>
+  <input type="file" id="fileIn" accept=".json,application/json" class="hidden">
+</header>
+
+<div class="banner hide" id="draftBar">
+  <span id="draftMsg"></span>
+  <button class="pri" id="draftLoad">載入草稿</button>
+  <button id="draftDrop">丟棄</button>
+</div>
+<div class="banner hide" id="warnBar"><span id="warnMsg"></span></div>
+
+<div class="tabs" id="tabs">
+  <button data-t="rules" class="on">⚙ 通用規則</button>
+  <button data-t="mon">寶可夢名稱</button>
+  <button data-t="form">型態 / 造型</button>
+  <button data-t="bg">背卡</button>
+  <button data-t="combo">🎯 單一組合</button>
+  <button data-t="list">📋 已修改</button>
+</div>
+
+<!-- ===== 通用規則 ===== -->
+<main id="viewRules">
+  <div class="panel">
+    <b>搜尋字模板</b>
+    <div class="sub">留空 = 用預設。可用的欄位(沒有值的會自動省略):</div>
+    <div class="ph">
+      <code>{name}</code><span class="sub">名稱</span>
+      <code>{shiny}</code><span class="sub">異色</span>
+      <code>{kind}</code><span class="sub">極巨化/超極巨化/淨化</span>
+      <code>{form}</code><span class="sub">型態造型</span>
+      <code>{bg}</code><span class="sub">背卡</span>
+      <code>{dex}</code><span class="sub">編號</span>
+    </div>
+    <input id="rTemplate" class="wide" spellcheck="false">
+    <div class="hr"></div>
+    <b>固定用字</b>
+    <div class="sub">留空 = 用灰字的預設;輸入 <code>-</code> = 不加這個字</div>
+    <div class="fields" id="rWords"></div>
+    <div class="hr"></div>
+    <b>查價網站</b>
+    <div class="sub"><code>{q}</code> 會換成搜尋字。留空 = 用預設;也可以在網址後面加 eBay 的篩選參數。</div>
+    <div class="fields" id="rSites"></div>
+  </div>
+  <div class="panel">
+    <b>預覽</b>
+    <div class="sub">邊打邊更新;各類型各挑一個組合示範</div>
+    <div class="tableWrap" style="max-height:none">
+      <table><thead><tr><th>類型</th><th>組合</th><th>搜尋字</th></tr></thead><tbody id="rSamples"></tbody></table>
+    </div>
+  </div>
+</main>
+
+<!-- ===== 名稱 / 型態 / 背卡 / 組合 / 已修改 共用的表格 ===== -->
+<main id="viewTable" class="one hidden">
+  <div class="panel">
+    <div class="row">
+      <input id="q" placeholder="搜尋…" style="flex:1;min-width:200px">
+      <button id="fMod" data-on="0">只看已修改</button>
+      <span class="sub" id="count"></span>
+      <label class="szCtl" for="thSize">圖片大小 <input type="range" id="thSize" min="64" max="256" step="8"><span id="thVal"></span></label>
+    </div>
+    <div class="sub" id="help" style="margin-top:8px"></div>
+    <div class="tableWrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    <div class="sub" id="more" style="margin-top:8px"></div>
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const PQ=window.PriceQuery, own=PQ.own;
+const FILE='data/price_search.json', DRAFT='priceDraft', BATCH=120;
+const LANGS=['zh','en','ja','ko','fr','de','es'];
+const BADGE={D:'assets/badge_dynamax.png',G:'assets/badge_gigantamax.png',P:'assets/badge_purified.png'};   // 與 index.html 相同
+const KIND_ZH={dynamax:'極巨化',gigantamax:'超極巨化',purified:'淨化'};
+const WORD_LABEL={shiny:'異色',dynamax:'極巨化',gigantamax:'超極巨化',purified:'淨化',background:'背卡後綴'};
+const SITE_LABEL={ebay:'eBay 搜尋網址'};
+const HELP={
+  mon:'留空 = 用灰字的英文官方名。例:Nidoran♀ → <code>Nidoran female</code>',
+  form:'型態 / 造型代碼預設<b>不加</b>進搜尋字(代碼本身拿去搜只會更糟),填了才會放進 <code>{form}</code>。'
+    +'好幾隻共用同一個代碼時(例:<code>SPRING_2020_NOEVOLVE</code>),「全部共用」那列套用到每一隻;'
+    +'底下每隻自己那列填了就<b>只換那一隻</b>,輸入 <code>-</code> = 這隻不加。可打寶可夢名稱或代碼找。',
+  bg:'留空 = 用灰字的預設(城市 / 活動名 + background);輸入 <code>-</code> = 不加背卡字。可用 aliases.json 的中文別名搜(台南、首爾…)。',
+  combo:'整句指定某一個組合的搜尋字,<b>優先於所有規則</b>。灰字是依規則組出來的結果。搜尋可打名稱、代碼、背卡、shiny、dynamax…',
+  list:'所有改過的項目。清空輸入框 = 刪除該項。',
+};
+
+let POKE={}, BG=[], EN={}, ZH={}, ALLNAMES={}, BGALIAS={}, CTX=null;
+let CFG=blankCfg(), NOTE='', DIRTY=false, HIST=[], VIEW='rules', ROWS=[], BEFORE=null;
+let COMBOS=[], FORMS=[], NO_SHINY=new Set(), SPEC={};
+
+function blankCfg(){ return {words:{},sites:{},mon:{},form:{},bg:{},combo:{}}; }
+const cfg=()=>PQ.normCfg(CFG);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toast=(m,ms=2000)=>{const t=$('#toast');t.textContent=m;t.classList.add('on');
+  clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('on'),ms);};
+function thumb(u){ if(!u)return '';
+  if(u.startsWith('assets/img/'))return 'assets/thumb/'+u.slice(11).replace(/\.png$/i,'.webp');
+  if(u.startsWith('assets/bg/'))return 'assets/bgthumb/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp');
+  return u; }
+/* 表格圖片:顯示得比縮圖(sprite 128px、背卡 220px)大就換大圖,放大才不會糊。
+   sprite → 256px 原圖;背卡 → 384px 的 bgexp(fetch_assets 產的匯出用圖),載不到再退回原檔 */
+let TH=160;
+function imgSrc(u){
+  if(!u) return '';
+  if(u.startsWith('assets/bg/')) return TH*1.6<=200 ? thumb(u) : 'assets/bgexp/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp');
+  return TH<=100 ? thumb(u) : u;
+}
+function imgTag(u,cls){
+  const src=imgSrc(u);
+  return `<img class="${cls}" loading="lazy" decoding="async" src="${esc(src)}" data-orig="${esc(u)}" alt=""`
+    +` onerror="if(this.dataset.orig&&this.getAttribute('src')!==this.dataset.orig){this.src=this.dataset.orig}else{this.style.visibility='hidden'}">`;
+}
+function setThumbSize(px,redraw){
+  TH=Math.max(64,Math.min(256,+px||160));
+  document.body.style.setProperty('--th',TH+'px');
+  $('#thSize').value=TH; $('#thVal').textContent=TH+'px';
+  try{ localStorage.setItem('priceEditorThumb',String(TH)); }catch(e){}
+  if(redraw&&VIEW!=='rules') drawTable();   // 換大圖 / 縮圖的網址
+}
+
+/* ===== 與 index.html 相同的 sprite 選擇(組合鍵靠 sprite 網址回查造型,兩邊必須挑到同一張) ===== */
+const baseVar=(p,s)=>p.variants.find(v=>!!v.shiny===s&&(!v.form||v.form===p.base_form)&&!v.costume&&!v.gender)||p.variants.find(v=>!!v.shiny===s)||null;
+const formVar=(p,f,s)=>p.variants.find(v=>v.form===f&&!!v.shiny===s&&!v.costume&&!v.gender)||p.variants.find(v=>v.form===f&&!!v.shiny===s)||baseVar(p,s);
+const costVar=(p,c,s)=>p.variants.find(v=>v.costume===c&&!!v.shiny===s&&!v.gender)||p.variants.find(v=>v.costume===c&&!!v.shiny===s)||baseVar(p,s);
+function monUrl(p,mon,shiny){
+  if(mon.sprite) return (shiny&&mon.sprite_shiny)||mon.sprite;
+  const v=mon.costume?costVar(p,mon.costume,shiny):(mon.form?formVar(p,mon.form,shiny):baseVar(p,shiny));
+  return v&&v.url;
+}
+
+/* ===== 載入 ===== */
+async function jget(p,fallback){ try{const r=await fetch(p,{cache:'no-store'}); if(r.ok)return await r.json(); }catch(e){} return fallback; }
+async function loadData(name){ return (await jget('data/'+name+'.local.json',null)) || await jget('data/'+name+'.json',null); }
+async function boot(){
+  const [poke,bg,aliases,special,...names]=await Promise.all([loadData('pokemon'),loadData('backgrounds'),
+    jget('data/aliases.json',null), jget('data/special_forms.json',null), ...LANGS.map(l=>jget('data/names/'+l+'.json',{}))]);
+  if(!poke||!bg){ $('#state').textContent='✗ 讀不到 data/,請用 python preview.py 開這一頁'; return; }
+  POKE=poke; BG=bg; ZH=names[0]||{}; EN=names[1]||{};
+  for(const m of names) for(const d in m) ALLNAMES[d]=(ALLNAMES[d]?ALLNAMES[d]+'|':'')+m[d];
+  for(const d in ALLNAMES) ALLNAMES[d]=ALLNAMES[d].toLowerCase();
+  for(const e of ((aliases&&aliases.entries)||[])) if(e.kind==='bg')
+    for(const t of (e.targets||[])) BGALIAS[t]=(BGALIAS[t]||'')+'|'+(e.terms||[]).join('|').toLowerCase();
+  CTX={POKE,BG,enName:d=>EN[d]||('#'+d)};
+  // 跟 index.html 一樣:special_forms.json 標了 no_shiny 的型態(至尊洛奇亞 / 鳳王)遊戲裡沒有異色 → 不列
+  for(const e of ((special&&special.forms)||[])) if(e.no_shiny&&POKE[e.dex])
+    for(const v of POKE[e.dex].variants) if(v.shiny&&(v.form||null)===(e.form||null)) NO_SHINY.add(v.url);
+  // 特殊型態的標籤 / 搜尋別名 / 至尊光暈圖(以 sprite 檔名對應,與 index.html 同規則)
+  for(const e of ((special&&special.forms)||[])) if(POKE[e.dex])
+    for(const v of POKE[e.dex].variants) if((v.form||null)===(e.form||null)){
+      const f=v.url.split('/').pop();
+      SPEC[f]={label:(e.label&&(e.label.zh||e.label.en))||e.id||'',
+        hay:[...(e.aliases||[]), ...Object.values(e.label||{}), e.id||''].join('|').toLowerCase(),
+        disp:e.fx&&!(e.no_shiny&&v.shiny)&&v.url.startsWith('assets/img/')?'assets/img/fx_'+f:null};
+    }
+  buildCombos(); buildForms();
+  const f=await jget(FILE,null);
+  adopt(f);
+  checkDraft();
+  bindUI();
+  if(!/^(127\.0\.0\.1|localhost|\[::1\])$/.test(location.hostname)){
+    $('#warnMsg').innerHTML='這一頁不是由 <code>preview.py</code> 提供的,「儲存」只能下載檔案。'
+      +'要直接存回 <code>data/price_search.json</code> 請在 trade-list 資料夾執行 <code>python preview.py</code>。';
+    $('#warnBar').classList.remove('hide');
+  }
+  setView('rules'); mark(false);
+}
+// 只留下「有改的」:template/words/sites 沒寫 = 用 price-query.js 的預設,之後調預設時沒改過的會跟著走
+function adopt(d){
+  const c=blankCfg(); d=d&&typeof d==='object'?d:{};
+  if(typeof d.template==='string'&&d.template.trim()) c.template=d.template;
+  for(const k of ['words','sites']) for(const w in (d[k]||{})) if(own(PQ.DEF[k],w)&&typeof d[k][w]==='string') c[k][w]=d[k][w];
+  for(const k of ['mon','form','bg','combo']) for(const key in (d[k]||{})) if(typeof d[k][key]==='string') c[k][key]=d[k][key];
+  CFG=c; NOTE=typeof d.note==='string'?d.note:NOTE;
+}
+
+/* ===== 所有組合(與 index.html buildThumbs 相同的列舉方式) ===== */
+function buildCombos(){
+  const seen=new Map();
+  const add=c=>{ if(!c.url)return; const key=PQ.comboKey(c,CTX); if(seen.has(key))return; c.key=key; seen.set(key,c); };
+  for(const p of Object.values(POKE).sort((a,b)=>a.id-b.id)){
+    for(const v of p.variants) if(!NO_SHINY.has(v.url)) add({dex:p.id,url:v.url,shiny:!!v.shiny,badge:null,bg:null});   // 公母同鍵,取第一張
+    if(p.gigantamax){
+      add({dex:p.id,url:p.gigantamax.normal,shiny:false,badge:BADGE.G,bg:null});
+      add({dex:p.id,url:p.gigantamax.shiny,shiny:true,badge:BADGE.G,bg:null});
+    }
+    if(p.dynamax_capable){ const n=baseVar(p,false), s=baseVar(p,true);
+      if(n)add({dex:p.id,url:n.url,shiny:false,badge:BADGE.D,bg:null});
+      if(s)add({dex:p.id,url:s.url,shiny:true,badge:BADGE.D,bg:null}); }
+  }
+  for(const b of BG){ if(!b.image_url)continue;
+    for(const mon of (b.pokemon||[])){ const p=POKE[mon.dex]; if(!p)continue;
+      const un=monUrl(p,mon,false), us=monUrl(p,mon,true);
+      const A=(url,shiny,badge)=>add({dex:p.id,url,shiny,badge,bg:b.image_url});
+      if(mon.gmax){ if(p.gigantamax){ A(p.gigantamax.normal,false,BADGE.G); if(mon.shiny)A(p.gigantamax.shiny,true,BADGE.G); } }
+      else if(mon.dynamax){ A(un,false,BADGE.D); if(mon.shiny)A(us,true,BADGE.D); }
+      else if(mon.shadow){ A(un,false,BADGE.P); if(mon.shiny)A(us,true,BADGE.P); }
+      else { A(un,false,null); if(mon.shiny)A(us,true,null); }
+    }
+  }
+  COMBOS=[...seen.values()];
+  for(const c of COMBOS){ c.code=PQ.formCodeOf(c,POKE); c.kind=PQ.kindOf(c); c.bgo=PQ.bgOf(c,BG); }
+}
+function buildForms(){
+  const m=new Map();
+  for(const p of Object.values(POKE).sort((a,b)=>a.id-b.id)) for(const v of p.variants){
+    if(v.shiny)continue;
+    const code=v.costume||(v.form&&v.form!==p.base_form?v.form:''); if(!code)continue;
+    const o=m.get(code)||{code,dex:[],samples:{},isCos:!!v.costume,sample:{dex:p.id,url:v.url,shiny:false,badge:null,bg:null}};
+    if(!o.dex.includes(p.id)){ o.dex.push(p.id); o.samples[p.id]={dex:p.id,url:v.url,shiny:false,badge:null,bg:null}; }   // 每隻自己的圖與預覽用卡
+    m.set(code,o);
+  }
+  FORMS=[...m.values()].sort((a,b)=>a.code<b.code?-1:1);
+}
+const zhName=d=>ZH[d]||EN[d]||('#'+d);
+const namesOf=ds=>ds.length<=3?ds.map(zhName).join('、'):ds.slice(0,3).map(zhName).join('、')+` …等 ${ds.length} 隻`;
+/* 特殊型態(data/special_forms.json)——不標出來的話,至尊洛奇亞在這裡只是「洛奇亞 · S」,
+   跟拉帝亞斯的 S 混在同一組,搜「至尊」「apex」也找不到 */
+function specOfUrl(u){ return SPEC[String(u||'').split('/').pop()]||null; }
+function specTag(u){ const s=specOfUrl(u); return s&&s.label?' 【'+s.label+'】':''; }
+function specHay(u){ const s=specOfUrl(u); return s?'|'+s.hay:''; }
+function specImg(u){ const s=specOfUrl(u); return (s&&s.disp)||u; }
+function comboLabel(c){ return zhName(c.dex)+specTag(c.url)+(c.shiny?' ✨':'')+(c.kind?' · '+KIND_ZH[c.kind]:'')+(c.code?' · '+c.code:''); }
+function comboSub(c){ return '#'+c.dex+(c.bgo?' · 🖼 '+(c.bgo.name||c.bgo.image_name):''); }
+
+/* ===== 值的讀寫:輸入框顯示值 ↔ 存檔值 =====
+   空白 = 刪掉這項(回到預設);背卡與固定用字的 "-" = 存成 ""(明確不加) */
+const DASH=new Set(['bg','words','form']);
+function shown(kind,map,key){ if(!own(map,key))return ''; const v=map[key]; return v===''&&DASH.has(kind)?'-':v; }
+function apply(kind,map,key,raw){
+  const v=String(raw).trim();
+  if(!v) delete map[key]; else if(v==='-'&&DASH.has(kind)) map[key]=''; else map[key]=v;
+}
+// 打字時即時套用 + 預覽;離開輸入框才記一筆復原點(不然每個字一筆)
+function beginEdit(){ if(BEFORE==null) BEFORE=JSON.stringify(CFG); }
+function endEdit(){ if(BEFORE!=null&&BEFORE!==JSON.stringify(CFG)){ HIST.push(BEFORE); if(HIST.length>80)HIST.shift(); $('#btnUndo').disabled=false; } BEFORE=null; }
+function undo(){ if(!HIST.length)return; CFG=JSON.parse(HIST.pop()); $('#btnUndo').disabled=!HIST.length; mark(true); setView(VIEW,true); toast('已復原'); }
+
+function counts(){
+  return {rules:(CFG.template?1:0)+Object.keys(CFG.words).length+Object.keys(CFG.sites).length,
+    mon:Object.keys(CFG.mon).length, form:Object.keys(CFG.form).length, bg:Object.keys(CFG.bg).length, combo:Object.keys(CFG.combo).length};
+}
+function mark(dirty){
+  DIRTY=dirty; const n=counts(), total=Object.values(n).reduce((a,b)=>a+b,0), s=$('#state');
+  s.className=dirty?'dirty':'saved';
+  s.textContent=(dirty?'● 有未儲存的變更 · ':'✓ 已同步 · ')+'共改了 '+total+' 項';
+  for(const b of $$('#tabs button')){ const k=b.dataset.t;
+    if(!b.dataset.label) b.dataset.label=b.textContent;
+    const c=k==='list'?total-n.rules:n[k];
+    b.innerHTML=esc(b.dataset.label)+(c?`<span class="n">${c}</span>`:''); }
+  if(dirty) try{ localStorage.setItem(DRAFT,JSON.stringify({t:Date.now(),cfg:CFG})); }catch(e){}
+}
+function checkDraft(){
+  let d=null; try{ d=JSON.parse(localStorage.getItem(DRAFT)||'null'); }catch(e){}
+  if(!d||!d.cfg||JSON.stringify(d.cfg)===JSON.stringify(CFG))return;
+  $('#draftMsg').textContent='偵測到上次沒存檔的草稿('+new Date(d.t).toLocaleString()+'),要接著編嗎?';
+  $('#draftBar').classList.remove('hide');
+  $('#draftLoad').onclick=()=>{ HIST.push(JSON.stringify(CFG)); $('#btnUndo').disabled=false;
+    adopt(d.cfg); $('#draftBar').classList.add('hide'); mark(true); setView(VIEW,true); };
+  $('#draftDrop').onclick=()=>{ try{localStorage.removeItem(DRAFT);}catch(e){} $('#draftBar').classList.add('hide'); };
+}
+
+/* ===== 連結 ===== */
+function linksHTML(q){
+  return `<div class="links"><a href="${esc(PQ.siteURL(cfg().sites.ebay,q))}" target="_blank" rel="noopener">在 eBay 試搜 ↗</a></div>`;
+}
+
+/* ===== 通用規則 ===== */
+function drawRules(){
+  const t=$('#rTemplate'); t.value=CFG.template||''; t.placeholder=PQ.DEF.template;
+  const field=(kind,key,label)=>`<label for="f_${kind}_${key}">${esc(label)}</label>`
+    +`<input id="f_${kind}_${key}" data-kind="${kind}" data-key="${key}" spellcheck="false" placeholder="${esc(PQ.DEF[kind][key])}" value="${esc(shown(kind,CFG[kind],key))}">`;
+  $('#rWords').innerHTML=Object.keys(PQ.DEF.words).map(k=>field('words',k,WORD_LABEL[k]||k)).join('');
+  $('#rSites').innerHTML=Object.keys(SITE_LABEL).map(k=>field('sites',k,SITE_LABEL[k])).join('');
+  for(const inp of $$('#rWords input,#rSites input')){
+    inp.onfocus=beginEdit; inp.onblur=endEdit;
+    inp.oninput=()=>{ beginEdit(); apply(inp.dataset.kind,CFG[inp.dataset.kind],inp.dataset.key,inp.value); mark(true); drawSamples(); };
+  }
+  drawSamples();
+}
+function samples(){
+  const f=p=>COMBOS.find(p);
+  const isCos=c=>!!c.code&&POKE[c.dex]&&POKE[c.dex].variants.some(v=>v.url===c.url&&v.costume);
+  return [
+    ['一般', f(c=>c.dex===25&&!c.shiny&&!c.kind&&!c.code&&!c.bg)],
+    ['異色', f(c=>c.dex===150&&c.shiny&&!c.kind&&!c.code&&!c.bg)],
+    ['超極巨化', f(c=>c.kind==='gigantamax'&&c.shiny&&!c.bg)],
+    ['極巨化', f(c=>c.kind==='dynamax'&&!c.bg)],
+    ['型態', f(c=>c.code&&!isCos(c)&&!c.bg)],
+    ['造型', f(c=>isCos(c)&&!c.bg)],
+    ['地點背卡', f(c=>c.bgo&&c.bgo.type==='location'&&c.shiny)],
+    ['活動背卡', f(c=>c.bgo&&c.bgo.type==='special')],
+    ['淨化', f(c=>c.kind==='purified')],
+  ].filter(x=>x[1]);
+}
+function drawSamples(){
+  const C=cfg();
+  $('#rSamples').innerHTML=samples().map(([k,c])=>{ const q=PQ.build(c,C,CTX);
+    return `<tr><td><span class="kbadge">${esc(k)}</span></td>`
+      +`<td><div class="nm">${esc(comboLabel(c))}</div><div class="sub">${esc(comboSub(c))}</div></td>`
+      +`<td class="pv">${esc(q)}${linksHTML(q)}</td></tr>`; }).join('');
+}
+
+/* ===== 表格分頁 ===== */
+function rowsFor(view){
+  if(view==='mon') return Object.values(POKE).sort((a,b)=>a.id-b.id).map(p=>{
+    const k=String(p.id), base=baseVar(p,false)||p.variants[0]||{};
+    // 新出的寶可夢常常名稱檔還沒更新(PokeMiners 還沒翻)→ 不要留白,標出來提醒自己在右邊填英文名
+    const named=ZH[k]||EN[k];
+    return {kind:'mon',key:k,img:base.url,label:named?(ZH[k]||'')+'  '+(EN[k]||''):'#'+k+'  ⚠ 名稱檔沒有這隻,請在右邊填英文名',sub:'#'+k,
+      hay:(ALLNAMES[k]||'')+'|'+k, ph:()=>EN[k]||'', sample:{dex:p.id,url:base.url,shiny:false,badge:null,bg:null}}; });
+  // 一個代碼只有一隻 → 一列(存 CODE);好幾隻共用 → 「全部共用」一列(CODE)+ 每隻一列(dex|CODE,優先於共用)
+  if(view==='form') return FORMS.flatMap(o=>{
+    const kindTxt=o.isCos?'造型':'型態', allHay=(o.code+'|'+o.dex.map(d=>(ALLNAMES[d]||'')+specHay(o.samples[d].url)).join('|')).toLowerCase();
+    if(o.dex.length===1) return [{kind:'form',key:o.code,img:specImg(o.sample.url),label:zhName(o.dex[0])+specTag(o.sample.url)+' · '+o.code,
+      sub:kindTxt+' · #'+o.dex[0], hay:allHay, ph:()=>'(不加)', sample:o.sample}];
+    return [
+      {kind:'form',key:o.code,group:'head',img:o.sample.url,label:o.code+' · 全部 '+o.dex.length+' 隻',
+        sub:kindTxt+' · '+namesOf(o.dex), hay:allHay, ph:()=>'(不加)', sample:o.sample,
+        // 共用列的預覽要顯示「共用字」本身:示範那隻若自己另外設了字,預覽時先忽略掉那隻的設定
+        pcfg:()=>{ const c=cfg(), f={...c.form}; for(const d of o.dex) delete f[d+'|'+o.code]; return {...c,form:f}; }},
+      ...o.dex.map(d=>({kind:'form',key:d+'|'+o.code,group:'item',img:specImg(o.samples[d].url),label:zhName(d)+specTag(o.samples[d].url)+' · '+o.code,
+        sub:'#'+d+' · 只套用這隻', hay:(o.code+'|'+(ALLNAMES[d]||'')+'|'+d+specHay(o.samples[d].url)).toLowerCase(),
+        ph:()=>own(CFG.form,o.code)&&CFG.form[o.code]?'共用:'+CFG.form[o.code]:'(不加)', sample:o.samples[d]})),
+    ];
+  });
+  if(view==='bg') return BG.filter(b=>b.image_url).map(b=>{
+    const m=(b.pokemon||[]).find(x=>POKE[x.dex]), p=m&&POKE[m.dex];
+    return {kind:'bg',key:b.image_name,bgimg:b.image_url,wide:true,label:b.name||b.image_name,
+      sub:b.image_name+' · '+namesOf([...new Set((b.pokemon||[]).map(x=>x.dex))]),
+      hay:(b.image_name+'|'+(b.name||'')+(BGALIAS[b.image_name]||'')+'|'+(b.pokemon||[]).map(x=>ALLNAMES[x.dex]||'').join('|')).toLowerCase(),
+      ph:()=>PQ.defaultBgWord(b,cfg().words)||'(不加)',
+      sample:p?{dex:p.id,url:monUrl(p,m,false),shiny:false,badge:null,bg:b.image_url}:null}; });
+  if(view==='combo') return COMBOS.map(c=>({kind:'combo',key:c.key,img:specImg(c.url),bgimg:c.bg||'',
+    label:comboLabel(c),sub:comboSub(c),
+    hay:((ALLNAMES[c.dex]||'')+'|'+c.dex+'|'+c.code+'|'+c.kind+(c.shiny?'|shiny|異色':'')+specHay(c.url)
+      +(c.bgo?'|'+c.bgo.image_name+'|'+(c.bgo.name||'')+(BGALIAS[c.bgo.image_name]||''):'')).toLowerCase(),
+    ph:()=>PQ.build(c,cfg(),CTX,{ignoreCombo:true}), sample:c}));
+  if(view==='list') return ['mon','form','bg','combo'].flatMap(k=>Object.keys(CFG[k]).length?rowsFor(k).filter(r=>own(CFG[k],r.key)):[]);
+  return [];
+}
+function setView(v,keepQuery){
+  VIEW=v; BEFORE=null;
+  $$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===v));
+  $('#viewRules').classList.toggle('hidden',v!=='rules');
+  $('#viewTable').classList.toggle('hidden',v==='rules');
+  if(v==='rules'){ drawRules(); return; }
+  if(!keepQuery) $('#q').value='';
+  $('#q').placeholder={mon:'搜尋寶可夢…名稱(各語言)或編號',form:'搜尋代碼或寶可夢名稱(例:HALLOWEEN、皮卡丘)',
+    bg:'搜尋背卡…地名、檔名、中文別名或卡上的寶可夢',combo:'搜尋組合…例:超夢 shiny、las vegas、gigantamax',list:'搜尋已修改的項目…'}[v];
+  $('#help').innerHTML=HELP[v]||'';
+  $('#fMod').classList.toggle('hidden',v==='list');
+  $('#thead').innerHTML=`<tr><th></th>${v==='list'?'<th>類型</th>':''}<th>目標</th><th style="width:34%">搜尋字(可直接改)</th>`
+    +`<th style="width:30%">使用者會搜到</th>${v==='list'?'<th></th>':''}</tr>`;
+  ROWS=rowsFor(v);
+  drawTable();
+}
+function drawTable(){
+  // 空白分隔 = 每個詞都要中(「超夢 shiny」「las vegas gigantamax」);比對名稱索引、標籤與目前填的字
+  const words=$('#q').value.trim().toLowerCase().split(/\s+/).filter(Boolean), onlyMod=$('#fMod').dataset.on==='1'&&VIEW!=='list';
+  const val=r=>CFG[r.kind][r.key];
+  const list=ROWS.filter(r=>{
+    if(onlyMod&&!own(CFG[r.kind],r.key)) return false;
+    if(!words.length) return true;
+    const text=r.hay+'|'+r.label.toLowerCase()+'|'+r.sub.toLowerCase()+'|'+String(val(r)||'').toLowerCase();
+    return words.every(w=>text.includes(w));
+  });
+  const kn={mon:'名稱',form:'型態造型',bg:'背卡',combo:'組合'};
+  const tb=$('#tbody'); tb.innerHTML='';
+  TABLE={list,kn,shown:0};
+  const wrap=$('#viewTable .tableWrap'); if(wrap) wrap.scrollTop=0;
+  appendRows();
+  if(!list.length) tb.innerHTML=`<tr><td colspan="6" class="sub">${VIEW==='list'?'還沒有修改任何項目':'沒有符合的項目'}</td></tr>`;
+  $('#count').textContent='共 '+list.length+' 項';
+}
+/* 全部都列得出來,但分批長 DOM:一次先畫 BATCH 列,捲到接近底部再補下一批 ——
+   六千多個組合、每列一個輸入框 + 大圖,一次塞進去會卡好幾秒。 */
+let TABLE={list:[],kn:{},shown:0};
+function appendRows(){
+  const {list,kn}=TABLE, tb=$('#tbody'), end=Math.min(list.length,TABLE.shown+BATCH);
+  if(end<=TABLE.shown) return;
+  const frag=document.createDocumentFragment();
+  for(const r of list.slice(TABLE.shown,end)){
+    const tr=document.createElement('tr');
+    if(r.group) tr.className=r.group==='head'?'grpHead':'grpItem';
+    tr.innerHTML=`<td class="im${r.wide?' wide':''}"><div class="thumbs${r.wide?' wide':''}">`
+        +(r.bgimg?imgTag(r.bgimg,'bgi'):'')
+        +(r.img?imgTag(r.img,r.bgimg?'mi':''):'')
+      +`</div></td>`
+      +(VIEW==='list'?`<td><span class="kbadge ${r.kind}">${kn[r.kind]}</span></td>`:'')
+      +`<td><div class="nm">${esc(r.label)}</div><div class="sub">${esc(r.sub)}</div></td>`
+      +`<td><input class="val" spellcheck="false"></td><td class="pv"></td>`
+      +(VIEW==='list'?`<td><button class="danger del">刪除</button></td>`:'');
+    const inp=tr.querySelector('.val');
+    inp.value=shown(r.kind,CFG[r.kind],r.key);
+    r._tr=tr; r._in=inp; r._pv=tr.querySelector('.pv');
+    inp.onfocus=beginEdit; inp.onblur=endEdit;
+    inp.oninput=()=>{ beginEdit(); apply(r.kind,CFG[r.kind],r.key,inp.value); mark(true); refreshVisible(); };   // 改「全部共用」會影響同組其他列的預覽
+    inp.onkeydown=e=>{ if(e.key==='Enter'&&!e.isComposing) inp.blur(); };
+    const del=tr.querySelector('.del');
+    if(del) del.onclick=()=>{ beginEdit(); delete CFG[r.kind][r.key]; endEdit(); mark(true); setView('list',true); };
+    refreshRow(r);
+    frag.appendChild(tr);
+  }
+  tb.appendChild(frag);
+  TABLE.shown=end;
+  $('#more').textContent=end<list.length?`已載入 ${end} / ${list.length} 項,往下捲會繼續載入…`:(list.length?`已全部列出(${list.length} 項)`:'');
+  // 圖很小(或畫面很高)時一批塞不滿捲動區 → 不會觸發捲動事件,直接再補
+  const wrap=$('#viewTable .tableWrap');
+  if(wrap && end<list.length && wrap.scrollHeight<=wrap.clientHeight+600) requestAnimationFrame(appendRows);
+}
+function refreshVisible(){ for(const x of ROWS) if(x._in&&x._tr.isConnected) refreshRow(x); }
+function refreshRow(r){
+  if(!r._in) return;
+  r._in.placeholder=r.ph();
+  r._tr.classList.toggle('mod',own(CFG[r.kind],r.key));
+  if(!r.sample){ r._pv.innerHTML='<span class="sub">(這張卡沒有可用的寶可夢)</span>'; return; }
+  const q=PQ.build(r.sample,r.pcfg?r.pcfg():cfg(),CTX);
+  r._pv.innerHTML=esc(q)+linksHTML(q);
+}
+
+/* ===== 存檔 ===== */
+function serialize(){
+  const srt=o=>Object.fromEntries(Object.keys(o).sort((a,b)=>a.localeCompare(b,'en',{numeric:true})).map(k=>[k,o[k]]));
+  const out={version:1, updated:new Date().toISOString().slice(0,10),
+    note:NOTE||'交易清單 $ 查價的搜尋字規則,用 price-editor.html 編輯。'};
+  if(CFG.template) out.template=CFG.template;
+  for(const k of ['words','sites']) if(Object.keys(CFG[k]).length) out[k]=CFG[k];
+  for(const k of ['mon','form','bg','combo']) out[k]=srt(CFG[k]);
+  return JSON.stringify(out,null,1)+'\n';
+}
+function download(text){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));
+  a.download='price_search.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+async function save(){
+  endEdit();
+  const text=serialize();
+  try{
+    const r=await fetch('/__save?f='+encodeURIComponent(FILE),{method:'POST',headers:{'Content-Type':'application/json'},body:text});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok) throw new Error(j.error||('HTTP '+r.status));
+    try{ localStorage.removeItem(DRAFT); }catch(e){}
+    mark(false); toast('✔ 已寫回 '+FILE+'(舊檔備份為 price_search.json.bak)',3000);
+  }catch(err){
+    download(text);
+    $('#warnMsg').textContent='寫不回檔案('+err.message+')→ 已改成下載 price_search.json,請自行覆蓋到 trade-list/data/。'
+      +' 想直接存檔請用:python preview.py 開這一頁。';
+    $('#warnBar').classList.remove('hide');
+  }
+}
+
+/* ===== 綁定 ===== */
+function bindUI(){
+  $$('#tabs button').forEach(b=>b.onclick=()=>setView(b.dataset.t));
+  const t=$('#rTemplate');
+  t.onfocus=beginEdit; t.onblur=endEdit;
+  t.oninput=()=>{ beginEdit(); if(t.value.trim()) CFG.template=t.value; else delete CFG.template; mark(true); drawSamples(); };
+  $('#q').oninput=()=>drawTable();
+  $('#viewTable .tableWrap').addEventListener('scroll',e=>{   // 捲到離底部不到 1200px 就補下一批
+    const w=e.currentTarget; if(TABLE.shown<TABLE.list.length && w.scrollTop+w.clientHeight>w.scrollHeight-1200) appendRows();
+  },{passive:true});
+  { let saved=null; try{ saved=localStorage.getItem('priceEditorThumb'); }catch(e){}
+    setThumbSize(saved||160,false); }
+  $('#thSize').oninput=()=>setThumbSize($('#thSize').value,false);   // 拖曳時只改 CSS 變數,即時縮放
+  $('#thSize').onchange=()=>setThumbSize($('#thSize').value,true);   // 放開才重畫(換大圖 / 縮圖網址)
+  $('#fMod').onclick=()=>{ const b=$('#fMod'); b.dataset.on=b.dataset.on==='1'?'0':'1'; b.classList.toggle('pri',b.dataset.on==='1'); drawTable(); };
+  $('#btnSave').onclick=save;
+  $('#btnExport').onclick=()=>{ endEdit(); download(serialize()); };
+  $('#btnUndo').onclick=undo;
+  $('#btnImport').onclick=()=>$('#fileIn').click();
+  $('#fileIn').onchange=async e=>{
+    const f=e.target.files[0]; if(!f)return;
+    try{ const d=JSON.parse(await f.text()); HIST.push(JSON.stringify(CFG)); $('#btnUndo').disabled=false;
+      adopt(d); mark(true); setView(VIEW,true); toast('已匯入'); }
+    catch(err){ toast('匯入失敗:'+err.message,3000); }
+    e.target.value='';
+  };
+  addEventListener('keydown',e=>{
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!/^(INPUT|TEXTAREA)$/.test(e.target.tagName)){ e.preventDefault(); undo(); }
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){ e.preventDefault(); save(); }
+  });
+  addEventListener('beforeunload',e=>{ if(DIRTY){ e.preventDefault(); e.returnValue=''; } });
+}
+boot();
+</script>
+</body>
+</html>
