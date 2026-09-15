@@ -3670,9 +3670,9 @@ function setDefaultName(){ const taken=new Set(SETS.map(s=>s.name)); let n=1;
 function uniqueSetName(base){ const taken=new Set(SETS.map(s=>s.name));
   if(!taken.has(base)) return base; let i=2; while(taken.has(base+' '+i)) i++; return base+' '+i; }
 function newSet(name){ return {id:suid(), name:name||setDefaultName(), data:newSetData()}; }
-// 新用戶首次造訪的示範卡片:異色超夢 + NYC 2026 背卡(讓「我想要的」「我能提供的」一開始就有內容)
+// 新用戶首次造訪的示範卡片:異色超夢 + 10th Anniversary Celebration 背卡(讓「我想要的」「我能提供的」一開始就有內容)
 function starterCard(){ return {url:'assets/img/pm150.s.icon.png', badge:null, zh:nameOf(150), shiny:true, tag:'',
-                                bg:'assets/bg/Location_Background_NYC_2026.png', gender:null, dex:150}; }
+                                bg:'assets/bg/GO_10th_Anniversary_Celebration_Mewtwo_background.png', gender:null, dex:150}; }
 function newStarterSet(name){ const s=newSet(name); s.data.want=[starterCard()]; s.data.have=[starterCard()]; return s; }
 function curSet(){ return SETS.find(s=>s.id===activeSetId)||SETS[0]; }
 // 「⋯」選單的開關(清單管理的次要動作都收在裡面)
