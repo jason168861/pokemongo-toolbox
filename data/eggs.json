@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年9月15日04時",
+  "lastUpdated": "2026年9月15日12時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -312,6 +312,14 @@
       "cpRange": "799",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm942.icon.png",
       "isShiny": false
+    },
+    {
+      "eggDistance": 5,
+      "source": "regular",
+      "name": "Mime Jr",
+      "cpRange": "626",
+      "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm439.icon.png",
+      "isShiny": true
     },
     {
       "eggDistance": 5,
