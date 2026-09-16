@@ -1,10 +1,130 @@
 [
   {
-    "category": "Pokémon Horizons: The Series Celebration Event 2026 Tasks",
+    "category": "Pokémon Horizons: The Series Celebration Event 2026 - Nighttime (5 PM to 5 AM) Tasks",
     "tasks": [
       {
         "description": "捕捉 10 隻火屬性的寶可夢",
         "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Charmander wearing Friede's goggles",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.fGOGGLES_2026.icon.png",
+            "isShiny": false,
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伊布",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm133.icon.png",
+            "isShiny": false,
+            "maxCp": "459",
+            "minCp": "424"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷布莉姆",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm856.icon.png",
+            "isShiny": false,
+            "maxCp": "369",
+            "minCp": "338"
+          }
+        ]
+      },
+      {
+        "description": "投出1次Excellent Throw",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Charmander wearing Friede's goggles",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.fGOGGLES_2026.icon.png",
+            "isShiny": false,
+            "maxCp": "420",
+            "minCp": "387"
+          }
+        ]
+      },
+      {
+        "description": "投出 5 次Great",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "獨角犀牛",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm111.icon.png",
+            "isShiny": false,
+            "maxCp": "707",
+            "minCp": "664"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鹽石寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm932.icon.png",
+            "isShiny": false,
+            "maxCp": "414",
+            "minCp": "381"
+          }
+        ]
+      },
+      {
+        "description": "在團體戰中獲勝1次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "岩狗狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm744.icon.png",
+            "isShiny": false,
+            "maxCp": "407",
+            "minCp": "374"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小鍛匠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm957.icon.png",
+            "isShiny": false,
+            "maxCp": "368",
+            "minCp": "337"
+          }
+        ]
+      },
+      {
+        "description": "在團體戰中獲勝 2 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Captain's Cap Pikachu",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fHORIZONS.icon.png",
+            "isShiny": false,
+            "maxCp": "402",
+            "minCp": "369"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon Horizons: The Series Celebration Event 2026 - Daytime (5 AM to 5 PM) Tasks",
+    "tasks": [
+      {
+        "description": "捕捉 10 隻火屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Charmander wearing Friede's goggles",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.fGOGGLES_2026.icon.png",
+            "isShiny": false,
+            "maxCp": "420",
+            "minCp": "387"
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -22,6 +142,20 @@
             "isShiny": false,
             "maxCp": "354",
             "minCp": "323"
+          }
+        ]
+      },
+      {
+        "description": "投出1次Excellent Throw",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Charmander wearing Friede's goggles",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.fGOGGLES_2026.icon.png",
+            "isShiny": false,
+            "maxCp": "420",
+            "minCp": "387"
           }
         ]
       },
