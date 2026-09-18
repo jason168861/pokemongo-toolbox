@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-09-12",
+ "updated": "2026-09-18",
  "note": "交易清單搜尋用的別名表。請用 alias-editor.html 編輯(手改也可以,格式很單純)。 kind=mon → targets 是圖鑑編號;kind=form → 型態/造型代碼;kind=bg → 背卡的 image_name。",
  "entries": [
   {"kind":"mon","terms":["奇異種子"],"targets":["1"],"note":"舊譯名"},
@@ -138,6 +138,11 @@
   {"kind":"bg","terms":["新加坡"],"targets":["lc tpc30th singapore.png"]},
   {"kind":"bg","terms":["水墨"],"targets":["GO Road of Legends background.png"]},
   {"kind":"bg","terms":["太陽"],"targets":["Special Background GoFest2024 Radiance.png"]},
-  {"kind":"bg","terms":["月亮"],"targets":["Special Background GoFest2024 Umbra.png"]}
+  {"kind":"bg","terms":["月亮"],"targets":["Special Background GoFest2024 Umbra.png"]},
+  {"kind":"bg","terms":["飛機","ana航空"],"targets":["Location Background RPJ.png","Location Background GPJ.png"]},
+  {"kind":"bg","terms":["101","台北","台灣","臺北","臺灣"],"targets":["Location Background PokéXciting Taiwan.png"]},
+  {"kind":"bg","terms":["新加坡"],"targets":["Location Background PokéXciting Singapore.png"]},
+  {"kind":"bg","terms":["菲律賓","馬尼拉"],"targets":["Location Background PokéXciting Philippines.png"]},
+  {"kind":"bg","terms":["馬來西亞","吉隆坡"],"targets":["Location Background PokéXciting Malaysia.png"]}
  ]
 }
