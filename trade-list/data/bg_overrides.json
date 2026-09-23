@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-09-18",
+ "updated": "2026-09-23",
  "note": "背卡資料的人工修正。build_data.py 每次都把 backgrounds.json 整份重寫,所以修正要放在這裡才不會被 update.py 蓋掉。請用 bg-editor.html 編輯。op: remove=刪掉這筆 / set=改欄位(值給 null 代表刪掉該欄位) / add=補一筆來源沒有的 / setCard=改卡片自己的欄位(例如卡名)。key 由 dex|form|costume|gmax|dynamax|shadow|sprite檔名 組成。",
  "ops": [
   {"card":"GO Tainan background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"sprite":"assets/img/pm134.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm134.cMAY_2023.s.icon.png","shiny":true}},
@@ -76,7 +76,6 @@
   {"card":"GO Valor background.png","op":"set","key":"9||||||GO0009Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
   {"card":"GO Valor background.png","op":"set","key":"25||||||GO0025Leaf.png","fields":{"costume":"GOTOUR_2026_A_02","sprite":null}},
   {"card":"GO Valor background.png","op":"set","key":"25||||||GO0025Red.png","fields":{"costume":"GOTOUR_2026_A","sprite":null}},
-  {"card":"GO Valor background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"form":"ANNIVERSARY_2026","sprite":null}},
   {"card":"GO Valor background.png","op":"set","key":"88||||||GO0088Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null}},
   {"card":"GO Valor background.png","op":"set","key":"78||SPRING_2023_VALOR||||","fields":{"shiny":true}},
   {"card":"GO Valor background.png","op":"set","key":"89||||||GO0089Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null,"shiny":true}},
@@ -93,7 +92,6 @@
   {"card":"GO Instinct background.png","op":"set","key":"9||||||GO0009Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
   {"card":"GO Instinct background.png","op":"set","key":"25||||||GO0025Leaf.png","fields":{"costume":"GOTOUR_2026_A_02","sprite":null}},
   {"card":"GO Instinct background.png","op":"set","key":"25||||||GO0025Red.png","fields":{"costume":"GOTOUR_2026_A","sprite":null}},
-  {"card":"GO Instinct background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"form":"ANNIVERSARY_2026","sprite":null}},
   {"card":"GO Instinct background.png","op":"set","key":"88||||||GO0088Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null}},
   {"card":"GO Instinct background.png","op":"set","key":"89||||||GO0089Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null,"shiny":true}},
   {"card":"GO Instinct background.png","op":"set","key":"466||SPRING_2023_INSTINCT||||","fields":{"shiny":true}},
@@ -110,7 +108,6 @@
   {"card":"GO Mystic background.png","op":"set","key":"9||||||GO0009Visor.png","fields":{"costume":"SPRING_2020_NOEVOLVE","sprite":null}},
   {"card":"GO Mystic background.png","op":"set","key":"25||||||GO0025Leaf.png","fields":{"costume":"GOTOUR_2026_A_02","sprite":null}},
   {"card":"GO Mystic background.png","op":"set","key":"25||||||GO0025Red.png","fields":{"costume":"GOTOUR_2026_A","sprite":null}},
-  {"card":"GO Mystic background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"form":"ANNIVERSARY_2026","sprite":null}},
   {"card":"GO Mystic background.png","op":"set","key":"89||||||GO0089Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null,"shiny":true}},
   {"card":"GO Mystic background.png","op":"set","key":"88||||||GO0088Party.png","fields":{"costume":"ANNIVERSARY_2024","sprite":null}},
   {"card":"GO N background.png","op":"set","key":"521||||||GO0521_f.png","fields":{"sprite":"assets/img/pm521.g2.icon.png","sprite_shiny":"assets/img/pm521.g2.s.icon.png"}},
@@ -287,6 +284,11 @@
   {"card":"GO Horizons background.png","op":"set","key":"4||||||GO0004Friede.png","fields":{"form":"GOGGLES_2026","sprite":null}},
   {"card":"GO Horizons background.png","op":"set","key":"5||||||GO0005Friede.png","fields":{"form":"GOGGLES_2026","sprite":null,"shiny":true}},
   {"card":"GO Horizons background.png","op":"set","key":"6||||||GO0006Friede.png","fields":{"form":"GOGGLES_2026","sprite":null}},
-  {"card":"GO Horizons background.png","op":"set","key":"25||||||GO0025Captain.png","fields":{"costume":"HORIZONS","sprite":null}}
+  {"card":"GO Horizons background.png","op":"set","key":"25||||||GO0025Captain.png","fields":{"costume":"HORIZONS","sprite":null}},
+  {"card":"moonlight.jpg","op":"addCard","type":"location","name":"moonlight","image_url":"assets/bg/moonlight.jpg"},
+  {"card":"GO Valor background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"costume":"ANNIVERSARY_2026","sprite":null}},
+  {"card":"GO Instinct background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"costume":"ANNIVERSARY_2026","sprite":null}},
+  {"card":"GO Mystic background.png","op":"set","key":"25||||||GO0025Willow.png","fields":{"costume":"ANNIVERSARY_2026","sprite":null}},
+  {"card":"moonlight.jpg","op":"add","mon":{"dex":35,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}}
  ]
 }
