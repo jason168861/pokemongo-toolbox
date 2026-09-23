@@ -1,5 +1,49 @@
 [
   {
+    "category": "Choose Your Path: Twilight Trails Tasks",
+    "tasks": [
+      {
+        "description": "投出 5 次Nice",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "打敗1個GO火箭隊手下",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "探索 1 公里",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Pokémon Horizons: The Series Celebration Event 2026 - Nighttime (5 PM to 5 AM) Tasks",
     "tasks": [
       {
@@ -225,50 +269,6 @@
             "isShiny": false,
             "maxCp": "402",
             "minCp": "369"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "Choose Your Path: Twilight Trails Tasks",
-    "tasks": [
-      {
-        "description": "投出 5 次Nice",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
-            "name": "神奇糖果 ×1",
-            "quantity": "×1"
-          }
-        ]
-      },
-      {
-        "description": "打敗1個GO火箭隊手下",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
-            "name": "神奇糖果 ×1",
-            "quantity": "×1"
-          }
-        ]
-      },
-      {
-        "description": "探索 1 公里",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
-            "name": "神奇糖果 ×1",
-            "quantity": "×1"
           }
         ]
       }
