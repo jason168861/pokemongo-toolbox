@@ -98,6 +98,8 @@ jobs:
           rm -f trade-list/alias-editor.html trade-list/bg-editor.html
           rm -f trade-list/data/*.raw.json trade-list/data/*.raw.local.json
           rm -f cp-similarity-report.html
+          # 本機測試頁:內容是半成品/重複,上線會被 AdSense 審查當成低價值內容
+          rm -f filter-builder-test.html cp-test-rayquaza.html
 
       # 步驟 6: 將網站檔案 (包含剛抓到的新資料) 打包
       - name: Upload artifact
