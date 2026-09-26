@@ -3,7 +3,30 @@
     "category": "Phantump Catch Mastery Tasks",
     "tasks": [
       {
-        "description": "投出1次Excellent Throw",
+        "description": "投出 10 次Nice",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飄飄球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm425.icon.png",
+            "isShiny": false,
+            "maxCp": "513",
+            "minCp": "475"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小木靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "isShiny": false,
+            "maxCp": "481",
+            "minCp": "446"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 3 次Great",
         "rewards": [
           {
             "isFeatured": true,
@@ -40,7 +63,7 @@
         ]
       },
       {
-        "description": "連續投出 3 次Great",
+        "description": "投出1次Excellent Throw",
         "rewards": [
           {
             "isFeatured": true,
@@ -52,27 +75,76 @@
             "minCp": "446"
           }
         ]
+      }
+    ]
+  },
+  {
+    "category": "Brisbane, Australia - Pokémon GO City Safari Tasks",
+    "tasks": [
+      {
+        "description": "捕捉 5 隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          }
+        ]
       },
       {
-        "description": "投出 10 次Nice",
+        "description": "捕捉 15 隻寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "飄飄球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm425.icon.png",
+            "name": "泥驢仔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
             "isShiny": false,
-            "maxCp": "513",
-            "minCp": "475"
-          },
+            "maxCp": "811",
+            "minCp": "764"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 20 隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 5 隻不同的寶可夢",
+        "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "小木靈",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "name": "泥驢仔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
             "isShiny": false,
-            "maxCp": "481",
-            "minCp": "446"
+            "maxCp": "811",
+            "minCp": "764"
+          }
+        ]
+      },
+      {
+        "description": "為夥伴拍攝1張GO Snapshot照片",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
           }
         ]
       }
