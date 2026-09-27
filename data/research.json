@@ -1,84 +1,5 @@
 [
   {
-    "category": "Phantump Catch Mastery Tasks",
-    "tasks": [
-      {
-        "description": "投出 10 次Nice",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "飄飄球",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm425.icon.png",
-            "isShiny": false,
-            "maxCp": "513",
-            "minCp": "475"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小木靈",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
-            "isShiny": false,
-            "maxCp": "481",
-            "minCp": "446"
-          }
-        ]
-      },
-      {
-        "description": "連續投出 3 次Great",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小木靈",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
-            "isShiny": false,
-            "maxCp": "481",
-            "minCp": "446"
-          }
-        ]
-      },
-      {
-        "description": "投出 7 次Great",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "櫻花寶",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm420.icon.png",
-            "isShiny": false,
-            "maxCp": "407",
-            "minCp": "374"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小木靈",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
-            "isShiny": false,
-            "maxCp": "481",
-            "minCp": "446"
-          }
-        ]
-      },
-      {
-        "description": "投出1次Excellent Throw",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "小木靈",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
-            "isShiny": false,
-            "maxCp": "481",
-            "minCp": "446"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "category": "Brisbane, Australia - Pokémon GO City Safari Tasks",
     "tasks": [
       {
@@ -189,6 +110,85 @@
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
             "name": "神奇糖果 ×1",
             "quantity": "×1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Phantump Catch Mastery Tasks",
+    "tasks": [
+      {
+        "description": "投出 10 次Nice",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飄飄球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm425.icon.png",
+            "isShiny": false,
+            "maxCp": "513",
+            "minCp": "475"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小木靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "isShiny": false,
+            "maxCp": "481",
+            "minCp": "446"
+          }
+        ]
+      },
+      {
+        "description": "連續投出 3 次Great",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小木靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "isShiny": false,
+            "maxCp": "481",
+            "minCp": "446"
+          }
+        ]
+      },
+      {
+        "description": "投出 7 次Great",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "櫻花寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm420.icon.png",
+            "isShiny": false,
+            "maxCp": "407",
+            "minCp": "374"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小木靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "isShiny": false,
+            "maxCp": "481",
+            "minCp": "446"
+          }
+        ]
+      },
+      {
+        "description": "投出1次Excellent Throw",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小木靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm708.icon.png",
+            "isShiny": false,
+            "maxCp": "481",
+            "minCp": "446"
           }
         ]
       }
