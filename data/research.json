@@ -1,77 +1,5 @@
 [
   {
-    "category": "Brisbane, Australia - Pokémon GO City Safari Tasks",
-    "tasks": [
-      {
-        "description": "捕捉 5 隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1000",
-            "quantity": "×1000"
-          }
-        ]
-      },
-      {
-        "description": "捕捉 15 隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "泥驢仔",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
-            "isShiny": false,
-            "maxCp": "811",
-            "minCp": "764"
-          }
-        ]
-      },
-      {
-        "description": "捕捉 20 隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
-            "name": "神奇糖果 ×1",
-            "quantity": "×1"
-          }
-        ]
-      },
-      {
-        "description": "捕捉 5 隻不同的寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "泥驢仔",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
-            "isShiny": false,
-            "maxCp": "811",
-            "minCp": "764"
-          }
-        ]
-      },
-      {
-        "description": "為夥伴拍攝1張GO Snapshot照片",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1000",
-            "quantity": "×1000"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "category": "Choose Your Path: Twilight Trails Tasks",
     "tasks": [
       {
@@ -189,6 +117,78 @@
             "isShiny": false,
             "maxCp": "481",
             "minCp": "446"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Brisbane, Australia - Pokémon GO City Safari Tasks",
+    "tasks": [
+      {
+        "description": "捕捉 5 隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 15 隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥驢仔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
+            "isShiny": false,
+            "maxCp": "811",
+            "minCp": "764"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 20 隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 5 隻不同的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥驢仔",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
+            "isShiny": false,
+            "maxCp": "811",
+            "minCp": "764"
+          }
+        ]
+      },
+      {
+        "description": "為夥伴拍攝1張GO Snapshot照片",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×1000",
+            "quantity": "×1000"
           }
         ]
       }
