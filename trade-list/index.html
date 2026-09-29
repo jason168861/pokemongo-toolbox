@@ -529,9 +529,10 @@
   .priceCard .btn.g#priceClose{margin-top:8px;font-size:14px;padding:10px}
   .priceCard .priceHint{margin:12px 0 0;font-size:12px;line-height:1.5;color:var(--mut)}
   /* 新功能提示(查價):挖洞的聚光燈 + 脈動光圈 + 一圈光點 + 指向 $ 的泡泡。
-     聚光燈是 box-shadow 畫的暗幕,本身不吃點擊;點擊改由 JS 在 capture 階段攔(見 showPriceTip) */
+     聚光燈是 box-shadow 畫的暗幕,本身不吃點擊;點擊改由 JS 在 capture 階段攔(見 showTip) */
   #ptip{position:fixed;inset:0;z-index:480;display:none;pointer-events:none}
   #ptip.on{display:block}
+  #ptipBody{white-space:pre-line}   /* 提示內文可以有第二段(例如電腦版的縮放小技巧) */
   .ptipSpot{position:fixed;border-radius:10px;box-shadow:0 0 0 200vmax rgba(6,8,18,.74)}
   #ptip.in .ptipSpot{animation:ptipDim .45s ease-out both}
   @keyframes ptipDim{from{box-shadow:0 0 0 200vmax rgba(6,8,18,0)}to{box-shadow:0 0 0 200vmax rgba(6,8,18,.74)}}
@@ -612,7 +613,10 @@
   .txtctl input[type=number]{width:64px;min-width:64px}
   .hint{color:var(--mut);font-size:11px;margin-top:6px}
   /* ===== IG 風格文字編輯器 ===== */
-  #edTop,#edBottom,#edToolsToggle{display:none}
+  #edTop,#edBottom,#edToolsToggle,#edZoom{display:none}
+  body.editmode #edZoom{display:flex;align-items:center;gap:10px;flex:none;margin-top:6px}
+  body.editmode #edZoom .edHint{margin:0;flex:none;white-space:nowrap}
+  body.editmode #edZoom #edSize{flex:1 1 auto;min-width:0;margin:0}
   /* 工具區收合鈕(只在製圖畫面出現)。
      第一版是「灰字 + 1px 細框」,在深色面板上看起來像分隔線,沒人知道可以按。
      改成一次給四個「這是按鈕」的訊號:藥丸外框、強調色的框與字、實心箭頭圓點、
@@ -639,6 +643,51 @@
   #enterEdit:hover{filter:brightness(1.08)}
   #edSelBar #dlList{flex:none}
   body.editmode #edSelBar{display:none}
+  /* ===== 分組交換 =====
+     卡片多一個 g(A–F),同色的互相交換。字母放「上緣正中」:左上是 ✨、右上是極巨化徽章、
+     下面兩角是性別/球/複製/✕,只剩這裡是空的。
+     分組模式(body.grouping)下整張卡就是按鈕:角落圓鈕、備註、拖曳全部停用 ——
+     手機上點一下就好,不可能誤刪,也不會跟捲動打架。 */
+  .li .gring{position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 3px var(--gc);z-index:5;pointer-events:none;display:none}
+  .li .gtag{position:absolute;left:50%;top:3px;transform:translateX(-50%);z-index:5;display:none;pointer-events:none;
+            min-width:calc(var(--gnS)*.82);height:calc(var(--gnS)*.82);padding:0 3px;border-radius:99px;box-sizing:border-box;
+            background:var(--gc);color:var(--gi,#fff);text-align:center;
+            font:900 calc(var(--gnS)*.52)/calc(var(--gnS)*.82) "Arial Black",sans-serif;
+            box-shadow:0 0 0 1.5px #fff,0 1px 3px rgba(0,0,0,.5)}
+  .li.hasg .gring,.li.hasg .gtag{display:block}
+  body.grouping .li{cursor:pointer}
+  /* 橫向手勢留給拖曳上色(setupGroupDrag),縱向照常捲動 —— 與選寶可夢的格子同一招 */
+  body.grouping .sec .list{touch-action:pan-y}
+  body.grouping .li .card .del,body.grouping .li .gn,body.grouping .li .bl,body.grouping .li .dup{display:none}
+  body.grouping .li .noteRow{pointer-events:none;opacity:.55}
+  body.grouping .li .card{transition:opacity .18s,filter .18s}
+  body.grouping .li.gOther .card{opacity:.32;filter:saturate(.5)}
+  .li.gPop .card{animation:gPop .22s ease-out}
+  @keyframes gPop{0%{transform:scale(.9)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+  #grpBtn.on{background:var(--acc2);border-color:var(--acc2);color:#fff}
+  /* 畫筆列住在 #startBar 裡、取代「開始製圖」鈕:那條本來就黏在視窗底部(拇指按得到),
+     高度也有 ResizeObserver 回饋給「我能提供的」的黏底位置,不必再管一條新的 sticky */
+  #grpBar{display:none}
+  body.grouping #grpBar{display:block;flex:1 1 100%;min-width:0}   /* #startBar 是 flex:不設 min-width:0 會被色鈕列撐寬、凸出面板 */
+  body.grouping #startBtn{display:none}
+  .grpHint{display:flex;align-items:center;gap:8px;font-size:12px;line-height:1.35;color:var(--mut);margin-bottom:4px}
+  .grpHint b{color:var(--fg)}
+  #grpHintTxt{flex:1;min-width:0}
+  #grpDone{flex:none;border:0;background:var(--acc2);color:#fff;border-radius:8px;padding:5px 14px;font:inherit;font-weight:800;cursor:pointer;min-height:32px}
+  /* 7 顆(A–F + 取消)在 360px 寬的手機要一排放得下:面板內寬約 299px,7×40 + 6×3 = 298。
+     更窄的螢幕就橫向捲動,不換行 */
+  .grpChips{display:flex;justify-content:space-between;gap:3px;overflow-x:auto;scrollbar-width:none;padding:8px 8px 2px;margin:-4px -8px 0}
+  .grpChips::-webkit-scrollbar{display:none}
+  .grpChip{flex:0 0 auto;width:40px;border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;color:inherit;font:inherit}
+  .grpChip .c{width:36px;height:36px;border-radius:50%;background:var(--gc);color:var(--gi,#fff);font:900 15px/36px "Arial Black",sans-serif;
+              text-align:center;transition:transform .12s;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+  .grpChip small{font-size:11px;color:var(--mut);line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .grpChip.on .c{transform:scale(1.08);box-shadow:0 0 0 3px var(--card),0 0 0 6px var(--fg)}
+  .grpChip.on small{color:var(--fg);font-weight:700}
+  .grpChip.er .c{background:repeating-linear-gradient(45deg,#4a5170 0 6px,#383e5a 6px 12px);color:#e3e8f7}
+  .grpChip.er small{font-size:10px}
+  #grpRow .szGroup+.szGroup{margin-left:8px}
+  @media(prefers-reduced-motion:reduce){ .li.gPop .card{animation:none} .grpChip .c{transition:none} }
   /* 開始製圖:置中、醒目 */
   #startBtn{width:100%;font-size:16px;font-weight:800;padding:13px}
   /* 開始製圖列:始終懸浮在視窗底部,選很多隻也不用滑到最下面才能按 */
@@ -788,6 +837,36 @@
     #edBottom .edRow .btn{padding:10px 6px;font-size:13px}
   }
   body.editmode #selPanel,body.editmode #listPanel{display:none}
+  /* ===== 電腦版製圖畫面:工具放右側欄 =====
+     原本工具區疊在預覽下面、寬度撐滿整個螢幕 —— 桌機是橫向螢幕,那一條吃掉快一半高度,圖就被壓得很小。
+     改成兩欄:左邊預覽吃滿整個高度,右邊 340px 的工具欄自己捲。縮放橫桿在預覽正下方,
+     收合工具時側欄整個消失(只剩收合鈕),預覽拿到全寬。
+     applyZoom() 讀的是 #editor 的實際大小,所以版面怎麼變都不用改 JS(收合時 setEdTools 會重算)。 */
+  @media (min-width:900px){
+    body.editmode #editPanel{display:grid;column-gap:16px;padding:10px 14px;
+      grid-template-columns:minmax(0,1fr) 340px;
+      grid-template-rows:auto auto minmax(0,1fr) auto;
+      grid-template-areas:"top top" "editor toggle" "editor side" "zoom side"}
+    body.editmode.edToolsHidden #editPanel{grid-template-columns:minmax(0,1fr) auto}
+    body.editmode #edTop{grid-area:top;margin-bottom:8px}
+    body.editmode #editor{grid-area:editor;min-height:0}
+    body.editmode #edZoom{grid-area:zoom;margin-top:8px}
+    body.editmode #edToolsToggle{grid-area:toggle;margin:0 0 8px;min-height:40px}
+    body.editmode.edToolsHidden #edToolsToggle{width:auto}
+    /* 側欄的收合方向是「往右收」,箭頭跟著轉 */
+    body.editmode #edToolsToggle .chev{transform:rotate(-90deg)}
+    body.editmode.edToolsHidden #edToolsToggle .chev{transform:rotate(90deg)}
+    body.editmode #edBottom{grid-area:side;max-height:none;min-height:0;margin:0;padding:2px 6px 16px 2px}
+    /* 側欄夠高,樣式縮圖直接換行排開(不必橫向捲),分類籤也可以換行 */
+    body.editmode #edBottom .edThemes{flex-wrap:wrap;overflow:visible}
+    body.editmode #edBottom .edSkinCats{flex-wrap:wrap;overflow:visible}
+    body.editmode #edBottom .edThemesWrap{flex-wrap:wrap;margin:14px 0 6px}
+    body.editmode #edBottom .edRow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+    body.editmode #edBottom .edRow .btn,body.editmode #edBottom .edRow .edColorBox{width:100%;min-width:0;justify-content:center;box-sizing:border-box}
+    body.editmode #edBottom .edRow .btn{padding:10px 8px;font-size:13px}
+    body.editmode #edBottom>.switch{margin-top:14px}
+    body.editmode #trainerRow{max-width:none}
+  }
   /* 一開始只顯示清單;按「開始製圖」進入編輯模式才出現編輯/預覽面板 */
   body:not(.editmode) #editPanel{display:none}
 </style>
@@ -871,6 +950,7 @@
         <button class="mmItem" id="setRename" role="menuitem">✎ 重新命名</button>
         <button class="mmItem" id="setDup" role="menuitem">⧉ 複製</button>
         <button class="mmItem" id="sortBtn" role="menuitem">↕ 依編號排序</button>
+        <button class="mmItem" id="grpSort" role="menuitem">↕ 同組排一起</button>
         <div class="mmSep"></div>
         <button class="mmItem danger" id="clr" role="menuitem">清空清單</button>
         <button class="mmItem danger" id="setDel" role="menuitem">🗑 刪除</button>
@@ -883,6 +963,7 @@
       <div class="setacts">
         <button class="btn g" id="setAdd">＋ 新增</button>
         <button class="btn g" id="setShare">🔗 分享連結</button>
+        <button class="btn g" id="grpBtn" aria-pressed="false">🎨 分組</button>
         <span class="setBreak"></span>
         <label class="switch" id="ballRow"><input type="checkbox" id="showBall"><span class="track"></span><span id="showBallLabel">球種</span></label>
         <span class="sizeCtl" role="group" aria-label="圖片大小">
@@ -903,6 +984,10 @@
         <div class="secBody"><div class="list" id="listH"><div class="empty">點 ✏️ 加入寶可夢</div></div></div></div>
       <div class="toolbar" id="startBar">
         <button class="btn" id="startBtn" onclick="setMode('edit')">🎨 我選好了，開始製圖</button>
+        <div id="grpBar">
+          <div class="grpHint"><span id="grpHintTxt"></span><button type="button" id="grpDone">完成</button></div>
+          <div class="grpChips" id="grpChips"></div>
+        </div>
       </div>
     </div>
 
@@ -926,6 +1011,11 @@
       <div id="editor">
         <div id="edStage"><canvas id="baseCv"></canvas><div id="txtLayer"></div></div>
       </div>
+      <!-- 縮放橫桿獨立一條、緊貼在預覽下面:收合工具後還在(看圖時最常用的就是它) -->
+      <div id="edZoom">
+        <span class="edHint" id="zoomHint">↔ 拖曳調整畫面大小</span>
+        <input type="range" id="edSize" min="0" max="100" step="any" value="0" title="縮放(左=整張顯示、中=符合寬度、右=放大)">
+      </div>
       <!-- 收合下面整區工具:手機上 #edBottom 佔到 38vh,只想看圖或調位置時把它收起來,
            預覽就能吃滿整個畫面。放在兩者之間 → 收合後這顆鈕自己還看得到。 -->
       <button id="edToolsToggle" aria-expanded="true" aria-controls="edBottom">
@@ -935,10 +1025,15 @@
            設定一次就不會再動的(能飛 / QR / 訓練家代碼)。手機上這一區高度有上限、可自行捲動,
            所以再多控制項也不會把預覽圖擠扁 —— 之前開關排在預覽上面,360×640 只剩 20% 給圖。 -->
       <div id="edBottom">
-        <div class="edHint" id="zoomHint">↔ 拖曳調整畫面大小</div>
-        <input type="range" id="edSize" min="0" max="100" value="0" title="縮放(左=整張顯示、中=符合寬度、右=放大)">
         <div class="edThemesWrap"><span class="edThemesLabel" id="edThemesLabel">圖片風格</span><div class="edSkinCats" id="edSkinCats"></div></div>
         <div class="edThemes" id="edThemes"></div>
+        <div class="edThemesWrap" id="grpRow"><span class="edThemesLabel" id="grpLabel">版型</span>
+          <span class="szGroup" role="group">
+            <button type="button" class="szBtn grpStyle" data-gs="">一般</button>
+            <button type="button" class="szBtn grpStyle" data-gs="pair">配對</button></span>
+          <span class="szGroup" role="group" id="grpDirG">
+            <button type="button" class="szBtn grpDir" data-gd="lr">左右</button>
+            <button type="button" class="szBtn grpDir" data-gd="tb">上下</button></span></div>
         <div class="edThemesWrap" id="colsRow"><span class="edThemesLabel" id="colsLabel">每排數量</span>
           <div class="colsCtl"><button class="btn g" id="colsMinus" title="減少">−</button><span id="colsVal">5</span><button class="btn g" id="colsPlus" title="增加">＋</button></div></div>
         <div class="edThemesWrap" id="qualRow"><span class="edThemesLabel" id="qualLabel">圖片畫質</span>
@@ -996,7 +1091,7 @@
   </div>
 </div>
 
-<!-- 新功能提示:第一次看到 $ 鈕時的聚光燈 + 泡泡,看過就不再出現(localStorage tlSeenPriceTip) -->
+<!-- 新功能提示:聚光燈 + 泡泡,每則看過就不再出現(內容與順序見 JS 的 TIPS) -->
 <div id="ptip">
   <div class="ptipSpot" id="ptipSpot"><span class="ptipRing"></span><span class="ptipRing r2"></span></div>
   <div class="ptipBurst" id="ptipBurst"></div>
@@ -1427,8 +1522,45 @@ const I18N_ST={
       price_tip:'Ver precio en eBay',price_title:'Consultar precio',price_lab:'Texto de búsqueda (edítalo si el nombre no coincide)',price_reset:'Restablecer',price_ebay:'Buscar en eBay',price_hint:'Solo como referencia para intercambios; tus cambios se guardan en esta tarjeta.',ptip_title:'🎉 Nuevo: consultar precio',ptip_body:'¿Te preocupa un intercambio desigual? Toca el $ debajo de una carta para ver cuánto vale ese Pokémon en eBay.',ptip_ok:'Entendido',ptip_try:'💲 Probar',price_rules_updated:'Texto de búsqueda actualizado a las reglas más recientes ({n} cartas)',
      ty_normal:'Normal',ty_fire:'Fuego',ty_water:'Agua',ty_grass:'Planta',ty_electric:'Eléctrico',ty_ice:'Hielo',ty_fighting:'Lucha',ty_poison:'Veneno',ty_ground:'Tierra',
      ty_flying:'Volador',ty_psychic:'Psíquico',ty_bug:'Bicho',ty_rock:'Roca',ty_ghost:'Fantasma',ty_dragon:'Dragón',ty_dark:'Siniestro',ty_steel:'Acero',ty_fairy:'Hada'}};
+// 分組交換的字串(同 I18N_ST 的理由:整批獨立,不去擠那幾行大物件)
+const I18N_G={
+ zh:{gtip_title:'🎉 新功能:分組交換',gtip_body:'想要的一堆、能給的一堆,但只想某些換某些?按「🎨 分組」,選顏色再點卡片(橫向滑過去可以一次選多張),同色的互相交換。',gtip_try:'🎨 試試看',ltip_title:'🎉 新功能:配對版型',ltip_body:'分好組之後,這裡選「配對」,每組會排成「我想要 ⇄ 我提供」一塊一塊。圖上的說明文字都可以點兩下改。',ltip_zoom:'💡 電腦版:按住 Ctrl 滾動滑鼠滾輪可以縮放圖片',ltip_try:'✨ 試試看',
+     g_btn:'分組',g_tip:'分組:指定哪些跟哪些交換',g_hint:'點卡片加入 {g} 組,再點一次取消',g_hint_er:'點卡片取消分組',g_erase:'取消',
+     g_sort:'同組排一起',g_sorted:'已依組別排序',g_layout:'版型',g_classic:'一般',g_pair:'配對',g_lr:'左右',g_tb:'上下',g_per_side:'每側數量',
+     g_want:'我想要',g_have:'我提供',g_any:'都可以談',g_other:'其他',g_legend:'同色的互相交換',g_legend_free:'沒標的都可以談',
+     g_need:'還沒分組:回清單按「🎨 分組」,選顏色再點卡片'},
+ en:{gtip_title:'🎉 New: trade groups',gtip_body:'Only want to trade some cards for some others? Tap "🎨 Group", pick a color and tap cards (swipe sideways to select many). Same color = trade together.',gtip_try:'🎨 Try it',ltip_title:'🎉 New: paired layout',ltip_body:'Once you have groups, choose "Paired" here and each group becomes its own "I want ⇄ I offer" block. Tap any caption on the image to edit it.',ltip_zoom:'💡 On desktop: hold Ctrl and scroll to zoom the image',ltip_try:'✨ Try it',
+     g_btn:'Group',g_tip:'Groups: choose which cards trade for which',g_hint:'Tap cards to add to group {g}; tap again to remove',g_hint_er:'Tap cards to ungroup',g_erase:'Clear',
+     g_sort:'Sort by group',g_sorted:'Sorted by group',g_layout:'Layout',g_classic:'Standard',g_pair:'Paired',g_lr:'Side by side',g_tb:'Stacked',g_per_side:'Per side',
+     g_want:'I want',g_have:'I offer',g_any:'Open to offers',g_other:'Other',g_legend:'Same color = trade together',g_legend_free:'unmarked: open to offers',
+     g_need:'No groups yet: go back to your list, tap "🎨 Group", pick a color and tap cards'},
+ ja:{gtip_title:'🎉 新機能:グループ交換',gtip_body:'欲しいもの・出せるものの中で、特定の組み合わせだけ交換したい?「🎨 グループ」を押し、色を選んでカードをタップ(横にスワイプでまとめて選択)。同じ色同士で交換します。',gtip_try:'🎨 試してみる',ltip_title:'🎉 新機能:ペアレイアウト',ltip_body:'グループ分けしたら、ここで「ペア」を選ぶと、グループごとに「欲しい ⇄ 出せる」のブロックになります。画像上の説明文はタップして編集できます。',ltip_zoom:'💡 PC:Ctrl を押しながらホイールで拡大・縮小',ltip_try:'✨ 試してみる',
+     g_btn:'グループ',g_tip:'グループ:どれとどれを交換するか指定',g_hint:'カードをタップで {g} グループに追加、もう一度で解除',g_hint_er:'カードをタップでグループ解除',g_erase:'解除',
+     g_sort:'グループ順に並べる',g_sorted:'グループ順に並べました',g_layout:'レイアウト',g_classic:'標準',g_pair:'ペア',g_lr:'左右',g_tb:'上下',g_per_side:'片側の数',
+     g_want:'欲しい',g_have:'出せる',g_any:'応相談',g_other:'その他',g_legend:'同じ色同士で交換',g_legend_free:'印なしは応相談',
+     g_need:'まだグループがありません:リストで「🎨 グループ」を押し、色を選んでカードをタップ'},
+ ko:{gtip_title:'🎉 새 기능: 그룹 교환',gtip_body:'원하는 것과 드릴 것 중 특정 조합만 교환하고 싶나요? 「🎨 그룹」을 누르고 색을 고른 뒤 카드를 탭하세요(옆으로 밀면 여러 장 선택). 같은 색끼리 교환해요.',gtip_try:'🎨 해 보기',ltip_title:'🎉 새 기능: 짝지어 보기',ltip_body:'그룹을 나눴다면 여기서 「짝지어 보기」를 고르세요. 그룹마다 「원해요 ⇄ 드려요」 블록으로 정리됩니다. 이미지 위 설명 글은 탭해서 수정할 수 있어요.',ltip_zoom:'💡 PC: Ctrl을 누른 채 휠을 굴리면 확대/축소',ltip_try:'✨ 해 보기',
+     g_btn:'그룹',g_tip:'그룹: 어떤 것끼리 교환할지 지정',g_hint:'카드를 탭하면 {g} 그룹에 추가, 다시 탭하면 해제',g_hint_er:'카드를 탭하면 그룹 해제',g_erase:'해제',
+     g_sort:'그룹별 정렬',g_sorted:'그룹별로 정렬했습니다',g_layout:'레이아웃',g_classic:'기본',g_pair:'짝지어 보기',g_lr:'좌우',g_tb:'위아래',g_per_side:'한쪽 개수',
+     g_want:'원해요',g_have:'드려요',g_any:'협의 가능',g_other:'기타',g_legend:'같은 색끼리 교환',g_legend_free:'표시 없음은 협의 가능',
+     g_need:'아직 그룹이 없어요: 목록에서 「🎨 그룹」을 누르고 색을 고른 뒤 카드를 탭하세요'},
+ fr:{gtip_title:'🎉 Nouveau : groupes d’échange',gtip_body:'Vous voulez échanger seulement certaines cartes contre certaines autres ? Touchez « 🎨 Groupes », choisissez une couleur puis touchez des cartes (glissez latéralement pour en sélectionner plusieurs). Même couleur = échange ensemble.',gtip_try:'🎨 Essayer',ltip_title:'🎉 Nouveau : mise en page par paires',ltip_body:'Une fois les groupes faits, choisissez « Par paires » ici : chaque groupe devient un bloc « Je cherche ⇄ Je propose ». Touchez un texte de l’image pour le modifier.',ltip_zoom:'💡 Sur ordinateur : Ctrl + molette pour zoomer',ltip_try:'✨ Essayer',
+     g_btn:'Groupes',g_tip:'Groupes : choisir quoi échanger contre quoi',g_hint:'Touchez des cartes pour les ajouter au groupe {g} ; touchez à nouveau pour retirer',g_hint_er:'Touchez des cartes pour les retirer du groupe',g_erase:'Retirer',
+     g_sort:'Trier par groupe',g_sorted:'Trié par groupe',g_layout:'Mise en page',g_classic:'Standard',g_pair:'Par paires',g_lr:'Côte à côte',g_tb:'Empilé',g_per_side:'Par côté',
+     g_want:'Je cherche',g_have:'Je propose',g_any:'À discuter',g_other:'Autres',g_legend:'Même couleur = échange ensemble',g_legend_free:'sans marque : à discuter',
+     g_need:'Aucun groupe : revenez à la liste, touchez « 🎨 Groupes », choisissez une couleur puis touchez des cartes'},
+ de:{gtip_title:'🎉 Neu: Tauschgruppen',gtip_body:'Nur bestimmte Karten gegen bestimmte andere tauschen? „🎨 Gruppen“ antippen, Farbe wählen und Karten antippen (seitlich wischen wählt mehrere). Gleiche Farbe = zusammen tauschen.',gtip_try:'🎨 Ausprobieren',ltip_title:'🎉 Neu: paarweises Layout',ltip_body:'Nach dem Gruppieren hier „Paarweise“ wählen – jede Gruppe wird zu einem Block „Ich suche ⇄ Ich biete“. Texte im Bild lassen sich antippen und bearbeiten.',ltip_zoom:'💡 Am Computer: Strg gedrückt halten und scrollen zum Zoomen',ltip_try:'✨ Ausprobieren',
+     g_btn:'Gruppen',g_tip:'Gruppen: festlegen, was gegen was getauscht wird',g_hint:'Karten antippen, um sie Gruppe {g} hinzuzufügen; erneut tippen zum Entfernen',g_hint_er:'Karten antippen, um die Gruppe zu entfernen',g_erase:'Entfernen',
+     g_sort:'Nach Gruppe sortieren',g_sorted:'Nach Gruppe sortiert',g_layout:'Layout',g_classic:'Standard',g_pair:'Paarweise',g_lr:'Nebeneinander',g_tb:'Untereinander',g_per_side:'Pro Seite',
+     g_want:'Ich suche',g_have:'Ich biete',g_any:'Verhandelbar',g_other:'Sonstige',g_legend:'Gleiche Farbe = zusammen tauschen',g_legend_free:'ohne Markierung: verhandelbar',
+     g_need:'Noch keine Gruppen: zurück zur Liste, „🎨 Gruppen“ antippen, Farbe wählen und Karten antippen'},
+ es:{gtip_title:'🎉 Novedad: grupos de intercambio',gtip_body:'¿Solo quieres cambiar ciertas cartas por otras concretas? Toca «🎨 Grupos», elige un color y toca cartas (desliza de lado para elegir varias). Mismo color = se intercambian juntos.',gtip_try:'🎨 Probar',ltip_title:'🎉 Novedad: diseño por parejas',ltip_body:'Con los grupos hechos, elige «Por parejas» aquí y cada grupo será un bloque «Busco ⇄ Ofrezco». Toca cualquier texto de la imagen para editarlo.',ltip_zoom:'💡 En ordenador: mantén Ctrl y usa la rueda para hacer zoom',ltip_try:'✨ Probar',
+     g_btn:'Grupos',g_tip:'Grupos: elige qué se cambia por qué',g_hint:'Toca cartas para añadirlas al grupo {g}; vuelve a tocar para quitar',g_hint_er:'Toca cartas para quitarles el grupo',g_erase:'Quitar',
+     g_sort:'Ordenar por grupo',g_sorted:'Ordenado por grupo',g_layout:'Diseño',g_classic:'Estándar',g_pair:'Por parejas',g_lr:'Lado a lado',g_tb:'Apilado',g_per_side:'Por lado',
+     g_want:'Busco',g_have:'Ofrezco',g_any:'A negociar',g_other:'Otros',g_legend:'Mismo color = se intercambian juntos',g_legend_free:'sin marca: a negociar',
+     g_need:'Aún no hay grupos: vuelve a la lista, toca «🎨 Grupos», elige un color y toca cartas'}};
 let LANG='zh',NAMES={};
-function tr(k){return (I18N[LANG]&&I18N[LANG][k])||(I18N_ST[LANG]&&I18N_ST[LANG][k])||I18N.en[k]||I18N_ST.en[k]||k;}
+function tr(k){return (I18N[LANG]&&I18N[LANG][k])||(I18N_ST[LANG]&&I18N_ST[LANG][k])||(I18N_G[LANG]&&I18N_G[LANG][k])||I18N.en[k]||I18N_ST.en[k]||I18N_G.en[k]||k;}
 // 卡片的 tag 一律以中文字面值儲存(buildThumbs 與雲端/localStorage 的舊資料都是),顯示時才翻譯。
 // 少了這層轉換,韓文/英文介面的 tooltip 會直接跳出「極巨化」「淨化」等中文。
 const TAG_KEY={'極巨化':'f_dmax','超極巨化':'f_gmax','淨化':'mix_purified'};
@@ -1535,9 +1667,13 @@ function applyStaticI18n(){
     $('#priceReset').textContent=T('price_reset'); $('#priceEbay').textContent='🔍 '+T('price_ebay');
     $('#priceClose').textContent=T('done'); $('#priceHint').textContent=T('price_hint');
     if($('#priceMask').classList.contains('on')) syncPriceMon(); }
-  if($('#ptipTitle')){ $('#ptipTitle').textContent=T('ptip_title'); $('#ptipBody').textContent=T('ptip_body');
-    $('#ptipOk').textContent=T('ptip_ok'); $('#ptipTry').textContent=T('ptip_try'); }
+  if($('#ptipTitle')) fillTip(PTIP?PTIP.spec:TIPS[0]);
   $('#labWant').textContent='🟢 '+T('want'); $('#labHave').textContent='🟡 '+T('have');
+  { const b=$('#grpBtn'); if(b){ b.textContent='🎨 '+T('g_btn'); b.title=T('g_tip'); }
+    $('#grpSort').textContent='↕ '+T('g_sort'); $('#grpDone').textContent=T('done'); $('#grpLabel').textContent=T('g_layout');
+    for(const x of document.querySelectorAll('.grpStyle')) x.textContent=T(x.dataset.gs?'g_pair':'g_classic');
+    for(const x of document.querySelectorAll('.grpDir')) x.textContent=T('g_'+x.dataset.gd);
+    syncGrpBar(); }
   syncEdToolsLabel();
   { const L=$('#qualLabel'); if(L)L.textContent=T('qual_label');
     for(const b of document.querySelectorAll('.qualBtn')) b.textContent=T('qual_'+b.dataset.qual); }
@@ -1628,6 +1764,7 @@ async function boot(){
   $('#saveDl').onclick=()=>{ if(_saveBlob) saveBlob(_saveBlob, tr('fname')+extOf(_saveBlob)); };
   setupGridSelect($('#grid'));   // 選取網格:單點切換 + 橫向起手的拖曳批次選取(iPhone 相簿式)
   setupPinchZoom();              // 編輯區兩指縮放(與縮放滑桿連動)
+  setupWheelZoom();              // 電腦版 Ctrl + 滾輪 / 觸控板夾捏(同樣走滑桿)
   $('#edToolsToggle').onclick=()=>setEdTools(document.body.classList.contains('edToolsHidden'));
   // 還原工具區的收合狀態。沒選過就是展開 —— 第一次進來要先看得到有哪些東西可以調。
   { let v=null; try{ v=localStorage.getItem('tlEdTools'); }catch(e){}
@@ -1706,7 +1843,14 @@ async function boot(){
     im.onerror=()=>alert(tr('share_fail'));
     im.src=src;
   };
-  $('#colsMinus').onclick=()=>setColsExport(COLS-1); $('#colsPlus').onclick=()=>setColsExport(COLS+1);
+  $('#colsMinus').onclick=()=>stepCols(-1); $('#colsPlus').onclick=()=>stepCols(1);
+  // 分組交換:清單上的開關 / 畫筆列 / 製圖畫面的版型切換
+  renderGrpChips(); setupGroupDrag($('#listW')); setupGroupDrag($('#listH'));
+  $('#grpBtn').onclick=()=>setGrouping(!GROUPING);
+  $('#grpDone').onclick=()=>setGrouping(false);
+  $('#grpSort').onclick=sortByGroup;
+  for(const b of document.querySelectorAll('.grpStyle')) b.onclick=()=>setGrpStyle(b.dataset.gs,undefined);
+  for(const b of document.querySelectorAll('.grpDir')) b.onclick=()=>setGrpStyle(undefined,b.dataset.gd);
   $('#txtReset').onclick=()=>{ snapshot(); TEXTS=[]; SEL=null; renderBase(); syncTools(); };
   $('#edSize').oninput=applyZoom;   // 縮放整個檢視(文字大小改用右下把手拖曳)
   $('#edColor').onpointerdown=()=>{ if(SEL)snapshot(); };
@@ -1835,7 +1979,7 @@ function applySkin(k){
   const box=$('#edThemes'); if(box) box.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
   // 樣式色套到「未被手動改色」的預設文字
   const T=EXP();
-  for(const t of TEXTS){ if(t.autoColor){ if(t.id==='title')t.color=T.title; else if(t.id==='canfly')t.color=T.fly; else if(t.id==='lab-want')t.color=T.sec1; else if(t.id==='lab-have')t.color=T.sec2; else if(t.id==='foot'||t.id==='trainer')t.color=T.foot; } }
+  for(const t of TEXTS){ if(t.autoColor){ if(t.id==='title')t.color=T.title; else if(t.id==='canfly')t.color=T.fly; else if(t.id==='lab-want')t.color=T.sec1; else if(t.id==='lab-have')t.color=T.sec2; else if(t.id==='foot'||t.id==='trainer'||t.id==='legend')t.color=T.foot; } }
   renderBase();
 }
 
@@ -1845,6 +1989,7 @@ function setMode(m){
   if(m==='edit'&&window.track) track('start_edit',{want:LIST.want.length,have:LIST.have.length,lang:LANG});
   document.body.classList.remove('picking');   // 進入製圖前先收起選取面板
   if(m==='edit'){
+    setGrouping(false);
     // 電腦版:少於 100 隻用最小(整張顯示),否則約 1/8 位置;手機維持約 1/4
     const total=LIST.want.length+LIST.have.length;
     $('#edSize').value = window.innerWidth>=900 ? (total<100 ? 0 : 13) : 25;
@@ -1855,6 +2000,8 @@ function setMode(m){
     document.body.classList.remove('editmode');
   }
   syncTools();   // 「字體/底色」「顏色」的可用狀態跟著 SEL 走,進出模式都要對得上
+  if(PTIP) closeTip(false);   // 換畫面:指著的東西不見了,提示先收起來(不算看過)
+  scheduleTip(900);           // 製圖畫面有自己的新功能提示;回到清單則補出還沒看過的
   requestAnimationFrame(()=>{ renderBase();     // 版面寬度變了,重新排版
     if(m==='select') $('#listPanel').scrollIntoView({behavior:'smooth',block:'start'}); });   // 完成編輯 → 回到清單(編輯面板已收起)
 }
@@ -1883,14 +2030,73 @@ const COLS_MIN=3, COLS_MAX=15;
 // 有效每排數量:不超過「內容較多的一側」的隻數(例如兩側各 6/5,設 10 時實際每排 6,不留空位)
 function maxRowItems(){ return Math.max(1, (LIST.want||[]).length, (LIST.have||[]).length); }
 function effCols(){ return Math.max(Math.min(3,COLS), Math.min(COLS, maxRowItems())); }   // 至少 3 格(除非設定<3),避免只選一兩隻時圖太窄
-function calcLAYW(){ return 2*PAD+GAP+effCols()*(S+GAP); }
+/* ===== 分組交換 =====
+   卡片多一個欄位 g = 'A'…'F'(沒有 = 未分組)。版型存在每組清單自己的資料裡
+   (LIST.gstyle:'' 一般 / 'pair' 配對;LIST.gdir:'lr' 左右 / 'tb' 上下)→ 跟著雲端 / 分享連結走。
+   一般版型:有分組的卡加同色外框 + 角標,標題下多一行圖例;沒分組的人外觀一模一樣。
+   配對版型:每組一塊面板「我想要 ⇄ 我提供」,沒分組的集中到最後一塊「其他」。
+   顏色 + 字母一起用 → 色弱也分得出來;黃底配白字太淡,C 用深色字。 */
+const GROUPS=[{k:'A',c:'#f2545b'},{k:'B',c:'#3b82f6'},{k:'C',c:'#f5b700',ink:'#2a1f00'},
+              {k:'D',c:'#22b573'},{k:'E',c:'#9b6bff'},{k:'F',c:'#ff8a3d'}];
+const GRP=Object.fromEntries(GROUPS.map(g=>[g.k,g])), GRP_OTHER='#7d86a6', PAIR_ARW=120;
+const GFONT='"Microsoft JhengHei","PingFang TC","Noto Sans TC","Hiragino Sans","Malgun Gothic",sans-serif';
+let GROUPING=false, BRUSH='A', PAIRK=3;   // PAIRK = 左右對照時「每側幾隻」(1–6),與 COLS 分開存
+try{ const v=+localStorage.getItem('tlPairK'); if(v>=1&&v<=6) PAIRK=v; }catch(e){}
+const isPair=()=>LIST.gstyle==='pair', pairLR=()=>LIST.gdir!=='tb';
+const grpOf=c=>(c&&c.g&&GRP[c.g])||null;
+function hasAnyGroup(){ return LIST.want.some(grpOf)||LIST.have.some(grpOf); }
+function usedGroups(){ return GROUPS.filter(g=>LIST.want.some(c=>c.g===g.k)||LIST.have.some(c=>c.g===g.k)); }
+// 配對版型的分組:有卡的組依 A→F,最後是「其他」(未分組)
+function groupsOf(){
+  const out=[];
+  for(const g of GROUPS){ const w=LIST.want.filter(c=>c.g===g.k), h=LIST.have.filter(c=>c.g===g.k); if(w.length||h.length) out.push({...g,w,h}); }
+  const w=LIST.want.filter(c=>!grpOf(c)), h=LIST.have.filter(c=>!grpOf(c));
+  if(w.length||h.length) out.push({k:null,c:GRP_OTHER,w,h});
+  return out;
+}
+// 配對版型的寬度:左右 = 兩側各 k 隻 + 中間箭頭欄;上下 = 跟一般版型一樣依 COLS
+function pairGeom(){
+  const gs=groupsOf(), maxSide=Math.max(1,...gs.map(g=>Math.max(g.w.length,g.h.length)));
+  if(pairLR()){
+    const k=Math.max(1,Math.min(PAIRK,maxSide)), SW=GAP+k*(S+GAP), cw=2*SW+PAIR_ARW;
+    const W=Math.max(cw+2*PAD, 2*PAD+GAP+3*(S+GAP));   // 至少跟一般版型 3 格一樣寬,標題才不會被縮到很小
+    return {gs,k,SW,cw,W,ox:(W-cw)/2};
+  }
+  const k=Math.max(Math.min(3,COLS),Math.min(COLS,maxSide)), W=2*PAD+GAP+k*(S+GAP);
+  return {gs,k,SW:W-2*PAD,cw:W-2*PAD,W,ox:PAD};
+}
+function calcLAYW(){ return isPair() ? pairGeom().W : 2*PAD+GAP+effCols()*(S+GAP); }
 function setCols(){   // 優先用使用者存過的每排數量;沒有才依裝置寬度給預設
   const saved=+localStorage.getItem('bgtoolCols');
   COLS = (saved>=COLS_MIN&&saved<=COLS_MAX) ? saved : (window.innerWidth>=1100?8 : window.innerWidth>=880?7 : 5);
   LAYW=calcLAYW();
 }
-function updateColsUI(){ const v=$('#colsVal'); if(v)v.textContent=COLS;
-  const m=$('#colsMinus'),p=$('#colsPlus'); if(m)m.disabled=COLS<=COLS_MIN; if(p)p.disabled=COLS>=COLS_MAX; }
+function updateColsUI(){
+  const lr=isPair()&&pairLR(), n=lr?PAIRK:COLS, lo=lr?1:COLS_MIN, hi=lr?6:COLS_MAX;
+  const v=$('#colsVal'); if(v)v.textContent=n;
+  const L=$('#colsLabel'); if(L)L.textContent=tr(lr?'g_per_side':'per_row');
+  const m=$('#colsMinus'),p=$('#colsPlus'); if(m)m.disabled=n<=lo; if(p)p.disabled=n>=hi; }
+// 版面寬度改變時,手動移動過的文字按比例跟著走(未移動的會由 reconcile 重新置中)
+function rescaleTexts(oldW){ LAYW=calcLAYW(); const r=LAYW/oldW; if(r!==1) for(const t of TEXTS) t.cx*=r; }
+function stepCols(d){ if(isPair()&&pairLR()) setPairK(PAIRK+d); else setColsExport(COLS+d); }
+function setPairK(n){
+  n=Math.max(1,Math.min(6,Math.round(n))); if(n===PAIRK){ updateColsUI(); return; }
+  const oldW=calcLAYW(); PAIRK=n; rescaleTexts(oldW);
+  try{ localStorage.setItem('tlPairK',PAIRK); }catch(e){}
+  updateColsUI(); renderBase();
+}
+function setGrpStyle(gs,gd){
+  const oldW=calcLAYW();
+  if(gs!==undefined) LIST.gstyle=gs; if(gd!==undefined) LIST.gdir=gd;
+  rescaleTexts(oldW); syncGrpUI(); persist(); renderBase();
+  if(isPair() && !hasAnyGroup()) toast(tr('g_need'));
+}
+function syncGrpUI(){
+  for(const b of document.querySelectorAll('.grpStyle')) b.classList.toggle('on', b.dataset.gs===(LIST.gstyle||''));
+  for(const b of document.querySelectorAll('.grpDir')) b.classList.toggle('on', b.dataset.gd===(LIST.gdir==='tb'?'tb':'lr'));
+  const d=$('#grpDirG'); if(d) d.style.display=isPair()?'':'none';
+  updateColsUI();   // 「每排數量 / 每側數量」跟著版型走 —— 切換清單時兩組的版型可能不同
+}
 // 編輯圖片時調整每排幾隻:改 COLS→重算版面寬度,並把文字水平位置等比例縮放以維持相對位置
 function setColsExport(n){
   n=Math.max(COLS_MIN,Math.min(COLS_MAX,Math.round(n))); if(n===COLS){ updateColsUI(); return; }
@@ -1900,14 +2106,48 @@ function setColsExport(n){
   updateColsUI(); renderBase();
 }
 function rowsOf(n){return Math.max(1,Math.ceil(n/effCols()));}
+// 每排的備註高度只看「這一排」(可同時看好幾側,配對版型左右兩側的排才會對齊)
+function rowsFor(lists,k){
+  const n=Math.max(1,...lists.map(l=>Math.ceil(l.length/k))), rows=[]; let y=0;
+  for(let r=0;r<n;r++){ let lines=0;
+    for(const l of lists) for(let c=0;c<k;c++){ const it=l[r*k+c]; if(it&&it.note) lines=Math.max(lines,String(it.note).split('\n').length); }
+    const nh=lines?lines*NOTELH+6:0; rows.push({y,noteH:nh}); y+=S+nh+GAP; }
+  return {rows,h:y};
+}
+// 內容之後的共同收尾:訓練家代碼 + 品牌頁尾
+function layoutTail(y){
+  let H=Math.max(y,190);
+  const hasTrainer=!!(LIST.trainer&&LIST.trainer.trim());
+  const trainerY=H+40;
+  if(hasTrainer) H=trainerY+58;
+  const brandY=H+18; H=brandY+BRAND_H;
+  return {H,trainerY,hasTrainer,brandY};
+}
+function computePairLayout(){
+  const G=pairGeom(); LAYW=G.W;
+  const fly=$('#canfly').checked, top=140+(fly?46:0), lr=pairLR(), HDR=64, DIV=72, panels=[];
+  let y=top+6;
+  G.gs.forEach((g,i)=>{
+    let p;
+    if(lr){ const R=rowsFor([g.w,g.h],G.k); p={g,y,ph:HDR+R.h+4,R}; }
+    else { const Rw=rowsFor([g.w],G.k), Rh=rowsFor([g.h],G.k); p={g,y,ph:HDR+Rw.h+DIV+Rh.h+4,Rw,Rh}; }
+    panels.push(p); y+=p.ph+(i<G.gs.length-1?26:0);
+  });
+  // secs 留空 → reconcile 會收掉「我想要的 / 我能提供的」兩個大標籤(面板裡已經各自標了)
+  return {fly,secs:[],pair:{...G,lr,HDR,DIV,panels},top,cols:G.k,...layoutTail(y)};
+}
 function computeLayout(){
+  if(isPair()) return computePairLayout();
   const EC=effCols(); LAYW=2*PAD+GAP+EC*(S+GAP);   // 依有效每排數量決定整張寬度
   const fly=$('#canfly').checked;
   const EX=EXP();
   const secs=[{key:'want',items:LIST.want,col:EX.sec1,def:'🟢 '+tr('want')},
               {key:'have',items:LIST.have,col:EX.sec2,def:'🟡 '+tr('have')}].filter(s=>s.items.length);
   let top=140+(fly?46:0);
-  let y=top; const S2=[];
+  // 有分組才多兩行圖例:色點(底圖層)+ 說明文字(文字層 id 'legend',可以點兩下改字、拖曳、換色);
+  // 沒分組的人版面完全不變
+  const used=usedGroups(), legend=used.length?{y:top+14,textY:top+40,used,free:LIST.want.some(c=>!grpOf(c))||LIST.have.some(c=>!grpOf(c))}:null;
+  let y=top+(legend?86:0); const S2=[];
   for(let i=0;i<secs.length;i++){
     const s=secs[i];
     const nrows=rowsOf(s.items.length), rows=[]; let yoff=0;
@@ -1922,20 +2162,19 @@ function computeLayout(){
     // 它下面接的是頁尾,那邊自己有留白,兩個疊起來就是一大片空白
     S2.push({...s,labelY:y,panelY:y+80,ph,rows}); y=y+80+ph+(i<secs.length-1?30:0);
   }
-  let H=Math.max(y,190);
-  const hasTrainer=!!(LIST.trainer&&LIST.trainer.trim());
-  const trainerY=H+40;                      // 訓練家代碼:放在內容的最底部
-  if(hasTrainer) H=trainerY+58;
-  const brandY=H+18; H=brandY+BRAND_H;      // 品牌頁尾:誰都排不進來的保留區(見 BRAND_H 的說明)
-  return {fly,secs:S2,H,top,cols:EC,trainerY,hasTrainer,brandY};
+  // 訓練家代碼放在內容的最底部;品牌頁尾是誰都排不進來的保留區(見 BRAND_H 的說明)
+  return {fly,secs:S2,top,cols:EC,legend,...layoutTail(y)};
 }
 function defaultTexts(lay){
   const T=EXP(),list=[];
   list.push({id:'title',text:'POKÉMON TRADE',align:'center',cx:LAYW/2,y:32,size:62,color:T.title,weight:900,font:DEFONT,outline:false,shadow:!!T.shadow,autoColor:true});
   if(lay.fly) list.push({id:'canfly',text:'✈ CAN FLY',align:'center',cx:LAYW/2,y:114,size:32,color:T.fly,weight:900,font:DEFONT,outline:false,shadow:!!T.shadow,autoColor:true});
   for(const s of lay.secs) list.push({id:'lab-'+s.key,text:s.def,align:'left',cx:PAD,y:s.labelY,size:66,color:s.col,weight:900,font:DEFONT,outline:false,shadow:!!T.shadow,bg:0,autoColor:true,autoSize:true});
+  if(lay.legend){ const tx=legendText(lay.legend);
+    list.push({id:'legend',text:tx,align:'center',cx:LAYW/2,y:lay.legend.textY,size:fitTextSize(tx,26,LAYW-2*PAD,800),color:T.foot||T.title,weight:800,font:DEFONT,outline:false,shadow:!!T.shadow,bg:0,autoColor:true,autoSize:true}); }
   return list;
 }
+function legendText(lg){ return tr('g_legend')+(lg.free?' · '+tr('g_legend_free'):''); }
 function reconcile(lay){
   if(!TEXTS.length){ TEXTS=defaultTexts(lay); }   // 清空後重建預設,但不 return → 下方訓練家代碼仍會依 LIST.trainer 補回
   const byId=id=>TEXTS.find(t=>t.id===id);
@@ -1959,6 +2198,14 @@ function reconcile(lay){
       // 大小/樣式:只要沒「手動縮放過」就套用最新預設(與有沒有移動位置無關) → 改預設字級才會生效
       if(el.autoSize!==false){ const dd=def.find(d=>d.id==='lab-'+key); if(dd){ el.size=dd.size; el.outline=dd.outline; el.shadow=dd.shadow; el.bg=dd.bg; } } }
   }
+  // 分組圖例的說明文字:有分組才有。沒改過字就跟著「有沒有未分組的卡」與語言走,沒移動過就跟著版面
+  { let el=byId('legend');
+    if(lay.legend && !el){ TEXTS.push(def.find(d=>d.id==='legend')); }
+    else if(!lay.legend && el){ TEXTS=TEXTS.filter(t=>t!==el); }
+    else if(el){
+      if(!el.edited) el.text=legendText(lay.legend);
+      if(!el.moved){ el.cx=LAYW/2; el.y=lay.legend.textY; }
+      if(el.autoSize!==false){ el.size=fitTextSize(el.text,26,LAYW-2*PAD,800); el.shadow=!!EXP().shadow; } } }
   // 訓練家代碼:有填代碼才顯示(底部),文字=標題+代碼;半透明黑底條上用白字,並自動縮字避免超出圖寬
   const code=(LIST.trainer||'').trim(); let tn=byId('trainer');
   if(code){
@@ -2133,7 +2380,7 @@ function hookTrim(img,hasBg,cellW){
   if(img.complete && img.naturalWidth) run(); else img.addEventListener('load',run,{once:true});
 }
 function star(x,cx,cy,r,fill){x.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr_=i%2?r*0.45:r;x[i?'lineTo':'moveTo'](cx+rr_*Math.cos(a),cy+rr_*Math.sin(a));}x.closePath();x.fillStyle=fill;x.fill();}
-async function drawCard(x,cx,cy,c,T,noteH,noteCol){
+async function drawCard(x,cx,cy,c,T,noteH,noteCol,ring){
   x.save();x.shadowColor='rgba(0,0,0,0.35)';x.shadowBlur=8;x.shadowOffsetY=3;x.fillStyle=T.cardbg;rrPath(x,cx,cy,S,S,S*0.16);x.fill();x.restore();
   x.save();rrPath(x,cx,cy,S,S,S*0.16);x.clip();x.fillStyle=T.cardbg;x.fillRect(cx,cy,S,S);
   if(c.bg){const b=await loadExport(c.bg);if(b)x.drawImage(b,cx,cy,S,S);}
@@ -2157,6 +2404,14 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
     if(b){ const D=S*0.2, gap=S*0.03, by=cy+S*0.96-D-(hasGender?D+gap:0);
       x.save(); x.shadowColor='rgba(0,0,0,.55)'; x.shadowBlur=Math.max(1,S*0.014);
       x.drawImage(b, cx+S*0.04, by, D, D); x.restore(); } }
+  // 分組(一般版型):同色外框 + 右下角字母圓章。右下角在匯出圖上是空的(✕ 只存在清單畫面)
+  if(ring){ const G=GRP[ring];
+    x.save(); x.strokeStyle=G.c; x.lineWidth=7; rrPath(x,cx+2.5,cy+2.5,S-5,S-5,S*0.16-2); x.stroke();
+    const r=S*0.14, bx=cx+S-r-S*0.045, by=cy+S-r-S*0.045;
+    x.shadowColor='rgba(0,0,0,.45)'; x.shadowBlur=6; x.beginPath(); x.arc(bx,by,r,0,7); x.fillStyle=G.c; x.fill();
+    x.shadowColor='transparent'; x.lineWidth=4; x.strokeStyle='#fff'; x.stroke();
+    x.fillStyle=G.ink||'#fff'; x.font='900 '+Math.round(r*1.15)+'px '+DEFONT; x.textAlign='center'; x.textBaseline='middle';
+    x.fillText(G.k,bx,by+1); x.restore(); }
   if(c.note && noteH){   // 附加文字:畫在整張卡片「下方」,不擋圖(支援多行)
     x.save();
     const lines=String(c.note).split('\n');
@@ -2167,6 +2422,98 @@ async function drawCard(x,cx,cy,c,T,noteH,noteCol){
     x.fillStyle=noteCol||T.title||'#fff'; x.textAlign='center'; x.textBaseline='middle';
     lines.forEach((l,i)=>{ x.fillText(l, cx+S/2, cy+S+6+NOTELH*(i+0.5)); });
     x.restore();
+  }
+}
+/* ---------- 分組交換的匯出圖元件 ----------
+   跟底圖引擎同一個原則:只吃版面座標、不看 canvas 尺寸 → 分塊輸出時每塊畫出來的一樣,接縫對得起來。
+   ⇄ / ⇅ / 字母一律用路徑或拉丁字畫,不靠 emoji 字型(手機電腦長得一樣)。 */
+function fitFont(x,text,weight,base,maxW,font){
+  let fs=base; x.font=weight+' '+fs+'px '+font;
+  while(fs>12 && x.measureText(text).width>maxW){ fs--; x.font=weight+' '+fs+'px '+font; }
+  return fs;
+}
+// 圖例的色點列(一般版型、有分組時)。說明文字不在這裡 —— 那是文字層的 'legend',使用者可以改字/拖曳
+function drawGrpLegend(x,lg,T,W){
+  let sx=(W-(lg.used.length*44-8))/2;
+  x.save();
+  for(const g of lg.used){
+    x.shadowColor='rgba(0,0,0,.35)'; x.shadowBlur=5;
+    x.beginPath(); x.arc(sx+18,lg.y,18,0,7); x.fillStyle=g.c; x.fill(); x.shadowColor='transparent';
+    x.fillStyle=g.ink||'#fff'; x.font='900 18px '+DEFONT; x.textAlign='center'; x.textBaseline='middle'; x.fillText(g.k,sx+18,lg.y+1); sx+=44; }
+  x.restore();
+}
+function grpPanel(x,X,Y,w,h,col,T){
+  x.save(); x.shadowColor='rgba(0,0,0,.25)'; x.shadowBlur=14; x.shadowOffsetY=4; x.fillStyle=T.panel; rrPath(x,X,Y,w,h,24); x.fill(); x.restore();
+  x.save(); rrPath(x,X,Y,w,h,24); x.clip(); x.fillStyle=col; x.fillRect(X,Y,9,h); x.restore();   // 左側色條
+  x.save(); x.strokeStyle=rgba(col,.6); x.lineWidth=3; rrPath(x,X+1.5,Y+1.5,w-3,h-3,23); x.stroke(); x.restore();
+}
+function grpChip(x,g,cx,cy){
+  x.save(); x.shadowColor='rgba(0,0,0,.35)'; x.shadowBlur=6;
+  if(g.k){ x.beginPath(); x.arc(cx,cy,24,0,7); x.fillStyle=g.c; x.fill(); x.shadowColor='transparent';
+    x.fillStyle=g.ink||'#fff'; x.font='900 26px '+DEFONT; x.textAlign='center'; x.textBaseline='middle'; x.fillText(g.k,cx,cy+1); }
+  else{ const t=tr('g_other'), fs=fitFont(x,t,800,24,PAIR_ARW-24,GFONT), w=Math.max(96,x.measureText(t).width+28);
+    rrPath(x,cx-w/2,cy-22,w,44,22); x.fillStyle=g.c; x.fill(); x.shadowColor='transparent';
+    x.fillStyle='#fff'; x.font='800 '+fs+'px '+GFONT; x.textAlign='center'; x.textBaseline='middle'; x.fillText(t,cx,cy+1); }
+  x.restore();
+}
+function grpLabel(x,t,X,Y,col,align,maxW){
+  x.save(); fitFont(x,t,900,30,maxW||9999,GFONT); x.fillStyle=col; x.textAlign=align||'center'; x.textBaseline='middle'; x.fillText(t,X,Y); x.restore(); }
+function grpSwap(x,cx,cy,col,dir){
+  x.save(); x.shadowColor='rgba(0,0,0,.35)'; x.shadowBlur=8; x.beginPath(); x.arc(cx,cy,34,0,7); x.fillStyle=col; x.fill(); x.shadowColor='transparent';
+  x.strokeStyle='#fff'; x.lineWidth=5; x.lineCap='round'; x.lineJoin='round';
+  const arrow=(x1,y1,x2,y2)=>{ const a=Math.atan2(y2-y1,x2-x1), L=9;
+    x.beginPath(); x.moveTo(x1,y1); x.lineTo(x2,y2);
+    x.moveTo(x2-L*Math.cos(a-0.7),y2-L*Math.sin(a-0.7)); x.lineTo(x2,y2); x.lineTo(x2-L*Math.cos(a+0.7),y2-L*Math.sin(a+0.7)); x.stroke(); };
+  if(dir==='h'){ arrow(cx-15,cy-8,cx+15,cy-8); arrow(cx+15,cy+8,cx-15,cy+8); }
+  else{ arrow(cx-8,cy+15,cx-8,cy-15); arrow(cx+8,cy-15,cx+8,cy+15); }
+  x.restore();
+}
+// 某一側沒有卡(只寫了想要、或只寫了提供)→ 虛線卡「都可以談」,版面不會缺一角
+function grpAny(x,cx,cy,T){
+  const col=T.foot||T.title;
+  x.save(); x.setLineDash([12,9]); x.lineWidth=3; x.strokeStyle=rgba(col,.55); rrPath(x,cx+2,cy+2,S-4,S-4,S*0.16); x.stroke(); x.setLineDash([]);
+  x.fillStyle=rgba(col,.8); x.textAlign='center'; x.textBaseline='middle';
+  x.font='900 60px '+DEFONT; x.fillText('?',cx+S/2,cy+S*0.42);
+  const t=tr('g_any'); fitFont(x,t,800,24,S-16,GFONT); x.fillText(t,cx+S/2,cy+S*0.77); x.restore();
+}
+// 一側的卡片:center=每排置中(左右對照),否則靠左(上下對照,與一般版型一致)
+async function grpSide(x,list,sx,sy,k,R,T,center,noteCol,vT,vB){
+  if(!list.length){ if(sy<=vB+16 && sy+S>=vT-16) grpAny(x, sx+GAP+(center?(k-1)*(S+GAP)/2:0), sy, T); return; }
+  for(let i=0;i<list.length;i++){
+    const r=(i/k)|0, n=Math.min(k,list.length-r*k), rw=R.rows[r], off=center?(k-n)*(S+GAP)/2:0;
+    const cx=sx+GAP+off+(i%k)*(S+GAP), cy=sy+rw.y;
+    if(cy+S+rw.noteH<vT-16 || cy>vB+16) continue;   // 不在此段(分塊輸出)→ 跳過,留陰影的餘裕
+    await drawCard(x,cx,cy,list[i],T,rw.noteH,noteCol);
+  }
+}
+async function drawPairTo(x,lay,T,vT,vB){
+  const P=lay.pair, {k,SW,cw,ox,lr,HDR,DIV}=P, ARW=PAIR_ARW;
+  for(const p of P.panels){
+    const g=p.g, col=g.c, py=p.y;
+    if(py>vB+24 || py+p.ph<vT-24) continue;
+    grpPanel(x,ox,py,cw,p.ph,col,T);
+    if(lr){
+      const hy=py+HDR/2+4;
+      grpLabel(x,tr('g_want'),ox+SW/2+4,hy,T.sec1,'center',SW-GAP*2);
+      grpLabel(x,tr('g_have'),ox+SW+ARW+SW/2,hy,T.sec2,'center',SW-GAP*2);
+      grpChip(x,g,ox+SW+ARW/2,hy);
+      await grpSide(x,g.w,ox,py+HDR,k,p.R,T,true,T.sec1,vT,vB);
+      await grpSide(x,g.h,ox+SW+ARW,py+HDR,k,p.R,T,true,T.sec2,vT,vB);
+      grpSwap(x,ox+SW+ARW/2,py+HDR+S/2+(p.R.rows.length>1?(p.R.h-GAP-S)/2:0),col,'h');
+    }else{
+      const cx0=ox+GAP+(g.k?30:54), hy=py+HDR/2+4;
+      grpChip(x,g,cx0,hy);
+      grpLabel(x,tr('g_want'),cx0+(g.k?40:64),hy,T.sec1,'left',cw/2-80);
+      await grpSide(x,g.w,ox,py+HDR,k,p.Rw,T,false,T.sec1,vT,vB);
+      const dy=py+HDR+p.Rw.h-GAP+DIV/2+GAP/2;
+      x.save(); fitFont(x,tr('g_have'),900,30,cw/2-80,GFONT); const lw=x.measureText(tr('g_have')).width; x.restore();
+      x.save(); x.strokeStyle=rgba(col,.45); x.lineWidth=3; x.setLineDash([2,10]); x.lineCap='round'; x.beginPath();
+      if(ox+GAP+lw+30<ox+cw/2-48){ x.moveTo(ox+GAP+lw+30,dy); x.lineTo(ox+cw/2-48,dy); }
+      x.moveTo(ox+cw/2+48,dy); x.lineTo(ox+cw-GAP-12,dy); x.stroke(); x.restore();
+      grpLabel(x,tr('g_have'),ox+GAP+6,dy,T.sec2,'left',cw/2-80);
+      grpSwap(x,ox+cw/2,dy,col,'v');
+      await grpSide(x,g.h,ox,py+HDR+p.Rw.h+DIV,k,p.Rh,T,false,T.sec2,vT,vB);
+    }
   }
 }
 /* ---------- 底圖引擎:漸層 + 光暈 + 圖樣 + 暗角 ----------
@@ -2417,7 +2764,10 @@ async function drawBaseTo(x,lay,SC,offY){
   await preloadSkin(T);   // 浮水印/橫幅是同步畫的,圖得先在快取裡(第二塊之後即時返回)
   paintBackdrop(x,T,W,H,visTop,Math.min(visBot,H));
   // 先平行啟動本次要用的所有圖片下載(填入快取);下面的 draw 迴圈再逐張命中 → 平行載入、漸進顯示,不再一張等一張
-  for(const s of lay.secs) for(const c of s.items){ loadImg(dispUrl(c.url)); { const sp=specOf(c.url); if(sp&&sp.badge) loadImg(sp.badge); } if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
+  const allItems=lay.pair ? [...LIST.want,...LIST.have] : lay.secs.flatMap(s=>s.items);
+  for(const c of allItems){ loadImg(dispUrl(c.url)); { const sp=specOf(c.url); if(sp&&sp.badge) loadImg(sp.badge); } if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
+  if(lay.pair) await drawPairTo(x,lay,T,visTop,visBot);
+  if(lay.legend && lay.legend.y-26<=visBot && lay.legend.y+26>=visTop) drawGrpLegend(x,lay.legend,T,W);
   const EC=lay.cols||effCols();
   for(const s of lay.secs){
     if(s.panelY<=visBot && s.panelY+s.ph>=visTop){ x.fillStyle=T.panel;rrPath(x,PAD,s.panelY,W-2*PAD,s.ph,24);x.fill(); }
@@ -2427,7 +2777,8 @@ async function drawBaseTo(x,lay,SC,offY){
       // 不在此段 → 跳過。留 16 的邊界餘裕:卡片陰影(blur 8/offsetY 3)會溢出卡片外,
       // 剛好卡在分段接縫上的卡片若被整個略過,接縫處會少一條陰影
       if(cy+S+rw.noteH<visTop-16 || cy>visBot+16) continue;
-      await drawCard(x,cx,cy,s.items[i],T,rw.noteH,s.col);
+      const it=s.items[i];
+      await drawCard(x,cx,cy,it,T,rw.noteH,s.col,grpOf(it)?it.g:null);
     }
   }
   // 品牌頁尾:畫在最後 = 底圖層的最上面,但仍在使用者的貼圖與文字之下 → 只會被蓋,不會蓋別人。
@@ -2550,7 +2901,8 @@ function applyZoom(){
   const wContain=Math.min(availW, availH*(LAYW/Math.max(LAYH,1)));   // 符合高度時的寬度
   const t=(+$('#edSize').value||0)/100;
   const w = t<=0.5 ? wContain+(availW-wContain)*(t/0.5) : availW+(availW*1.6)*((t-0.5)/0.5);
-  cv.style.width=Math.max(60,Math.round(w))+'px';
+  // floor 不用 round:「整張顯示」時四捨五入會讓高度多出 1px → 冒出一條沒必要的捲軸
+  cv.style.width=Math.max(60,Math.floor(w))+'px';
   layoutTexts();
 }
 /* applyZoom 的反函式:給定想要的畫布寬度,回推滑桿該停在哪。
@@ -2563,7 +2915,7 @@ function zoomSliderFor(w){
   const t = w<=availW
     ? ((availW-wContain)>1 ? 0.5*(w-wContain)/(availW-wContain) : 0)   // 前半段:符合高度 → 符合寬度
     : 0.5 + 0.5*(w-availW)/(availW*1.6);                              // 後半段:再往上放大
-  return Math.max(0, Math.min(100, Math.round(t*100)));
+  return Math.max(0, Math.min(100, t*100));   // 不取整:滑桿是 step="any",Ctrl+滾輪的平滑縮放才不會一格一格跳
 }
 /* 編輯區的兩指縮放。
    用 touch 事件而不是 pointer:文字/貼圖圖層的拖曳已經是 pointer + setPointerCapture,
@@ -2582,7 +2934,7 @@ function setEdTools(open,persistIt){
   const b=$('#edToolsToggle'); if(b) b.setAttribute('aria-expanded', open?'true':'false');
   syncEdToolsLabel();
   if(persistIt!==false){ try{ localStorage.setItem('tlEdTools', open?'1':'0'); }catch(e){} }
-  if(document.body.classList.contains('editmode')) requestAnimationFrame(applyZoom);
+  if(document.body.classList.contains('editmode')){ requestAnimationFrame(applyZoom); if(open) scheduleTip(600); }
 }
 let PINCHING=false;
 function setupPinchZoom(){
@@ -2613,6 +2965,43 @@ function setupPinchZoom(){
   const end=e=>{ if(PINCHING && (!e.touches || e.touches.length<2)) PINCHING=false; };
   ed.addEventListener('touchend',end);
   ed.addEventListener('touchcancel',end);
+}
+/* 電腦版 Ctrl + 滾輪縮放(觸控板的兩指夾捏,瀏覽器也是送成 ctrlKey 的 wheel)。
+   滾輪一格是一大步(deltaY≈100),直接套用會一頓一頓的 → 累加到目標寬度 zTarget,
+   再由 rAF 每格往目標靠近三成(指數平滑):快速連滾會自然加速,停手時柔和收尾。
+   以游標為中心:縮放前游標底下是畫布的哪一點,縮放後就把那一點拉回游標底下。
+   跟兩指縮放一樣只改滑桿再走 applyZoom() —— 單一真相來源,滑桿與畫面不會對不起來。
+   只攔「編輯區上」的 Ctrl+滾輪;其他地方照常是瀏覽器的整頁縮放。 */
+function setupWheelZoom(){
+  const ed=$('#editor'); let zTarget=0, raf=0, fx=.5, fy=.5, mx=0, my=0;
+  const bounds=()=>{ const aw=ed.clientWidth||1, ah=ed.clientHeight||1;   // = 滑桿 0 與 100 對應的寬度(見 applyZoom)
+    return [Math.max(60,Math.min(aw, ah*(LAYW/Math.max(LAYH,1)))), aw*2.6]; };
+  const step=()=>{
+    raf=0;
+    // ⚠ 上下限每一格都要重算:放大到超出畫面時會冒出捲軸,#editor 的可用寬度跟著變窄,
+    //   滑桿 100 對應的寬度就比當初算的 zTarget 小 → 永遠到不了目標,動畫停不下來,
+    //   而它每一格都把捲動位置拉回游標中心 = 滾輪完全捲不動。
+    const [lo,hi]=bounds(); zTarget=Math.max(lo,Math.min(hi,zTarget));
+    const cv=$('#baseCv'), cur=cv.getBoundingClientRect().width;
+    let next=cur+(zTarget-cur)*0.3; if(Math.abs(zTarget-next)<0.75) next=zTarget;
+    $('#edSize').value=zoomSliderFor(next); applyZoom();
+    const r=cv.getBoundingClientRect();
+    ed.scrollLeft += (r.left+fx*r.width)-mx;
+    ed.scrollTop  += (r.top +fy*r.height)-my;
+    // 到目標了、或寬度已經動不了(碰到滑桿的頭尾)→ 停。不停的話會一直霸佔捲動位置
+    if(next!==zTarget && Math.abs(r.width-cur)>=0.5) raf=requestAnimationFrame(step);
+  };
+  ed.addEventListener('wheel',e=>{
+    if(!e.ctrlKey || !document.body.classList.contains('editmode')) return;
+    e.preventDefault();   // 不讓瀏覽器縮放整頁
+    const r=$('#baseCv').getBoundingClientRect(); if(!r.width) return;
+    if(!raf) zTarget=r.width;   // 不在動畫中 → 從目前寬度起算
+    fx=(e.clientX-r.left)/r.width; fy=(e.clientY-r.top)/r.height; mx=e.clientX; my=e.clientY;
+    const dy = e.deltaMode===1 ? e.deltaY*33 : e.deltaMode===2 ? e.deltaY*400 : e.deltaY;   // 行 / 頁 → px
+    const [lo,hi]=bounds();
+    zTarget=Math.max(lo, Math.min(hi, zTarget*Math.exp(-dy*0.0025)));   // 滾輪一格(100)≈ 縮放 22%
+    if(!raf) raf=requestAnimationFrame(step);
+  },{passive:false});
 }
 async function renderBase(){
   if(baseBusy){baseAgain=true;return;} baseBusy=true;
@@ -3123,37 +3512,59 @@ function setupPriceModal(){
   $('#priceClose').onclick=closePrice;
   closeOnBackdrop($('#priceMask'),closePrice);
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('#priceMask').classList.contains('on')) closePrice(); });
-  $('#ptipOk').onclick=()=>closePriceTip(true);
-  $('#ptipTry').onclick=()=>{ const t=PTIP&&PTIP.t; closePriceTip(true); if(t&&t.isConnected) t.click(); };
+  $('#ptipOk').onclick=()=>closeTip(true);
+  $('#ptipTry').onclick=()=>{ const P=PTIP; if(!P) return; closeTip(true); if(P.t.isConnected) P.spec.onTry(P.t); };
 }
-/* ===== 新功能提示:查價 =====
-   舊使用者不會自己發現卡片下多了一顆小小的 $ → 第一次進站時,聚光燈打在第一張看得到的卡的 $ 上:
-   畫面變暗、$ 亮起來脈動、灑一圈光點、旁邊泡泡說明,可以直接「試試看」。
-   按知道了 / 試試看 / 點其他地方 / Esc 都算看過(tlSeenPriceTip),之後不再出現。
-   清單是空的、正在選寶可夢或製圖、歡迎視窗或其他浮窗開著 → 先不出,
-   之後清單重畫(drawLists)或歡迎視窗關掉時再試。 */
+/* ===== 新功能提示(聚光燈佇列) =====
+   舊使用者不會自己發現新東西 → 第一次遇到時,聚光燈打在那個按鈕上:
+   畫面變暗、目標亮起來脈動、灑一圈光點、旁邊泡泡說明,可以直接「試試看」。
+   按知道了 / 試試看 / 點其他地方 / Esc 都算看過(各自的 localStorage key),之後不再出現。
+   一次只出一則,依 TIPS 的順序;看完一則,稍等一下再出下一則。
+   ctx 決定在哪個畫面出:'list' = 清單(不在製圖、不在選寶可夢),'edit' = 製圖畫面。
+   目標看不到(清單是空的、工具區收起來)、歡迎視窗或其他浮窗開著 → 先不出,
+   之後清單重畫(drawLists)、歡迎視窗關掉、進製圖、展開工具時再試。
+   想讓大家再看一次某則(例如之後又改版)→ 換一個 key 名稱即可。 */
+const isVis=el=>!!(el && el.getClientRects().length);
+const TIPS=[
+  { key:'tlSeenPriceTip', ctx:'list', glow:'pqGlow', title:'ptip_title', body:()=>tr('ptip_body'), tryL:'ptip_try',
+    find:()=>[...document.querySelectorAll('#listW .li .pq,#listH .li .pq')].find(isVis), onTry:t=>t.click() },
+  { key:'tlSeenGroupTip', ctx:'list', title:'gtip_title', body:()=>tr('gtip_body'), tryL:'gtip_try',
+    find:()=>isVis($('#grpBtn'))?$('#grpBtn'):null, onTry:()=>{ if(!GROUPING) setGrouping(true); } },
+  // 製圖畫面:配對版型;電腦版順便講 Ctrl + 滾輪縮放(手機本來就會用兩指)
+  { key:'tlSeenLayoutTip', ctx:'edit', title:'ltip_title', tryL:'ltip_try',
+    body:()=>tr('ltip_body')+(matchMedia('(hover:hover) and (pointer:fine)').matches?'\n'+tr('ltip_zoom'):''),
+    find:()=>isVis($('#grpRow'))?$('#grpRow'):null, onTry:()=>{ if(!isPair()) setGrpStyle('pair',undefined); } }];
 let PTIP=null, _ptipTimer=null;
-function seenPriceTip(){ try{ return localStorage.getItem('tlSeenPriceTip')==='1'; }catch(e){ return true; } }   // 讀不到就當看過,免得每次都跳
-function schedulePriceTip(){ if(seenPriceTip()) return; clearTimeout(_ptipTimer); _ptipTimer=setTimeout(maybeShowPriceTip,700); }
-function maybeShowPriceTip(){
-  if(!ready||seenPriceTip()) return;
-  if(PTIP){ if(PTIP.t.isConnected) return; closePriceTip(false); }   // 清單重畫、指著的節點被換掉 → 重新找一顆
+function seenTip(s){ try{ return localStorage.getItem(s.key)==='1'; }catch(e){ return true; } }   // 讀不到就當看過,免得每次都跳
+function scheduleTip(delay){ if(TIPS.every(seenTip)) return; clearTimeout(_ptipTimer); _ptipTimer=setTimeout(maybeShowTip,delay||700); }
+function schedulePriceTip(){ scheduleTip(); }   // 舊呼叫端(drawLists / 歡迎視窗 / 開站)沿用這個名字
+function maybeShowTip(){
+  if(!ready) return;
+  if(PTIP){ if(isVis(PTIP.t)) return; closeTip(false); }   // 清單重畫、指著的節點被換掉 → 重新找
   const B=document.body.classList;
-  if(B.contains('editmode')||B.contains('picking')) return;
-  if(document.querySelector('#introMask.on,#priceMask.on,#mixMask.on,#saveMask.on,#supMask.on,#busyMask.on')) return;
-  const t=[...document.querySelectorAll('#listW .li .pq,#listH .li .pq')].find(b=>b.getClientRects().length);
-  if(t) showPriceTip(t);
+  if(B.contains('picking')) return;
+  if(document.querySelector('#introMask.on,#priceMask.on,#mixMask.on,#saveMask.on,#supMask.on,#busyMask.on,#txtEditOverlay.on')) return;
+  const ctx=B.contains('editmode')?'edit':'list';
+  for(const s of TIPS){
+    if(s.ctx!==ctx || seenTip(s)) continue;
+    const t=s.find(); if(t){ showTip(t,s); return; }
+  }
 }
-function showPriceTip(t){
+function fillTip(s){
+  $('#ptipTitle').textContent=tr(s.title); $('#ptipBody').textContent=s.body();
+  $('#ptipOk').textContent=tr('ptip_ok'); $('#ptipTry').textContent=tr(s.tryL);
+}
+function showTip(t,spec){
   const root=$('#ptip'), spot=$('#ptipSpot'), bub=$('#ptipBubble'), arrow=$('#ptipArrow'), burst=$('#ptipBurst');
   const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   t.scrollIntoView({block:'center',behavior:still?'auto':'smooth'});
-  t.classList.add('pqGlow');
-  PTIP={t,raf:0};
+  if(spec.glow) t.classList.add(spec.glow);
+  fillTip(spec);
+  PTIP={t,spec,raf:0};
   // 每個 frame 重算位置:跟著頁面捲動、清單自己的捲軸、手機轉向走
   const place=()=>{
     if(!PTIP) return;
-    if(!t.isConnected){ closePriceTip(false); schedulePriceTip(); return; }
+    if(!isVis(t)){ closeTip(false); scheduleTip(); return; }   // 節點被換掉、或畫面切走(例如進了製圖)
     const r=t.getBoundingClientRect(), pad=6, vw=innerWidth, vh=innerHeight;
     Object.assign(spot.style,{left:(r.left-pad)+'px',top:(r.top-pad)+'px',width:(r.width+pad*2)+'px',height:(r.height+pad*2)+'px'});
     burst.style.left=(r.left+r.width/2)+'px'; burst.style.top=(r.top+r.height/2)+'px';
@@ -3174,28 +3585,30 @@ function showPriceTip(t){
   root.classList.add('on','in');
   place();
   // 暗幕是 box-shadow,不擋點擊 → 在 capture 階段攔:
-  //   點泡泡 → 照常;點到 $ 本身 → 收掉提示,查價照常打開;點其他地方 → 只收掉提示,不讓那一下誤觸底下的東西
+  //   點泡泡 → 照常;點到目標本身 → 收掉提示,目標照常動作;點其他地方 → 只收掉提示,不讓那一下誤觸底下的東西
   PTIP.onDown=e=>{
     if(bub.contains(e.target)) return;
-    if(t.contains(e.target)){ closePriceTip(true); return; }
-    e.preventDefault(); e.stopPropagation(); closePriceTip(true);
+    if(t.contains(e.target)){ closeTip(true); return; }
+    e.preventDefault(); e.stopPropagation(); closeTip(true);
     const eat=ev=>{ ev.preventDefault(); ev.stopPropagation(); };
     document.addEventListener('click',eat,{capture:true,once:true});
     setTimeout(()=>document.removeEventListener('click',eat,true),600);
   };
-  PTIP.onKey=e=>{ if(e.key==='Escape') closePriceTip(true); };
+  PTIP.onKey=e=>{ if(e.key==='Escape') closeTip(true); };
   document.addEventListener('pointerdown',PTIP.onDown,true);
   document.addEventListener('keydown',PTIP.onKey,true);
 }
-function closePriceTip(markSeen){
+function closeTip(markSeen){
   if(!PTIP) return;
+  const spec=PTIP.spec;
   cancelAnimationFrame(PTIP.raf);
   document.removeEventListener('pointerdown',PTIP.onDown,true);
   document.removeEventListener('keydown',PTIP.onKey,true);
-  PTIP.t.classList.remove('pqGlow');
+  if(spec.glow) PTIP.t.classList.remove(spec.glow);
   $('#ptip').classList.remove('on','in'); $('#ptipBurst').innerHTML='';
   PTIP=null;
-  if(markSeen){ clearTimeout(_ptipTimer); try{ localStorage.setItem('tlSeenPriceTip','1'); }catch(e){} }
+  if(markSeen){ try{ localStorage.setItem(spec.key,'1'); }catch(e){}
+    scheduleTip(1100); }   // 下一則(若有)稍等一下再出,不要一關掉就又暗下來
 }
 function showSupportModal(){ const m=$('#supMask'); if(m) m.classList.add('on'); }
 function closeSupportModal(){ const m=$('#supMask'); if(m) m.classList.remove('on'); }
@@ -3687,12 +4100,13 @@ let dragK=null,dragIdx=null;
 /* ===== 多組清單 ===== */
 let SETS=[], activeSetId=null, setDragId=null;
 const suid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-function newSetData(){ return {want:[],have:[],canfly:false,trainer:'',trainerLabel:''}; }
+function newSetData(){ return {want:[],have:[],canfly:false,trainer:'',trainerLabel:'',gstyle:'',gdir:'lr'}; }
 // 舊資料可能還有 qr 欄位(推廣 QR 已改成固定的品牌頁尾),正規化時直接丟掉
 function normSetData(d){ return {
   want:Array.isArray(d&&d.want)?d.want:[], have:Array.isArray(d&&d.have)?d.have:[],
   canfly:!!(d&&d.canfly),
-  trainer:(d&&typeof d.trainer==='string')?d.trainer:'', trainerLabel:(d&&typeof d.trainerLabel==='string')?d.trainerLabel:'' }; }
+  trainer:(d&&typeof d.trainer==='string')?d.trainer:'', trainerLabel:(d&&typeof d.trainerLabel==='string')?d.trainerLabel:'',
+  gstyle:(d&&d.gstyle==='pair')?'pair':'', gdir:(d&&d.gdir==='tb')?'tb':'lr' }; }
 function setDefaultName(){ const taken=new Set(SETS.map(s=>s.name)); let n=1;
   while(taken.has(tr('set_default')+' '+n)) n++; return tr('set_default')+' '+n; }
 function uniqueSetName(base){ const taken=new Set(SETS.map(s=>s.name));
@@ -3923,6 +4337,7 @@ let liDragActive=false;
 document.addEventListener('touchmove',e=>{ if(liDragActive && e.cancelable) e.preventDefault(); },{passive:false});
 function liDrag(d,k,i){
   d.addEventListener('pointerdown',e=>{
+    if(GROUPING) return;   // 分組模式只點不拖:長按拖曳在手機上會跟「點一下上色」搶手勢
     if(e.target.closest('.note')||e.target.closest('.del')) return;
     const sx=e.clientX,sy=e.clientY,touch=e.pointerType==='touch'; let active=false,hold=null;
     const begin=()=>{ active=true; liDragActive=true; dragK=k; dragIdx=i; d.classList.add('dragging'); try{d.setPointerCapture(e.pointerId);}catch(_){} };
@@ -3985,6 +4400,115 @@ function cycleGender(k,c,node){
   }
   toast(tr('mix_dup')); return false;    // 公母兩種都已經在清單裡
 }
+/* ===== 分組模式(清單畫面) =====
+   選一個顏色(畫筆)→ 點卡片就加入那一組,同色再點一次取消;「取消」畫筆 = 橡皮擦。
+   不用拖拉:手機上拖放跟捲動搶手勢,而且這裡已經有「滑清單時誤觸 ✕」的前科。
+   ⚠ 取消分組一律 delete c.g,不寫 undefined —— Firebase 的 set() 遇到 undefined 會整包拒收。 */
+function syncGrpCard(d){
+  const c=d._c; if(!c) return; const G=grpOf(c);
+  d.style.setProperty('--gc',G?G.c:'transparent'); d.style.setProperty('--gi',(G&&G.ink)||'#fff');
+  d.classList.toggle('hasg',!!G);
+  const t=d.querySelector('.gtag'); if(t) t.textContent=G?G.k:'';
+  d.classList.toggle('gOther', GROUPING && !!BRUSH && !!G && G.k!==BRUSH);   // 別組的變淡:一眼看出這個顏色有哪些
+}
+function syncGrpCards(){ for(const d of document.querySelectorAll('#listW .li,#listH .li')) syncGrpCard(d); }
+function paintCard(d){
+  const c=d._c; if(!c) return;
+  if(!BRUSH || c.g===BRUSH) delete c.g; else c.g=BRUSH;
+  try{ navigator.vibrate&&navigator.vibrate(8); }catch(e){}
+  d.classList.remove('gPop'); void d.offsetWidth; d.classList.add('gPop');
+  syncGrpCard(d); syncGrpBar(); persist(); scheduleBase();
+}
+function renderGrpChips(){
+  const box=$('#grpChips'); if(!box) return;
+  box.innerHTML=GROUPS.map(g=>`<button type="button" class="grpChip" data-g="${g.k}" style="--gc:${g.c};--gi:${g.ink||'#fff'}"><span class="c">${g.k}</span><small></small></button>`).join('')
+    +`<button type="button" class="grpChip er" data-g=""><span class="c"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" style="vertical-align:-4px"><circle cx="12" cy="12" r="8"/><path d="M6.5 17.5l11-11"/></svg></span><small></small></button>`;
+  box.onclick=e=>{ const b=e.target.closest('.grpChip'); if(!b) return; BRUSH=b.dataset.g; syncGrpBar(); syncGrpCards(); };
+  syncGrpBar();
+}
+function syncGrpBar(){
+  const box=$('#grpChips'); if(!box) return;
+  for(const b of box.querySelectorAll('.grpChip')){
+    const g=b.dataset.g; b.classList.toggle('on',g===BRUSH);
+    if(g){ const w=LIST.want.filter(c=>c.g===g).length, h=LIST.have.filter(c=>c.g===g).length;
+      b.querySelector('small').textContent=(w||h)?w+'⇄'+h:'—'; }
+    else{ b.querySelector('small').textContent=tr('g_erase'); b.title=tr('g_erase'); }
+  }
+  const G=GRP[BRUSH], h=$('#grpHintTxt');
+  if(h) h.innerHTML = G ? tr('g_hint').replace('{g}',`<b style="color:${G.c}">${G.k}</b>`) : tr('g_hint_er');
+}
+function setGrouping(on){
+  GROUPING=!!on; document.body.classList.toggle('grouping',GROUPING);
+  const b=$('#grpBtn'); if(b){ b.classList.toggle('on',GROUPING); b.setAttribute('aria-pressed',GROUPING?'true':'false'); }
+  syncGrpCards(); syncGrpBar();
+}
+/* 分組的拖曳多選:手勢跟選寶可夢的格子(setupGridSelect)一樣,兩邊手感才一致 ——
+   橫向起手 → 拖曳上色,之後上下左右都行,起點到手指之間的卡一起設定,拖回去的會還原;
+   縱向起手 → 交給捲動;沒滑動 → 單點(走卡片自己的 click)。滑鼠則任何方向拖都算。
+   這一趟是「上色」還是「取消」看起點那張:已經是這個顏色 → 這趟全部取消。
+   只在同一側清單內(想要 / 提供各自一個容器);清單有自己的捲軸,到邊緣會自動捲。 */
+let grpDragJustEnded=false;
+function setupGroupDrag(box){
+  let mode='idle', sx=0, sy=0, start=-1, val=null, dMin=-1, dMax=-1, lastX=0, lastY=0, pid=null;
+  const base=new Map();   // idx → 拖曳前的 g,拖回去時還原
+  const cards=()=>[...box.children].filter(n=>n.classList&&n.classList.contains('li'));
+  const setG=(d,g)=>{ const c=d._c; if(!c||(c.g||null)===(g||null)) return;
+    if(g) c.g=g; else delete c.g;
+    syncGrpCard(d); try{ navigator.vibrate&&navigator.vibrate(5); }catch(e){} };
+  function updateTo(x,y){
+    const el=document.elementFromPoint(x,y), li=el&&el.closest('.li');
+    if(!li||li.parentNode!==box) return;
+    const L=cards(), idx=L.indexOf(li); if(idx<0) return;
+    const nMin=Math.min(start,idx), nMax=Math.max(start,idx);
+    for(let i=dMin;i<=dMax;i++) if((i<nMin||i>nMax) && base.has(i)) setG(L[i],base.get(i));   // 離開區間 → 還原
+    for(let i=nMin;i<=nMax;i++){ if(!base.has(i)) base.set(i,L[i]._c.g||null); setG(L[i],val); }
+    dMin=nMin; dMax=nMax;
+  }
+  const onScroll=()=>{ if(mode==='paint') updateTo(lastX,lastY); };   // 自動捲動時,手指底下換了卡
+  function end(){
+    stopAutoScroll(); box.removeEventListener('scroll',onScroll);
+    if(mode==='paint'){
+      liDragActive=false; base.clear();
+      grpDragJustEnded=true; setTimeout(()=>{ grpDragJustEnded=false; },0);   // 吃掉放開後那一下 click
+      syncGrpBar(); persist(); scheduleBase();
+    }
+    mode='idle'; start=-1; dMin=dMax=-1; pid=null;
+  }
+  box.addEventListener('pointerdown',e=>{
+    if(!GROUPING) return;
+    const li=e.target.closest('.li'); if(!li||li.parentNode!==box) return;
+    if(e.pointerType==='mouse'&&e.button!==0) return;
+    mode='pending'; sx=e.clientX; sy=e.clientY; start=cards().indexOf(li); pid=e.pointerId;
+  });
+  box.addEventListener('pointermove',e=>{
+    if(mode==='idle'||mode==='scroll'||e.pointerId!==pid) return;
+    const dx=e.clientX-sx, dy=e.clientY-sy;
+    if(mode==='pending'){
+      const mouse=e.pointerType==='mouse';
+      if((mouse && Math.hypot(dx,dy)>8) || (Math.abs(dx)>12 && Math.abs(dx)>Math.abs(dy))){
+        mode='paint'; liDragActive=true;   // liDragActive:沿用清單拖曳那個「擋掉瀏覽器捲動」的開關
+        try{ box.setPointerCapture(e.pointerId); }catch(_){}
+        const L=cards(), c0=L[start]._c;
+        val = (!BRUSH || c0.g===BRUSH) ? null : BRUSH;
+        dMin=dMax=start; base.set(start,c0.g||null); setG(L[start],val);
+        box.addEventListener('scroll',onScroll);
+      } else if(Math.abs(dy)>12) mode='scroll';
+      return;
+    }
+    if(e.cancelable) e.preventDefault();
+    lastX=e.clientX; lastY=e.clientY;
+    updateTo(lastX,lastY);
+    dragAutoScroll(box,lastY);
+  });
+  box.addEventListener('pointerup',end);
+  box.addEventListener('pointercancel',end);
+}
+// 同組的排在一起(A→F,未分組在最後;組內維持原本順序)。給復原,跟其他整批改動一樣
+function sortByGroup(){
+  const ord=c=>{ const G=grpOf(c); return G?GROUPS.indexOf(G):99; };
+  const srt=a=>a.map((c,i)=>[c,i]).sort((p,q)=>ord(p[0])-ord(q[0])||p[1]-q[1]).map(p=>p[0]);
+  undoableListEdit(tr('g_sorted'), ()=>{ LIST.want=srt(LIST.want); LIST.have=srt(LIST.have); drawLists(); renderBase(); });
+}
 /* 單張卡片的節點。抽出來是為了讓「複製一張」可以只插一個節點 ——
    整份 drawLists() 在長清單會停一下,而且清單自己有捲軸,重畫等於把捲動位置扔回頂端。
    i 只餵給 liDrag 當 dragIdx,而 dragIdx 從頭到尾沒有人讀(真正的排序是拖放當下
@@ -3994,7 +4518,7 @@ function makeCard(k,c,i,box,cnt){
       d.innerHTML=`<div class="card">${c.bg?`<img class="bg" loading="lazy" decoding="async" src="${thumbOf(c.bg)}" referrerpolicy="no-referrer">`:''}
         <img class="m${c.bg?'':' big'}${fxCls(c.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${cdn(dispUrl(c.url))}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}${specBadge(c.url,!!c.badge)}
         ${c.shiny?'<span class="sh">✨</span>':''}
-        <button class="del">✕</button></div>`;
+        <span class="gring"></span><span class="gtag"></span><button class="del">✕</button></div>`;
       // 性別鈕:大多數物種公母同圖,交易時卻常有人指定 → 加完之後在卡片上點一下就能標
       const gn=document.createElement('button'); gn.title=tr('gender_tip');
       const syncGn=()=>{ gn.className='gn'+(c.gender==='male'?' male':c.gender==='female'?'':' off');
@@ -4048,6 +4572,9 @@ function makeCard(k,c,i,box,cnt){
           if(!LIST[k].length) box.innerHTML='<div class="empty">'+tr('empty')+'</div>';
           renderSets(); persist(); scheduleBase(); }); };
       liDrag(d,k,i);
+      // 分組模式:整張卡就是按鈕(其他圓鈕在 CSS 裡已收起)。單點在這裡,拖曳多選在 setupGroupDrag
+      d._c=c; syncGrpCard(d);
+      d.addEventListener('click',e=>{ if(!GROUPING || grpDragJustEnded) return; e.preventDefault(); paintCard(d); });
       const pq=document.createElement('button'); pq.className='pq'+(c.pq?' has':''); pq.type='button';
       pq.textContent='$'; pq.title=tr('price_tip');
       pq.onpointerdown=e=>e.stopPropagation();   // 不觸發卡片拖曳
@@ -4069,6 +4596,7 @@ function drawLists(){
     });
   }
   persist();
+  syncGrpBar(); syncGrpUI();   // 換了一組清單 → 畫筆列的數量與版型按鈕跟著這組
   renderSets();   // 更新清單膠囊上的數量
   schedulePriceTip();   // 第一次有卡片時才出新功能提示
 }
