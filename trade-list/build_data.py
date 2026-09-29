@@ -117,8 +117,10 @@ except Exception as ex:
 # 不可交換的:幻之寶可夢(夢幻→薩戮德;美錄坦/美錄梅塔/桃歹郎是例外,GM 標 true)
 #   以及合體/究極型態:黑白酋雷姆、基格爾德(全型態)、奈克洛茲瑪合體、無極汰那。
 #   王之劍/王之盾不在此列(GM 只是漏寫 isTradable,見 _trad())。
-# 交換清單放這些等於讓人做出無效的清單 → 與 Mega/Primal 同政策,sprite 與背卡一律不列。
-# 注意:實際的排除放在最後(見「拿掉不可交換的變體」),不能在這裡就從 pokemon 裡刪掉——
+# 以前是整個不列(怕做出無效的清單);現在照樣列出,只加上 untradable 旗標 ——
+#   有人就是想把收藏放進圖裡展示,選取網格會用暗色 +「不可交換」標籤提醒,要不要選交給使用者。
+#   Mega/Primal 仍然不列:那是戰鬥中的暫時形態,不是一隻可以擁有的寶可夢。
+# 注意:標記放在最後(見「標記不可交換的變體」),不能在這裡就動 pokemon ——
 #   背卡的型態解析要靠完整的 form 清單才對得到「0646B → BLACK」,先刪會讓它退回 wiki 原圖、
 #   form 變成 None 反而繞過這道過濾(實測會漏掉 40 筆)。
 def tradable(dex, form=None):
@@ -631,18 +633,19 @@ for r in rows:
     r["pokemon"].sort(key=lambda x: (x["dex"], str(x.get("form")), str(x.get("costume")),
                                      x["gmax"], x["dynamax"], x["shadow"]))
 
-# ---- 拿掉不可交換的變體(型態解析都做完了,現在才刪才不會影響上面的 form 比對)----
+# ---- 標記不可交換的變體(型態解析都做完了,現在才標)----
+# 不刪,只加 untradable: true(沒有這個欄位 = 可交換,舊資料/舊前端都照常)。
+# 前端:選取網格變暗 + 標籤、篩選列可以隱藏;超極巨化看基本型(GM 的 G-Max 型態沒有自己的 isTradable)。
 untradable_n = 0
 for _p in pokemon.values():
-    _keep = [v for v in _p["variants"] if tradable(_p["id"], v["form"])]
-    untradable_n += len(_p["variants"]) - len(_keep); _p["variants"] = _keep
-    if _p["gigantamax"] and not tradable(_p["id"]): _p["gigantamax"] = None
-pokemon = {k: v for k, v in pokemon.items() if v["variants"] or v["gigantamax"]}
-# 背卡側套同一條規則(黑酋雷姆、王之劍蒼響…背卡有列但換不了),整張卡只剩不可交換的就丟掉
+    for v in _p["variants"]:
+        if not tradable(_p["id"], v["form"]): v["untradable"] = True; untradable_n += 1
+    if _p["gigantamax"] and not tradable(_p["id"]): _p["gigantamax"]["untradable"] = True
+# 背卡側套同一條規則(黑酋雷姆、王之劍蒼響…背卡有列但換不了)
 bg_untradable = 0
 for r in rows:
-    keep = [m for m in r["pokemon"] if tradable(m["dex"], m.get("form"))]
-    bg_untradable += len(r["pokemon"]) - len(keep); r["pokemon"] = keep
+    for m in r["pokemon"]:
+        if not tradable(m["dex"], m.get("form")): m["untradable"] = True; bg_untradable += 1
 
 # 套用人工修正「之前」的樣子,另存一份給 bg-editor 用。
 # ⚠ 少了這一步,編輯器會拿套用後的結果再疊一次 ops —— 條目的 key 早就變了
@@ -655,7 +658,7 @@ json.dump([r for r in rows if r["pokemon"]],
 # ---- 人工修正:套用 data/bg_overrides.json ----
 # 這支程式每次都把 backgrounds.json 整份重寫,所以直接改產出檔會被下一次 update.py 蓋掉。
 # 人工修正一律寫在獨立的疊加檔裡(跟 aliases.json 一樣不會被重建碰到),在最後套上去。
-# 放在最後 = 人工的判斷最大:連「不可交換」的過濾都已經跑完了,你說要留就留。
+# 放在最後 = 人工的判斷最大:連「不可交換」的標記都已經跑完了,你說要留就留。
 # 用 bg-editor.html 編輯這個檔。
 def _spr_key(s):
     """sprite 欄位正規化成「同一個名字」。
@@ -785,7 +788,7 @@ print(f"[健檢] Bulbapedia MSP 標籤 {STAT['msp_total']} / 成功解析 {STAT[
       f"{'  ← ⚠ 有漏,正則要修' if STAT['msp_parsed'] < STAT['msp_total'] else '  ✔ 全數解析'}")
 print(f"[健檢] 後綴解析:型態 {STAT['form']} / 對到本機造型 {STAT['costume']} / 走 wiki 原圖 {STAT['wiki']}")
 print(f"[健檢] 產出帶造型的背卡條目 {_cos} 筆(本機 sprite) + {_spr} 筆(wiki 原圖)")
-print(f"[健檢] 不可交換而排除:sprite {untradable_n} 個變體 / 背卡 {bg_untradable} 筆(依 GM isTradable)")
+print(f"[健檢] 不可交換(已標記、仍列出):sprite {untradable_n} 個變體 / 背卡 {bg_untradable} 筆(依 GM isTradable)")
 print(f"[健檢] 背卡進化型補完:補異色旗標 {evo_shiny_n} 筆 / 補整筆條目 {evo_added_n} 筆(依 GM evolutionBranch)")
 print(f"[健檢] 人工修正(bg_overrides.json):刪 {ov_removed} / 改 {ov_set} / 加 {ov_added} / 整張卡 {ov_card} / 新建卡 {ov_new}"
       + (f"  ⚠ 對不到目標 {ov_miss} 筆(來源可能已變動,請用 bg-editor.html 檢查)" if ov_miss else ""))

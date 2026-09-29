@@ -267,6 +267,14 @@
             filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 1px 1px #000)}
   .gn.male{color:#8fc7ff}
   .cell .ok{position:absolute;right:3px;bottom:2px;z-index:4;font-size:12px;color:#7dffb0}
+  /* 不可交換:灰階壓暗(跟「已選」的半透明綠框區分)+ 底部暗紅標籤;性別/✓ 往上讓出標籤的位置 */
+  .cell.untr img.m,.cell.untr img.cbg{filter:grayscale(.85) brightness(.55)}
+  .cell.untr:hover img.m,.cell.untr:hover img.cbg{filter:grayscale(.6) brightness(.75)}
+  .cell .ut{position:absolute;left:0;right:0;bottom:0;z-index:4;padding:1px 3px;font-size:9.5px;font-weight:800;line-height:1.4;
+            text-align:center;color:#ffd6d6;background:rgba(110,18,32,.86);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+  .cell.untr .ok{bottom:16px}
+  .cell.untr .gn{bottom:17px}
+  .chip.untrChip.on{background:#8a2436}   /* 篩選開關也用同一個暗紅,看得出是同一件事 */
   .seg{display:flex;gap:6px;margin-bottom:8px}
   .seg button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--cellbg);color:var(--fg);cursor:pointer;font:inherit}
   .seg button.on{font-weight:700;border:0;color:#fff}
@@ -1006,6 +1014,7 @@
       <span class="chip on" id="fDmax" onclick="tog('fDmax')">極巨化</span>
       <span class="chip on" id="fGmax" onclick="tog('fGmax')">超極巨化</span>
       <span class="chip on" id="fCos" onclick="tog('fCos')">造形/服裝</span>
+      <span class="chip on untrChip" id="fUntr" onclick="tog('fUntr')">🚫 不可交換</span>
       <span class="fbreak"></span>
       <span class="fdiv" id="fdiv">只看▸</span>
       <span class="chip scope" id="fSelected" onclick="tog('fSelected')">✓ 已選</span>
@@ -1287,7 +1296,7 @@ function cdn(p){ return p && !/^(https?:|data:)/.test(p) ? CDN+p : p; }
 const badgeD='assets/badge_dynamax.png',badgeG='assets/badge_gigantamax.png',badgeP='assets/badge_purified.png',shinyIcon='assets/ic_shiny.png';
 let POKE={},BG=[],THUMBS=[],BGCOMBOS=[],TAB='mon',TARGET='want';
 let TRIM={};   // 建置期算好的去透明邊範圍(data/trim.json,由 fetch_assets.py 產出);沒有就退回即時掃描
-const FILT={fNormal:true,fShiny:true,fDmax:true,fGmax:true,fCos:true,fSelected:false,fLego:false};
+const FILT={fNormal:true,fShiny:true,fDmax:true,fGmax:true,fCos:true,fUntr:true,fSelected:false,fLego:false};
 const THEMES={
  neon:{ui:{bg:'linear-gradient(160deg,#0f1220,#191540)',card:'#1a1f36',line:'#2b3153',fg:'#eef0fb',mut:'#9aa3c7',acc:'#e0276c',acc2:'#7b5cff',want:'#2f9e57',have:'#c9a227',cellbg:'#0d1024'},
       exp:{grad:['#100e1e','#211741'],panel:'rgba(26,28,52,0.90)',cardbg:'#14162c',line:'rgba(123,92,255,0.55)',title:'#e0276c',tOut:'#ffffff',sec1:'#50dc8c',sec2:'#f0c850',fly:'#7b5cff',foot:'#b4b4d2'}},
@@ -1633,37 +1642,37 @@ const I18N_ST={
      ty_flying:'Volador',ty_psychic:'Psíquico',ty_bug:'Bicho',ty_rock:'Roca',ty_ghost:'Fantasma',ty_dragon:'Dragón',ty_dark:'Siniestro',ty_steel:'Acero',ty_fairy:'Hada'}};
 // 分組交換的字串(同 I18N_ST 的理由:整批獨立,不去擠那幾行大物件)
 const I18N_G={
- zh:{g_note_ph:'{g} 組備註(會顯示在圖上),例如:多換一',st_btn:'常用圖片',ed_tab_style:'風格',ed_tab_text:'文字/圖片',ed_tab_more:'設定',gtip_title:'🎉 新功能:分組交換',gtip_body:'想要的一堆、能給的一堆,但只想某些換某些?按畫面底部的「分組」,選顏色再點卡片(橫向滑過去可以一次選多張),同色的互相交換。',gtip_try:'🎨 試試看',ltip_title:'🎉 新功能:配對版型',ltip_body:'分好組之後,這裡選「配對」,每組會排成「我想要 ⇄ 我提供」一塊一塊。圖上的說明文字都可以點兩下改。',ltip_zoom:'💡 電腦版:按住 Ctrl 滾動滑鼠滾輪可以縮放圖片',ltip_try:'✨ 試試看',
+ zh:{untr:'不可交換',untr_tip:'幻之寶可夢、黑白酋雷姆、基格爾德等遊戲裡不能交換的寶可夢(仍可放進清單);點一下隱藏/顯示',g_note_ph:'{g} 組備註(會顯示在圖上),例如:多換一',st_btn:'常用圖片',ed_tab_style:'風格',ed_tab_text:'文字/圖片',ed_tab_more:'設定',gtip_title:'🎉 新功能:分組交換',gtip_body:'想要的一堆、能給的一堆,但只想某些換某些?按畫面底部的「分組」,選顏色再點卡片(橫向滑過去可以一次選多張),同色的互相交換。',gtip_try:'🎨 試試看',ltip_title:'🎉 新功能:配對版型',ltip_body:'分好組之後,這裡選「配對」,每組會排成「我想要 ⇄ 我提供」一塊一塊。圖上的說明文字都可以點兩下改。',ltip_zoom:'💡 電腦版:按住 Ctrl 滾動滑鼠滾輪可以縮放圖片',ltip_try:'✨ 試試看',
      g_btn:'分組',g_tip:'分組:指定哪些跟哪些交換',g_hint:'點卡片加入 {g} 組,再點一次取消',g_hint_er:'點卡片取消分組',g_erase:'取消',
      g_sort:'同組排一起',g_sorted:'已依組別排序',g_layout:'版型',g_classic:'一般',g_pair:'配對',g_lr:'左右',g_tb:'上下',g_per_side:'每側數量',
      g_want:'我想要',g_have:'我提供',g_any:'都可以談',g_other:'其他',g_legend:'同色的互相交換',g_legend_free:'沒標的都可以談',
      g_need:'還沒分組:回清單按底部的「分組」,選顏色再點卡片'},
- en:{g_note_ph:'Note for group {g} (shown on the image), e.g. 2-for-1',st_btn:'Stickers',ed_tab_style:'Style',ed_tab_text:'Text/Image',ed_tab_more:'More',gtip_title:'🎉 New: trade groups',gtip_body:'Only want to trade some cards for some others? Tap "Group" at the bottom, pick a color and tap cards (swipe sideways to select many). Same color = trade together.',gtip_try:'🎨 Try it',ltip_title:'🎉 New: paired layout',ltip_body:'Once you have groups, choose "Paired" here and each group becomes its own "I want ⇄ I offer" block. Tap any caption on the image to edit it.',ltip_zoom:'💡 On desktop: hold Ctrl and scroll to zoom the image',ltip_try:'✨ Try it',
+ en:{untr:'Untradable',untr_tip:'Pokémon that cannot be traded in the game (Mythicals, Black/White Kyurem, Zygarde…). You can still add them; tap to hide/show',g_note_ph:'Note for group {g} (shown on the image), e.g. 2-for-1',st_btn:'Stickers',ed_tab_style:'Style',ed_tab_text:'Text/Image',ed_tab_more:'More',gtip_title:'🎉 New: trade groups',gtip_body:'Only want to trade some cards for some others? Tap "Group" at the bottom, pick a color and tap cards (swipe sideways to select many). Same color = trade together.',gtip_try:'🎨 Try it',ltip_title:'🎉 New: paired layout',ltip_body:'Once you have groups, choose "Paired" here and each group becomes its own "I want ⇄ I offer" block. Tap any caption on the image to edit it.',ltip_zoom:'💡 On desktop: hold Ctrl and scroll to zoom the image',ltip_try:'✨ Try it',
      g_btn:'Group',g_tip:'Groups: choose which cards trade for which',g_hint:'Tap cards to add to group {g}; tap again to remove',g_hint_er:'Tap cards to ungroup',g_erase:'Clear',
      g_sort:'Sort by group',g_sorted:'Sorted by group',g_layout:'Layout',g_classic:'Standard',g_pair:'Paired',g_lr:'Side by side',g_tb:'Stacked',g_per_side:'Per side',
      g_want:'I want',g_have:'I offer',g_any:'Open to offers',g_other:'Other',g_legend:'Same color = trade together',g_legend_free:'unmarked: open to offers',
      g_need:'No groups yet: go back to your list, tap "Group" at the bottom, pick a color and tap cards'},
- ja:{g_note_ph:'{g} グループのメモ(画像に表示)例:2対1',st_btn:'よく使う画像',ed_tab_style:'スタイル',ed_tab_text:'テキスト/画像',ed_tab_more:'設定',gtip_title:'🎉 新機能:グループ交換',gtip_body:'欲しいもの・出せるものの中で、特定の組み合わせだけ交換したい?画面下の「グループ」を押し、色を選んでカードをタップ(横にスワイプでまとめて選択)。同じ色同士で交換します。',gtip_try:'🎨 試してみる',ltip_title:'🎉 新機能:ペアレイアウト',ltip_body:'グループ分けしたら、ここで「ペア」を選ぶと、グループごとに「欲しい ⇄ 出せる」のブロックになります。画像上の説明文はタップして編集できます。',ltip_zoom:'💡 PC:Ctrl を押しながらホイールで拡大・縮小',ltip_try:'✨ 試してみる',
+ ja:{untr:'交換不可',untr_tip:'幻のポケモンやブラック/ホワイトキュレム、ジガルデなどゲーム内で交換できないポケモン(リストには追加可);タップで表示/非表示',g_note_ph:'{g} グループのメモ(画像に表示)例:2対1',st_btn:'よく使う画像',ed_tab_style:'スタイル',ed_tab_text:'テキスト/画像',ed_tab_more:'設定',gtip_title:'🎉 新機能:グループ交換',gtip_body:'欲しいもの・出せるものの中で、特定の組み合わせだけ交換したい?画面下の「グループ」を押し、色を選んでカードをタップ(横にスワイプでまとめて選択)。同じ色同士で交換します。',gtip_try:'🎨 試してみる',ltip_title:'🎉 新機能:ペアレイアウト',ltip_body:'グループ分けしたら、ここで「ペア」を選ぶと、グループごとに「欲しい ⇄ 出せる」のブロックになります。画像上の説明文はタップして編集できます。',ltip_zoom:'💡 PC:Ctrl を押しながらホイールで拡大・縮小',ltip_try:'✨ 試してみる',
      g_btn:'グループ',g_tip:'グループ:どれとどれを交換するか指定',g_hint:'カードをタップで {g} グループに追加、もう一度で解除',g_hint_er:'カードをタップでグループ解除',g_erase:'解除',
      g_sort:'グループ順に並べる',g_sorted:'グループ順に並べました',g_layout:'レイアウト',g_classic:'標準',g_pair:'ペア',g_lr:'左右',g_tb:'上下',g_per_side:'片側の数',
      g_want:'欲しい',g_have:'出せる',g_any:'応相談',g_other:'その他',g_legend:'同じ色同士で交換',g_legend_free:'印なしは応相談',
      g_need:'まだグループがありません:リスト画面下の「グループ」を押し、色を選んでカードをタップ'},
- ko:{g_note_ph:'{g} 그룹 메모(이미지에 표시), 예: 2대1',st_btn:'자주 쓰는 이미지',ed_tab_style:'스타일',ed_tab_text:'텍스트/이미지',ed_tab_more:'설정',gtip_title:'🎉 새 기능: 그룹 교환',gtip_body:'원하는 것과 드릴 것 중 특정 조합만 교환하고 싶나요? 화면 아래 「그룹」을 누르고 색을 고른 뒤 카드를 탭하세요(옆으로 밀면 여러 장 선택). 같은 색끼리 교환해요.',gtip_try:'🎨 해 보기',ltip_title:'🎉 새 기능: 짝지어 보기',ltip_body:'그룹을 나눴다면 여기서 「짝지어 보기」를 고르세요. 그룹마다 「원해요 ⇄ 드려요」 블록으로 정리됩니다. 이미지 위 설명 글은 탭해서 수정할 수 있어요.',ltip_zoom:'💡 PC: Ctrl을 누른 채 휠을 굴리면 확대/축소',ltip_try:'✨ 해 보기',
+ ko:{untr:'교환 불가',untr_tip:'환상의 포켓몬, 블랙/화이트 큐레무, 지가르데 등 게임에서 교환할 수 없는 포켓몬(목록에는 추가 가능). 탭하면 숨기기/보이기',g_note_ph:'{g} 그룹 메모(이미지에 표시), 예: 2대1',st_btn:'자주 쓰는 이미지',ed_tab_style:'스타일',ed_tab_text:'텍스트/이미지',ed_tab_more:'설정',gtip_title:'🎉 새 기능: 그룹 교환',gtip_body:'원하는 것과 드릴 것 중 특정 조합만 교환하고 싶나요? 화면 아래 「그룹」을 누르고 색을 고른 뒤 카드를 탭하세요(옆으로 밀면 여러 장 선택). 같은 색끼리 교환해요.',gtip_try:'🎨 해 보기',ltip_title:'🎉 새 기능: 짝지어 보기',ltip_body:'그룹을 나눴다면 여기서 「짝지어 보기」를 고르세요. 그룹마다 「원해요 ⇄ 드려요」 블록으로 정리됩니다. 이미지 위 설명 글은 탭해서 수정할 수 있어요.',ltip_zoom:'💡 PC: Ctrl을 누른 채 휠을 굴리면 확대/축소',ltip_try:'✨ 해 보기',
      g_btn:'그룹',g_tip:'그룹: 어떤 것끼리 교환할지 지정',g_hint:'카드를 탭하면 {g} 그룹에 추가, 다시 탭하면 해제',g_hint_er:'카드를 탭하면 그룹 해제',g_erase:'해제',
      g_sort:'그룹별 정렬',g_sorted:'그룹별로 정렬했습니다',g_layout:'레이아웃',g_classic:'기본',g_pair:'짝지어 보기',g_lr:'좌우',g_tb:'위아래',g_per_side:'한쪽 개수',
      g_want:'원해요',g_have:'드려요',g_any:'협의 가능',g_other:'기타',g_legend:'같은 색끼리 교환',g_legend_free:'표시 없음은 협의 가능',
      g_need:'아직 그룹이 없어요: 목록 화면 아래 「그룹」을 누르고 색을 고른 뒤 카드를 탭하세요'},
- fr:{g_note_ph:'Note du groupe {g} (affichée sur l’image), ex. 2 contre 1',st_btn:'Autocollants',ed_tab_style:'Style',ed_tab_text:'Texte/Image',ed_tab_more:'Plus',gtip_title:'🎉 Nouveau : groupes d’échange',gtip_body:'Vous voulez échanger seulement certaines cartes contre certaines autres ? Touchez « Groupes » en bas, choisissez une couleur puis touchez des cartes (glissez latéralement pour en sélectionner plusieurs). Même couleur = échange ensemble.',gtip_try:'🎨 Essayer',ltip_title:'🎉 Nouveau : mise en page par paires',ltip_body:'Une fois les groupes faits, choisissez « Par paires » ici : chaque groupe devient un bloc « Je cherche ⇄ Je propose ». Touchez un texte de l’image pour le modifier.',ltip_zoom:'💡 Sur ordinateur : Ctrl + molette pour zoomer',ltip_try:'✨ Essayer',
+ fr:{untr:'Non échangeable',untr_tip:'Pokémon impossibles à échanger en jeu (fabuleux, Kyurem Noir/Blanc, Zygarde…). Vous pouvez quand même les ajouter ; touchez pour masquer/afficher',g_note_ph:'Note du groupe {g} (affichée sur l’image), ex. 2 contre 1',st_btn:'Autocollants',ed_tab_style:'Style',ed_tab_text:'Texte/Image',ed_tab_more:'Plus',gtip_title:'🎉 Nouveau : groupes d’échange',gtip_body:'Vous voulez échanger seulement certaines cartes contre certaines autres ? Touchez « Groupes » en bas, choisissez une couleur puis touchez des cartes (glissez latéralement pour en sélectionner plusieurs). Même couleur = échange ensemble.',gtip_try:'🎨 Essayer',ltip_title:'🎉 Nouveau : mise en page par paires',ltip_body:'Une fois les groupes faits, choisissez « Par paires » ici : chaque groupe devient un bloc « Je cherche ⇄ Je propose ». Touchez un texte de l’image pour le modifier.',ltip_zoom:'💡 Sur ordinateur : Ctrl + molette pour zoomer',ltip_try:'✨ Essayer',
      g_btn:'Groupes',g_tip:'Groupes : choisir quoi échanger contre quoi',g_hint:'Touchez des cartes pour les ajouter au groupe {g} ; touchez à nouveau pour retirer',g_hint_er:'Touchez des cartes pour les retirer du groupe',g_erase:'Retirer',
      g_sort:'Trier par groupe',g_sorted:'Trié par groupe',g_layout:'Mise en page',g_classic:'Standard',g_pair:'Par paires',g_lr:'Côte à côte',g_tb:'Empilé',g_per_side:'Par côté',
      g_want:'Je cherche',g_have:'Je propose',g_any:'À discuter',g_other:'Autres',g_legend:'Même couleur = échange ensemble',g_legend_free:'sans marque : à discuter',
      g_need:'Aucun groupe : revenez à la liste, touchez « Groupes » en bas, choisissez une couleur puis touchez des cartes'},
- de:{g_note_ph:'Notiz für Gruppe {g} (im Bild), z. B. 2 gegen 1',st_btn:'Sticker',ed_tab_style:'Stil',ed_tab_text:'Text/Bild',ed_tab_more:'Mehr',gtip_title:'🎉 Neu: Tauschgruppen',gtip_body:'Nur bestimmte Karten gegen bestimmte andere tauschen? unten „Gruppen“ antippen, Farbe wählen und Karten antippen (seitlich wischen wählt mehrere). Gleiche Farbe = zusammen tauschen.',gtip_try:'🎨 Ausprobieren',ltip_title:'🎉 Neu: paarweises Layout',ltip_body:'Nach dem Gruppieren hier „Paarweise“ wählen – jede Gruppe wird zu einem Block „Ich suche ⇄ Ich biete“. Texte im Bild lassen sich antippen und bearbeiten.',ltip_zoom:'💡 Am Computer: Strg gedrückt halten und scrollen zum Zoomen',ltip_try:'✨ Ausprobieren',
+ de:{untr:'Nicht tauschbar',untr_tip:'Im Spiel nicht tauschbare Pokémon (Mysteriöse, Schwarzes/Weißes Kyurem, Zygarde…). Hinzufügen geht trotzdem; antippen zum Aus-/Einblenden',g_note_ph:'Notiz für Gruppe {g} (im Bild), z. B. 2 gegen 1',st_btn:'Sticker',ed_tab_style:'Stil',ed_tab_text:'Text/Bild',ed_tab_more:'Mehr',gtip_title:'🎉 Neu: Tauschgruppen',gtip_body:'Nur bestimmte Karten gegen bestimmte andere tauschen? unten „Gruppen“ antippen, Farbe wählen und Karten antippen (seitlich wischen wählt mehrere). Gleiche Farbe = zusammen tauschen.',gtip_try:'🎨 Ausprobieren',ltip_title:'🎉 Neu: paarweises Layout',ltip_body:'Nach dem Gruppieren hier „Paarweise“ wählen – jede Gruppe wird zu einem Block „Ich suche ⇄ Ich biete“. Texte im Bild lassen sich antippen und bearbeiten.',ltip_zoom:'💡 Am Computer: Strg gedrückt halten und scrollen zum Zoomen',ltip_try:'✨ Ausprobieren',
      g_btn:'Gruppen',g_tip:'Gruppen: festlegen, was gegen was getauscht wird',g_hint:'Karten antippen, um sie Gruppe {g} hinzuzufügen; erneut tippen zum Entfernen',g_hint_er:'Karten antippen, um die Gruppe zu entfernen',g_erase:'Entfernen',
      g_sort:'Nach Gruppe sortieren',g_sorted:'Nach Gruppe sortiert',g_layout:'Layout',g_classic:'Standard',g_pair:'Paarweise',g_lr:'Nebeneinander',g_tb:'Untereinander',g_per_side:'Pro Seite',
      g_want:'Ich suche',g_have:'Ich biete',g_any:'Verhandelbar',g_other:'Sonstige',g_legend:'Gleiche Farbe = zusammen tauschen',g_legend_free:'ohne Markierung: verhandelbar',
      g_need:'Noch keine Gruppen: zurück zur Liste, unten „Gruppen“ antippen, Farbe wählen und Karten antippen'},
- es:{g_note_ph:'Nota del grupo {g} (se ve en la imagen), p. ej. 2 por 1',st_btn:'Stickers',ed_tab_style:'Estilo',ed_tab_text:'Texto/Imagen',ed_tab_more:'Más',gtip_title:'🎉 Novedad: grupos de intercambio',gtip_body:'¿Solo quieres cambiar ciertas cartas por otras concretas? Toca «Grupos» abajo, elige un color y toca cartas (desliza de lado para elegir varias). Mismo color = se intercambian juntos.',gtip_try:'🎨 Probar',ltip_title:'🎉 Novedad: diseño por parejas',ltip_body:'Con los grupos hechos, elige «Por parejas» aquí y cada grupo será un bloque «Busco ⇄ Ofrezco». Toca cualquier texto de la imagen para editarlo.',ltip_zoom:'💡 En ordenador: mantén Ctrl y usa la rueda para hacer zoom',ltip_try:'✨ Probar',
+ es:{untr:'No intercambiable',untr_tip:'Pokémon que no se pueden intercambiar en el juego (singulares, Kyurem Negro/Blanco, Zygarde…). Puedes añadirlos igual; toca para ocultar/mostrar',g_note_ph:'Nota del grupo {g} (se ve en la imagen), p. ej. 2 por 1',st_btn:'Stickers',ed_tab_style:'Estilo',ed_tab_text:'Texto/Imagen',ed_tab_more:'Más',gtip_title:'🎉 Novedad: grupos de intercambio',gtip_body:'¿Solo quieres cambiar ciertas cartas por otras concretas? Toca «Grupos» abajo, elige un color y toca cartas (desliza de lado para elegir varias). Mismo color = se intercambian juntos.',gtip_try:'🎨 Probar',ltip_title:'🎉 Novedad: diseño por parejas',ltip_body:'Con los grupos hechos, elige «Por parejas» aquí y cada grupo será un bloque «Busco ⇄ Ofrezco». Toca cualquier texto de la imagen para editarlo.',ltip_zoom:'💡 En ordenador: mantén Ctrl y usa la rueda para hacer zoom',ltip_try:'✨ Probar',
      g_btn:'Grupos',g_tip:'Grupos: elige qué se cambia por qué',g_hint:'Toca cartas para añadirlas al grupo {g}; vuelve a tocar para quitar',g_hint_er:'Toca cartas para quitarles el grupo',g_erase:'Quitar',
      g_sort:'Ordenar por grupo',g_sorted:'Ordenado por grupo',g_layout:'Diseño',g_classic:'Estándar',g_pair:'Por parejas',g_lr:'Lado a lado',g_tb:'Apilado',g_per_side:'Por lado',
      g_want:'Busco',g_have:'Ofrezco',g_any:'A negociar',g_other:'Otros',g_legend:'Mismo color = se intercambian juntos',g_legend_free:'sin marca: a negociar',
@@ -1760,6 +1769,7 @@ function applyStaticI18n(){
   $('#tMon').textContent=T('tab_mon'); $('#tBg').textContent=T('tab_bg');
   $('#fNormal').textContent=T('f_normal'); $('#fShiny').textContent='✨ '+T('f_shiny'); $('#fDmax').textContent=T('f_dmax'); $('#fGmax').textContent=T('f_gmax'); $('#fCos').textContent=T('f_cos');
   $('#fdiv').textContent=T('only')+'▸'; $('#fLego').textContent='👑 '+T('f_lego');
+  $('#fUntr').textContent='🚫 '+T('untr'); $('#fUntr').title=T('untr_tip');
   $('#fSelected').textContent='✓ '+T('f_sel')+'：'+(TARGET==='want'?T('want'):T('have'));
   $('#addWant').innerHTML='✏️ '+T('sec_add'); $('#addHave').innerHTML='✏️ '+T('sec_add');
   $('#clrWant').innerHTML='🗑 '+T('clear_side'); $('#clrHave').innerHTML='🗑 '+T('clear_side');
@@ -3917,15 +3927,16 @@ function buildThumbs(){
   THUMBS=[];BGCOMBOS=[];
   for(const p of Object.values(POKE)){
     // form / costume 一併帶進格子:讓選取網格也能用型態代碼與造型別名搜(自由搭配本來就可以)
-    for(const v of p.variants) if(!hiddenShiny(v)) THUMBS.push({url:v.url,dex:p.id,zh:nameOf(p.id),shiny:v.shiny,gender:v.gender,badge:null,tag:'',cos:!!(v.form||v.costume),form:v.form||null,costume:v.costume||null});
+    for(const v of p.variants) if(!hiddenShiny(v)) THUMBS.push({url:v.url,dex:p.id,zh:nameOf(p.id),shiny:v.shiny,gender:v.gender,badge:null,tag:'',cos:!!(v.form||v.costume),form:v.form||null,costume:v.costume||null,untr:!!v.untradable});
     if(p.gigantamax){
-      if(p.gigantamax.normal)THUMBS.push({url:p.gigantamax.normal,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeG,tag:'超極巨化',gmax:true,form:'GIGANTAMAX',costume:null});
-      if(p.gigantamax.shiny)THUMBS.push({url:p.gigantamax.shiny,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeG,tag:'超極巨化',gmax:true,form:'GIGANTAMAX',costume:null});
+      const gu=!!p.gigantamax.untradable;
+      if(p.gigantamax.normal)THUMBS.push({url:p.gigantamax.normal,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeG,tag:'超極巨化',gmax:true,form:'GIGANTAMAX',costume:null,untr:gu});
+      if(p.gigantamax.shiny)THUMBS.push({url:p.gigantamax.shiny,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeG,tag:'超極巨化',gmax:true,form:'GIGANTAMAX',costume:null,untr:gu});
     }
     if(p.dynamax_capable){
       const n=baseVar(p,false),s=baseVar(p,true);
-      if(n)THUMBS.push({url:n.url,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeD,tag:'極巨化',dmax:true});
-      if(s)THUMBS.push({url:s.url,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeD,tag:'極巨化',dmax:true});
+      if(n)THUMBS.push({url:n.url,dex:p.id,zh:nameOf(p.id),shiny:false,badge:badgeD,tag:'極巨化',dmax:true,untr:!!n.untradable});
+      if(s)THUMBS.push({url:s.url,dex:p.id,zh:nameOf(p.id),shiny:true,badge:badgeD,tag:'極巨化',dmax:true,untr:!!s.untradable});
     }
   }
   for(const b of BG){
@@ -3933,7 +3944,7 @@ function buildThumbs(){
     for(const mon of b.pokemon){
       const dex=mon.dex, p=POKE[dex]; if(!p)continue;
       const un=monUrl(p,mon,false), us=monUrl(p,mon,true);
-      const add=(url,shiny,badge,tag,gm)=>{ if(url)BGCOMBOS.push({url,bg:b.image_url,dex,zh:nameOf(p.id),bgname:b.image_name,bgtitle:b.name||'',badge:badge||null,shiny:!!shiny,tag:tag||'',dmax:tag==='極巨化',gmax:!!gm,purified:tag==='淨化',cos:!!(mon.costume||mon.sprite),form:mon.form||null,costume:mon.costume||null}); };
+      const add=(url,shiny,badge,tag,gm)=>{ if(url)BGCOMBOS.push({url,untr:!!mon.untradable,bg:b.image_url,dex,zh:nameOf(p.id),bgname:b.image_name,bgtitle:b.name||'',badge:badge||null,shiny:!!shiny,tag:tag||'',dmax:tag==='極巨化',gmax:!!gm,purified:tag==='淨化',cos:!!(mon.costume||mon.sprite),form:mon.form||null,costume:mon.costume||null}); };
       if(mon.gmax){ if(p.gigantamax){ add(p.gigantamax.normal,false,badgeG,'超極巨化',true); if(mon.shiny) add(p.gigantamax.shiny,true,badgeG,'超極巨化',true);} }
       else if(mon.dynamax){ add(un,false,badgeD,'極巨化'); if(mon.shiny) add(us,true,badgeD,'極巨化'); }
       else if(mon.shadow){ add(un,false,badgeP,'淨化'); if(mon.shiny) add(us,true,badgeP,'淨化'); }
@@ -3976,23 +3987,26 @@ function buildMixMons(){
   MIXMONS=[];
   for(const p of Object.values(POKE)){
     for(const v of p.variants) if(!hiddenShiny(v))
-      MIXMONS.push({url:v.url,dex:p.id,shiny:!!v.shiny,gender:v.gender||null,form:v.form||null,costume:v.costume||null});
+      MIXMONS.push({url:v.url,dex:p.id,shiny:!!v.shiny,gender:v.gender||null,form:v.form||null,costume:v.costume||null,untr:!!v.untradable});
     // 超極巨化是另一張圖(不只是加徽章)→ 也列進來讓使用者可以單獨挑
     if(p.gigantamax){
-      if(p.gigantamax.normal) MIXMONS.push({url:p.gigantamax.normal,dex:p.id,shiny:false,gender:null,form:'GIGANTAMAX',costume:null});
-      if(p.gigantamax.shiny)  MIXMONS.push({url:p.gigantamax.shiny, dex:p.id,shiny:true, gender:null,form:'GIGANTAMAX',costume:null});
+      if(p.gigantamax.normal) MIXMONS.push({url:p.gigantamax.normal,dex:p.id,shiny:false,gender:null,form:'GIGANTAMAX',costume:null,untr:!!p.gigantamax.untradable});
+      if(p.gigantamax.shiny)  MIXMONS.push({url:p.gigantamax.shiny, dex:p.id,shiny:true, gender:null,form:'GIGANTAMAX',costume:null,untr:!!p.gigantamax.untradable});
     }
   }
   return MIXMONS;
 }
+/* 不可交換(幻之寶可夢、黑白酋雷姆、基格爾德…,依遊戲資料 isTradable):一樣可以選,但格子灰階壓暗 +
+   底部一條暗紅標籤。刻意不用「變淡」—— 已選的格子本來就是半透明 + 綠框,兩者要一眼分得出來。 */
+function untrTag(){ return '<span class="ut">🚫 '+tr('untr')+'</span>'; }
 function mixCell(o,sel,isBg){
-  const d=document.createElement('div'); d.className='cell'+(sel?' sel':'');
+  const d=document.createElement('div'); d.className='cell'+(sel?' sel':'')+(!isBg&&o.untr?' untr':'');
   d.innerHTML = isBg
     ? `<img class="cbg" loading="lazy" decoding="async" src="${thumbOf(o.image_url)}">`
     : `<img class="m big${fxCls(o.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(dispUrl(o.url))}">`
       + specBadge(o.url,false)
       + (o.shiny?'<span class="sh">✨</span>':'')
-      + gnMark(o.gender);
+      + gnMark(o.gender) + (o.untr?untrTag():'');
   d.title = isBg ? (o.name||o.image_name) : (nameOf(o.dex)+specSuffix(o.url)+(o.form?' · '+o.form:'')+(o.costume?' · '+o.costume:'')+(o.shiny?' ✨':''));
   return d;
 }
@@ -4233,14 +4247,14 @@ function render(){
     FILTERED=BGCOMBOS.filter(c=>{const normal=!c.shiny&&!c.dmax&&!c.gmax;   // 淨化算「一般」
       if(normal&&!FILT.fNormal)return false; if(c.shiny&&!FILT.fShiny)return false;
       if(c.dmax&&!FILT.fDmax)return false; if(c.gmax&&!FILT.fGmax)return false;
-      if(FILT.fSelected&&!inTarget(c))return false; if(FILT.fLego&&!c.legendary)return false;
+      if(FILT.fSelected&&!inTarget(c))return false; if(FILT.fLego&&!c.legendary)return false; if(c.untr&&!FILT.fUntr)return false;
       if(q&&!(hitMon(c,q)||hitBg(c.bgname,c.bgtitle,q)))return false; return true;});
     $('#gcount').textContent=`${FILTERED.length} ${tr('bg_unit')}`;
   }else{
     FILTERED=THUMBS.filter(t=>{const normal=!t.shiny&&!t.cos&&!t.dmax&&!t.gmax;
       if(normal&&!FILT.fNormal)return false; if(t.gmax&&!FILT.fGmax)return false; if(t.dmax&&!FILT.fDmax)return false;
       if(t.shiny&&!FILT.fShiny)return false; if(t.cos&&!FILT.fCos)return false;
-      if(FILT.fSelected&&!inTarget(t))return false; if(FILT.fLego&&!t.legendary)return false;
+      if(FILT.fSelected&&!inTarget(t))return false; if(FILT.fLego&&!t.legendary)return false; if(t.untr&&!FILT.fUntr)return false;
       if(q&&!hitMon(t,q))return false; return true;});
     $('#gcount').textContent=`${FILTERED.length} ${tr('combos_unit')}`;
   }
@@ -4289,11 +4303,11 @@ function appendBatch(){
   const g=$('#grid');const end=Math.min(shown+BATCH,FILTERED.length);
   const frag=document.createDocumentFragment(), made=[];
   for(let i=shown;i<end;i++){
-    const it=FILTERED[i];const on=inTarget(it);const d=document.createElement('div');d.className=on?'cell added':'cell';
+    const it=FILTERED[i];const on=inTarget(it);const d=document.createElement('div');d.className=(on?'cell added':'cell')+(it.untr?' untr':'');
     d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${thumbOf(it.bg)}">`:''}
       <img class="m${it.bg?'':' big'}${fxCls(it.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(dispUrl(it.url))}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}${specBadge(it.url,!!it.badge)}
-      ${it.shiny?'<span class="sh">✨</span>':''}${gnMark(it.gender)}${on?'<span class="ok">✓</span>':''}`;
-    d.title=(it.zh||'')+specSuffix(it.url)+(it.tag?'('+tagLabel(it.tag)+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' '+tr('f_shiny'):'');
+      ${it.shiny?'<span class="sh">✨</span>':''}${gnMark(it.gender)}${on?'<span class="ok">✓</span>':''}${it.untr?untrTag():''}`;
+    d.title=(it.zh||'')+specSuffix(it.url)+(it.tag?'('+tagLabel(it.tag)+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' '+tr('f_shiny'):'')+(it.untr?' 🚫 '+tr('untr'):'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
     frag.appendChild(d); made.push(d);
   }
