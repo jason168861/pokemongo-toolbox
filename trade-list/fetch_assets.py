@@ -131,6 +131,7 @@ def main():
     print("已寫出 data/pokemon.local.json 與 data/backgrounds.local.json", flush=True)
     make_thumbs()
     make_style_assets()
+    make_sticker_assets()
     make_trim()
 
 def make_thumbs():
@@ -298,6 +299,78 @@ def make_style_assets():
         sq.save(out, "WEBP", quality=88, method=6)
         total += os.path.getsize(out); n += 1
     print(f"樣式素材 assets/type + assets/team + assets/ball:{n} 檔 / {total//1024} KB", flush=True)
+
+# 製圖畫面「常用圖片」的貼圖:key → POGO_ASSETS/Images 底下的路徑。
+# ⚠ 前端 index.html 的 STICKERS 照這裡的 key 找 assets/sticker/<key>.webp —— 增刪時兩邊一起改。
+#   (亮晶晶首飾加「＋」那張是另外合成好的 assets/lucky_friend_plus.png,不在這裡)
+STICKERS = {
+    "stardust":    "Items/stardust_painted.png",
+    "lucky":       "Items/lucky_friend_applicator.png",
+    "lucky_glow":  "Friends/ui_bg_lucky_pokemon.png",
+    "trade":       "Friends/pogo_trading_icon.png",
+    "meteorite":   "Items/Item_Meteorite.png",
+    "sword":       "Items/sword_fusionResource.png",
+    "shield":      "Items/shield_fusionResource.png",
+    **{f"ball_{b}": f"Items/{f}_sprite.png" for f, b in BALLS.items()},
+}
+
+# 現金類貼圖(交易時常有人問「可以用錢買嗎」):遊戲裡的寶可幣不是這個意思,要的是現實的錢 →
+# 用 Google Noto Emoji 的表情符號。來源是 Noto Animated Emoji 的靜態 512px PNG(CC BY 4.0,
+# 需標示出處:README 與貼圖浮窗底下都有寫)。GitHub 在部分網路連不上,fonts.gstatic.com 比較穩。
+# ⚠ key 同樣要跟前端 STICKERS 一致。
+EMOJI_STICKERS = {
+    "cash":        "1f4b5",   # 💵
+    "money_bag":   "1f4b0",   # 💰
+    "money_wings": "1f4b8",   # 💸
+    "coin_gold":   "1fa99",   # 🪙
+    "dollar":      "1f4b2",   # 💲
+    "red_packet":  "1f9e7",   # 🧧
+    "money_face":  "1f911",   # 🤑
+}
+NOTO_EMOJI_URL = "https://fonts.gstatic.com/s/e/notoemoji/latest/{cp}/512.png"
+
+def make_sticker_assets():
+    """常用圖片(貼圖):去透明邊、最長邊縮到 256px(不放大)存 WebP → assets/sticker/<key>.webp。
+    去邊是為了插進圖裡時,拖曳框就是圖本身的大小(不會框到一大片透明)。
+    球另外存一份在這裡,而不是用 assets/ball:那份只有 128px,當貼圖放大會糊。"""
+    try:
+        from PIL import Image
+    except ImportError:
+        print("(略過常用圖片:未安裝 Pillow)", flush=True); return
+    src_root = os.path.join(POGO_ASSETS, "Images")
+    if not os.path.isdir(src_root):
+        print(f"(略過常用圖片:找不到 {src_root},請設 POGO_ASSETS)", flush=True); return
+    dst = os.path.join(HERE, "assets", "sticker"); os.makedirs(dst, exist_ok=True)
+    total = n = 0
+    for key, rel in STICKERS.items():
+        src = os.path.join(src_root, *rel.split("/"))
+        if not os.path.exists(src):
+            print(f"  (找不到 {src})", flush=True); continue
+        im = Image.open(src).convert("RGBA")
+        bb = im.getbbox()
+        if bb: im = im.crop(bb)
+        im.thumbnail((256, 256), Image.LANCZOS)
+        out = os.path.join(dst, f"{key}.webp")
+        im.save(out, "WEBP", quality=88, method=6)
+        total += os.path.getsize(out); n += 1
+    # 表情符號:已經有檔就不重抓(離線也能跑);要更新就先刪掉 assets/sticker/<key>.webp
+    import tempfile
+    for key, cp in EMOJI_STICKERS.items():
+        out = os.path.join(dst, f"{key}.webp")
+        if not os.path.exists(out):
+            tmp = os.path.join(tempfile.gettempdir(), f"noto_{cp}.png")
+            r = dl(NOTO_EMOJI_URL.format(cp=cp), tmp, force=True)
+            if r != "ok":
+                print(f"  (下載表情符號 {key} 失敗:{r})", flush=True); continue
+            im = Image.open(tmp).convert("RGBA")
+            bb = im.getbbox()
+            if bb: im = im.crop(bb)
+            im.thumbnail((256, 256), Image.LANCZOS)
+            im.save(out, "WEBP", quality=88, method=6)
+            try: os.remove(tmp)
+            except OSError: pass
+        total += os.path.getsize(out); n += 1
+    print(f"常用圖片 assets/sticker:{n} 檔 / {total//1024} KB", flush=True)
 
 
 def make_trim():

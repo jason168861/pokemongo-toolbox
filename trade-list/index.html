@@ -179,8 +179,28 @@
   .saveHint{margin:0 0 12px;font-size:13.5px;line-height:1.55;color:var(--mut)}
   /* 自由搭配:wiki 沒收錄的「寶可夢 × 背卡」組合,讓使用者自己疊出來 */
   /* 按鈕用真實道具圖取代表情符號 */
-  #luckyAdd{display:inline-flex;align-items:center;gap:6px}
-  #luckyAdd img{width:20px;height:20px;object-fit:contain;flex:none;-webkit-user-drag:none}
+  #stkAdd{display:inline-flex;align-items:center;gap:6px}
+  #stkAdd img{width:20px;height:20px;object-fit:contain;flex:none;-webkit-user-drag:none}
+  /* 常用圖片(貼圖)浮窗:電腦置中、手機從底部滑出 */
+  #stkMask{position:fixed;inset:0;z-index:470;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(6,8,18,.62)}
+  #stkMask.on{display:flex}
+  .stkCard{max-width:440px}
+  .stkHead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+  .stkHead b{margin:0}
+  .stkX{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--cellbg);color:var(--fg);font-size:14px;cursor:pointer}
+  .stkGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:8px;max-height:56vh;overflow-y:auto;padding:2px}
+  .stkGrid button{aspect-ratio:1/1;border:1px solid var(--line);background:var(--cellbg);border-radius:12px;padding:9px;cursor:pointer;
+                  transition:border-color .12s,transform .08s}
+  .stkGrid button:hover{border-color:var(--acc2)}
+  .stkGrid button:active{transform:scale(.94)}
+  .stkGrid img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;-webkit-user-drag:none}
+  .stkCredit{margin:10px 0 0;font-size:10.5px;color:var(--mut);opacity:.75;text-align:right}   /* CC BY 需標示出處 */
+  @media (max-width:700px){
+    #stkMask{align-items:flex-end;padding:0}
+    .stkCard{max-width:none;border-radius:18px 18px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+    .stkGrid{grid-template-columns:repeat(5,1fr);gap:6px}
+    .stkGrid button{padding:7px}
+  }
   .mixBtn{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:0;border-radius:8px;
           font:inherit;font-weight:700;padding:7px 12px;cursor:pointer;white-space:nowrap}
   #mixMask{position:fixed;inset:0;z-index:350;display:none;background:rgba(6,8,18,.82);
@@ -605,6 +625,13 @@
   body.editmode #txtLayer{pointer-events:auto}   /* 只有進入編輯後才能點/拖文字 */
   .txt{position:absolute;cursor:grab;white-space:nowrap;line-height:1;touch-action:none;font-family:"Arial Black","Microsoft JhengHei",sans-serif}
   .txt.sel{outline:2px dashed #fff;outline-offset:13px;cursor:grabbing}
+  /* 拖曳的感應範圍 = 虛線框。虛線是 outline-offset 畫在元素外 13px 的,但 outline 不吃點擊 ——
+     原本只有文字/圖片本體才拖得動,框和字之間那一圈點下去沒反應(字小的時候幾乎點不到)。
+     用透明的 ::before 撐出同樣的範圍:偽元素的點擊算在元素自己身上(e.target 就是 .txt),
+     startMove 那邊不用改;沒 z-index → 畫在把手(✕ / ✎ / ⤡)底下,不會搶把手的點擊。
+     沒選取的也擴 6px,手機上點小字比較好點中。 */
+  .txt::before{content:"";position:absolute;inset:-6px}
+  .txt.sel::before{inset:-13px}
   .txt.imgl{line-height:0}
   .txt.imgl img{width:100%;height:100%;display:block;-webkit-user-drag:none;user-select:none;pointer-events:none}
   .txtctl{display:none;gap:6px;align-items:center;margin-top:10px;flex-wrap:wrap}
@@ -664,7 +691,19 @@
   body.grouping .li.gOther .card{opacity:.32;filter:saturate(.5)}
   .li.gPop .card{animation:gPop .22s ease-out}
   @keyframes gPop{0%{transform:scale(.9)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
-  #grpBtn.on{background:var(--acc2);border-color:var(--acc2);color:#fff}
+  /* 分組鈕(底部固定列、開始製圖左邊):外框樣式,不搶主按鈕的戲。
+     圖示是組別色點 = 這個功能的樣子;沒分組時固定 A/B/C 三色,分過組就換成實際用到的顏色,後面帶組數 */
+  #startBar{flex-wrap:nowrap}
+  #startBar #grpBtn{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:12px 14px;
+                    font-size:15px;font-weight:800;border:1.5px solid var(--acc2);background:var(--cellbg);color:var(--fg);
+                    box-shadow:0 6px 20px rgba(0,0,0,.3)}
+  #startBar #grpBtn:hover{border-color:var(--acc)}
+  .grpDots{display:inline-flex;align-items:center}
+  .grpDots i{width:11px;height:11px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1.5px var(--cellbg);margin-left:-3px}
+  .grpDots i:first-child{margin-left:0}
+  .grpN{font-size:12px;font-weight:800;color:var(--mut)}
+  .grpN:empty{display:none}
+  body.grouping #startBar #grpBtn{display:none}   /* 權重要蓋過上面的 #startBar #grpBtn(兩個 id),不然分組時還在 */
   /* 畫筆列住在 #startBar 裡、取代「開始製圖」鈕:那條本來就黏在視窗底部(拇指按得到),
      高度也有 ResizeObserver 回饋給「我能提供的」的黏底位置,不必再管一條新的 sticky */
   #grpBar{display:none}
@@ -678,18 +717,25 @@
      更窄的螢幕就橫向捲動,不換行 */
   .grpChips{display:flex;justify-content:space-between;gap:3px;overflow-x:auto;scrollbar-width:none;padding:8px 8px 2px;margin:-4px -8px 0}
   .grpChips::-webkit-scrollbar{display:none}
-  .grpChip{flex:0 0 auto;width:40px;border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;color:inherit;font:inherit}
+  .grpChip{flex:0 0 auto;width:40px;border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;color:inherit;font:inherit}
   .grpChip .c{width:36px;height:36px;border-radius:50%;background:var(--gc);color:var(--gi,#fff);font:900 15px/36px "Arial Black",sans-serif;
               text-align:center;transition:transform .12s;box-shadow:0 2px 6px rgba(0,0,0,.4)}
   .grpChip small{font-size:11px;color:var(--mut);line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
+  /* 選中的外圈(放大 1.08 + 6px 外框)往下凸出約 7.5px —— 上面 gap 給 12px(留約 4px 空隙),不然會蓋住下面的「5⇄4」 */
   .grpChip.on .c{transform:scale(1.08);box-shadow:0 0 0 3px var(--card),0 0 0 6px var(--fg)}
   .grpChip.on small{color:var(--fg);font-weight:700}
   .grpChip.er .c{background:repeating-linear-gradient(45deg,#4a5170 0 6px,#383e5a 6px 12px);color:#e3e8f7}
   .grpChip.er small{font-size:10px}
   #grpRow .szGroup+.szGroup{margin-left:8px}
+  /* 目前顏色的備註(畫在匯出圖上);選「取消」畫筆時收起來 */
+  .grpNote{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .grpNote[hidden]{display:none}
+  .grpNoteK{flex:none;width:26px;height:26px;border-radius:50%;background:var(--gc);color:var(--gi,#fff);
+            font:900 13px/26px "Arial Black",sans-serif;text-align:center}
+  .grpNote input{flex:1;min-width:0;padding:7px 10px;font-size:14px}
   @media(prefers-reduced-motion:reduce){ .li.gPop .card{animation:none} .grpChip .c{transition:none} }
   /* 開始製圖:置中、醒目 */
-  #startBtn{width:100%;font-size:16px;font-weight:800;padding:13px}
+  #startBtn{flex:1 1 0;min-width:0;font-size:16px;font-weight:800;padding:13px}   /* 旁邊多了分組鈕:吃剩下的寬度,太長就換行 */
   /* 開始製圖列:始終懸浮在視窗底部,選很多隻也不用滑到最下面才能按 */
   #startBar{position:sticky;bottom:0;z-index:20;margin:14px -14px -14px;
             padding:12px 14px calc(12px + env(safe-area-inset-bottom));
@@ -795,7 +841,7 @@
      實測桌機拉到最大時從 301px 被壓成 91px,手機 296→173px。 */
   body.editmode #edBottom{display:block;flex:0 0 auto;max-height:52vh;margin-top:6px;
         overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
-  body.editmode #edBottom>.switch{margin:6px 0 0;font-size:13px}
+  body.editmode #edBottom .switch{margin:6px 0 0;font-size:13px}
   body.editmode #trainerRow{margin:8px 0 2px}
   body.editmode #enterEdit{display:none}
   /* 圖片顯示大小由縮放滑桿控制(JS 設定 #baseCv 的 style.width);超出時捲動 */
@@ -837,6 +883,34 @@
     #edBottom .edRow .btn{padding:10px 6px;font-size:13px}
   }
   body.editmode #selPanel,body.editmode #listPanel{display:none}
+  /* ===== 手機版製圖畫面:底部分頁列(IG / Canva 修圖畫面的做法) =====
+     原本工具全部攤開(限高 38vh 還要自己捲)+ 一顆「收合工具」大按鈕,圖只分到螢幕的 45% 左右。
+     一次其實只會用到其中一組 → 平常只留一條分頁列,點哪頁才展開那一組(再點一次收起來)。
+     分頁列取代「收合工具」;舊的收合狀態(tlEdTools / edToolsHidden)在手機不作用。
+     展開、收起都會改變 #editor 的高度,setEdTab() 會重跑 applyZoom()。 */
+  #edTabs{display:none}
+  @media (max-width:700px){
+    body.editmode #edToolsToggle{display:none}
+    body.editmode #edTabs{display:grid;grid-template-columns:repeat(4,1fr);flex:none;
+        margin:6px -8px -8px;padding:2px 6px calc(2px + env(safe-area-inset-bottom));
+        background:var(--card);border-top:1px solid var(--line)}
+    .edTab{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+        min-height:54px;border:0;background:transparent;color:var(--mut);font:inherit;font-size:11px;font-weight:700;
+        cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .edTab svg{width:22px;height:22px;display:block}
+    .edTab.on{color:var(--acc2)}
+    .edTab.on::before{content:"";position:absolute;top:-2px;left:28%;right:28%;height:3px;border-radius:0 0 3px 3px;background:var(--acc2)}
+    /* 在圖上選了文字、但「文字」頁沒開 → 那一頁亮一個小點,提示字體/顏色在那裡 */
+    .edTab.dot::after{content:"";position:absolute;top:7px;left:calc(50% + 9px);width:8px;height:8px;border-radius:50%;
+        background:var(--acc);box-shadow:0 0 0 2px var(--card)}
+    body.editmode #edBottom{max-height:36vh;margin-top:4px;padding-top:2px}
+    body.editmode #edBottom:not([data-tab]){display:none}
+    body.editmode.edToolsHidden #edBottom[data-tab]{display:block}
+    .edPane{display:none}
+    #edBottom[data-tab="style"] .edPane[data-pane="style"],#edBottom[data-tab="layout"] .edPane[data-pane="layout"],
+    #edBottom[data-tab="text"] .edPane[data-pane="text"],#edBottom[data-tab="more"] .edPane[data-pane="more"]{display:block}
+    .edPane>:first-child{margin-top:2px}
+  }
   /* ===== 電腦版製圖畫面:工具放右側欄 =====
      原本工具區疊在預覽下面、寬度撐滿整個螢幕 —— 桌機是橫向螢幕,那一條吃掉快一半高度,圖就被壓得很小。
      改成兩欄:左邊預覽吃滿整個高度,右邊 340px 的工具欄自己捲。縮放橫桿在預覽正下方,
@@ -864,7 +938,7 @@
     body.editmode #edBottom .edRow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
     body.editmode #edBottom .edRow .btn,body.editmode #edBottom .edRow .edColorBox{width:100%;min-width:0;justify-content:center;box-sizing:border-box}
     body.editmode #edBottom .edRow .btn{padding:10px 8px;font-size:13px}
-    body.editmode #edBottom>.switch{margin-top:14px}
+    body.editmode #edBottom .switch{margin-top:14px}
     body.editmode #trainerRow{max-width:none}
   }
   /* 一開始只顯示清單;按「開始製圖」進入編輯模式才出現編輯/預覽面板 */
@@ -963,7 +1037,6 @@
       <div class="setacts">
         <button class="btn g" id="setAdd">＋ 新增</button>
         <button class="btn g" id="setShare">🔗 分享連結</button>
-        <button class="btn g" id="grpBtn" aria-pressed="false">🎨 分組</button>
         <span class="setBreak"></span>
         <label class="switch" id="ballRow"><input type="checkbox" id="showBall"><span class="track"></span><span id="showBallLabel">球種</span></label>
         <span class="sizeCtl" role="group" aria-label="圖片大小">
@@ -983,10 +1056,15 @@
         <div class="secStick" id="stickHave" aria-hidden="true"></div>
         <div class="secBody"><div class="list" id="listH"><div class="empty">點 ✏️ 加入寶可夢</div></div></div></div>
       <div class="toolbar" id="startBar">
+        <!-- 分組鈕放在這條:它一直黏在畫面底部(捲到哪都看得到),按下去畫筆列就在同一條原地展開;
+             左分組、右製圖 = 先分組再製圖的順序 -->
+        <button type="button" class="btn g" id="grpBtn" aria-pressed="false"><span class="grpDots" id="grpDots" aria-hidden="true"></span><span id="grpBtnTxt">分組</span><span class="grpN" id="grpN"></span></button>
         <button class="btn" id="startBtn" onclick="setMode('edit')">🎨 我選好了，開始製圖</button>
         <div id="grpBar">
           <div class="grpHint"><span id="grpHintTxt"></span><button type="button" id="grpDone">完成</button></div>
           <div class="grpChips" id="grpChips"></div>
+          <div class="grpNote" id="grpNoteRow"><span class="grpNoteK" id="grpNoteK">A</span>
+            <input type="text" id="grpNote" maxlength="16" autocomplete="off" enterkeyhint="done" placeholder="A 組備註,例如:多換一"></div>
         </div>
       </div>
     </div>
@@ -1021,12 +1099,15 @@
       <button id="edToolsToggle" aria-expanded="true" aria-controls="edBottom">
         <span class="chev" aria-hidden="true">▾</span><span id="edToolsTxt">工具</span></button>
 
-      <!-- 控制項一律排在預覽下面,而且照「多常用」排序:縮放 → 風格 → 每排數量 → 加東西 →
-           設定一次就不會再動的(能飛 / QR / 訓練家代碼)。手機上這一區高度有上限、可自行捲動,
-           所以再多控制項也不會把預覽圖擠扁 —— 之前開關排在預覽上面,360×640 只剩 20% 給圖。 -->
+      <!-- 控制項分成四組(.edPane),照「多常用」排序:風格 → 版型 → 加文字/圖 → 設定一次就不會再動的。
+           電腦版(側欄)四組全部攤開;手機版只顯示底部分頁列(#edTabs),點哪一頁才展開那一組 ——
+           原本全部攤開要佔掉半個手機螢幕,但一次其實只會用到其中一組。 -->
       <div id="edBottom">
+       <div class="edPane" data-pane="style">
         <div class="edThemesWrap"><span class="edThemesLabel" id="edThemesLabel">圖片風格</span><div class="edSkinCats" id="edSkinCats"></div></div>
         <div class="edThemes" id="edThemes"></div>
+       </div>
+       <div class="edPane" data-pane="layout">
         <div class="edThemesWrap" id="grpRow"><span class="edThemesLabel" id="grpLabel">版型</span>
           <span class="szGroup" role="group">
             <button type="button" class="szBtn grpStyle" data-gs="">一般</button>
@@ -1036,25 +1117,45 @@
             <button type="button" class="szBtn grpDir" data-gd="tb">上下</button></span></div>
         <div class="edThemesWrap" id="colsRow"><span class="edThemesLabel" id="colsLabel">每排數量</span>
           <div class="colsCtl"><button class="btn g" id="colsMinus" title="減少">−</button><span id="colsVal">5</span><button class="btn g" id="colsPlus" title="增加">＋</button></div></div>
+       </div>
+       <div class="edPane" data-pane="text">
+        <div class="edRow">
+          <button class="btn" id="txtAdd">＋ 新增文字</button>
+          <button class="btn g" id="imgAdd">🖼 插入圖片</button>
+          <button class="btn g" id="stkAdd"><img src="assets/sticker/cash.webp" alt=""><span id="stkAddTxt">常用圖片</span></button>
+          <button class="btn g" id="edStyle" title="切換字體與底色" disabled>🅰 字體/底色</button>
+          <span class="edColorBox off"><input type="color" id="edColor" title="文字顏色" disabled><span id="edColorLabel">顏色</span></span>
+        </div>
+       </div>
+       <div class="edPane" data-pane="more">
         <div class="edThemesWrap" id="qualRow"><span class="edThemesLabel" id="qualLabel">圖片畫質</span>
           <span class="szGroup" role="group">
             <button type="button" class="szBtn qualBtn" data-qual="std" onclick="setExportQual('std')">標準</button>
             <button type="button" class="szBtn qualBtn" data-qual="high" onclick="setExportQual('high')">高畫質</button>
             <button type="button" class="szBtn qualBtn" data-qual="png" onclick="setExportQual('png')">無損 PNG</button>
           </span></div>
-        <div class="edRow">
-          <button class="btn" id="txtAdd">＋ 新增文字</button>
-          <button class="btn g" id="imgAdd">🖼 插入圖片</button>
-          <button class="btn g" id="luckyAdd"><img src="assets/lucky_friend_icon.png" alt=""><span id="luckyAddTxt">亮晶晶首飾</span></button>
-          <button class="btn g" id="edStyle" title="切換字體與底色" disabled>🅰 字體/底色</button>
-          <span class="edColorBox off"><input type="color" id="edColor" title="文字顏色" disabled><span id="edColorLabel">顏色</span></span>
-        </div>
         <label class="switch" id="flyRow"><input type="checkbox" id="canfly"><span class="track"></span><span id="canflyLabel">✈ 我能飛（顯示 CAN FLY）</span></label>
         <div class="edFieldRow" id="trainerRow">
           <input type="text" id="trainerLabel" maxlength="24" placeholder="標題">
           <input type="text" id="trainerCode" inputmode="numeric" maxlength="14" placeholder="1234 5678 9012">
         </div>
+       </div>
         <input type="file" id="imgFile" accept="image/*" style="display:none">
+      </div>
+      <!-- 手機版的底部分頁列(電腦版隱藏)。再點一次目前那頁 = 收起來,圖片拿回整個高度 -->
+      <div id="edTabs" role="tablist">
+        <button type="button" class="edTab" data-tab="style" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15.5" cy="7.5" r="1.2" fill="currentColor"/></svg>
+          <span id="edTabStyle">風格</span></button>
+        <button type="button" class="edTab" data-tab="layout" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>
+          <span id="edTabLayout">版型</span></button>
+        <button type="button" class="edTab" data-tab="text" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20 11 4h2l6 16"/><path d="M7.5 14h9"/></svg>
+          <span id="edTabText">文字/圖片</span></button>
+        <button type="button" class="edTab" data-tab="more" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+          <span id="edTabMore">設定</span></button>
       </div>
     </div>
   </div>
@@ -1078,6 +1179,14 @@
 
 <!-- 查價:預設搜尋字由 price-query.js + data/price_search.json 組出來(站長用 price-editor.html 維護);
      使用者可再改單張卡,存在 c.pq -->
+<!-- 常用圖片:點一張就插進圖裡(出現在目前畫面中心),之後跟上傳的圖一樣可拖曳/縮放/旋轉/刪除 -->
+<div id="stkMask" role="dialog" aria-modal="true" aria-labelledby="stkTitle">
+  <div class="introCard stkCard">
+    <div class="stkHead"><b id="stkTitle">⭐ 常用圖片</b><button type="button" class="stkX" id="stkClose" aria-label="完成">✕</button></div>
+    <div class="stkGrid" id="stkGrid"></div>
+    <p class="stkCredit">💵 Emoji: Google Noto Emoji · CC BY 4.0</p>
+  </div>
+</div>
 <div id="priceMask" role="dialog" aria-modal="true" aria-labelledby="priceTitle">
   <div class="introCard priceCard">
     <b id="priceTitle">💲 查價</b>
@@ -1524,41 +1633,41 @@ const I18N_ST={
      ty_flying:'Volador',ty_psychic:'Psíquico',ty_bug:'Bicho',ty_rock:'Roca',ty_ghost:'Fantasma',ty_dragon:'Dragón',ty_dark:'Siniestro',ty_steel:'Acero',ty_fairy:'Hada'}};
 // 分組交換的字串(同 I18N_ST 的理由:整批獨立,不去擠那幾行大物件)
 const I18N_G={
- zh:{gtip_title:'🎉 新功能:分組交換',gtip_body:'想要的一堆、能給的一堆,但只想某些換某些?按「🎨 分組」,選顏色再點卡片(橫向滑過去可以一次選多張),同色的互相交換。',gtip_try:'🎨 試試看',ltip_title:'🎉 新功能:配對版型',ltip_body:'分好組之後,這裡選「配對」,每組會排成「我想要 ⇄ 我提供」一塊一塊。圖上的說明文字都可以點兩下改。',ltip_zoom:'💡 電腦版:按住 Ctrl 滾動滑鼠滾輪可以縮放圖片',ltip_try:'✨ 試試看',
+ zh:{g_note_ph:'{g} 組備註(會顯示在圖上),例如:多換一',st_btn:'常用圖片',ed_tab_style:'風格',ed_tab_text:'文字/圖片',ed_tab_more:'設定',gtip_title:'🎉 新功能:分組交換',gtip_body:'想要的一堆、能給的一堆,但只想某些換某些?按畫面底部的「分組」,選顏色再點卡片(橫向滑過去可以一次選多張),同色的互相交換。',gtip_try:'🎨 試試看',ltip_title:'🎉 新功能:配對版型',ltip_body:'分好組之後,這裡選「配對」,每組會排成「我想要 ⇄ 我提供」一塊一塊。圖上的說明文字都可以點兩下改。',ltip_zoom:'💡 電腦版:按住 Ctrl 滾動滑鼠滾輪可以縮放圖片',ltip_try:'✨ 試試看',
      g_btn:'分組',g_tip:'分組:指定哪些跟哪些交換',g_hint:'點卡片加入 {g} 組,再點一次取消',g_hint_er:'點卡片取消分組',g_erase:'取消',
      g_sort:'同組排一起',g_sorted:'已依組別排序',g_layout:'版型',g_classic:'一般',g_pair:'配對',g_lr:'左右',g_tb:'上下',g_per_side:'每側數量',
      g_want:'我想要',g_have:'我提供',g_any:'都可以談',g_other:'其他',g_legend:'同色的互相交換',g_legend_free:'沒標的都可以談',
-     g_need:'還沒分組:回清單按「🎨 分組」,選顏色再點卡片'},
- en:{gtip_title:'🎉 New: trade groups',gtip_body:'Only want to trade some cards for some others? Tap "🎨 Group", pick a color and tap cards (swipe sideways to select many). Same color = trade together.',gtip_try:'🎨 Try it',ltip_title:'🎉 New: paired layout',ltip_body:'Once you have groups, choose "Paired" here and each group becomes its own "I want ⇄ I offer" block. Tap any caption on the image to edit it.',ltip_zoom:'💡 On desktop: hold Ctrl and scroll to zoom the image',ltip_try:'✨ Try it',
+     g_need:'還沒分組:回清單按底部的「分組」,選顏色再點卡片'},
+ en:{g_note_ph:'Note for group {g} (shown on the image), e.g. 2-for-1',st_btn:'Stickers',ed_tab_style:'Style',ed_tab_text:'Text/Image',ed_tab_more:'More',gtip_title:'🎉 New: trade groups',gtip_body:'Only want to trade some cards for some others? Tap "Group" at the bottom, pick a color and tap cards (swipe sideways to select many). Same color = trade together.',gtip_try:'🎨 Try it',ltip_title:'🎉 New: paired layout',ltip_body:'Once you have groups, choose "Paired" here and each group becomes its own "I want ⇄ I offer" block. Tap any caption on the image to edit it.',ltip_zoom:'💡 On desktop: hold Ctrl and scroll to zoom the image',ltip_try:'✨ Try it',
      g_btn:'Group',g_tip:'Groups: choose which cards trade for which',g_hint:'Tap cards to add to group {g}; tap again to remove',g_hint_er:'Tap cards to ungroup',g_erase:'Clear',
      g_sort:'Sort by group',g_sorted:'Sorted by group',g_layout:'Layout',g_classic:'Standard',g_pair:'Paired',g_lr:'Side by side',g_tb:'Stacked',g_per_side:'Per side',
      g_want:'I want',g_have:'I offer',g_any:'Open to offers',g_other:'Other',g_legend:'Same color = trade together',g_legend_free:'unmarked: open to offers',
-     g_need:'No groups yet: go back to your list, tap "🎨 Group", pick a color and tap cards'},
- ja:{gtip_title:'🎉 新機能:グループ交換',gtip_body:'欲しいもの・出せるものの中で、特定の組み合わせだけ交換したい?「🎨 グループ」を押し、色を選んでカードをタップ(横にスワイプでまとめて選択)。同じ色同士で交換します。',gtip_try:'🎨 試してみる',ltip_title:'🎉 新機能:ペアレイアウト',ltip_body:'グループ分けしたら、ここで「ペア」を選ぶと、グループごとに「欲しい ⇄ 出せる」のブロックになります。画像上の説明文はタップして編集できます。',ltip_zoom:'💡 PC:Ctrl を押しながらホイールで拡大・縮小',ltip_try:'✨ 試してみる',
+     g_need:'No groups yet: go back to your list, tap "Group" at the bottom, pick a color and tap cards'},
+ ja:{g_note_ph:'{g} グループのメモ(画像に表示)例:2対1',st_btn:'よく使う画像',ed_tab_style:'スタイル',ed_tab_text:'テキスト/画像',ed_tab_more:'設定',gtip_title:'🎉 新機能:グループ交換',gtip_body:'欲しいもの・出せるものの中で、特定の組み合わせだけ交換したい?画面下の「グループ」を押し、色を選んでカードをタップ(横にスワイプでまとめて選択)。同じ色同士で交換します。',gtip_try:'🎨 試してみる',ltip_title:'🎉 新機能:ペアレイアウト',ltip_body:'グループ分けしたら、ここで「ペア」を選ぶと、グループごとに「欲しい ⇄ 出せる」のブロックになります。画像上の説明文はタップして編集できます。',ltip_zoom:'💡 PC:Ctrl を押しながらホイールで拡大・縮小',ltip_try:'✨ 試してみる',
      g_btn:'グループ',g_tip:'グループ:どれとどれを交換するか指定',g_hint:'カードをタップで {g} グループに追加、もう一度で解除',g_hint_er:'カードをタップでグループ解除',g_erase:'解除',
      g_sort:'グループ順に並べる',g_sorted:'グループ順に並べました',g_layout:'レイアウト',g_classic:'標準',g_pair:'ペア',g_lr:'左右',g_tb:'上下',g_per_side:'片側の数',
      g_want:'欲しい',g_have:'出せる',g_any:'応相談',g_other:'その他',g_legend:'同じ色同士で交換',g_legend_free:'印なしは応相談',
-     g_need:'まだグループがありません:リストで「🎨 グループ」を押し、色を選んでカードをタップ'},
- ko:{gtip_title:'🎉 새 기능: 그룹 교환',gtip_body:'원하는 것과 드릴 것 중 특정 조합만 교환하고 싶나요? 「🎨 그룹」을 누르고 색을 고른 뒤 카드를 탭하세요(옆으로 밀면 여러 장 선택). 같은 색끼리 교환해요.',gtip_try:'🎨 해 보기',ltip_title:'🎉 새 기능: 짝지어 보기',ltip_body:'그룹을 나눴다면 여기서 「짝지어 보기」를 고르세요. 그룹마다 「원해요 ⇄ 드려요」 블록으로 정리됩니다. 이미지 위 설명 글은 탭해서 수정할 수 있어요.',ltip_zoom:'💡 PC: Ctrl을 누른 채 휠을 굴리면 확대/축소',ltip_try:'✨ 해 보기',
+     g_need:'まだグループがありません:リスト画面下の「グループ」を押し、色を選んでカードをタップ'},
+ ko:{g_note_ph:'{g} 그룹 메모(이미지에 표시), 예: 2대1',st_btn:'자주 쓰는 이미지',ed_tab_style:'스타일',ed_tab_text:'텍스트/이미지',ed_tab_more:'설정',gtip_title:'🎉 새 기능: 그룹 교환',gtip_body:'원하는 것과 드릴 것 중 특정 조합만 교환하고 싶나요? 화면 아래 「그룹」을 누르고 색을 고른 뒤 카드를 탭하세요(옆으로 밀면 여러 장 선택). 같은 색끼리 교환해요.',gtip_try:'🎨 해 보기',ltip_title:'🎉 새 기능: 짝지어 보기',ltip_body:'그룹을 나눴다면 여기서 「짝지어 보기」를 고르세요. 그룹마다 「원해요 ⇄ 드려요」 블록으로 정리됩니다. 이미지 위 설명 글은 탭해서 수정할 수 있어요.',ltip_zoom:'💡 PC: Ctrl을 누른 채 휠을 굴리면 확대/축소',ltip_try:'✨ 해 보기',
      g_btn:'그룹',g_tip:'그룹: 어떤 것끼리 교환할지 지정',g_hint:'카드를 탭하면 {g} 그룹에 추가, 다시 탭하면 해제',g_hint_er:'카드를 탭하면 그룹 해제',g_erase:'해제',
      g_sort:'그룹별 정렬',g_sorted:'그룹별로 정렬했습니다',g_layout:'레이아웃',g_classic:'기본',g_pair:'짝지어 보기',g_lr:'좌우',g_tb:'위아래',g_per_side:'한쪽 개수',
      g_want:'원해요',g_have:'드려요',g_any:'협의 가능',g_other:'기타',g_legend:'같은 색끼리 교환',g_legend_free:'표시 없음은 협의 가능',
-     g_need:'아직 그룹이 없어요: 목록에서 「🎨 그룹」을 누르고 색을 고른 뒤 카드를 탭하세요'},
- fr:{gtip_title:'🎉 Nouveau : groupes d’échange',gtip_body:'Vous voulez échanger seulement certaines cartes contre certaines autres ? Touchez « 🎨 Groupes », choisissez une couleur puis touchez des cartes (glissez latéralement pour en sélectionner plusieurs). Même couleur = échange ensemble.',gtip_try:'🎨 Essayer',ltip_title:'🎉 Nouveau : mise en page par paires',ltip_body:'Une fois les groupes faits, choisissez « Par paires » ici : chaque groupe devient un bloc « Je cherche ⇄ Je propose ». Touchez un texte de l’image pour le modifier.',ltip_zoom:'💡 Sur ordinateur : Ctrl + molette pour zoomer',ltip_try:'✨ Essayer',
+     g_need:'아직 그룹이 없어요: 목록 화면 아래 「그룹」을 누르고 색을 고른 뒤 카드를 탭하세요'},
+ fr:{g_note_ph:'Note du groupe {g} (affichée sur l’image), ex. 2 contre 1',st_btn:'Autocollants',ed_tab_style:'Style',ed_tab_text:'Texte/Image',ed_tab_more:'Plus',gtip_title:'🎉 Nouveau : groupes d’échange',gtip_body:'Vous voulez échanger seulement certaines cartes contre certaines autres ? Touchez « Groupes » en bas, choisissez une couleur puis touchez des cartes (glissez latéralement pour en sélectionner plusieurs). Même couleur = échange ensemble.',gtip_try:'🎨 Essayer',ltip_title:'🎉 Nouveau : mise en page par paires',ltip_body:'Une fois les groupes faits, choisissez « Par paires » ici : chaque groupe devient un bloc « Je cherche ⇄ Je propose ». Touchez un texte de l’image pour le modifier.',ltip_zoom:'💡 Sur ordinateur : Ctrl + molette pour zoomer',ltip_try:'✨ Essayer',
      g_btn:'Groupes',g_tip:'Groupes : choisir quoi échanger contre quoi',g_hint:'Touchez des cartes pour les ajouter au groupe {g} ; touchez à nouveau pour retirer',g_hint_er:'Touchez des cartes pour les retirer du groupe',g_erase:'Retirer',
      g_sort:'Trier par groupe',g_sorted:'Trié par groupe',g_layout:'Mise en page',g_classic:'Standard',g_pair:'Par paires',g_lr:'Côte à côte',g_tb:'Empilé',g_per_side:'Par côté',
      g_want:'Je cherche',g_have:'Je propose',g_any:'À discuter',g_other:'Autres',g_legend:'Même couleur = échange ensemble',g_legend_free:'sans marque : à discuter',
-     g_need:'Aucun groupe : revenez à la liste, touchez « 🎨 Groupes », choisissez une couleur puis touchez des cartes'},
- de:{gtip_title:'🎉 Neu: Tauschgruppen',gtip_body:'Nur bestimmte Karten gegen bestimmte andere tauschen? „🎨 Gruppen“ antippen, Farbe wählen und Karten antippen (seitlich wischen wählt mehrere). Gleiche Farbe = zusammen tauschen.',gtip_try:'🎨 Ausprobieren',ltip_title:'🎉 Neu: paarweises Layout',ltip_body:'Nach dem Gruppieren hier „Paarweise“ wählen – jede Gruppe wird zu einem Block „Ich suche ⇄ Ich biete“. Texte im Bild lassen sich antippen und bearbeiten.',ltip_zoom:'💡 Am Computer: Strg gedrückt halten und scrollen zum Zoomen',ltip_try:'✨ Ausprobieren',
+     g_need:'Aucun groupe : revenez à la liste, touchez « Groupes » en bas, choisissez une couleur puis touchez des cartes'},
+ de:{g_note_ph:'Notiz für Gruppe {g} (im Bild), z. B. 2 gegen 1',st_btn:'Sticker',ed_tab_style:'Stil',ed_tab_text:'Text/Bild',ed_tab_more:'Mehr',gtip_title:'🎉 Neu: Tauschgruppen',gtip_body:'Nur bestimmte Karten gegen bestimmte andere tauschen? unten „Gruppen“ antippen, Farbe wählen und Karten antippen (seitlich wischen wählt mehrere). Gleiche Farbe = zusammen tauschen.',gtip_try:'🎨 Ausprobieren',ltip_title:'🎉 Neu: paarweises Layout',ltip_body:'Nach dem Gruppieren hier „Paarweise“ wählen – jede Gruppe wird zu einem Block „Ich suche ⇄ Ich biete“. Texte im Bild lassen sich antippen und bearbeiten.',ltip_zoom:'💡 Am Computer: Strg gedrückt halten und scrollen zum Zoomen',ltip_try:'✨ Ausprobieren',
      g_btn:'Gruppen',g_tip:'Gruppen: festlegen, was gegen was getauscht wird',g_hint:'Karten antippen, um sie Gruppe {g} hinzuzufügen; erneut tippen zum Entfernen',g_hint_er:'Karten antippen, um die Gruppe zu entfernen',g_erase:'Entfernen',
      g_sort:'Nach Gruppe sortieren',g_sorted:'Nach Gruppe sortiert',g_layout:'Layout',g_classic:'Standard',g_pair:'Paarweise',g_lr:'Nebeneinander',g_tb:'Untereinander',g_per_side:'Pro Seite',
      g_want:'Ich suche',g_have:'Ich biete',g_any:'Verhandelbar',g_other:'Sonstige',g_legend:'Gleiche Farbe = zusammen tauschen',g_legend_free:'ohne Markierung: verhandelbar',
-     g_need:'Noch keine Gruppen: zurück zur Liste, „🎨 Gruppen“ antippen, Farbe wählen und Karten antippen'},
- es:{gtip_title:'🎉 Novedad: grupos de intercambio',gtip_body:'¿Solo quieres cambiar ciertas cartas por otras concretas? Toca «🎨 Grupos», elige un color y toca cartas (desliza de lado para elegir varias). Mismo color = se intercambian juntos.',gtip_try:'🎨 Probar',ltip_title:'🎉 Novedad: diseño por parejas',ltip_body:'Con los grupos hechos, elige «Por parejas» aquí y cada grupo será un bloque «Busco ⇄ Ofrezco». Toca cualquier texto de la imagen para editarlo.',ltip_zoom:'💡 En ordenador: mantén Ctrl y usa la rueda para hacer zoom',ltip_try:'✨ Probar',
+     g_need:'Noch keine Gruppen: zurück zur Liste, unten „Gruppen“ antippen, Farbe wählen und Karten antippen'},
+ es:{g_note_ph:'Nota del grupo {g} (se ve en la imagen), p. ej. 2 por 1',st_btn:'Stickers',ed_tab_style:'Estilo',ed_tab_text:'Texto/Imagen',ed_tab_more:'Más',gtip_title:'🎉 Novedad: grupos de intercambio',gtip_body:'¿Solo quieres cambiar ciertas cartas por otras concretas? Toca «Grupos» abajo, elige un color y toca cartas (desliza de lado para elegir varias). Mismo color = se intercambian juntos.',gtip_try:'🎨 Probar',ltip_title:'🎉 Novedad: diseño por parejas',ltip_body:'Con los grupos hechos, elige «Por parejas» aquí y cada grupo será un bloque «Busco ⇄ Ofrezco». Toca cualquier texto de la imagen para editarlo.',ltip_zoom:'💡 En ordenador: mantén Ctrl y usa la rueda para hacer zoom',ltip_try:'✨ Probar',
      g_btn:'Grupos',g_tip:'Grupos: elige qué se cambia por qué',g_hint:'Toca cartas para añadirlas al grupo {g}; vuelve a tocar para quitar',g_hint_er:'Toca cartas para quitarles el grupo',g_erase:'Quitar',
      g_sort:'Ordenar por grupo',g_sorted:'Ordenado por grupo',g_layout:'Diseño',g_classic:'Estándar',g_pair:'Por parejas',g_lr:'Lado a lado',g_tb:'Apilado',g_per_side:'Por lado',
      g_want:'Busco',g_have:'Ofrezco',g_any:'A negociar',g_other:'Otros',g_legend:'Mismo color = se intercambian juntos',g_legend_free:'sin marca: a negociar',
-     g_need:'Aún no hay grupos: vuelve a la lista, toca «🎨 Grupos», elige un color y toca cartas'}};
+     g_need:'Aún no hay grupos: vuelve a la lista, toca «Grupos» abajo, elige un color y toca cartas'}};
 let LANG='zh',NAMES={};
 function tr(k){return (I18N[LANG]&&I18N[LANG][k])||(I18N_ST[LANG]&&I18N_ST[LANG][k])||(I18N_G[LANG]&&I18N_G[LANG][k])||I18N.en[k]||I18N_ST.en[k]||I18N_G.en[k]||k;}
 // 卡片的 tag 一律以中文字面值儲存(buildThumbs 與雲端/localStorage 的舊資料都是),顯示時才翻譯。
@@ -1669,8 +1778,10 @@ function applyStaticI18n(){
     if($('#priceMask').classList.contains('on')) syncPriceMon(); }
   if($('#ptipTitle')) fillTip(PTIP?PTIP.spec:TIPS[0]);
   $('#labWant').textContent='🟢 '+T('want'); $('#labHave').textContent='🟡 '+T('have');
-  { const b=$('#grpBtn'); if(b){ b.textContent='🎨 '+T('g_btn'); b.title=T('g_tip'); }
+  { const b=$('#grpBtn'); if(b){ $('#grpBtnTxt').textContent=T('g_btn'); b.title=T('g_tip'); syncGrpBtn(); }
     $('#grpSort').textContent='↕ '+T('g_sort'); $('#grpDone').textContent=T('done'); $('#grpLabel').textContent=T('g_layout');
+    $('#edTabStyle').textContent=T('ed_tab_style'); $('#edTabLayout').textContent=T('g_layout');
+    $('#edTabText').textContent=T('ed_tab_text'); $('#edTabMore').textContent=T('ed_tab_more');
     for(const x of document.querySelectorAll('.grpStyle')) x.textContent=T(x.dataset.gs?'g_pair':'g_classic');
     for(const x of document.querySelectorAll('.grpDir')) x.textContent=T('g_'+x.dataset.gd);
     syncGrpBar(); }
@@ -1721,8 +1832,9 @@ function applyStaticI18n(){
   if($('#setShare')) $('#setShare').textContent='🔗 '+T('share_list');
   if($('#trainerLabel')){ if(!(LIST&&LIST.trainerLabel)) $('#trainerLabel').value=T('trainer_label_def'); $('#trainerCode').placeholder=T('trainer_code_ph'); }
   if($('#imgAdd')) $('#imgAdd').textContent=T('img_add');
-  // 只換 span,不能對 #luckyAdd 設 textContent —— 那會把裡面的道具圖 <img> 一起清掉
-  if($('#luckyAddTxt')) $('#luckyAddTxt').textContent=T('lucky_add');
+  // 只換 span,不能對 #stkAdd 設 textContent —— 那會把裡面的圖示 <img> 一起清掉
+  if($('#stkAddTxt')) $('#stkAddTxt').textContent=T('st_btn');
+  if($('#stkTitle')){ $('#stkTitle').textContent='⭐ '+T('st_btn'); $('#stkClose').setAttribute('aria-label',T('done')); }
 }
 
 async function loadData(name){
@@ -1766,6 +1878,7 @@ async function boot(){
   setupPinchZoom();              // 編輯區兩指縮放(與縮放滑桿連動)
   setupWheelZoom();              // 電腦版 Ctrl + 滾輪 / 觸控板夾捏(同樣走滑桿)
   $('#edToolsToggle').onclick=()=>setEdTools(document.body.classList.contains('edToolsHidden'));
+  for(const b of document.querySelectorAll('.edTab')) b.onclick=()=>setEdTab(b.dataset.tab);
   // 還原工具區的收合狀態。沒選過就是展開 —— 第一次進來要先看得到有哪些東西可以調。
   { let v=null; try{ v=localStorage.getItem('tlEdTools'); }catch(e){}
     setEdTools(v!=='0', v?undefined:false); }
@@ -1830,24 +1943,19 @@ async function boot(){
   $('#imgAdd').onclick=()=>$('#imgFile').click();
   $('#imgFile').onchange=e=>{ const f=e.target.files&&e.target.files[0]; e.target.value=''; if(!f||!/^image\//.test(f.type))return;
     const rd=new FileReader(); rd.onload=()=>{ const im=new Image(); im.onload=()=>addImage(rd.result,im); im.onerror=()=>alert('圖片載入失敗'); im.src=rd.result; }; rd.readAsDataURL(f); };
-  // 「亮晶晶首飾」(Lucky Trinket,官方鍵 item_lucky_friend_applicator_name):插入預先合成好的「＋道具圖」(assets/lucky_friend_plus.png,
-  // 由 pogo_assets 的 lucky_friend_applicator.png 去邊後左側加白色描邊「＋」合成而成)。
-  // 走與上傳圖片相同的圖層機制,所以一樣可拖曳/縮放/旋轉/刪除,也會進 undo 快照。
-  // 用同源相對路徑載入(不走 cdn),匯出時不會污染 canvas。
-  $('#luckyAdd').onclick=()=>{
-    const src='assets/lucky_friend_plus.png';
-    const c=_imgEls.get(src);
-    if(c && c.complete && c.naturalWidth) return addImage(src,c);
-    const im=new Image();
-    im.onload=()=>addImage(src,im);
-    im.onerror=()=>alert(tr('share_fail'));
-    im.src=src;
-  };
+  // 常用圖片(見 STICKERS):原本只有一顆「亮晶晶首飾」,現在收進貼圖浮窗的第一格。
+  $('#stkAdd').onclick=openStickers;
+  $('#stkClose').onclick=closeStickers;
+  closeOnBackdrop($('#stkMask'),closeStickers);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('#stkMask').classList.contains('on')) closeStickers(); });
+  $('#stkGrid').onclick=e=>{ const b=e.target.closest('button[data-k]'); if(b) addSticker(b.dataset.k); };
   $('#colsMinus').onclick=()=>stepCols(-1); $('#colsPlus').onclick=()=>stepCols(1);
   // 分組交換:清單上的開關 / 畫筆列 / 製圖畫面的版型切換
   renderGrpChips(); setupGroupDrag($('#listW')); setupGroupDrag($('#listH'));
   $('#grpBtn').onclick=()=>setGrouping(!GROUPING);
   $('#grpDone').onclick=()=>setGrouping(false);
+  $('#grpNote').oninput=e=>{ if(GRP[BRUSH]){ setGrpNote(BRUSH,e.target.value); persist(); scheduleBase(); } };
+  $('#grpNote').onkeydown=e=>{ if(e.key==='Enter') e.target.blur(); };
   $('#grpSort').onclick=sortByGroup;
   for(const b of document.querySelectorAll('.grpStyle')) b.onclick=()=>setGrpStyle(b.dataset.gs,undefined);
   for(const b of document.querySelectorAll('.grpDir')) b.onclick=()=>setGrpStyle(undefined,b.dataset.gd);
@@ -1990,6 +2098,7 @@ function setMode(m){
   document.body.classList.remove('picking');   // 進入製圖前先收起選取面板
   if(m==='edit'){
     setGrouping(false);
+    setEdTab('');   // 手機:每次進來都先收起,圖片拿到最大
     // 電腦版:少於 100 隻用最小(整張顯示),否則約 1/8 位置;手機維持約 1/4
     const total=LIST.want.length+LIST.have.length;
     $('#edSize').value = window.innerWidth>=900 ? (total<100 ? 0 : 13) : 25;
@@ -2043,6 +2152,15 @@ const GFONT='"Microsoft JhengHei","PingFang TC","Noto Sans TC","Hiragino Sans","
 let GROUPING=false, BRUSH='A', PAIRK=3;   // PAIRK = 左右對照時「每側幾隻」(1–6),與 COLS 分開存
 try{ const v=+localStorage.getItem('tlPairK'); if(v>=1&&v<=6) PAIRK=v; }catch(e){}
 const isPair=()=>LIST.gstyle==='pair', pairLR=()=>LIST.gdir!=='tb';
+/* 組別備註(例如 A 組「多換一」):分組模式的畫筆列可以填,畫在匯出圖上 ——
+   配對版型在面板上、一般版型在圖例的色點旁邊。存在 LIST.gnotes,跟著雲端 / 分享連結走。 */
+const GNOTE_MAX=16;
+function grpNote(k){ const v=k&&LIST.gnotes&&LIST.gnotes[k]; return typeof v==='string'?v.trim():''; }
+function setGrpNote(k,v){
+  if(!LIST.gnotes||typeof LIST.gnotes!=='object') LIST.gnotes={};
+  v=String(v||'').slice(0,GNOTE_MAX);
+  if(v.trim()) LIST.gnotes[k]=v; else delete LIST.gnotes[k];   // 空的就刪掉,不存空字串
+}
 const grpOf=c=>(c&&c.g&&GRP[c.g])||null;
 function hasAnyGroup(){ return LIST.want.some(grpOf)||LIST.have.some(grpOf); }
 function usedGroups(){ return GROUPS.filter(g=>LIST.want.some(c=>c.g===g.k)||LIST.have.some(c=>c.g===g.k)); }
@@ -2129,8 +2247,10 @@ function computePairLayout(){
   let y=top+6;
   G.gs.forEach((g,i)=>{
     let p;
-    if(lr){ const R=rowsFor([g.w,g.h],G.k); p={g,y,ph:HDR+R.h+4,R}; }
-    else { const Rw=rowsFor([g.w],G.k), Rh=rowsFor([g.h],G.k); p={g,y,ph:HDR+Rw.h+DIV+Rh.h+4,Rw,Rh}; }
+    // 左右對照:標題列三格(想要 / 組別 / 提供)都佔了 → 有備註就在標題下面多一列;上下對照放標題列右側,不加高
+    const note=g.k?grpNote(g.k):'', hdr=HDR+(lr&&note?40:0);
+    if(lr){ const R=rowsFor([g.w,g.h],G.k); p={g,note,y,HDR:hdr,ph:hdr+R.h+4,R}; }
+    else { const Rw=rowsFor([g.w],G.k), Rh=rowsFor([g.h],G.k); p={g,note,y,HDR:hdr,ph:hdr+Rw.h+DIV+Rh.h+4,Rw,Rh}; }
     panels.push(p); y+=p.ph+(i<G.gs.length-1?26:0);
   });
   // secs 留空 → reconcile 會收掉「我想要的 / 我能提供的」兩個大標籤(面板裡已經各自標了)
@@ -2146,8 +2266,11 @@ function computeLayout(){
   let top=140+(fly?46:0);
   // 有分組才多兩行圖例:色點(底圖層)+ 說明文字(文字層 id 'legend',可以點兩下改字、拖曳、換色);
   // 沒分組的人版面完全不變
-  const used=usedGroups(), legend=used.length?{y:top+14,textY:top+40,used,free:LIST.want.some(c=>!grpOf(c))||LIST.have.some(c=>!grpOf(c))}:null;
-  let y=top+(legend?86:0); const S2=[];
+  const used=usedGroups();
+  let legend=null;
+  if(used.length){ const lines=legendLines(used), extra=(lines.length-1)*LEG_ROW;
+    legend={y:top+14,lines,textY:top+40+extra,used,free:LIST.want.some(c=>!grpOf(c))||LIST.have.some(c=>!grpOf(c))}; }
+  let y=top+(legend?86+(legend.lines.length-1)*LEG_ROW:0); const S2=[];
   for(let i=0;i<secs.length;i++){
     const s=secs[i];
     const nrows=rowsOf(s.items.length), rows=[]; let yoff=0;
@@ -2432,14 +2555,32 @@ function fitFont(x,text,weight,base,maxW,font){
   while(fs>12 && x.measureText(text).width>maxW){ fs--; x.font=weight+' '+fs+'px '+font; }
   return fs;
 }
-// 圖例的色點列(一般版型、有分組時)。說明文字不在這裡 —— 那是文字層的 'legend',使用者可以改字/拖曳
+/* 圖例的色點列(一般版型、有分組時):「Ⓐ 多換一   Ⓑ 一換一」,有備註才帶字,一行放不下就換行。
+   排版在 computeLayout 就算好(legendLines),這裡只照著畫 —— 版面高度要先知道有幾行。
+   說明文字不在這裡 —— 那是文字層的 'legend',使用者可以改字/拖曳。 */
+const LEG_ROW=46, LEG_FONT='800 24px ';
+function legendLines(used){
+  const maxW=LAYW-2*PAD, anyNote=used.some(g=>grpNote(g.k)), gap=anyNote?22:8;
+  const items=used.map(g=>{ const note=grpNote(g.k);
+    const tw=note?Math.min(measureText(note,LEG_FONT+GFONT), maxW-44):0;
+    return {g,note,tw,w:36+(note?8+tw:0)}; });
+  const out=[]; let cur=[], cw=0;
+  for(const it of items){ const need=cur.length?cw+gap+it.w:it.w;
+    if(cur.length && need>maxW){ out.push({items:cur,w:cw}); cur=[it]; cw=it.w; } else { cur.push(it); cw=need; } }
+  if(cur.length) out.push({items:cur,w:cw});
+  out.gap=gap; return out;
+}
 function drawGrpLegend(x,lg,T,W){
-  let sx=(W-(lg.used.length*44-8))/2;
   x.save();
-  for(const g of lg.used){
-    x.shadowColor='rgba(0,0,0,.35)'; x.shadowBlur=5;
-    x.beginPath(); x.arc(sx+18,lg.y,18,0,7); x.fillStyle=g.c; x.fill(); x.shadowColor='transparent';
-    x.fillStyle=g.ink||'#fff'; x.font='900 18px '+DEFONT; x.textAlign='center'; x.textBaseline='middle'; x.fillText(g.k,sx+18,lg.y+1); sx+=44; }
+  lg.lines.forEach((ln,r)=>{
+    const cy=lg.y+r*LEG_ROW; let sx=(W-ln.w)/2;
+    for(const it of ln.items){ const g=it.g;
+      x.shadowColor='rgba(0,0,0,.35)'; x.shadowBlur=5;
+      x.beginPath(); x.arc(sx+18,cy,18,0,7); x.fillStyle=g.c; x.fill(); x.shadowColor='transparent';
+      x.fillStyle=g.ink||'#fff'; x.font='900 18px '+DEFONT; x.textAlign='center'; x.textBaseline='middle'; x.fillText(g.k,sx+18,cy+1);
+      if(it.note){ fitFont(x,it.note,800,24,it.tw,GFONT); x.fillStyle=T.foot||T.title; x.textAlign='left'; x.fillText(it.note,sx+44,cy+1); }
+      sx+=it.w+lg.lines.gap; }
+  });
   x.restore();
 }
 function grpPanel(x,X,Y,w,h,col,T){
@@ -2486,14 +2627,22 @@ async function grpSide(x,list,sx,sy,k,R,T,center,noteCol,vT,vB){
     await drawCard(x,cx,cy,list[i],T,rw.noteH,noteCol);
   }
 }
+// 組別備註的膠囊(同組顏色 + 同色系字,跟組別圓章一致);align:'center' = X 是中心,'right' = X 是右緣
+function grpNotePill(x,t,X,cy,g,maxW,align){
+  x.save(); fitFont(x,t,800,24,Math.max(40,maxW-28),GFONT);
+  const w=x.measureText(t).width+28, h=36, left=align==='right'?X-w:X-w/2;
+  x.shadowColor='rgba(0,0,0,.3)'; x.shadowBlur=6; rrPath(x,left,cy-h/2,w,h,18); x.fillStyle=g.c; x.fill(); x.shadowColor='transparent';
+  x.fillStyle=g.ink||'#fff'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(t,left+w/2,cy+1); x.restore();
+}
 async function drawPairTo(x,lay,T,vT,vB){
-  const P=lay.pair, {k,SW,cw,ox,lr,HDR,DIV}=P, ARW=PAIR_ARW;
+  const P=lay.pair, {k,SW,cw,ox,lr,DIV}=P, ARW=PAIR_ARW;
   for(const p of P.panels){
-    const g=p.g, col=g.c, py=p.y;
+    const g=p.g, col=g.c, py=p.y, HDR=p.HDR;
     if(py>vB+24 || py+p.ph<vT-24) continue;
     grpPanel(x,ox,py,cw,p.ph,col,T);
     if(lr){
-      const hy=py+HDR/2+4;
+      const hy=py+P.HDR/2+4;   // 標題列固定在上面;有備註時 p.HDR 比較高,多出來的那列放膠囊
+      if(p.note) grpNotePill(x,p.note,ox+cw/2,py+P.HDR+14,g,cw-2*GAP,'center');
       grpLabel(x,tr('g_want'),ox+SW/2+4,hy,T.sec1,'center',SW-GAP*2);
       grpLabel(x,tr('g_have'),ox+SW+ARW+SW/2,hy,T.sec2,'center',SW-GAP*2);
       grpChip(x,g,ox+SW+ARW/2,hy);
@@ -2504,6 +2653,7 @@ async function drawPairTo(x,lay,T,vT,vB){
       const cx0=ox+GAP+(g.k?30:54), hy=py+HDR/2+4;
       grpChip(x,g,cx0,hy);
       grpLabel(x,tr('g_want'),cx0+(g.k?40:64),hy,T.sec1,'left',cw/2-80);
+      if(p.note) grpNotePill(x,p.note,ox+cw-GAP,hy,g,cw/2-40,'right');
       await grpSide(x,g.w,ox,py+HDR,k,p.Rw,T,false,T.sec1,vT,vB);
       const dy=py+HDR+p.Rw.h-GAP+DIV/2+GAP/2;
       x.save(); fitFont(x,tr('g_have'),900,30,cw/2-80,GFONT); const lw=x.measureText(tr('g_have')).width; x.restore();
@@ -2767,7 +2917,7 @@ async function drawBaseTo(x,lay,SC,offY){
   const allItems=lay.pair ? [...LIST.want,...LIST.have] : lay.secs.flatMap(s=>s.items);
   for(const c of allItems){ loadImg(dispUrl(c.url)); { const sp=specOf(c.url); if(sp&&sp.badge) loadImg(sp.badge); } if(c.bg)loadExport(c.bg); if(c.badge)loadImg(c.badge); }
   if(lay.pair) await drawPairTo(x,lay,T,visTop,visBot);
-  if(lay.legend && lay.legend.y-26<=visBot && lay.legend.y+26>=visTop) drawGrpLegend(x,lay.legend,T,W);
+  if(lay.legend && lay.legend.y-26<=visBot && lay.legend.y+(lay.legend.lines.length-1)*LEG_ROW+26>=visTop) drawGrpLegend(x,lay.legend,T,W);
   const EC=lay.cols||effCols();
   for(const s of lay.secs){
     if(s.panelY<=visBot && s.panelY+s.ph>=visTop){ x.fillStyle=T.panel;rrPath(x,PAD,s.panelY,W-2*PAD,s.ph,24);x.fill(); }
@@ -2936,6 +3086,22 @@ function setEdTools(open,persistIt){
   if(persistIt!==false){ try{ localStorage.setItem('tlEdTools', open?'1':'0'); }catch(e){} }
   if(document.body.classList.contains('editmode')){ requestAnimationFrame(applyZoom); if(open) scheduleTip(600); }
 }
+/* 手機版底部分頁列:同一頁再點一次 = 收起來(force=true 時只開不關,給新功能提示的「試試看」用)。
+   #edBottom[data-tab] 決定顯示哪一組(CSS),電腦版側欄不看這個,四組全部攤開。 */
+let ED_TAB='';
+const isPhoneEd=()=>matchMedia('(max-width:700px)').matches;
+function setEdTab(tab,force){
+  ED_TAB = tab && (force || tab!==ED_TAB) ? tab : '';
+  const b=$('#edBottom'); if(!b) return;
+  if(ED_TAB) b.dataset.tab=ED_TAB; else delete b.dataset.tab;
+  for(const t of document.querySelectorAll('.edTab')){ const on=t.dataset.tab===ED_TAB;
+    t.classList.toggle('on',on); t.setAttribute('aria-selected',on?'true':'false'); }
+  syncTools();   // 「文字」頁的小紅點
+  if(document.body.classList.contains('editmode')){
+    requestAnimationFrame(applyZoom);   // 展開/收起改變了預覽區高度
+    if(ED_TAB){ b.scrollTop=0; scheduleTip(500); }
+  }
+}
 let PINCHING=false;
 function setupPinchZoom(){
   const ed=$('#editor');
@@ -3071,13 +3237,51 @@ function layoutTexts(){
     layer.appendChild(d);
   }
 }
-// 上傳圖片 → 加為可拖曳/縮放的圖片圖層
-function addImage(src,im){
+/* 目前畫面中心 → 版面(layout)座標,給新增文字 / 圖片 / 亮晶晶首飾用。
+   原本固定放在圖的最上面:放大到看卡片細節時,按了「新增」卻什麼都沒出現(其實跑到畫面外的頂端去了)。
+   可見範圍 = #editor 與畫布的交集(捲動、縮放、手機展開分頁都算進去),取它的中心;w/h 是可見範圍的大小。 */
+function viewCenter(){
+  const r=$('#baseCv').getBoundingClientRect(), e=$('#editor').getBoundingClientRect();
+  if(!r.width || !r.height) return {x:LAYW/2, y:(computeLayout().top||140)+60, w:LAYW, h:LAYH};
+  const sc=r.width/LAYW, H=r.height/sc;
+  const L=Math.max(r.left,e.left), R=Math.min(r.right,e.right), T=Math.max(r.top,e.top), B=Math.min(r.bottom,e.bottom);
+  if(R<=L || B<=T) return {x:LAYW/2, y:H/2, w:LAYW, h:H};   // 畫布整個不在畫面內(理論上不會)→ 圖的正中央
+  return {x:((L+R)/2-r.left)/sc, y:((T+B)/2-r.top)/sc, w:(R-L)/sc, h:(B-T)/sc};
+}
+// 上傳圖片 → 加為可拖曳/縮放的圖片圖層,出現在目前畫面的中心
+// longest:指定「最長邊」的版面大小(常用圖片用,約一張卡片大);不給 = 上傳的圖,照原圖大小但不超過圖寬 45%
+function addImage(src,im,longest){
   snapshot(); _imgEls.set(src,im);
-  const w=Math.min(LAYW*0.45, im.naturalWidth||300);
-  const t={id:'im'+Date.now(),type:'img',src,img:im,align:'center',cx:LAYW/2,y:(computeLayout().top||140)+30,
-           size:w,rot:0,aspect:(im.naturalHeight||1)/(im.naturalWidth||1)};
+  const v=viewCenter(), aspect=(im.naturalHeight||1)/(im.naturalWidth||1);
+  // 放大檢視時可見範圍很小 → 不超過可見寬度的 60%,不然一插進來就蓋滿整個畫面
+  const w0 = longest ? (aspect>1 ? longest/aspect : longest) : Math.min(LAYW*0.45, im.naturalWidth||300);
+  const w=Math.max(24, Math.min(w0, v.w*0.6));
+  const t={id:'im'+Date.now(),type:'img',src,img:im,align:'center',cx:v.x,y:Math.max(0,v.y-w*aspect/2),
+           size:w,rot:0,aspect};
   IMAGES.push(t); SEL=t; renderBase(); layoutTexts(); syncTools();
+}
+/* ===== 常用圖片(貼圖) =====
+   素材由 fetch_assets.py 的 make_sticker_assets() 從 pogo_assets 轉存到 assets/sticker/<key>.webp
+   (key 兩邊要一致);亮晶晶首飾加「＋」那張是另外合成好的 assets/lucky_friend_plus.png。
+   現金那幾張是 Google Noto Emoji(CC BY 4.0),浮窗底下有出處。
+   一律用同源相對路徑載入(不走 cdn),匯出時才不會污染 canvas。 */
+const STICKERS=['lucky_plus','lucky','lucky_glow','trade',
+                'cash','money_bag','money_wings','coin_gold','dollar','red_packet','money_face',   // 現金(Noto Emoji)
+                'stardust','meteorite','sword','shield',
+                'ball_poke','ball_great','ball_ultra','ball_master','ball_premier','ball_safari','ball_beast'];
+const stkSrc=k=>k==='lucky_plus'?'assets/lucky_friend_plus.png':'assets/sticker/'+k+'.webp';
+function openStickers(){
+  const g=$('#stkGrid');
+  if(!g.childElementCount) g.innerHTML=STICKERS.map(k=>`<button type="button" data-k="${k}"><img src="${stkSrc(k)}" alt="" loading="lazy" draggable="false"></button>`).join('');
+  $('#stkMask').classList.add('on');
+}
+function closeStickers(){ $('#stkMask').classList.remove('on'); }
+function addSticker(k){
+  const src=stkSrc(k); closeStickers();
+  const put=im=>addImage(src,im,170);   // 最長邊約一張卡片(S=164)
+  const c=_imgEls.get(src);
+  if(c && c.complete && c.naturalWidth) return put(c);
+  const im=new Image(); im.onload=()=>put(im); im.onerror=()=>alert(tr('share_fail')); im.src=src;
 }
 function startMove(e,t,d,sc){
   e.preventDefault();
@@ -3116,6 +3320,7 @@ function syncTools(){
     // 整個色票盒(含「顏色」字樣)一起變淡 —— 只淡化 <input> 的話,旁邊的字看起來還是可以點
     col.closest('.edColorBox').classList.toggle('off',!isTxt); }
   const st=$('#edStyle'); if(st)st.disabled=!isTxt;
+  const tt=document.querySelector('.edTab[data-tab="text"]'); if(tt) tt.classList.toggle('dot', !!SEL && ED_TAB!=='text');
 }
 let _editingT=null;
 function openTextEdit(t){ _editingT=t; snapshot();
@@ -3126,7 +3331,8 @@ function cycleStyle(t){ t._si=((t._si||0)+1)%STYLES.length; const s=STYLES[t._si
 function addText(){
   snapshot();
   const b=SEL||{size:46,color:EXP().title,weight:900,font:DEFONT};
-  const t={id:'u'+Date.now(),text:tr('newtext'),align:'center',cx:LAYW/2,y:computeLayout().top-70,
+  const v=viewCenter();   // 出現在目前畫面的中心(y 是文字上緣,行高 1 → 往上扣半個字高)
+  const t={id:'u'+Date.now(),text:tr('newtext'),align:'center',cx:v.x,y:Math.max(0,v.y-b.size/2),
            size:b.size,color:b.color,weight:b.weight||900,font:b.font||DEFONT,outline:false,rot:0,bg:0,_si:0,edited:true};
   TEXTS.push(t); select(t);
 }
@@ -3528,12 +3734,15 @@ const isVis=el=>!!(el && el.getClientRects().length);
 const TIPS=[
   { key:'tlSeenPriceTip', ctx:'list', glow:'pqGlow', title:'ptip_title', body:()=>tr('ptip_body'), tryL:'ptip_try',
     find:()=>[...document.querySelectorAll('#listW .li .pq,#listH .li .pq')].find(isVis), onTry:t=>t.click() },
-  { key:'tlSeenGroupTip', ctx:'list', title:'gtip_title', body:()=>tr('gtip_body'), tryL:'gtip_try',
+  // 分組鈕搬到底部固定列後換了 key(原本 tlSeenGroupTip),讓看過舊位置的人再看一次
+  { key:'tlSeenGroupTip2', ctx:'list', title:'gtip_title', body:()=>tr('gtip_body'), tryL:'gtip_try',
     find:()=>isVis($('#grpBtn'))?$('#grpBtn'):null, onTry:()=>{ if(!GROUPING) setGrouping(true); } },
   // 製圖畫面:配對版型;電腦版順便講 Ctrl + 滾輪縮放(手機本來就會用兩指)
   { key:'tlSeenLayoutTip', ctx:'edit', title:'ltip_title', tryL:'ltip_try',
     body:()=>tr('ltip_body')+(matchMedia('(hover:hover) and (pointer:fine)').matches?'\n'+tr('ltip_zoom'):''),
-    find:()=>isVis($('#grpRow'))?$('#grpRow'):null, onTry:()=>{ if(!isPair()) setGrpStyle('pair',undefined); } }];
+    find:()=>{ const tab=document.querySelector('.edTab[data-tab="layout"]');   // 手機:版型那組平常收著 → 指分頁鈕
+      return isVis($('#grpRow')) ? $('#grpRow') : isVis(tab) ? tab : null; },
+    onTry:()=>{ if(isPhoneEd()) setEdTab('layout',true); if(!isPair()) setGrpStyle('pair',undefined); } }];
 let PTIP=null, _ptipTimer=null;
 function seenTip(s){ try{ return localStorage.getItem(s.key)==='1'; }catch(e){ return true; } }   // 讀不到就當看過,免得每次都跳
 function scheduleTip(delay){ if(TIPS.every(seenTip)) return; clearTimeout(_ptipTimer); _ptipTimer=setTimeout(maybeShowTip,delay||700); }
@@ -3543,7 +3752,7 @@ function maybeShowTip(){
   if(PTIP){ if(isVis(PTIP.t)) return; closeTip(false); }   // 清單重畫、指著的節點被換掉 → 重新找
   const B=document.body.classList;
   if(B.contains('picking')) return;
-  if(document.querySelector('#introMask.on,#priceMask.on,#mixMask.on,#saveMask.on,#supMask.on,#busyMask.on,#txtEditOverlay.on')) return;
+  if(document.querySelector('#introMask.on,#priceMask.on,#mixMask.on,#saveMask.on,#supMask.on,#busyMask.on,#txtEditOverlay.on,#stkMask.on')) return;
   const ctx=B.contains('editmode')?'edit':'list';
   for(const s of TIPS){
     if(s.ctx!==ctx || seenTip(s)) continue;
@@ -4100,13 +4309,16 @@ let dragK=null,dragIdx=null;
 /* ===== 多組清單 ===== */
 let SETS=[], activeSetId=null, setDragId=null;
 const suid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-function newSetData(){ return {want:[],have:[],canfly:false,trainer:'',trainerLabel:'',gstyle:'',gdir:'lr'}; }
+function newSetData(){ return {want:[],have:[],canfly:false,trainer:'',trainerLabel:'',gstyle:'',gdir:'lr',gnotes:{}}; }
 // 舊資料可能還有 qr 欄位(推廣 QR 已改成固定的品牌頁尾),正規化時直接丟掉
 function normSetData(d){ return {
   want:Array.isArray(d&&d.want)?d.want:[], have:Array.isArray(d&&d.have)?d.have:[],
   canfly:!!(d&&d.canfly),
   trainer:(d&&typeof d.trainer==='string')?d.trainer:'', trainerLabel:(d&&typeof d.trainerLabel==='string')?d.trainerLabel:'',
-  gstyle:(d&&d.gstyle==='pair')?'pair':'', gdir:(d&&d.gdir==='tb')?'tb':'lr' }; }
+  gstyle:(d&&d.gstyle==='pair')?'pair':'', gdir:(d&&d.gdir==='tb')?'tb':'lr', gnotes:normGNotes(d&&d.gnotes) }; }
+// 組別備註:只收 A–F、非空字串(Firebase 會把空物件整個丟掉,讀回來可能是 undefined)
+function normGNotes(o){ const r={}; if(o&&typeof o==='object') for(const g of GROUPS){ const v=o[g.k];
+  if(typeof v==='string'&&v.trim()) r[g.k]=v.trim().slice(0,GNOTE_MAX); } return r; }
 function setDefaultName(){ const taken=new Set(SETS.map(s=>s.name)); let n=1;
   while(taken.has(tr('set_default')+' '+n)) n++; return tr('set_default')+' '+n; }
 function uniqueSetName(base){ const taken=new Set(SETS.map(s=>s.name));
@@ -4426,7 +4638,15 @@ function renderGrpChips(){
   box.onclick=e=>{ const b=e.target.closest('.grpChip'); if(!b) return; BRUSH=b.dataset.g; syncGrpBar(); syncGrpCards(); };
   syncGrpBar();
 }
+// 底部「分組」鈕:圖示用實際用到的組別顏色(沒分組就固定 A/B/C),後面帶組數 → 一眼看出這份清單分過沒
+function syncGrpBtn(){
+  const d=$('#grpDots'), n=$('#grpN'); if(!d) return;
+  const used=usedGroups(), show=used.length?used.slice(0,4):GROUPS.slice(0,3);
+  d.innerHTML=show.map(g=>`<i style="--c:${g.c}"></i>`).join('');
+  n.textContent=used.length?'· '+used.length:'';
+}
 function syncGrpBar(){
+  syncGrpBtn();
   const box=$('#grpChips'); if(!box) return;
   for(const b of box.querySelectorAll('.grpChip')){
     const g=b.dataset.g; b.classList.toggle('on',g===BRUSH);
@@ -4436,6 +4656,11 @@ function syncGrpBar(){
   }
   const G=GRP[BRUSH], h=$('#grpHintTxt');
   if(h) h.innerHTML = G ? tr('g_hint').replace('{g}',`<b style="color:${G.c}">${G.k}</b>`) : tr('g_hint_er');
+  const nr=$('#grpNoteRow'), ni=$('#grpNote');
+  if(nr){ nr.hidden=!G;
+    if(G){ nr.style.setProperty('--gc',G.c); nr.style.setProperty('--gi',G.ink||'#fff'); $('#grpNoteK').textContent=G.k;
+      ni.placeholder=tr('g_note_ph').replace('{g}',G.k);
+      if(document.activeElement!==ni) ni.value=grpNote(G.k); } }
 }
 function setGrouping(on){
   GROUPING=!!on; document.body.classList.toggle('grouping',GROUPING);
