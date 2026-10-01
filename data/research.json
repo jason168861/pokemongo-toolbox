@@ -1,5 +1,39 @@
 [
   {
+    "category": "Harvest Festival: Taken Over Tasks",
+    "tasks": [
+      {
+        "description": "？？？",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Fast TM.png",
+            "name": "一般招式學習器 ×?",
+            "quantity": "×?"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Charged TM.png",
+            "name": "特殊招式學習器",
+            "quantity": "×?"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Mysterious Component.png",
+            "name": "神秘零件",
+            "quantity": "×?"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Harvest Festival 2026: Applin Picking Tasks",
     "tasks": [
       {
