@@ -1,145 +1,34 @@
 {
-    "lastUpdated": "2026年10月4日13時",
+    "lastUpdated": "2026年10月4日21時",
     "bosses": [
         {
-            "name": "伽勒爾 大蔥鴨",
-            "englishName": "Galarian Farfetch'd",
+            "name": "Astronaut Pikachu",
+            "englishName": "Astronaut Pikachu",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "fighting",
-                    "image": "https://leekduck.com/assets/img/types/fighting.png"
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 898,
-                    "max": 956
+                    "min": 493,
+                    "max": 536
                 },
                 "boosted": {
-                    "min": 1123,
-                    "max": 1196
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm83.fGALARIAN.icon.png"
-        },
-        {
-            "name": "伽勒爾 蛇紋熊",
-            "englishName": "Galarian Zigzagoon",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "dark",
-                    "image": "https://leekduck.com/assets/img/types/dark.png"
-                },
-                {
-                    "name": "normal",
-                    "image": "https://leekduck.com/assets/img/types/normal.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 258,
-                    "max": 290
-                },
-                "boosted": {
-                    "min": 323,
-                    "max": 363
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "fog",
-                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
-                },
-                {
-                    "name": "partly cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm263.fGALARIAN.icon.png"
-        },
-        {
-            "name": "三蜜蜂",
-            "englishName": "Combee",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "bug",
-                    "image": "https://leekduck.com/assets/img/types/bug.png"
-                },
-                {
-                    "name": "flying",
-                    "image": "https://leekduck.com/assets/img/types/flying.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 251,
-                    "max": 282
-                },
-                "boosted": {
-                    "min": 314,
-                    "max": 353
+                    "min": 616,
+                    "max": 670
                 }
             },
             "boostedWeather": [
                 {
                     "name": "rainy",
                     "image": "https://leekduck.com/assets/img/weather/rainy.png"
-                },
-                {
-                    "name": "windy",
-                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm415.icon.png"
-        },
-        {
-            "name": "獨劍鞘",
-            "englishName": "Honedge",
-            "tier": "1-Star Raids",
-            "canBeShiny": true,
-            "types": [
-                {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
-                },
-                {
-                    "name": "ghost",
-                    "image": "https://leekduck.com/assets/img/types/ghost.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 742,
-                    "max": 794
-                },
-                "boosted": {
-                    "min": 927,
-                    "max": 993
-                }
-            },
-            "boostedWeather": [
-                {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
-                },
-                {
-                    "name": "fog",
-                    "image": "https://leekduck.com/assets/img/weather/foggy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm679.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGLASS_HELMET_2026.icon.png"
         },
         {
             "name": "大奶罐",
