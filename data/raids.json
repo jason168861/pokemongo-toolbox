@@ -1,34 +1,129 @@
 {
-    "lastUpdated": "2026年10月12日04時",
+    "lastUpdated": "2026年10月12日13時",
     "bosses": [
         {
-            "name": "Astronaut Pikachu",
-            "englishName": "Astronaut Pikachu",
+            "name": "皮皮",
+            "englishName": "Clefairy",
             "tier": "1-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "electric",
-                    "image": "https://leekduck.com/assets/img/types/electric.png"
+                    "name": "fairy",
+                    "image": "https://leekduck.com/assets/img/types/fairy.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 493,
-                    "max": 536
+                    "min": 611,
+                    "max": 660
                 },
                 "boosted": {
-                    "min": 616,
-                    "max": 670
+                    "min": 764,
+                    "max": 825
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "rainy",
-                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm25.fGLASS_HELMET_2026.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm35.icon.png"
+        },
+        {
+            "name": "熊寶寶",
+            "englishName": "Teddiursa",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "normal",
+                    "image": "https://leekduck.com/assets/img/types/normal.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 707,
+                    "max": 759
+                },
+                "boosted": {
+                    "min": 884,
+                    "max": 949
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm216.icon.png"
+        },
+        {
+            "name": "小灰怪",
+            "englishName": "Elgyem",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "psychic",
+                    "image": "https://leekduck.com/assets/img/types/psychic.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 738,
+                    "max": 791
+                },
+                "boosted": {
+                    "min": 923,
+                    "max": 989
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm605.icon.png"
+        },
+        {
+            "name": "冰雪龍",
+            "englishName": "Amaura",
+            "tier": "1-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "rock",
+                    "image": "https://leekduck.com/assets/img/types/rock.png"
+                },
+                {
+                    "name": "ice",
+                    "image": "https://leekduck.com/assets/img/types/ice.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 726,
+                    "max": 779
+                },
+                "boosted": {
+                    "min": 908,
+                    "max": 974
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "partly cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/partlycloudy.png"
+                },
+                {
+                    "name": "snow",
+                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm698.icon.png"
         },
         {
             "name": "寶石海星",
