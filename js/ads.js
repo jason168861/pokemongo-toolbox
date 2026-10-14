@@ -26,13 +26,14 @@
         '<ins class="adsbygoogle" style="display:block" data-ad-client="' + PUBLISHER_ID +
         '" data-ad-slot="' + AD_SLOT_ID + '" data-ad-format="auto" data-full-width-responsive="true"></ins>';
 
-    const isTradeList = /\/trade-list(?:\/|$)/.test(window.location.pathname);
-    const tradeListHeader = isTradeList ? document.querySelector('body > header') : null;
-    const footer = document.querySelector('.site-footer');
-    if (tradeListHeader) {
-        tradeListHeader.insertAdjacentElement('afterend', ad);
-    } else if (footer && footer.parentNode) {
-        footer.parentNode.insertBefore(ad, footer);
+    const pageHeader = document.querySelector('body > header, .site-header-main, .topbar, .ed-topbar');
+    const breadcrumb = document.querySelector('.wrap > .crumb');
+    if (pageHeader) {
+        pageHeader.insertAdjacentElement('afterend', ad);
+    } else if (breadcrumb) {
+        breadcrumb.insertAdjacentElement('afterend', ad);
+    } else if (document.body.firstElementChild) {
+        document.body.insertBefore(ad, document.body.firstElementChild);
     } else {
         document.body.appendChild(ad);
     }
