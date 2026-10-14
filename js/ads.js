@@ -6,7 +6,7 @@
     'use strict';
 
     const PUBLISHER_ID = 'ca-pub-8866689605007086';
-    const AD_SLOT_ID = '';
+    const AD_SLOT_ID = '2584052803';
 
     if (!AD_SLOT_ID) return;
 
