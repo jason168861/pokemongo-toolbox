@@ -314,6 +314,7 @@ def build():
 </footer>
 
 <script src="filter.js" defer></script>
+<script src="../js/ads.js" defer></script>
 </body>
 </html>
 '''

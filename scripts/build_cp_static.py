@@ -551,6 +551,7 @@ def build(name):
 </div>
 
 <a class="fab" href="../../?tab=cp-checker-app" aria-label="搜尋其他寶可夢">🔍 <span>搜尋寶可夢</span></a>
+<script src="../../js/ads.js" defer></script>
 </body>
 </html>"""
 

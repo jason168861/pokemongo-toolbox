@@ -274,6 +274,7 @@ def build():
      Pokémon 及其商標為 &copy;1995-2026 Nintendo, Creatures, GAME FREAK 所有。</p>
   <p><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="../">回工具箱</a></p>
 </footer>
+<script src="../js/ads.js" defer></script>
 </body>
 </html>
 '''

@@ -180,6 +180,7 @@ document.getElementById('copyright-year').textContent = new Date().getFullYear()
 {inits}
 </script>
 <script src="../js/site-nav.js" defer></script>
+<script src="../js/ads.js" defer></script>
 </body>
 </html>
 '''
