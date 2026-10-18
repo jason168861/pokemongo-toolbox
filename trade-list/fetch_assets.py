@@ -311,6 +311,13 @@ STICKERS = {
     "meteorite":   "Items/Item_Meteorite.png",
     "sword":       "Items/sword_fusionResource.png",
     "shield":      "Items/shield_fusionResource.png",
+    "triple_stat_increase": "Items/triple_stat_increase.png",
+    "single_stat_increase": "Items/single_stat_increase.png",
+    "item_1600":   "Items/item_1600.png",
+    "item_1601":   "Items/item_1601.png",
+    "item_1602":   "Items/item_1602.png",
+    "item_1606":   "Items/item_1606.png",
+    "item_1607":   "Items/item_1607.png",
     **{f"ball_{b}": f"Items/{f}_sprite.png" for f, b in BALLS.items()},
 }
 
