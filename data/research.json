@@ -1,71 +1,132 @@
 [
   {
-    "category": "Pokémon GO City Safari: Boston (Rescheduled) Tasks",
+    "category": "Pokémon GO Halloween 2026 Part I Tasks",
     "tasks": [
       {
-        "description": "捕捉 5 隻寶可夢",
-        "rewards": [
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1000",
-            "quantity": "×1000"
-          }
-        ]
-      },
-      {
-        "description": "捕捉 15 隻寶可夢",
+        "description": "捕捉 13 隻幽靈屬性的寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "泥驢仔",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
+            "name": "Zubat wearing a top hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm41.fHALLOWEEN_2026_01.icon.png",
             "isShiny": false,
-            "maxCp": "811",
-            "minCp": "764"
-          }
-        ]
-      },
-      {
-        "description": "捕捉 20 隻寶可夢",
-        "rewards": [
+            "maxCp": "285",
+            "minCp": "258"
+          },
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
-            "name": "神奇糖果 ×1",
-            "quantity": "×1"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Piplup wearing a Halloween Mischief costume",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm393.cHALLOWEEN_2021_NOEVOLVE.icon.png",
+            "isShiny": false,
+            "maxCp": "460",
+            "minCp": "426"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Noibat wearing a headband",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/Headband Noibat.png",
+            "isShiny": false,
+            "maxCp": "285",
+            "minCp": "258"
           }
         ]
       },
       {
-        "description": "捕捉 5 隻不同的寶可夢",
+        "description": "投出 6 次Nice",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "泥驢仔",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm749.icon.png",
+            "name": "夢妖",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm200.icon.png",
             "isShiny": false,
-            "maxCp": "811",
-            "minCp": "764"
+            "maxCp": "825",
+            "minCp": "779"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "夜巡靈",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm355.icon.png",
+            "isShiny": false,
+            "maxCp": "302",
+            "minCp": "273"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Small)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSMALL.icon.png",
+            "isShiny": false,
+            "maxCp": "515",
+            "minCp": "478"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Average)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fAVERAGE.icon.png",
+            "isShiny": false,
+            "maxCp": "523",
+            "minCp": "486"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Large)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fLARGE.icon.png",
+            "isShiny": false,
+            "maxCp": "533",
+            "minCp": "496"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pumpkaboo (Super)",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm710.fSUPER.icon.png",
+            "isShiny": false,
+            "maxCp": "536",
+            "minCp": "498"
           }
         ]
       },
       {
-        "description": "為夥伴拍攝1張GO Snapshot照片",
+        "description": "在團體戰中獲勝1次",
         "rewards": [
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×1000",
-            "quantity": "×1000"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Zubat wearing a top hat",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm41.fHALLOWEEN_2026_01.icon.png",
+            "isShiny": false,
+            "maxCp": "285",
+            "minCp": "258"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Sinistea wearing a bow",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm854.fP_HALLOWEEN_2026_01.icon.png",
+            "isShiny": false,
+            "maxCp": "488",
+            "minCp": "452"
+          }
+        ]
+      },
+      {
+        "description": "在團體戰中獲勝 3 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Pikachu wearing a hat and capelet",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm25.fHALLOWEEN_2026.icon.png",
+            "isShiny": false,
+            "maxCp": "402",
+            "minCp": "369"
           }
         ]
       }
