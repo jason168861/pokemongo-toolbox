@@ -13368,6 +13368,24 @@ const POKEDEX = [
     }
   },
   {
+    "id": "chandelure_mega",
+    "dexNumber": 609,
+    "name": "水晶燈火靈 (Mega)",
+    "stats": {
+      "atk": 335,
+      "def": 182,
+      "sta": 155
+    },
+    "types": [
+      "ghost",
+      "fire"
+    ],
+    "family": {
+      "id": "litwick",
+      "stage": 3
+    }
+  },
+  {
     "id": "axew",
     "dexNumber": 610,
     "name": "牙牙",
