@@ -12,7 +12,9 @@
   }
   function load() {
     if (D) return Promise.resolve(D);
-    if (!loading) loading = fetch('all.json').then(function (r) { return r.json(); }).then(function (j) { D = j; return j; });
+    if (!loading) loading = fetch('all.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) { D = j; return j; })
+      .catch(function (e) { loading = null; throw e; });   // 失敗就清掉，下次輸入會重試
     return loading;
   }
   function cp(lv, v) { return esc(L.lv) + lv + ' ' + esc(L.cp) + ' ' + v; }
@@ -32,8 +34,8 @@
         if (r[7]) return '<a href="' + esc(r[7]) + '/">' + img + '<span>' + esc(r[0]) + '<small>' + cp(20, r[3]) + '</small></span></a>';
         return '<div>' + img + '<span>' + esc(r[0]) + ' <small>#' + r[1] + ' · ' + cp(15, r[2]) + ' · ' + cp(20, r[3]) + ' · ' + cp(25, r[4]) + '</small></span></div>';
       }).join('');
-    }).catch(function () { res.hidden = true; msg.hidden = false; msg.textContent = L.none; });
+    }).catch(function () { res.hidden = true; pop.hidden = false; msg.hidden = false; msg.textContent = L.err || L.none; });
   }
   q.addEventListener('input', render);
-  q.addEventListener('focus', function () { load(); }, { once: true });
+  q.addEventListener('focus', function () { load().catch(function () {}); }, { once: true });
 })();
