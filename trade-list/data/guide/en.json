@@ -1,0 +1,30 @@
+{
+  "title": "How to make a Pokémon GO trade list",
+  "sections": [
+    {
+      "h": "What this trade list generator does",
+      "html": "<p>The Pokémon GO Trade List Generator turns the Pokémon you are looking for and the ones you can give away into one clean image you can post in a Discord server, a Facebook group, a community chat or a Reddit thread. Instead of typing long lists by hand, you pick cards from a catalogue of every Pokémon combination in the game — <strong>shiny</strong> Pokémon, regional and seasonal <strong>forms</strong>, <strong>costumes</strong>, gender differences, <strong>Dynamax</strong> and <strong>Gigantamax</strong>, purified Pokémon, and Pokémon with <strong>location and special backgrounds</strong>.</p><p>It is free, needs no account and works on phones as well as on desktop browsers.</p>"
+    },
+    {
+      "h": "Make your list in four steps",
+      "html": "<ol><li><strong>Add what you want.</strong> Under <em>Looking For</em>, tap <em>✏️ Add</em> and search by name or Pokédex number. Filters narrow the grid to Shiny, Form/Costume, Dynamax, Gigantamax or Legendary Pokémon, and you can swipe sideways to select many cards at once.</li><li><strong>Add what you can offer.</strong> Do the same under <em>For Trade</em>. The <em>Backgrounds</em> tab lists Pokémon that appeared with location or event backgrounds, and <em>Custom combo</em> lets you build a combination the catalogue does not cover: any Pokémon plus a marker and a background.</li><li><strong>Fine-tune each card.</strong> Use the small buttons on a card to mark its gender or the Poké Ball it was caught in, so trade partners know exactly which one you mean.</li><li><strong>Make the image.</strong> Tap <em>🎨 Make image</em> to choose a theme, fonts, colours and how many cards go in each row, add your Trainer Code if you want, then download or share the picture.</li></ol>"
+    },
+    {
+      "h": "Share a link and keep several lists",
+      "html": "<p><em>Share link</em> creates a URL that opens your list for someone else; they can import it as a new list of their own. With <em>New list</em> you can keep separate lists side by side — for example one for Community Day and one for a regional swap. Lists are saved in your browser, and signing in with Google keeps the same lists on your phone and your computer.</p>"
+    },
+    {
+      "h": "Trading tips worth knowing",
+      "html": "<ul><li><strong>Special Trades</strong> — shiny Pokémon, Legendary Pokémon and Pokémon you have not registered yet — cost more Stardust and are limited to one per day. Higher Friendship levels make them much cheaper.</li><li>Some Pokémon cannot be traded at all, such as most Mythical Pokémon. The catalogue marks them with 🚫 so you do not advertise something you cannot actually send.</li><li>Pokémon with a location or special background keep it after the trade, which is why many players put background Pokémon on their lists.</li><li>Put the trades you care about most in the first rows — most people only glance at the top of an image.</li></ul>"
+    }
+  ],
+  "faqTitle": "Frequently asked questions",
+  "faq": [
+    { "q": "Is the trade list generator free?", "a": "Yes. There is nothing to buy and no sign-up; ads on the page keep the site running." },
+    { "q": "Do I need to log in?", "a": "No. Your lists are stored in this browser. Logging in with Google is optional and only syncs your lists between devices." },
+    { "q": "Which Pokémon and backgrounds are included?", "a": "Pokémon released in Pokémon GO with their forms, costumes, shiny and Dynamax/Gigantamax variants, plus the location and special backgrounds that have appeared in events. If a combination is missing, build it yourself with Custom combo." },
+    { "q": "Will my Trainer Code be shown on the image?", "a": "Only if you type it in. The Trainer Code field is optional and empty by default." },
+    { "q": "Which languages are supported?", "a": "English, Traditional Chinese, Japanese, Korean, French, German and Spanish. Pokémon names follow the language you choose, and search understands names in all of them." },
+    { "q": "Can I use it on my phone?", "a": "Yes. On iPhone and Android the finished image can be saved to your photo album or shared directly to another app." }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "title": "So erstellst du eine Pokémon GO Tauschliste",
+  "sections": [
+    {
+      "h": "Was dieser Tauschlisten-Generator kann",
+      "html": "<p>Der Generator macht aus den Pokémon, die du suchst, und denen, die du abgeben kannst, ein übersichtliches Bild – zum Posten auf einem Discord-Server, in einer Facebook-Gruppe oder auf Reddit. Statt lange Listen abzutippen, wählst du Karten aus einem Katalog mit allen Kombinationen im Spiel: <strong>schillernde</strong> Pokémon, regionale und saisonale <strong>Formen</strong>, <strong>Kostüme</strong>, Geschlechtsunterschiede, <strong>Dynamax</strong> und <strong>Gigadynamax</strong>, erlöste Pokémon sowie Pokémon mit <strong>Orts- und Spezial-Hintergründen</strong>.</p><p>Kostenlos, ohne Konto und auf dem Handy genauso nutzbar wie am Computer.</p>"
+    },
+    {
+      "h": "In vier Schritten zur Liste",
+      "html": "<ol><li><strong>Gesuchte Pokémon hinzufügen.</strong> Tippe unter <em>Gesucht</em> auf <em>✏️ Hinzufügen</em> und suche nach Name oder Pokédex-Nummer. Filter zeigen nur Schillernd, Form/Kostüm, Dynamax, Gigadynamax oder Legendär, und mit einem Wisch zur Seite wählst du viele Karten auf einmal aus.</li><li><strong>Angebotene Pokémon hinzufügen.</strong> Dasselbe unter <em>Biete</em>. Der Tab <em>Hintergründe</em> zeigt Pokémon, die mit Orts- oder Event-Hintergründen erschienen sind, und mit <em>Freie Kombination</em> baust du Kombinationen, die nicht im Katalog stehen: ein beliebiges Pokémon plus Markierung und Hintergrund.</li><li><strong>Karten anpassen.</strong> Mit den kleinen Knöpfen auf einer Karte markierst du das Geschlecht oder den Pokéball, mit dem es gefangen wurde – so weiß dein Tauschpartner genau, welches gemeint ist.</li><li><strong>Bild erstellen.</strong> Tippe auf <em>🎨 Bild erstellen</em>, wähle Design, Schriften, Farben und die Anzahl der Karten pro Reihe, füge bei Bedarf deinen Trainercode hinzu und lade das Bild herunter oder teile es.</li></ol>"
+    },
+    {
+      "h": "Link teilen und mehrere Listen führen",
+      "html": "<p>Der <em>Teilen-Link</em> erzeugt eine URL, mit der andere deine Liste öffnen und als eigene neue Liste importieren können. Mit <em>Neue Liste</em> führst du mehrere Listen nebeneinander, etwa eine für den Community Day und eine für Regionale. Die Listen werden in deinem Browser gespeichert; mit einer Google-Anmeldung hast du dieselben Listen auf Handy und Computer.</p>"
+    },
+    {
+      "h": "Gut zu wissen vor dem Tauschen",
+      "html": "<ul><li><strong>Spezialtausche</strong> (schillernde und legendäre Pokémon sowie Pokémon, die noch nicht in deinem Pokédex stehen) kosten mehr Sternenstaub und sind auf einen pro Tag begrenzt. Je höher das Freundschaftslevel, desto günstiger werden sie.</li><li>Manche Pokémon lassen sich gar nicht tauschen, zum Beispiel die meisten Mysteriösen Pokémon. Der Katalog markiert sie mit 🚫, damit du nichts anbietest, was du gar nicht verschicken kannst.</li><li>Pokémon mit Orts- oder Spezial-Hintergrund behalten ihn nach dem Tausch – deshalb stehen sie bei vielen Spielern auf der Liste.</li><li>Setz die wichtigsten Tausche in die ersten Reihen: Die meisten schauen nur auf den oberen Teil des Bildes.</li></ul>"
+    }
+  ],
+  "faqTitle": "Häufige Fragen",
+  "faq": [
+    { "q": "Ist der Generator kostenlos?", "a": "Ja. Nichts zu kaufen, keine Registrierung; die Werbung auf der Seite finanziert den Betrieb." },
+    { "q": "Muss ich mich anmelden?", "a": "Nein. Deine Listen werden in diesem Browser gespeichert. Die Google-Anmeldung ist optional und dient nur zum Synchronisieren zwischen Geräten." },
+    { "q": "Welche Pokémon und Hintergründe sind enthalten?", "a": "Die in Pokémon GO erschienenen Pokémon mit ihren Formen, Kostümen, schillernden und Dynamax-/Gigadynamax-Varianten sowie die Orts- und Spezial-Hintergründe aus Events. Fehlt eine Kombination, baust du sie mit Freie Kombination selbst." },
+    { "q": "Wird mein Trainercode auf dem Bild angezeigt?", "a": "Nur wenn du ihn eingibst. Das Feld für den Trainercode ist optional und standardmäßig leer." },
+    { "q": "Welche Sprachen gibt es?", "a": "Englisch, traditionelles Chinesisch, Japanisch, Koreanisch, Französisch, Deutsch und Spanisch. Pokémon-Namen folgen der gewählten Sprache, und die Suche versteht Namen in allen diesen Sprachen." },
+    { "q": "Funktioniert es auf dem Handy?", "a": "Ja. Auf iPhone und Android kannst du das fertige Bild in deinen Fotos speichern oder direkt mit einer anderen App teilen." }
+  ]
+}

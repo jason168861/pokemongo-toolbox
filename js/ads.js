@@ -30,10 +30,18 @@
     const INS = '<ins class="adsbygoogle" style="display:block" data-ad-client="' + PUBLISHER_ID +
         '" data-ad-slot="' + AD_SLOT_ID + '" data-ad-format="auto" data-full-width-responsive="true"></ins>';
 
+    // 「廣告」標籤跟著頁面語言（交易清單有 7 種語言；其他頁面都是繁中 → 一律「廣告」）。
+    // 交易清單切換語言時也會呼叫 window.pkAdLabel 更新標籤。
+    const AD_LABELS = { zh: '廣告', ja: '広告', ko: '광고', fr: 'Publicité', de: 'Anzeige', es: 'Publicidad', en: 'Advertisement' };
+    window.pkAdLabel = function (lang) {
+        return AD_LABELS[String(lang || '').slice(0, 2).toLowerCase()] || AD_LABELS.zh;
+    };
+    const label = window.pkAdLabel(document.documentElement.lang);
+
     const ad = document.createElement('aside');
     ad.className = 'site-ad';
-    ad.setAttribute('aria-label', '廣告');
-    ad.innerHTML = '<span class="site-ad-label">廣告</span>' + INS;
+    ad.setAttribute('aria-label', label);
+    ad.innerHTML = '<span class="site-ad-label">' + label + '</span>' + INS;
 
     const pageHeader = document.querySelector('body > header, .site-header-main, .topbar, .ed-topbar');
     const breadcrumb = document.querySelector('.wrap > .crumb');
