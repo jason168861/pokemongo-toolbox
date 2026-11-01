@@ -668,6 +668,8 @@ export function initializeCpChecker() {
         // 沒輸入時＝剛進頁面的瀏覽狀態，說明就該看得到。
         const guide = document.querySelector('#cp-checker-app .cp-guide');
         if (guide) guide.hidden = !!query;
+        const popular = document.querySelector('#cp-checker-app .cp-pop-wrap');   // 熱門寶可夢也一樣，搜尋時收起
+        if (popular) popular.hidden = !!query;
 
         // 鎖定到單一寶可夢時，補上牠的全等級 CP 表（這是每個 ?mon= 網址的主要獨立內容）
         const lockedMon = resolveOne(query, visibleIdx);
