@@ -56,9 +56,12 @@
 
 
 #pvp-ranker-app .iv-slider {
-    flex-grow: 1; 
+    flex-grow: 1;
     padding: 5px 0;
     cursor: pointer;
+    /* 觸控時只讓瀏覽器處理垂直捲動，水平方向留給 js 的拖曳判斷。
+       寫在全域而不是只限手機：平板橫向（>767px）、觸控筆電也需要；滑鼠不受影響。 */
+    touch-action: pan-y;
 }
 
 #pvp-ranker-app .iv-slider-track {
@@ -473,21 +476,151 @@
 /* 面板開著時隱藏開關鈕 */
 #pvp-ranker-app #pvp-controls-toggle.hidden { display: none; }
 
-/* 手機：一樣放右上角，只把寬度縮小一點以符合小螢幕 */
+/* 即時排名摘要：只在手機顯示（桌機面板浮動，結果本來就看得到）。
+   這條必須寫在下面的 @media 之前：權重相同，寫在後面的會贏。 */
+#pvp-ranker-app .pvp-quick-summary { display: none; }
+/* 摘要的「查看完整結果」捲過來時，結果頂端不要貼著畫面上緣 */
+#pvp-ranker-app #results-container { scroll-margin-top: 60px; }
+
+/* 手機（≤767px）：面板排在內容流中、永遠展開，不能收合也不能拖曳。
+   桌機（>767px）維持上面的浮動面板，可以收合與拖曳。 */
 @media (max-width: 767px) {
+    /* 手機改成不浮動：浮動面板在 375×667 會蓋住約六成畫面（含上方的廣告區塊），
+       改成排進內容流、永遠展開，不能拖曳、也不能收合。
+       js/pvp-ranker.js 的 initControlsPanel 會偵測到 position 不是 fixed 而自動停用拖曳。 */
     #pvp-ranker-app #pvp-controls {
-        top: 70px;
-        right: 10px;
-        width: 300px;
-        max-width: calc(100vw - 20px);
-        max-height: calc(100vh - 90px);
+        position: static;
+        width: auto;
+        max-width: none;
+        max-height: none;
+        overflow: visible;
+        z-index: auto;
+        margin: 0 0 16px;
+        padding: 0 12px 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    /* 防呆：桌機收合後把視窗縮到手機寬，面板不能就此消失（手機上沒有 ⚙ 可以叫回來） */
+    #pvp-ranker-app #pvp-controls.collapsed { display: block; }
+    #pvp-ranker-app .controls-header {
+        position: static;
+        cursor: default;
+        margin: 0 -12px 10px;
+        padding: 8px 12px;
+        touch-action: auto;      /* 桌機是 none（拖曳用）；手機不拖曳，在標題列上滑動要能捲動頁面 */
+    }
+    #pvp-ranker-app #pvp-controls-close,
+    #pvp-ranker-app #pvp-controls-toggle { display: none; }
+    #pvp-ranker-app .controls-header-hint { display: none; }
+
+    /* 壓縮高度：IV 標籤從選單上方改到左側同一列 */
+    #pvp-ranker-app .iv-inputs { padding-top: 0; }
+    #pvp-ranker-app .iv-control { margin-bottom: 10px; }
+    #pvp-ranker-app .iv-label-select {
+        flex: 0 0 136px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    #pvp-ranker-app .iv-label-select label {
+        position: static;
+        margin: 0;
+        font-size: 13px;
+        flex: 1;                 /* 標籤吃掉剩餘寬度，三個 select 的左緣才會對齊 */
+    }
+    #pvp-ranker-app .iv-label-select select {
+        width: 64px;
+        flex: 0 0 64px;
+    }
+    /* 搜尋框的標籤只對螢幕閱讀器保留（不用 display:none，否則 label 關聯失效） */
+    #pvp-ranker-app .search-container label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+    /* 標籤拿掉後 .search-container 只剩輸入框高度，原本 top:50% 會讓 × 偏到框外，改成垂直置中 */
+    #pvp-ranker-app .clear-button { transform: translateY(-50%); }
+    #pvp-ranker-app #pokemon-input,
+    #pvp-ranker-app .iv-label-select select { min-height: 44px; }
+
+    /* ---- 即時排名摘要（W3b）----
+       每個狀態的高度都相同：三格固定是「聯盟名稱／數值」兩行，空狀態文字用同樣的 min-height，
+       「查看完整結果」隱藏時用 visibility 保留高度 → 改 IV、清空輸入框都不會讓版面跳動。 */
+    #pvp-ranker-app .pvp-quick-summary {
+        display: block;
+        min-height: 2.8em;
+        font-size: 14px;
+        border-top: 1px solid #e3e8ef;
+        padding-top: 8px;
+        margin-top: 8px;
+    }
+    #pvp-ranker-app .pvp-quick-summary [hidden] { display: none; }
+    #pvp-ranker-app .pvp-qs-empty,
+    #pvp-ranker-app .pvp-qs-cells {
+        min-height: 2.6em;
+        margin: 0;
+    }
+    #pvp-ranker-app .pvp-qs-empty {
+        display: flex;
+        align-items: center;
+        color: #777;
+    }
+    #pvp-ranker-app .pvp-qs-cells {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        padding: 0;
+        list-style: none;
+        text-align: center;
+    }
+    #pvp-ranker-app .pvp-qs-cells li { min-width: 0; }
+    #pvp-ranker-app .pvp-qs-label {
+        display: block;
+        font-size: 12px;
+        line-height: 1.3;
+        color: #666;
+    }
+    #pvp-ranker-app .pvp-qs-value {
+        display: block;
+        line-height: 1.4;
+        font-weight: bold;
+        color: #1877f2;
+        white-space: nowrap;
+    }
+    #pvp-ranker-app .pvp-qs-more {
+        display: block;
+        width: 100%;
+        min-height: 36px;
+        margin: 4px 0 0;
+        padding: 6px 0;
+        border: none;
+        background: none;
+        color: #1877f2;
+        font: inherit;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+    }
+    #pvp-ranker-app .pvp-qs-more.is-invisible { visibility: hidden; }
+    /* 數字更新時底色閃一下（約 0.6 秒），減少動態效果的設定下不播 */
+    @media (prefers-reduced-motion: no-preference) {
+        #pvp-ranker-app .pvp-quick-summary.is-updated { animation: pvp-qs-flash 0.6s ease-out; }
+    }
+    @keyframes pvp-qs-flash {
+        from { background-color: #fff3bf; }
+        to   { background-color: transparent; }
     }
 }
 /* 說明區要閃開浮動的查詢面板。
    #pvp-controls 是 position:fixed 貼在右上（桌機 360px + 16px 邊距），
    不讓路的話文字右半邊會被蓋住、整段變成讀不完的斷句。
-   手機版面板本來就會蓋住大半個畫面（結果卡片也一樣），
-   使用者是靠收合鈕處理的，這裡不另外硬擠。 */
+   只有桌機需要：手機（≤767px）的面板排在內容流中、不浮動，不會蓋到說明區。 */
 @media (min-width: 768px) {
     #pvp-ranker-app .tool-guide {
         /* 面板實測從右緣佔到約 425px（width 360 + 左右 padding + 邊距 + 捲軸），
