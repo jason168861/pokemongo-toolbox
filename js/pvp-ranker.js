@@ -13,6 +13,9 @@ export function initializePvpRanker() {
         return;
     }
 
+    // 條件面板的收合／拖曳（原本寫在首頁 index.html，拆頁後沒有帶過來）
+    initControlsPanel();
+
     const pokemonInput = document.getElementById('pokemon-input');
     const searchResultsContainer = document.getElementById('search-results');
     const atkSelect = document.getElementById('atk-iv');
@@ -111,13 +114,69 @@ export function initializePvpRanker() {
         });
     }
 
+    // ---- 即時排名摘要（只在手機顯示，CSS 控制）----
+    // 手機上面板排在內容流中，調完 IV 後結果在面板下方、要往下捲才看得到。
+    // 在面板底部固定放三格（超級／高級／大師）顯示「使用者選的那一隻」的排名，
+    // 改 IV 時不用離開面板就看得到結果變化。進化型的結果仍看下方完整卡片。
+    // 每格的狀態和結果卡片一致（generateLeagueCardHTML）：
+    //   #名次 / 超過上限 / 不在排名內 / —（沒有排名資料，卡片也不會出現）
+    // 結構寫死在 HTML（格數永遠不變，避免版面跳動），這裡只改 textContent。
+    // 刻意不設 aria-live：拖滑桿時會連續播報。
+    const quickSummary = document.getElementById('pvp-quick-summary');
+    const QS_LEAGUES = [1500, 2500, 10000];   // 小小盃（500）沒有排名資料，不顯示
+    let qsHasData = false;
+    function setTextIfChanged(el, text) {
+        if (!el || el.textContent === text) return false;
+        el.textContent = text;
+        return true;
+    }
+    // ranks：{1500: '#87', 2500: '超過上限', ...}；null = 空狀態
+    function renderQuickSummary(ranks) {
+        if (!quickSummary) return;
+        const emptyEl = quickSummary.querySelector('.pvp-qs-empty');
+        const cellsEl = quickSummary.querySelector('.pvp-qs-cells');
+        const moreBtn = quickSummary.querySelector('.pvp-qs-more');
+        const hasData = !!ranks;
+        if (emptyEl && emptyEl.hidden !== hasData) emptyEl.hidden = hasData;
+        if (cellsEl && cellsEl.hidden !== !hasData) cellsEl.hidden = !hasData;
+        let changed = false;
+        if (hasData && cellsEl) {
+            QS_LEAGUES.forEach(cp => {
+                const v = cellsEl.querySelector(`[data-cp="${cp}"] .pvp-qs-value`);
+                if (setTextIfChanged(v, ranks[cp] || '—')) changed = true;
+            });
+        }
+        // 「查看完整結果」：結果區沒東西時隱藏（用 visibility 保留高度，避免版面跳動）
+        if (moreBtn) {
+            const showMore = hasData && !resultsContainer.classList.contains('hidden')
+                             && resultsContainer.childElementCount > 0;
+            moreBtn.classList.toggle('is-invisible', !showMore);
+            moreBtn.disabled = !showMore;
+        }
+        // 數字變了就閃一下底色（從空狀態第一次填入時不閃）；prefers-reduced-motion 時 CSS 不播
+        if (changed && qsHasData) {
+            quickSummary.classList.remove('is-updated');
+            void quickSummary.offsetWidth;   // 重新觸發 animation
+            quickSummary.classList.add('is-updated');
+        }
+        qsHasData = hasData;
+    }
+    if (quickSummary) {
+        const moreBtn = quickSummary.querySelector('.pvp-qs-more');
+        if (moreBtn) moreBtn.addEventListener('click', () => {
+            // 不用 <a href="#...">：網址不加 hash；scroll-margin-top 讓結果頂端不貼著畫面邊緣
+            resultsContainer.scrollIntoView({ block: 'start' });
+        });
+    }
+
     function handleCalculate() {
-        updateCurrentCpDisplay(); 
+        updateCurrentCpDisplay();
 
         const pokemonName = pokemonInput.value;
         if (!pokemonName) { // 如果沒有寶可夢名稱，則不進行計算
             resultsContainer.innerHTML = '';
             resultsContainer.classList.add('hidden');
+            renderQuickSummary(null);
             return;
         }
 
@@ -133,9 +192,11 @@ export function initializePvpRanker() {
         if (!initialPokemon) {
             resultsContainer.innerHTML = '';
             resultsContainer.classList.add('hidden');
+            renderQuickSummary(null);
             return;
         }
-        
+        const quickRanks = {};   // 摘要用：只收使用者選的那一隻（非進化型）的結果
+
         const initialStage = initialPokemon.family.stage;
         const familyId = initialPokemon.family.id;
         const evolutionFamily = POKEDEX.filter(p => p.family.id === familyId);
@@ -201,7 +262,13 @@ export function initializePvpRanker() {
                     spread.ivs.def === userIvs.def &&
                     spread.ivs.sta === userIvs.sta
                 );
-                
+                // 摘要：判斷順序與 generateLeagueCardHTML 相同（超過上限 > 有排名 > 不在排名內）
+                if (!isEvolution) {
+                    quickRanks[league.cp] = isOverLimit ? '超過上限'
+                        : userPokemonRankInfo ? '#' + userPokemonRankInfo.rank
+                        : '不在排名內';
+                }
+
                 const leagueCardHTML = generateLeagueCardHTML(league, userPokemonRankInfo, rankOneSpread, isOverLimit, warningText, rankingInfoFromDataFile);
                 leagueCardsContainer.innerHTML += leagueCardHTML;
             });
@@ -211,6 +278,7 @@ export function initializePvpRanker() {
                 resultsContainer.appendChild(familyResultContainer);
             }
         });
+        renderQuickSummary(quickRanks);   // 沒寫到的聯盟（allRankedSpreads 為空而提早 return）顯示「—」
     }
 
 function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, warningText, rankingInfoFromDataFile) { 
@@ -332,8 +400,9 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
             clearBtn.classList.remove('hidden');
         } else {
             clearBtn.classList.add('hidden');
-            resultsContainer.classList.add('hidden'); 
+            resultsContainer.classList.add('hidden');
             currentCpDisplay.textContent = '-';
+            renderQuickSummary(null);   // 清空輸入框不會呼叫 handleCalculate，這裡自己回到空狀態
         }
         showSuggestions(); 
     });
@@ -422,11 +491,12 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
         const correspondingSelect = document.getElementById(`${ivType}-iv`);
         let isDragging = false;
 
-        const handleInteraction = (e) => {
-            e.preventDefault();
+        // 依手指／滑鼠的 X 座標設定 IV。
+        // 原本寫 (e.clientX || e.touches[0].clientX)：clientX 剛好是 0 時會被當成沒有值，
+        // 滑鼠事件沒有 touches 就丟錯。現在滑鼠與觸控各自把座標傳進來。
+        const setFromClientX = (clientX) => {
             const rect = slider.getBoundingClientRect();
-            // 兼容滑鼠和觸控事件
-            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const x = clientX - rect.left;
             let percentage = x / rect.width;
             percentage = Math.max(0, Math.min(1, percentage)); // 確保比例在 0 和 1 之間
             const value = Math.round(percentage * 15);
@@ -436,6 +506,11 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
                 // 手動觸發 change 事件，來執行 handleCalculate 和更新滑桿
                 correspondingSelect.dispatchEvent(new Event('change'));
             }
+        };
+        // 滑鼠用（行為與原本相同）
+        const handleInteraction = (e) => {
+            e.preventDefault();
+            setFromClientX(e.clientX);
         };
 
         // 滑鼠事件
@@ -455,21 +530,56 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
             isDragging = false;
         });
 
-         // 觸控事件
+        // ---- 觸控事件 ----
+        // 原本 touchstart 就 preventDefault 並改值：手機上手指剛好從滑桿上開始往上下滑，
+        // 頁面捲不動、IV 還被改掉。改成先判斷方向：
+        //   水平先超過 8px（且大於垂直）→ 拖曳，之後才 preventDefault 並改值；
+        //   垂直先超過 8px → 放棄，交給頁面捲動；
+        //   都沒超過就放開 → 視為輕點，用放開的位置設值。
+        // 手機 CSS 另有 .iv-slider{touch-action:pan-y}，讓瀏覽器不搶水平方向。
+        const TOUCH_SLOP = 8;
+        let touchStartX = 0, touchStartY = 0;
+        let touchMode = null;   // null = 還沒判斷方向、'drag' = 拖曳中、'ignore' = 交給頁面
         slider.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            handleInteraction(e);
-        });
+            if (e.touches.length !== 1) { touchMode = 'ignore'; return; }   // 多指（縮放）不處理
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            touchMode = null;
+        }, { passive: true });
 
         slider.addEventListener('touchmove', (e) => {
-            if (isDragging) {
-                handleInteraction(e);
+            if (touchMode === 'ignore') return;
+            const t = e.touches[0];
+            if (!t) return;
+            if (touchMode === null) {
+                const adx = Math.abs(t.clientX - touchStartX);
+                const ady = Math.abs(t.clientY - touchStartY);
+                // 瀏覽器已經開始捲動時 touchmove 不可取消（cancelable=false），這時也只能放棄
+                if (adx > TOUCH_SLOP && adx > ady && e.cancelable) {
+                    touchMode = 'drag';
+                } else if (ady > TOUCH_SLOP || adx > TOUCH_SLOP) {
+                    touchMode = 'ignore';
+                    return;
+                } else {
+                    return;   // 還在誤差範圍內，先不決定
+                }
             }
-        });
+            if (e.cancelable) e.preventDefault();
+            setFromClientX(t.clientX);
+        }, { passive: false });
 
-        slider.addEventListener('touchend', () => {
-            isDragging = false;
+        slider.addEventListener('touchend', (e) => {
+            if (touchMode === null) {   // 沒移動超過誤差 → 輕點
+                const t = e.changedTouches[0];
+                if (t) {
+                    // 擋掉輕點後瀏覽器補發的 mousedown/click，免得滑鼠的處理再跑一次
+                    if (e.cancelable) e.preventDefault();
+                    setFromClientX(t.clientX);
+                }
+            }
+            touchMode = 'ignore';
         });
+        slider.addEventListener('touchcancel', () => { touchMode = 'ignore'; });
     });
     
     // --- 初始設定 ---
@@ -487,4 +597,104 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
         clearBtn.classList.remove('hidden');
         handleCalculate();
     }
+}
+
+// ==================== 查詢條件浮動面板：收合、展開、拖曳 ====================
+// 這段原本是首頁 index.html 底部的 inline script（針對 #pvp-controls）。
+// build_tool_pages.py 拆頁時只擷取了 #pvp-ranker-app 區塊，handler 沒跟過來，
+// 獨立頁的「−」與「⚙ 調整條件」因此都沒有作用。放在模組裡，
+// build_tool_pages.py 的 sync()（只換表頭頁尾）不會覆蓋掉它。
+// 不記住收合狀態（原版也沒有）。
+function initControlsPanel() {
+    const panel = document.getElementById('pvp-controls');
+    const closeBtn = document.getElementById('pvp-controls-close');
+    const toggleBtn = document.getElementById('pvp-controls-toggle');
+    if (!panel || !closeBtn || !toggleBtn) return;
+    const header = panel.querySelector('.controls-header');
+
+    const EDGE = 4;   // 至少留一點邊，避免整個拖出去抓不回來
+    // 只有浮動（position:fixed）時才拖曳／夾回畫面。手機版若改成排進內容流（static），
+    // 這裡自動停用，也不會寫入 inline 的 left/top。
+    const isFloating = () => getComputedStyle(panel).position === 'fixed';
+
+    // 可視範圍用 documentElement.clientWidth/Height：桌機的 innerWidth 含垂直捲軸，
+    // 用它的話面板右緣會被夾到捲軸底下。
+    function clampPos(left, top) {
+        const vw = document.documentElement.clientWidth || window.innerWidth;
+        const vh = document.documentElement.clientHeight || window.innerHeight;
+        const maxLeft = vw - panel.offsetWidth - EDGE;
+        const maxTop = vh - (header ? header.offsetHeight : 0) - EDGE;
+        return {
+            left: Math.max(EDGE, Math.min(left, maxLeft)),
+            top: Math.max(EDGE, Math.min(top, maxTop))
+        };
+    }
+
+    // 拖曳過（有 inline left/top）的面板，在縮窗、轉向、重新展開後可能落到畫面外，
+    // 把它夾回來。沒拖曳過的面板仍由 CSS 的 top/right 錨定，不去動它。
+    // 從 static（手機寬）回到 fixed（桌機寬）時也會觸發 resize，留著的 left/top 會在這裡重新夾回。
+    function clampIntoView() {
+        if (!isFloating() || panel.classList.contains('collapsed')) return;
+        if (!panel.style.left && !panel.style.top) return;
+        const rect = panel.getBoundingClientRect();
+        const p = clampPos(rect.left, rect.top);
+        if (p.left !== rect.left) panel.style.left = p.left + 'px';
+        if (p.top !== rect.top) panel.style.top = p.top + 'px';
+    }
+
+    function openPanel() {
+        panel.classList.remove('collapsed');
+        toggleBtn.classList.add('hidden');
+        clampIntoView();
+    }
+    function closePanel() {
+        panel.classList.add('collapsed');
+        toggleBtn.classList.remove('hidden');
+    }
+    closeBtn.addEventListener('click', closePanel);
+    toggleBtn.addEventListener('click', openPanel);
+
+    // 預設展開，讓搜尋框一進來就看得到；收合後改用右下浮動鈕重新開啟
+    openPanel();
+
+    let resizeRaf = 0;
+    window.addEventListener('resize', () => {
+        if (resizeRaf) return;
+        resizeRaf = requestAnimationFrame(() => { resizeRaf = 0; clampIntoView(); });
+    });
+
+    // ---- 拖曳：抓標題列移動面板位置 ----
+    if (!header) return;
+    let dragging = false, startX = 0, startY = 0, startLeft = 0, startTop = 0;
+
+    header.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;   // 只有滑鼠左鍵能拖曳
+        if (e.target.closest('#pvp-controls-close')) return;   // 在「−」上按下不拖曳
+        if (!isFloating()) return;
+        dragging = true;
+        const rect = panel.getBoundingClientRect();
+        // 改成用 left/top 定位（原本靠 right 錨定）
+        panel.style.left = rect.left + 'px';
+        panel.style.top = rect.top + 'px';
+        panel.style.right = 'auto';
+        startX = e.clientX; startY = e.clientY;
+        startLeft = rect.left; startTop = rect.top;
+        header.setPointerCapture(e.pointerId);
+        e.preventDefault();
+    });
+
+    header.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const p = clampPos(startLeft + (e.clientX - startX), startTop + (e.clientY - startY));
+        panel.style.left = p.left + 'px';
+        panel.style.top = p.top + 'px';
+    });
+
+    function endDrag(e) {
+        if (!dragging) return;
+        dragging = false;
+        try { header.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+    header.addEventListener('pointerup', endDrag);
+    header.addEventListener('pointercancel', endDrag);
 }

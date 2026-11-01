@@ -91,7 +91,7 @@
                 <h1>Pokémon Go PvP IV 排名查詢器</h1>
                 <div class="controls" id="pvp-controls">
                     <div class="controls-header">
-                        <span class="controls-header-title">查詢條件(可收合、移動)</span>
+                        <span class="controls-header-title">查詢條件<span class="controls-header-hint">(可收合、移動)</span></span>
                         <button type="button" id="pvp-controls-close" aria-label="收合條件面板">&minus;</button>
                     </div>
                     <div class="search-container">
@@ -147,8 +147,18 @@
                             <span id="current-cp-display" class="cp-display">-</span>
                         </div>
                     </div>
+                    <!-- 即時排名摘要（只在手機顯示）：結構固定，js/pvp-ranker.js 只改文字 -->
+                    <div id="pvp-quick-summary" class="pvp-quick-summary">
+                        <p class="pvp-qs-empty">選擇寶可夢後顯示排名</p>
+                        <ul class="pvp-qs-cells" hidden>
+                            <li data-cp="1500"><span class="pvp-qs-label">超級聯盟</span><span class="pvp-qs-value">—</span></li>
+                            <li data-cp="2500"><span class="pvp-qs-label">高級聯盟</span><span class="pvp-qs-value">—</span></li>
+                            <li data-cp="10000"><span class="pvp-qs-label">大師聯盟</span><span class="pvp-qs-value">—</span></li>
+                        </ul>
+                        <button type="button" class="pvp-qs-more is-invisible" disabled>查看完整結果（含進化型）↓</button>
+                    </div>
                 </div>
-                <button type="button" id="pvp-controls-toggle" aria-label="開啟查詢條件">⚙ 調整條件</button>
+                <button type="button" id="pvp-controls-toggle" class="hidden" aria-label="開啟查詢條件">⚙ 調整條件</button>
                 <div id="results-container" class="hidden"></div>
 
                 <!-- 說明放在結果容器「之後」：#results-container 預設是 hidden，

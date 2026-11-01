@@ -196,12 +196,14 @@ export function initializeCpChecker() {
     }
     // 只在「編號或名稱完全相符」或「篩選後只剩一隻」時才出表，
     // 否則打一個字就跳出某一隻的完整表格會很怪。
+    // 名稱比對兩邊都經過 zhLower（繁簡＋大小寫正規化）：打字路徑傳進來的已是簡體，
+    // 只做 toLowerCase 的話「拉達」這類多筆命中的名稱永遠精確比對不到，表格就不出現。
     function resolveOne(query, visibleIdx) {
-        const s = (query || '').trim().toLowerCase();
+        const s = zhLower((query || '').trim());
         if (s) {
             const hit = allPokemonData.find(p => String(p.id) === s)
-                     || allPokemonData.find(p => p.name.toLowerCase() === s)
-                     || allPokemonData.find(p => (p.alt || '').toLowerCase() === s);
+                     || allPokemonData.find(p => zhLower(p.name) === s)
+                     || allPokemonData.find(p => zhLower(p.alt || '') === s);
             if (hit) return hit;
         }
         return visibleIdx.length === 1 ? allPokemonData[visibleIdx[0]] : null;
@@ -483,12 +485,13 @@ export function initializeCpChecker() {
     }
 
     // 依查詢找出對應寶可夢（編號完全相符 > 名稱完全相符 > 名稱包含）
+    // 比對用 zhLower（繁簡通用），回傳的仍是原物件 → title / h1 用的是繁體原名
     function findMon(q) {
         if (!q) return null;
-        const s = q.trim().toLowerCase();
+        const s = zhLower(q.trim());
         return allPokemonData.find(p => String(p.id) === s)
-            || allPokemonData.find(p => p.name.toLowerCase() === s)
-            || allPokemonData.find(p => (p.alt || '').toLowerCase() === s)   // 改名前的舊 ?mon= 連結
+            || allPokemonData.find(p => zhLower(p.name) === s)
+            || allPokemonData.find(p => zhLower(p.alt || '') === s)   // 改名前的舊 ?mon= 連結
             || allPokemonData.find(p => zhLower(p.name).includes(s)) || null;
     }
     // 把目前查詢反映到網址列（可分享/可被收錄）並更新標題、描述、canonical
@@ -687,10 +690,6 @@ export function initializeCpChecker() {
             searchInput.blur();
         }
     });
-    searchInput.addEventListener('input', (event) => {
-        const query = zhLower(event.target.value.trim());
-        filterResults(query);
-    });
     // 網址帶 ?mon= → 只建立那幾張卡（Googlebot 看到的就是這個精簡版）；
     // 沒帶 → 建立全部 1079 張，這頁是站內連結的樞紐。
     if (CP_INITIAL_MON) showOnly(CP_INITIAL_MON); else buildIndexList();   // 樞紐頁只列連結，搜尋時才換成完整卡片
@@ -709,7 +708,7 @@ export function initializeCpChecker() {
         // 還沒展開全部時就只換成目標那幾張卡，維持精簡的 DOM；
         // 展開過了就照原本的篩選走。
         if (!builtAll) showOnly(name);
-        filterResults(name.trim().toLowerCase());
+        filterResults(zhLower(name.trim()));   // 卡片 dataset 存的是 zhLower 後的值，查詢也要同一套
         clearBtn.style.display = 'block';
         syncMonUrlSeo(name);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -721,7 +720,7 @@ export function initializeCpChecker() {
     // 深連結：有人開 ?tab=cp-checker-app&mon=皮卡丘 → 自動填入搜尋框並顯示結果
     if (CP_INITIAL_MON) {
         searchInput.value = CP_INITIAL_MON;
-        filterResults(CP_INITIAL_MON.trim().toLowerCase());
+        filterResults(zhLower(CP_INITIAL_MON.trim()));   // 同上；syncMonUrlSeo 仍傳原文，canonical 不變
         clearBtn.style.display = 'block';
         // 直接呼叫。原本這裡包了 setTimeout(0)，是為了讓「該寶可夢的 SEO」排在
         // main.js 的 applySeo（通用標題）之後才設定，免得被蓋掉；但那是在賭執行順序，
