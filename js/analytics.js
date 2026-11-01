@@ -70,6 +70,79 @@ window.GA_ID = 'G-TXSLDX2J4X';   // GA4「pogokit」資源的評估 ID
       gtag('event', name, out);
     } catch (e) { /* 分析壞掉不能影響功能 */ }
   };
+
+  /* 慢互動歸因(INP 診斷用)。
+     CrUX 只說手機 INP 偏高,看不出是哪個按鈕慢。這裡在頁面被隱藏(切 App、關分頁、換頁)時,
+     把這段期間「最慢的一次互動」送成 slow_interaction 事件;只有 ≥ 200ms(INP「需要改善」門檻)才送。
+     送出的只有:互動類型、目標元素的「標籤 + id 或第一個 class」(寫在程式碼裡的名稱)、
+     三段耗時、互動當時頁面是否還在載入。不送元素裡的文字、輸入值或任何使用者輸入的內容。
+     只有支援 Event Timing API 的瀏覽器(Chromium 系)會有資料,其他瀏覽器什麼都不做。 */
+  try {
+    if (!window.PerformanceObserver ||
+        (PerformanceObserver.supportedEntryTypes || []).indexOf('event') < 0) return;
+    const SLOW = 200;
+    const desc = function (el) {
+      if (!el || el.nodeType !== 1) return '';
+      let d = el.tagName.toLowerCase();
+      if (el.id) d += '#' + el.id;
+      else if (typeof el.className === 'string' && el.className.trim()) d += '.' + el.className.trim().split(/\s+/)[0];
+      return d;
+    };
+    // 互動後元素常被重繪移除(entry.target 會變 null),所以事件當下先記下描述,
+    // 再用 event.timeStamp(= entry.startTime)對回去。只留最近幾筆。
+    const recent = [];
+    const remember = function (ev) {
+      recent.push([ev.timeStamp, desc(ev.target)]);
+      if (recent.length > 20) recent.shift();
+    };
+    ['pointerdown', 'pointerup', 'click', 'keydown', 'keyup'].forEach(function (t) {
+      addEventListener(t, remember, { capture: true, passive: true });
+    });
+    const lookup = function (t) {
+      for (let i = recent.length - 1; i >= 0; i--) if (Math.abs(recent[i][0] - t) < 1) return recent[i][1];
+      return '';
+    };
+
+    // 目前最慢的一次互動。一次點擊會有 pointerdown / pointerup / click 好幾筆 entry
+    // (同一個 interactionId),要合併起來算,不然耗時會被算在第一筆 pointerdown 上。
+    let worst = null;
+    new PerformanceObserver(function (list) {
+      list.getEntries().forEach(function (e) {
+        if (!e.interactionId || e.duration < SLOW) return;
+        let w = worst && worst.id === e.interactionId ? worst : null;
+        if (!w) {
+          if (worst && e.duration <= worst.dur) return;
+          w = { id: e.interactionId, start: e.startTime, dur: 0, ps: Infinity, pe: 0, proc: 0, pmax: -1, type: '', target: '' };
+        }
+        const p = e.processingEnd - e.processingStart;
+        w.start = Math.min(w.start, e.startTime);
+        w.dur = Math.max(w.dur, e.duration);
+        w.ps = Math.min(w.ps, e.processingStart);
+        w.pe = Math.max(w.pe, e.processingEnd);
+        w.proc += p;
+        if (p > w.pmax) { w.pmax = p; w.type = e.name; }   // 類型以「處理最久」的那個事件為準
+        w.target = w.target || desc(e.target) || lookup(e.startTime);
+        worst = w;
+      });
+    }).observe({ type: 'event', durationThreshold: SLOW, buffered: true });
+
+    const flush = function () {
+      if (!worst) return;
+      const w = worst; worst = null;     // 送過就清掉;回到頁面後再有更慢的互動會另外送一筆
+      const nav = performance.getEntriesByType('navigation')[0];
+      window.track('slow_interaction', {
+        value: Math.round(w.dur),
+        interaction_type: w.type,
+        interaction_target: w.target || '(unknown)',
+        input_delay: Math.max(0, Math.round(w.ps - w.start)),
+        processing_time: Math.round(w.proc),
+        presentation_delay: Math.max(0, Math.round(w.start + w.dur - w.pe)),
+        load_state: nav && nav.loadEventEnd && w.start > nav.loadEventEnd ? 'after_load' : 'during_load'
+      });
+    };
+    addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') flush(); });
+    addEventListener('pagehide', flush);
+  } catch (e) { /* 量測壞掉不能影響功能 */ }
 })();
 
 /* 搜尋框用:只有「打完字而且找不到東西」才回報。

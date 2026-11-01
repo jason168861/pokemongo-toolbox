@@ -592,10 +592,17 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
     // 預設帶入妙蛙種子並直接計算：讓新用戶一進來就看到結果長什麼樣子，
     // 而不是面對一片空白不知道要做什麼
     const defaultPokemon = POKEDEX.find(p => p.name === '妙蛙種子') || POKEDEX.find(p => p.dexNumber === 1);
-    if (defaultPokemon) {
-        pokemonInput.value = defaultPokemon.name;
-        clearBtn.classList.remove('hidden');
-        handleCalculate();
+    // HTML 先以 .is-loading 預留預設結果的高度（避免 CLS），算完就解除（計算出錯也要解除）；
+    // 萬一找不到預設寶可夢，回到原本「隱藏、空白」的狀態。
+    try {
+        if (defaultPokemon) {
+            pokemonInput.value = defaultPokemon.name;
+            clearBtn.classList.remove('hidden');
+            handleCalculate();
+        }
+    } finally {
+        resultsContainer.classList.remove('is-loading');
+        if (!defaultPokemon) resultsContainer.classList.add('hidden');
     }
 }
 

@@ -6,6 +6,8 @@
 
     python scripts/build_bg_index.py
 
+順便把首頁 index.html 裡 <span data-bg-count> 標記的背卡張數同步成同一個數字。
+
 表格是機器產生的，但這一頁真正的價值在 PROSE 區塊的文字 ——
   資料整理過程的說明、以及對背卡的實際判斷。那些要人來寫，
   只有表格的話這一頁沒有存在的必要。
@@ -329,6 +331,28 @@ def build():
     if miss:
         print(f"  ⚠ 有 {miss} 個寶可夢找不到圖示（會顯示成 —）")
     print("  ⚠ 別忘了補 PROSE_TOP / PROSE_NOTES 裡標「請補上」的段落 —— 那才是這頁的價值")
+    sync_home_count(len(bgs))
+
+
+# 首頁（index.html）的背卡卡片和介紹段落也寫了背卡張數，用 <span data-bg-count> 標記。
+# 首頁是手寫的，這裡只換標記裡的數字，其他內容一律不動。
+HOME = os.path.join(HERE, "index.html")
+HOME_COUNT_RE = re.compile(r"(<span data-bg-count>)\d+(</span>)")
+
+
+def sync_home_count(n):
+    with open(HOME, encoding="utf-8", newline="") as f:
+        src = f.read()
+    new, hits = HOME_COUNT_RE.subn(rf"\g<1>{n}\g<2>", src)
+    if not hits:
+        print("  ⚠ index.html 找不到 <span data-bg-count>，首頁的背卡張數沒有同步")
+        return
+    if new != src:
+        with open(HOME, "w", encoding="utf-8", newline="") as f:
+            f.write(new)
+        print(f"  已把 index.html 的背卡張數（{hits} 處）同步為 {n}")
+    else:
+        print(f"  index.html 的背卡張數（{hits} 處）已經是 {n}")
 
 
 if __name__ == "__main__":

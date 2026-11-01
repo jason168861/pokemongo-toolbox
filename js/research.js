@@ -145,5 +145,7 @@ export function initializeResearchApp() {
         .catch(error => {
             console.error('載入田野調查資料時發生錯誤:', error);
             container.innerHTML = '<p style="text-align: center; color: red;">載入資料失敗，請檢查 `research.json` 檔案是否存在且格式正確。</p>';
-        });
+        })
+        // HTML 先以 .is-loading 預留任務列表的高度（避免 CLS），不論成功或失敗都在第一次填入後解除
+        .finally(() => container.classList.remove('is-loading'));
 }

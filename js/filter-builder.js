@@ -412,7 +412,9 @@ export function initializeFilterBuilder() {
     else { saveCloud(); }   // 雲端還沒有 → 把目前本機的組合推上去
   };
 
-  renderSets(); renderAll(); build();
+  // HTML 預留的首次載入高度（見 css/filter-builder.css）畫好就解除；渲染出錯也要解除，不能留下空白骨架
+  try { renderSets(); renderAll(); build(); }
+  finally { root.classList.remove('is-loading'); }
 
   // 若登入資料比本模組先到（使用者尚未點開此分頁），這裡補套用
   if (window.pendingFilterBuilder) {

@@ -91,9 +91,11 @@ def build():
         </li>''' for m in mons)
 
     top = mons[0]
-    desc = (f"Pokémon GO 捕捉星星沙子完整說明：基礎值依進化階段為 {BASE[1]}／{BASE[2]}／{BASE[3]}，"
-            f"每日第一隻額外 {DAILY_FIRST}、連續第七天額外 {DAILY_STREAK7:,}，"
-            f"另有 {len(mons)} 隻寶可夢捕捉時給得特別多（最高 {top['name']} {top['stardust']:,}）。")
+    # 開頭先回答搜尋意圖（星星沙子怎麼賺），數字放後面當佐證
+    desc = (f"Pokémon GO 星星沙子怎麼賺？捕捉基礎量 {BASE[1]}／{BASE[2]}／{BASE[3]}、"
+            f"每日第一隻 +{DAILY_FIRST}、連續第七天 +{DAILY_STREAK7:,}，"
+            f"加上加成怎麼疊、捕捉以外的來源，以及 {len(mons)} 隻捕捉時給特別多的寶可夢"
+            f"（最高 {top['name']} {top['stardust']:,}）。")
 
     ld = json.dumps({
         "@context": "https://schema.org", "@type": "Article",
@@ -113,12 +115,12 @@ def build():
 <script src="../config.js"></script>
 <script src="../js/pageview-counter.js" defer></script>
 <link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
-<title>Pokémon GO 星星沙子怎麼賺？捕捉量、每日獎勵與高星沙寶可夢｜Pokémon Go 工具箱</title>
+<title>星星沙子怎麼賺？捕捉量、每日獎勵、加成與高星沙寶可夢整理｜Pokémon Go 工具箱</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="https://pogokit.com/stardust/">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pokémon GO 星星沙子怎麼賺？捕捉量、每日獎勵與高星沙寶可夢">
+<meta property="og:title" content="Pokémon GO 星星沙子怎麼賺？捕捉量、每日獎勵、加成與高星沙寶可夢整理">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="https://pogokit.com/stardust/">
 <script type="application/ld+json">{ld}</script>
@@ -272,7 +274,7 @@ def build():
   <p>本頁數值整理自遊戲內實際表現，非官方資料，可能隨改版變動。</p>
   <p>本站為非官方同人工具，與 Pokémon GO／Niantic 無隸屬關係。
      Pokémon 及其商標為 &copy;1995-2026 Nintendo, Creatures, GAME FREAK 所有。</p>
-  <p><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="../">回工具箱</a></p>
+  <p><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="https://buymeacoffee.com/pogokit" target="_blank" rel="noopener">☕ 請我喝杯咖啡</a> · <a href="../">回工具箱</a></p>
 </footer>
 <script src="../js/ads.js" defer></script>
 </body>
