@@ -515,25 +515,37 @@
    以前這裡是 1079 張完整卡片（5.8 萬字、1084 個 <h2>），整頁 99% 是機器產生的
    表格，人寫的說明完全被淹沒。改成只列名稱連結：站內連結一個都沒少，
    但內容量回到正常比例。使用者一碰搜尋框就會換成完整卡片。 */
+/* 每個名稱帶一張 40×40 小圖，排成格狀（以前只有文字膠囊，和搜尋後有圖的卡片落差太大） */
 #cp-checker-app .cp-index {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 8px;
     margin-top: 16px;
 }
 #cp-checker-app .cp-index a {
-    padding: 5px 11px;
-    border: 1px solid #dddfe2;
-    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 4px;
+    border: 1px solid #e3e6eb;
+    border-radius: 12px;
     background: #fff;
     color: #3a3b3c;
-    font-size: 14px;
+    font-size: 13.5px;
     text-decoration: none;
-    line-height: 1.5;
+    line-height: 1.35;
+    min-width: 0;
+}
+#cp-checker-app .cp-index a img {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    object-fit: contain;
 }
 #cp-checker-app .cp-index a:hover {
     border-color: #1877f2;
     color: #1877f2;
+    background: #f5f9ff;
 }
 
 /* ---- ?mon= 頁的對戰聯盟分析 ----------------------------------------------

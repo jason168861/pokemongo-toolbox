@@ -10,13 +10,18 @@ canonical 收斂到 ?tab=cp-checker-app，判為重複而不收錄（GSC 實測�
 解法：每隻輸出一個真正獨立的檔案（不同路徑、內容寫死在原始 HTML、自帶 self-canonical），
 Google 一抓就看得到不同文件，才有機會收錄。
 
-目前只做「烈空坐」一隻做收錄測試。確認有效後，把 ENRICH 改成用
-data/pokemon_data_and_rankings.js 的 POKEDEX / rankings 自動生成全部。
+名單在 data/cp_static_targets.json（依搜尋需求挑選）；內容由 auto_enrich() 從
+data/pokemon_data_and_rankings.js 的 POKEDEX / rankings 自動生成（烈空坐另有手寫版）。
+同時產生 js/cp-static-slugs.js（給 CP 查詢工具做 ?mon= 轉址與站內連結），
+並更新 sitemap.xml 裡的 /cp/ 區塊。
+⚠ CI 的 refresh_cp_data.py 若把名單裡的寶可夢改名，要更新 data/cp_static_targets.json 的名稱並重跑本腳本，
+  否則新名稱不會轉址到靜態頁，build_cp_sitemap.py 也會把它重新列進 sitemap-cp.xml。
 
 用法：  python scripts/build_cp_static.py
 輸出：  cp/<slug>/index.html
 """
 import os, re, math, html, json
+from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORIGIN = "https://pogokit.com"
@@ -278,55 +283,116 @@ MANUAL_ENRICH = {
 def get_enrich(name, p):
     return MANUAL_ENRICH.get(name) or auto_enrich(name, p)
 
-# 要產生靜態頁的清單（挑 ?mon= 收不了的重要寶可夢；auto 生成，加名字即可）
-TARGETS = [
-    "烈空坐",
-    "雷公", "雷吉艾斯", "雷吉斯奇魯", "由克希", "露奈雅拉", "轟擂金剛猩", "騎拉帝納 (起源形態)",
-    "火焰雞", "烈咬陸鯊", "波士可多拉",
-    "閃電鳥", "火焰鳥", "急凍鳥", "炎帝", "水君",
-]
+# 要產生靜態頁的清單：data/cp_static_targets.json（[{name, slug}]，依搜尋需求排序）
+with open(os.path.join(ROOT, "data", "cp_static_targets.json"), encoding="utf-8") as _f:
+    TARGET_LIST = json.load(_f)["targets"]
+SLUG_OF = {t["name"]: t["slug"] for t in TARGET_LIST}
+POOL = []   # main() 填入：所有靜態頁的 名稱／slug／圖／屬性，給「同屬性的熱門寶可夢」用
 
 CSS = """
-:root{--bg:#f0f2f5;--card:#fff;--ink:#1c1e21;--ink2:#3a3b3c;--muted:#606770;--line:#dddfe2;
- --blue:#1877f2;--blue2:#4aa3e8;--red:#e63946;--green:#2f9e57;--dragon:#6a5ae0;--flying:#4aa3e8}
+:root{--bg:#f3f5f8;--card:#fff;--ink:#14171c;--ink2:#3a3f47;--muted:#68707c;--line:#e6e9ee;--soft:#f6f7f9;
+ --blue:#1877f2;--blue2:#4aa3e8;--red:#e63946;--green:#2f9e57;--accent:#6a5ae0;--accent2:#4aa3e8}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
  font-family:system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;
- line-height:1.75;-webkit-font-smoothing:antialiased}
-.wrap{max-width:640px;margin:0 auto;padding:20px 16px 70px}
-.crumb{font-size:13px;color:var(--muted);margin:4px 0 16px}
+ line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:18px 16px 84px}
+.crumb{font-size:13px;color:var(--muted);margin:2px 0 14px}
 .crumb a{color:var(--blue);text-decoration:none}
 .crumb a:hover{text-decoration:underline}
-.card{background:var(--card);border-radius:10px;box-shadow:0 2px 4px rgba(0,0,0,.08);padding:22px 22px;margin-bottom:16px}
-.head{display:flex;gap:16px;align-items:center}
-.head img{width:84px;height:84px;border-radius:16px;background:linear-gradient(140deg,var(--dragon),var(--flying));padding:6px;flex:none}
-.dexno{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.04em}
-h1{font-size:26px;margin:2px 0 8px;font-weight:750;letter-spacing:-.01em}
-.types{display:flex;gap:8px}
+.card{background:var(--card);border-radius:16px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 6px 20px rgba(16,24,40,.05);
+ padding:22px;margin-bottom:16px}
+h2{font-size:18.5px;margin:0 0 12px;color:var(--ink);letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:5px;height:20px;border-radius:3px;background:linear-gradient(var(--accent),var(--accent2));flex:none}
+.sub{color:var(--muted);font-size:13.5px;margin:-4px 0 14px}
+/* 廣告框預留（與 css/main.css、js/ads.js 相同；ads.js 會把廣告放進這個框） */
+.site-ad{box-sizing:border-box;width:min(100% - 32px,1100px);min-height:120px;margin:28px auto 32px;padding:8px 0;text-align:center}
+.site-ad-label{display:block;margin:0 0 6px;color:#7b8190;font:11px/1.3 system-ui,sans-serif;letter-spacing:.04em}
+.site-ad ins,.site-ad .site-ad-ph{display:block;min-height:100px;overflow:hidden}
+@media(max-width:600px){.site-ad{width:calc(100% - 24px);min-height:100px;margin:20px auto 24px}.site-ad ins,.site-ad .site-ad-ph{min-height:80px}}
+.site-ad[data-ad-reserved]{visibility:hidden}
+/* 主視覺 */
+.card.hero{padding:0;overflow:hidden}
+.band{height:84px;background:linear-gradient(120deg,var(--accent),var(--accent2))}
+.hero-main{display:flex;gap:18px;align-items:flex-start;padding:0 22px;margin-top:-56px}
+.sprite{width:120px;height:120px;flex:none;border-radius:50%;background:#fff;padding:8px;
+ box-shadow:0 4px 14px rgba(16,24,40,.14);object-fit:contain}
+.hero-txt{padding-top:64px;min-width:0}
+.dexno{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.04em}
+h1{font-size:27px;line-height:1.25;margin:2px 0 8px;font-weight:800;letter-spacing:-.015em}
+.types{display:flex;gap:8px;flex-wrap:wrap}
 .type{font-size:12.5px;font-weight:700;color:#fff;padding:3px 12px;border-radius:999px}
-.t0{background:var(--dragon)}.t1{background:var(--flying)}
-.lead{font-size:15px;color:var(--ink2);margin:16px 0 0}
-.lead strong{color:var(--ink)}
-h2{font-size:19px;margin:0 0 10px;color:var(--ink);letter-spacing:-.01em}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px}
-.stat{background:#f7f8fa;border-radius:11px;padding:13px 15px}
-.stat .v{font-size:23px;font-weight:730;font-variant-numeric:tabular-nums}
-.stat .v small{font-size:.5em;color:var(--muted);font-weight:600}
-.stat .l{font-size:12px;color:var(--ink2);margin-top:1px}
-.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.hundo{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:18px 22px 0}
+.h-tile{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:12px 10px 10px;text-align:center}
+.h-tile .h-lab{display:block;font-size:12.5px;color:var(--ink2);font-weight:600}
+.h-tile b{display:block;font-size:28px;line-height:1.2;margin:4px 0 2px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}
+.h-tile .h-lv{font-size:12px;color:var(--muted);font-weight:600}
+.h-tile.main{background:linear-gradient(160deg,#fff,#f1f6ff);border-color:#cfe0fb}
+.h-tile.main b{color:var(--blue)}
+.hundo-note{margin:10px 22px 0;font-size:13px;color:var(--muted)}
+.hundo-note strong{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 22px 0}
+.pill{font-size:12.5px;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.pill b{color:var(--ink)}
+.lead{font-size:15px;color:var(--ink2);margin:0;padding:14px 22px 22px}
+.lead strong,.note strong,.role strong{color:var(--ink)}
+@media (max-width:480px){
+ .hero-main{flex-direction:column;align-items:flex-start;margin-top:-60px;gap:8px}.hero-txt{padding-top:0}
+ .sprite{width:104px;height:104px}
+ h1{font-size:24px}
+ .hundo{gap:8px;padding:16px 16px 0}.h-tile{padding:10px 4px 8px}.h-tile b{font-size:23px}
+ .h-tile .h-lab{font-size:11.5px}
+ .hero-main,.chips{padding-left:16px;padding-right:16px}.hundo-note{margin:10px 16px 0}.lead{padding:14px 16px 18px}
+ .card{padding:18px 16px}
+}
+/* CP 反查 IV */
+.rv{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:end}
+.rv label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.rv input,.rv select{font:inherit;font-size:16px;padding:9px 10px;border:1px solid #cfd5dd;border-radius:10px;background:#fff;width:100%;min-width:0}
+.rv input:focus,.rv select:focus{outline:2px solid #bcd5fb;border-color:var(--blue)}
+.rv button{font:inherit;font-weight:800;font-size:15px;border:0;border-radius:10px;padding:10px 12px;background:var(--blue);color:#fff;cursor:pointer}
+.rv button:hover{background:#166fe0}
+@media (max-width:480px){.rv{grid-template-columns:1fr 1fr}.rv button{grid-column:span 2}}
+.rv-msg{font-size:13.5px;color:var(--muted);margin:12px 0 0}
+.rv-msg strong{color:var(--ink)}
+table.rvt{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums;margin-top:10px}
+table.rvt th,table.rvt td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right;white-space:nowrap}
+table.rvt thead th{color:var(--muted);font-size:12.5px;font-weight:700}
+table.rvt td.l,table.rvt th.l{text-align:left}
+table.rvt tr.top td{background:#fff5f5}
+table.rvt td.iv{font-weight:800}
+.rv-more{margin-top:10px;font:inherit;font-size:13.5px;background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--ink2)}
+/* 表格 */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px}
 table.cp{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
-table.cp caption{caption-side:top;text-align:left;color:var(--muted);font-size:13px;padding-bottom:8px}
-table.cp th,table.cp td{border:1px solid #e4e6eb;padding:7px 10px;text-align:right;white-space:nowrap}
-table.cp thead th{background:#f7f8fa;color:var(--ink);font-weight:700}
-table.cp tbody th{text-align:left;background:#fafbfc}
+table.cp caption{caption-side:top;text-align:left;color:var(--muted);font-size:13px;padding:10px 12px 6px}
+table.cp th,table.cp td{border-top:1px solid var(--line);padding:7px 12px;text-align:right;white-space:nowrap}
+table.cp thead th{background:var(--soft);color:var(--ink);font-weight:700}
+table.cp tbody th{text-align:left;font-weight:600}
 table.cp td.mx{font-weight:700;color:var(--green)}
 table.cp td.mn{color:var(--muted)}
 table.cp td.nt,table.cp thead th:last-child{text-align:left;white-space:normal;color:var(--muted);font-size:13px;width:42%}
 table.cp thead th:last-child{color:var(--ink)}
-table.cp tr:nth-child(even) td,table.cp tr:nth-child(even) th{background:#fcfcfd}
 table.cp tr.key th,table.cp tr.key td{background:#eef7f1}
 table.cp tr.bb th,table.cp tr.bb td{background:#fff7e8}
 .foot-t{color:var(--muted);font-size:13px;margin:12px 0 0}
+/* 高 IV CP·HP 對照表 */
+table.iv{border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:560px;width:100%}
+table.iv th,table.iv td{border-top:1px solid var(--line);border-left:1px solid var(--line);padding:4px 7px;text-align:right}
+table.iv thead th{background:var(--soft);color:var(--ink);font-weight:700;text-align:center}
+table.iv td.pct{text-align:left;color:var(--muted)}
+table.iv tr.hundo td.pct{color:var(--red);font-weight:800}
+table.iv td.hp{color:var(--muted)}
+table.iv td.iv{color:#fff;font-weight:700;text-align:center}
+table.iv td.v15{background:#e63946}
+table.iv td.v14{background:#2b6cb0}
+table.iv td.v13{background:#2f9e57}
+table.iv td.v12{background:#d98324}
+table.iv td.v11{background:#8a8f98}
+.iv-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:12px;color:var(--muted)}
+.iv-legend span{display:inline-flex;align-items:center;gap:5px}
+.iv-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+/* 屬性剋制、招式、聯盟 */
 .matchup{display:flex;flex-direction:column;gap:10px;margin:4px 0 12px}
 .mg{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .mlab{flex:none;width:44px;font-size:13px;font-weight:700;color:var(--muted)}
@@ -334,8 +400,7 @@ table.cp tr.bb th,table.cp tr.bb td{background:#fff7e8}
 .chip em{font-style:normal;font-size:11.5px;opacity:.85;font-variant-numeric:tabular-nums}
 .chip.wk{background:#fdecec;color:#c5221f}.chip.wk.dbl{background:#f9d5d3;color:#a50e0e;font-weight:800}
 .chip.rs{background:#e7f5ec;color:#1e7e46}
-.note{color:var(--muted);font-size:13px;margin:6px 0 0}
-.note strong,.lead strong,.role strong{color:var(--ink)}
+.note{color:var(--muted);font-size:13.5px;margin:6px 0 0}
 .role{font-size:14.5px;color:var(--ink2);margin:0 0 14px}
 ul.moves{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
 ul.moves li{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
@@ -346,55 +411,81 @@ ul.moves .v em{font-style:normal;font-size:12px;color:#d97706;font-weight:700}
 .lrow{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:center}
 .lname{font-size:13.5px;font-weight:600}
 .lbar{height:9px;background:#e9ebee;border-radius:999px;overflow:hidden}
-.lbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--blue2))}
+.lbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
 .lrk{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .lrk b{color:var(--ink);font-size:13.5px}
-.related p{margin:0 0 8px;font-size:14px}
-.related a{color:var(--blue);text-decoration:none;padding:2px 4px;border-radius:4px}
-.related a:hover{background:#eaf2fd;text-decoration:underline}
-.related strong{color:var(--muted);font-weight:600}
+@media (max-width:480px){.lrow{grid-template-columns:64px 1fr}.lrk{grid-column:2;text-align:right}}
+/* 相關寶可夢 */
+.nav2{display:flex;justify-content:space-between;gap:10px;margin:0 0 14px}
+.nav2 a{flex:1;display:block;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:9px 12px;
+ color:var(--ink);text-decoration:none;font-size:14px;font-weight:600}
+.nav2 a small{display:block;color:var(--muted);font-weight:600;font-size:11.5px}
+.nav2 a.nx{text-align:right}
+.nav2 a:hover{border-color:#bcd5fb;background:#f1f6ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.grid a{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--soft);border:1px solid var(--line);
+ border-radius:12px;padding:10px 6px;text-decoration:none;color:var(--ink);font-size:13px;font-weight:600;text-align:center}
+.grid a img{width:56px;height:56px;object-fit:contain}
+.grid a:hover{border-color:#bcd5fb;background:#f1f6ff}
 .cta{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;
- padding:11px 20px;border-radius:8px;font-size:15px}
+ padding:11px 20px;border-radius:10px;font-size:15px}
 .cta:hover{background:#166fe0}
 .pagefoot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:22px}
 .pagefoot a{color:var(--muted)}
-@media (max-width:480px){.lrow{grid-template-columns:64px 1fr}.lrk{grid-column:2;text-align:right}}
-/* 高 IV CP·HP 對照表 */
-table.iv{border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:560px}
-table.iv th,table.iv td{border:1px solid #e4e6eb;padding:4px 7px;text-align:right}
-table.iv thead th{background:#f7f8fa;color:var(--ink);font-weight:700;text-align:center}
-table.iv td.pct{text-align:left;color:var(--muted)}
-table.iv tr.hundo td.pct{color:var(--red);font-weight:800}
-table.iv td.hp{color:var(--muted)}
-table.iv td.iv{color:#fff;font-weight:700;text-align:center}
-table.iv td.v15{background:#e63946}
-table.iv td.v14{background:#2b6cb0}
-table.iv td.v13{background:#2f9e57}
-table.iv td.v12{background:#d98324}
-table.iv td.v11{background:#8a8f98}
-table.iv tbody tr:nth-child(even) td:not(.iv){background:#fcfcfd}
-.iv-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:12px;color:var(--muted)}
-.iv-legend span{display:inline-flex;align-items:center;gap:5px}
-.iv-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
 /* 浮動搜尋鈕 */
 .fab{position:fixed;right:16px;bottom:16px;z-index:60;display:inline-flex;align-items:center;gap:8px;
  background:var(--blue);color:#fff;text-decoration:none;font-weight:700;font-size:14px;
  padding:12px 18px;border-radius:999px;box-shadow:0 6px 18px rgba(24,119,242,.45)}
 .fab:hover{background:#166fe0}
-.fab:active{transform:translateY(1px)}
 @media (max-width:480px){.fab{padding:12px 16px}}
 """
 
 def esc(s): return html.escape(str(s), quote=True)
 
+# ---- 頁面內的 CP 反查 IV（純前端；佔位字在 build() 換掉）----
+RV_JS = """(function(){
+var P={a:__ATK__,d:__DEF__,s:__STA__},C=__CPM__,F=[],i;
+for(i=0;i<C.length;i++){F.push([i+1,C[i]]);if(i+1<C.length)F.push([i+1.5,Math.sqrt((C[i]*C[i]+C[i+1]*C[i+1])/2)]);}
+function cp(m,a,d,s){return Math.max(10,Math.floor((P.a+a)*Math.sqrt(P.d+d)*Math.sqrt(P.s+s)*m*m/10));}
+function hp(m,s){return Math.max(10,Math.floor((P.s+s)*m));}
+var f=document.getElementById('rvForm'),o=document.getElementById('rvOut');
+if(!f||!o)return;
+f.addEventListener('submit',function(ev){ev.preventDefault();
+ var c=parseInt(document.getElementById('rvCp').value,10),h=parseInt(document.getElementById('rvHp').value,10),L=parseFloat(document.getElementById('rvLv').value);
+ if(!(c>=10)){o.innerHTML='<p class="rv-msg">請輸入 CP（10 以上）。</p>';return;}
+ var r=[];F.forEach(function(x){if(L&&x[0]!==L)return;for(var a=0;a<16;a++)for(var d=0;d<16;d++)for(var s=0;s<16;s++){if(cp(x[1],a,d,s)!==c)continue;var hh=hp(x[1],s);if(h&&hh!==h)continue;r.push([x[0],a,d,s,hh]);}});
+ if(!r.length){o.innerHTML='<p class="rv-msg">找不到符合的組合。請確認 CP 是否正確（天氣加成、強化過都會改變等級）。</p>';return;}
+ r.sort(function(x,y){return (y[1]+y[2]+y[3])-(x[1]+x[2]+x[3])||x[0]-y[0];});
+ var hi=r[0][1]+r[0][2]+r[0][3],lo=r[r.length-1][1]+r[r.length-1][2]+r[r.length-1][3],rows='';
+ r.forEach(function(x,k){var t=x[1]+x[2]+x[3];rows+='<tr'+(k>=30?' hidden':'')+(t===45?' class="top"':'')+'><td class="l">Lv'+x[0]+'</td><td class="iv">'+x[1]+' / '+x[2]+' / '+x[3]+'</td><td>'+(t/45*100).toFixed(1)+'%</td><td>'+x[4]+'</td></tr>';});
+ o.innerHTML='<p class="rv-msg">CP <strong>'+c+'</strong>'+(h?'、HP <strong>'+h+'</strong>':'')+'：共 <strong>'+r.length+'</strong> 種可能，IV 約 <strong>'+Math.round(lo/45*100)+'%～'+Math.round(hi/45*100)+'%</strong>。'+(r.length>1&&!h?'再填 HP 可以縮小範圍。':'')+'</p>'
+  +'<div class="tbl-wrap"><table class="rvt"><thead><tr><th class="l">等級</th><th>攻 / 防 / 耐</th><th>IV%</th><th>HP</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+  +(r.length>30?'<button type="button" class="rv-more">顯示全部 '+r.length+' 筆</button>':'');
+ var m=o.querySelector('.rv-more');if(m)m.onclick=function(){o.querySelectorAll('tr[hidden]').forEach(function(t){t.hidden=false;});m.remove();};
+ if(window.track)window.track('cp_reverse_static',{mon:'__SLUG__',hits:r.length});
+});
+})();"""
+
+
+def mon_url(name, from_static=True):
+    """站內連到某隻寶可夢：有靜態頁就連靜態頁，沒有就連 ?mon= 深連結（編碼與 build_cp_sitemap.py 的 quote() 一致）。"""
+    s = SLUG_OF.get(name)
+    if s:
+        return f"../{s}/" if from_static else f"cp/{s}/"
+    return ("../../" if from_static else "") + "?tab=cp-checker-app&mon=" + quote(name)
+
+
 def build(name):
     p = CP_DATA[name]; e = get_enrich(name, p)
-    pid = p["id"]; slug = e["slug"]
+    pid = p["id"]; slug = SLUG_OF[name]
     url = f"{ORIGIN}/cp/{slug}/"
-    cp40, cp50 = cp_at(p, 40, 15), cp_at(p, 50, 15)
+    cp15, cp20, cp25 = cp_at(p, 15, 15), cp_at(p, 20, 15), cp_at(p, 25, 15)
+    cp40, cp50, cp51 = cp_at(p, 40, 15), cp_at(p, 50, 15), cp_at(p, BB, 15)
     title = f"{name} IV100 CP 速查｜Lv1-50 全等級 CP 表｜Pokémon Go 工具箱"
-    desc = (f"{name}（#{pid}，{e['type_line']}）的 IV 100% CP 速查與 Lv1～50 全等級 CP 對照表："
-            f"滿 IV 最大 CP L40 {cp40}／L50 {cp50}，含屬性剋制、推薦招式、團體戰與 PvP 聯盟定位。")
+    desc = (f"{name}（#{pid}，{e['type_line']}）IV 100% CP：田野調查 Lv15 {cp15}、團體戰 Lv20 {cp20}、"
+            f"天氣加成 Lv25 {cp25}；含 CP 反查 IV、Lv1～50 全等級 CP 表、屬性剋制、推薦招式與 PvP 聯盟定位。")
+    c1 = e["types"][0][1] if e["types"] else "#6a5ae0"
+    c2 = e["types"][-1][1] if e["types"] else "#4aa3e8"
 
     # CP 表
     rows = ""
@@ -406,7 +497,6 @@ def build(name):
                  f'<td class="nt">{note}</td></tr>')
 
     iv_table = build_iv_table(p)
-
     types_html = "".join(f'<span class="type" style="background:{c}">{esc(z)}</span>' for z, c in e["types"])
     weak_html = "".join(f'<span class="chip wk{" dbl" if d else ""}">{esc(t)} <em>{esc(m)}</em></span>'
                         for t, m, d in e["weak"])
@@ -417,12 +507,26 @@ def build(name):
         f'<span class="lbar"><i style="width:{w}%"></i></span>'
         f'<span class="lrk"><b>{esc(rk)}</b> / {tot} · {sc} 分</span></div>'
         for n, w, rk, tot, sc in e["leagues"])
+    league_card = (f'<section class="card"><h2>{esc(name)} 對戰聯盟表現</h2><div class="league">{league_html}</div>'
+                   f'<p class="note">{e["league_note"]}</p></section>') if league_html else ""
 
+    # 圖鑑相鄰 + 同屬性的熱門寶可夢（都連到有靜態頁的優先，方便爬蟲與使用者在 /cp/ 之間移動）
     prev_n, next_n = dex_neighbor(pid, -1), dex_neighbor(pid, +1)
-    rel = []
-    if prev_n: rel.append(f'上一隻 <a href="../../?tab=cp-checker-app&mon={esc(prev_n)}">{esc(prev_n)}</a>')
-    if next_n: rel.append(f'下一隻 <a href="../../?tab=cp-checker-app&mon={esc(next_n)}">{esc(next_n)}</a>')
-    related_html = ('<p><strong>圖鑑相鄰：</strong>' + '　·　'.join(rel) + '</p>') if rel else ''
+    nav2 = ""
+    if prev_n or next_n:
+        a = (f'<a class="pv" href="{esc(mon_url(prev_n))}"><small>← 上一隻</small>{esc(prev_n)}</a>' if prev_n else '<span></span>')
+        b = (f'<a class="nx" href="{esc(mon_url(next_n))}"><small>下一隻 →</small>{esc(next_n)}</a>' if next_n else '<span></span>')
+        nav2 = f'<div class="nav2">{a}{b}</div>'
+    my_types = {z for z, _ in e["types"]}
+    same = [t for t in POOL if t["name"] != name and my_types & set(t["types"])]
+    same.sort(key=lambda t: (t["types"][0] not in my_types, t["rank"]))
+    grid = "".join(f'<a href="../{t["slug"]}/"><img src="{esc(t["img"])}" alt="" width="56" height="56" loading="lazy">{esc(t["name"])}</a>'
+                   for t in same[:8])
+    grid_html = (f'<p class="sub" style="margin:0 0 10px">同屬性的熱門寶可夢</p><div class="grid">{grid}</div>') if grid else ""
+
+    rv_js = (RV_JS.replace("__ATK__", str(p["atk"])).replace("__DEF__", str(p["def"]))
+             .replace("__STA__", str(p["sta"])).replace("__CPM__", json.dumps(CPM[:BB]))
+             .replace("__SLUG__", slug))
 
     ld = (
         '{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":['
@@ -457,40 +561,54 @@ def build(name):
 <script type="application/ld+json">{ld}</script>
 <style>{CSS}</style>
 </head>
-<body>
+<body style="--accent:{c1};--accent2:{c2}">
 <div class="wrap">
   <nav class="crumb" aria-label="麵包屑">
     <a href="../../">工具箱首頁</a> ›
     <a href="../../?tab=cp-checker-app">IV100 CP 查詢</a> ›
     <span>{esc(name)}</span>
   </nav>
+  <!-- 廣告框預留：位置與 js/ads.js 原本插入的位置相同（麵包屑之後），先佔好高度，廣告載入時版面不會跳動 -->
+  <aside class="site-ad" aria-label="廣告" data-ad-reserved><span class="site-ad-label">廣告</span><div class="site-ad-ph"></div></aside>
 
-  <div class="card">
-    <div class="head">
-      <img src="{esc(p['imageUrl'])}" alt="{esc(name)}" width="84" height="84" loading="lazy" style="background:{e['grad']}">
-      <div>
+  <header class="card hero">
+    <div class="band"></div>
+    <div class="hero-main">
+      <img class="sprite" src="{esc(p['imageUrl'])}" alt="{esc(name)}" width="120" height="120">
+      <div class="hero-txt">
         <div class="dexno">#{pid}</div>
-        <h1>{esc(name)} IV100 CP 查詢</h1>
+        <h1>{esc(name)} IV100 CP</h1>
         <div class="types">{types_html}</div>
       </div>
     </div>
-    <p class="lead">{e['lead']} 以下提供牠的 Lv1～50 全等級 CP 對照表、屬性剋制、角色定位、推薦招式與對戰聯盟表現。</p>
-  </div>
-
-  <div class="card">
-    <h2>{esc(name)} 關鍵數據</h2>
-    <div class="stats">
-      <div class="stat"><div class="v">{cp40}</div><div class="l">滿 IV 最大 CP（L40）</div></div>
-      <div class="stat"><div class="v">{cp50}</div><div class="l">滿 IV 最大 CP（L50）</div></div>
-      <div class="stat"><div class="v">{p['atk']}</div><div class="l">基礎攻擊</div></div>
-      <div class="stat"><div class="v">{p['def']}<small> / {p['sta']}</small></div><div class="l">防禦 / 耐力</div></div>
+    <div class="hundo">
+      <div class="h-tile"><span class="h-lab">🔬 田野調查</span><b>{cp15}</b><span class="h-lv">Lv15</span></div>
+      <div class="h-tile main"><span class="h-lab">⚔️ 團體戰・孵蛋</span><b>{cp20}</b><span class="h-lv">Lv20</span></div>
+      <div class="h-tile"><span class="h-lab">☀️ 天氣加成</span><b>{cp25}</b><span class="h-lv">Lv25</span></div>
     </div>
-  </div>
+    <p class="hundo-note">以上是 <strong>IV 100%（15/15/15）</strong>時的 CP。在田野調查（Lv15）、團體戰或孵蛋（Lv20）、天氣加成團體戰（Lv25）抓到時，CP 正好是上面的數字，幾乎可以確定是 100% 個體；其他情況或想確認，請用下面的「CP 反查 IV」。</p>
+    <div class="chips">
+      <span class="pill">最大 CP <b>Lv40 {cp40}</b></span><span class="pill"><b>Lv50 {cp50}</b></span><span class="pill"><b>Lv51 {cp51}</b></span>
+      <span class="pill">攻 <b>{p['atk']}</b> · 防 <b>{p['def']}</b> · 耐 <b>{p['sta']}</b></span>
+    </div>
+    <p class="lead">{e['lead']}</p>
+  </header>
 
-  <div class="card">
-    <h2>{esc(name)} 高 IV CP·HP 對照表（IV 100%～91.1%）</h2>
-    <p class="foot-t" style="margin:0 0 12px">IV 總和最高的 35 種組合（IV% ≥ 91.1%），以及各自在 L15／L20／L25／L40 的 CP 與 HP。
-       攻／防／耐為個體值（0～15）。</p>
+  <section class="card" id="rev">
+    <h2>{esc(name)} CP 反查 IV</h2>
+    <p class="sub">輸入抓到時的 CP（可再加 HP），列出所有可能的等級與個體值組合。</p>
+    <form class="rv" id="rvForm">
+      <label>CP<input id="rvCp" type="number" inputmode="numeric" min="10" placeholder="例：{cp20}"></label>
+      <label>HP<input id="rvHp" type="number" inputmode="numeric" min="10" placeholder="選填"></label>
+      <label>等級<select id="rvLv"><option value="">不限</option><option value="15">Lv15 田野調查</option><option value="20">Lv20 團體戰・孵蛋</option><option value="25">Lv25 天氣加成</option></select></label>
+      <button type="submit">查詢</button>
+    </form>
+    <div id="rvOut" aria-live="polite"></div>
+  </section>
+
+  <section class="card">
+    <h2>{esc(name)} 高 IV CP·HP 對照表</h2>
+    <p class="sub">IV 總和最高的 35 種組合（IV% ≥ 91.1%），以及各自在 Lv15／20／25／40 的 CP 與 HP。攻／防／耐為個體值（0～15）。</p>
     <div class="tbl-wrap">{iv_table}</div>
     <div class="iv-legend">
       <span><i style="background:#e63946"></i>15</span>
@@ -499,12 +617,11 @@ def build(name):
       <span><i style="background:#d98324"></i>12</span>
       <span><i style="background:#8a8f98"></i>11</span>
     </div>
-  </div>
+  </section>
 
-  <div class="card">
+  <section class="card">
     <h2>{esc(name)} 全等級 CP 對照表（Lv1～Lv{MAX_LEVEL}）</h2>
-    <p class="foot-t" style="margin:0 0 12px">{esc(name)}（#{pid}）基礎數值 攻擊 {p['atk']}／防禦 {p['def']}／耐力 {p['sta']}。
-       <strong>100% IV</strong>（15/15/15）為該等級 CP 上限，<strong>0% IV</strong>（0/0/0）為下限。</p>
+    <p class="sub"><strong>100% IV</strong>（15/15/15）為該等級的 CP 上限，<strong>0% IV</strong>（0/0/0）為下限。</p>
     <div class="tbl-wrap">
       <table class="cp">
         <caption>{esc(name)} 各等級 CP（100% IV / 0% IV）</caption>
@@ -513,59 +630,110 @@ def build(name):
       </table>
     </div>
     <p class="foot-t">Lv{BB} 為最佳夥伴狀態下的等級上限；一般強化上限為 Lv{MAX_LEVEL}。資料來源為 Pokémon GO GAME_MASTER。</p>
-  </div>
+  </section>
 
-  <div class="card">
+  <section class="card">
     <h2>{esc(name)} 屬性與剋制</h2>
     <div class="matchup">
       <div class="mg"><span class="mlab">弱點</span>{weak_html}</div>
       <div class="mg"><span class="mlab">抗性</span>{resist_html}</div>
     </div>
     <p class="note">{e['type_note']}</p>
-  </div>
+  </section>
 
-  <div class="card">
+  <section class="card">
     <h2>{esc(name)} 角色定位與推薦招式</h2>
     <p class="role">{e['role']}</p>
     <ul class="moves">{moves_html}</ul>
-  </div>
+  </section>
 
-  <div class="card">
-    <h2>{esc(name)} 對戰聯盟表現</h2>
-    <div class="league">{league_html}</div>
-    <p class="note">{e['league_note']}</p>
-  </div>
+  {league_card}
 
-  <div class="card related">
+  <section class="card">
     <h2>相關寶可夢</h2>
-    {related_html}
-    <p><strong>互動查詢：</strong>在工具裡即時查 <a href="../../?tab=cp-checker-app&mon={esc(name)}">{esc(name)}</a> 的完整資料。</p>
-  </div>
+    {nav2}
+    {grid_html}
+  </section>
 
   <div style="text-align:center;margin-top:8px">
-    <a class="cta" href="../../?tab=cp-checker-app&mon={esc(name)}">開啟互動 CP 查詢工具 →</a>
+    <a class="cta" href="../../?tab=cp-checker-app">查詢其他寶可夢的 IV100 CP →</a>
   </div>
 
   <p class="pagefoot"><a href="../../">Pokémon Go 工具箱</a> · IV100 CP、PvP 排名、搜尋指令、團體戰與孵蛋查詢</p>
-  <p class="pagefoot"><a href="../../privacy/">隱私權政策</a> · <a href="../../disclaimer/">免責聲明</a></p>
+  <p class="pagefoot"><a href="../../about/">關於本站</a> · <a href="../../privacy/">隱私權政策</a> · <a href="../../disclaimer/">免責聲明</a></p>
 </div>
 
 <a class="fab" href="../../?tab=cp-checker-app" aria-label="搜尋其他寶可夢">🔍 <span>搜尋寶可夢</span></a>
+<script>{rv_js}</script>
 <script src="../../js/ads.js" defer></script>
 </body>
 </html>"""
 
+
+def write_slug_module(targets):
+    """給 js/cp-checker.js 用：哪些寶可夢有靜態頁（?mon= 轉址與站內連結用）。"""
+    body = ",\n".join(f'  [{json.dumps(t["name"], ensure_ascii=False)}, {json.dumps(t["slug"])}]' for t in targets)
+    js = ("// 由 scripts/build_cp_static.py 產生，請勿手改。\n"
+          "// [名稱, slug]：有 /cp/<slug>/ 靜態頁的寶可夢。名單在 data/cp_static_targets.json。\n"
+          "export const CP_STATIC = new Map([\n" + body + "\n]);\n")
+    open(os.path.join(ROOT, "js", "cp-static-slugs.js"), "w", encoding="utf-8", newline="\n").write(js)
+
+
+def write_sitemap_block(targets, fps):
+    """sitemap.xml 裡的 /cp/ 靜態頁區塊（只換這個區塊，其他內容不動）。
+    lastmod 只在該頁內容（指紋）改變時才換成今天，狀態存在 data/cp_static_lastmod.json；
+    每次都寫今天的話，Google 久了會不再相信 lastmod。"""
+    path = os.path.join(ROOT, "sitemap.xml")
+    xml = open(path, encoding="utf-8", newline="").read()
+    nl = "\r\n" if "\r\n" in xml else "\n"
+    # 移除舊的 /cp/ 網址（含以前手寫的）與舊區塊註解
+    xml = re.sub(r"[ \t]*<!-- CP 靜態頁：[^\n]*\n", "", xml)
+    xml = re.sub(r"[ \t]*<url>\s*<loc>" + re.escape(ORIGIN) + r"/cp/[^<]*</loc>.*?</url>[ \t]*\r?\n", "", xml, flags=re.S)
+    today = __import__("datetime").date.today().isoformat()
+    state_path = os.path.join(ROOT, "data", "cp_static_lastmod.json")
+    try:
+        with open(state_path, encoding="utf-8") as f:
+            old = json.load(f)
+    except (OSError, ValueError):
+        old = {}
+    state = {}
+    for t in targets:
+        prev = old.get(t["slug"]) or {}
+        state[t["slug"]] = {"fp": fps[t["slug"]],
+                            "lastmod": prev["lastmod"] if prev.get("fp") == fps[t["slug"]] and prev.get("lastmod") else today}
+    with open(state_path, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(state, f, ensure_ascii=False, indent=1, sort_keys=True); f.write("\n")
+    lines = ["  <!-- CP 靜態頁：由 scripts/build_cp_static.py 自動產生，勿手改此區塊 -->"]
+    for t in targets:
+        lines += ["  <url>", f"    <loc>{ORIGIN}/cp/{t['slug']}/</loc>", f"    <lastmod>{state[t['slug']]['lastmod']}</lastmod>",
+                  "    <priority>0.6</priority>", "  </url>"]
+    xml = xml.replace("</urlset>", nl.join(lines) + nl + "</urlset>")
+    open(path, "w", encoding="utf-8", newline="").write(xml)
+
+
 def main():
-    for name in TARGETS:
-        p = CP_DATA.get(name)
-        if not p:
-            print("SKIP（找不到 CP 資料）:", name); continue
-        e = get_enrich(name, p)
-        out_dir = os.path.join(ROOT, "cp", e["slug"])
+    global POOL
+    targets = [t for t in TARGET_LIST if t["name"] in CP_DATA]
+    for t in TARGET_LIST:
+        if t["name"] not in CP_DATA:
+            print("SKIP（找不到 CP 資料）:", t["name"])
+    POOL = []
+    for rank, t in enumerate(targets):
+        p = CP_DATA[t["name"]]; e = get_enrich(t["name"], p)
+        POOL.append({"name": t["name"], "slug": t["slug"], "img": p["imageUrl"], "rank": rank,
+                     "types": [z for z, _ in e["types"]]})
+    fps = {}
+    for t in targets:
+        out_dir = os.path.join(ROOT, "cp", t["slug"])
         os.makedirs(out_dir, exist_ok=True)
-        out = os.path.join(out_dir, "index.html")
-        open(out, "w", encoding="utf-8").write(build(name))
-        print("wrote", os.path.relpath(out, ROOT), "  (" + e["type_line"] + ")")
+        page = build(t["name"])
+        fps[t["slug"]] = __import__("hashlib").sha1(page.encode("utf-8")).hexdigest()[:16]
+        with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as f:
+            f.write(page)
+    write_slug_module(targets)
+    write_sitemap_block(targets, fps)
+    print(f"已產生 {len(targets)} 個 /cp/<slug>/ 靜態頁、js/cp-static-slugs.js，並更新 sitemap.xml 的 CP 區塊")
+
 
 if __name__ == "__main__":
     main()
