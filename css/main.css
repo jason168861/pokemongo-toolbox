@@ -1277,3 +1277,14 @@ a.tab-button {
     line-height: 1.7;
     color: #606770;
 }
+
+/* ===== 廣告框（js/ads.js）=====
+   規則和 ads.js 注入的樣式相同。放在這裡是為了讓它在 ads.js 執行前就生效：
+   頁面若已在 HTML 預留 aside.site-ad[data-ad-reserved]，第一次繪製時就有正確的高度，
+   廣告載入時不會再把整頁往下推。改尺寸時兩邊要一起改。 */
+.site-ad{box-sizing:border-box;width:min(100% - 32px,1100px);min-height:120px;margin:28px auto 32px;padding:8px 0;text-align:center}
+.site-ad-label{display:block;margin:0 0 6px;color:#7b8190;font:11px/1.3 system-ui,sans-serif;letter-spacing:.04em}
+.site-ad ins,.site-ad .site-ad-ph{display:block;min-height:100px;overflow:hidden}
+@media(max-width:600px){.site-ad{width:calc(100% - 24px);min-height:100px;margin:20px auto 24px}.site-ad ins,.site-ad .site-ad-ph{min-height:80px}}
+/* 預留框在 ads.js 接手前先隱藏（仍佔空間）：ads.js 被攔截或沒有 JS 時只會是留白，不會出現空的「廣告」框 */
+.site-ad[data-ad-reserved]{visibility:hidden}

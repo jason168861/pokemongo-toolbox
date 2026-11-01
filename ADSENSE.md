@@ -2,6 +2,8 @@
 
 目前載入 `js/ads.js` 的頁面共用同一個廣告位置規則：廣告會放在頁首區塊之後、主要內容之前；沒有頁首區塊的頁面會放在麵包屑之後。Trade List 的廣告位於頁面標題與清單操作流程之後，不會插入清單編輯或匯出流程。
 
+部分頁面（raids、eggs、research、pvp-ranker、search-filters）在 HTML 的同一個位置預先放了廣告框 `aside.site-ad[data-ad-reserved]`（樣式在 `css/main.css`），`js/ads.js` 會把廣告放進這個框，而不是另外插入新元素，所以廣告載入時版面不會跳動。廣告框的尺寸規則在 `css/main.css` 與 `js/ads.js` 各有一份，修改時兩邊要一致。
+
 ## 啟用廣告
 
 1. 在 AdSense 建立一個「顯示廣告」單元，版型選「回應式」。
