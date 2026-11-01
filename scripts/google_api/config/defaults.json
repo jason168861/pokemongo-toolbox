@@ -1,0 +1,69 @@
+{
+  "_comment": "可調參數。不放任何帳戶、資源、property ID 或憑證。",
+  "rate_per_minute": {
+    "adsense": 60,
+    "gsc": 60,
+    "ga4": 30,
+    "psi": 30,
+    "crux": 120
+  },
+  "retry": {
+    "max_retries": 5,
+    "max_total_seconds": 300
+  },
+  "breaker_threshold": 3,
+  "timeout_seconds": {
+    "google_api": 60,
+    "psi": 120,
+    "crux": 30
+  },
+  "refetch": {
+    "gsc_days": 10,
+    "ga4_days": 7,
+    "adsense_min_days": 35,
+    "gsc_provisional_min_days": 4,
+    "ga4_provisional_days": 3
+  },
+  "probe_days": 7,
+  "adsense": {
+    "site_domain": "pogokit.com"
+  },
+  "gsc": {
+    "search_types": ["web", "image", "video", "news", "discover", "googleNews"],
+    "query_country_types": ["web"],
+    "site_domain": "pogokit.com",
+    "legacy_path_hint": "/pokemongo-toolbox/",
+    "site": null
+  },
+  "ga4": {
+    "site_domain": "pogokit.com",
+    "property": null,
+    "home_drop_stop": {
+      "_comment": "ga4_date_home_query 逐列排除的停損：任何一天排除列數 > max_rows 就停；排除列數 ≥ min_rows_for_ratio 時，再看是否 > 該日總列數 × max_ratio",
+      "max_ratio": 0.01,
+      "max_rows": 20,
+      "min_rows_for_ratio": 3
+    },
+    "quota_stop": {
+      "tokens_per_hour_remaining": 2000,
+      "tokens_per_day_remaining": 10000,
+      "tokens_per_project_per_hour_remaining": 1000
+    }
+  },
+  "psi": {
+    "strategies": ["mobile", "desktop"],
+    "runs": 1,
+    "max_tests": 60,
+    "key_mode": "header",
+    "categories": ["performance", "accessibility", "best-practices", "seo"]
+  },
+  "crux": {
+    "origin": "https://pogokit.com",
+    "form_factors": ["PHONE", "DESKTOP", null],
+    "history_periods": 40,
+    "key_mode": "header"
+  },
+  "url_inspection": {
+    "max": 50
+  }
+}
