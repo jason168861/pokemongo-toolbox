@@ -1,5 +1,19 @@
 // js/pvp-ranker.js
 
+// 介面文字：中文頁直接用這裡的預設值；/<lang>/pvp-ranker/ 會在載入前設定 window.PVP_I18N 覆蓋
+// （同時把 POKEDEX／排名資料裡的寶可夢、招式名稱換成該語言，見 scripts/build_pvp_i18n.py）
+const T = Object.assign({
+    loadErrLog: 'PvP Ranker: POKEDEX 或排名數據尚未載入。',
+    loadErrHtml: '<h1>數據載入失敗</h1><p>請檢查 data/pokemon_data_and_rankings.js 是否存在且格式正確。</p>',
+    evoOver: '進化後CP約為 {cp}，將超過限制',
+    nowOver: '目前CP {cp} 已超過限制',
+    over: '超過上限', unranked: '不在排名內',
+    fast: '一般', charged: '特殊', yourRank: '您的排名',
+    noRank: '您的IV組合不在此聯盟排名內。', topIv: '第一名 IV',
+    defaultMon: '妙蛙種子'
+}, (typeof window !== 'undefined' && window.PVP_I18N) || {});
+const tf = (s, v) => s.replace(/\{(\w+)\}/g, (_, k) => v[k]);
+
 export function initializePvpRanker() {
     // 防止重複初始化
     const container = document.getElementById('pvp-ranker-app');
@@ -8,8 +22,8 @@ export function initializePvpRanker() {
 
     // 檢查必要的數據是否已載入
     if (typeof POKEDEX === 'undefined' || typeof POKEMON_RANKINGS_1500 === 'undefined') {
-        console.error("PvP Ranker: POKEDEX 或排名數據尚未載入。");
-        container.innerHTML = '<h1>數據載入失敗</h1><p>請檢查 data/pokemon_data_and_rankings.js 是否存在且格式正確。</p>';
+        console.error(T.loadErrLog);
+        container.innerHTML = T.loadErrHtml;
         return;
     }
 
@@ -239,7 +253,7 @@ export function initializePvpRanker() {
                     
                     if (evolvedCp > league.cp && league.cp !== 10000) {
                         isOverLimit = true;
-                        warningText = `<p class="over-limit-warning">進化後CP約為 ${evolvedCp}，將超過限制</p>`;
+                        warningText = `<p class="over-limit-warning">${tf(T.evoOver, { cp: evolvedCp })}</p>`;
                     }
                 } else {
                     const currentAtk = pokemon.stats.atk + userIvs.atk;
@@ -249,7 +263,7 @@ export function initializePvpRanker() {
 
                     if (currentCP > league.cp && league.cp !== 10000) { 
                         isOverLimit = true;
-                        warningText = `<p class="over-limit-warning">目前CP ${currentCP} 已超過限制</p>`;
+                        warningText = `<p class="over-limit-warning">${tf(T.nowOver, { cp: currentCP })}</p>`;
                     }
                 }
 
@@ -264,9 +278,9 @@ export function initializePvpRanker() {
                 );
                 // 摘要：判斷順序與 generateLeagueCardHTML 相同（超過上限 > 有排名 > 不在排名內）
                 if (!isEvolution) {
-                    quickRanks[league.cp] = isOverLimit ? '超過上限'
+                    quickRanks[league.cp] = isOverLimit ? T.over
                         : userPokemonRankInfo ? '#' + userPokemonRankInfo.rank
-                        : '不在排名內';
+                        : T.unranked;
                 }
 
                 const leagueCardHTML = generateLeagueCardHTML(league, userPokemonRankInfo, rankOneSpread, isOverLimit, warningText, rankingInfoFromDataFile);
@@ -305,11 +319,11 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
             movesetHTML = `
                 <div class="moveset-details">
                     <div class="moveset-line">
-                        <span class="move-type-label">一般</span>
+                        <span class="move-type-label">${T.fast}</span>
                         <span class="move-name ${fastMoveClass}">${rankingInfoFromDataFile.fastMove}${fastMoveSymbol}</span>
                     </div>
                     <div class="moveset-line">
-                        <span class="move-type-label">特殊</span>
+                        <span class="move-type-label">${T.charged}</span>
                         <div class="charged-move-list">
                             <span class="move-name ${cm1Class}">${rankingInfoFromDataFile.chargedMove1}${cm1Symbol}</span>
                             ${cm2HTML}
@@ -327,7 +341,7 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
             userResultHTML = `
                 <div class="rank-details your-rank">
                     <p class="rank-line">
-                        <span class="rank-label">您的排名</span>
+                        <span class="rank-label">${T.yourRank}</span>
                         <span class="rank">#${userRankInfo.rank}</span>
                     </p>
                     <p class="details-line">
@@ -342,7 +356,7 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
         } else {
              userResultHTML = `
                 <div class="rank-details your-rank">
-                     <p class="no-rank">您的IV組合不在此聯盟排名內。</p>
+                     <p class="no-rank">${T.noRank}</p>
                 </div>
                `;
         }
@@ -350,7 +364,7 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
         const rankOneResultHTML = rankOneInfo ? `
             <div class="rank-details rank-one">
                 <p class="rank-line">
-                    <span class="rank-label">第一名 IV</span>
+                    <span class="rank-label">${T.topIv}</span>
                     <span class="iv-details">${rankOneInfo.ivs.atk}/${rankOneInfo.ivs.def}/${rankOneInfo.ivs.sta}</span>
                 </p>
             </div>
@@ -591,7 +605,7 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
 
     // 預設帶入妙蛙種子並直接計算：讓新用戶一進來就看到結果長什麼樣子，
     // 而不是面對一片空白不知道要做什麼
-    const defaultPokemon = POKEDEX.find(p => p.name === '妙蛙種子') || POKEDEX.find(p => p.dexNumber === 1);
+    const defaultPokemon = POKEDEX.find(p => p.name === T.defaultMon) || POKEDEX.find(p => p.dexNumber === 1);
     // HTML 先以 .is-loading 預留預設結果的高度（避免 CLS），算完就解除（計算出錯也要解除）；
     // 萬一找不到預設寶可夢，回到原本「隱藏、空白」的狀態。
     try {

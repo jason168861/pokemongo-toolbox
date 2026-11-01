@@ -454,6 +454,18 @@ ul.moves .v em{font-style:normal;font-size:12px;color:#d97706;font-weight:700}
 .hub a small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;font-variant-numeric:tabular-nums}
 .hub a:hover{border-color:#bcd5fb;background:#f1f6ff}
 .hub a[hidden]{display:none}
+.hub>div{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 6px;font-size:13.5px;font-weight:600;line-height:1.3;min-width:0}
+.hub>div img{width:48px;height:48px;flex:none;object-fit:contain}
+.hub>div small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;font-variant-numeric:tabular-nums}
+.hub[hidden],#popwrap[hidden],.sub[hidden]{display:none}
+/* 各語言首頁（/<lang>/）的工具卡 */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:0 0 16px}
+.tool{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-decoration:none;color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.05),0 6px 20px rgba(16,24,40,.05)}
+.tool:hover{border-color:#bcd5fb}
+.tool .ico{font-size:28px;line-height:1}
+.tool b{display:block;font-size:17px;margin:8px 0 4px}
+.tool span:last-child{display:block;color:var(--ink2);font-size:14px;line-height:1.6}
+.more a{color:var(--blue);text-decoration:none;font-weight:600}.more a:hover{text-decoration:underline}
 """
 
 def esc(s): return html.escape(str(s), quote=True)
