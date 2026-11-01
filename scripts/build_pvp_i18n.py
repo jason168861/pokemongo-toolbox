@@ -13,6 +13,7 @@ import os, re, json, hashlib, collections
 import build_cp_static as B
 from cp_i18n_strings import STR
 from pvp_i18n_strings import P
+from i18n_header import site_header
 
 ROOT, ORIGIN, esc = B.ROOT, B.ORIGIN, B.esc
 LANGS = B.I18N_LANGS
@@ -214,11 +215,12 @@ def page_html(lang, T, lang_nav_html):
 <meta property="og:locale" content="{C['og_locale']}">
 <link rel="stylesheet" href="{R}css/main.css">
 <link rel="stylesheet" href="{R}css/pvp-ranker.css">
-<style>.pk-top{{max-width:1100px;margin:0 auto;padding:12px 16px 0;font-size:13px;color:#606770}}.pk-top a{{color:#1877f2;text-decoration:none}}
+<link rel="stylesheet" href="{R}css/site-i18n.css">
+<style>body{{padding:0}}.main-container{{box-sizing:border-box;padding-left:5px;padding-right:5px}}.pk-top{{max-width:1100px;margin:0 auto;padding:12px 16px 0;font-size:13px;color:#606770}}.pk-top a{{color:#1877f2;text-decoration:none}}
 .pk-foot{{text-align:center;color:#606770;font-size:13px;line-height:2;padding:8px 16px 40px}}.pk-foot a{{color:#606770}}</style>
 </head>
 <body>
-<nav class="pk-top" aria-label="{esc(C['crumb_aria'])}"><a href="../">{esc(C['site'])}</a> › <span>{esc(S['crumb'])}</span></nav>
+{site_header(lang, "../", "p", dict([("zh", R + "pvp-ranker/")] + [(l, R + l + "/pvp-ranker/") for l in LANGS]))}
 <aside class="site-ad" aria-label="{esc(C['ad'])}" data-ad-reserved><span class="site-ad-label">{esc(C['ad'])}</span><div class="site-ad-ph"></div></aside>
 {seg}
 <footer class="pk-foot">

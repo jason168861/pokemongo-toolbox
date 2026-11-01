@@ -17,7 +17,8 @@
       .catch(function (e) { loading = null; throw e; });   // 失敗就清掉，下次輸入會重試
     return loading;
   }
-  function cp(lv, v) { return esc(L.lv) + lv + ' ' + esc(L.cp) + ' ' + v; }
+  function chip(cls, lv, v) { return '<span class="lvc ' + cls + '">' + esc(L.lv) + lv + ' <b>' + v + '</b></span>'; }
+  function chips(r) { return '<div class="lvs">' + chip('l15', 15, r[2]) + chip('l20', 20, r[3]) + chip('l25', 25, r[4]) + '</div>'; }
   function render() {
     var v = q.value.trim().toLowerCase();
     if (!v) { res.hidden = true; msg.hidden = true; pop.hidden = false; return; }
@@ -31,8 +32,10 @@
       msg.textContent = hit.length ? L.more.replace('{n}', MAX) : L.none;
       res.innerHTML = hit.slice(0, MAX).map(function (r) {
         var img = '<img src="' + esc(L.img + r[8]) + '" alt="" width="48" height="48" loading="lazy">';
-        if (r[7]) return '<a href="' + esc(r[7]) + '/">' + img + '<span>' + esc(r[0]) + '<small>' + cp(20, r[3]) + '</small></span></a>';
-        return '<div>' + img + '<span>' + esc(r[0]) + ' <small>#' + r[1] + ' · ' + cp(15, r[2]) + ' · ' + cp(20, r[3]) + ' · ' + cp(25, r[4]) + '</small></span></div>';
+        var head = '<span class="rn">' + esc(r[0]) + '<small>#' + r[1] + '</small></span>';
+        // 有靜態頁的整張卡片可以點（左側藍色邊與箭頭）；沒有的直接顯示三個 CP
+        if (r[7]) return '<a class="rcard" href="' + esc(r[7]) + '/">' + img + head + chips(r) + '</a>';
+        return '<div class="rcard">' + img + head + chips(r) + '</div>';
       }).join('');
     }).catch(function () { res.hidden = true; pop.hidden = false; msg.hidden = false; msg.textContent = L.err || L.none; });
   }

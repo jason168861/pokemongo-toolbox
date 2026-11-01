@@ -454,6 +454,41 @@ ul.moves .v em{font-style:normal;font-size:12px;color:#d97706;font-weight:700}
 .hub a small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;font-variant-numeric:tabular-nums}
 .hub a:hover{border-color:#bcd5fb;background:#f1f6ff}
 .hub a[hidden]{display:none}
+/* ===== 外語首頁與列表頁：彩色主視覺、工具卡、Lv15/20/25 標籤、搜尋結果卡片 ===== */
+.xhero{border-radius:20px;padding:26px 22px 22px;margin:0 0 16px;color:#fff;
+ background:linear-gradient(135deg,#e0276c 0%,#a43ae0 55%,#5b6cff 100%);box-shadow:0 12px 32px rgba(123,92,255,.25)}
+.xhero h1{color:#fff;font-size:28px;line-height:1.25;margin:0 0 10px}
+.xhero p{color:rgba(255,255,255,.93);margin:0 0 8px;font-size:15.5px;line-height:1.7}
+.xhero strong{color:#fff}
+.xhero.cp{background:linear-gradient(135deg,#1769e0 0%,#2f8fe6 55%,#1fb9a6 100%);box-shadow:0 12px 32px rgba(24,119,242,.22)}
+.xhero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.xbtn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#b0246a;font-weight:800;text-decoration:none;
+ padding:11px 18px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.14)}
+.xbtn:hover{transform:translateY(-1px)}
+.xbtn.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.6);box-shadow:none}
+.tool{position:relative;overflow:hidden}
+.tool::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:var(--tc,#1877f2)}
+.tool .ico{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--tb,#eef4ff);font-size:24px}
+.tool.t{--tc:linear-gradient(90deg,#e0276c,#b23ad8);--tb:#fdeaf3}
+.tool.c{--tc:linear-gradient(90deg,#1877f2,#2fb5d6);--tb:#e8f1fe}
+.tool.p{--tc:linear-gradient(90deg,#7b5cff,#4a6cf7);--tb:#efeaff}
+.lvlegend{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.lvc{display:inline-flex;align-items:baseline;gap:4px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px;
+ font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.3}
+.lvc b{font-size:13.5px;font-weight:800}
+.lvc.l15{background:#e3f6ea;color:#16753f}.lvc.l20{background:#e6efff;color:#1a56c4}.lvc.l25{background:#fff0dc;color:#b45a00}
+.hub a .tn{display:block;margin-bottom:4px}
+.hub.rows{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.hub .rcard{display:grid;grid-template-columns:48px 1fr;gap:8px 10px;align-items:center;padding:10px 12px;border-radius:14px;
+ background:#fff;border:1px solid var(--line);border-left:4px solid var(--line)}
+.hub .rcard img{width:48px;height:48px;object-fit:contain}
+.hub .rcard .rn{font-weight:800;font-size:15px;color:var(--ink);line-height:1.3}
+.hub .rcard .rn small{display:inline;margin-left:6px;color:var(--muted);font-weight:600;font-size:12.5px}
+.hub .rcard .lvs{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.hub .rcard .lvc{justify-content:center;padding:5px 4px}
+.hub a.rcard{border-left-color:#1877f2}
+.hub a.rcard:hover{background:#f5f9ff;border-color:#bcd5fb;border-left-color:#1877f2}
+.hub a.rcard .rn::after{content:" →";color:#1877f2}
 .hub>div{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 6px;font-size:13.5px;font-weight:600;line-height:1.3;min-width:0}
 .hub>div img{width:48px;height:48px;flex:none;object-fit:contain}
 .hub>div small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;font-variant-numeric:tabular-nums}
