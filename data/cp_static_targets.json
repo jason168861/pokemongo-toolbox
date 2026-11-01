@@ -1,0 +1,1221 @@
+{
+ "_note": "每隻寶可夢一個靜態頁（/cp/<slug>/）的名單，依搜尋需求排序。scripts/build_cp_static.py 產生頁面、scripts/build_cp_sitemap.py 會把這些從 sitemap-cp.xml 排除（它們的 ?mon= 會轉到靜態頁）。",
+ "targets": [
+  {
+   "name": "烈咬陸鯊",
+   "slug": "garchomp"
+  },
+  {
+   "name": "超夢",
+   "slug": "mewtwo"
+  },
+  {
+   "name": "由克希",
+   "slug": "uxie"
+  },
+  {
+   "name": "閃電鳥",
+   "slug": "zapdos"
+  },
+  {
+   "name": "騎拉帝納 (起源形態)",
+   "slug": "giratina_origin"
+  },
+  {
+   "name": "露奈雅拉",
+   "slug": "lunala"
+  },
+  {
+   "name": "伊裴爾塔爾",
+   "slug": "yveltal"
+  },
+  {
+   "name": "蒼響 (百戰勇者形態)",
+   "slug": "zacian"
+  },
+  {
+   "name": "騎拉帝納 (別種形態)",
+   "slug": "giratina"
+  },
+  {
+   "name": "圓陸鯊",
+   "slug": "gible"
+  },
+  {
+   "name": "呱呱泡蛙",
+   "slug": "froakie"
+  },
+  {
+   "name": "固拉多",
+   "slug": "groudon"
+  },
+  {
+   "name": "拉帝亞斯",
+   "slug": "latias"
+  },
+  {
+   "name": "快龍",
+   "slug": "dragonite"
+  },
+  {
+   "name": "小火龍",
+   "slug": "charmander"
+  },
+  {
+   "name": "烈空坐",
+   "slug": "rayquaza"
+  },
+  {
+   "name": "小隕星",
+   "slug": "minior_blue"
+  },
+  {
+   "name": "噴火龍",
+   "slug": "charizard"
+  },
+  {
+   "name": "美錄坦",
+   "slug": "meltan"
+  },
+  {
+   "name": "狐大盜",
+   "slug": "thievul"
+  },
+  {
+   "name": "甲賀忍蛙",
+   "slug": "greninja"
+  },
+  {
+   "name": "索羅亞",
+   "slug": "zorua"
+  },
+  {
+   "name": "超夢 (鎧甲形態)",
+   "slug": "mewtwo_a"
+  },
+  {
+   "name": "酋雷姆",
+   "slug": "kyurem"
+  },
+  {
+   "name": "火焰鳥 (伽勒爾形態)",
+   "slug": "moltres_galarian"
+  },
+  {
+   "name": "哲爾尼亞斯",
+   "slug": "xerneas"
+  },
+  {
+   "name": "帝牙盧卡",
+   "slug": "dialga"
+  },
+  {
+   "name": "火焰雞",
+   "slug": "blaziken"
+  },
+  {
+   "name": "暴鯉龍",
+   "slug": "gyarados"
+  },
+  {
+   "name": "妖火紅狐",
+   "slug": "delphox"
+  },
+  {
+   "name": "閃焰王牌",
+   "slug": "cinderace"
+  },
+  {
+   "name": "海星星",
+   "slug": "staryu"
+  },
+  {
+   "name": "火焰鳥",
+   "slug": "moltres"
+  },
+  {
+   "name": "獨角犀牛",
+   "slug": "rhyhorn"
+  },
+  {
+   "name": "帕路奇亞",
+   "slug": "palkia"
+  },
+  {
+   "name": "蒼響 (劍之王形態)",
+   "slug": "zacian_crowned_sword"
+  },
+  {
+   "name": "伊布",
+   "slug": "eevee"
+  },
+  {
+   "name": "鯉魚王",
+   "slug": "magikarp"
+  },
+  {
+   "name": "皮卡丘",
+   "slug": "pikachu"
+  },
+  {
+   "name": "閃電鳥 (伽勒爾形態)",
+   "slug": "zapdos_galarian"
+  },
+  {
+   "name": "急凍鳥",
+   "slug": "articuno"
+  },
+  {
+   "name": "急凍鳥 (伽勒爾形態)",
+   "slug": "articuno_galarian"
+  },
+  {
+   "name": "藏瑪然特 (百戰勇者形態)",
+   "slug": "zamazenta"
+  },
+  {
+   "name": "水晶燈火靈",
+   "slug": "chandelure"
+  },
+  {
+   "name": "亞克諾姆",
+   "slug": "azelf"
+  },
+  {
+   "name": "藏瑪然特 (盾之王形態)",
+   "slug": "zamazenta_crowned_shield"
+  },
+  {
+   "name": "耿鬼",
+   "slug": "gengar"
+  },
+  {
+   "name": "基格爾德 (１０％形態)",
+   "slug": "zygarde_complete_ten_percent"
+  },
+  {
+   "name": "卡比獸",
+   "slug": "snorlax"
+  },
+  {
+   "name": "巨金怪",
+   "slug": "metagross"
+  },
+  {
+   "name": "妙蛙花",
+   "slug": "venusaur"
+  },
+  {
+   "name": "啃果蟲",
+   "slug": "applin"
+  },
+  {
+   "name": "小灰怪",
+   "slug": "elgyem"
+  },
+  {
+   "name": "巨沼怪",
+   "slug": "swampert"
+  },
+  {
+   "name": "勾魂眼",
+   "slug": "sableye"
+  },
+  {
+   "name": "拉帝歐斯",
+   "slug": "latios"
+  },
+  {
+   "name": "信使鳥",
+   "slug": "delibird"
+  },
+  {
+   "name": "姆克鷹",
+   "slug": "staraptor"
+  },
+  {
+   "name": "蓋歐卡",
+   "slug": "kyogre"
+  },
+  {
+   "name": "酋雷姆 (闇黑形態)",
+   "slug": "kyurem_black"
+  },
+  {
+   "name": "鑽角犀獸",
+   "slug": "rhydon"
+  },
+  {
+   "name": "淚眼蜥",
+   "slug": "sobble"
+  },
+  {
+   "name": "戴魯比",
+   "slug": "houndour"
+  },
+  {
+   "name": "小木靈",
+   "slug": "phantump"
+  },
+  {
+   "name": "火狐狸",
+   "slug": "fennekin"
+  },
+  {
+   "name": "帝牙盧卡 (起源形態)",
+   "slug": "dialga_origin"
+  },
+  {
+   "name": "大針蜂",
+   "slug": "beedrill"
+  },
+  {
+   "name": "雷丘",
+   "slug": "raichu"
+  },
+  {
+   "name": "大舌舔",
+   "slug": "lickilicky"
+  },
+  {
+   "name": "基格爾德 (完全體形態)",
+   "slug": "zygarde_complete"
+  },
+  {
+   "name": "艾姆利多",
+   "slug": "mesprit"
+  },
+  {
+   "name": "鴨嘴火獸",
+   "slug": "magmar"
+  },
+  {
+   "name": "狃拉",
+   "slug": "sneasel"
+  },
+  {
+   "name": "土地雲 (化身形態)",
+   "slug": "landorus"
+  },
+  {
+   "name": "燒火蚣",
+   "slug": "sizzlipede"
+  },
+  {
+   "name": "水箭龜",
+   "slug": "blastoise"
+  },
+  {
+   "name": "鬼斯",
+   "slug": "gastly"
+  },
+  {
+   "name": "土地雲 (靈獸形態)",
+   "slug": "landorus_therian"
+  },
+  {
+   "name": "小拉達",
+   "slug": "rattata"
+  },
+  {
+   "name": "列陣兵",
+   "slug": "falinks"
+  },
+  {
+   "name": "雷吉斯奇魯",
+   "slug": "registeel"
+  },
+  {
+   "name": "無極汰那 (無極巨化形態)",
+   "slug": "eternatus_eternamax"
+  },
+  {
+   "name": "寶石海星",
+   "slug": "starmie"
+  },
+  {
+   "name": "迷你龍",
+   "slug": "dratini"
+  },
+  {
+   "name": "幸福蛋",
+   "slug": "blissey"
+  },
+  {
+   "name": "鬼斯通",
+   "slug": "haunter"
+  },
+  {
+   "name": "小卡比獸",
+   "slug": "munchlax"
+  },
+  {
+   "name": "爆肌蚊",
+   "slug": "buzzwole"
+  },
+  {
+   "name": "電束木",
+   "slug": "xurkitree"
+  },
+  {
+   "name": "雷吉洛克",
+   "slug": "regirock"
+  },
+  {
+   "name": "哈力栗",
+   "slug": "chespin"
+  },
+  {
+   "name": "無極汰那",
+   "slug": "eternatus"
+  },
+  {
+   "name": "雷電雲 (靈獸形態)",
+   "slug": "thundurus_therian"
+  },
+  {
+   "name": "美錄梅塔",
+   "slug": "melmetal"
+  },
+  {
+   "name": "棄世猴",
+   "slug": "annihilape"
+  },
+  {
+   "name": "童偶熊",
+   "slug": "stufful"
+  },
+  {
+   "name": "拉普拉斯",
+   "slug": "lapras"
+  },
+  {
+   "name": "盔甲鳥",
+   "slug": "skarmory"
+  },
+  {
+   "name": "古月鳥",
+   "slug": "cramorant"
+  },
+  {
+   "name": "奈克洛茲瑪",
+   "slug": "necrozma"
+  },
+  {
+   "name": "炭小侍",
+   "slug": "charcadet"
+  },
+  {
+   "name": "大狃拉",
+   "slug": "sneasler"
+  },
+  {
+   "name": "落雷獸",
+   "slug": "electrike"
+  },
+  {
+   "name": "捷克羅姆",
+   "slug": "zekrom"
+  },
+  {
+   "name": "皮皮",
+   "slug": "clefairy"
+  },
+  {
+   "name": "索羅亞克",
+   "slug": "zoroark"
+  },
+  {
+   "name": "長尾火狐",
+   "slug": "braixen"
+  },
+  {
+   "name": "仙子伊布",
+   "slug": "sylveon"
+  },
+  {
+   "name": "班基拉斯",
+   "slug": "tyranitar"
+  },
+  {
+   "name": "超甲狂犀",
+   "slug": "rhyperior"
+  },
+  {
+   "name": "橡實果",
+   "slug": "seedot"
+  },
+  {
+   "name": "巨鍛匠",
+   "slug": "tinkaton"
+  },
+  {
+   "name": "猴怪",
+   "slug": "mankey"
+  },
+  {
+   "name": "謎擬Ｑ",
+   "slug": "mimikyu"
+  },
+  {
+   "name": "卡蒂狗",
+   "slug": "growlithe"
+  },
+  {
+   "name": "稚山雀",
+   "slug": "rookidee"
+  },
+  {
+   "name": "火稚雞",
+   "slug": "torchic"
+  },
+  {
+   "name": "瑪狃拉",
+   "slug": "weavile"
+  },
+  {
+   "name": "烏賊王",
+   "slug": "malamar"
+  },
+  {
+   "name": "鋼鎧鴉",
+   "slug": "corviknight"
+  },
+  {
+   "name": "雪童子",
+   "slug": "snorunt"
+  },
+  {
+   "name": "皮丘",
+   "slug": "pichu"
+  },
+  {
+   "name": "燈火幽靈",
+   "slug": "lampent"
+  },
+  {
+   "name": "嗡蝠",
+   "slug": "noibat"
+  },
+  {
+   "name": "鐵啞鈴",
+   "slug": "beldum"
+  },
+  {
+   "name": "迷你芙",
+   "slug": "smoliv"
+  },
+  {
+   "name": "纏紅鶴",
+   "slug": "flamigo"
+  },
+  {
+   "name": "索財靈",
+   "slug": "gimmighoul"
+  },
+  {
+   "name": "酋雷姆 (焰白形態)",
+   "slug": "kyurem_white"
+  },
+  {
+   "name": "夢幻",
+   "slug": "mew"
+  },
+  {
+   "name": "狂歡浪舞鴨",
+   "slug": "quaquaval"
+  },
+  {
+   "name": "費洛美螂",
+   "slug": "pheromosa"
+  },
+  {
+   "name": "捷拉奧拉",
+   "slug": "zeraora"
+  },
+  {
+   "name": "吼吼鯨",
+   "slug": "wailmer"
+  },
+  {
+   "name": "青綿鳥",
+   "slug": "swablu"
+  },
+  {
+   "name": "拉魯拉絲",
+   "slug": "ralts"
+  },
+  {
+   "name": "具甲武者",
+   "slug": "golisopod"
+  },
+  {
+   "name": "百變怪",
+   "slug": "ditto"
+  },
+  {
+   "name": "納噬草",
+   "slug": "bramblin"
+  },
+  {
+   "name": "妙蛙草",
+   "slug": "ivysaur"
+  },
+  {
+   "name": "好啦魷",
+   "slug": "inkay"
+  },
+  {
+   "name": "小鋸鱷",
+   "slug": "totodile"
+  },
+  {
+   "name": "食夢夢",
+   "slug": "munna"
+  },
+  {
+   "name": "大舌頭",
+   "slug": "lickitung"
+  },
+  {
+   "name": "火爆猴",
+   "slug": "primeape"
+  },
+  {
+   "name": "燭光靈",
+   "slug": "litwick"
+  },
+  {
+   "name": "毛球",
+   "slug": "venonat"
+  },
+  {
+   "name": "可達鴨",
+   "slug": "psyduck"
+  },
+  {
+   "name": "尖牙陸鯊",
+   "slug": "gabite"
+  },
+  {
+   "name": "獨角蟲",
+   "slug": "weedle"
+  },
+  {
+   "name": "偷兒狐",
+   "slug": "nickit"
+  },
+  {
+   "name": "月亮伊布",
+   "slug": "umbreon"
+  },
+  {
+   "name": "萊希拉姆",
+   "slug": "reshiram"
+  },
+  {
+   "name": "雷電獸",
+   "slug": "manectric"
+  },
+  {
+   "name": "大力鱷",
+   "slug": "feraligatr"
+  },
+  {
+   "name": "吉利蛋",
+   "slug": "chansey"
+  },
+  {
+   "name": "雷吉艾斯",
+   "slug": "regice"
+  },
+  {
+   "name": "戰舞郎",
+   "slug": "hitmontop"
+  },
+  {
+   "name": "請假王",
+   "slug": "slaking"
+  },
+  {
+   "name": "岩狗狗",
+   "slug": "rockruff"
+  },
+  {
+   "name": "大食花",
+   "slug": "victreebel"
+  },
+  {
+   "name": "九尾",
+   "slug": "ninetales"
+  },
+  {
+   "name": "火斑喵",
+   "slug": "litten"
+  },
+  {
+   "name": "刺梭魚",
+   "slug": "arrokuda"
+  },
+  {
+   "name": "小鍛匠",
+   "slug": "tinkatink"
+  },
+  {
+   "name": "呆火鱷",
+   "slug": "fuecoco"
+  },
+  {
+   "name": "飄飄球",
+   "slug": "drifloon"
+  },
+  {
+   "name": "帕路奇亞 (起源形態)",
+   "slug": "palkia_origin"
+  },
+  {
+   "name": "涼脊龍",
+   "slug": "frigibax"
+  },
+  {
+   "name": "利歐路",
+   "slug": "riolu"
+  },
+  {
+   "name": "路卡利歐",
+   "slug": "lucario"
+  },
+  {
+   "name": "多龍梅西亞",
+   "slug": "dreepy"
+  },
+  {
+   "name": "大劍鬼",
+   "slug": "samurott"
+  },
+  {
+   "name": "化石翼龍",
+   "slug": "aerodactyl"
+  },
+  {
+   "name": "牙牙",
+   "slug": "axew"
+  },
+  {
+   "name": "單首龍",
+   "slug": "deino"
+  },
+  {
+   "name": "熊寶寶",
+   "slug": "teddiursa"
+  },
+  {
+   "name": "三首惡龍",
+   "slug": "hydreigon"
+  },
+  {
+   "name": "炎兔兒",
+   "slug": "scorbunny"
+  },
+  {
+   "name": "頑皮熊貓",
+   "slug": "pancham"
+  },
+  {
+   "name": "象徵鳥",
+   "slug": "sigilyph"
+  },
+  {
+   "name": "利牙魚",
+   "slug": "carvanha"
+  },
+  {
+   "name": "波克基斯",
+   "slug": "togekiss"
+  },
+  {
+   "name": "索爾迦雷歐",
+   "slug": "solgaleo"
+  },
+  {
+   "name": "南瓜精 (普通尺寸)",
+   "slug": "pumpkaboo_average"
+  },
+  {
+   "name": "好壞星",
+   "slug": "mareanie"
+  },
+  {
+   "name": "膽小蟲",
+   "slug": "wimpod"
+  },
+  {
+   "name": "基格爾德 (５０％形態)",
+   "slug": "zygarde"
+  },
+  {
+   "name": "奈克洛茲瑪 (黃昏之鬃形態)",
+   "slug": "necrozma_dusk_mane"
+  },
+  {
+   "name": "螺釘地鼠",
+   "slug": "drilbur"
+  },
+  {
+   "name": "劈斧螳螂",
+   "slug": "kleavor"
+  },
+  {
+   "name": "奈克洛茲瑪 (拂曉之翼形態)",
+   "slug": "necrozma_dawn_wings"
+  },
+  {
+   "name": "沼王",
+   "slug": "quagsire"
+  },
+  {
+   "name": "鳳王",
+   "slug": "ho_oh"
+  },
+  {
+   "name": "燃燒蟲",
+   "slug": "larvesta"
+  },
+  {
+   "name": "寶貝龍",
+   "slug": "bagon"
+  },
+  {
+   "name": "小箭雀",
+   "slug": "fletchling"
+  },
+  {
+   "name": "胖可丁",
+   "slug": "wigglytuff"
+  },
+  {
+   "name": "輕飄飄",
+   "slug": "frillish"
+  },
+  {
+   "name": "喵喵",
+   "slug": "meowth"
+  },
+  {
+   "name": "木守宮",
+   "slug": "treecko"
+  },
+  {
+   "name": "洛奇亞",
+   "slug": "lugia"
+  },
+  {
+   "name": "蒂安希",
+   "slug": "diancie"
+  },
+  {
+   "name": "龍頭地鼠",
+   "slug": "excadrill"
+  },
+  {
+   "name": "九尾 (阿羅拉形態)",
+   "slug": "ninetales_alola"
+  },
+  {
+   "name": "刺球仙人掌",
+   "slug": "cacnea"
+  },
+  {
+   "name": "波爾凱尼恩",
+   "slug": "volcanion"
+  },
+  {
+   "name": "雷電雲 (化身形態)",
+   "slug": "thundurus"
+  },
+  {
+   "name": "小獅獅",
+   "slug": "litleo"
+  },
+  {
+   "name": "焚焰蚣",
+   "slug": "centiskorch"
+  },
+  {
+   "name": "哈克龍",
+   "slug": "dragonair"
+  },
+  {
+   "name": "木木梟",
+   "slug": "rowlet"
+  },
+  {
+   "name": "小火馬",
+   "slug": "ponyta"
+  },
+  {
+   "name": "水水獺",
+   "slug": "oshawott"
+  },
+  {
+   "name": "魔幻假面喵",
+   "slug": "meowscarada"
+  },
+  {
+   "name": "石丸子",
+   "slug": "roggenrola"
+  },
+  {
+   "name": "四季鹿",
+   "slug": "deerling"
+  },
+  {
+   "name": "太陽伊布",
+   "slug": "espeon"
+  },
+  {
+   "name": "轟擂金剛猩",
+   "slug": "rillaboom"
+  },
+  {
+   "name": "凱路迪歐",
+   "slug": "keldeo"
+  },
+  {
+   "name": "南瓜怪人 (普通尺寸)",
+   "slug": "gourgeist_average"
+  },
+  {
+   "name": "胖嘟嘟",
+   "slug": "jellicent"
+  },
+  {
+   "name": "吼鯨王",
+   "slug": "wailord"
+  },
+  {
+   "name": "波波",
+   "slug": "pidgey"
+  },
+  {
+   "name": "波克基古",
+   "slug": "togetic"
+  },
+  {
+   "name": "巨牙鯊",
+   "slug": "sharpedo"
+  },
+  {
+   "name": "堅盾劍怪",
+   "slug": "aegislash"
+  },
+  {
+   "name": "瑪力露麗",
+   "slug": "azumarill"
+  },
+  {
+   "name": "彩粉蝶",
+   "slug": "vivillon"
+  },
+  {
+   "name": "拉達",
+   "slug": "raticate"
+  },
+  {
+   "name": "咕咕",
+   "slug": "hoothoot"
+  },
+  {
+   "name": "蛋蛋",
+   "slug": "exeggcute"
+  },
+  {
+   "name": "大鋼蛇",
+   "slug": "steelix"
+  },
+  {
+   "name": "七夕青鳥",
+   "slug": "altaria"
+  },
+  {
+   "name": "蛇紋熊",
+   "slug": "zigzagoon"
+  },
+  {
+   "name": "多邊獸",
+   "slug": "porygon"
+  },
+  {
+   "name": "獨劍鞘",
+   "slug": "honedge"
+  },
+  {
+   "name": "潤水鴨",
+   "slug": "quaxly"
+  },
+  {
+   "name": "超音蝠",
+   "slug": "zubat"
+  },
+  {
+   "name": "雷吉艾勒奇",
+   "slug": "regieleki"
+  },
+  {
+   "name": "奈克洛茲瑪 (究極形態)",
+   "slug": "necrozma_ultra"
+  },
+  {
+   "name": "鴨嘴炎獸",
+   "slug": "magmortar"
+  },
+  {
+   "name": "波加曼",
+   "slug": "piplup"
+  },
+  {
+   "name": "雙劍鞘",
+   "slug": "doublade"
+  },
+  {
+   "name": "醜醜魚",
+   "slug": "feebas"
+  },
+  {
+   "name": "櫻花寶",
+   "slug": "cherubi"
+  },
+  {
+   "name": "變隱龍",
+   "slug": "kecleon"
+  },
+  {
+   "name": "雪笠怪",
+   "slug": "snover"
+  },
+  {
+   "name": "西獅海壬",
+   "slug": "primarina"
+  },
+  {
+   "name": "雪吞蟲",
+   "slug": "snom"
+  },
+  {
+   "name": "燈罩夜菇",
+   "slug": "shiinotic"
+  },
+  {
+   "name": "月石",
+   "slug": "lunatone"
+  },
+  {
+   "name": "腕力",
+   "slug": "machop"
+  },
+  {
+   "name": "狙射樹梟",
+   "slug": "decidueye"
+  },
+  {
+   "name": "新葉喵",
+   "slug": "sprigatito"
+  },
+  {
+   "name": "妙蛙種子",
+   "slug": "bulbasaur"
+  },
+  {
+   "name": "大劍鬼 (洗翠形態)",
+   "slug": "samurott_hisuian"
+  },
+  {
+   "name": "呆殼獸 (2021形態)",
+   "slug": "slowbro"
+  },
+  {
+   "name": "滴蛛",
+   "slug": "dewpider"
+  },
+  {
+   "name": "吃吼霸",
+   "slug": "dondozo"
+  },
+  {
+   "name": "奇魯莉安",
+   "slug": "kirlia"
+  },
+  {
+   "name": "觸手百合",
+   "slug": "lileep"
+  },
+  {
+   "name": "千面避役",
+   "slug": "inteleon"
+  },
+  {
+   "name": "巨鉗螳螂",
+   "slug": "scizor"
+  },
+  {
+   "name": "月月熊",
+   "slug": "ursaluna"
+  },
+  {
+   "name": "泥巴魚",
+   "slug": "stunfisk"
+  },
+  {
+   "name": "傑尼龜",
+   "slug": "squirtle"
+  },
+  {
+   "name": "睡睡菇",
+   "slug": "morelull"
+  },
+  {
+   "name": "凱西",
+   "slug": "abra"
+  },
+  {
+   "name": "狗仔包",
+   "slug": "fidough"
+  },
+  {
+   "name": "長毛巨魔",
+   "slug": "grimmsnarl"
+  },
+  {
+   "name": "呆火駝",
+   "slug": "numel"
+  },
+  {
+   "name": "呱頭蛙",
+   "slug": "frogadier"
+  },
+  {
+   "name": "走路草",
+   "slug": "oddish"
+  },
+  {
+   "name": "隨風球",
+   "slug": "drifblim"
+  },
+  {
+   "name": "迷布莉姆",
+   "slug": "hatenna"
+  },
+  {
+   "name": "胖丁",
+   "slug": "jigglypuff"
+  },
+  {
+   "name": "天蠍",
+   "slug": "gligar"
+  },
+  {
+   "name": "烈焰馬",
+   "slug": "rapidash"
+  },
+  {
+   "name": "毒貝比",
+   "slug": "poipole"
+  },
+  {
+   "name": "火爆獸",
+   "slug": "typhlosion"
+  },
+  {
+   "name": "蚊香蝌蚪",
+   "slug": "poliwag"
+  },
+  {
+   "name": "巧鍛匠",
+   "slug": "tinkatuff"
+  },
+  {
+   "name": "冰伊布",
+   "slug": "glaceon"
+  },
+  {
+   "name": "卡蒂狗 (洗翠形態)",
+   "slug": "growlithe_hisuian"
+  },
+  {
+   "name": "蜥蜴王",
+   "slug": "sceptile"
+  },
+  {
+   "name": "杖尾鱗甲龍",
+   "slug": "kommo_o"
+  },
+  {
+   "name": "鋁鋼龍",
+   "slug": "duraludon"
+  },
+  {
+   "name": "托戈德瑪爾",
+   "slug": "togedemaru"
+  },
+  {
+   "name": "美洛耶塔 (歌聲形態)",
+   "slug": "meloetta"
+  },
+  {
+   "name": "顫弦蠑螈",
+   "slug": "toxtricity"
+  },
+  {
+   "name": "黑魯加",
+   "slug": "houndoom"
+  },
+  {
+   "name": "天然鳥",
+   "slug": "xatu"
+  },
+  {
+   "name": "怪力",
+   "slug": "machamp"
+  },
+  {
+   "name": "搗蛋小妖",
+   "slug": "impidimp"
+  },
+  {
+   "name": "胡帕 (解放形態)",
+   "slug": "hoopa_unbound"
+  },
+  {
+   "name": "風速狗",
+   "slug": "arcanine"
+  },
+  {
+   "name": "幼基拉斯",
+   "slug": "larvitar"
+  },
+  {
+   "name": "打擊鬼",
+   "slug": "sawk"
+  },
+  {
+   "name": "熾焰咆哮虎",
+   "slug": "incineroar"
+  },
+  {
+   "name": "雷公",
+   "slug": "raikou"
+  },
+  {
+   "name": "波士可多拉",
+   "slug": "aggron"
+  },
+  {
+   "name": "炎帝",
+   "slug": "entei"
+  },
+  {
+   "name": "水君",
+   "slug": "suicune"
+  }
+ ]
+}

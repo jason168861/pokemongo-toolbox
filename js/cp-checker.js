@@ -1,3 +1,6 @@
+import { CP_STATIC } from './cp-static-slugs.js';
+// 有 /cp/<slug>/ 靜態頁的寶可夢 → 站內連結直接連靜態頁（相對於網站根目錄，舊的 github.io 子路徑也適用）
+const staticHref = name => { const s = CP_STATIC.get(name); return s ? location.pathname.replace(/[^/]*$/, '') + 'cp/' + s + '/' : null; };
 // 進頁時就抓住 ?mon= 深連結參數（main.js 稍後會把網址改回 ?tab=cp-checker-app，會清掉它）
 const CP_INITIAL_MON = new URLSearchParams(location.search).get('mon');
 // 清空搜尋時用的通用 SEO（與 main.js 的 TAB_SEO['cp-checker-app'] 一致）
@@ -18,6 +21,14 @@ export function initializeCpChecker() {
         statusMessage.textContent = "錯誤：寶可夢資料未載入。";
         statusMessage.style.color = 'red';
         return;
+    }
+    // ?mon= 指到有靜態頁的寶可夢 → 直接轉到 /cp/<slug>/（內容更完整，Google 也只需要收那一頁）。
+    // 只比對完整名稱／舊名；?mon=25 這種編號查詢會列出所有型態，不轉。
+    if (CP_INITIAL_MON) {
+        const s0 = zhLower(CP_INITIAL_MON.trim());
+        const m0 = s0 && (allPokemonData.find(p => zhLower(p.name) === s0) || allPokemonData.find(p => p.alt && zhLower(p.alt) === s0));
+        const to = m0 && staticHref(m0.name);
+        if (to) { location.replace(to + location.hash); return; }
     }
 
     // ---- 全等級 CP 表 ----------------------------------------------------
@@ -220,7 +231,7 @@ export function initializeCpChecker() {
     // 不統一的話「sitemap 裡的網址」和「站內連結／canonical」會長得不一樣。
     const monParam = n => encodeURIComponent(n)
         .replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase());
-    const monHref = n => location.pathname + '?tab=cp-checker-app&mon=' + monParam(n);
+    const monHref = n => staticHref(n) || (location.pathname + '?tab=cp-checker-app&mon=' + monParam(n));
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const monLink = n => `<a class="mon-link" href="${monHref(n)}">${esc(n)}</a>`;
 
@@ -598,7 +609,12 @@ export function initializeCpChecker() {
             const a = document.createElement("a");
             a.className = "mon-link";
             a.href = monHref(p.name);
-            a.textContent = p.name;
+            // 每個名稱前放一張小圖（固定 40×40、lazy，不會造成版面跳動），入口頁與搜尋後的卡片一樣有圖
+            const img = document.createElement('img');
+            img.src = p.imageUrl; img.alt = ''; img.width = 40; img.height = 40;
+            img.loading = 'lazy'; img.decoding = 'async';
+            a.appendChild(img);
+            a.appendChild(document.createTextNode(p.name));
             frag.appendChild(a);
         });
         box.appendChild(frag);

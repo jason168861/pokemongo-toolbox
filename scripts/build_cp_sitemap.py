@@ -95,6 +95,9 @@ def load_state(entries):
 
 def main():
     entries = load_entries()
+    # 有 /cp/<slug>/ 靜態頁的寶可夢不列：它們的 ?mon= 網址會轉到靜態頁（靜態頁另列在 sitemap.xml）
+    static = {t["name"] for t in json.load(open(os.path.join(ROOT, "data", "cp_static_targets.json"), encoding="utf-8"))["targets"]}
+    entries = [(n, fp) for n, fp in entries if n not in static]
     old = load_state(entries)
     today = date.today().isoformat()
 
