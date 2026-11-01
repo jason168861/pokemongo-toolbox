@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../../js/analytics.js"></script>
+<script src="../../config.js"></script>
+<script src="../../js/pageview-counter.js" defer></script>
+<script src="../../js/zh-search.js"></script>
+<link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
+<title>Pokémon GO PvP IV Rankings – Best IVs for Great, Ultra &amp; Master League | Pokémon GO Toolbox</title>
+<meta name="description" content="Check your Pokémon&#x27;s PvP IV rank in Great League, Ultra League and Master League, see the best IV spreads with their CP and level, and compare its evolutions. Free and fast on mobile.">
+<link rel="canonical" href="https://pogokit.com/en/pvp-ranker/">
+<link rel="alternate" hreflang="zh-Hant" href="https://pogokit.com/pvp-ranker/">
+<link rel="alternate" hreflang="en" href="https://pogokit.com/en/pvp-ranker/">
+<link rel="alternate" hreflang="ja" href="https://pogokit.com/ja/pvp-ranker/">
+<link rel="alternate" hreflang="ko" href="https://pogokit.com/ko/pvp-ranker/">
+<link rel="alternate" hreflang="fr" href="https://pogokit.com/fr/pvp-ranker/">
+<link rel="alternate" hreflang="de" href="https://pogokit.com/de/pvp-ranker/">
+<link rel="alternate" hreflang="es" href="https://pogokit.com/es/pvp-ranker/">
+<link rel="alternate" hreflang="x-default" href="https://pogokit.com/en/pvp-ranker/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pokémon GO Toolbox">
+<meta property="og:title" content="Pokémon GO PvP IV Rankings">
+<meta property="og:description" content="Check your Pokémon&#x27;s PvP IV rank in Great League, Ultra League and Master League, see the best IV spreads with their CP and level, and compare its evolutions. Free and fast on mobile.">
+<meta property="og:url" content="https://pogokit.com/en/pvp-ranker/">
+<meta property="og:locale" content="en_US">
+<link rel="stylesheet" href="../../css/main.css">
+<link rel="stylesheet" href="../../css/pvp-ranker.css">
+<style>.pk-top{max-width:1100px;margin:0 auto;padding:12px 16px 0;font-size:13px;color:#606770}.pk-top a{color:#1877f2;text-decoration:none}
+.pk-foot{text-align:center;color:#606770;font-size:13px;line-height:2;padding:8px 16px 40px}.pk-foot a{color:#606770}</style>
+</head>
+<body>
+<nav class="pk-top" aria-label="Breadcrumb"><a href="../">Pokémon GO Toolbox</a> › <span>PvP IV Rankings</span></nav>
+<aside class="site-ad" aria-label="Advertisement" data-ad-reserved><span class="site-ad-label">Advertisement</span><div class="site-ad-ph"></div></aside>
+<div class="main-container">
+<div id="pvp-ranker-app" class="app-content active">
+            <div class="container">
+                <h1>Pokémon GO PvP IV Rankings</h1>
+                <div class="controls" id="pvp-controls">
+                    <div class="controls-header">
+                        <span class="controls-header-title">Search<span class="controls-header-hint">(collapsible, movable)</span></span>
+                        <button type="button" id="pvp-controls-close" aria-label="Collapse the panel">&minus;</button>
+                    </div>
+                    <div class="search-container">
+                        <label for="pokemon-input">Pokémon name or Pokédex number</label>
+                        <input type="text" id="pokemon-input" placeholder="e.g. Bulbasaur or 1" autocomplete="off">
+                        <span id="clear-btn" class="clear-button hidden">&times;</span>
+                        <div id="search-results"></div>
+                    </div>
+
+                    <div class="iv-inputs">
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="atk-iv">Attack (ATK)</label>
+                                <select id="atk-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="atk">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="atk-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="def-iv">Defense (DEF)</label>
+                                <select id="def-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="def">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="def-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="hp-iv">HP (STA)</label>
+                                <select id="hp-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="hp">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="hp-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="current-stats-inputs">
+                        <div>
+                            <label for="current-level">Current level: <span id="current-level-value">20</span></label>
+                            <input type="range" id="current-level" min="1" max="51" step="0.5" value="20">
+                        </div>
+                        <div>
+                            <label>Current CP</label>
+                            <span id="current-cp-display" class="cp-display">-</span>
+                        </div>
+                    </div>
+                    
+                    <div id="pvp-quick-summary" class="pvp-quick-summary">
+                        <p class="pvp-qs-empty">Choose a Pokémon to see its ranks</p>
+                        <ul class="pvp-qs-cells" hidden>
+                            <li data-cp="1500"><span class="pvp-qs-label">Great League</span><span class="pvp-qs-value">—</span></li>
+                            <li data-cp="2500"><span class="pvp-qs-label">Ultra League</span><span class="pvp-qs-value">—</span></li>
+                            <li data-cp="10000"><span class="pvp-qs-label">Master League</span><span class="pvp-qs-value">—</span></li>
+                        </ul>
+                        <button type="button" class="pvp-qs-more is-invisible" disabled>See full results (incl. evolutions) ↓</button>
+                    </div>
+                </div>
+                <button type="button" id="pvp-controls-toggle" class="hidden" aria-label="Open the search panel">⚙ Adjust</button>
+                <div id="results-container" class="is-loading"></div>
+
+                
+                <section class="tool-guide"><h2>How PvP IV rankings work</h2><p>In Great League (1,500 CP cap) and Ultra League (2,500 CP cap) the best IVs are usually <strong>not 15/15/15</strong>. A lower Attack IV lets a Pokémon reach a higher level under the CP cap, which raises its Defense and HP more than it loses in Attack — so its overall bulk (stat product) ends up higher.</p><p>Enter your Pokémon's IVs to see where they rank among all 4,096 combinations in each league, the level and CP to power up to, and how the evolutions in the same family compare. Rank 1 is the best possible spread; outside the most competitive play, anything near the top is usually good enough.</p><p>Master League has no CP cap, so a 15/15/15 Pokémon is the best there.</p></section>
+            </div>
+        </div>
+    </div>
+    
+<footer class="pk-foot">
+  <p><a href="../../trade-list/?lang=en">Trade List Generator</a> · <a href="../cp/">100% IV CP</a> · <a href="../../about/">About</a> · <a href="../../privacy/#en">Privacy Policy</a> · <a href="../../disclaimer/">Disclaimer</a></p>
+  <p><a href="../../pvp-ranker/" hreflang="zh-Hant">繁體中文</a> · <b>English</b> · <a href="../../ja/pvp-ranker/" hreflang="ja">日本語</a> · <a href="../../ko/pvp-ranker/" hreflang="ko">한국어</a> · <a href="../../fr/pvp-ranker/" hreflang="fr">Français</a> · <a href="../../de/pvp-ranker/" hreflang="de">Deutsch</a> · <a href="../../es/pvp-ranker/" hreflang="es">Español</a></p>
+</footer>
+<script src="../../data/precomputed_pokemon_cp.js"></script>
+<script src="../../data/pokemon_translation_map.js"></script>
+<script src="../../data/pokemon_names_from_api.js"></script>
+<script src="../../data/pokemon_data_and_rankings.js"></script>
+<script src="../../data/pokemon_images.js"></script>
+<script src="../../js/pvp-logic.js"></script>
+<script src="pvp-i18n.js"></script>
+<script type="module">
+import { initializePvpRanker } from '../../js/pvp-ranker.js';
+initializePvpRanker();
+</script>
+<script src="../../js/ads.js" defer></script>
+</body>
+</html>

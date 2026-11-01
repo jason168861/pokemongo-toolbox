@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../../js/analytics.js"></script>
+<script src="../../config.js"></script>
+<script src="../../js/pageview-counter.js" defer></script>
+<script src="../../js/zh-search.js"></script>
+<link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
+<title>ポケモンGO PvP個体値ランキング｜スーパー・ハイパー・マスターリーグの最適個体値｜ポケモンGO ツールボックス</title>
+<meta name="description" content="ポケモンの個体値がスーパーリーグ・ハイパーリーグ・マスターリーグで何位かを調べ、最適な個体値とそのCP・レベル、進化後との比較を確認できます。無料、スマホでもすぐ使えます。">
+<link rel="canonical" href="https://pogokit.com/ja/pvp-ranker/">
+<link rel="alternate" hreflang="zh-Hant" href="https://pogokit.com/pvp-ranker/">
+<link rel="alternate" hreflang="en" href="https://pogokit.com/en/pvp-ranker/">
+<link rel="alternate" hreflang="ja" href="https://pogokit.com/ja/pvp-ranker/">
+<link rel="alternate" hreflang="ko" href="https://pogokit.com/ko/pvp-ranker/">
+<link rel="alternate" hreflang="fr" href="https://pogokit.com/fr/pvp-ranker/">
+<link rel="alternate" hreflang="de" href="https://pogokit.com/de/pvp-ranker/">
+<link rel="alternate" hreflang="es" href="https://pogokit.com/es/pvp-ranker/">
+<link rel="alternate" hreflang="x-default" href="https://pogokit.com/en/pvp-ranker/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ポケモンGO ツールボックス">
+<meta property="og:title" content="ポケモンGO PvP個体値ランキング">
+<meta property="og:description" content="ポケモンの個体値がスーパーリーグ・ハイパーリーグ・マスターリーグで何位かを調べ、最適な個体値とそのCP・レベル、進化後との比較を確認できます。無料、スマホでもすぐ使えます。">
+<meta property="og:url" content="https://pogokit.com/ja/pvp-ranker/">
+<meta property="og:locale" content="ja_JP">
+<link rel="stylesheet" href="../../css/main.css">
+<link rel="stylesheet" href="../../css/pvp-ranker.css">
+<style>.pk-top{max-width:1100px;margin:0 auto;padding:12px 16px 0;font-size:13px;color:#606770}.pk-top a{color:#1877f2;text-decoration:none}
+.pk-foot{text-align:center;color:#606770;font-size:13px;line-height:2;padding:8px 16px 40px}.pk-foot a{color:#606770}</style>
+</head>
+<body>
+<nav class="pk-top" aria-label="パンくずリスト"><a href="../">ポケモンGO ツールボックス</a> › <span>PvP個体値ランキング</span></nav>
+<aside class="site-ad" aria-label="広告" data-ad-reserved><span class="site-ad-label">広告</span><div class="site-ad-ph"></div></aside>
+<div class="main-container">
+<div id="pvp-ranker-app" class="app-content active">
+            <div class="container">
+                <h1>ポケモンGO PvP個体値ランキング</h1>
+                <div class="controls" id="pvp-controls">
+                    <div class="controls-header">
+                        <span class="controls-header-title">検索条件<span class="controls-header-hint">（折りたたみ・移動できます）</span></span>
+                        <button type="button" id="pvp-controls-close" aria-label="条件パネルを閉じる">&minus;</button>
+                    </div>
+                    <div class="search-container">
+                        <label for="pokemon-input">ポケモンの名前か図鑑番号</label>
+                        <input type="text" id="pokemon-input" placeholder="例：フシギダネ または 1" autocomplete="off">
+                        <span id="clear-btn" class="clear-button hidden">&times;</span>
+                        <div id="search-results"></div>
+                    </div>
+
+                    <div class="iv-inputs">
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="atk-iv">こうげき (ATK)</label>
+                                <select id="atk-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="atk">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="atk-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="def-iv">ぼうぎょ (DEF)</label>
+                                <select id="def-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="def">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="def-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="hp-iv">HP (STA)</label>
+                                <select id="hp-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="hp">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="hp-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="current-stats-inputs">
+                        <div>
+                            <label for="current-level">現在のレベル： <span id="current-level-value">20</span></label>
+                            <input type="range" id="current-level" min="1" max="51" step="0.5" value="20">
+                        </div>
+                        <div>
+                            <label>現在のCP</label>
+                            <span id="current-cp-display" class="cp-display">-</span>
+                        </div>
+                    </div>
+                    
+                    <div id="pvp-quick-summary" class="pvp-quick-summary">
+                        <p class="pvp-qs-empty">ポケモンを選ぶと順位が表示されます</p>
+                        <ul class="pvp-qs-cells" hidden>
+                            <li data-cp="1500"><span class="pvp-qs-label">スーパーリーグ</span><span class="pvp-qs-value">—</span></li>
+                            <li data-cp="2500"><span class="pvp-qs-label">ハイパーリーグ</span><span class="pvp-qs-value">—</span></li>
+                            <li data-cp="10000"><span class="pvp-qs-label">マスターリーグ</span><span class="pvp-qs-value">—</span></li>
+                        </ul>
+                        <button type="button" class="pvp-qs-more is-invisible" disabled>すべての結果を見る（進化後を含む）↓</button>
+                    </div>
+                </div>
+                <button type="button" id="pvp-controls-toggle" class="hidden" aria-label="条件パネルを開く">⚙ 条件を変更</button>
+                <div id="results-container" class="is-loading"></div>
+
+                
+                <section class="tool-guide"><h2>PvPの個体値ランキングのしくみ</h2><p>スーパーリーグ（CP上限1500）とハイパーリーグ（CP上限2500）では、最適な個体値は<strong>15/15/15 ではない</strong>ことがほとんどです。こうげきの個体値が低いほど上限内で高いレベルまで強化でき、ぼうぎょとHPの伸びが、こうげきの低さを上回ります。その結果、総合的な耐久（ステータス積）が高くなります。</p><p>個体値を入れると、各リーグで 4,096 通りのうち何位か、強化すべきレベルとCP、同じ進化系統のポケモンとの比較がわかります。1位が理論上の最適値ですが、上位であれば普段の対戦では十分です。</p><p>マスターリーグにはCP上限がないため、15/15/15 がいちばん強くなります。</p></section>
+            </div>
+        </div>
+    </div>
+    
+<footer class="pk-foot">
+  <p><a href="../../trade-list/?lang=ja">交換リスト作成ツール</a> · <a href="../cp/">個体値100 CP</a> · <a href="../../about/">このサイトについて</a> · <a href="../../privacy/#en">プライバシーポリシー</a> · <a href="../../disclaimer/">免責事項</a></p>
+  <p><a href="../../pvp-ranker/" hreflang="zh-Hant">繁體中文</a> · <a href="../../en/pvp-ranker/" hreflang="en">English</a> · <b>日本語</b> · <a href="../../ko/pvp-ranker/" hreflang="ko">한국어</a> · <a href="../../fr/pvp-ranker/" hreflang="fr">Français</a> · <a href="../../de/pvp-ranker/" hreflang="de">Deutsch</a> · <a href="../../es/pvp-ranker/" hreflang="es">Español</a></p>
+</footer>
+<script src="../../data/precomputed_pokemon_cp.js"></script>
+<script src="../../data/pokemon_translation_map.js"></script>
+<script src="../../data/pokemon_names_from_api.js"></script>
+<script src="../../data/pokemon_data_and_rankings.js"></script>
+<script src="../../data/pokemon_images.js"></script>
+<script src="../../js/pvp-logic.js"></script>
+<script src="pvp-i18n.js"></script>
+<script type="module">
+import { initializePvpRanker } from '../../js/pvp-ranker.js';
+initializePvpRanker();
+</script>
+<script src="../../js/ads.js" defer></script>
+</body>
+</html>

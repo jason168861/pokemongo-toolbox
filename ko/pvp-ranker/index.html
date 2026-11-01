@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../../js/analytics.js"></script>
+<script src="../../config.js"></script>
+<script src="../../js/pageview-counter.js" defer></script>
+<script src="../../js/zh-search.js"></script>
+<link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
+<title>포켓몬 GO PvP 개체값 순위｜슈퍼·하이퍼·마스터리그 최적 개체값｜포켓몬 GO 툴박스</title>
+<meta name="description" content="포켓몬의 개체값이 슈퍼리그·하이퍼리그·마스터리그에서 몇 위인지 확인하고, 최적 개체값과 그 CP·레벨, 진화형과의 비교를 볼 수 있습니다. 무료이며 휴대폰에서도 빠르게 사용할 수 있습니다.">
+<link rel="canonical" href="https://pogokit.com/ko/pvp-ranker/">
+<link rel="alternate" hreflang="zh-Hant" href="https://pogokit.com/pvp-ranker/">
+<link rel="alternate" hreflang="en" href="https://pogokit.com/en/pvp-ranker/">
+<link rel="alternate" hreflang="ja" href="https://pogokit.com/ja/pvp-ranker/">
+<link rel="alternate" hreflang="ko" href="https://pogokit.com/ko/pvp-ranker/">
+<link rel="alternate" hreflang="fr" href="https://pogokit.com/fr/pvp-ranker/">
+<link rel="alternate" hreflang="de" href="https://pogokit.com/de/pvp-ranker/">
+<link rel="alternate" hreflang="es" href="https://pogokit.com/es/pvp-ranker/">
+<link rel="alternate" hreflang="x-default" href="https://pogokit.com/en/pvp-ranker/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="포켓몬 GO 툴박스">
+<meta property="og:title" content="포켓몬 GO PvP 개체값 순위">
+<meta property="og:description" content="포켓몬의 개체값이 슈퍼리그·하이퍼리그·마스터리그에서 몇 위인지 확인하고, 최적 개체값과 그 CP·레벨, 진화형과의 비교를 볼 수 있습니다. 무료이며 휴대폰에서도 빠르게 사용할 수 있습니다.">
+<meta property="og:url" content="https://pogokit.com/ko/pvp-ranker/">
+<meta property="og:locale" content="ko_KR">
+<link rel="stylesheet" href="../../css/main.css">
+<link rel="stylesheet" href="../../css/pvp-ranker.css">
+<style>.pk-top{max-width:1100px;margin:0 auto;padding:12px 16px 0;font-size:13px;color:#606770}.pk-top a{color:#1877f2;text-decoration:none}
+.pk-foot{text-align:center;color:#606770;font-size:13px;line-height:2;padding:8px 16px 40px}.pk-foot a{color:#606770}</style>
+</head>
+<body>
+<nav class="pk-top" aria-label="이동 경로"><a href="../">포켓몬 GO 툴박스</a> › <span>PvP 개체값 순위</span></nav>
+<aside class="site-ad" aria-label="광고" data-ad-reserved><span class="site-ad-label">광고</span><div class="site-ad-ph"></div></aside>
+<div class="main-container">
+<div id="pvp-ranker-app" class="app-content active">
+            <div class="container">
+                <h1>포켓몬 GO PvP 개체값 순위</h1>
+                <div class="controls" id="pvp-controls">
+                    <div class="controls-header">
+                        <span class="controls-header-title">검색 조건<span class="controls-header-hint">(접기·이동 가능)</span></span>
+                        <button type="button" id="pvp-controls-close" aria-label="조건 패널 접기">&minus;</button>
+                    </div>
+                    <div class="search-container">
+                        <label for="pokemon-input">포켓몬 이름 또는 도감 번호</label>
+                        <input type="text" id="pokemon-input" placeholder="예: 이상해씨 또는 1" autocomplete="off">
+                        <span id="clear-btn" class="clear-button hidden">&times;</span>
+                        <div id="search-results"></div>
+                    </div>
+
+                    <div class="iv-inputs">
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="atk-iv">공격 (ATK)</label>
+                                <select id="atk-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="atk">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="atk-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="def-iv">방어 (DEF)</label>
+                                <select id="def-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="def">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="def-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="iv-control">
+                            <div class="iv-label-select">
+                                <label for="hp-iv">HP (STA)</label>
+                                <select id="hp-iv"></select>
+                            </div>
+                            <div class="iv-slider" data-iv="hp">
+                                <div class="iv-slider-track">
+                                    <div class="iv-slider-progress" id="hp-progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="current-stats-inputs">
+                        <div>
+                            <label for="current-level">현재 레벨: <span id="current-level-value">20</span></label>
+                            <input type="range" id="current-level" min="1" max="51" step="0.5" value="20">
+                        </div>
+                        <div>
+                            <label>현재 CP</label>
+                            <span id="current-cp-display" class="cp-display">-</span>
+                        </div>
+                    </div>
+                    
+                    <div id="pvp-quick-summary" class="pvp-quick-summary">
+                        <p class="pvp-qs-empty">포켓몬을 고르면 순위가 표시됩니다</p>
+                        <ul class="pvp-qs-cells" hidden>
+                            <li data-cp="1500"><span class="pvp-qs-label">슈퍼리그</span><span class="pvp-qs-value">—</span></li>
+                            <li data-cp="2500"><span class="pvp-qs-label">하이퍼리그</span><span class="pvp-qs-value">—</span></li>
+                            <li data-cp="10000"><span class="pvp-qs-label">마스터리그</span><span class="pvp-qs-value">—</span></li>
+                        </ul>
+                        <button type="button" class="pvp-qs-more is-invisible" disabled>전체 결과 보기(진화형 포함) ↓</button>
+                    </div>
+                </div>
+                <button type="button" id="pvp-controls-toggle" class="hidden" aria-label="조건 패널 열기">⚙ 조건 변경</button>
+                <div id="results-container" class="is-loading"></div>
+
+                
+                <section class="tool-guide"><h2>PvP 개체값 순위의 원리</h2><p>슈퍼리그(CP 상한 1500)와 하이퍼리그(CP 상한 2500)에서는 최적 개체값이 대부분 <strong>15/15/15가 아닙니다</strong>. 공격 개체값이 낮을수록 CP 상한 안에서 더 높은 레벨까지 강화할 수 있어, 방어와 HP가 오르는 폭이 공격 손해보다 커집니다. 그 결과 전체적인 내구(스탯 곱)가 높아집니다.</p><p>개체값을 입력하면 리그별로 4,096가지 조합 중 몇 위인지, 강화할 레벨과 CP, 같은 진화 계열과의 비교를 볼 수 있습니다. 1위가 이론상 최적이지만, 상위권이라면 일반적인 대전에는 충분합니다.</p><p>마스터리그는 CP 상한이 없으므로 15/15/15가 가장 강합니다.</p></section>
+            </div>
+        </div>
+    </div>
+    
+<footer class="pk-foot">
+  <p><a href="../../trade-list/?lang=ko">교환 목록 생성기</a> · <a href="../cp/">100% 개체값 CP</a> · <a href="../../about/">사이트 소개</a> · <a href="../../privacy/#en">개인정보처리방침</a> · <a href="../../disclaimer/">면책 조항</a></p>
+  <p><a href="../../pvp-ranker/" hreflang="zh-Hant">繁體中文</a> · <a href="../../en/pvp-ranker/" hreflang="en">English</a> · <a href="../../ja/pvp-ranker/" hreflang="ja">日本語</a> · <b>한국어</b> · <a href="../../fr/pvp-ranker/" hreflang="fr">Français</a> · <a href="../../de/pvp-ranker/" hreflang="de">Deutsch</a> · <a href="../../es/pvp-ranker/" hreflang="es">Español</a></p>
+</footer>
+<script src="../../data/precomputed_pokemon_cp.js"></script>
+<script src="../../data/pokemon_translation_map.js"></script>
+<script src="../../data/pokemon_names_from_api.js"></script>
+<script src="../../data/pokemon_data_and_rankings.js"></script>
+<script src="../../data/pokemon_images.js"></script>
+<script src="../../js/pvp-logic.js"></script>
+<script src="pvp-i18n.js"></script>
+<script type="module">
+import { initializePvpRanker } from '../../js/pvp-ranker.js';
+initializePvpRanker();
+</script>
+<script src="../../js/ads.js" defer></script>
+</body>
+</html>

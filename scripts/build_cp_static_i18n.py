@@ -15,10 +15,12 @@
 名單沿用 data/cp_static_targets.json。新增語言時，build_cp_static.I18N_LANGS 與
 本檔的 TXT_FILE、cp_i18n_strings.STR 要一起加。
 """
-import os, sys, json, re, hashlib, datetime
+import os, sys, json, re, hashlib, datetime, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_cp_static as B
 from cp_i18n_strings import STR
+from i18n_home_strings import HOME, MORE_PATHS
+import build_pvp_i18n as PV
 
 ROOT, ORIGIN, esc = B.ROOT, B.ORIGIN, B.esc
 LANGS = B.I18N_LANGS
@@ -26,6 +28,7 @@ TXT_FILE = {"en": "english", "ja": "japanese", "ko": "korean", "fr": "french", "
             "es": "spanish", "zh": "chinesetraditional"}
 POGO = os.environ.get("POGO_ASSETS", os.path.join(os.path.dirname(ROOT), "pogo_assets"))
 TERMS_PATH = os.path.join(ROOT, "data", "cp_i18n_terms.json")
+TERMS_EN_ALL = {}
 
 # 官方文字的對照補充
 FORM_KEY = {"zacian": "form_zacian_hero", "zamazenta": "form_zamazenta_hero", "giratina": "form_giratina_altered",
@@ -39,7 +42,15 @@ MANUAL_NAME = {"mewtwo_a": {"en": "Armored Mewtwo", "ja": "アーマードミュ
 MOVE_FIX = {"加農水砲": "Hydro Cannon", "巨力錘": "Gigaton Hammer", "氣象球 冰": ("Weather Ball", "ice"),
             "氣象球 火": ("Weather Ball", "fire"), "泡影詠歎調": "Sparkling Aria", "潑冷水": "Chilling Water",
             "潛水": "Dive", "火焰球": "Pyro Ball", "狙擊": "Snipe Shot", "等離子閃電拳": "Plasma Fists",
-            "逆鱗": "Outrage", "鼓擊": "Drum Beating"}
+            "逆鱗": "Outrage", "鼓擊": "Drum Beating",
+            # PvP 排名資料裡帶屬性的變體
+            "氣象球 岩石": ("Weather Ball", "rock"), "氣象球 水": ("Weather Ball", "water"),
+            "覺醒力量 冰": ("Hidden Power", "ice"), "覺醒力量 格鬥": ("Hidden Power", "fighting"),
+            "覺醒力量 超能力": ("Hidden Power", "psychic"), "覺醒力量 電": ("Hidden Power", "electric"),
+            "高科技光炮 一般": ("Techno Blast", "normal"), "高科技光炮 冰": ("Techno Blast", "ice"),
+            "高科技光炮 水": ("Techno Blast", "water"), "高科技光炮 火": ("Techno Blast", "fire"),
+            "高科技光炮 電": ("Techno Blast", "electric"),
+            "巨劍突擊": "Behemoth Blade", "神秘之劍": "Secret Sword", "驚爆大頭": "Mind Blown", "鳥嘴加農炮": "Beak Blast"}
 # 目前的 pogo_assets 文字檔還沒有的新招式：採用本傳遊戲的官方譯名（Pokémon GO 沿用同一套招式名稱）。
 # pogo_assets 更新後若官方文字已有，會優先用官方文字。
 MANUAL_MOVES = {
@@ -49,7 +60,16 @@ MANUAL_MOVES = {
     "狙擊": {"en": "Snipe Shot", "ja": "ねらいうち", "ko": "노려맞히기", "fr": "Tir de Précision", "de": "Präzisionsschuss", "es": "Disparo Certero"},
     "等離子閃電拳": {"en": "Plasma Fists", "ja": "プラズマフィスト", "ko": "플라스마피스트", "fr": "Plasma Punch", "de": "Plasmafäuste", "es": "Puños Plasma"},
     "鼓擊": {"en": "Drum Beating", "ja": "ドラムアタック", "ko": "드럼어택", "fr": "Tambour Battant", "de": "Trommelschläge", "es": "Batería Asalto"},
+    "巨劍突擊": {"en": "Behemoth Blade", "ja": "きょじゅうざん", "ko": "거수참", "fr": "Gladius Maximus", "de": "Gigaklinge", "es": "Tajo Supremo"},
+    "神秘之劍": {"en": "Secret Sword", "ja": "しんぴのつるぎ", "ko": "신비의칼", "fr": "Lame Ointe", "de": "Mystoschwert", "es": "Sable Místico"},
+    "驚爆大頭": {"en": "Mind Blown", "ja": "ビックリヘッド", "ko": "빅리헤드", "fr": "Caboche-Kaboum", "de": "Knallkopf", "es": "Cabeza Sorpresa"},
+    "鳥嘴加農炮": {"en": "Beak Blast", "ja": "くちばしキャノン", "ko": "부리캐논", "fr": "Bec-Canon", "de": "Schnabelkanone", "es": "Pico Cañón"},
 }
+# 全部寶可夢（給各語言 CP 查詢的搜尋）：地區型態的官方名稱 key，以及不顯示型態的幾筆
+REGION_TOK = {"ALOLA": "alola_pokedex_header", "GALARIAN": "galarian_pokedex_header",
+              "HISUIAN": "hisuian_pokedex_header", "PALDEA": "paldean_pokedex_header"}
+NO_FORM_ALL = NO_FORM | {"slowking"}   # 「2021／2022形態」只是資料上的區分
+IMG_PREFIX = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon%20-%20256x256/Addressable%20Assets/"
 WEATHER_KEY = {"clear": "weather_sunny", "rain": "weather_rainy", "partlycloudy": "weather_partly_cloudy",
                "cloudy": "weather_overcast", "windy": "weather_windy", "snow": "weather_snow", "fog": "weather_fog"}
 
@@ -118,6 +138,19 @@ def extract_terms(targets):
                 base = en.get(f"pokemon_name_{p['id']:04d}", slug)
             form = tx[l].get(form_key) if form_key else None
             terms[l]["names"][slug] = STR[l]["paren"].format(a=base, b=form) if form else base
+    names_all(tx, targets, terms)
+
+    def move_name(mv):
+        fix = MOVE_FIX.get(mv); typ = None
+        if isinstance(fix, tuple):
+            key, typ = en_move.get(fix[0]), fix[1]
+        else:
+            key = zh_move.get(mv) or (en_move.get(fix) if fix else None)
+        if not key:
+            return dict(MANUAL_MOVES[mv]) if mv in MANUAL_MOVES else None
+        return {l: (STR[l]["paren"].format(a=tx[l].get(key) or en[key], b=tx[l]["pokemon_type_" + typ]) if typ
+                    else (tx[l].get(key) or en[key])) for l in LANGS}
+    PV.extract_pvp_terms(tx, terms, move_name, missing)
     for l in LANGS:
         for ty in B.TYPE_DEF:
             terms[l]["types"][ty] = tx[l]["pokemon_type_" + ty]
@@ -146,6 +179,55 @@ def extract_terms(targets):
         # 缺字就停下來，不要用英文或代號默默頂替
         raise SystemExit("找不到官方文字（補 FORM_KEY／MANUAL_NAME／MOVE_FIX／MANUAL_MOVES 後再跑）：" + ", ".join(missing))
     return terms
+
+
+def names_all(tx, targets, terms):
+    """全部 CP 資料（約 1,079 筆，含型態）的各語言名稱，鍵是中文名稱。名單內的直接沿用 names。"""
+    en, zh = tx["en"], tx["zh"]
+    by_dex = collections.defaultdict(list)
+    for p in B.CP_DATA.values():
+        by_dex[p["id"]].append(p["gm"].split("_POKEMON_", 1)[1])
+    zh_form = collections.defaultdict(list)
+    for k, v in zh.items():
+        if k.startswith("form_"):
+            zh_form[v].append(k)
+    tslug = {t["name"]: t["slug"] for t in targets}
+    for l in LANGS:
+        terms[l]["all"] = {}
+    for p in B.CP_DATA.values():
+        nm = p["name"]
+        if nm in tslug:
+            for l in LANGS:
+                terms[l]["all"][nm] = terms[l]["names"][tslug[nm]]
+            continue
+        tok = p["gm"].split("_POKEMON_", 1)[1]; slug = tok.lower()
+        fk = None
+        if "(" in nm and slug not in NO_FORM_ALL:
+            fk = FORM_KEY.get(slug) or ("form_" + slug if "form_" + slug in en else None)
+            if not fk:
+                fk = next((k for r, k in REGION_TOK.items() if r in tok.split("_")), None)
+            if not fk:
+                lab = re.search(r"\(([^)]*)\)", nm).group(1).translate(str.maketrans("０１２３４５６７８９％", "0123456789%"))
+                base = min(by_dex[p["id"]], key=len).lower()
+                hits = zh_form.get(lab, []) + zh_form.get(lab.replace("形態", ""), [])
+                fk = next((k for k in hits if k.startswith("form_" + base)), hits[0] if hits else None)
+        for l in LANGS:
+            if slug in MANUAL_NAME:
+                terms[l]["all"][nm] = MANUAL_NAME[slug][l]; continue
+            base_n = tx[l].get(f"pokemon_name_{p['id']:04d}") or en.get(f"pokemon_name_{p['id']:04d}", nm)
+            form = tx[l].get(fk) if fk else None
+            terms[l]["all"][nm] = STR[l]["paren"].format(a=base_n, b=form) if form else base_n
+    # 同一語言裡名稱重複（型態對不到官方文字）→ 用遊戲代號的型態部分區分，避免搜尋結果分不出來
+    for l in LANGS:
+        seen = collections.Counter(terms[l]["all"].values())
+        for p in B.CP_DATA.values():
+            v = terms[l]["all"][p["name"]]
+            if seen[v] > 1 and "(" in p["name"]:
+                tok = p["gm"].split("_POKEMON_", 1)[1]
+                base = min(by_dex[p["id"]], key=len)
+                suf = tok[len(base) + 1:] if tok.startswith(base + "_") else ""
+                if suf:
+                    terms[l]["all"][p["name"]] = STR[l]["paren"].format(a=v, b=suf.replace("_", " ").title())
 
 
 def load_terms(targets):
@@ -252,8 +334,12 @@ def enrich(t, lang, T):
                 moves=moves, leagues=leagues, league_note=league_note)
 
 
-def lang_nav(slug, lang, to_root):
-    """頁尾的語言切換列（中文版在 /cp/<slug>/）。"""
+def lang_nav(slug, lang, to_root, home=False):
+    """頁尾的語言切換列（中文版在 /cp/<slug>/；home=True 時連到各語言首頁）。"""
+    if home:
+        names = {"en": "English", "ja": "日本語", "ko": "한국어", "fr": "Français", "de": "Deutsch", "es": "Español"}
+        items = [("zh", "繁體中文", to_root)] + [(l, names[l], f"{to_root}{l}/") for l in LANGS]
+        return " · ".join(f'<b>{n}</b>' if l == lang else f'<a href="{u}" hreflang="{STR[l]["html_lang"] if l != "zh" else "zh-Hant"}">{n}</a>' for l, n, u in items)
     items = [("zh", "繁體中文", f"{to_root}cp/{slug}/" if slug else f"{to_root}?tab=cp-checker-app")]
     names = {"en": "English", "ja": "日本語", "ko": "한국어", "fr": "Français", "de": "Deutsch", "es": "Español"}
     items += [(l, names[l], f"{to_root}{l}/cp/{slug + '/' if slug else ''}") for l in LANGS]
@@ -309,7 +395,7 @@ def build_page(t, lang, T, pool):
     grid_html = f'<p class="sub" style="margin:0 0 10px">{esc(S["same"])}</p><div class="grid">{grid}</div>' if grid else ""
     rv_data = B.rv_data_json(p, slug, lang, S["rv"])
     ld = json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": S["site"], "item": ORIGIN + "/"},
+        {"@type": "ListItem", "position": 1, "name": S["site"], "item": f"{ORIGIN}/{lang}/"},
         {"@type": "ListItem", "position": 2, "name": S["hub_name"], "item": f"{ORIGIN}/{lang}/cp/"},
         {"@type": "ListItem", "position": 3, "name": name, "item": url}]}, ensure_ascii=False).replace("</", "<\\/")
     return f"""<!doctype html>
@@ -340,7 +426,7 @@ def build_page(t, lang, T, pool):
 <body style="--accent:{c1};--accent2:{c2}">
 <div class="wrap">
   <nav class="crumb" aria-label="{esc(S['crumb_aria'])}">
-    <a href="{R}">{esc(S['site'])}</a> ›
+    <a href="../../">{esc(S['site'])}</a> ›
     <a href="../">{esc(S['hub_name'])}</a> ›
     <span>{esc(name)}</span>
   </nav>
@@ -430,7 +516,7 @@ def build_page(t, lang, T, pool):
 
   <div style="text-align:center;margin-top:8px"><a class="cta" href="../">{esc(S['cta'])}</a></div>
 
-  <p class="pagefoot"><a href="{R}">{esc(S['site'])}</a> · {esc(S['foot_tag'])}</p>
+  <p class="pagefoot"><a href="../../">{esc(S['site'])}</a> · {esc(S['foot_tag'])}</p>
   <p class="pagefoot"><a href="{R}trade-list/?lang={lang}">{esc(S['trade'])}</a> · <a href="{R}about/">{esc(S['about'])}</a> · <a href="{R}privacy/#en">{esc(S['privacy'])}</a> · <a href="{R}disclaimer/">{esc(S['disclaimer'])}</a></p>
   <p class="pagefoot">{lang_nav(slug, lang, R)}</p>
 </div>
@@ -449,9 +535,11 @@ def hub_alternates():
     return "\n".join(out)
 
 
-def build_hub(lang, T, pool):
-    S = STR[lang]; R = "../../"; n = len(pool)
+def build_hub(lang, T, pool, n_all):
+    S = STR[lang]; H = HOME[lang]; R = "../../"; n = len(pool)
     url = f"{ORIGIN}/{lang}/cp/"
+    hub_json = json.dumps({"lv": S["lv"], "cp": S["f_cp"], "none": H["hub_none"], "more": H["hub_more"], "img": IMG_PREFIX},
+                          ensure_ascii=False).replace("</", "<\\/")
     tiles = []
     for x in sorted(pool, key=lambda x: (x["dex"], x["rank"])):
         nm = T["names"][x["slug"]]
@@ -483,7 +571,7 @@ def build_hub(lang, T, pool):
 </head>
 <body>
 <div class="wrap">
-  <nav class="crumb" aria-label="{esc(S['crumb_aria'])}"><a href="{R}">{esc(S['site'])}</a> › <span>{esc(S['hub_name'])}</span></nav>
+  <nav class="crumb" aria-label="{esc(S['crumb_aria'])}"><a href="../">{esc(S['site'])}</a> › <span>{esc(S['hub_name'])}</span></nav>
   <aside class="site-ad" aria-label="{esc(S['ad'])}" data-ad-reserved><span class="site-ad-label">{esc(S['ad'])}</span><div class="site-ad-ph"></div></aside>
   <section class="card">
     <h1 style="font-size:25px">{esc(S['hub_h1'])}</h1>
@@ -491,14 +579,99 @@ def build_hub(lang, T, pool):
   </section>
   <section class="card">
     <input class="hubq" id="hubq" type="search" placeholder="{esc(S['hub_q'])}" aria-label="{esc(S['hub_q'])}">
-    <p class="sub">{esc(S['hub_count'].format(n=n))}</p>
-    <div class="hub" id="hub">{''.join(tiles)}</div>
+    <p class="sub">{esc(H['hub_search_note'].format(n=n_all))}</p>
+    <p class="sub" id="resmsg" hidden></p>
+    <div class="hub" id="res" hidden></div>
+    <div id="popwrap">
+      <h2>{esc(H['hub_popular'])}</h2>
+      <p class="sub">{esc(S['hub_count'].format(n=n))}</p>
+      <div class="hub" id="hub">{''.join(tiles)}</div>
+    </div>
   </section>
   <p class="pagefoot"><a href="{R}trade-list/?lang={lang}">{esc(S['trade'])}</a> · <a href="{R}about/">{esc(S['about'])}</a> · <a href="{R}privacy/#en">{esc(S['privacy'])}</a> · <a href="{R}disclaimer/">{esc(S['disclaimer'])}</a></p>
   <p class="pagefoot">{lang_nav('', lang, R)}</p>
 </div>
-<script>(function(){{var q=document.getElementById('hubq'),a=[].slice.call(document.querySelectorAll('#hub a'));
-q.addEventListener('input',function(){{var v=q.value.trim().toLowerCase();a.forEach(function(x){{x.hidden=!!v&&x.getAttribute('data-k').indexOf(v)<0;}});}});}})();</script>
+<script type="application/json" id="hubL">{hub_json}</script>
+<script src="{R}js/cp-hub.js" defer></script>
+<script src="{R}js/ads.js" defer></script>
+</body>
+</html>"""
+
+
+def write_all_json(lang, T, targets):
+    """/<lang>/cp/all.json：[名稱, 圖鑑編號, Lv15, Lv20, Lv25, Lv40, Lv50 的 100% CP, slug（有靜態頁才有）, 圖檔名, 英文名]。"""
+    tslug = {t["name"]: t["slug"] for t in targets}
+    en_all = TERMS_EN_ALL
+    rows = []
+    for p in sorted(B.CP_DATA.values(), key=lambda p: (p["id"], p["name"])):
+        rows.append([T["all"][p["name"]], p["id"]] + [B.cp_at(p, L, 15) for L in (15, 20, 25, 40, 50)]
+                    + [tslug.get(p["name"], ""), p["imageUrl"].replace(IMG_PREFIX, ""), en_all[p["name"]].lower()])
+    data = json.dumps(rows, ensure_ascii=False, separators=(",", ":"))
+    with open(os.path.join(ROOT, lang, "cp", "all.json"), "w", encoding="utf-8", newline="\n") as f:
+        f.write(data)
+    return len(rows)
+
+
+def home_alternates():
+    out = [f'<link rel="alternate" hreflang="{l}" href="{ORIGIN}/{l}/">' for l in LANGS]
+    out.append(f'<link rel="alternate" hreflang="x-default" href="{ORIGIN}/en/">')
+    return "\n".join(out)
+
+
+def build_home(lang):
+    S = STR[lang]; H = HOME[lang]; R = "../"
+    url = f"{ORIGIN}/{lang}/"
+    more = " · ".join(f'<a href="{R}{p}" hreflang="zh-Hant">{esc(n)}</a>' for p, n in zip(MORE_PATHS, H["more_links"]))
+    ld = json.dumps({"@context": "https://schema.org", "@type": "WebSite", "name": S["site"], "url": url,
+                     "inLanguage": S["html_lang"]}, ensure_ascii=False).replace("</", "<\\/")
+    return f"""<!doctype html>
+<html lang="{S['html_lang']}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="{R}js/analytics.js"></script>
+<script src="{R}config.js"></script>
+<script src="{R}js/pageview-counter.js" defer></script>
+<link rel="icon" type="image/png" sizes="192x192" href="{R}img/masterball.png">
+<title>{esc(H['home_title'])}</title>
+<meta name="description" content="{esc(H['home_desc'])}">
+<link rel="canonical" href="{url}">
+{home_alternates()}
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{esc(S['site'])}">
+<meta property="og:title" content="{esc(H['home_title'])}">
+<meta property="og:description" content="{esc(H['home_desc'])}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{ORIGIN}/trade-list/assets/brand/og.png">
+<meta property="og:locale" content="{S['og_locale']}">
+<script type="application/ld+json">{ld}</script>
+<link rel="stylesheet" href="{R}css/cp-static.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumb" aria-label="{esc(H['lang_label'])}">🌐 {lang_nav('', lang, R, home=True)}</nav>
+  <aside class="site-ad" aria-label="{esc(S['ad'])}" data-ad-reserved><span class="site-ad-label">{esc(S['ad'])}</span><div class="site-ad-ph"></div></aside>
+  <header class="card hero">
+    <div class="band" style="height:56px"></div>
+    <div style="padding:18px 22px 4px">
+      <h1>{esc(H['home_h1'])}</h1>
+    </div>
+    <p class="lead">{esc(H['home_lead'])}</p>
+  </header>
+  <div class="tools">
+    <a class="tool" href="{R}trade-list/?lang={lang}"><span class="ico">📋</span><b>{esc(H['c_trade_t'])}</b><span>{esc(H['c_trade_d'])}</span></a>
+    <a class="tool" href="cp/"><span class="ico">💯</span><b>{esc(H['c_cp_t'])}</b><span>{esc(H['c_cp_d'])}</span></a>
+    <a class="tool" href="pvp-ranker/"><span class="ico">⚔️</span><b>{esc(H['c_pvp_t'])}</b><span>{esc(H['c_pvp_d'])}</span></a>
+  </div>
+  <section class="card">
+    <h2>{esc(H['more_t'])}</h2>
+    <p class="sub" style="margin:0 0 8px">{esc(H['more_d'])}</p>
+    <p class="more" style="margin:0">{more}</p>
+  </section>
+  <p class="pagefoot"><a href="{R}about/">{esc(S['about'])}</a> · <a href="{R}privacy/#en">{esc(S['privacy'])}</a> · <a href="{R}disclaimer/">{esc(S['disclaimer'])}</a></p>
+</div>
 <script src="{R}js/ads.js" defer></script>
 </body>
 </html>"""
@@ -512,7 +685,7 @@ def write_sitemap_block(urls_fp):
     nl = "\r\n" if "\r\n" in xml else "\n"
     xml = re.sub(r"[ \t]*<!-- CP 多語言頁：[^\n]*\n", "", xml)
     pat = "|".join(LANGS)
-    xml = re.sub(r"[ \t]*<url>\s*<loc>" + re.escape(ORIGIN) + r"/(?:" + pat + r")/cp/[^<]*</loc>.*?</url>[ \t]*\r?\n", "", xml, flags=re.S)
+    xml = re.sub(r"[ \t]*<url>\s*<loc>" + re.escape(ORIGIN) + r"/(?:" + pat + r")/(?:cp/[^<]*|pvp-ranker/)?</loc>.*?</url>[ \t]*\r?\n", "", xml, flags=re.S)
     state_path = os.path.join(ROOT, "data", "cp_static_i18n_lastmod.json")
     try:
         with open(state_path, encoding="utf-8") as f:
@@ -529,7 +702,7 @@ def write_sitemap_block(urls_fp):
     lines = ["  <!-- CP 多語言頁：由 scripts/build_cp_static_i18n.py 自動產生，勿手改此區塊 -->"]
     for u in urls_fp:
         lines += ["  <url>", f"    <loc>{u}</loc>", f"    <lastmod>{state[u]['lastmod']}</lastmod>",
-                  f"    <priority>{'0.5' if u.endswith('/cp/') else '0.6'}</priority>", "  </url>"]
+                  f"    <priority>{'0.7' if re.search(r'/[a-z]{2}/$', u) else ('0.5' if u.endswith('/cp/') else '0.6')}</priority>", "  </url>"]
     xml = xml.replace("</urlset>", nl.join(lines) + nl + "</urlset>")
     open(path, "w", encoding="utf-8", newline="").write(xml)
 
@@ -537,6 +710,8 @@ def write_sitemap_block(urls_fp):
 def main():
     targets = [t for t in B.TARGET_LIST if t["name"] in B.CP_DATA]
     terms = load_terms(targets)
+    global TERMS_EN_ALL
+    TERMS_EN_ALL = terms["en"]["all"]
     en_names = terms["en"]["names"]
     pool = []
     for rank, t in enumerate(targets):
@@ -554,10 +729,16 @@ def main():
             with open(os.path.join(out, "index.html"), "w", encoding="utf-8", newline="\n") as f:
                 f.write(page)
             urls_fp[f"{ORIGIN}/{lang}/cp/{t['slug']}/"] = hashlib.sha1(page.encode("utf-8")).hexdigest()[:16]
-        hub = build_hub(lang, T, pool)
+        n_all = write_all_json(lang, T, targets)
+        hub = build_hub(lang, T, pool, n_all)
         with open(os.path.join(base, "index.html"), "w", encoding="utf-8", newline="\n") as f:
             f.write(hub)
         urls_fp[f"{ORIGIN}/{lang}/cp/"] = hashlib.sha1(hub.encode("utf-8")).hexdigest()[:16]
+        home = build_home(lang)
+        with open(os.path.join(ROOT, lang, "index.html"), "w", encoding="utf-8", newline="\n") as f:
+            f.write(home)
+        urls_fp[f"{ORIGIN}/{lang}/"] = hashlib.sha1(home.encode("utf-8")).hexdigest()[:16]
+    urls_fp.update(PV.generate(terms, lang_nav))   # /<lang>/pvp-ranker/
     write_sitemap_block(urls_fp)
     print(f"已產生 {len(LANGS)} 種語言 × {len(targets)} 隻 = {len(LANGS) * len(targets)} 頁，加上 {len(LANGS)} 個列表頁；sitemap.xml 已更新")
 

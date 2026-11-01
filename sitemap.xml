@@ -3251,7 +3251,12 @@
   <url>
     <loc>https://pogokit.com/en/cp/</loc>
     <lastmod>2026-11-02</lastmod>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/en/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://pogokit.com/ja/cp/garchomp/</loc>
@@ -4776,7 +4781,12 @@
   <url>
     <loc>https://pogokit.com/ja/cp/</loc>
     <lastmod>2026-11-02</lastmod>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/ja/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://pogokit.com/ko/cp/garchomp/</loc>
@@ -6301,7 +6311,12 @@
   <url>
     <loc>https://pogokit.com/ko/cp/</loc>
     <lastmod>2026-11-02</lastmod>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/ko/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://pogokit.com/fr/cp/garchomp/</loc>
@@ -7826,7 +7841,12 @@
   <url>
     <loc>https://pogokit.com/fr/cp/</loc>
     <lastmod>2026-11-02</lastmod>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/fr/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://pogokit.com/de/cp/garchomp/</loc>
@@ -9351,7 +9371,12 @@
   <url>
     <loc>https://pogokit.com/de/cp/</loc>
     <lastmod>2026-11-02</lastmod>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/de/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://pogokit.com/es/cp/garchomp/</loc>
@@ -10876,6 +10901,41 @@
   <url>
     <loc>https://pogokit.com/es/cp/</loc>
     <lastmod>2026-11-02</lastmod>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/es/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/en/pvp-ranker/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/ja/pvp-ranker/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/ko/pvp-ranker/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/fr/pvp-ranker/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/de/pvp-ranker/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/es/pvp-ranker/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>
