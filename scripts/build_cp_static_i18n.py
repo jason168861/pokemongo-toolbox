@@ -21,6 +21,7 @@ import build_cp_static as B
 from cp_i18n_strings import STR
 from i18n_home_strings import HOME, MORE_PATHS
 import build_pvp_i18n as PV
+from i18n_header import site_header
 
 ROOT, ORIGIN, esc = B.ROOT, B.ORIGIN, B.esc
 LANGS = B.I18N_LANGS
@@ -432,8 +433,10 @@ def build_page(t, lang, T, pool):
 <meta property="og:locale" content="{S['og_locale']}">
 <script type="application/ld+json">{ld}</script>
 <link rel="stylesheet" href="{R}css/cp-static.css">
+<link rel="stylesheet" href="{R}css/site-i18n.css">
 </head>
 <body style="--accent:{c1};--accent2:{c2}">
+{site_header(lang, "../../", "c", dict([("zh", R + "cp/" + slug + "/")] + [(l, R + l + "/cp/" + slug + "/") for l in LANGS]))}
 <div class="wrap">
   <nav class="crumb" aria-label="{esc(S['crumb_aria'])}">
     <a href="../../">{esc(S['site'])}</a> ›
@@ -555,7 +558,7 @@ def build_hub(lang, T, pool, n_all):
         nm = T["names"][x["slug"]]
         key = " ".join([nm.lower(), str(x["dex"]), x["en"].lower(), x["slug"].replace("_", " ")])
         tiles.append(f'<a href="{x["slug"]}/" data-k="{esc(key)}"><img src="{esc(x["img"])}" alt="" width="48" height="48" loading="lazy">'
-                     f'<span>{esc(nm)}<small>{esc(S["tile"].format(cp=x["cp20"]))}</small></span></a>')
+                     f'<span><b class="tn">{esc(nm)}</b><span class="lvc l20">{esc(S["lv"])}20 <b>{x["cp20"]}</b></span></span></a>')
     return f"""<!doctype html>
 <html lang="{S['html_lang']}">
 <head>
@@ -578,20 +581,23 @@ def build_hub(lang, T, pool, n_all):
 <meta property="og:url" content="{url}">
 <meta property="og:locale" content="{S['og_locale']}">
 <link rel="stylesheet" href="{R}css/cp-static.css">
+<link rel="stylesheet" href="{R}css/site-i18n.css">
 </head>
 <body>
+{site_header(lang, "../", "c", dict([("zh", R + "?tab=cp-checker-app")] + [(l, R + l + "/cp/") for l in LANGS]))}
 <div class="wrap">
   <nav class="crumb" aria-label="{esc(S['crumb_aria'])}"><a href="../">{esc(S['site'])}</a> › <span>{esc(S['hub_name'])}</span></nav>
   <aside class="site-ad" aria-label="{esc(S['ad'])}" data-ad-reserved><span class="site-ad-label">{esc(S['ad'])}</span><div class="site-ad-ph"></div></aside>
-  <section class="card">
-    <h1 style="font-size:25px">{esc(S['hub_h1'])}</h1>
+  <section class="xhero cp">
+    <h1>{esc(S['hub_h1'])}</h1>
     {S['hub_intro']}
+    <div class="lvlegend"><span class="lvc l15">{esc(S['t15'])} · {esc(S['lv'])}15</span><span class="lvc l20">{esc(S['t20'])} · {esc(S['lv'])}20</span><span class="lvc l25">{esc(S['t25'])} · {esc(S['lv'])}25</span></div>
   </section>
   <section class="card">
     <input class="hubq" id="hubq" type="search" placeholder="{esc(S['hub_q'])}" aria-label="{esc(S['hub_q'])}">
     <p class="sub">{esc(H['hub_search_note'].format(n=n_all))}</p>
     <p class="sub" id="resmsg" hidden></p>
-    <div class="hub" id="res" hidden></div>
+    <div class="hub rows" id="res" hidden></div>
     <div id="popwrap">
       <h2>{esc(H['hub_popular'])}</h2>
       <p class="sub">{esc(S['hub_count'].format(n=n))}</p>
@@ -658,22 +664,24 @@ def build_home(lang):
 <meta property="og:locale" content="{S['og_locale']}">
 <script type="application/ld+json">{ld}</script>
 <link rel="stylesheet" href="{R}css/cp-static.css">
+<link rel="stylesheet" href="{R}css/site-i18n.css">
 </head>
 <body>
+{site_header(lang, "", "", dict([("zh", R)] + [(l, R + l + "/") for l in LANGS]))}
 <div class="wrap">
-  <nav class="crumb" aria-label="{esc(H['lang_label'])}">🌐 {lang_nav('', lang, R, home=True)}</nav>
   <aside class="site-ad" aria-label="{esc(S['ad'])}" data-ad-reserved><span class="site-ad-label">{esc(S['ad'])}</span><div class="site-ad-ph"></div></aside>
-  <header class="card hero">
-    <div class="band" style="height:56px"></div>
-    <div style="padding:18px 22px 4px">
-      <h1>{esc(H['home_h1'])}</h1>
+  <section class="xhero">
+    <h1>{esc(H['home_h1'])}</h1>
+    <p>{esc(H['home_lead'])}</p>
+    <div class="xhero-cta">
+      <a class="xbtn" href="{R}trade-list/?lang={lang}">📋 {esc(H['c_trade_t'])} →</a>
+      <a class="xbtn ghost" href="cp/">💯 {esc(H['c_cp_t'])}</a>
     </div>
-    <p class="lead">{esc(H['home_lead'])}</p>
-  </header>
+  </section>
   <div class="tools">
-    <a class="tool" href="{R}trade-list/?lang={lang}"><span class="ico">📋</span><b>{esc(H['c_trade_t'])}</b><span>{esc(H['c_trade_d'])}</span></a>
-    <a class="tool" href="cp/"><span class="ico">💯</span><b>{esc(H['c_cp_t'])}</b><span>{esc(H['c_cp_d'])}</span></a>
-    <a class="tool" href="pvp-ranker/"><span class="ico">⚔️</span><b>{esc(H['c_pvp_t'])}</b><span>{esc(H['c_pvp_d'])}</span></a>
+    <a class="tool t" href="{R}trade-list/?lang={lang}"><span class="ico">📋</span><b>{esc(H['c_trade_t'])}</b><span>{esc(H['c_trade_d'])}</span></a>
+    <a class="tool c" href="cp/"><span class="ico">💯</span><b>{esc(H['c_cp_t'])}</b><span>{esc(H['c_cp_d'])}</span></a>
+    <a class="tool p" href="pvp-ranker/"><span class="ico">⚔️</span><b>{esc(H['c_pvp_t'])}</b><span>{esc(H['c_pvp_d'])}</span></a>
   </div>
   <section class="card">
     <h2>{esc(H['more_t'])}</h2>
@@ -681,6 +689,7 @@ def build_home(lang):
     <p class="more" style="margin:0">{more}</p>
   </section>
   <p class="pagefoot"><a href="{R}about/">{esc(S['about'])}</a> · <a href="{R}privacy/#en">{esc(S['privacy'])}</a> · <a href="{R}disclaimer/">{esc(S['disclaimer'])}</a></p>
+  <p class="pagefoot">{lang_nav('', lang, R, home=True)}</p>
 </div>
 <script src="{R}js/ads.js" defer></script>
 </body>

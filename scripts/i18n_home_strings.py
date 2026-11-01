@@ -4,6 +4,7 @@
 HOME = {}
 
 HOME["en"] = dict(
+    nav=('Trade List', '100% IV CP', 'PvP IV'),
     hub_err="Couldn't load the Pokémon list. Please check your connection and try again.",
     home_title="Pokémon GO Toolbox – Trade List Generator, 100% IV CP & PvP IV Rankings",
     home_desc=("Free Pokémon GO tools: make a trade list image with shiny, forms and backgrounds, check the 100% IV (hundo) CP "
@@ -27,6 +28,7 @@ HOME["en"] = dict(
 )
 
 HOME["ja"] = dict(
+    nav=('交換リスト', '個体値100 CP', 'PvP個体値'),
     hub_err="ポケモンの一覧を読み込めませんでした。通信状況を確認して、もう一度お試しください。",
     home_title="ポケモンGO ツールボックス｜交換リスト作成・個体値100のCP・PvP個体値ランキング",
     home_desc=("無料のポケモンGO ツール集：色違い・すがた・背景つきポケモンで交換リストの画像を作成、どのポケモンでも個体値100のCPを確認、"
@@ -50,6 +52,7 @@ HOME["ja"] = dict(
 )
 
 HOME["ko"] = dict(
+    nav=('교환 목록', '100% 개체값 CP', 'PvP 개체값'),
     hub_err="포켓몬 목록을 불러오지 못했습니다. 연결 상태를 확인한 뒤 다시 시도해 주세요.",
     home_title="포켓몬 GO 툴박스｜교환 목록 생성기·100% 개체값 CP·PvP 개체값 순위",
     home_desc=("무료 포켓몬 GO 도구: 색이 다른 포켓몬·모습·배경으로 교환 목록 이미지를 만들고, 모든 포켓몬의 100% 개체값 CP를 확인하고, "
@@ -73,6 +76,7 @@ HOME["ko"] = dict(
 )
 
 HOME["fr"] = dict(
+    nav=('Liste d’échange', 'PC 100 % IV', 'IV PvP'),
     hub_err="Impossible de charger la liste des Pokémon. Vérifiez votre connexion et réessayez.",
     home_title="Boîte à outils Pokémon GO – liste d’échange, PC à 100 % IV et classement PvP des IV",
     home_desc=("Outils gratuits pour Pokémon GO : créez une image de liste d’échange (chromatiques, formes, fonds), consultez les PC à 100 % IV "
@@ -96,6 +100,7 @@ HOME["fr"] = dict(
 )
 
 HOME["de"] = dict(
+    nav=('Tauschliste', '100 % IV WP', 'PvP-IV'),
     hub_err="Die Pokémon-Liste konnte nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.",
     home_title="Pokémon GO Toolbox – Tauschlisten-Generator, 100 % IV WP & PvP-IV-Rankings",
     home_desc=("Kostenlose Pokémon GO Tools: Tauschliste mit schillernden Pokémon, Formen und Hintergründen als Bild erstellen, 100 % IV WP (Hundo) "
@@ -119,6 +124,7 @@ HOME["de"] = dict(
 )
 
 HOME["es"] = dict(
+    nav=('Lista de intercambio', 'PC 100 % IV', 'IV PvP'),
     hub_err="No se pudo cargar la lista de Pokémon. Revisa tu conexión e inténtalo de nuevo.",
     home_title="Herramientas Pokémon GO – lista de intercambio, PC con 100 % IV y ranking PvP de IV",
     home_desc=("Herramientas gratuitas para Pokémon GO: crea una imagen de lista de intercambio con variocolor, formas y fondos, consulta los PC con "
