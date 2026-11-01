@@ -1,0 +1,30 @@
+{
+  "title": "Comment faire une liste d’échange Pokémon GO",
+  "sections": [
+    {
+      "h": "À quoi sert ce générateur de liste d’échange",
+      "html": "<p>Le générateur transforme les Pokémon que vous recherchez et ceux que vous pouvez céder en une seule image claire, à publier sur un serveur Discord, un groupe Facebook ou Reddit. Au lieu de taper de longues listes à la main, vous choisissez des cartes dans un catalogue de toutes les combinaisons du jeu : Pokémon <strong>chromatiques</strong>, <strong>formes</strong> régionales et saisonnières, <strong>costumes</strong>, différences mâle/femelle, <strong>Dynamax</strong> et <strong>Gigamax</strong>, Pokémon purifiés, et Pokémon avec <strong>fonds de lieu et fonds spéciaux</strong>.</p><p>C’est gratuit, sans compte, et cela fonctionne aussi bien sur téléphone que sur ordinateur.</p>"
+    },
+    {
+      "h": "Votre liste en quatre étapes",
+      "html": "<ol><li><strong>Ajoutez ce que vous cherchez.</strong> Dans <em>Je recherche</em>, touchez <em>✏️ Ajouter</em> et cherchez par nom ou par numéro du Pokédex. Les filtres affichent uniquement les Chromatiques, Forme/Costume, Dynamax, Gigamax ou Légendaires, et un glissement latéral permet de sélectionner plusieurs cartes d’un coup.</li><li><strong>Ajoutez ce que vous proposez.</strong> Faites de même dans <em>Je propose</em>. L’onglet <em>Fonds</em> regroupe les Pokémon apparus avec un fond de lieu ou d’événement, et <em>Combinaison libre</em> permet de créer une combinaison absente du catalogue : n’importe quel Pokémon avec un marqueur et un fond.</li><li><strong>Affinez chaque carte.</strong> Les petits boutons d’une carte indiquent le sexe ou la Poké Ball utilisée pour la capture, pour que votre partenaire sache exactement de quel Pokémon il s’agit.</li><li><strong>Créez l’image.</strong> Touchez <em>🎨 Créer l’image</em> pour choisir le thème, les polices, les couleurs et le nombre de cartes par ligne, ajoutez votre Code de Dresseur si vous le souhaitez, puis téléchargez ou partagez l’image.</li></ol>"
+    },
+    {
+      "h": "Partager un lien et garder plusieurs listes",
+      "html": "<p><em>Lien de partage</em> crée une URL qui ouvre votre liste chez quelqu’un d’autre, qui peut aussi l’importer comme nouvelle liste. Avec <em>Nouvelle liste</em>, vous gardez plusieurs listes en parallèle, par exemple une pour la Journée Communauté et une pour les Pokémon régionaux. Les listes sont enregistrées dans votre navigateur ; en vous connectant avec Google, vous retrouvez les mêmes listes sur téléphone et sur ordinateur.</p>"
+    },
+    {
+      "h": "Conseils utiles pour échanger",
+      "html": "<ul><li>Les <strong>échanges spéciaux</strong> (Pokémon chromatiques, légendaires ou pas encore enregistrés dans votre Pokédex) coûtent plus de Poussière d’Étoile et sont limités à un par jour. Plus le niveau d’amitié est élevé, plus ils sont bon marché.</li><li>Certains Pokémon ne peuvent pas être échangés du tout, comme la plupart des Pokémon fabuleux. Le catalogue les marque d’un 🚫 pour éviter de proposer ce que vous ne pouvez pas envoyer.</li><li>Un Pokémon avec un fond de lieu ou un fond spécial le conserve après l’échange ; c’est pourquoi beaucoup de joueurs en mettent dans leur liste.</li><li>Placez les échanges qui comptent le plus dans les premières lignes : la plupart des gens ne regardent que le haut de l’image.</li></ul>"
+    }
+  ],
+  "faqTitle": "Questions fréquentes",
+  "faq": [
+    { "q": "Le générateur est-il gratuit ?", "a": "Oui. Rien à acheter, aucune inscription ; les publicités de la page financent le site." },
+    { "q": "Faut-il se connecter ?", "a": "Non. Vos listes sont enregistrées dans ce navigateur. La connexion Google est facultative et sert seulement à synchroniser vos listes entre appareils." },
+    { "q": "Quels Pokémon et fonds sont inclus ?", "a": "Les Pokémon sortis dans Pokémon GO avec leurs formes, costumes, versions chromatiques et Dynamax/Gigamax, ainsi que les fonds de lieu et fonds spéciaux apparus lors d’événements. S’il manque une combinaison, créez-la avec Combinaison libre." },
+    { "q": "Mon Code de Dresseur apparaît-il sur l’image ?", "a": "Seulement si vous le saisissez. Le champ Code de Dresseur est facultatif et vide par défaut." },
+    { "q": "Quelles langues sont disponibles ?", "a": "Anglais, chinois traditionnel, japonais, coréen, français, allemand et espagnol. Les noms des Pokémon suivent la langue choisie, et la recherche comprend les noms dans toutes ces langues." },
+    { "q": "Est-ce que ça marche sur téléphone ?", "a": "Oui. Sur iPhone et Android, l’image peut être enregistrée dans vos photos ou partagée directement dans une autre application." }
+  ]
+}

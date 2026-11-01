@@ -1,0 +1,30 @@
+{
+  "title": "Cómo hacer una lista de intercambio de Pokémon GO",
+  "sections": [
+    {
+      "h": "Qué hace este generador de listas de intercambio",
+      "html": "<p>El generador convierte los Pokémon que buscas y los que puedes ofrecer en una sola imagen clara para publicarla en un servidor de Discord, un grupo de Facebook o WhatsApp, o en Reddit. En lugar de escribir listas largas a mano, eliges tarjetas de un catálogo con todas las combinaciones del juego: Pokémon <strong>variocolor</strong>, <strong>formas</strong> regionales y de temporada, <strong>disfraces</strong>, diferencias de sexo, <strong>Dinamax</strong> y <strong>Gigamax</strong>, Pokémon purificados y Pokémon con <strong>fondos de ubicación y fondos especiales</strong>.</p><p>Es gratis, no necesita cuenta y funciona tanto en el móvil como en el ordenador.</p>"
+    },
+    {
+      "h": "Haz tu lista en cuatro pasos",
+      "html": "<ol><li><strong>Añade lo que buscas.</strong> En <em>Busco</em>, toca <em>✏️ Añadir</em> y busca por nombre o número de la Pokédex. Los filtros muestran solo Variocolor, Forma/Disfraz, Dinamax, Gigamax o Legendarios, y puedes deslizar hacia un lado para seleccionar muchas tarjetas a la vez.</li><li><strong>Añade lo que ofreces.</strong> Haz lo mismo en <em>Ofrezco</em>. La pestaña <em>Fondos</em> reúne los Pokémon que aparecieron con fondos de ubicación o de eventos, y <em>Combinación libre</em> te permite crear una combinación que no está en el catálogo: cualquier Pokémon con una marca y un fondo.</li><li><strong>Ajusta cada tarjeta.</strong> Con los botones pequeños de la tarjeta puedes indicar el sexo o la Poké Ball con la que lo atrapaste, para que tu compañero sepa exactamente cuál es.</li><li><strong>Crea la imagen.</strong> Toca <em>🎨 Crear imagen</em> para elegir tema, fuentes, colores y cuántas tarjetas van en cada fila, añade tu Código de Entrenador si quieres y descarga o comparte la imagen.</li></ol>"
+    },
+    {
+      "h": "Comparte un enlace y guarda varias listas",
+      "html": "<p><em>Enlace para compartir</em> crea una URL que abre tu lista para otra persona, que además puede importarla como una lista nueva propia. Con <em>Nueva lista</em> puedes tener varias listas a la vez, por ejemplo una para el Día de la Comunidad y otra para regionales. Las listas se guardan en tu navegador; si inicias sesión con Google, tendrás las mismas listas en el móvil y en el ordenador.</p>"
+    },
+    {
+      "h": "Consejos útiles para intercambiar",
+      "html": "<ul><li>Los <strong>intercambios especiales</strong> (Pokémon variocolor, legendarios o que aún no tienes registrados) cuestan más Polvos Estelares y solo se puede hacer uno al día. Cuanto más alto es el nivel de amistad, mucho más baratos son.</li><li>Algunos Pokémon no se pueden intercambiar, como la mayoría de los Pokémon singulares. El catálogo los marca con 🚫 para que no ofrezcas algo que en realidad no puedes enviar.</li><li>Los Pokémon con fondo de ubicación o fondo especial lo conservan después del intercambio; por eso muchos jugadores los incluyen en sus listas.</li><li>Pon los intercambios que más te interesan en las primeras filas: la mayoría solo mira la parte de arriba de la imagen.</li></ul>"
+    }
+  ],
+  "faqTitle": "Preguntas frecuentes",
+  "faq": [
+    { "q": "¿El generador es gratis?", "a": "Sí. No hay nada de pago ni registro; los anuncios de la página mantienen el sitio." },
+    { "q": "¿Tengo que iniciar sesión?", "a": "No. Tus listas se guardan en este navegador. Iniciar sesión con Google es opcional y solo sirve para sincronizar las listas entre dispositivos." },
+    { "q": "¿Qué Pokémon y fondos incluye?", "a": "Los Pokémon que han salido en Pokémon GO con sus formas, disfraces, variocolor y Dinamax/Gigamax, además de los fondos de ubicación y fondos especiales que han aparecido en eventos. Si falta una combinación, créala con Combinación libre." },
+    { "q": "¿Se verá mi Código de Entrenador en la imagen?", "a": "Solo si lo escribes. El campo del Código de Entrenador es opcional y está vacío por defecto." },
+    { "q": "¿En qué idiomas está?", "a": "Inglés, chino tradicional, japonés, coreano, francés, alemán y español. Los nombres de los Pokémon siguen el idioma que elijas y la búsqueda entiende los nombres en todos ellos." },
+    { "q": "¿Funciona en el móvil?", "a": "Sí. En iPhone y Android puedes guardar la imagen en tu galería o compartirla directamente con otra app." }
+  ]
+}

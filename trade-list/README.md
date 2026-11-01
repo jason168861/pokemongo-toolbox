@@ -555,3 +555,10 @@ sprite 四周常有一圈透明 padding。前端會掃描出主體的 bounding b
 程式碼為個人非商業用途的同好作品。
 寶可夢、Pokémon GO 及相關圖像之著作權屬 Nintendo / Creatures Inc. /
 GAME FREAK inc. / Niantic, Inc. 所有,本專案與上述公司無任何關聯。
+
+## 使用說明與 FAQ、各語言的 title / description
+
+- 工具下方的使用說明與 FAQ 在 `data/guide/<lang>.json`（zh、en、ja、ko、fr、de、es 各一份），由 `loadGuide()` 依介面語言載入，只渲染目前語言那一份。內容是站內自寫的靜態文字，可以含簡單的 HTML（`<strong>`、`<em>`、`<ol>`、`<ul>`）。改功能時，記得同步更新說明裡提到的按鈕名稱。
+- 說明區與頁尾連結等 boot 完成後才顯示，避免桌機首屏的頁尾被一路推動而增加 CLS。
+- 各語言的 `<title>` 與 meta description 在 `SEO_META`（`applySeoMeta()`）。zh、ko、es、fr、de 的 title 沿用 app 名稱；en、ja 用含搜尋字的版本。
+- `sitemap.xml` 列出 x-default 與 7 個 `?lang=` 網址，每筆附 xhtml:link hreflang；新增語言時，頁面 `<head>` 的 hreflang 與 sitemap 要一起改。
