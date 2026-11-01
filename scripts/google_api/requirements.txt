@@ -1,0 +1,5 @@
+# 只用 Google 官方套件（免費）。httplib2、google-auth-httplib2、uritemplate 是 google-api-python-client 的相依套件。
+# 版本固定為 C2 單元測試實際使用的版本（Python 3.11.4）。
+google-api-python-client==2.201.0
+google-auth==2.62.0
+google-auth-oauthlib==1.5.0

@@ -1,0 +1,8 @@
+{
+  "_comment": "PSI 與 CrUX 共用的網址清單。暫定的最小清單，正式內容在 C5 由 SEO、UX、Developer 決定。只放公開網址。",
+  "urls": [
+    "https://pogokit.com/",
+    "https://pogokit.com/trade-list/",
+    "https://pogokit.com/pvp-ranker/"
+  ]
+}
