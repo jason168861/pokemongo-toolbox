@@ -1,0 +1,7322 @@
+{
+ "https://pogokit.com/de/cp/": {
+  "fp": "a024ef7f6caf9b0a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/abra/": {
+  "fp": "295b297bc99f36a0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/aegislash/": {
+  "fp": "b756f2f2e79daf4a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/aerodactyl/": {
+  "fp": "25769144f956e49d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/aggron/": {
+  "fp": "13db25a51ec7b367",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/altaria/": {
+  "fp": "4dd4cb367883c2de",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/annihilape/": {
+  "fp": "a4dd87d206eebdc8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/applin/": {
+  "fp": "463fc77a07d12070",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/arcanine/": {
+  "fp": "df4da78d43292b4f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/arrokuda/": {
+  "fp": "e5258c9d1b32532e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/articuno/": {
+  "fp": "1a21e60e9fbf106a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/articuno_galarian/": {
+  "fp": "d8e409e6065c561e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/axew/": {
+  "fp": "dced3b22d8f20ce6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/azelf/": {
+  "fp": "47bf71955dee23ff",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/azumarill/": {
+  "fp": "0a25958ee89e491c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/bagon/": {
+  "fp": "cb0c17cd1b680c7d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/beedrill/": {
+  "fp": "5b87ee9d9ac03050",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/beldum/": {
+  "fp": "26471904913c9158",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/blastoise/": {
+  "fp": "c96e3b7e7c30f67d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/blaziken/": {
+  "fp": "e65df3a386d73b2f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/blissey/": {
+  "fp": "fdbbaa0e96ffbf5d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/braixen/": {
+  "fp": "d6fb5708108a0075",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/bramblin/": {
+  "fp": "f30dd9faf12743cf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/bulbasaur/": {
+  "fp": "c5ece82641c0cd1d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/buzzwole/": {
+  "fp": "62d1691be2078730",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/cacnea/": {
+  "fp": "3cc8a16220a7dda2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/carvanha/": {
+  "fp": "6bf53f1763637b38",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/centiskorch/": {
+  "fp": "0cdb742c8c99b5a4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/chandelure/": {
+  "fp": "0b6b9f1d65969018",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/chansey/": {
+  "fp": "f60cbe225a7fcd7d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/charcadet/": {
+  "fp": "b83f0fcb2d5bc413",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/charizard/": {
+  "fp": "45cb917f7db345ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/charmander/": {
+  "fp": "c921f584bfd71f68",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/cherubi/": {
+  "fp": "43ebf31fb5d11ac7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/chespin/": {
+  "fp": "43537f7fb063e0d7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/cinderace/": {
+  "fp": "6fe2c6c542245a0e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/clefairy/": {
+  "fp": "4f46dde2bd6a6e6c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/corviknight/": {
+  "fp": "45ea6e32b6cac301",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/cramorant/": {
+  "fp": "73811a99e7589234",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/decidueye/": {
+  "fp": "5eb238affb4ee8aa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/deerling/": {
+  "fp": "709b73118ce2267f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/deino/": {
+  "fp": "a572663829d518cd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/delibird/": {
+  "fp": "a329421ee7daec67",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/delphox/": {
+  "fp": "1d0e28dc322cd887",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/dewpider/": {
+  "fp": "53e05636ba0cd97c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/dialga/": {
+  "fp": "a51b31d966953bc7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/dialga_origin/": {
+  "fp": "94fe85ad19547c56",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/diancie/": {
+  "fp": "8dc9fab92cf6a0ab",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/ditto/": {
+  "fp": "c5ded60e2586c00b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/dondozo/": {
+  "fp": "5596509425367f7a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/doublade/": {
+  "fp": "a6599db2e58689a8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/dragonair/": {
+  "fp": "b48c3080d3854d90",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/dragonite/": {
+  "fp": "05f295e7cb4b3aae",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/dratini/": {
+  "fp": "9c59136a9825a2cc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/dreepy/": {
+  "fp": "8750b99f18f458e5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/drifblim/": {
+  "fp": "f3938edc2cb9a1b0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/drifloon/": {
+  "fp": "3ddbecd05174328f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/drilbur/": {
+  "fp": "8c10b3cfd1cfaf27",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/duraludon/": {
+  "fp": "4bddf2a3696aba04",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/eevee/": {
+  "fp": "f379cafa92eda3e5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/electrike/": {
+  "fp": "4e5e07a4b88992a6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/elgyem/": {
+  "fp": "a4d53aa9bb42f7ee",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/entei/": {
+  "fp": "d307e53065321cae",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/espeon/": {
+  "fp": "b7a6ae0fcc41ec65",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/eternatus/": {
+  "fp": "75f39ed693a4063a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/eternatus_eternamax/": {
+  "fp": "20f73a4f48ce3280",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/excadrill/": {
+  "fp": "a72c4348b7e42447",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/exeggcute/": {
+  "fp": "540d2ed0a5a1d7d6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/falinks/": {
+  "fp": "fc0591a8b815b4df",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/feebas/": {
+  "fp": "9e5592c153061325",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/fennekin/": {
+  "fp": "994a7c5854097fed",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/feraligatr/": {
+  "fp": "17a20adb90bbc4a9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/fidough/": {
+  "fp": "176e3641bb1c08cd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/flamigo/": {
+  "fp": "ef8057f024cd119e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/fletchling/": {
+  "fp": "441bc3a6a77df082",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/frigibax/": {
+  "fp": "9b5c04b7c0dc1b2b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/frillish/": {
+  "fp": "c1946ad4ba84132f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/froakie/": {
+  "fp": "d6b1363395cae88f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/frogadier/": {
+  "fp": "18e34be07cb25a84",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/fuecoco/": {
+  "fp": "b705725fed7993de",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/gabite/": {
+  "fp": "931dfa67e081594c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/garchomp/": {
+  "fp": "3bb7223f1b44cb06",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/gastly/": {
+  "fp": "3c086a532467c767",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/gengar/": {
+  "fp": "9b4387ffa2c98fbd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/gible/": {
+  "fp": "4fafe53f867563a9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/gimmighoul/": {
+  "fp": "2984271dc6fa806c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/giratina/": {
+  "fp": "15bf765ca49ae986",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/giratina_origin/": {
+  "fp": "6f0e83be63f08780",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/glaceon/": {
+  "fp": "771b61e59489506f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/gligar/": {
+  "fp": "7024608a87053b02",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/golisopod/": {
+  "fp": "a8d0c0426ee9718d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/gourgeist_average/": {
+  "fp": "ae27f61f1960dd85",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/greninja/": {
+  "fp": "af7b8531803d29ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/grimmsnarl/": {
+  "fp": "fc844cc5b8fe016d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/groudon/": {
+  "fp": "1e8d9eb85dfc0038",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/growlithe/": {
+  "fp": "050235d197bad030",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/growlithe_hisuian/": {
+  "fp": "f565b87a43efd4ab",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/gyarados/": {
+  "fp": "5332d692c3afbe8d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/hatenna/": {
+  "fp": "b6cd192943463d3c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/haunter/": {
+  "fp": "924fe0e323582cff",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/hitmontop/": {
+  "fp": "d74f7d2cb105f983",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/ho_oh/": {
+  "fp": "5ad8ca07f0cadb48",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/honedge/": {
+  "fp": "aba592fb03317d98",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/hoopa_unbound/": {
+  "fp": "f15ec11585f0175d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/hoothoot/": {
+  "fp": "5218938cfa7c883e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/houndoom/": {
+  "fp": "d4768518f8890ba7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/houndour/": {
+  "fp": "6051e7b9f2e24d4c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/hydreigon/": {
+  "fp": "194bc262d6001b93",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/impidimp/": {
+  "fp": "990e860691b9df77",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/incineroar/": {
+  "fp": "25e9875d5b819f10",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/inkay/": {
+  "fp": "c283ea74fb58a878",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/inteleon/": {
+  "fp": "90488ab76703d660",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/ivysaur/": {
+  "fp": "fe1ac316ce8cd643",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/jellicent/": {
+  "fp": "f13f2f38bb1bb883",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/jigglypuff/": {
+  "fp": "ac8c36bd6a09cc39",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/kecleon/": {
+  "fp": "56920b29fe5cf203",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/keldeo/": {
+  "fp": "2cd89620dd3965a4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/kirlia/": {
+  "fp": "ff914a49e53dd492",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/kleavor/": {
+  "fp": "1f6289d06cb0bf86",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/kommo_o/": {
+  "fp": "20ee9723296a2ed5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/kyogre/": {
+  "fp": "936f2b71eefce3d4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/kyurem/": {
+  "fp": "3d9d5d2507a4efb2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/kyurem_black/": {
+  "fp": "a212cd1ee3efa088",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/kyurem_white/": {
+  "fp": "3f10b49c11740bd3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lampent/": {
+  "fp": "9a4629614bf64a25",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/landorus/": {
+  "fp": "02f0b138c1b01590",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/landorus_therian/": {
+  "fp": "992f4161fb895797",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lapras/": {
+  "fp": "cdf6e6b39d474df4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/larvesta/": {
+  "fp": "f774e62ed99fa5c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/larvitar/": {
+  "fp": "321824af2ea284af",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/latias/": {
+  "fp": "727c27071c951955",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/latios/": {
+  "fp": "0a7fee3d10b316a8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lickilicky/": {
+  "fp": "bc830b17770077c9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lickitung/": {
+  "fp": "237393cf9f2b98c1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lileep/": {
+  "fp": "1bfbcdbf997bb343",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/litleo/": {
+  "fp": "5d97f691748bb977",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/litten/": {
+  "fp": "68e85177260ad77e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/litwick/": {
+  "fp": "17831cd8198f888c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lucario/": {
+  "fp": "d3aa49e0d610f637",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lugia/": {
+  "fp": "32e43f2bc1327f21",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lunala/": {
+  "fp": "7fe52d993531cb4e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/lunatone/": {
+  "fp": "76578512cd6c7dae",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/machamp/": {
+  "fp": "102aef78eebc0886",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/machop/": {
+  "fp": "cdf6765d7b3fd829",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/magikarp/": {
+  "fp": "41c01a68d82b0cf2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/magmar/": {
+  "fp": "d6a67905516582b9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/magmortar/": {
+  "fp": "b03a7c1c32b9bd8f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/malamar/": {
+  "fp": "6f66870fccccbd14",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/manectric/": {
+  "fp": "787f42b118642c4f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/mankey/": {
+  "fp": "f7aa9a8c9a649964",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/mareanie/": {
+  "fp": "0e48a58f207a5273",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/melmetal/": {
+  "fp": "e6f5c68781e54063",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/meloetta/": {
+  "fp": "7660eca23a5ceb2c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/meltan/": {
+  "fp": "3a03a2ef7290d5c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/meowscarada/": {
+  "fp": "2c26496432dcef06",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/meowth/": {
+  "fp": "ce7ec7ce6f0a5ba5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/mesprit/": {
+  "fp": "1dc1f990db7e3285",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/metagross/": {
+  "fp": "3d95f4d128d60f6c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/mew/": {
+  "fp": "e323216f5d45d5df",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/mewtwo/": {
+  "fp": "543ccd8769033277",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/mewtwo_a/": {
+  "fp": "86830994a552cb84",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/mimikyu/": {
+  "fp": "9248ca7955bb4a6c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/minior_blue/": {
+  "fp": "a2a347c8e91b920d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/moltres/": {
+  "fp": "8943f2d6d42c1dc6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/moltres_galarian/": {
+  "fp": "3b078f6e048e1571",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/morelull/": {
+  "fp": "b65684be40ce694e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/munchlax/": {
+  "fp": "7e1d4d20d073468e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/munna/": {
+  "fp": "ad37b93491120ba0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/necrozma/": {
+  "fp": "4086878d8d0339ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/necrozma_dawn_wings/": {
+  "fp": "b99c736272345858",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/necrozma_dusk_mane/": {
+  "fp": "d43e053a08a45e95",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/necrozma_ultra/": {
+  "fp": "156653f7ba5ffb29",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/nickit/": {
+  "fp": "af4d4cd5369fd6d2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/ninetales/": {
+  "fp": "4bf31009e0d7fee2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/ninetales_alola/": {
+  "fp": "904ff3941f50aba3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/noibat/": {
+  "fp": "9ddf3b24db8404b9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/numel/": {
+  "fp": "095a6bf1c76908e4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/oddish/": {
+  "fp": "6ad10c762ed575d2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/oshawott/": {
+  "fp": "cd7bd7579e853758",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/palkia/": {
+  "fp": "cd5d06b935d9b365",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/palkia_origin/": {
+  "fp": "96b243036ac7d8e7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/pancham/": {
+  "fp": "b2f95e0d7a6cfd88",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/phantump/": {
+  "fp": "09192608a995fda3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/pheromosa/": {
+  "fp": "2bd4366d20dd90e5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/pichu/": {
+  "fp": "4cb669d2a8be5779",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/pidgey/": {
+  "fp": "55590d4f2a610be3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/pikachu/": {
+  "fp": "cf6796b6f47c73ca",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/piplup/": {
+  "fp": "5c4d1b3734a51661",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/poipole/": {
+  "fp": "ed84516218509bb9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/poliwag/": {
+  "fp": "fa47861174e0c105",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/ponyta/": {
+  "fp": "29797b82f8093074",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/porygon/": {
+  "fp": "96c00002e8ada998",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/primarina/": {
+  "fp": "55b5b7cff340a21d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/primeape/": {
+  "fp": "66bc78fe1d3f9f9f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/psyduck/": {
+  "fp": "93cb9f5eb89bd49b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/pumpkaboo_average/": {
+  "fp": "51da2ffc47c233b8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/quagsire/": {
+  "fp": "4ad63b315a5965e0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/quaquaval/": {
+  "fp": "03d2bdf38e5a00d0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/quaxly/": {
+  "fp": "b7d3a1829eb5b7c2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/raichu/": {
+  "fp": "5db2b710753ddce7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/raikou/": {
+  "fp": "e11de3dbeaab1188",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/ralts/": {
+  "fp": "9a0c2706740e33c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rapidash/": {
+  "fp": "b93d5dbddd67b551",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/raticate/": {
+  "fp": "dcec67b580c2f2ba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rattata/": {
+  "fp": "791fafa30b17e89c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rayquaza/": {
+  "fp": "7373d6fb4b6bbf09",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/regice/": {
+  "fp": "35823940bd527e42",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/regieleki/": {
+  "fp": "bd80c828728906ea",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/regirock/": {
+  "fp": "bb0fd526fbb9a9ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/registeel/": {
+  "fp": "9dce82bd43da3bfa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/reshiram/": {
+  "fp": "09fe6848b530c465",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rhydon/": {
+  "fp": "6d850dc36019c27d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rhyhorn/": {
+  "fp": "eeea1e1af4d1f06f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rhyperior/": {
+  "fp": "6603c020241aae92",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rillaboom/": {
+  "fp": "3f3a290b23253a11",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/riolu/": {
+  "fp": "b8490497b605c9f9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rockruff/": {
+  "fp": "f0c32ae324453d42",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/roggenrola/": {
+  "fp": "79e6a5a7204708ec",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rookidee/": {
+  "fp": "9b1042376ddacfea",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/rowlet/": {
+  "fp": "60af3200226db68a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sableye/": {
+  "fp": "9699e58f52b3ea71",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/samurott/": {
+  "fp": "133a4ee54d1d3fb8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/samurott_hisuian/": {
+  "fp": "652a958ceb49565e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sawk/": {
+  "fp": "d471443798113605",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sceptile/": {
+  "fp": "04f3b44d5fa412fe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/scizor/": {
+  "fp": "d4b423c6133de8b5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/scorbunny/": {
+  "fp": "34bf41383d1390c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/seedot/": {
+  "fp": "5871d4f6cef69c00",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sharpedo/": {
+  "fp": "340e38863d1a5aeb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/shiinotic/": {
+  "fp": "30af4f232776862a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sigilyph/": {
+  "fp": "8cdcdfc79bd1c10d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sizzlipede/": {
+  "fp": "fd5d66411fa08771",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/skarmory/": {
+  "fp": "11bd66c4d3d6f505",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/slaking/": {
+  "fp": "065e70af7a35cc75",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/slowbro/": {
+  "fp": "61364b23e8d71c9a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/smoliv/": {
+  "fp": "8c00af1c22cd37cc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sneasel/": {
+  "fp": "222701e48ffb7c55",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sneasler/": {
+  "fp": "d6846e66f956e511",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/snom/": {
+  "fp": "91dc5c47f334d15d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/snorlax/": {
+  "fp": "977e77d89838e9ca",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/snorunt/": {
+  "fp": "8775c6637c07421a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/snover/": {
+  "fp": "a58febf57289f07f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sobble/": {
+  "fp": "a6fe98986e001f42",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/solgaleo/": {
+  "fp": "ce2a405fa50c7d62",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sprigatito/": {
+  "fp": "3aeb139a20a197ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/squirtle/": {
+  "fp": "b5e5b3731c5b3a4b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/staraptor/": {
+  "fp": "9cf2199726bd458d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/starmie/": {
+  "fp": "dd6fe4509e813738",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/staryu/": {
+  "fp": "236fcda2bd0af400",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/steelix/": {
+  "fp": "cd733b4a2f70828b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/stufful/": {
+  "fp": "0ae25b0f7d0370ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/stunfisk/": {
+  "fp": "09592277c4bbe56a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/suicune/": {
+  "fp": "5dbf2d67c8bb2ae9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/swablu/": {
+  "fp": "87fccd6ae883a1db",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/swampert/": {
+  "fp": "1c39700b9d4ebd2a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/sylveon/": {
+  "fp": "817137852abfcaaf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/teddiursa/": {
+  "fp": "a0e9d2f5551c35c0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/thievul/": {
+  "fp": "e98da8143d7bc9f9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/thundurus/": {
+  "fp": "b8dd4749e7c6ab21",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/thundurus_therian/": {
+  "fp": "669ac3f70354a0e2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/tinkatink/": {
+  "fp": "ddabf487f11eea18",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/tinkaton/": {
+  "fp": "54c7cac2917e8a05",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/tinkatuff/": {
+  "fp": "4cf78e0675f8bb03",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/togedemaru/": {
+  "fp": "188d0c6af813f34b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/togekiss/": {
+  "fp": "9bbf0f5fc023e2ff",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/togetic/": {
+  "fp": "ebe24125baa017f4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/torchic/": {
+  "fp": "4a6fc1cddf5c6555",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/totodile/": {
+  "fp": "dd615086be456866",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/toxtricity/": {
+  "fp": "86f5781127cda55d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/treecko/": {
+  "fp": "94b3be1ee038a88d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/typhlosion/": {
+  "fp": "ee42ade078990f8b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/tyranitar/": {
+  "fp": "deb093a65f5124ab",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/umbreon/": {
+  "fp": "1a4a877273838464",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/ursaluna/": {
+  "fp": "59c529533d2d395b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/uxie/": {
+  "fp": "4a6610c22b3308bd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/venonat/": {
+  "fp": "2f49688c4a14a18b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/venusaur/": {
+  "fp": "0b204a8ce94a7786",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/victreebel/": {
+  "fp": "abb804f0161169c5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/vivillon/": {
+  "fp": "7e0885d3e1745a52",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/volcanion/": {
+  "fp": "e3d71ee1d69314e2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/wailmer/": {
+  "fp": "7dd87aacc217d7e1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/wailord/": {
+  "fp": "5edc153734012dfb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/weavile/": {
+  "fp": "56eccfe96ee11ddb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/weedle/": {
+  "fp": "81e650d780c723db",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/wigglytuff/": {
+  "fp": "e7cb5c92e7851803",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/wimpod/": {
+  "fp": "4753177cc3ce69ff",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/xatu/": {
+  "fp": "608e4a84262ac1f9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/xerneas/": {
+  "fp": "ef64756350e44eed",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/xurkitree/": {
+  "fp": "08b2038bd11060ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/yveltal/": {
+  "fp": "ce91c4051da4346f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zacian/": {
+  "fp": "766338d8c04e1ea3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zacian_crowned_sword/": {
+  "fp": "5925808db248cafd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zamazenta/": {
+  "fp": "0f4330720ac3e64e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zamazenta_crowned_shield/": {
+  "fp": "998392de3a83ea44",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zapdos/": {
+  "fp": "45e9dd9126b43e5f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zapdos_galarian/": {
+  "fp": "951cdd232116bb19",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zekrom/": {
+  "fp": "d451593a9bb16f25",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zeraora/": {
+  "fp": "bb9cec4a7996b8d1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zigzagoon/": {
+  "fp": "8303c81b8bbd3d1e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zoroark/": {
+  "fp": "bb241eb3cb78346d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zorua/": {
+  "fp": "7d7ff2ad3a473995",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zubat/": {
+  "fp": "b123de2410bf3af2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zygarde/": {
+  "fp": "7de7f4a92cc524d9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zygarde_complete/": {
+  "fp": "380c1118a6e02622",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/de/cp/zygarde_complete_ten_percent/": {
+  "fp": "13a1b4ba16afc9eb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/": {
+  "fp": "c01fbc73a59d32bd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/abra/": {
+  "fp": "dca9c4b0e0c12c00",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/aegislash/": {
+  "fp": "9d3224a6e8ed8b46",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/aerodactyl/": {
+  "fp": "3f5a844d990bf3cb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/aggron/": {
+  "fp": "8b3c87cc14ba197c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/altaria/": {
+  "fp": "bc8d884146f0da6c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/annihilape/": {
+  "fp": "38fd26920c5f8e52",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/applin/": {
+  "fp": "cae1b2d0471a17d5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/arcanine/": {
+  "fp": "7624e5457225d440",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/arrokuda/": {
+  "fp": "24f2796ca139eac9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/articuno/": {
+  "fp": "b90a8ea6570eba45",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/articuno_galarian/": {
+  "fp": "e57d8807e9390fb6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/axew/": {
+  "fp": "c9e35cdb4280c63e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/azelf/": {
+  "fp": "f01835fd970c1356",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/azumarill/": {
+  "fp": "49313f2097207bdd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/bagon/": {
+  "fp": "48f2e8458709aa65",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/beedrill/": {
+  "fp": "173d1ba95a737010",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/beldum/": {
+  "fp": "6608e9c2de401ed8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/blastoise/": {
+  "fp": "9bf044df6c239642",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/blaziken/": {
+  "fp": "21032601a39a1f15",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/blissey/": {
+  "fp": "01504441f038e435",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/braixen/": {
+  "fp": "9ffbb81f42907fe6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/bramblin/": {
+  "fp": "84d71160c2efd16a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/bulbasaur/": {
+  "fp": "afa213f1f7ef1318",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/buzzwole/": {
+  "fp": "2e184f7f27fb039c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/cacnea/": {
+  "fp": "6d07eace0bc170d6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/carvanha/": {
+  "fp": "38bbf14f4a04d156",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/centiskorch/": {
+  "fp": "02683a26bd603f4c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/chandelure/": {
+  "fp": "a220e6c6baf4f0dc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/chansey/": {
+  "fp": "f972e3ee5fa47b8a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/charcadet/": {
+  "fp": "4f7548404325a2dc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/charizard/": {
+  "fp": "99ed17ac82c154a0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/charmander/": {
+  "fp": "780d8932f3fef4f3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/cherubi/": {
+  "fp": "258fd79a497f260a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/chespin/": {
+  "fp": "a058c0718c840841",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/cinderace/": {
+  "fp": "3f9a8c1f08bd6b08",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/clefairy/": {
+  "fp": "a5fd18de4bde45a7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/corviknight/": {
+  "fp": "341d4e187b37da53",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/cramorant/": {
+  "fp": "dbe8de25d16ebd49",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/decidueye/": {
+  "fp": "575a00599517843a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/deerling/": {
+  "fp": "054d2f966573f0da",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/deino/": {
+  "fp": "8f756622c4d7dbd1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/delibird/": {
+  "fp": "96228afa021ab934",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/delphox/": {
+  "fp": "7fc3b01ea168efdc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/dewpider/": {
+  "fp": "bf5e499984f9d202",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/dialga/": {
+  "fp": "ba6034937bbc60a8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/dialga_origin/": {
+  "fp": "231e1eff2b46362d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/diancie/": {
+  "fp": "db620718e5ae84c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/ditto/": {
+  "fp": "3a6d9ca4f4762ab2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/dondozo/": {
+  "fp": "1e68ac24f2ae383d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/doublade/": {
+  "fp": "35852b020f2fe446",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/dragonair/": {
+  "fp": "13cd755e2f5ded3a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/dragonite/": {
+  "fp": "f936572cac347dc8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/dratini/": {
+  "fp": "60e8e736b752df4c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/dreepy/": {
+  "fp": "3649afeb5566e93f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/drifblim/": {
+  "fp": "4a8eefda45304a6d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/drifloon/": {
+  "fp": "655c38aa49c1d052",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/drilbur/": {
+  "fp": "0207f148bde4f548",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/duraludon/": {
+  "fp": "f799634895c8ea42",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/eevee/": {
+  "fp": "4b52e323f6085c2b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/electrike/": {
+  "fp": "de52b007f10115c9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/elgyem/": {
+  "fp": "16363152cd0ea17a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/entei/": {
+  "fp": "fc420d1189f221c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/espeon/": {
+  "fp": "91aea2173e19abb7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/eternatus/": {
+  "fp": "9ff0f5d5a02038c2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/eternatus_eternamax/": {
+  "fp": "4957d477734e7a18",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/excadrill/": {
+  "fp": "8a23bfd80511bbfb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/exeggcute/": {
+  "fp": "8275533584ca580c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/falinks/": {
+  "fp": "996ec85eaf9707db",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/feebas/": {
+  "fp": "449448a9a1375d0d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/fennekin/": {
+  "fp": "37b4dc73eeb08f10",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/feraligatr/": {
+  "fp": "2366f37c3cc838da",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/fidough/": {
+  "fp": "c90870441a6022be",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/flamigo/": {
+  "fp": "4710481cc05f26ec",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/fletchling/": {
+  "fp": "967c3e70c31e1636",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/frigibax/": {
+  "fp": "f2389853e08f184c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/frillish/": {
+  "fp": "90b96f45e93ed21f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/froakie/": {
+  "fp": "0eaf3fe185e2fd36",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/frogadier/": {
+  "fp": "b1887dc48f3e34a9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/fuecoco/": {
+  "fp": "4a44e983a871f688",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/gabite/": {
+  "fp": "60b3c05db4ed832a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/garchomp/": {
+  "fp": "223baa318ff8fef3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/gastly/": {
+  "fp": "1c67dba7c46f8be2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/gengar/": {
+  "fp": "86d4cba5af2a6eec",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/gible/": {
+  "fp": "d78c862e2019c3fd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/gimmighoul/": {
+  "fp": "b6ca72fac374b73e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/giratina/": {
+  "fp": "27574e79eefa2aff",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/giratina_origin/": {
+  "fp": "ee3a47146c766a0e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/glaceon/": {
+  "fp": "a516bcf8c0cc99f2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/gligar/": {
+  "fp": "c0c31e1e3058cfa0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/golisopod/": {
+  "fp": "f210b85ff98a1c7b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/gourgeist_average/": {
+  "fp": "c0d350b2285fe8d6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/greninja/": {
+  "fp": "924cef6e41d6b067",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/grimmsnarl/": {
+  "fp": "92acbf25a22cb8a6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/groudon/": {
+  "fp": "b3a03cf148bcd750",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/growlithe/": {
+  "fp": "1e5441d7ef99d015",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/growlithe_hisuian/": {
+  "fp": "78bdb095a7bb54bb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/gyarados/": {
+  "fp": "37604a77308d89c0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/hatenna/": {
+  "fp": "38ec49f1801a1faf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/haunter/": {
+  "fp": "d03dd6acb57db0b1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/hitmontop/": {
+  "fp": "32e0f727c648011a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/ho_oh/": {
+  "fp": "6755af0e2117b7ec",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/honedge/": {
+  "fp": "6cac0dd4a5e0709a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/hoopa_unbound/": {
+  "fp": "01133eca0c421ed2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/hoothoot/": {
+  "fp": "9714c32353ea900c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/houndoom/": {
+  "fp": "58fbdc93a5620d56",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/houndour/": {
+  "fp": "3ce9b37ea17e075d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/hydreigon/": {
+  "fp": "dbf2766337a3319f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/impidimp/": {
+  "fp": "18ee69fbcaec1487",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/incineroar/": {
+  "fp": "04701ab181d3c0aa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/inkay/": {
+  "fp": "7298e068bafcbaea",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/inteleon/": {
+  "fp": "d4adecbffc77c282",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/ivysaur/": {
+  "fp": "342b0b0260d3114c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/jellicent/": {
+  "fp": "33a011237b3ed518",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/jigglypuff/": {
+  "fp": "7b519d88b85823d0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/kecleon/": {
+  "fp": "b6eb31b870b61191",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/keldeo/": {
+  "fp": "3de732a53d88e025",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/kirlia/": {
+  "fp": "fabc5e8184722059",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/kleavor/": {
+  "fp": "fb6672aabc89c078",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/kommo_o/": {
+  "fp": "5a26d2ba57074420",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/kyogre/": {
+  "fp": "563a823740f0f35c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/kyurem/": {
+  "fp": "4c3ff5902fe68c88",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/kyurem_black/": {
+  "fp": "63df70a8568c1472",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/kyurem_white/": {
+  "fp": "3a858224d4cb0348",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lampent/": {
+  "fp": "6b8c4a2e6c54a295",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/landorus/": {
+  "fp": "13e71bbda2567056",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/landorus_therian/": {
+  "fp": "0b3cf79f7c2c7318",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lapras/": {
+  "fp": "9d2d0191a9e7d803",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/larvesta/": {
+  "fp": "47d5547d4bc54d51",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/larvitar/": {
+  "fp": "a6393f66f94a0470",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/latias/": {
+  "fp": "ce86b190ae65f7b2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/latios/": {
+  "fp": "2bf4974c813fc2bf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lickilicky/": {
+  "fp": "801d9c919a55ab1f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lickitung/": {
+  "fp": "7234c750f57836bf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lileep/": {
+  "fp": "a27d960723d33f49",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/litleo/": {
+  "fp": "000a694155d87fb9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/litten/": {
+  "fp": "1f5af5286c1664e4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/litwick/": {
+  "fp": "61a69f5edf3a12f7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lucario/": {
+  "fp": "544933f5d518f496",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lugia/": {
+  "fp": "1fe185011cd0c5d1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lunala/": {
+  "fp": "b7da5652db47bf05",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/lunatone/": {
+  "fp": "d7a9cb8dacc719ee",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/machamp/": {
+  "fp": "d29f3154110cda0f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/machop/": {
+  "fp": "80c86141db4bea94",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/magikarp/": {
+  "fp": "279a837cc8a68441",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/magmar/": {
+  "fp": "a9c75e42b3033642",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/magmortar/": {
+  "fp": "ac40269ff2ae114c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/malamar/": {
+  "fp": "d406c14cbcd49c8f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/manectric/": {
+  "fp": "bb91afe640330864",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/mankey/": {
+  "fp": "2735c1914ca3b50d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/mareanie/": {
+  "fp": "2732afcfd73f6c9f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/melmetal/": {
+  "fp": "cb7d0b9b0735d119",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/meloetta/": {
+  "fp": "f899d0921ee483fe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/meltan/": {
+  "fp": "2265bc8f67df5daa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/meowscarada/": {
+  "fp": "74924fbbb59d34d8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/meowth/": {
+  "fp": "1cf688edd466318f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/mesprit/": {
+  "fp": "c60a4bc70088f9c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/metagross/": {
+  "fp": "0c8ecf1f7435cac8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/mew/": {
+  "fp": "c96c917cb7a0d28d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/mewtwo/": {
+  "fp": "a1892b74fc96e261",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/mewtwo_a/": {
+  "fp": "ce8a1d873dd7536b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/mimikyu/": {
+  "fp": "ffe7f125f7c0c436",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/minior_blue/": {
+  "fp": "c9b0a491bb3788b1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/moltres/": {
+  "fp": "e8c642fcefc77cdb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/moltres_galarian/": {
+  "fp": "9be42d5051377391",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/morelull/": {
+  "fp": "9efc3cbf97ad0cd3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/munchlax/": {
+  "fp": "6ce30d408dfe70c8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/munna/": {
+  "fp": "549a64d3f00596a3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/necrozma/": {
+  "fp": "edac7c1758709834",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/necrozma_dawn_wings/": {
+  "fp": "450a3a124e7062a3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/necrozma_dusk_mane/": {
+  "fp": "9f00ff9701654bb2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/necrozma_ultra/": {
+  "fp": "4f2cc92d80a3689d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/nickit/": {
+  "fp": "21e62dd3ddf4a782",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/ninetales/": {
+  "fp": "a9338a44040622b6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/ninetales_alola/": {
+  "fp": "7df214f695414964",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/noibat/": {
+  "fp": "d911f7612603c020",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/numel/": {
+  "fp": "55bb2b1bccbbd448",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/oddish/": {
+  "fp": "05d0a19b481d1521",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/oshawott/": {
+  "fp": "c314c88bbbf6ac42",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/palkia/": {
+  "fp": "ad257c599ae7a8ee",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/palkia_origin/": {
+  "fp": "132457bdc947cbdf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/pancham/": {
+  "fp": "c6ac0f732d5b2cc2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/phantump/": {
+  "fp": "aa90a80a41454404",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/pheromosa/": {
+  "fp": "79c70d563ea22405",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/pichu/": {
+  "fp": "59c4a24dc4beae7d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/pidgey/": {
+  "fp": "8a2caea6e0442295",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/pikachu/": {
+  "fp": "60d671075335d966",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/piplup/": {
+  "fp": "d0d6c1a8def6a788",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/poipole/": {
+  "fp": "0eab88f6eec2abc4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/poliwag/": {
+  "fp": "6b5be3400b1a2021",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/ponyta/": {
+  "fp": "60d4ddca191e51d8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/porygon/": {
+  "fp": "901c8935acc5b6c4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/primarina/": {
+  "fp": "da634b042d48d821",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/primeape/": {
+  "fp": "dd7dd2b552bfe88a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/psyduck/": {
+  "fp": "a4a18664a2a40c0f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/pumpkaboo_average/": {
+  "fp": "9dbe323a110710c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/quagsire/": {
+  "fp": "9365c58864d86c5a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/quaquaval/": {
+  "fp": "7eb1a73b72472403",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/quaxly/": {
+  "fp": "5e04882667fcc75f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/raichu/": {
+  "fp": "4e20e1ec0bca1231",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/raikou/": {
+  "fp": "3e365fae47b8d1f7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/ralts/": {
+  "fp": "0ae200c70de62d12",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rapidash/": {
+  "fp": "e58df22dfe305a58",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/raticate/": {
+  "fp": "2c6a25e23e6fb93d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rattata/": {
+  "fp": "576df5b2efe99f6c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rayquaza/": {
+  "fp": "890fad6ed342c972",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/regice/": {
+  "fp": "4645b204a0fe3264",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/regieleki/": {
+  "fp": "45037660b138244a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/regirock/": {
+  "fp": "746e28c344f0ac9e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/registeel/": {
+  "fp": "e208852cd97d48d1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/reshiram/": {
+  "fp": "ccbc5f637b591f24",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rhydon/": {
+  "fp": "5987439fbf2d71da",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rhyhorn/": {
+  "fp": "e2069a7386afd7bb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rhyperior/": {
+  "fp": "2b16e4cc815092ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rillaboom/": {
+  "fp": "5d3fd472f07957a7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/riolu/": {
+  "fp": "abf131bb158b034d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rockruff/": {
+  "fp": "1f7bf293f4c964d1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/roggenrola/": {
+  "fp": "9c9500ce4e183ef9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rookidee/": {
+  "fp": "b2fda9c95abb70b8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/rowlet/": {
+  "fp": "a97555426a116430",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sableye/": {
+  "fp": "c17c19e8cf68dcf8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/samurott/": {
+  "fp": "0570dec30aa870dc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/samurott_hisuian/": {
+  "fp": "ed1881e56fde0821",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sawk/": {
+  "fp": "045c21f81ea5a76c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sceptile/": {
+  "fp": "423b08b472bb3571",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/scizor/": {
+  "fp": "ae99c51141a5b56f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/scorbunny/": {
+  "fp": "a9dc6bd6d4875db2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/seedot/": {
+  "fp": "32164b072a134761",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sharpedo/": {
+  "fp": "ebadfe8f4b82879b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/shiinotic/": {
+  "fp": "940920dd44150155",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sigilyph/": {
+  "fp": "77f3b08ef0369644",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sizzlipede/": {
+  "fp": "6b6a450d66a5bdbd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/skarmory/": {
+  "fp": "6d1652cae38246f2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/slaking/": {
+  "fp": "914fcc4263025bb1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/slowbro/": {
+  "fp": "60a0576d478effbe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/smoliv/": {
+  "fp": "c8a2caf345d5d349",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sneasel/": {
+  "fp": "ce5131a44ee48cd9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sneasler/": {
+  "fp": "9701f211b8ed3ae4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/snom/": {
+  "fp": "0c3e081dd0f8aa99",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/snorlax/": {
+  "fp": "4834806cb930ef85",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/snorunt/": {
+  "fp": "247ae16ff6e84638",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/snover/": {
+  "fp": "23d19a68db69ed94",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sobble/": {
+  "fp": "cb4451efacb15bdf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/solgaleo/": {
+  "fp": "1bae6cafd4aaf03c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sprigatito/": {
+  "fp": "5ce3dd20cf0bf55f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/squirtle/": {
+  "fp": "4561b5e682127943",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/staraptor/": {
+  "fp": "a9ed3887143a2cc3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/starmie/": {
+  "fp": "955d23546b2c5c60",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/staryu/": {
+  "fp": "30b78e35043cf825",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/steelix/": {
+  "fp": "287121f2efac47c3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/stufful/": {
+  "fp": "d804fc4263aa5a79",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/stunfisk/": {
+  "fp": "1cdb4014dbb52b76",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/suicune/": {
+  "fp": "32137fba552bc8bc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/swablu/": {
+  "fp": "75cb75adb30592f4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/swampert/": {
+  "fp": "228512df3aa53449",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/sylveon/": {
+  "fp": "c15386f27638c96a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/teddiursa/": {
+  "fp": "9991c7497a8c8414",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/thievul/": {
+  "fp": "50ce3541612fd4dd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/thundurus/": {
+  "fp": "5ea5f15894a3ca85",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/thundurus_therian/": {
+  "fp": "8c1a3f37d52c5367",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/tinkatink/": {
+  "fp": "f8b1ec4898ec432a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/tinkaton/": {
+  "fp": "b97d89cedf64fc56",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/tinkatuff/": {
+  "fp": "6bbe40856d453c8a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/togedemaru/": {
+  "fp": "90942c34e23642be",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/togekiss/": {
+  "fp": "88cddb9f3ab3cb50",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/togetic/": {
+  "fp": "bfa892263dfbb8bb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/torchic/": {
+  "fp": "878fdf7da1a54ec7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/totodile/": {
+  "fp": "3b7a150797f7c0a4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/toxtricity/": {
+  "fp": "6fb4454178c1ac3f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/treecko/": {
+  "fp": "422d575c21cef734",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/typhlosion/": {
+  "fp": "7de572b9c453f2f6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/tyranitar/": {
+  "fp": "8884273d03485146",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/umbreon/": {
+  "fp": "3d5ff8003401acf3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/ursaluna/": {
+  "fp": "2d79cd820f6340c9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/uxie/": {
+  "fp": "b28106413daecfd3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/venonat/": {
+  "fp": "3982c1db4b87eddb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/venusaur/": {
+  "fp": "cc36e494142d8bff",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/victreebel/": {
+  "fp": "1b73e3774ac0e59a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/vivillon/": {
+  "fp": "8901fc10bf6737fc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/volcanion/": {
+  "fp": "2c5f9835475418f5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/wailmer/": {
+  "fp": "5de3631082c02dd2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/wailord/": {
+  "fp": "8c8bb774a5a19b5b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/weavile/": {
+  "fp": "0572fac02555e366",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/weedle/": {
+  "fp": "f68634bd16a9f7c1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/wigglytuff/": {
+  "fp": "e61420023cc152a9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/wimpod/": {
+  "fp": "5d4146611313d26d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/xatu/": {
+  "fp": "ee59777fda88d417",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/xerneas/": {
+  "fp": "9fd7257191e57cf7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/xurkitree/": {
+  "fp": "fdb3b0a523843d12",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/yveltal/": {
+  "fp": "4e726fe7199580ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zacian/": {
+  "fp": "6337270054b7ecf2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zacian_crowned_sword/": {
+  "fp": "465198ef0e251c85",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zamazenta/": {
+  "fp": "84c6c45b1f536269",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zamazenta_crowned_shield/": {
+  "fp": "a598cf92293bbc59",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zapdos/": {
+  "fp": "ee6f1852362b8815",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zapdos_galarian/": {
+  "fp": "0388402b5cb900d3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zekrom/": {
+  "fp": "846c69e6f75e3987",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zeraora/": {
+  "fp": "d5cd3a3bb5f14a4b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zigzagoon/": {
+  "fp": "c2a20ea9b13ce0ff",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zoroark/": {
+  "fp": "1fc2e93386b7dc15",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zorua/": {
+  "fp": "0aefd3ee5e2e0cd1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zubat/": {
+  "fp": "1b3b0837d78d472a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zygarde/": {
+  "fp": "766baaea74703c97",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zygarde_complete/": {
+  "fp": "daa92acdb11e4ad9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/en/cp/zygarde_complete_ten_percent/": {
+  "fp": "f296ba066a7959d2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/": {
+  "fp": "46593009a2f78921",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/abra/": {
+  "fp": "fd4cdd72059f896c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/aegislash/": {
+  "fp": "00bdd9e0d54ad71a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/aerodactyl/": {
+  "fp": "41fd381d7c7a2c25",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/aggron/": {
+  "fp": "be7fbb96f539af11",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/altaria/": {
+  "fp": "81054dd78b18c165",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/annihilape/": {
+  "fp": "fcaed6b3668a0943",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/applin/": {
+  "fp": "761cb64d5fe5a75c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/arcanine/": {
+  "fp": "8105a06b6d258169",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/arrokuda/": {
+  "fp": "f577a6c772515e1d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/articuno/": {
+  "fp": "0c69aa065858cd1d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/articuno_galarian/": {
+  "fp": "d2346d18090f8614",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/axew/": {
+  "fp": "fb48d629d3659352",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/azelf/": {
+  "fp": "637c12378a472001",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/azumarill/": {
+  "fp": "e49dc870a0ecd1c5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/bagon/": {
+  "fp": "aabc1c508adbc36c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/beedrill/": {
+  "fp": "206035650ad9cfd3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/beldum/": {
+  "fp": "e53d221f09c2f40e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/blastoise/": {
+  "fp": "0fe02bb1f1ece882",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/blaziken/": {
+  "fp": "d508c839d5a70e08",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/blissey/": {
+  "fp": "5d2e5519be843423",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/braixen/": {
+  "fp": "2915eb43f4a82efe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/bramblin/": {
+  "fp": "eeb548b079136e75",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/bulbasaur/": {
+  "fp": "1178e49c2bdfb63f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/buzzwole/": {
+  "fp": "a6cdda030addb69c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/cacnea/": {
+  "fp": "12b455bf64fb17cd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/carvanha/": {
+  "fp": "9d80610cf2495a25",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/centiskorch/": {
+  "fp": "daad946ebe063b36",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/chandelure/": {
+  "fp": "ae2124227469b1a9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/chansey/": {
+  "fp": "c6c2b80b2ad0bff5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/charcadet/": {
+  "fp": "f82c75f9b481e6ff",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/charizard/": {
+  "fp": "c6fd957d7ba73c13",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/charmander/": {
+  "fp": "90c6ad08a71f5d70",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/cherubi/": {
+  "fp": "df38607c9745d43a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/chespin/": {
+  "fp": "b0361c497b9c16fc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/cinderace/": {
+  "fp": "6ea19d148f17f25a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/clefairy/": {
+  "fp": "a491c22ebbf1975c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/corviknight/": {
+  "fp": "63f57cf73153bb79",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/cramorant/": {
+  "fp": "2e2d35a9176bff0e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/decidueye/": {
+  "fp": "5c2c1edab34c3104",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/deerling/": {
+  "fp": "463a2fe9cd0514d1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/deino/": {
+  "fp": "3e088798cf30702d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/delibird/": {
+  "fp": "4dcbc67fccd645f7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/delphox/": {
+  "fp": "5934fee1a7dc366f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/dewpider/": {
+  "fp": "4a13aeb2cbcc9ffe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/dialga/": {
+  "fp": "2bf5744956c3ef65",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/dialga_origin/": {
+  "fp": "2e760ff7b953acfc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/diancie/": {
+  "fp": "4a0705ca882d3143",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/ditto/": {
+  "fp": "e4c909081d37d763",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/dondozo/": {
+  "fp": "98c96b272c8a54cc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/doublade/": {
+  "fp": "63f71fcefa9acf16",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/dragonair/": {
+  "fp": "e785213bd14d4c8a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/dragonite/": {
+  "fp": "855d0cff9db3f83c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/dratini/": {
+  "fp": "2abac0ec61e0cef1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/dreepy/": {
+  "fp": "9fd368251e63d693",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/drifblim/": {
+  "fp": "f662cb450ffe1478",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/drifloon/": {
+  "fp": "6625d6c72330a3c3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/drilbur/": {
+  "fp": "135b7eac6dff8397",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/duraludon/": {
+  "fp": "355fdfe943ddb406",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/eevee/": {
+  "fp": "cf5f1a21461c435c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/electrike/": {
+  "fp": "bf035f1eda4ec46d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/elgyem/": {
+  "fp": "c0d25ccf78dbd0a3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/entei/": {
+  "fp": "6bfbb5bf780b452b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/espeon/": {
+  "fp": "ed9c9a24e26e5311",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/eternatus/": {
+  "fp": "0c185998ba73dbe7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/eternatus_eternamax/": {
+  "fp": "649dafd5c11e67ed",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/excadrill/": {
+  "fp": "2107bca06ea74648",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/exeggcute/": {
+  "fp": "365255f5027462ea",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/falinks/": {
+  "fp": "4f43f8224172e0c5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/feebas/": {
+  "fp": "ab87b223fd264534",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/fennekin/": {
+  "fp": "8de8f3bdff4dd193",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/feraligatr/": {
+  "fp": "e045fa9c4c8bdd33",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/fidough/": {
+  "fp": "3dba74f939a833dc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/flamigo/": {
+  "fp": "95f91c571b5bbba5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/fletchling/": {
+  "fp": "f5d71e1608f9fd2a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/frigibax/": {
+  "fp": "ce33986d140fb787",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/frillish/": {
+  "fp": "c61082f11b240bf8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/froakie/": {
+  "fp": "c666915549cd6403",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/frogadier/": {
+  "fp": "242563072452d98b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/fuecoco/": {
+  "fp": "48175339aaa916ec",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/gabite/": {
+  "fp": "097d79fc98ce06bb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/garchomp/": {
+  "fp": "90828b9806d465e6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/gastly/": {
+  "fp": "fd9a2beed541f05a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/gengar/": {
+  "fp": "d60a39f8896091e1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/gible/": {
+  "fp": "8bc2d5a7effc3044",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/gimmighoul/": {
+  "fp": "334aee175f0685a4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/giratina/": {
+  "fp": "bdd689894f5c1dba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/giratina_origin/": {
+  "fp": "627dc6150096f67c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/glaceon/": {
+  "fp": "a880e9ba1e9b366a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/gligar/": {
+  "fp": "75f1cbc6147765b1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/golisopod/": {
+  "fp": "31a0d174082a38fe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/gourgeist_average/": {
+  "fp": "43d8dc2d0bc89fe9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/greninja/": {
+  "fp": "ceb3c55f93cb1f36",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/grimmsnarl/": {
+  "fp": "c30a66afb8877166",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/groudon/": {
+  "fp": "6209448292dbc968",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/growlithe/": {
+  "fp": "af0ffec07b413ff6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/growlithe_hisuian/": {
+  "fp": "48e6ead1a80020bf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/gyarados/": {
+  "fp": "28db47a480fa766f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/hatenna/": {
+  "fp": "d9d924b4cf2849e9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/haunter/": {
+  "fp": "ea1d304b67a893cd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/hitmontop/": {
+  "fp": "a088038b3620f2e8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/ho_oh/": {
+  "fp": "f2a5220f9be97893",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/honedge/": {
+  "fp": "aa3cb6d4802fe480",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/hoopa_unbound/": {
+  "fp": "be58aff4c50a9792",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/hoothoot/": {
+  "fp": "1838430e879878e5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/houndoom/": {
+  "fp": "19a8da2f0a973102",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/houndour/": {
+  "fp": "b88100ef8f6c5abb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/hydreigon/": {
+  "fp": "f15c4adb16c60fed",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/impidimp/": {
+  "fp": "02748ab39030659c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/incineroar/": {
+  "fp": "ca72c7e1ba0310d8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/inkay/": {
+  "fp": "37f250bce2494703",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/inteleon/": {
+  "fp": "75736621122ee620",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/ivysaur/": {
+  "fp": "5ad24af50201de99",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/jellicent/": {
+  "fp": "1f498d9355e838fa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/jigglypuff/": {
+  "fp": "2189349f00e80bcb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/kecleon/": {
+  "fp": "201b3057dfaeb13e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/keldeo/": {
+  "fp": "1605424ebe2ed306",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/kirlia/": {
+  "fp": "ff87ae92b19e58a7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/kleavor/": {
+  "fp": "7e6561e3a5cd13fb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/kommo_o/": {
+  "fp": "9a2428c44dd262e1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/kyogre/": {
+  "fp": "33e9d0372caef5a0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/kyurem/": {
+  "fp": "d15bc4124710c0e0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/kyurem_black/": {
+  "fp": "1d1f8a1ee053ff00",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/kyurem_white/": {
+  "fp": "f7ec8f9558be95c0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lampent/": {
+  "fp": "1e8638acccbeb9e3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/landorus/": {
+  "fp": "dab5df5a00787d00",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/landorus_therian/": {
+  "fp": "4c226f56f0085e57",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lapras/": {
+  "fp": "e0f1494ec0490622",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/larvesta/": {
+  "fp": "112227e41fb599dc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/larvitar/": {
+  "fp": "83e24b56b3f85c05",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/latias/": {
+  "fp": "a92ad820f53ea7c0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/latios/": {
+  "fp": "9eba7714ede9e1a1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lickilicky/": {
+  "fp": "db5cc9b960343a80",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lickitung/": {
+  "fp": "dba0a51e3dc03fe3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lileep/": {
+  "fp": "714b96c58d651963",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/litleo/": {
+  "fp": "5b5c6700b8b05c3a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/litten/": {
+  "fp": "42d66b398a077dad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/litwick/": {
+  "fp": "ba596f537e46a895",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lucario/": {
+  "fp": "272cda8e42850708",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lugia/": {
+  "fp": "df957da089fb7588",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lunala/": {
+  "fp": "9a55f0e370c4250e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/lunatone/": {
+  "fp": "ff986285c10ef339",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/machamp/": {
+  "fp": "3a4c0878a6dbc541",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/machop/": {
+  "fp": "90df09a3a5ee15e3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/magikarp/": {
+  "fp": "2a6d2c4304ccb465",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/magmar/": {
+  "fp": "a89319f3164b40ef",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/magmortar/": {
+  "fp": "5372120186b621a4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/malamar/": {
+  "fp": "a7583d1f4edf5488",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/manectric/": {
+  "fp": "1edb9f0d283283c3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/mankey/": {
+  "fp": "11d3075ee51a760e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/mareanie/": {
+  "fp": "80f1a416e45b6567",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/melmetal/": {
+  "fp": "8fa7477d785bd241",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/meloetta/": {
+  "fp": "633524f173067eed",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/meltan/": {
+  "fp": "250ef61a1331090c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/meowscarada/": {
+  "fp": "4420b4900c688d4a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/meowth/": {
+  "fp": "6cc4b12d1ca39577",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/mesprit/": {
+  "fp": "d80a223221c873c8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/metagross/": {
+  "fp": "2efa4f99b6c28efe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/mew/": {
+  "fp": "03ba29567bb11ea8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/mewtwo/": {
+  "fp": "edd453a8b7dd83f5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/mewtwo_a/": {
+  "fp": "ad515e666fdc7773",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/mimikyu/": {
+  "fp": "96abbc12a3ebe8d6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/minior_blue/": {
+  "fp": "cf5f326cfcc6a22d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/moltres/": {
+  "fp": "d08c8aafe048f7ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/moltres_galarian/": {
+  "fp": "72452de090837503",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/morelull/": {
+  "fp": "977c1a919c322d37",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/munchlax/": {
+  "fp": "4422d3faf120ad4c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/munna/": {
+  "fp": "e00d2652c6762489",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/necrozma/": {
+  "fp": "753f3d5cf2a79dd6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/necrozma_dawn_wings/": {
+  "fp": "46dee373d055a543",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/necrozma_dusk_mane/": {
+  "fp": "2fd228adcda3f83e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/necrozma_ultra/": {
+  "fp": "f079e12cbe268e7e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/nickit/": {
+  "fp": "9d3aedf5b4f552a3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/ninetales/": {
+  "fp": "c13a3e85f667a787",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/ninetales_alola/": {
+  "fp": "e0e1f55239d4d715",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/noibat/": {
+  "fp": "382c61143dbd7cb5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/numel/": {
+  "fp": "3ea3d51ae55d45e5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/oddish/": {
+  "fp": "7d28d673d06e0d5f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/oshawott/": {
+  "fp": "bf789ea8ad48ce09",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/palkia/": {
+  "fp": "08ecb129c2ba7fef",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/palkia_origin/": {
+  "fp": "d021d28943d8ceea",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/pancham/": {
+  "fp": "4b6caa6db06afe17",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/phantump/": {
+  "fp": "5064a79bec5485d4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/pheromosa/": {
+  "fp": "0fa2c9a9d65b88ce",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/pichu/": {
+  "fp": "4b5521258395d382",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/pidgey/": {
+  "fp": "2b554b59e0f69290",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/pikachu/": {
+  "fp": "e69bd5509b7aec91",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/piplup/": {
+  "fp": "2cd6370e58e5e715",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/poipole/": {
+  "fp": "3a978b4596519975",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/poliwag/": {
+  "fp": "12817ced4cd7d587",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/ponyta/": {
+  "fp": "b5cda5b9043c0798",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/porygon/": {
+  "fp": "6f39ecfba575ae1a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/primarina/": {
+  "fp": "f3bdd99a10daf911",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/primeape/": {
+  "fp": "867415faff77a5ec",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/psyduck/": {
+  "fp": "17b51b21403efdca",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/pumpkaboo_average/": {
+  "fp": "f72f783c72d46dab",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/quagsire/": {
+  "fp": "119a89a3b30d43fd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/quaquaval/": {
+  "fp": "3018cf57208f03b5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/quaxly/": {
+  "fp": "e453b8d681a0d7c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/raichu/": {
+  "fp": "1a928c22974f8e32",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/raikou/": {
+  "fp": "63303e5d37118281",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/ralts/": {
+  "fp": "59ab5113ee6a7523",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rapidash/": {
+  "fp": "dcb0f3914810c10e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/raticate/": {
+  "fp": "09d216642b089a59",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rattata/": {
+  "fp": "f8430e757a63459e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rayquaza/": {
+  "fp": "969025aedb8cf4c2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/regice/": {
+  "fp": "19f5fc7b70e3b1e8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/regieleki/": {
+  "fp": "2595c9cf506ea717",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/regirock/": {
+  "fp": "b84c8a3b0a5580a7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/registeel/": {
+  "fp": "a48e102c43f5a2b9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/reshiram/": {
+  "fp": "bc058471c85110fa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rhydon/": {
+  "fp": "9e761e317f797c18",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rhyhorn/": {
+  "fp": "846fd5859947de6d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rhyperior/": {
+  "fp": "f58a5d4e7d14edd0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rillaboom/": {
+  "fp": "ed3d5c4637f29942",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/riolu/": {
+  "fp": "4c60da379bc39b23",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rockruff/": {
+  "fp": "b6be31ec8c125f9e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/roggenrola/": {
+  "fp": "1814561371b7f080",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rookidee/": {
+  "fp": "f899562079a9858f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/rowlet/": {
+  "fp": "5e88431085793e9d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sableye/": {
+  "fp": "1f75a1882b0fdfae",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/samurott/": {
+  "fp": "de108e7db3cca64e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/samurott_hisuian/": {
+  "fp": "712d559aedbc220c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sawk/": {
+  "fp": "830b4572fbacc926",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sceptile/": {
+  "fp": "656ef00729a0dc25",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/scizor/": {
+  "fp": "548122b01a1ae5e3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/scorbunny/": {
+  "fp": "d0ed0ee468448f34",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/seedot/": {
+  "fp": "825b7743a219ee7f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sharpedo/": {
+  "fp": "9d0e84b4eee6e4d1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/shiinotic/": {
+  "fp": "bf54cfac7d014084",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sigilyph/": {
+  "fp": "223e2149d3391fbf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sizzlipede/": {
+  "fp": "314c15713ee9b969",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/skarmory/": {
+  "fp": "9fc3b5d77888870b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/slaking/": {
+  "fp": "3e2b48b00bf0e719",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/slowbro/": {
+  "fp": "173c7746ea1e6144",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/smoliv/": {
+  "fp": "a0c703e77c3e94b3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sneasel/": {
+  "fp": "66dd85080be814f7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sneasler/": {
+  "fp": "6fba43a8edab4912",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/snom/": {
+  "fp": "7fc7546e8f74051a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/snorlax/": {
+  "fp": "32e9b7e9496cc99c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/snorunt/": {
+  "fp": "eec8035ec3d60140",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/snover/": {
+  "fp": "fa19f82fafdf1524",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sobble/": {
+  "fp": "97ba9eb78abdf491",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/solgaleo/": {
+  "fp": "5bd3b0c7c6740669",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sprigatito/": {
+  "fp": "47617856fdc06ecc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/squirtle/": {
+  "fp": "8a1eea5a9c8029e7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/staraptor/": {
+  "fp": "5721850bee0d05c5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/starmie/": {
+  "fp": "abfacb197c3ac1bf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/staryu/": {
+  "fp": "fdba3a9840f4d1cb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/steelix/": {
+  "fp": "6d4312189c691f14",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/stufful/": {
+  "fp": "9f3be767d8ccbb4a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/stunfisk/": {
+  "fp": "39b15270f93f7093",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/suicune/": {
+  "fp": "0e9b7e35a56df54d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/swablu/": {
+  "fp": "29a93d959d9f70e8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/swampert/": {
+  "fp": "10d8c5d59e5808ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/sylveon/": {
+  "fp": "bcec9cb83df3e879",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/teddiursa/": {
+  "fp": "b9d993f8095c06f5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/thievul/": {
+  "fp": "b54cacbc70ae87d9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/thundurus/": {
+  "fp": "ae973ea48b1919d2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/thundurus_therian/": {
+  "fp": "b347a2b81e6d6491",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/tinkatink/": {
+  "fp": "6d76f19fe7d33c1b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/tinkaton/": {
+  "fp": "b0df16e6a5c87c58",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/tinkatuff/": {
+  "fp": "546bb334f07ed38f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/togedemaru/": {
+  "fp": "223f050c17fb814e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/togekiss/": {
+  "fp": "08db939f8febba30",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/togetic/": {
+  "fp": "9eb415c6ce65fd91",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/torchic/": {
+  "fp": "9ea8a94e4d0ba827",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/totodile/": {
+  "fp": "45c8d8601e1ad668",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/toxtricity/": {
+  "fp": "cfcb32f52e6c613a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/treecko/": {
+  "fp": "9f64ff73a6c21be5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/typhlosion/": {
+  "fp": "efac2da2453de70c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/tyranitar/": {
+  "fp": "478ef65aced7b838",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/umbreon/": {
+  "fp": "a589ae91154ee9ec",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/ursaluna/": {
+  "fp": "7abd659250fc5deb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/uxie/": {
+  "fp": "53803d92053af427",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/venonat/": {
+  "fp": "25bf7cdf7b9748b3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/venusaur/": {
+  "fp": "9dc167600cbaaf3b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/victreebel/": {
+  "fp": "e8a1cfe09758c17b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/vivillon/": {
+  "fp": "6c50df505830d5bf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/volcanion/": {
+  "fp": "3acc394281f2741f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/wailmer/": {
+  "fp": "20f2ec4bf34a7b2b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/wailord/": {
+  "fp": "421fbea7add1f662",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/weavile/": {
+  "fp": "581df73c2d3d59c0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/weedle/": {
+  "fp": "e701ed4eebf5e000",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/wigglytuff/": {
+  "fp": "af9a4054653d57c3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/wimpod/": {
+  "fp": "ac013003b43783b1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/xatu/": {
+  "fp": "d146201f4e1cf084",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/xerneas/": {
+  "fp": "a8a7ebe18d21dea4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/xurkitree/": {
+  "fp": "a85aef31ab9b7678",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/yveltal/": {
+  "fp": "9492237fb4888a80",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zacian/": {
+  "fp": "0ec874de3be97169",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zacian_crowned_sword/": {
+  "fp": "28e6253ee01fdeb4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zamazenta/": {
+  "fp": "90b19659c663bf58",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zamazenta_crowned_shield/": {
+  "fp": "e448c85968a6d191",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zapdos/": {
+  "fp": "f4e30acb18d0280e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zapdos_galarian/": {
+  "fp": "c030cbb39a02619e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zekrom/": {
+  "fp": "1263e65f9991edcf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zeraora/": {
+  "fp": "18fc27fb7ad415f9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zigzagoon/": {
+  "fp": "95c5933aa1fb3dcc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zoroark/": {
+  "fp": "1861ecbae7b46e71",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zorua/": {
+  "fp": "53499a9c55ed0108",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zubat/": {
+  "fp": "3b803b671605f88d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zygarde/": {
+  "fp": "a1f9abfa3c7a880e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zygarde_complete/": {
+  "fp": "7b81002600093c10",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/es/cp/zygarde_complete_ten_percent/": {
+  "fp": "19b4cf0a323dc372",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/": {
+  "fp": "c88c3412b86f2153",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/abra/": {
+  "fp": "355c70bd67f002e8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/aegislash/": {
+  "fp": "5bb73efc381380a5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/aerodactyl/": {
+  "fp": "4eccaa22852ae1de",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/aggron/": {
+  "fp": "52a2d08d1d5ac8b0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/altaria/": {
+  "fp": "4298e289e700097c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/annihilape/": {
+  "fp": "d8dd97aafee51209",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/applin/": {
+  "fp": "59d10d843cf44e15",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/arcanine/": {
+  "fp": "0c148ca287c77119",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/arrokuda/": {
+  "fp": "9a953de69f35a950",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/articuno/": {
+  "fp": "7564af48f3a16f29",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/articuno_galarian/": {
+  "fp": "0c9269b9d9096ae1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/axew/": {
+  "fp": "b8b83cd9f2c4cea1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/azelf/": {
+  "fp": "7723c890c4566719",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/azumarill/": {
+  "fp": "57c00cbc96c7d236",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/bagon/": {
+  "fp": "0aaea68f5545c921",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/beedrill/": {
+  "fp": "4cd3f2182ee63dbe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/beldum/": {
+  "fp": "8c9b63f16ca11ade",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/blastoise/": {
+  "fp": "6d04e25c5458eb05",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/blaziken/": {
+  "fp": "ee5dd7485d4e40aa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/blissey/": {
+  "fp": "b7566f930f19092b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/braixen/": {
+  "fp": "232d503a1d52e582",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/bramblin/": {
+  "fp": "e9e28ac2ef6428a1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/bulbasaur/": {
+  "fp": "8268c0cc230f9082",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/buzzwole/": {
+  "fp": "1004d6beeb2d9a07",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/cacnea/": {
+  "fp": "92a75c087f116a34",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/carvanha/": {
+  "fp": "82f0d81f15722467",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/centiskorch/": {
+  "fp": "12ca956c4cb2f999",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/chandelure/": {
+  "fp": "83e9200a50124e22",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/chansey/": {
+  "fp": "dc276bb9679b500d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/charcadet/": {
+  "fp": "236add89a6c0748c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/charizard/": {
+  "fp": "d3405be3a9f58bcb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/charmander/": {
+  "fp": "f7d842f2db84b34c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/cherubi/": {
+  "fp": "067d9a584a716405",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/chespin/": {
+  "fp": "422d350fd0e22466",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/cinderace/": {
+  "fp": "aa4a7b7238e337d3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/clefairy/": {
+  "fp": "1aebe2a880c0f3cb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/corviknight/": {
+  "fp": "fd8d21d1847ece31",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/cramorant/": {
+  "fp": "0966155699cced86",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/decidueye/": {
+  "fp": "13a9bfa16638d59e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/deerling/": {
+  "fp": "6a531288558da5ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/deino/": {
+  "fp": "47f9a61bb302f961",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/delibird/": {
+  "fp": "79ac3255249ff534",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/delphox/": {
+  "fp": "f4486f82edf3f04e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/dewpider/": {
+  "fp": "687829b3bc905f86",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/dialga/": {
+  "fp": "4b8a153a844b16d9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/dialga_origin/": {
+  "fp": "4f3e796d6d0c125b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/diancie/": {
+  "fp": "7e2762f59610798a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/ditto/": {
+  "fp": "a93521694696285d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/dondozo/": {
+  "fp": "effee3caa1d0446d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/doublade/": {
+  "fp": "e23053ee35fb7988",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/dragonair/": {
+  "fp": "4e98a60acb96c294",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/dragonite/": {
+  "fp": "c89ed02218049a97",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/dratini/": {
+  "fp": "4b04f40ac2ca9bd8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/dreepy/": {
+  "fp": "b8fb76ea5a350e70",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/drifblim/": {
+  "fp": "197f797aa3a7e4d0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/drifloon/": {
+  "fp": "e05b54bb4772677a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/drilbur/": {
+  "fp": "5d1774c7f06d4b52",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/duraludon/": {
+  "fp": "e91e07e0bd81b4f0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/eevee/": {
+  "fp": "e7166ea9bcc6653c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/electrike/": {
+  "fp": "450833bb952b162a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/elgyem/": {
+  "fp": "5e39a6b7fcfc887f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/entei/": {
+  "fp": "a9af05ebe20d4ed1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/espeon/": {
+  "fp": "843dfdc68547d34f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/eternatus/": {
+  "fp": "62ec84efd77f2df5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/eternatus_eternamax/": {
+  "fp": "4c97cb7d82d56ebd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/excadrill/": {
+  "fp": "3670eec07d84b740",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/exeggcute/": {
+  "fp": "d220be8b75a363ab",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/falinks/": {
+  "fp": "1d4be67c2280e27e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/feebas/": {
+  "fp": "ab510963a5c4c4ca",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/fennekin/": {
+  "fp": "e661c4080c3f15e7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/feraligatr/": {
+  "fp": "cacf635dbd1b5125",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/fidough/": {
+  "fp": "c66d911a5740dd5f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/flamigo/": {
+  "fp": "c3d268602d2b9462",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/fletchling/": {
+  "fp": "a3674b1b0867f8d9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/frigibax/": {
+  "fp": "79fa5c76bf7a9380",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/frillish/": {
+  "fp": "a8ed76c19da7a957",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/froakie/": {
+  "fp": "3e5d9dc6e23cac00",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/frogadier/": {
+  "fp": "045b891ecd5deef3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/fuecoco/": {
+  "fp": "e4e06d939f41eb04",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/gabite/": {
+  "fp": "9bd90f841ab22e27",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/garchomp/": {
+  "fp": "a955764c31334158",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/gastly/": {
+  "fp": "fd9d11c89f30c44a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/gengar/": {
+  "fp": "ba48e25da78361d1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/gible/": {
+  "fp": "bc1ec5d43f551cc2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/gimmighoul/": {
+  "fp": "65096b75ca66e7ea",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/giratina/": {
+  "fp": "d7514262d5deed51",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/giratina_origin/": {
+  "fp": "b60bf68320023383",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/glaceon/": {
+  "fp": "067c55eb7383873d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/gligar/": {
+  "fp": "058c404957a60cad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/golisopod/": {
+  "fp": "b27fd18bbf9bed00",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/gourgeist_average/": {
+  "fp": "02a50e9c2a481a53",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/greninja/": {
+  "fp": "71dc9d5cca9132c3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/grimmsnarl/": {
+  "fp": "fd8217e154351445",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/groudon/": {
+  "fp": "2a30bda4698e5e31",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/growlithe/": {
+  "fp": "a53234979d2d1b7b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/growlithe_hisuian/": {
+  "fp": "5176d6c8565ab2de",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/gyarados/": {
+  "fp": "aea1b0bfdd12a08a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/hatenna/": {
+  "fp": "487ecff709f82e43",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/haunter/": {
+  "fp": "9f81bddff680c939",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/hitmontop/": {
+  "fp": "0d9877dd29e3a8ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/ho_oh/": {
+  "fp": "d01ea76d37606f35",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/honedge/": {
+  "fp": "946620e19c44915e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/hoopa_unbound/": {
+  "fp": "5adf093618cce89c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/hoothoot/": {
+  "fp": "cd977829028d0274",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/houndoom/": {
+  "fp": "ca61342bdb330130",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/houndour/": {
+  "fp": "3a508056c8577ba1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/hydreigon/": {
+  "fp": "bed1824663caded1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/impidimp/": {
+  "fp": "fdc7c36f6b8c99c5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/incineroar/": {
+  "fp": "607bb675bd501292",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/inkay/": {
+  "fp": "912679f1278c9bd8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/inteleon/": {
+  "fp": "1d08129d4b924c15",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/ivysaur/": {
+  "fp": "b75dd4c5c319eb67",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/jellicent/": {
+  "fp": "c8d25a0e994c2a9e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/jigglypuff/": {
+  "fp": "6ea8950b82c4bb56",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/kecleon/": {
+  "fp": "28a6cc541f0d1840",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/keldeo/": {
+  "fp": "5ebe6a8bba9f6630",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/kirlia/": {
+  "fp": "5278c074273bc995",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/kleavor/": {
+  "fp": "59799000637ce046",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/kommo_o/": {
+  "fp": "abf1a0b7f9b4736b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/kyogre/": {
+  "fp": "b6f12bc04ebff393",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/kyurem/": {
+  "fp": "5d6b72814c12f71e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/kyurem_black/": {
+  "fp": "33f6414dfc4d0bea",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/kyurem_white/": {
+  "fp": "2aa5742d50e259f1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lampent/": {
+  "fp": "bbbd90d9b6be21bf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/landorus/": {
+  "fp": "dfec3f6481698b38",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/landorus_therian/": {
+  "fp": "2ca4bb9e4da3ada0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lapras/": {
+  "fp": "aa0e60c9cae3c94d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/larvesta/": {
+  "fp": "d8b772fd0a8f0be9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/larvitar/": {
+  "fp": "3991ee5dd7eb5c13",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/latias/": {
+  "fp": "87aa158ed272d6d4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/latios/": {
+  "fp": "c797f7ca1246eef2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lickilicky/": {
+  "fp": "a1bf406503cb11a0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lickitung/": {
+  "fp": "785d627851d55f96",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lileep/": {
+  "fp": "976bf45bd8d49a8f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/litleo/": {
+  "fp": "fec2a1873d2fdc60",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/litten/": {
+  "fp": "5b059bf01db2816a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/litwick/": {
+  "fp": "555bebc5ce7524f7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lucario/": {
+  "fp": "4b819110f327cb46",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lugia/": {
+  "fp": "426584830a298385",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lunala/": {
+  "fp": "f4545fa1ba970814",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/lunatone/": {
+  "fp": "677d412c3872ad85",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/machamp/": {
+  "fp": "59ec8002b084ac05",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/machop/": {
+  "fp": "883509487554456c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/magikarp/": {
+  "fp": "ae3a1afd0e00e368",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/magmar/": {
+  "fp": "d921be4369cb0e4d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/magmortar/": {
+  "fp": "2a114c22fa2d76a1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/malamar/": {
+  "fp": "443d61aac9fcdf20",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/manectric/": {
+  "fp": "a5e686ad24656608",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/mankey/": {
+  "fp": "8151c58f15ec5d2b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/mareanie/": {
+  "fp": "b199b68ea13305db",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/melmetal/": {
+  "fp": "c6f59d9e2f346d9f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/meloetta/": {
+  "fp": "615b3edf5a48962f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/meltan/": {
+  "fp": "b32247e9cc818d0d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/meowscarada/": {
+  "fp": "e7800a99c4a458cc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/meowth/": {
+  "fp": "2ea8dc6de8a43621",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/mesprit/": {
+  "fp": "af65688f871907f1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/metagross/": {
+  "fp": "ece9ff3f4d6e2367",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/mew/": {
+  "fp": "5b60e12602dab31e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/mewtwo/": {
+  "fp": "d8554885dca35dd6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/mewtwo_a/": {
+  "fp": "f09a59a436ce2010",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/mimikyu/": {
+  "fp": "a71504a1be1b77ba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/minior_blue/": {
+  "fp": "b2b01b75ee4f3df7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/moltres/": {
+  "fp": "f2cdce173c12da2e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/moltres_galarian/": {
+  "fp": "c315659b89679b31",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/morelull/": {
+  "fp": "54c9aaadf7f51704",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/munchlax/": {
+  "fp": "bcc5b6efcb2deecf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/munna/": {
+  "fp": "30c48b8f58750240",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/necrozma/": {
+  "fp": "cc657e51325160e9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/necrozma_dawn_wings/": {
+  "fp": "5bd2173eb6d75fd8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/necrozma_dusk_mane/": {
+  "fp": "fab3a3017d72d025",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/necrozma_ultra/": {
+  "fp": "e50fde4b1929f0c5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/nickit/": {
+  "fp": "2f56ab74b0c871c6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/ninetales/": {
+  "fp": "0561d51f9fa36fe8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/ninetales_alola/": {
+  "fp": "cc7e5b54a319b8c6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/noibat/": {
+  "fp": "5a965058dddfaeac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/numel/": {
+  "fp": "814ea72f11adaff1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/oddish/": {
+  "fp": "d91abbd46f08ed96",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/oshawott/": {
+  "fp": "1317dfb49711cd0a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/palkia/": {
+  "fp": "92068fcddbf6a6b1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/palkia_origin/": {
+  "fp": "5600120ec6ab1efb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/pancham/": {
+  "fp": "06c988afdeeb7bc0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/phantump/": {
+  "fp": "16ef0dc6b2d08250",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/pheromosa/": {
+  "fp": "728937c85d3cc9e8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/pichu/": {
+  "fp": "9da70879717873bf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/pidgey/": {
+  "fp": "dd3c7dcc36420075",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/pikachu/": {
+  "fp": "637eff8533366608",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/piplup/": {
+  "fp": "29c27e84adda63bd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/poipole/": {
+  "fp": "469258ded55b14ee",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/poliwag/": {
+  "fp": "e995ccfbbd28aa54",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/ponyta/": {
+  "fp": "63d5abe40627a983",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/porygon/": {
+  "fp": "fc43e8d7ff9c6479",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/primarina/": {
+  "fp": "ac1f7df712789897",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/primeape/": {
+  "fp": "89d023b8d639b664",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/psyduck/": {
+  "fp": "e7b61bf8958006c9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/pumpkaboo_average/": {
+  "fp": "1887cb747994bbd2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/quagsire/": {
+  "fp": "4ca2630010e48fd5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/quaquaval/": {
+  "fp": "bf24fe9bde8aecb3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/quaxly/": {
+  "fp": "6dba8f98fd947095",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/raichu/": {
+  "fp": "0c93b8eb52bf01ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/raikou/": {
+  "fp": "bb8f67e476e91788",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/ralts/": {
+  "fp": "c855e47912d79367",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rapidash/": {
+  "fp": "6cf5938149b16235",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/raticate/": {
+  "fp": "f7eb1719f083f6fa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rattata/": {
+  "fp": "bf70fd39004348fa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rayquaza/": {
+  "fp": "a84685921971c208",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/regice/": {
+  "fp": "5590fe1b58968f25",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/regieleki/": {
+  "fp": "3e0ad0c68e1d7c44",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/regirock/": {
+  "fp": "1d44a449c5773dd7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/registeel/": {
+  "fp": "0942233ff48b3dd3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/reshiram/": {
+  "fp": "ffcdd417b3515335",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rhydon/": {
+  "fp": "e28d979387bf2a86",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rhyhorn/": {
+  "fp": "5829a4fecd00502f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rhyperior/": {
+  "fp": "30cdebca8a96ae1f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rillaboom/": {
+  "fp": "357f2cf93b6ab21c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/riolu/": {
+  "fp": "63c9166b914fe1c4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rockruff/": {
+  "fp": "f1c06c20db7c6b45",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/roggenrola/": {
+  "fp": "a4ea23e659e7e907",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rookidee/": {
+  "fp": "47087661962679db",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/rowlet/": {
+  "fp": "71c48c7c050ca62d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sableye/": {
+  "fp": "5301e1227db20e25",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/samurott/": {
+  "fp": "af1a08b2f2d88731",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/samurott_hisuian/": {
+  "fp": "c082f7c5d0766cba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sawk/": {
+  "fp": "bd93805ea180852f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sceptile/": {
+  "fp": "cc0e5b107bfc9885",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/scizor/": {
+  "fp": "67156e7c6719ca36",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/scorbunny/": {
+  "fp": "793e576d2b7774b3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/seedot/": {
+  "fp": "e2676c0dc1fd6184",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sharpedo/": {
+  "fp": "0f4d1861b4a9b389",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/shiinotic/": {
+  "fp": "0c7aaf857d004ac9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sigilyph/": {
+  "fp": "2161920620714f18",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sizzlipede/": {
+  "fp": "a534e7eda9116025",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/skarmory/": {
+  "fp": "e044581cededd5ab",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/slaking/": {
+  "fp": "f7e94feead1d6668",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/slowbro/": {
+  "fp": "d8afbe7197f88a9c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/smoliv/": {
+  "fp": "8d0543cbdf2f356f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sneasel/": {
+  "fp": "2766e6822bfe8a7c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sneasler/": {
+  "fp": "7d6c034e06cf5ab4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/snom/": {
+  "fp": "92fe9dc315f66ea5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/snorlax/": {
+  "fp": "15f9e8d344cf4d0e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/snorunt/": {
+  "fp": "58e3029cfcdb9aa6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/snover/": {
+  "fp": "d4d4e1554060a596",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sobble/": {
+  "fp": "c9d579c70d042860",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/solgaleo/": {
+  "fp": "64bec3f1a3b8bf44",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sprigatito/": {
+  "fp": "457384502805d8e2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/squirtle/": {
+  "fp": "c7a45dc2fe22deaa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/staraptor/": {
+  "fp": "de5a685cf1b87698",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/starmie/": {
+  "fp": "417d62528519e7ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/staryu/": {
+  "fp": "bbdd3662dcda6a7d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/steelix/": {
+  "fp": "1c57a0f3a1a0634c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/stufful/": {
+  "fp": "ed7806c6f80f8d57",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/stunfisk/": {
+  "fp": "044cd1171e49d70d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/suicune/": {
+  "fp": "edc5fcb1bc9a5440",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/swablu/": {
+  "fp": "c0e7a584c8a62c90",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/swampert/": {
+  "fp": "310653c84b2e6e8a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/sylveon/": {
+  "fp": "15bf3700eabce002",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/teddiursa/": {
+  "fp": "f0608de7ac821169",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/thievul/": {
+  "fp": "bf09d5e12de738f6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/thundurus/": {
+  "fp": "b04779be0fe824f9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/thundurus_therian/": {
+  "fp": "9679989604938b40",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/tinkatink/": {
+  "fp": "5a340b0dd889156a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/tinkaton/": {
+  "fp": "c1a36bde8d8717c2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/tinkatuff/": {
+  "fp": "19b447af048169ce",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/togedemaru/": {
+  "fp": "06d8de852dd52742",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/togekiss/": {
+  "fp": "3090c2c6e0ad25d5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/togetic/": {
+  "fp": "36e4d0b7d262dcbb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/torchic/": {
+  "fp": "bc0deb4ae7da8e12",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/totodile/": {
+  "fp": "7b6a9639476dea56",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/toxtricity/": {
+  "fp": "88e0444106f90aa6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/treecko/": {
+  "fp": "fda9bfe8c1520ca4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/typhlosion/": {
+  "fp": "d15f433ab15e5520",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/tyranitar/": {
+  "fp": "fc615a94a85206ea",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/umbreon/": {
+  "fp": "d3b8977732665a53",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/ursaluna/": {
+  "fp": "5add5b7a7c1f466b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/uxie/": {
+  "fp": "a425e53dcef8f24c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/venonat/": {
+  "fp": "c9c38df82046770c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/venusaur/": {
+  "fp": "adb61cca19beb461",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/victreebel/": {
+  "fp": "9070394461aad519",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/vivillon/": {
+  "fp": "d85f87e451e85111",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/volcanion/": {
+  "fp": "0164e806722edc79",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/wailmer/": {
+  "fp": "07106313125a77ba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/wailord/": {
+  "fp": "eb01fb35d2a53cdf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/weavile/": {
+  "fp": "8b7c165ee9a664d7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/weedle/": {
+  "fp": "76eb438364ce2180",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/wigglytuff/": {
+  "fp": "7b3c6d8ccf604308",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/wimpod/": {
+  "fp": "809abe02d99c4b5f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/xatu/": {
+  "fp": "5c92c1d99585ab77",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/xerneas/": {
+  "fp": "036977835ccc3bb2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/xurkitree/": {
+  "fp": "0e7fe53c10a2febd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/yveltal/": {
+  "fp": "d497a6e48e0e12d8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zacian/": {
+  "fp": "8d66dfbcd324609f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zacian_crowned_sword/": {
+  "fp": "23557e959ac6b002",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zamazenta/": {
+  "fp": "6d50408ccd1f26d7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zamazenta_crowned_shield/": {
+  "fp": "bf31737754642e8a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zapdos/": {
+  "fp": "5011bf3c05dde709",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zapdos_galarian/": {
+  "fp": "a7b7cecbb4cc6ed0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zekrom/": {
+  "fp": "91be49ac000020d6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zeraora/": {
+  "fp": "40a85e65606c7cd9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zigzagoon/": {
+  "fp": "49c6e25b34d56cd0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zoroark/": {
+  "fp": "005dbab55ae7430c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zorua/": {
+  "fp": "1fbf12e26bfe46df",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zubat/": {
+  "fp": "8dcd3b73556a7d9b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zygarde/": {
+  "fp": "5d46b931de0282cb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zygarde_complete/": {
+  "fp": "0dff20b3849f213d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/fr/cp/zygarde_complete_ten_percent/": {
+  "fp": "677b657270a51691",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/": {
+  "fp": "78c9462d39853882",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/abra/": {
+  "fp": "189ffe48919ed5d5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/aegislash/": {
+  "fp": "d406d67fbe6f7693",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/aerodactyl/": {
+  "fp": "b5434d3aee72c54e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/aggron/": {
+  "fp": "5111ac01176bb1b3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/altaria/": {
+  "fp": "edf349a4e112e4c5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/annihilape/": {
+  "fp": "68f8248ced99b04d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/applin/": {
+  "fp": "6a37bbdd75853a26",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/arcanine/": {
+  "fp": "25a8578c0734dd75",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/arrokuda/": {
+  "fp": "5dc74783e099644a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/articuno/": {
+  "fp": "497d2d9b160a8d7a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/articuno_galarian/": {
+  "fp": "e644715f01ccdfb4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/axew/": {
+  "fp": "54451027d37995b9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/azelf/": {
+  "fp": "268a1b2c7d999160",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/azumarill/": {
+  "fp": "16f550ea9b323986",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/bagon/": {
+  "fp": "9b2e9eccfa6020e9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/beedrill/": {
+  "fp": "b00dc7806dfdc339",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/beldum/": {
+  "fp": "73223e721d01501a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/blastoise/": {
+  "fp": "1e99eb58e72acffe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/blaziken/": {
+  "fp": "ddc44f4966d25ea2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/blissey/": {
+  "fp": "356ef149bdfda4ba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/braixen/": {
+  "fp": "10f83702bab68b3a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/bramblin/": {
+  "fp": "61660b726539ff8d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/bulbasaur/": {
+  "fp": "3dd1a96beaea8c09",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/buzzwole/": {
+  "fp": "8ae32c9434bd3513",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/cacnea/": {
+  "fp": "a46f8bf01ab18c64",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/carvanha/": {
+  "fp": "23d943f62ca4b3d0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/centiskorch/": {
+  "fp": "f4715cc7dbabeb8c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/chandelure/": {
+  "fp": "c63b87c5f4aaef55",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/chansey/": {
+  "fp": "9b25fa50801a8005",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/charcadet/": {
+  "fp": "63187274ef1ed899",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/charizard/": {
+  "fp": "0ac3e393892ae526",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/charmander/": {
+  "fp": "ab9c460b7446ffc7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/cherubi/": {
+  "fp": "eeddcbc27c512c9a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/chespin/": {
+  "fp": "8d5cab9f31f77b5b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/cinderace/": {
+  "fp": "49aae395cb55a0e8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/clefairy/": {
+  "fp": "3b624fce95814197",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/corviknight/": {
+  "fp": "1500b347fe1db291",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/cramorant/": {
+  "fp": "54bec4d64666745a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/decidueye/": {
+  "fp": "036089c3dde729f0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/deerling/": {
+  "fp": "7b03636ecba90949",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/deino/": {
+  "fp": "89b1b95df44a7e9a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/delibird/": {
+  "fp": "6c7ee0c4c504ed93",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/delphox/": {
+  "fp": "865fc8ba9606fe19",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/dewpider/": {
+  "fp": "894d244666b16d54",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/dialga/": {
+  "fp": "139876be7b51e4e4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/dialga_origin/": {
+  "fp": "8421876e183ae012",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/diancie/": {
+  "fp": "3454fd8566a12f9d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/ditto/": {
+  "fp": "ed1d4b32baf40790",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/dondozo/": {
+  "fp": "eb7f5b455869e583",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/doublade/": {
+  "fp": "6470ab0bb2f29902",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/dragonair/": {
+  "fp": "1588f9c514907040",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/dragonite/": {
+  "fp": "39e065a6cc0f24f7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/dratini/": {
+  "fp": "deee5ccf91e1ac71",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/dreepy/": {
+  "fp": "6ad1ff3b4c83a493",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/drifblim/": {
+  "fp": "8da57cc3ccc64600",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/drifloon/": {
+  "fp": "31b41e4b3ccfd18d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/drilbur/": {
+  "fp": "0df755fa190cc186",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/duraludon/": {
+  "fp": "0d0c68afd2e5e911",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/eevee/": {
+  "fp": "d91756b9fc7c1f49",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/electrike/": {
+  "fp": "c03c9843065525cc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/elgyem/": {
+  "fp": "66e19ce4338129e8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/entei/": {
+  "fp": "38ac89313cabe60e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/espeon/": {
+  "fp": "4588bf208266e05e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/eternatus/": {
+  "fp": "881392f5a83bf80c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/eternatus_eternamax/": {
+  "fp": "960ce669d0138230",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/excadrill/": {
+  "fp": "1dc34c1050c7fba2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/exeggcute/": {
+  "fp": "efe28116dd34b7a5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/falinks/": {
+  "fp": "2d1fa32653d28c32",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/feebas/": {
+  "fp": "44749612c7596636",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/fennekin/": {
+  "fp": "ce43b16ec6133546",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/feraligatr/": {
+  "fp": "c65345cb8d8e7450",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/fidough/": {
+  "fp": "714a407059008f4e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/flamigo/": {
+  "fp": "f406ef1e3e660230",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/fletchling/": {
+  "fp": "2a3ebdb81ab21a77",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/frigibax/": {
+  "fp": "5b77565bf502eef0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/frillish/": {
+  "fp": "71293689cc73f318",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/froakie/": {
+  "fp": "2cc141d51c36747c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/frogadier/": {
+  "fp": "fecee9b3ff49732d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/fuecoco/": {
+  "fp": "5f72b2d7e34f2895",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/gabite/": {
+  "fp": "2d41e81bc78c1276",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/garchomp/": {
+  "fp": "a989fb041ffcbea4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/gastly/": {
+  "fp": "417830329da973d9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/gengar/": {
+  "fp": "dd3074a1f53a9af4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/gible/": {
+  "fp": "94ceaa0a7f2a3191",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/gimmighoul/": {
+  "fp": "f48d34289bb9e132",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/giratina/": {
+  "fp": "6dd84459fc14b4ce",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/giratina_origin/": {
+  "fp": "e646a5370685a7c8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/glaceon/": {
+  "fp": "71b7185cba28c6ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/gligar/": {
+  "fp": "14dbca00f9a40ba3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/golisopod/": {
+  "fp": "64abeb560b5d10f1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/gourgeist_average/": {
+  "fp": "034862ab66d0cdb5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/greninja/": {
+  "fp": "3e6f402f7344fe1a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/grimmsnarl/": {
+  "fp": "7cd12e35d18bb25e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/groudon/": {
+  "fp": "e9c4ef62ce47cdaa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/growlithe/": {
+  "fp": "12178caa17f35a2b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/growlithe_hisuian/": {
+  "fp": "10b43b2f6e0914e9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/gyarados/": {
+  "fp": "922336c356e9f869",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/hatenna/": {
+  "fp": "612f25cef8fb49fe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/haunter/": {
+  "fp": "4ec547ba9a0d83c1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/hitmontop/": {
+  "fp": "a759568d1f6b7eac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/ho_oh/": {
+  "fp": "4dc5340330a80b6b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/honedge/": {
+  "fp": "6598e48b2094f33f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/hoopa_unbound/": {
+  "fp": "006fa5bb86751ebf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/hoothoot/": {
+  "fp": "a387be03901213a9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/houndoom/": {
+  "fp": "9a59727911b89af1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/houndour/": {
+  "fp": "6b4f34ecbebff852",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/hydreigon/": {
+  "fp": "dc63b1711f708a5c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/impidimp/": {
+  "fp": "f05bb9f0fa221237",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/incineroar/": {
+  "fp": "50ece9d753570721",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/inkay/": {
+  "fp": "d00f16db440a471b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/inteleon/": {
+  "fp": "5f0a1da20ac6078c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/ivysaur/": {
+  "fp": "5de3e421d898324a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/jellicent/": {
+  "fp": "d27ff3f13ee636a7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/jigglypuff/": {
+  "fp": "0e51b44f4dc9dd91",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/kecleon/": {
+  "fp": "4197f31a122da03d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/keldeo/": {
+  "fp": "51d1a194a68fc34f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/kirlia/": {
+  "fp": "db25bc5401431a81",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/kleavor/": {
+  "fp": "dcfde67a462fc6f4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/kommo_o/": {
+  "fp": "87cbdd824eba4905",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/kyogre/": {
+  "fp": "106b032c2200c081",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/kyurem/": {
+  "fp": "30253d1e7e8c17a7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/kyurem_black/": {
+  "fp": "38ecdce0e20796b4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/kyurem_white/": {
+  "fp": "d7a14256e5ee90a5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lampent/": {
+  "fp": "9efa52f5b6ad3b90",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/landorus/": {
+  "fp": "b55f245a498b5a0e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/landorus_therian/": {
+  "fp": "2363fb7dc03e0d55",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lapras/": {
+  "fp": "9ed28dd34f3d6329",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/larvesta/": {
+  "fp": "22221d9adeccdfcf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/larvitar/": {
+  "fp": "b721bc9cb34ee6f4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/latias/": {
+  "fp": "9d6b4dfe7a06d0ee",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/latios/": {
+  "fp": "0685e19eb9f1a8d8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lickilicky/": {
+  "fp": "44ccbafb60c0f12c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lickitung/": {
+  "fp": "3435a7a20fa2e1fa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lileep/": {
+  "fp": "c34a2f2d54f01533",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/litleo/": {
+  "fp": "aac2b8c2aa484886",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/litten/": {
+  "fp": "1703ac920e905615",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/litwick/": {
+  "fp": "5e68a39cc0e77b3f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lucario/": {
+  "fp": "349c0bf6d84ba93d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lugia/": {
+  "fp": "409d0816c6c72d5c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lunala/": {
+  "fp": "4d622295ede8f10d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/lunatone/": {
+  "fp": "45bbd0351c4f9341",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/machamp/": {
+  "fp": "6284ed5dd58ace86",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/machop/": {
+  "fp": "c06980198d63dfd4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/magikarp/": {
+  "fp": "b0fc6b5d91c60c3d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/magmar/": {
+  "fp": "021f9c3009f6bf9a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/magmortar/": {
+  "fp": "44eb9f66cb55572c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/malamar/": {
+  "fp": "9235b896d81d5860",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/manectric/": {
+  "fp": "41fad17ab8c984ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/mankey/": {
+  "fp": "aa4925106da73f5b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/mareanie/": {
+  "fp": "38c09c33605a65e9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/melmetal/": {
+  "fp": "db60120bf3007bd8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/meloetta/": {
+  "fp": "cc2e56c81470394b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/meltan/": {
+  "fp": "bd3e1938a99cc931",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/meowscarada/": {
+  "fp": "d185c73228b42531",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/meowth/": {
+  "fp": "fd763498580c23d0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/mesprit/": {
+  "fp": "e45e98e4e8ab3cab",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/metagross/": {
+  "fp": "9ef7baf8a26ca668",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/mew/": {
+  "fp": "c7e4580e10a56301",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/mewtwo/": {
+  "fp": "23c879bea3cf2616",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/mewtwo_a/": {
+  "fp": "862541be50f95292",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/mimikyu/": {
+  "fp": "bf6a41cf40176c4b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/minior_blue/": {
+  "fp": "cefc17db6a7ab0e5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/moltres/": {
+  "fp": "770fada3629da027",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/moltres_galarian/": {
+  "fp": "145d0307b80ade07",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/morelull/": {
+  "fp": "aef6927e1b9e3f60",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/munchlax/": {
+  "fp": "6cd09b43c2ad333d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/munna/": {
+  "fp": "b2185dc1ce6af3f3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/necrozma/": {
+  "fp": "93f95d4bb2e881c4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/necrozma_dawn_wings/": {
+  "fp": "da9f6eb2ff7b80fd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/necrozma_dusk_mane/": {
+  "fp": "3d5dd03da8978ede",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/necrozma_ultra/": {
+  "fp": "237f70e1f6730ce2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/nickit/": {
+  "fp": "addc3b60d4634644",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/ninetales/": {
+  "fp": "be00781d2ddeb1c2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/ninetales_alola/": {
+  "fp": "3df779d2b17a1c15",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/noibat/": {
+  "fp": "a7f96ea458a640b5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/numel/": {
+  "fp": "36966b32259cb038",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/oddish/": {
+  "fp": "8fda02d411d18060",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/oshawott/": {
+  "fp": "48dc6c71602444bd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/palkia/": {
+  "fp": "b2cf2d6db8b19ba4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/palkia_origin/": {
+  "fp": "70b017114a920df2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/pancham/": {
+  "fp": "d54765aa4b83b14c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/phantump/": {
+  "fp": "9727fe4ef29566ed",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/pheromosa/": {
+  "fp": "6c37e9189f5c50e6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/pichu/": {
+  "fp": "0c3e6d5399b4d8b3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/pidgey/": {
+  "fp": "478c9d8b22819725",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/pikachu/": {
+  "fp": "0b7137845c2b55d3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/piplup/": {
+  "fp": "0f330a886fbfe72c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/poipole/": {
+  "fp": "a71117c5f64ce71d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/poliwag/": {
+  "fp": "f9bd34f14a48f673",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/ponyta/": {
+  "fp": "32882aef13a87d23",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/porygon/": {
+  "fp": "3ba099a149b7a59a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/primarina/": {
+  "fp": "0324e01d54194281",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/primeape/": {
+  "fp": "521a15c386e2a3da",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/psyduck/": {
+  "fp": "da5df70da3feed86",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/pumpkaboo_average/": {
+  "fp": "c7590c488a68fdfd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/quagsire/": {
+  "fp": "fb184ef838caf26f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/quaquaval/": {
+  "fp": "21dc0a1db7079350",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/quaxly/": {
+  "fp": "a8b8be422b32a0a4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/raichu/": {
+  "fp": "a292c66dde934f89",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/raikou/": {
+  "fp": "e8a7347a19e550e0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/ralts/": {
+  "fp": "c6795932ced44106",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rapidash/": {
+  "fp": "6825e4536de87983",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/raticate/": {
+  "fp": "7095b21ec7895b91",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rattata/": {
+  "fp": "c2c6221b3b71e794",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rayquaza/": {
+  "fp": "3d4ce296b1366eb4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/regice/": {
+  "fp": "06674f28683803ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/regieleki/": {
+  "fp": "9cef220d45658a04",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/regirock/": {
+  "fp": "0961891fa40b2e6f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/registeel/": {
+  "fp": "a0bab07208f98b20",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/reshiram/": {
+  "fp": "7492ffa91d3fd1f0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rhydon/": {
+  "fp": "9ed4ad2e0ecafe75",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rhyhorn/": {
+  "fp": "8b9c85c97b45f271",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rhyperior/": {
+  "fp": "fde7c22e8d9151a3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rillaboom/": {
+  "fp": "0f4e4d105fea08dc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/riolu/": {
+  "fp": "6161ed57bf9505b9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rockruff/": {
+  "fp": "8e5b61dd8094a7b0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/roggenrola/": {
+  "fp": "33b89668350b87ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rookidee/": {
+  "fp": "0e9c015f5971ff3d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/rowlet/": {
+  "fp": "aec0e5c90590017c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sableye/": {
+  "fp": "0ceb6a3f869c4f1b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/samurott/": {
+  "fp": "2e24b85f899e4b12",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/samurott_hisuian/": {
+  "fp": "d991853726adec2e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sawk/": {
+  "fp": "84ef727087ba4312",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sceptile/": {
+  "fp": "353b6595da9095d8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/scizor/": {
+  "fp": "1483e3b2cbd13417",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/scorbunny/": {
+  "fp": "6e1c109a6828dc4a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/seedot/": {
+  "fp": "b15e0de2b685a9b6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sharpedo/": {
+  "fp": "85d1641ee816ae60",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/shiinotic/": {
+  "fp": "55443e882800def8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sigilyph/": {
+  "fp": "e81a8ef54df9e100",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sizzlipede/": {
+  "fp": "e3e52114ab56b880",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/skarmory/": {
+  "fp": "0dda1384d310c554",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/slaking/": {
+  "fp": "a39d52e0f9aab540",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/slowbro/": {
+  "fp": "5c8a069ec697451b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/smoliv/": {
+  "fp": "bb4c1a5a108fc43a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sneasel/": {
+  "fp": "9a38d878d39acae5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sneasler/": {
+  "fp": "21d92f62f7fc7140",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/snom/": {
+  "fp": "9f399e9d96f62b21",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/snorlax/": {
+  "fp": "227d63c64081a9cf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/snorunt/": {
+  "fp": "850bf967406231d5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/snover/": {
+  "fp": "a8d70efda0933d14",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sobble/": {
+  "fp": "ef8491033c7e5c94",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/solgaleo/": {
+  "fp": "283d0935bb897d11",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sprigatito/": {
+  "fp": "37d6349b5723f0c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/squirtle/": {
+  "fp": "436c316251c684ab",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/staraptor/": {
+  "fp": "603fadd0e232f6a9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/starmie/": {
+  "fp": "62b136549720d389",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/staryu/": {
+  "fp": "f096b0109f62a12c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/steelix/": {
+  "fp": "34eef1cf1d0306f6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/stufful/": {
+  "fp": "f41c27834e921b8c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/stunfisk/": {
+  "fp": "06799ff78f49c845",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/suicune/": {
+  "fp": "e20bdfd0753e58d4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/swablu/": {
+  "fp": "b7091947ae22bd75",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/swampert/": {
+  "fp": "b6b0b0b84f56566e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/sylveon/": {
+  "fp": "42a2c68ddf38390e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/teddiursa/": {
+  "fp": "6b3184d4199b9989",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/thievul/": {
+  "fp": "a095b561e432a3dc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/thundurus/": {
+  "fp": "49ce10bcc4cd0dd5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/thundurus_therian/": {
+  "fp": "6535f6395d1252f6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/tinkatink/": {
+  "fp": "1f95f8fb6ac6639d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/tinkaton/": {
+  "fp": "0828a9bc7c481553",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/tinkatuff/": {
+  "fp": "1d716cbd3607c654",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/togedemaru/": {
+  "fp": "34f31a53dc1b50d9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/togekiss/": {
+  "fp": "ed5298fcbad95341",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/togetic/": {
+  "fp": "7e9fbc01fdf9d3a0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/torchic/": {
+  "fp": "742d6b0f3471e5b9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/totodile/": {
+  "fp": "ec7083c92b73ab3a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/toxtricity/": {
+  "fp": "b3593bf8f32b1be0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/treecko/": {
+  "fp": "904b51c9af5e4436",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/typhlosion/": {
+  "fp": "11ffc6ab12ea6055",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/tyranitar/": {
+  "fp": "aaa34e4da1d0321a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/umbreon/": {
+  "fp": "2c0e1d6fd3bfa209",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/ursaluna/": {
+  "fp": "d7e6b8afc2c44de0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/uxie/": {
+  "fp": "eea802db7b66e9a2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/venonat/": {
+  "fp": "5c2ac97b92114a24",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/venusaur/": {
+  "fp": "94ef1bac49a720aa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/victreebel/": {
+  "fp": "59a2c35123eed7e6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/vivillon/": {
+  "fp": "fd2e4ec0efbd652d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/volcanion/": {
+  "fp": "58251517c70a523c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/wailmer/": {
+  "fp": "b79f57012e758318",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/wailord/": {
+  "fp": "920e81a9378febb3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/weavile/": {
+  "fp": "a8e40068e9deed10",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/weedle/": {
+  "fp": "84c162811a27c308",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/wigglytuff/": {
+  "fp": "a91d246917931d97",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/wimpod/": {
+  "fp": "13bf45e5c6333e53",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/xatu/": {
+  "fp": "2af00231bb7b44b6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/xerneas/": {
+  "fp": "19ce4bd7dc51b25c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/xurkitree/": {
+  "fp": "de5dadb78aae5b75",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/yveltal/": {
+  "fp": "fe01b2ebce7f861a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zacian/": {
+  "fp": "2b96e18db125a01d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zacian_crowned_sword/": {
+  "fp": "454a25fe3e3e89ce",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zamazenta/": {
+  "fp": "f828e0a368b013ad",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zamazenta_crowned_shield/": {
+  "fp": "33a4da1f95fe6f3d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zapdos/": {
+  "fp": "60a2694e81ffd554",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zapdos_galarian/": {
+  "fp": "da0fa7a405a93533",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zekrom/": {
+  "fp": "3d2dd0189187ff20",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zeraora/": {
+  "fp": "0aaf72e64e472f72",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zigzagoon/": {
+  "fp": "e2334cadf4382fb6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zoroark/": {
+  "fp": "1cbedd2ebf09b758",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zorua/": {
+  "fp": "035d8cd651460a14",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zubat/": {
+  "fp": "9b4503a4e1bbc6b5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zygarde/": {
+  "fp": "d9d2213c9abaee37",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zygarde_complete/": {
+  "fp": "d81257ca17fbebb5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ja/cp/zygarde_complete_ten_percent/": {
+  "fp": "c820f085a927098b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/": {
+  "fp": "f3162c452803f00b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/abra/": {
+  "fp": "4d44af486d248e39",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/aegislash/": {
+  "fp": "43c81b3f04ae9bda",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/aerodactyl/": {
+  "fp": "d74535d31d6c4117",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/aggron/": {
+  "fp": "2ccf947a24175e76",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/altaria/": {
+  "fp": "2eece7639ea0372f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/annihilape/": {
+  "fp": "ae669c6050e518b8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/applin/": {
+  "fp": "b65ccbde4fb36db8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/arcanine/": {
+  "fp": "844d68298c203424",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/arrokuda/": {
+  "fp": "01282ea312d6f226",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/articuno/": {
+  "fp": "e8d994b86618c72e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/articuno_galarian/": {
+  "fp": "c2239ccec283b53e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/axew/": {
+  "fp": "ca3b53970e58cf77",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/azelf/": {
+  "fp": "df7cc95bba066980",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/azumarill/": {
+  "fp": "2b09f6a4330a366c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/bagon/": {
+  "fp": "cb4e0c6ae08011e5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/beedrill/": {
+  "fp": "47c0a7a26f171154",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/beldum/": {
+  "fp": "58b82e179a50e35f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/blastoise/": {
+  "fp": "15a1db08b03a356f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/blaziken/": {
+  "fp": "4b007c67bd6e5f4e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/blissey/": {
+  "fp": "3c6093eaa23aee3c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/braixen/": {
+  "fp": "ada4a24fd5315efb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/bramblin/": {
+  "fp": "5e7d5c40962302a0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/bulbasaur/": {
+  "fp": "73b7397a5437a02a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/buzzwole/": {
+  "fp": "448899aa1ff0a815",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/cacnea/": {
+  "fp": "6a93c1e09874dbdb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/carvanha/": {
+  "fp": "f4dc55d973fbf4cc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/centiskorch/": {
+  "fp": "bb26e4b84c7c67ba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/chandelure/": {
+  "fp": "60864ab769d2c470",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/chansey/": {
+  "fp": "38ad20b49c02a068",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/charcadet/": {
+  "fp": "3c5e80ffa4eb0b34",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/charizard/": {
+  "fp": "aacc022c91e8ae49",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/charmander/": {
+  "fp": "324492ea2cacbcdb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/cherubi/": {
+  "fp": "0f49eaf7037ed6da",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/chespin/": {
+  "fp": "f2675443a983bfd5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/cinderace/": {
+  "fp": "11d97dc1a4c46ade",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/clefairy/": {
+  "fp": "266c58503e21b174",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/corviknight/": {
+  "fp": "124f3901b9161e76",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/cramorant/": {
+  "fp": "1baffb1736efd7d7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/decidueye/": {
+  "fp": "e677588a93ef6e34",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/deerling/": {
+  "fp": "0474217f1a50fde2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/deino/": {
+  "fp": "6fb176826d824a19",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/delibird/": {
+  "fp": "8091d36182570f51",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/delphox/": {
+  "fp": "a8a4c568ace94a58",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/dewpider/": {
+  "fp": "c6d7125a4188455e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/dialga/": {
+  "fp": "eefe8c7df935f91c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/dialga_origin/": {
+  "fp": "d234bbd127b888f1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/diancie/": {
+  "fp": "b6ca368928cec2e4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/ditto/": {
+  "fp": "87e39ecf8f2c31ec",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/dondozo/": {
+  "fp": "b80158db329ebad8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/doublade/": {
+  "fp": "64d8ea6d7dda6887",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/dragonair/": {
+  "fp": "43120b4882022d9b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/dragonite/": {
+  "fp": "95755e522e84256a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/dratini/": {
+  "fp": "92d408d65b244ec0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/dreepy/": {
+  "fp": "41a08393efe24e32",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/drifblim/": {
+  "fp": "b8c0501f2b8748e2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/drifloon/": {
+  "fp": "733c0b5476f9b88e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/drilbur/": {
+  "fp": "70eda6bf753dede2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/duraludon/": {
+  "fp": "f441b0063aa59ef8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/eevee/": {
+  "fp": "0f2f18ca1bc36562",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/electrike/": {
+  "fp": "4954c5a0737ee484",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/elgyem/": {
+  "fp": "5c27e2559c1f6952",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/entei/": {
+  "fp": "a91b47c6b7350791",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/espeon/": {
+  "fp": "df6547140ad7ee5a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/eternatus/": {
+  "fp": "1f8ab1fd0c893608",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/eternatus_eternamax/": {
+  "fp": "af7ce00ef0a5e9b0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/excadrill/": {
+  "fp": "0ef7264461bf94c8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/exeggcute/": {
+  "fp": "a1ab26e5dd607905",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/falinks/": {
+  "fp": "6f52a0a7f60471ac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/feebas/": {
+  "fp": "4f745c06dfc28087",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/fennekin/": {
+  "fp": "e5af9780fce7e664",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/feraligatr/": {
+  "fp": "e447d1561d59108f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/fidough/": {
+  "fp": "aad84597d190f3c6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/flamigo/": {
+  "fp": "480fcf24e2a21801",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/fletchling/": {
+  "fp": "d9f55132733c5343",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/frigibax/": {
+  "fp": "34058878f5950dc8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/frillish/": {
+  "fp": "d12260a438c358c0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/froakie/": {
+  "fp": "2df58351e722bf19",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/frogadier/": {
+  "fp": "b0b76a701ec47a5f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/fuecoco/": {
+  "fp": "1724fd888fb59c24",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/gabite/": {
+  "fp": "2b8c52be405ccbd0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/garchomp/": {
+  "fp": "293ba6c221e595d3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/gastly/": {
+  "fp": "8492bcac09a3bc40",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/gengar/": {
+  "fp": "6bc3ae36e2958ec0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/gible/": {
+  "fp": "51e42645c535bf6a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/gimmighoul/": {
+  "fp": "3db3399a969ca568",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/giratina/": {
+  "fp": "f7e3e10889d9c996",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/giratina_origin/": {
+  "fp": "2188a7e7cb879bd3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/glaceon/": {
+  "fp": "880cc9d4670bfb8c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/gligar/": {
+  "fp": "a243a16783203de1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/golisopod/": {
+  "fp": "8b93e1b15df834fe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/gourgeist_average/": {
+  "fp": "79116c31e192bd3c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/greninja/": {
+  "fp": "2dfc32904add96b9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/grimmsnarl/": {
+  "fp": "e7c4170eaa910ba9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/groudon/": {
+  "fp": "163cf1768d3240dc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/growlithe/": {
+  "fp": "a49cdab3a8d08bac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/growlithe_hisuian/": {
+  "fp": "287a86c753317ae2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/gyarados/": {
+  "fp": "5d77a9503995c029",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/hatenna/": {
+  "fp": "62e62c417fb3ccc0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/haunter/": {
+  "fp": "f956cf81d6511021",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/hitmontop/": {
+  "fp": "67b1146ad9cae829",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/ho_oh/": {
+  "fp": "d7ca5e2914c5808d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/honedge/": {
+  "fp": "63c74f7ec0155b4e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/hoopa_unbound/": {
+  "fp": "b1f59c8152b54c6e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/hoothoot/": {
+  "fp": "414dfe7f7d88abbb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/houndoom/": {
+  "fp": "663f28a7d4be7b63",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/houndour/": {
+  "fp": "50aee152f8d37362",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/hydreigon/": {
+  "fp": "70fa0f62a396215b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/impidimp/": {
+  "fp": "dc02c5c40c6bf457",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/incineroar/": {
+  "fp": "a90f8af58c90ccb8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/inkay/": {
+  "fp": "1c1fbbc34bb5fd69",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/inteleon/": {
+  "fp": "cc5ebb0812aed67a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/ivysaur/": {
+  "fp": "c02173bd17ac5d90",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/jellicent/": {
+  "fp": "820c750737902c60",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/jigglypuff/": {
+  "fp": "9f5a66fe1a4d3117",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/kecleon/": {
+  "fp": "bb18122aa7ff2d1c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/keldeo/": {
+  "fp": "20afce26f58c50fa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/kirlia/": {
+  "fp": "72a9c2571ea57f23",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/kleavor/": {
+  "fp": "bd5f074bc35f8c5f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/kommo_o/": {
+  "fp": "76f91b1a8f216bb2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/kyogre/": {
+  "fp": "a35e1cff1848c641",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/kyurem/": {
+  "fp": "c9c3bcde3dbe4e9f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/kyurem_black/": {
+  "fp": "c04e80ec773d296e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/kyurem_white/": {
+  "fp": "27fa91ac01276ca8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lampent/": {
+  "fp": "7f16a4a6247c4c30",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/landorus/": {
+  "fp": "a5cd118b75d82de5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/landorus_therian/": {
+  "fp": "daef8ca6af573db1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lapras/": {
+  "fp": "2b1fc4479d3f35fa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/larvesta/": {
+  "fp": "e2f0547763a44aba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/larvitar/": {
+  "fp": "fdebea8b1b3ab2b7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/latias/": {
+  "fp": "320b24a2a8c7c81f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/latios/": {
+  "fp": "4fc9feeca48952ae",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lickilicky/": {
+  "fp": "2221e6dd90f3149d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lickitung/": {
+  "fp": "9eb93ec0ebe95e4f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lileep/": {
+  "fp": "a261bba87434435e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/litleo/": {
+  "fp": "e23d8b58d1128370",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/litten/": {
+  "fp": "94ed8a026a38b1c7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/litwick/": {
+  "fp": "2c7422e0c14d86d0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lucario/": {
+  "fp": "9bf0dac23cdcf05f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lugia/": {
+  "fp": "580273f7033b75a2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lunala/": {
+  "fp": "2917de303a15d416",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/lunatone/": {
+  "fp": "cdc82ccb8b34570d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/machamp/": {
+  "fp": "18c105ce6c84a79a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/machop/": {
+  "fp": "56a1ff2d15f04026",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/magikarp/": {
+  "fp": "bd48b08c644934f0",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/magmar/": {
+  "fp": "e4eb12215791fadc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/magmortar/": {
+  "fp": "3f1d236d6faa3085",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/malamar/": {
+  "fp": "7e03e3179a15df4a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/manectric/": {
+  "fp": "85e3d61dc6544c0f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/mankey/": {
+  "fp": "7288ab9bac9eab24",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/mareanie/": {
+  "fp": "1ce454db930e3c79",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/melmetal/": {
+  "fp": "03fd1856c5bd84cf",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/meloetta/": {
+  "fp": "533f1119c1d93c69",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/meltan/": {
+  "fp": "2031cfc2538a888d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/meowscarada/": {
+  "fp": "a916d4b8239de407",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/meowth/": {
+  "fp": "b97f874fa2708361",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/mesprit/": {
+  "fp": "313abefb0eeef9a7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/metagross/": {
+  "fp": "8208f6dc97a0d251",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/mew/": {
+  "fp": "bb6636e4aa383c41",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/mewtwo/": {
+  "fp": "03875ca6d59a2ed7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/mewtwo_a/": {
+  "fp": "11b573385ceb6dbc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/mimikyu/": {
+  "fp": "f457c8ac7a3c3628",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/minior_blue/": {
+  "fp": "acdac45d9c5d3885",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/moltres/": {
+  "fp": "fcd4881f72c33e43",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/moltres_galarian/": {
+  "fp": "0571777a8304965a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/morelull/": {
+  "fp": "a16d4c4edcbbd8c1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/munchlax/": {
+  "fp": "486cb85158a4794b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/munna/": {
+  "fp": "98c20ba35b8e72f3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/necrozma/": {
+  "fp": "f93581f51460a4c1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/necrozma_dawn_wings/": {
+  "fp": "785b71354a9a3929",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/necrozma_dusk_mane/": {
+  "fp": "eeeee93709b70397",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/necrozma_ultra/": {
+  "fp": "792b72ab8dea61ba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/nickit/": {
+  "fp": "0852dbccc2f74dd6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/ninetales/": {
+  "fp": "c1745aa8d338c7d5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/ninetales_alola/": {
+  "fp": "0fd1f1ec33c3d0d8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/noibat/": {
+  "fp": "b90977b092107c06",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/numel/": {
+  "fp": "dc8343f3ee79d356",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/oddish/": {
+  "fp": "c405284836bd5458",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/oshawott/": {
+  "fp": "2805142fd5dd5f32",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/palkia/": {
+  "fp": "754474370f770ce2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/palkia_origin/": {
+  "fp": "91aa9b62b48d9a9c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/pancham/": {
+  "fp": "7687fbe4fb0ed8a6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/phantump/": {
+  "fp": "b905f3e990e80896",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/pheromosa/": {
+  "fp": "591949a2818d52fd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/pichu/": {
+  "fp": "2f6dd748825ffeac",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/pidgey/": {
+  "fp": "03ecae5ee4ff4155",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/pikachu/": {
+  "fp": "a9f9800f9cd51011",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/piplup/": {
+  "fp": "85672a899888c259",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/poipole/": {
+  "fp": "1b823ed4cc42a2dd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/poliwag/": {
+  "fp": "5c1cae073c51d43e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/ponyta/": {
+  "fp": "b9c9c17d48c2cb2e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/porygon/": {
+  "fp": "69d8c04df8667577",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/primarina/": {
+  "fp": "e9b8899ef9200dd2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/primeape/": {
+  "fp": "1aef404c1a6f2d43",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/psyduck/": {
+  "fp": "6ea0cc3ee025124c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/pumpkaboo_average/": {
+  "fp": "00b64dd5c6d1d512",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/quagsire/": {
+  "fp": "09b75b72dbc05658",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/quaquaval/": {
+  "fp": "2ac3e1fca8175ecc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/quaxly/": {
+  "fp": "d04a85f1d1b53f1e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/raichu/": {
+  "fp": "9cfe39064933b4d8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/raikou/": {
+  "fp": "2855c0bb8ef2a1ba",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/ralts/": {
+  "fp": "adc125d02adc2dfa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rapidash/": {
+  "fp": "5d58a32a8a9110d3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/raticate/": {
+  "fp": "a10a062e7ba4968a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rattata/": {
+  "fp": "32b34284065ce314",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rayquaza/": {
+  "fp": "1bbce34ce4b260fd",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/regice/": {
+  "fp": "4dc68a19af374320",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/regieleki/": {
+  "fp": "275040a2c307377c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/regirock/": {
+  "fp": "695cb960d8644d58",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/registeel/": {
+  "fp": "8b74ef01a70810b6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/reshiram/": {
+  "fp": "dec865c8e8150271",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rhydon/": {
+  "fp": "2909a19d93ae029b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rhyhorn/": {
+  "fp": "1e844a97a7d9e6d7",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rhyperior/": {
+  "fp": "6dad17db69252f62",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rillaboom/": {
+  "fp": "7d77190ae20e5455",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/riolu/": {
+  "fp": "f60415adfe70ebf6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rockruff/": {
+  "fp": "4c0585c84347505b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/roggenrola/": {
+  "fp": "4a96d29cbced65f2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rookidee/": {
+  "fp": "ac26d877a114add8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/rowlet/": {
+  "fp": "33ed430322303f13",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sableye/": {
+  "fp": "d559f72cc33981ce",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/samurott/": {
+  "fp": "b64a5f1c35b2800d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/samurott_hisuian/": {
+  "fp": "bb7a5c0f0362cc45",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sawk/": {
+  "fp": "a47af1be4a348a1f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sceptile/": {
+  "fp": "3bbb7c62de690f15",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/scizor/": {
+  "fp": "5bb59bdc765e9634",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/scorbunny/": {
+  "fp": "c79775b6c7ff9877",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/seedot/": {
+  "fp": "33ef088da90f1fa1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sharpedo/": {
+  "fp": "5c811d724b46bc65",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/shiinotic/": {
+  "fp": "cbda5622d9a31443",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sigilyph/": {
+  "fp": "589266f26bd86670",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sizzlipede/": {
+  "fp": "ce5fc558e72d184c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/skarmory/": {
+  "fp": "e24529722cb44234",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/slaking/": {
+  "fp": "332c05dc9de36395",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/slowbro/": {
+  "fp": "b0747083249ba5f9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/smoliv/": {
+  "fp": "8549483919436303",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sneasel/": {
+  "fp": "ee3b9d06bfb0aff2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sneasler/": {
+  "fp": "b256be275c545c7c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/snom/": {
+  "fp": "3fd5f643048b5467",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/snorlax/": {
+  "fp": "4c28c33e87484ba1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/snorunt/": {
+  "fp": "0a679c1d438f32e1",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/snover/": {
+  "fp": "1c67d8429e8d6885",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sobble/": {
+  "fp": "dd91320f6cc43002",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/solgaleo/": {
+  "fp": "71d6652b21ce3a7f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sprigatito/": {
+  "fp": "e72776de92004c9a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/squirtle/": {
+  "fp": "dfc8c1927dbbb8eb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/staraptor/": {
+  "fp": "6246495ca6a9c11d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/starmie/": {
+  "fp": "ce2d784210752818",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/staryu/": {
+  "fp": "6fe004c64f60d851",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/steelix/": {
+  "fp": "c66d30d49a995959",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/stufful/": {
+  "fp": "8a793636524f7481",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/stunfisk/": {
+  "fp": "dbaa177a4dbebc94",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/suicune/": {
+  "fp": "1f5252b98267855a",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/swablu/": {
+  "fp": "79f8897f29814eca",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/swampert/": {
+  "fp": "2c83eefa7916031e",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/sylveon/": {
+  "fp": "a699e139322da3c5",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/teddiursa/": {
+  "fp": "2eceed7cec6310af",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/thievul/": {
+  "fp": "45161023afbbfc49",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/thundurus/": {
+  "fp": "12698afca97468d9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/thundurus_therian/": {
+  "fp": "4271395b673ebf21",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/tinkatink/": {
+  "fp": "c2d15880e12f3f6b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/tinkaton/": {
+  "fp": "17a03d12e09f1172",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/tinkatuff/": {
+  "fp": "2d8398174a9b59b6",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/togedemaru/": {
+  "fp": "f8dec367f7541f31",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/togekiss/": {
+  "fp": "758af45ee5d0e512",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/togetic/": {
+  "fp": "8d90658e0e714a17",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/torchic/": {
+  "fp": "74200edf715cb19f",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/totodile/": {
+  "fp": "e8d15c8fbdad1f67",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/toxtricity/": {
+  "fp": "ed3ec1e28c7940fc",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/treecko/": {
+  "fp": "fa8a1d274719e400",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/typhlosion/": {
+  "fp": "095665c9dead0603",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/tyranitar/": {
+  "fp": "7685b683c12aa269",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/umbreon/": {
+  "fp": "54adbee68ae52374",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/ursaluna/": {
+  "fp": "87688074da02a2c3",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/uxie/": {
+  "fp": "dc6c35f47d72655d",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/venonat/": {
+  "fp": "9e811e93c6f12be4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/venusaur/": {
+  "fp": "a4ef7221df2326c8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/victreebel/": {
+  "fp": "193a953e0e8b8995",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/vivillon/": {
+  "fp": "79f1c36198586c15",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/volcanion/": {
+  "fp": "729facb47e2d0fcb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/wailmer/": {
+  "fp": "50351842c9521495",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/wailord/": {
+  "fp": "84dd7d0394b25073",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/weavile/": {
+  "fp": "958a280f1a75beaa",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/weedle/": {
+  "fp": "0b4d0e691da73f52",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/wigglytuff/": {
+  "fp": "8ea974b8b48cf520",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/wimpod/": {
+  "fp": "e8e785fce1e2887c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/xatu/": {
+  "fp": "3a1dff0e87332fa9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/xerneas/": {
+  "fp": "bbafb5f560c8e075",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/xurkitree/": {
+  "fp": "7c4658475931b58c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/yveltal/": {
+  "fp": "d1e03965f174d080",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zacian/": {
+  "fp": "f7c96bc234fa0d5c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zacian_crowned_sword/": {
+  "fp": "7b9ba2987666d7eb",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zamazenta/": {
+  "fp": "5026e9f0f381f6fe",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zamazenta_crowned_shield/": {
+  "fp": "596f707c4c5c32ae",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zapdos/": {
+  "fp": "d3bea8708963ca1c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zapdos_galarian/": {
+  "fp": "001b8b56ff099cd2",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zekrom/": {
+  "fp": "c6d1a29f1fbe7ff9",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zeraora/": {
+  "fp": "b64eb34e6a33f239",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zigzagoon/": {
+  "fp": "921744d5cb7eae16",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zoroark/": {
+  "fp": "3dadc49dcb6d9c8c",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zorua/": {
+  "fp": "8c98fc3e43e4e901",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zubat/": {
+  "fp": "433ab5d3da5b35f4",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zygarde/": {
+  "fp": "e22c05c0452332f8",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zygarde_complete/": {
+  "fp": "ab73f039875cf07b",
+  "lastmod": "2026-11-02"
+ },
+ "https://pogokit.com/ko/cp/zygarde_complete_ten_percent/": {
+  "fp": "6d2f859973bd1401",
+  "lastmod": "2026-11-02"
+ }
+}

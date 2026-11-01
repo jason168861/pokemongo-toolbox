@@ -178,6 +178,12 @@ def _json_block(txt, name):
 _RANK_SRC = open(os.path.join(ROOT, "data", "pokemon_data_and_rankings.js"), encoding="utf-8").read()
 POKEDEX = _json_block(_RANK_SRC, "POKEDEX")
 PDX_BY_NAME = {_norm(d["name"]): d for d in POKEDEX}
+
+
+def pdx_of(name, pid):
+    """名稱對不到排名資料的寫法時（鎧甲超夢、堅盾劍怪、基格爾德…），退回同圖鑑編號的第一筆（基本型態）。
+    名單裡用到退回的幾隻，型態間屬性都相同。"""
+    return PDX_BY_NAME.get(_norm(name)) or next((d for d in POKEDEX if d.get("dexNumber") == pid), None)
 LEAGUE_ZH = {"great": "超級聯盟", "ultra": "高級聯盟", "master": "大師聯盟"}
 RANKS = {}
 for _lg, _var in (("great", "POKEMON_RANKINGS_1500"), ("ultra", "POKEMON_RANKINGS_2500"), ("master", "POKEMON_RANKINGS_10000")):
@@ -191,7 +197,7 @@ for _lg, _var in (("great", "POKEMON_RANKINGS_1500"), ("ultra", "POKEMON_RANKING
 def auto_enrich(name, p):
     """用現有資料自動組出屬性剋制／定位／招式／PvP 內容。"""
     key = _norm(name)
-    d = PDX_BY_NAME.get(key)
+    d = pdx_of(name, p["id"])
     types = d["types"] if d else []
     slug = d["id"] if d else p["gm"].split("_POKEMON_")[-1].lower()
     type_line = "／".join(TYPE_ZH[t] for t in types) if types else "未知"
@@ -251,7 +257,7 @@ def auto_enrich(name, p):
         "slug": slug, "types": types_disp, "type_line": type_line, "grad": grad, "lead": lead,
         "weak": weak or [("—", "", False)], "resist": resist or [("—", "")],
         "type_note": wnote or "屬性相剋資料不足。", "role": role,
-        "moves": moves or [("—", "資料不足")], "leagues": leagues, "league_note": league_note,
+        "moves": moves, "leagues": leagues, "league_note": league_note,
     }
 
 # ---- 手寫覆寫（想人工潤飾的少數幾隻放這裡；其餘走 auto_enrich）----
@@ -396,7 +402,7 @@ table.iv td.v11{background:#8a8f98}
 /* 屬性剋制、招式、聯盟 */
 .matchup{display:flex;flex-direction:column;gap:10px;margin:4px 0 12px}
 .mg{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.mlab{flex:none;width:44px;font-size:13px;font-weight:700;color:var(--muted)}
+.mlab{flex:none;min-width:44px;font-size:13px;font-weight:700;color:var(--muted)}
 .chip{font-size:13px;font-weight:600;padding:5px 11px;border-radius:9px;display:inline-flex;gap:6px;align-items:center}
 .chip em{font-style:normal;font-size:11.5px;opacity:.85;font-variant-numeric:tabular-nums}
 .chip.wk{background:#fdecec;color:#c5221f}.chip.wk.dbl{background:#f9d5d3;color:#a50e0e;font-weight:800}
@@ -439,33 +445,80 @@ ul.moves .v em{font-style:normal;font-size:12px;color:#d97706;font-weight:700}
  padding:12px 18px;border-radius:999px;box-shadow:0 6px 18px rgba(24,119,242,.45)}
 .fab:hover{background:#166fe0}
 @media (max-width:480px){.fab{padding:12px 16px}}
+/* 各語言的 IV100 CP 列表頁（/<lang>/cp/） */
+.hubq{width:100%;font:inherit;font-size:16px;padding:11px 14px;border:1px solid #cfd5dd;border-radius:12px;margin:4px 0 14px}
+.hubq:focus{outline:2px solid #bcd5fb;border-color:var(--blue)}
+.hub{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.hub a{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 6px;text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:600;line-height:1.3;min-width:0}
+.hub a img{width:48px;height:48px;flex:none;object-fit:contain}
+.hub a small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;font-variant-numeric:tabular-nums}
+.hub a:hover{border-color:#bcd5fb;background:#f1f6ff}
+.hub a[hidden]{display:none}
 """
 
 def esc(s): return html.escape(str(s), quote=True)
 
-# ---- 頁面內的 CP 反查 IV（純前端；佔位字在 build() 換掉）----
-RV_JS = """(function(){
-var P={a:__ATK__,d:__DEF__,s:__STA__},C=__CPM__,F=[],i;
+# ---- CP 反查 IV：/cp/<slug>/ 與 /<lang>/cp/<slug>/ 共用 js/cp-reverse.js ----
+# 每頁在 <script type="application/json" id="rvData"> 放 {a,d,s,slug,lang,t:{介面文字}}；
+# 介面文字是站內自己寫的固定字串（不是使用者輸入），可以直接拼進 innerHTML。
+RV_JS_FILE = """// 由 scripts/build_cp_static.py 產生，請勿手改。/cp/<slug>/ 與 /<lang>/cp/<slug>/ 共用的「CP 反查 IV」。
+(function(){
+var el=document.getElementById('rvData'),f=document.getElementById('rvForm'),o=document.getElementById('rvOut');
+if(!el||!f||!o)return;
+var D=JSON.parse(el.textContent),T=D.t,C=__CPM__,F=[],i;
 for(i=0;i<C.length;i++){F.push([i+1,C[i]]);if(i+1<C.length)F.push([i+1.5,Math.sqrt((C[i]*C[i]+C[i+1]*C[i+1])/2)]);}
-function cp(m,a,d,s){return Math.max(10,Math.floor((P.a+a)*Math.sqrt(P.d+d)*Math.sqrt(P.s+s)*m*m/10));}
-function hp(m,s){return Math.max(10,Math.floor((P.s+s)*m));}
-var f=document.getElementById('rvForm'),o=document.getElementById('rvOut');
-if(!f||!o)return;
+function cp(m,a,d,s){return Math.max(10,Math.floor((D.a+a)*Math.sqrt(D.d+d)*Math.sqrt(D.s+s)*m*m/10));}
+function hp(m,s){return Math.max(10,Math.floor((D.s+s)*m));}
+function fm(s,v){return s.replace(/\\{(\\w+)\\}/g,function(_,k){return v[k];});}
 f.addEventListener('submit',function(ev){ev.preventDefault();
  var c=parseInt(document.getElementById('rvCp').value,10),h=parseInt(document.getElementById('rvHp').value,10),L=parseFloat(document.getElementById('rvLv').value);
- if(!(c>=10)){o.innerHTML='<p class="rv-msg">請輸入 CP（10 以上）。</p>';return;}
+ if(!(c>=10)){o.innerHTML='<p class="rv-msg">'+T.need+'</p>';return;}
  var r=[];F.forEach(function(x){if(L&&x[0]!==L)return;for(var a=0;a<16;a++)for(var d=0;d<16;d++)for(var s=0;s<16;s++){if(cp(x[1],a,d,s)!==c)continue;var hh=hp(x[1],s);if(h&&hh!==h)continue;r.push([x[0],a,d,s,hh]);}});
- if(!r.length){o.innerHTML='<p class="rv-msg">找不到符合的組合。請確認 CP 是否正確（天氣加成、強化過都會改變等級）。</p>';return;}
+ if(!r.length){o.innerHTML='<p class="rv-msg">'+T.none+'</p>';return;}
  r.sort(function(x,y){return (y[1]+y[2]+y[3])-(x[1]+x[2]+x[3])||x[0]-y[0];});
  var hi=r[0][1]+r[0][2]+r[0][3],lo=r[r.length-1][1]+r[r.length-1][2]+r[r.length-1][3],rows='';
- r.forEach(function(x,k){var t=x[1]+x[2]+x[3];rows+='<tr'+(k>=30?' hidden':'')+(t===45?' class="top"':'')+'><td class="l">Lv'+x[0]+'</td><td class="iv">'+x[1]+' / '+x[2]+' / '+x[3]+'</td><td>'+(t/45*100).toFixed(1)+'%</td><td>'+x[4]+'</td></tr>';});
- o.innerHTML='<p class="rv-msg">CP <strong>'+c+'</strong>'+(h?'、HP <strong>'+h+'</strong>':'')+'：共 <strong>'+r.length+'</strong> 種可能，IV 約 <strong>'+Math.round(lo/45*100)+'%～'+Math.round(hi/45*100)+'%</strong>。'+(r.length>1&&!h?'再填 HP 可以縮小範圍。':'')+'</p>'
-  +'<div class="tbl-wrap"><table class="rvt"><thead><tr><th class="l">等級</th><th>攻 / 防 / 耐</th><th>IV%</th><th>HP</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
-  +(r.length>30?'<button type="button" class="rv-more">顯示全部 '+r.length+' 筆</button>':'');
+ r.forEach(function(x,k){var t=x[1]+x[2]+x[3];rows+='<tr'+(k>=30?' hidden':'')+(t===45?' class="top"':'')+'><td class="l">'+T.lv+x[0]+'</td><td class="iv">'+x[1]+' / '+x[2]+' / '+x[3]+'</td><td>'+(t/45*100).toFixed(1)+'%</td><td>'+x[4]+'</td></tr>';});
+ o.innerHTML='<p class="rv-msg">'+fm(r.length===1&&T.sum1?T.sum1:T.sum,{cp:'<strong>'+c+'</strong>',hp:h?fm(T.hpPart,{hp:'<strong>'+h+'</strong>'}):'',n:'<strong>'+r.length+'</strong>',lo:Math.round(lo/45*100),hi:Math.round(hi/45*100)})+(r.length>1&&!h?T.narrow:'')+'</p>'
+  +'<div class="tbl-wrap"><table class="rvt"><thead><tr><th class="l">'+T.thLv+'</th><th>'+T.thIv+'</th><th>IV%</th><th>'+T.thHp+'</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+  +(r.length>30?'<button type="button" class="rv-more">'+fm(T.all,{n:r.length})+'</button>':'');
  var m=o.querySelector('.rv-more');if(m)m.onclick=function(){o.querySelectorAll('tr[hidden]').forEach(function(t){t.hidden=false;});m.remove();};
- if(window.track)window.track('cp_reverse_static',{mon:'__SLUG__',hits:r.length});
+ if(window.track)window.track('cp_reverse_static',{mon:D.slug,lang:D.lang,hits:r.length});
 });
-})();"""
+})();
+"""
+
+RV_T_ZH = {"need": "請輸入 CP（10 以上）。",
+           "none": "找不到符合的組合。請確認 CP 是否正確（天氣加成、強化過都會改變等級）。",
+           "sum": "CP {cp}{hp}：共 {n} 種可能，IV 約 <strong>{lo}%～{hi}%</strong>。", "hpPart": "、HP {hp}",
+           "sum1": "CP {cp}{hp}：只有 1 種可能，IV <strong>{hi}%</strong>。",
+           "narrow": "再填 HP 可以縮小範圍。", "lv": "Lv", "thLv": "等級", "thIv": "攻 / 防 / 耐", "thHp": "HP",
+           "all": "顯示全部 {n} 筆"}
+
+
+def rv_data_json(p, slug, lang, t):
+    """頁面上的 #rvData；把 </ 換成 <\\/，避免字串裡出現 </script> 提早結束標籤。"""
+    return json.dumps({"a": p["atk"], "d": p["def"], "s": p["sta"], "slug": slug, "lang": lang, "t": t},
+                      ensure_ascii=False).replace("</", "<\\/")
+
+
+# 其他語言版本（scripts/build_cp_static_i18n.py 產生）：/<lang>/cp/<slug>/
+I18N_LANGS = ["en", "ja", "ko", "fr", "de", "es"]
+
+
+def alternates(slug):
+    """同一隻寶可夢 7 個語言版本互相標示；x-default 指向英文版。"""
+    out = [f'<link rel="alternate" hreflang="zh-Hant" href="{ORIGIN}/cp/{slug}/">']
+    out += [f'<link rel="alternate" hreflang="{l}" href="{ORIGIN}/{l}/cp/{slug}/">' for l in I18N_LANGS]
+    out.append(f'<link rel="alternate" hreflang="x-default" href="{ORIGIN}/en/cp/{slug}/">')
+    return "\n".join(out)
+
+
+def write_assets():
+    """共用的 css/cp-static.css 與 js/cp-reverse.js（每頁不再各自內嵌，瀏覽多頁時可快取）。"""
+    with open(os.path.join(ROOT, "css", "cp-static.css"), "w", encoding="utf-8", newline="\n") as f:
+        f.write("/* 由 scripts/build_cp_static.py 產生，請勿手改（改 CSS 常數）。/cp/ 與 /<lang>/cp/ 靜態頁共用。 */\n" + CSS.strip() + "\n")
+    with open(os.path.join(ROOT, "js", "cp-reverse.js"), "w", encoding="utf-8", newline="\n") as f:
+        f.write(RV_JS_FILE.replace("__CPM__", json.dumps(CPM[:BB])))
 
 
 def mon_url(name, from_static=True):
@@ -503,6 +556,7 @@ def build(name):
                         for t, m, d in e["weak"])
     resist_html = "".join(f'<span class="chip rs">{esc(t)} <em>{esc(m)}</em></span>' for t, m in e["resist"])
     moves_html = "".join(f'<li><span class="k">{esc(k)}</span><span class="v">{v}</span></li>' for k, v in e["moves"])
+    moves_ul = f'<ul class="moves">{moves_html}</ul>' if moves_html else ""   # 沒有 PvP 資料就不顯示招式列
     league_html = "".join(
         f'<div class="lrow"><span class="lname">{esc(n)}</span>'
         f'<span class="lbar"><i style="width:{w}%"></i></span>'
@@ -525,9 +579,7 @@ def build(name):
                    for t in same[:8])
     grid_html = (f'<p class="sub" style="margin:0 0 10px">同屬性的熱門寶可夢</p><div class="grid">{grid}</div>') if grid else ""
 
-    rv_js = (RV_JS.replace("__ATK__", str(p["atk"])).replace("__DEF__", str(p["def"]))
-             .replace("__STA__", str(p["sta"])).replace("__CPM__", json.dumps(CPM[:BB]))
-             .replace("__SLUG__", slug))
+    rv_data = rv_data_json(p, slug, "zh", RV_T_ZH)
 
     ld = (
         '{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":['
@@ -551,6 +603,7 @@ def build(name):
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">
+{alternates(slug)}
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Pokémon Go 工具箱">
@@ -560,7 +613,7 @@ def build(name):
 <meta property="og:image" content="{esc(p['imageUrl'])}">
 <meta property="og:locale" content="zh_TW">
 <script type="application/ld+json">{ld}</script>
-<style>{CSS}</style>
+<link rel="stylesheet" href="../../css/cp-static.css">
 </head>
 <body style="--accent:{c1};--accent2:{c2}">
 <div class="wrap">
@@ -645,7 +698,7 @@ def build(name):
   <section class="card">
     <h2>{esc(name)} 角色定位與推薦招式</h2>
     <p class="role">{e['role']}</p>
-    <ul class="moves">{moves_html}</ul>
+    {moves_ul}
   </section>
 
   {league_card}
@@ -665,7 +718,8 @@ def build(name):
 </div>
 
 <a class="fab" href="../../?tab=cp-checker-app" aria-label="搜尋其他寶可夢">🔍 <span>搜尋寶可夢</span></a>
-<script>{rv_js}</script>
+<script type="application/json" id="rvData">{rv_data}</script>
+<script src="../../js/cp-reverse.js" defer></script>
 <script src="../../js/ads.js" defer></script>
 </body>
 </html>"""
@@ -723,6 +777,7 @@ def main():
         p = CP_DATA[t["name"]]; e = get_enrich(t["name"], p)
         POOL.append({"name": t["name"], "slug": t["slug"], "img": p["imageUrl"], "rank": rank,
                      "types": [z for z, _ in e["types"]]})
+    write_assets()
     fps = {}
     for t in targets:
         out_dir = os.path.join(ROOT, "cp", t["slug"])
