@@ -55,7 +55,8 @@ h2::before{content:"";width:5px;height:20px;border-radius:3px;background:linear-
 h1{font-size:27px;line-height:1.25;margin:2px 0 8px;font-weight:800;letter-spacing:-.015em}
 .types{display:flex;gap:8px;flex-wrap:wrap}
 .type{font-size:12.5px;font-weight:700;color:#fff;padding:3px 12px;border-radius:999px}
-.hundo{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:18px 22px 0}
+/* 注意：不要叫 .hundo —— 高 IV 表 100% 那一列是 tr.hundo，同名會把那一列也變成 grid */
+.h-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:18px 22px 0}
 .h-tile{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:12px 10px 10px;text-align:center}
 .h-tile .h-lab{display:block;font-size:12.5px;color:var(--ink2);font-weight:600}
 .h-tile b{display:block;font-size:28px;line-height:1.2;margin:4px 0 2px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}
@@ -73,7 +74,7 @@ h1{font-size:27px;line-height:1.25;margin:2px 0 8px;font-weight:800;letter-spaci
  .hero-main{flex-direction:column;align-items:flex-start;margin-top:-60px;gap:8px}.hero-txt{padding-top:0}
  .sprite{width:104px;height:104px}
  h1{font-size:24px}
- .hundo{gap:8px;padding:16px 16px 0}.h-tile{padding:10px 4px 8px}.h-tile b{font-size:23px}
+ .h-grid{gap:8px;padding:16px 16px 0}.h-tile{padding:10px 4px 8px}.h-tile b{font-size:23px}
  .h-tile .h-lab{font-size:11.5px}
  .hero-main,.chips{padding-left:16px;padding-right:16px}.hundo-note{margin:10px 16px 0}.lead{padding:14px 16px 18px}
  .card{padding:18px 16px}
@@ -193,7 +194,7 @@ ul.moves .v em{font-style:normal;font-size:12px;color:#d97706;font-weight:700}
         <div class="types"><span class="type" style="background:#d97845">地面</span></div>
       </div>
     </div>
-    <div class="hundo">
+    <div class="h-grid">
       <div class="h-tile"><span class="h-lab">🔬 田野調查</span><b>1764</b><span class="h-lv">Lv15</span></div>
       <div class="h-tile main"><span class="h-lab">⚔️ 團體戰・孵蛋</span><b>2351</b><span class="h-lv">Lv20</span></div>
       <div class="h-tile"><span class="h-lab">☀️ 天氣加成</span><b>2939</b><span class="h-lv">Lv25</span></div>
