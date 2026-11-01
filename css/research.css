@@ -12,6 +12,16 @@
 #research-app input#all-option:checked ~ .glider { transform: translateX(100%); }
 #research-app .glider { position: absolute; display: flex; height: 40px; width: 120px; background-color: #27ae60; z-index: 1; border-radius: 99px; transition: 0.1s ease-out; }
 #research-app #research-container { display: flex; justify-content: center; align-items: flex-start; gap: 20px; }
+/* 首次載入：research.json 讀進來之前先預留列表高度，避免下方說明區被往下推（CLS）。
+   任務每期都換、高度會變，所以取 2026-11 實測高度的約 75%
+   （<480px 約 5500–7400、480–799px 約 4300–5000、≥800px 約 2600–3200）。
+   js/research.js 第一次填入後就移除 .is-loading。 */
+#research-app #research-container.is-loading {
+    min-height: 4200px; border-radius: 12px;
+    background: repeating-linear-gradient(to bottom, #e4e7eb 0 120px, transparent 120px 140px);
+}
+@media (min-width: 480px) { #research-app #research-container.is-loading { min-height: 3300px; } }
+@media (min-width: 800px) { #research-app #research-container.is-loading { min-height: 2000px; } }
 #research-app .research-column { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
 #research-app .task-category h2 { background-color: var(--category-main-color, #27ae60); font-size: 1.1em; padding: 10px 15px; color: white; border-radius: 8px; margin: 0 0 10px 0; }
 #research-app .task-category { background-color: var(--category-bg-color, #e4f3e9); padding: 15px; border-radius: 12px; }

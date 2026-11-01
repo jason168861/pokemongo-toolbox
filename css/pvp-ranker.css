@@ -238,6 +238,24 @@
     display: none;
 }
 
+/* 首次載入：JS 算出預設的妙蛙種子之前，先預留結果的高度，避免說明區被往下推（CLS）。
+   2026-11 在 Windows Chrome 量測：≤594px 約 2780、595–800px 約 1947、≥805px 約 1111
+   （卡片換行決定的，不是 media query，會隨字型、捲軸寬度差幾 px）。
+   所以數值取實測的約 92%，斷點也往窄的一側提早切換：交界附近寧可少預留
+   （填入時往下長，跟沒預留一樣），也不要多預留（填入後往上縮，同樣算位移）。
+   卡片數量改變時才需要調整。js/pvp-ranker.js 算完第一次就移除 .is-loading。 */
+#pvp-ranker-app #results-container.is-loading {
+    min-height: 2550px;
+    border-radius: 12px;
+    background: repeating-linear-gradient(to bottom, #e4e7eb 0 160px, transparent 160px 180px);
+}
+@media (min-width: 580px) {
+    #pvp-ranker-app #results-container.is-loading { min-height: 1790px; }
+}
+@media (min-width: 790px) {
+    #pvp-ranker-app #results-container.is-loading { min-height: 1020px; }
+}
+
 #pvp-ranker-app .search-container {
     position: relative;
     margin-bottom: 15px;

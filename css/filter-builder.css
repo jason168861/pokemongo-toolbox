@@ -163,6 +163,13 @@
 /* 讓內容不被底部固定列蓋住 */
 #search-filters-app{padding-bottom:110px}
 
+/* 首次載入：JS 畫出條件卡片之前先預留高度，避免下方的指令說明被往下推（CLS）。
+   數值略低於 2026-11 實測（<480px 約 3400–5600、≥480px 約 3140–3260）。
+   js/filter-builder.js 第一次 renderAll() 之後就移除 .is-loading。 */
+#search-filters-app #fb-sections.is-loading{min-height:3200px;border-radius:12px;
+  background:repeating-linear-gradient(to bottom,#e4e7eb 0 160px,transparent 160px 180px)}
+@media (min-width:480px){#search-filters-app #fb-sections.is-loading{min-height:3000px}}
+
 /* ---- 手機版 ---- */
 @media (max-width:560px){
   /* 數值範圍：不要換成兩列。標籤可壓縮換行，輸入框縮窄，整列維持單行 */
