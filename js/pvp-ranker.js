@@ -678,6 +678,28 @@ function initControlsPanel() {
     // 預設展開，讓搜尋框一進來就看得到；收合後改用右下浮動鈕重新開啟
     openPanel();
 
+    // ---- 不要蓋住廣告 ----
+    // 桌機的面板固定在右上角，和表頭下方的廣告框左右重疊時會蓋住廣告右側。
+    // 還沒拖曳過的面板，在廣告框還在畫面上時往下讓開；捲到廣告離開畫面後回到原位。
+    // 用 CSS 變數 --pvp-shift（transform），不改 top，所以不會產生版面位移。
+    const ad = document.querySelector('.site-ad');
+    const BASE_TOP = parseFloat(getComputedStyle(panel).top) || 76;
+    function avoidAd() {
+        if (!ad || !isFloating() || panel.style.top) { panel.style.removeProperty('--pvp-shift'); return; }
+        const a = ad.getBoundingClientRect();
+        const vw = document.documentElement.clientWidth || window.innerWidth;
+        const panelLeft = vw - 16 - panel.offsetWidth;
+        const overlapX = a.right > panelLeft && a.left < vw - 16 && a.height > 0;
+        const shift = overlapX ? Math.max(0, Math.round(a.bottom + 12 - BASE_TOP)) : 0;
+        if (panel.style.getPropertyValue('--pvp-shift') !== shift + 'px') panel.style.setProperty('--pvp-shift', shift + 'px');
+    }
+    let adRaf = 0;
+    const scheduleAvoid = () => { if (!adRaf) adRaf = requestAnimationFrame(() => { adRaf = 0; avoidAd(); }); };
+    avoidAd();
+    window.addEventListener('scroll', scheduleAvoid, { passive: true });
+    window.addEventListener('resize', scheduleAvoid);
+    if (ad && 'ResizeObserver' in window) new ResizeObserver(scheduleAvoid).observe(ad);   // 廣告填入後高度會變
+
     let resizeRaf = 0;
     window.addEventListener('resize', () => {
         if (resizeRaf) return;
@@ -698,6 +720,7 @@ function initControlsPanel() {
         panel.style.left = rect.left + 'px';
         panel.style.top = rect.top + 'px';
         panel.style.right = 'auto';
+        panel.style.removeProperty('--pvp-shift');   // rect 已含讓開的位移，改用 inline top 之後就不需要了
         startX = e.clientX; startY = e.clientY;
         startLeft = rect.left; startTop = rect.top;
         header.setPointerCapture(e.pointerId);

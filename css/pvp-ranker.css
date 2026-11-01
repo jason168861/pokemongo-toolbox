@@ -426,9 +426,12 @@
     right: 16px;
     width: 360px;
     max-width: calc(100vw - 32px);
-    max-height: calc(100vh - 96px);
+    max-height: calc(100vh - 96px - var(--pvp-shift, 0px));
     margin: 0;
     overflow-y: auto;
+    /* 廣告框還在畫面上方時，js/pvp-ranker.js 會設定 --pvp-shift 讓面板往下讓開，避免蓋住廣告。
+       用 transform 而不是改 top：transform 不算版面位移（CLS）。拖曳過的面板改用 inline top，不受影響。 */
+    transform: translateY(var(--pvp-shift, 0px));
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 14px;
