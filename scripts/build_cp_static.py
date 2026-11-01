@@ -746,6 +746,38 @@ def write_slug_module(targets):
     open(os.path.join(ROOT, "js", "cp-static-slugs.js"), "w", encoding="utf-8", newline="\n").write(js)
 
 
+def write_home_popular(targets, n=12):
+    """index.html 的「熱門寶可夢 IV100 CP」：首頁一組、CP 查詢一組，取名單（依搜尋需求排序）的前 n 隻。
+    只換 CP_POPULAR_HOME／CP_POPULAR_TOOL 標記之間的內容，首頁其他部分不動。"""
+    path = os.path.join(ROOT, "index.html")
+    src = open(path, encoding="utf-8", newline="").read()
+    nl = "\r\n" if "\r\n" in src else "\n"
+    tiles = []
+    for t in targets[:n]:
+        p = CP_DATA[t["name"]]
+        tiles.append(f'<a href="cp/{t["slug"]}/"><img src="{esc(p["imageUrl"])}" alt="" width="48" height="48" loading="lazy">'
+                     f'<span>{esc(t["name"])}<small>Lv20 {cp_at(p, 20, 15)}</small></span></a>')
+    grid = '<div class="cp-pop">' + "".join(tiles) + '</div>'
+    home = (f'        <section class="home-section">{nl}'
+            f'            <div class="home-section-header">{nl}'
+            f'                <h2>熱門寶可夢 IV100 CP</h2>{nl}'
+            f'                <p>團體戰、孵蛋抓到時看 CP，就知道是不是 100%。點進去看完整 CP 表與 CP 反查 IV。</p>{nl}'
+            f'            </div>{nl}'
+            f'            {grid}{nl}'
+            f'            <p class="cp-pop-more"><a href="?tab=cp-checker-app">查詢全部 {len(CP_DATA)} 隻寶可夢的 IV100 CP →</a></p>{nl}'
+            f'        </section>{nl}')
+    tool = (f'                <div class="cp-pop-wrap">{nl}'
+            f'                    <h2>熱門寶可夢</h2>{nl}'
+            f'                    {grid}{nl}'
+            f'                </div>{nl}')
+    for key, body in (("CP_POPULAR_HOME", home), ("CP_POPULAR_TOOL", tool)):
+        pat = re.compile(r"(<!-- " + key + r":START[^\n]*-->\r?\n)(.*?)([ \t]*<!-- " + key + r":END -->)", re.S)
+        src, k = pat.subn(lambda m: m.group(1) + body + m.group(3), src)
+        if k != 1:
+            raise SystemExit("index.html 找不到 " + key + " 標記")
+    open(path, "w", encoding="utf-8", newline="").write(src)
+
+
 def write_sitemap_block(targets, fps):
     """sitemap.xml 裡的 /cp/ 靜態頁區塊（只換這個區塊，其他內容不動）。
     lastmod 只在該頁內容（指紋）改變時才換成今天，狀態存在 data/cp_static_lastmod.json；
@@ -799,6 +831,7 @@ def main():
         with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as f:
             f.write(page)
     write_slug_module(targets)
+    write_home_popular(targets)
     write_sitemap_block(targets, fps)
     print(f"已產生 {len(targets)} 個 /cp/<slug>/ 靜態頁、js/cp-static-slugs.js，並更新 sitemap.xml 的 CP 區塊")
 

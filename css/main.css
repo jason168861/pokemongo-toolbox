@@ -1288,3 +1288,16 @@ a.tab-button {
 @media(max-width:600px){.site-ad{width:calc(100% - 24px);min-height:100px;margin:20px auto 24px}.site-ad ins,.site-ad .site-ad-ph{min-height:80px}}
 /* 預留框在 ads.js 接手前先隱藏（仍佔空間）：ads.js 被攔截或沒有 JS 時只會是留白，不會出現空的「廣告」框 */
 .site-ad[data-ad-reserved]{visibility:hidden}
+/* ===== 熱門寶可夢 IV100 CP（首頁與 CP 查詢；內容由 scripts/build_cp_static.py 產生）===== */
+.cp-pop{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.cp-pop a{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e3e6eb;border-radius:12px;padding:6px 10px 6px 6px;
+  text-decoration:none;color:#1c1e21;font-size:14px;font-weight:600;line-height:1.3;min-width:0}
+.cp-pop a img{width:48px;height:48px;flex:none;object-fit:contain}
+.cp-pop a small{display:block;color:#606770;font-weight:600;font-size:12px;font-variant-numeric:tabular-nums}
+.cp-pop a:hover{border-color:#1877f2;background:#f5f9ff}
+.cp-pop-more{margin:12px 0 0;text-align:right;font-size:14px}
+.cp-pop-more a{color:#1877f2;font-weight:700;text-decoration:none}
+.cp-pop-more a:hover{text-decoration:underline}
+.cp-pop-wrap{margin:18px 0 8px}
+.cp-pop-wrap h2{font-size:17px;margin:0 0 10px;color:#1c1e21}
+.cp-pop-wrap[hidden]{display:none}
