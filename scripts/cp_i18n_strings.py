@@ -111,8 +111,8 @@ STR["ja"] = dict(
     cpt_sub="<strong>個体値100%</strong>（15/15/15）が各レベルの最大CP、<strong>個体値0%</strong>（0/0/0）が最小CPです。",
     cpt_cap="{name} レベル別CP（個体値100% / 0%）", th_lv="レベル", th_max="個体値100%", th_min="個体値0%", th_note="メモ",
     key15="🔬 フィールドリサーチ", key20="⚔️ レイド（天候ブーストなし）· 🥚 タマゴ", key25="☀️ レイド（天候ブースト）",
-    bb="⭐ 最高の相棒ブースト",
-    cpt_foot="Lv{bb} は最高の相棒ブースト時の上限で、通常の強化は Lv{max} までです。データ：Pokémon GO GAME_MASTER。",
+    bb="⭐ ベストバディブースト",
+    cpt_foot="Lv{bb} はベストバディブースト時の上限で、通常の強化は Lv{max} までです。データ：Pokémon GO GAME_MASTER。",
     mu_h="{name} の弱点と耐性", weak="弱点", resist="耐性",
     mu_note="{name} の弱点は {wlist}{dbl}、耐性は {rlist} です。<strong>{prim}</strong>タイプのわざがいちばん効果的です。",
     mu_dbl="（{dbls} は二重弱点）",
@@ -177,8 +177,8 @@ STR["ko"] = dict(
     cpt_sub="<strong>개체값 100%</strong>(15/15/15)가 각 레벨의 최대 CP, <strong>개체값 0%</strong>(0/0/0)가 최소 CP입니다.",
     cpt_cap="{name} 레벨별 CP(개체값 100% / 0%)", th_lv="레벨", th_max="개체값 100%", th_min="개체값 0%", th_note="비고",
     key15="🔬 필드리서치", key20="⚔️ 레이드(날씨 부스트 없음) · 🥚 알", key25="☀️ 레이드(날씨 부스트)",
-    bb="⭐ 최고의 파트너 부스트",
-    cpt_foot="Lv{bb}는 최고의 파트너 부스트를 받을 때의 상한이며, 일반 강화는 Lv{max}까지입니다. 데이터: Pokémon GO GAME_MASTER.",
+    bb="⭐ 베스트 파트너 부스트",
+    cpt_foot="Lv{bb}는 베스트 파트너 부스트를 받을 때의 상한이며, 일반 강화는 Lv{max}까지입니다. 데이터: Pokémon GO GAME_MASTER.",
     mu_h="{name} 약점과 저항", weak="약점", resist="저항",
     mu_note="약점: {wlist}{dbl}. 저항: {rlist}. <strong>{prim}</strong> 타입 기술로 공격하면 가장 효과적입니다.",
     mu_dbl=" (이중 약점: {dbls})",
@@ -243,8 +243,8 @@ STR["fr"] = dict(
     cpt_sub="<strong>100 % IV</strong> (15/15/15) donne les PC les plus hauts à chaque niveau, <strong>0 % IV</strong> (0/0/0) les plus bas.",
     cpt_cap="PC de {name} par niveau (100 % IV / 0 % IV)", th_lv="Niveau", th_max="100 % IV", th_min="0 % IV", th_note="Remarque",
     key15="🔬 Études de terrain", key20="⚔️ Raids (sans bonus météo) · 🥚 Œufs", key25="☀️ Raids (bonus météo)",
-    bb="⭐ Bonus Meilleur ami",
-    cpt_foot=("Le niveau {bb} n’est accessible qu’avec le bonus Meilleur ami ; les améliorations normales s’arrêtent au niveau {max}. "
+    bb="⭐ Bonus Meilleur Copain",
+    cpt_foot=("Le niveau {bb} n’est accessible qu’avec le bonus Meilleur Copain ; les améliorations normales s’arrêtent au niveau {max}. "
               "Données : GAME_MASTER de Pokémon GO."),
     mu_h="{name} : faiblesses et résistances", weak="Faiblesses", resist="Résistances",
     mu_note="{name} est faible contre {wlist}{dbl} et résiste à {rlist}. Les attaques de type <strong>{prim}</strong> lui infligent le plus de dégâts.",
@@ -386,8 +386,8 @@ STR["es"] = dict(
     cpt_sub="<strong>100 % IV</strong> (15/15/15) da los PC más altos de cada nivel y <strong>0 % IV</strong> (0/0/0) los más bajos.",
     cpt_cap="PC de {name} por nivel (100 % IV / 0 % IV)", th_lv="Nivel", th_max="100 % IV", th_min="0 % IV", th_note="Notas",
     key15="🔬 Investigación de campo", key20="⚔️ Incursiones (sin clima potenciado) · 🥚 Huevos", key25="☀️ Incursiones (clima potenciado)",
-    bb="⭐ Bonificación de Mejor amigo",
-    cpt_foot=("El nivel {bb} solo se alcanza con la bonificación de Mejor amigo; los aumentos normales llegan hasta el nivel {max}. "
+    bb="⭐ Bonificación de Mejor compañero",
+    cpt_foot=("El nivel {bb} solo se alcanza con la bonificación de Mejor compañero; los aumentos normales llegan hasta el nivel {max}. "
               "Datos: GAME_MASTER de Pokémon GO."),
     mu_h="{name}: debilidades y resistencias", weak="Debilidades", resist="Resistencias",
     mu_note="{name} es débil contra {wlist}{dbl} y resiste {rlist}. Los ataques de tipo <strong>{prim}</strong> le hacen más daño.",

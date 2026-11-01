@@ -143,7 +143,8 @@ def extract_terms(targets):
             nm = tx[l].get(key) or en[key]
             terms[l]["moves"][mv] = STR[l]["paren"].format(a=nm, b=tx[l]["pokemon_type_" + typ]) if typ else nm
     if missing:
-        print("⚠ 找不到官方文字：", missing)
+        # 缺字就停下來，不要用英文或代號默默頂替
+        raise SystemExit("找不到官方文字（補 FORM_KEY／MANUAL_NAME／MOVE_FIX／MANUAL_MOVES 後再跑）：" + ", ".join(missing))
     return terms
 
 
@@ -195,7 +196,7 @@ def iv_table(p, S):
 
 def enrich(t, lang, T):
     S = STR[lang]; p = B.CP_DATA[t["name"]]; slug = t["slug"]; name = T["names"][slug]
-    d = B.PDX_BY_NAME.get(B._norm(t["name"]))
+    d = B.pdx_of(t["name"], p["id"])
     types = d["types"] if d else []
     tn = [T["types"][x] for x in types]
     types_txt = S["type_sep"].join(tn) if tn else "?"
@@ -248,7 +249,7 @@ def enrich(t, lang, T):
                                           total=b["total"], score=b["score"], extra=esc(extra))
     return dict(types=[(T["types"][x], B.TYPE_COLOR[x]) for x in types], type_ids=types, types_txt=types_txt,
                 lead=lead, weak=weak, resist=resist, note=note, role=role,
-                moves=moves or [(S["rec"], S["nodata"])], leagues=leagues, league_note=league_note)
+                moves=moves, leagues=leagues, league_note=league_note)
 
 
 def lang_nav(slug, lang, to_root):
@@ -283,6 +284,7 @@ def build_page(t, lang, T, pool):
     resist_html = "".join(f'<span class="chip rs">{esc(T["types"][x])} <em>{esc(m)}</em></span>'
                           for x, m, _ in e["resist"]) or "—"
     moves_html = "".join(f'<li><span class="k">{esc(k)}</span><span class="v">{v}</span></li>' for k, v in e["moves"])
+    moves_ul = f'<ul class="moves">{moves_html}</ul>' if moves_html else ""   # 沒有 PvP 資料就不顯示招式列
     league_html = "".join(
         f'<div class="lrow"><span class="lname">{esc(n)}</span><span class="lbar"><i style="width:{w}%"></i></span>'
         f'<span class="lrk">{S["lg_row"].format(rank="#" + str(rk), total=tot, score=sc)}</span></div>'
@@ -415,7 +417,7 @@ def build_page(t, lang, T, pool):
   <section class="card">
     <h2>{esc(S['role_h'].format(name=name))}</h2>
     <p class="role">{e['role']}</p>
-    <ul class="moves">{moves_html}</ul>
+    {moves_ul}
   </section>
 
   {league_card}
@@ -538,7 +540,7 @@ def main():
     en_names = terms["en"]["names"]
     pool = []
     for rank, t in enumerate(targets):
-        p = B.CP_DATA[t["name"]]; d = B.PDX_BY_NAME.get(B._norm(t["name"]))
+        p = B.CP_DATA[t["name"]]; d = B.pdx_of(t["name"], p["id"])
         pool.append({"slug": t["slug"], "dex": p["id"], "rank": rank, "img": p["imageUrl"], "cp20": B.cp_at(p, 20, 15),
                      "type_ids": d["types"] if d else [], "en": en_names[t["slug"]]})
     urls_fp = {}

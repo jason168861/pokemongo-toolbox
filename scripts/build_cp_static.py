@@ -178,6 +178,12 @@ def _json_block(txt, name):
 _RANK_SRC = open(os.path.join(ROOT, "data", "pokemon_data_and_rankings.js"), encoding="utf-8").read()
 POKEDEX = _json_block(_RANK_SRC, "POKEDEX")
 PDX_BY_NAME = {_norm(d["name"]): d for d in POKEDEX}
+
+
+def pdx_of(name, pid):
+    """名稱對不到排名資料的寫法時（鎧甲超夢、堅盾劍怪、基格爾德…），退回同圖鑑編號的第一筆（基本型態）。
+    名單裡用到退回的幾隻，型態間屬性都相同。"""
+    return PDX_BY_NAME.get(_norm(name)) or next((d for d in POKEDEX if d.get("dexNumber") == pid), None)
 LEAGUE_ZH = {"great": "超級聯盟", "ultra": "高級聯盟", "master": "大師聯盟"}
 RANKS = {}
 for _lg, _var in (("great", "POKEMON_RANKINGS_1500"), ("ultra", "POKEMON_RANKINGS_2500"), ("master", "POKEMON_RANKINGS_10000")):
@@ -191,7 +197,7 @@ for _lg, _var in (("great", "POKEMON_RANKINGS_1500"), ("ultra", "POKEMON_RANKING
 def auto_enrich(name, p):
     """用現有資料自動組出屬性剋制／定位／招式／PvP 內容。"""
     key = _norm(name)
-    d = PDX_BY_NAME.get(key)
+    d = pdx_of(name, p["id"])
     types = d["types"] if d else []
     slug = d["id"] if d else p["gm"].split("_POKEMON_")[-1].lower()
     type_line = "／".join(TYPE_ZH[t] for t in types) if types else "未知"
@@ -251,7 +257,7 @@ def auto_enrich(name, p):
         "slug": slug, "types": types_disp, "type_line": type_line, "grad": grad, "lead": lead,
         "weak": weak or [("—", "", False)], "resist": resist or [("—", "")],
         "type_note": wnote or "屬性相剋資料不足。", "role": role,
-        "moves": moves or [("—", "資料不足")], "leagues": leagues, "league_note": league_note,
+        "moves": moves, "leagues": leagues, "league_note": league_note,
     }
 
 # ---- 手寫覆寫（想人工潤飾的少數幾隻放這裡；其餘走 auto_enrich）----
@@ -550,6 +556,7 @@ def build(name):
                         for t, m, d in e["weak"])
     resist_html = "".join(f'<span class="chip rs">{esc(t)} <em>{esc(m)}</em></span>' for t, m in e["resist"])
     moves_html = "".join(f'<li><span class="k">{esc(k)}</span><span class="v">{v}</span></li>' for k, v in e["moves"])
+    moves_ul = f'<ul class="moves">{moves_html}</ul>' if moves_html else ""   # 沒有 PvP 資料就不顯示招式列
     league_html = "".join(
         f'<div class="lrow"><span class="lname">{esc(n)}</span>'
         f'<span class="lbar"><i style="width:{w}%"></i></span>'
@@ -691,7 +698,7 @@ def build(name):
   <section class="card">
     <h2>{esc(name)} 角色定位與推薦招式</h2>
     <p class="role">{e['role']}</p>
-    <ul class="moves">{moves_html}</ul>
+    {moves_ul}
   </section>
 
   {league_card}
