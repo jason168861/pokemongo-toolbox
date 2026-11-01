@@ -15,3 +15,9 @@ js/community-day-editor.js
 data/community-day-import.js
 data/cd-names.js
 scripts/build_cd_names.py
+
+ai_private/
+.claude/
+CLAUDE.md
+# AI 團隊內部分析報告（不提交、不部署）
+.private/

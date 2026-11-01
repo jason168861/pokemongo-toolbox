@@ -536,6 +536,20 @@ sprite 四周常有一圈透明 padding。前端會掃描出主體的 bounding b
 水平置中、垂直靠下擺放,放大上限 `MAXUP`(見 `index.html`)以避免小圖被放大到模糊。
 網格用 128px WebP 縮圖,匯出圖則改用 256px 原圖重畫。
 
+## 安全:資料拼進 HTML 前一律轉義
+
+清單裡的卡片不一定是自己加的 —— 別人的分享連結(Firebase `shared/`,任何人都能寫入)匯入後也在這裡。
+所以**任何來自清單資料的欄位,放進 `innerHTML` 之前都要過 `attrUrl()` / `escHtml()`**:
+
+- `escHtml(v)`:轉義 `& < > " '`,屬性值與文字都適用
+- `safeUrl(u)`:圖片網址只放行相對路徑、`http(s)://`、點陣圖 `data:image/…`;
+  `javascript:`、`vbscript:`、`//` 開頭等一律變空字串(那張圖不顯示,**不刪資料**)
+- `attrUrl(u)` = `escHtml(safeUrl(u))`,給 `src="${…}"` 用
+
+以前卡片是把 `c.url` / `c.bg` / `c.badge` / `c.ball` 直接拼進 HTML,一份動過手腳的分享連結就能在打開的人那邊執行程式
+(已用無害的旗標實測可觸發,修正後 7 種注入寫法全數無效)。修法只改顯示、不改資料,舊清單照常顯示。
+文字類(清單名稱、備註、組別備註)一律用 `textContent` / `.value` / canvas 畫,不經過 HTML。
+
 ## 授權與聲明
 
 程式碼為個人非商業用途的同好作品。

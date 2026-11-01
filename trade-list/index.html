@@ -1293,6 +1293,26 @@ const $=s=>document.querySelector(s);
 // 線上(github.io)走 jsDelivr CDN 加速圖片;本機開發用相對路徑。資料 JSON 仍走同源。
 const CDN=(location.protocol==='https:'&&/github\.io$/.test(location.hostname))?'https://cdn.jsdelivr.net/gh/jason168861/pokemongo-toolbox@main/trade-list/':'';
 function cdn(p){ return p && !/^(https?:|data:)/.test(p) ? CDN+p : p; }
+/* ===== 資料拼進 HTML 前一律轉義 =====
+   清單裡的卡片不一定是自己加的:別人的分享連結(Firebase shared/,任何人都能寫入)匯入後也在這裡。
+   以前卡片是把 c.url / c.bg / c.badge / c.ball 直接拼進 innerHTML —— 欄位裡夾一個 " 就能跳出 src="…",
+   補上 onerror="…" 之類的屬性,在打開連結的人的瀏覽器執行程式(已用無害的旗標實測可觸發);
+   而且匯入的清單會存進本機 / 雲端,之後每次開站都會再觸發。
+   修法只改「顯示」、不改資料:使用者存過的清單一個字都不動,舊資料照常顯示。
+     escHtml —— 任何資料放進 HTML(含屬性值)前都要過
+     safeUrl —— 圖片網址只放行相對路徑、http(s) 與點陣圖 data URL;javascript: / vbscript: / // 開頭等一律變空字串
+                (不刪卡片,只是那張圖不顯示)
+     attrUrl —— 兩者合一,給 src="${…}" 用 */
+const escHtml=v=>String(v==null?'':v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+function safeUrl(u){
+  const v=String(u==null?'':u).trim();
+  if(!v) return '';
+  if(/^https?:\/\//i.test(v)) return v;
+  if(/^data:image\/(png|jpe?g|gif|webp);/i.test(v)) return v;
+  if(/^[a-z][a-z0-9+.-]*:/i.test(v) || v.startsWith('//') || v.startsWith('\\')) return '';   // 其他協定、protocol-relative
+  return v;   // 相對路徑(assets/…)
+}
+const attrUrl=u=>escHtml(safeUrl(u));
 const badgeD='assets/badge_dynamax.png',badgeG='assets/badge_gigantamax.png',badgeP='assets/badge_purified.png',shinyIcon='assets/ic_shiny.png';
 let POKE={},BG=[],THUMBS=[],BGCOMBOS=[],TAB='mon',TARGET='want';
 let TRIM={};   // 建置期算好的去透明邊範圍(data/trim.json,由 fetch_assets.py 產出);沒有就退回即時掃描
@@ -3894,7 +3914,7 @@ function dispUrl(u){ const s=specOf(u); return (s&&s.disp)||u; }
 function specLabel(u){ const s=specOf(u); return s ? (s.label[LANG]||s.label.en||s.label.zh||'') : ''; }
 function specSuffix(u){ const l=specLabel(u); return l?' · '+l:''; }
 function fxCls(u){ const s=specOf(u); return s&&s.fx&&s.disp ? ' fx-'+s.fx : ''; }
-function specBadge(u,low){ const s=specOf(u); return s&&s.badge ? `<img class="fb${low?' low':''}" src="${cdn(s.badge)}" alt="">` : ''; }
+function specBadge(u,low){ const s=specOf(u); return s&&s.badge ? `<img class="fb${low?' low':''}" src="${attrUrl(cdn(s.badge))}" alt="">` : ''; }
 function matchSpecial(o,q){ const s=specOf(o.url); return !!s && s.hay.includes(q); }
 // no_shiny:遊戲裡沒有異色的特殊型態(至尊洛奇亞 / 鳳王)→ 選取網格與自由搭配不列異色版;已在清單裡的舊卡照樣顯示
 function hiddenShiny(v){ const s=v.shiny&&specOf(v.url); return !!(s&&s.noShiny); }
@@ -4003,8 +4023,8 @@ function untrTag(){ return '<span class="ut">🚫 '+tr('untr')+'</span>'; }
 function mixCell(o,sel,isBg){
   const d=document.createElement('div'); d.className='cell'+(sel?' sel':'')+(!isBg&&o.untr?' untr':'');
   d.innerHTML = isBg
-    ? `<img class="cbg" loading="lazy" decoding="async" src="${thumbOf(o.image_url)}">`
-    : `<img class="m big${fxCls(o.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(dispUrl(o.url))}">`
+    ? `<img class="cbg" loading="lazy" decoding="async" src="${attrUrl(thumbOf(o.image_url))}">`
+    : `<img class="m big${fxCls(o.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${attrUrl(thumbOf(dispUrl(o.url)))}">`
       + specBadge(o.url,false)
       + (o.shiny?'<span class="sh">✨</span>':'')
       + gnMark(o.gender) + (o.untr?untrTag():'');
@@ -4081,8 +4101,8 @@ function renderMixBadges(){
 // 預覽 + 底部按鈕狀態
 function syncMix(){
   const card=$('#mixCard'), m=MIX.mon, bd=mixBadge();
-  card.innerHTML = (MIX.bg?`<img class="cbg" src="${thumbOf(MIX.bg)}">`:'')
-    + (m?`<img class="m${fxCls(m.url)}" crossorigin="anonymous" src="${thumbOf(dispUrl(m.url))}">`+specBadge(m.url,!!bd.img):'')
+  card.innerHTML = (MIX.bg?`<img class="cbg" src="${attrUrl(thumbOf(MIX.bg))}">`:'')
+    + (m?`<img class="m${fxCls(m.url)}" crossorigin="anonymous" src="${attrUrl(thumbOf(dispUrl(m.url)))}">`+specBadge(m.url,!!bd.img):'')
     + (bd.img?`<img class="bd" src="${cdn(bd.img)}">`:'')
     + (m&&m.shiny?'<span class="sh">✨</span>':'')
     + (m?gnMark(m.gender):'');
@@ -4305,8 +4325,8 @@ function appendBatch(){
   const frag=document.createDocumentFragment(), made=[];
   for(let i=shown;i<end;i++){
     const it=FILTERED[i];const on=inTarget(it);const d=document.createElement('div');d.className=(on?'cell added':'cell')+(it.untr?' untr':'');
-    d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${thumbOf(it.bg)}">`:''}
-      <img class="m${it.bg?'':' big'}${fxCls(it.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${thumbOf(dispUrl(it.url))}">${it.badge?`<img class="bd" src="${cdn(it.badge)}">`:''}${specBadge(it.url,!!it.badge)}
+    d.innerHTML=`${it.bg?`<img class="cbg" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="${attrUrl(thumbOf(it.bg))}">`:''}
+      <img class="m${it.bg?'':' big'}${fxCls(it.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${attrUrl(thumbOf(dispUrl(it.url)))}">${it.badge?`<img class="bd" src="${attrUrl(cdn(it.badge))}">`:''}${specBadge(it.url,!!it.badge)}
       ${it.shiny?'<span class="sh">✨</span>':''}${gnMark(it.gender)}${on?'<span class="ok">✓</span>':''}${it.untr?untrTag():''}`;
     d.title=(it.zh||'')+specSuffix(it.url)+(it.tag?'('+tagLabel(it.tag)+')':'')+(it.bgname?' + '+it.bgname:'')+(it.shiny?' '+tr('f_shiny'):'')+(it.untr?' 🚫 '+tr('untr'):'');
     d._it=it;   // 存參照,切換目標時可原地更新✓而不必重建網格(避免圖片重載)
@@ -4755,8 +4775,9 @@ function sortByGroup(){
    用 DOM 現況算的),所以中途插一張不需要把後面的 i 重編 —— 刪除那條路徑也是這樣。 */
 function makeCard(k,c,i,box,cnt){
       const d=document.createElement('div');d.className='li';
-      d.innerHTML=`<div class="card">${c.bg?`<img class="bg" loading="lazy" decoding="async" src="${thumbOf(c.bg)}" referrerpolicy="no-referrer">`:''}
-        <img class="m${c.bg?'':' big'}${fxCls(c.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${cdn(dispUrl(c.url))}">${c.badge?`<img class="bd" src="${cdn(c.badge)}">`:''}${specBadge(c.url,!!c.badge)}
+      // ⚠ c 可能來自別人的分享連結 → 所有欄位都過 attrUrl(見 escHtml 的說明)
+      d.innerHTML=`<div class="card">${c.bg?`<img class="bg" loading="lazy" decoding="async" src="${attrUrl(thumbOf(c.bg))}" referrerpolicy="no-referrer">`:''}
+        <img class="m${c.bg?'':' big'}${fxCls(c.url)}" crossorigin="anonymous" loading="lazy" decoding="async" src="${attrUrl(cdn(dispUrl(c.url)))}">${c.badge?`<img class="bd" src="${attrUrl(cdn(c.badge))}">`:''}${specBadge(c.url,!!c.badge)}
         ${c.shiny?'<span class="sh">✨</span>':''}
         <span class="gring"></span><span class="gtag"></span><button class="del">✕</button></div>`;
       // 性別鈕:大多數物種公母同圖,交易時卻常有人指定 → 加完之後在卡片上點一下就能標
@@ -4770,7 +4791,7 @@ function makeCard(k,c,i,box,cnt){
       // 球種鈕:跟性別一樣「結果顯示在哪裡就在哪裡改」,點圖示本身循環切換
       const bl=document.createElement('button'); bl.title=tr('ball_tip');
       const syncBl=()=>{ bl.className='bl';
-        bl.innerHTML=c.ball ? '<img src="'+ballSrc(c.ball)+'" alt="">' : BALL_OUTLINE; };
+        bl.innerHTML=c.ball ? '<img src="'+attrUrl(ballSrc(c.ball))+'" alt="">' : BALL_OUTLINE; };   // c.ball 也是資料,一樣要轉義
       syncBl();
       bl.onpointerdown=e=>e.stopPropagation();   // 不觸發卡片拖曳
       bl.onclick=e=>{ e.stopPropagation();
