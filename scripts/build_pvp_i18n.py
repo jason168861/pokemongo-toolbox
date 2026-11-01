@@ -19,6 +19,16 @@ LANGS = B.I18N_LANGS
 DATA_SCRIPTS = ["data/precomputed_pokemon_cp.js", "data/pokemon_translation_map.js", "data/pokemon_names_from_api.js",
                 "data/pokemon_data_and_rankings.js", "data/pokemon_images.js", "js/pvp-logic.js"]
 RANK_VARS = ("POKEMON_RANKINGS_1500", "POKEMON_RANKINGS_2500", "POKEMON_RANKINGS_10000")
+# 排名資料有、但目前 pogo_assets 文字檔還沒收錄的寶可夢（第九世代）。
+# 英文、日文用官方名稱；其他語言還沒有可靠的官方對照前先用英文官方名稱，不自行翻譯。
+PVP_MANUAL = {
+    "來悲粗茶": ("Poltchageist", "チャデス"), "斯魔茶": ("Sinistcha", "ヤバソチャ"), "厄鬼椪": ("Ogerpon", "オーガポン"),
+    "吉雉雞": ("Fezandipiti", "キチキギス"), "夠讚狗": ("Okidogi", "イイネイヌ"), "願增猿": ("Munkidori", "マシマシラ"),
+    "桃歹郎": ("Pecharunt", "モモワロウ"), "太樂巴戈斯": ("Terapagos", "テラパゴス"), "蜜集大蛇": ("Hydrapple", "カミツオロチ"),
+    "裹蜜蟲": ("Dipplin", "カミッチュ"), "鋁鋼橋龍": ("Archaludon", "ブリジュラス"), "波盪水": ("Walking Wake", "ウネルミナモ"),
+    "猛雷鼓": ("Raging Bolt", "タケルライコ"), "破空焰": ("Gouging Fire", "ウガツホムラ"), "鐵斑葉": ("Iron Leaves", "テツノイサハ"),
+    "鐵磐岩": ("Iron Boulder", "テツノイワオ"), "鐵頭殼": ("Iron Crown", "テツノカシラ"),
+}
 
 
 def _rank_moves():
@@ -65,8 +75,11 @@ def extract_pvp_terms(tx, terms, move_name, missing):
                 if cand in gm or alias(cand) in gm:
                     base_cp, rest = gm.get(cand) or gm.get(alias(cand)), toks[k:]
                     break
+        base_zh = re.sub(r"\s*\(.*$", "", zhn).strip()
         for l in LANGS:
-            if cp_name:
+            if base_zh in PVP_MANUAL and not cp_name:
+                name = PVP_MANUAL[base_zh][1 if l == "ja" else 0]
+            elif cp_name:
                 name = terms[l]["all"][cp_name]
             elif sp_key:
                 name = tx[l].get(sp_key) or en[sp_key]
@@ -89,7 +102,15 @@ def extract_pvp_terms(tx, terms, move_name, missing):
             if len(zh_names) > 1:
                 for d in ds[1:]:
                     if d["name"] != ds[0]["name"]:
-                        terms[l]["pvp_names"][d["name"]] = STR[l]["paren"].format(a=name, b=d["id"].replace("_", " "))
+                        # 用代號去掉物種名稱後的部分當後綴（eiscue_ice → Ice）
+                        sp = d["id"].split("_")
+                        tail = [t for t in sp[1:] if t not in name.lower()] or sp[1:]
+                        terms[l]["pvp_names"][d["name"]] = STR[l]["paren"].format(a=name, b=" ".join(t.title() for t in tail))
+    for l in LANGS:
+        if l != "ja":   # 日文本來就有漢字；其他語言的名稱不能再有中文
+            left = sorted(v for v in terms[l]["pvp_names"].values() if re.search(r"[\u4e00-\u9fff]", v))
+            if left:
+                missing.append(f"pvp-name:{l}:" + "、".join(left[:20]))
     for l in LANGS:
         terms[l]["pvp_moves"] = {}
     for mv in sorted(_rank_moves()):

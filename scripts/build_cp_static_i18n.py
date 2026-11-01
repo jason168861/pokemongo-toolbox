@@ -69,6 +69,16 @@ MANUAL_MOVES = {
 REGION_TOK = {"ALOLA": "alola_pokedex_header", "GALARIAN": "galarian_pokedex_header",
               "HISUIAN": "hisuian_pokedex_header", "PALDEA": "paldean_pokedex_header"}
 NO_FORM_ALL = NO_FORM | {"slowking"}   # 「2021／2022形態」只是資料上的區分
+# 官方文字裡洗翠的 pokedex header 是全大寫（HISUIAN FORM、FORMA DE HISUI…），名稱裡改用一般寫法
+UPPER_FIX = {"en": "Hisuian Form", "fr": "Forme de Hisui", "de": "Hisui-Form", "es": "Forma de Hisui"}
+
+
+def form_text(l, v):
+    if v and v.isupper() and len(v) > 3 and re.search(r"[A-Z]", v):
+        return UPPER_FIX.get(l, v.capitalize())
+    return v
+
+
 IMG_PREFIX = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon%20-%20256x256/Addressable%20Assets/"
 WEATHER_KEY = {"clear": "weather_sunny", "rain": "weather_rainy", "partlycloudy": "weather_partly_cloudy",
                "cloudy": "weather_overcast", "windy": "weather_windy", "snow": "weather_snow", "fog": "weather_fog"}
@@ -136,7 +146,7 @@ def extract_terms(targets):
             if not base:
                 missing.append(f"name:{slug}:{l}")
                 base = en.get(f"pokemon_name_{p['id']:04d}", slug)
-            form = tx[l].get(form_key) if form_key else None
+            form = form_text(l, tx[l].get(form_key)) if form_key else None
             terms[l]["names"][slug] = STR[l]["paren"].format(a=base, b=form) if form else base
     names_all(tx, targets, terms)
 
@@ -215,7 +225,7 @@ def names_all(tx, targets, terms):
             if slug in MANUAL_NAME:
                 terms[l]["all"][nm] = MANUAL_NAME[slug][l]; continue
             base_n = tx[l].get(f"pokemon_name_{p['id']:04d}") or en.get(f"pokemon_name_{p['id']:04d}", nm)
-            form = tx[l].get(fk) if fk else None
+            form = form_text(l, tx[l].get(fk)) if fk else None
             terms[l]["all"][nm] = STR[l]["paren"].format(a=base_n, b=form) if form else base_n
     # 同一語言裡名稱重複（型態對不到官方文字）→ 用遊戲代號的型態部分區分，避免搜尋結果分不出來
     for l in LANGS:
@@ -538,7 +548,7 @@ def hub_alternates():
 def build_hub(lang, T, pool, n_all):
     S = STR[lang]; H = HOME[lang]; R = "../../"; n = len(pool)
     url = f"{ORIGIN}/{lang}/cp/"
-    hub_json = json.dumps({"lv": S["lv"], "cp": S["f_cp"], "none": H["hub_none"], "more": H["hub_more"], "img": IMG_PREFIX},
+    hub_json = json.dumps({"lv": S["lv"], "cp": S["f_cp"], "none": H["hub_none"], "more": H["hub_more"], "err": H["hub_err"], "img": IMG_PREFIX},
                           ensure_ascii=False).replace("</", "<\\/")
     tiles = []
     for x in sorted(pool, key=lambda x: (x["dex"], x["rank"])):
