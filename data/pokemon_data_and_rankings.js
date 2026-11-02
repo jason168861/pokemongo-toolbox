@@ -13373,7 +13373,7 @@ const POKEDEX = [
     "name": "水晶燈火靈 (Mega)",
     "stats": {
       "atk": 335,
-      "def": 182,
+      "def": 227,
       "sta": 155
     },
     "types": [
