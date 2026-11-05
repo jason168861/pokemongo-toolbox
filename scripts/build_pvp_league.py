@@ -1,22 +1,115 @@
 #!/usr/bin/env python3
-"""產生 /pvp-ranker/great-league/ —— 超級聯盟（CP 1500）排名 Top 100 靜態頁。
+"""產生 PvP 三個聯盟的排名 Top 100 靜態頁：
+    /pvp-ranker/great-league/   超級聯盟（CP 1500）
+    /pvp-ranker/ultra-league/   高級聯盟（CP 2500）
+    /pvp-ranker/master-league/  大師聯盟（無上限）
 
-資料：data/pokemon_data_and_rankings.js（CI 每 8 小時由 generate_pokemon_data.py 從 pvpoketw 更新）
-      的 POKEMON_RANKINGS_1500、POKEDEX；圖片 data/pokemon_images.js。
+資料：data/pokemon_data_and_rankings.js（CI 由 generate_pokemon_data.py 從 pvpoketw 更新）
+      的 POKEMON_RANKINGS_*、POKEDEX；圖片用 trade-list/assets/thumb/。
 
     python scripts/build_pvp_league.py
+
+CI 每次排程都會跑（在 generate_pokemon_data.py / refresh_cp_data.py 之後）。
+頁面上的「資料更新」日期 = 這個聯盟 Top 100 內容最後一次改變的日期（台灣時間），
+狀態存在 data/pvp_league_state.json；排名沒變就不改日期，也不會產生無意義的 commit。
+同時更新 sitemap.xml 裡這三個網址的 <lastmod>（只改日期，不動其他內容）。
 
 為什麼要有這頁：/pvp-ranker/ 是「輸入 IV 查排名」的互動工具，但搜尋「超級聯盟排名」的人要的是
 一張看得到的強度榜。這頁是靜態榜單（Google 讀得到每一隻），每隻都連回工具（?p=<id> 直接帶入）。
 """
-import json, os, re, html, datetime
+import json, os, re, html, hashlib, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT_DIR = os.path.join(ROOT, "pvp-ranker", "great-league")
-OUT = os.path.join(OUT_DIR, "index.html")
-URL = "https://pogokit.com/pvp-ranker/great-league/"
+STATE = os.path.join(ROOT, "data", "pvp_league_state.json")
+SITEMAP = os.path.join(ROOT, "sitemap.xml")
+BASE = "https://pogokit.com/pvp-ranker/"
 TOP = 100
+TW = datetime.timezone(datetime.timedelta(hours=8))
 e = lambda s: html.escape(str(s), quote=True)
+
+FAQ_SCORE = ("這份排名的分數怎麼來的？", "分數來自 PvPoke 的對戰模擬：讓每隻寶可夢用推薦招式，和整個聯盟的常見對手以各種護盾數對打，"
+             "綜合勝率與表現算成 0～100 的分數。分數越高，代表在目前環境越全面，但實戰仍要看隊伍搭配與對手。")
+FAQ_ELITE = ("★ 招式是什麼意思？", "標 ★ 的是「傳說招式」：目前只能在特定活動或用厲害招式學習器學到。如果你的寶可夢沒有這個招式，強度會比排名低。")
+FAQ_UPDATE = ("排名多久更新？", "本站每天會多次檢查 PvPoke 的最新排名，前 100 名有變動就自動重新產生這頁，頁首的「資料更新」就是最近一次變動的日期。"
+              "賽季更換或招式平衡調整後，排名通常會明顯變動。")
+
+LEAGUES = [
+    {"slug": "great-league", "cp": 1500, "name": "超級聯盟", "short": "超級", "eyebrow": "GO 對戰聯盟 · CP 1500",
+     "lede": "超級聯盟限制 CP 1500，比的不是誰 CP 高，而是屬性、招式和耐久的組合，很多中低階的寶可夢反而是主力。",
+     "faq": [
+         ("超級聯盟是什麼？", "Pokémon GO 對戰聯盟（GO Battle League）中，寶可夢 CP 上限 1500 的聯盟。因為 CP 被限制，"
+          "強度看的是屬性、招式與耐久的組合，而不是單純的高 CP，很多中低階的寶可夢反而是主力。"),
+         FAQ_SCORE, FAQ_ELITE,
+         ("為什麼 PvP 要找低攻擊的 IV？", "CP 公式裡攻擊的權重最高。在 1500 的上限內，攻擊 IV 低、防禦與 HP 高的個體可以升到更高等級，"
+          "總能力值（統計值乘積）反而更大。想知道你手上那隻的 IV 排第幾，可以用 PvP IV 排名工具查。"),
+         FAQ_UPDATE]},
+    {"slug": "ultra-league", "cp": 2500, "name": "高級聯盟", "short": "高級", "eyebrow": "GO 對戰聯盟 · CP 2500",
+     "lede": "高級聯盟限制 CP 2500，是很多耐久型寶可夢與部分傳說寶可夢的舞台；不少寶可夢要用 XL 糖果升到 40 級以上才能接近上限。",
+     "faq": [
+         ("高級聯盟是什麼？", "Pokémon GO 對戰聯盟（GO Battle League）中，寶可夢 CP 上限 2500 的聯盟。比超級聯盟多了一些傳說寶可夢與高耐久的寶可夢，"
+          "但同樣有 CP 上限，所以屬性、招式和耐久的搭配仍然比單純的高 CP 重要。"),
+         FAQ_SCORE, FAQ_ELITE,
+         ("高級聯盟要什麼樣的 IV？", "跟超級聯盟一樣，攻擊 IV 低、防禦與 HP 高的個體可以升到更高等級，總能力值更大。"
+          "不過很多寶可夢就算 15/15/15 升到 50 級也碰不到 2500，這種情況三圍全滿就是最好。PvP IV 排名工具會直接算出你那隻排第幾。"),
+         ("要準備多少 XL 糖果？", "超過 40 級要用 XL 糖果。高級聯盟裡不少寶可夢要升到 45～50 級才接近 CP 2500，需要的 XL 糖果很多；"
+          "在 PvP IV 排名工具輸入 IV，就能看到牠要升到幾級、CP 多少。"),
+         FAQ_UPDATE]},
+    {"slug": "master-league", "cp": 10000, "name": "大師聯盟", "short": "大師", "eyebrow": "GO 對戰聯盟 · 無 CP 上限",
+     "lede": "大師聯盟沒有 CP 上限，主角是傳說、幻之寶可夢與高種族值的寶可夢；能養多高就多高，IV 越高越好。",
+     "faq": [
+         ("大師聯盟是什麼？", "Pokémon GO 對戰聯盟（GO Battle League）中沒有 CP 上限的聯盟。因為不限 CP，"
+          "種族值高的傳說、幻之寶可夢與大型寶可夢是主力，通常要升到 50 級（或最佳夥伴 51 級）才有競爭力。"),
+         FAQ_SCORE, FAQ_ELITE,
+         ("大師聯盟要什麼樣的 IV？", "沒有 CP 上限，所以攻擊、防禦、HP 都是越高越好，15/15/15 是最理想的。"
+          "IV 差一兩點影響不大，但要升到 50 級需要大量 XL 糖果，是大師聯盟最大的門檻。"),
+         FAQ_UPDATE]},
+]
+
+
+def league_url(lg):
+    return BASE + lg["slug"] + "/"
+
+
+def today_tw():
+    return datetime.datetime.now(TW).date().isoformat()
+
+
+def load_state():
+    try:
+        with open(STATE, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+def save_state(state):
+    with open(STATE, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(state, f, ensure_ascii=False, indent=2, sort_keys=True)
+        f.write("\n")
+
+
+def fingerprint(ranks):
+    """只看頁面上會顯示的內容：名字、分數（一位小數）、招式與 ★、總收錄數。"""
+    keys = ("name", "fastMove", "chargedMove1", "chargedMove2", "isEliteFast", "isEliteCharged1", "isEliteCharged2")
+    rows = [[r.get(k) for k in keys] + [round(r["score"], 1)] for r in ranks[:TOP]]
+    raw = json.dumps([len(ranks), rows], ensure_ascii=False, sort_keys=True)
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+
+
+def update_sitemap(dates):
+    """把 sitemap.xml 裡各聯盟網址的 <lastmod> 改成資料更新日期；保留原本的換行字元。"""
+    if not os.path.exists(SITEMAP):
+        return
+    with open(SITEMAP, encoding="utf-8", newline="") as f:
+        xml = f.read()
+    new = xml
+    for url, d in dates.items():
+        pat = re.compile(r"(<loc>" + re.escape(url) + r"</loc>\s*<lastmod>)[0-9-]+(</lastmod>)")
+        new = pat.sub(lambda m: m.group(1) + d + m.group(2), new)
+    if new != xml:
+        with open(SITEMAP, "w", encoding="utf-8", newline="") as f:
+            f.write(new)
+
 
 TYPE_COLOR = {   # 屬性色（取自遊戲常見配色，調暗一點讓白字讀得清楚）
     "一般": "#8a8a6e", "火": "#e2662a", "水": "#3d7fe0", "草": "#4fa83d", "電": "#d4a90f", "冰": "#4cb5c4",
@@ -28,14 +121,6 @@ TYPE_COLOR = {   # 屬性色（取自遊戲常見配色，調暗一點讓白字�
 def js_array(src, name):
     i = src.index(f"const {name} = ") + len(f"const {name} = ")
     return json.loads(src[i:src.index("];", i) + 1])
-
-
-def load():
-    src = open(os.path.join(ROOT, "data", "pokemon_data_and_rankings.js"), encoding="utf-8").read()
-    ranks, dex = js_array(src, "POKEMON_RANKINGS_1500"), js_array(src, "POKEDEX")
-    img_src = open(os.path.join(ROOT, "data", "pokemon_images.js"), encoding="utf-8").read()
-    imgs = json.loads(img_src[img_src.index("{"):img_src.rindex("}") + 1])
-    return ranks, dex, imgs
 
 
 def resolve(r, dex):
@@ -107,39 +192,34 @@ def row(i, r, dex, imgs):
             f'</li>')
 
 
-FAQ = [
-    ("超級聯盟是什麼？", "Pokémon GO 對戰聯盟（GO Battle League）中，寶可夢 CP 上限 1500 的聯盟。因為 CP 被限制，"
-     "強度看的是屬性、招式與耐久的組合，而不是單純的高 CP，很多中低階的寶可夢反而是主力。"),
-    ("這份排名的分數怎麼來的？", "分數來自 PvPoke 的對戰模擬：讓每隻寶可夢用推薦招式，和整個聯盟的常見對手以各種護盾數對打，"
-     "綜合勝率與表現算成 0～100 的分數。分數越高，代表在目前環境越全面，但實戰仍要看隊伍搭配與對手。"),
-    ("★ 招式是什麼意思？", "標 ★ 的是「傳說招式」：目前只能在特定活動或用厲害招式學習器學到。如果你的寶可夢沒有這個招式，強度會比排名低。"),
-    ("為什麼 PvP 要找低攻擊的 IV？", "CP 公式裡攻擊的權重最高。在 1500 的上限內，攻擊 IV 低、防禦與 HP 高的個體可以升到更高等級，"
-     "總能力值（統計值乘積）反而更大。想知道你手上那隻的 IV 排第幾，可以用 PvP IV 排名工具查。"),
-    ("排名多久更新？", "資料來自 PvPoke 的排名，賽季或招式平衡調整後會跟著變動；本頁會定期重新產生，頁首顯示最近一次更新日期。"),
-]
-
-
-def build():
-    ranks, dex, imgs = load()
+def build_league(lg, src, dex, imgs, date):
+    ranks = js_array(src, f"POKEMON_RANKINGS_{lg['cp']}")
     top = ranks[:TOP]
-    today = datetime.date.today().isoformat()
+    name, url = lg["name"], league_url(lg)
     rows = "\n".join(row(i, r, dex, imgs) for i, r in enumerate(top, 1))
     types = sorted({t for r in top for t in (r["type1"], r["type2"]) if t}, key=lambda t: list(TYPE_COLOR).index(t) if t in TYPE_COLOR else 99)
     tbtns = "".join(f'<button class="tf" data-t="{e(t)}" style="--c:{TYPE_COLOR.get(t, "#777")}">{e(t)}</button>' for t in types)
     top3 = "、".join(resolve(r, dex)[0] for r in top[:3])
-    title = f"Pokémon GO 超級聯盟排名 Top {TOP}｜PvP 強度排行與推薦招式（{today[:7].replace('-', ' 年 ')} 月）"
-    desc = (f"Pokémon GO 超級聯盟（CP 1500）寶可夢強度排名前 {TOP} 名：目前前三名是 {top3}。"
+    month = f"{int(date[:4])} 年 {int(date[5:7])} 月"
+    cap = "無 CP 上限" if lg["cp"] == 10000 else f"CP {lg['cp']}"
+    title = f"Pokémon GO {name}排名 Top {TOP}｜PvP 強度排行與推薦招式（{month}）"
+    desc = (f"Pokémon GO {name}（{cap}）寶可夢強度排名前 {TOP} 名：目前前三名是 {top3}。"
             f"列出每隻的屬性、推薦一般與特殊招式（★ 為傳說招式），點一下就能查自己那隻的 PvP IV 排名。")
-    faq_html = "\n".join(f'<details class="qa"><summary>{e(q)}</summary><p>{e(a)}</p></details>' for q, a in FAQ)
+    faq = lg["faq"]
+    faq_html = "\n".join(f'<details class="qa"><summary>{e(q)}</summary><p>{e(a)}</p></details>' for q, a in faq)
+    tabs = "".join(
+        (f'<a href="../{o["slug"]}/" aria-current="page">{e(o["name"])}</a>' if o is lg
+         else f'<a href="../{o["slug"]}/">{e(o["name"])}</a>') for o in LEAGUES)
+    others = "、".join(f'<a href="../{o["slug"]}/">{e(o["name"])}排名</a>' for o in LEAGUES if o is not lg)
     ld = [
-        {"@context": "https://schema.org", "@type": "Article", "headline": f"Pokémon GO 超級聯盟排名 Top {TOP}",
-         "description": desc, "inLanguage": "zh-Hant", "dateModified": today, "mainEntityOfPage": URL},
+        {"@context": "https://schema.org", "@type": "Article", "headline": f"Pokémon GO {name}排名 Top {TOP}",
+         "description": desc, "inLanguage": "zh-Hant", "dateModified": date, "mainEntityOfPage": url},
         {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Pokémon Go 工具箱", "item": "https://pogokit.com/"},
-            {"@type": "ListItem", "position": 2, "name": "PvP IV 排名", "item": "https://pogokit.com/pvp-ranker/"},
-            {"@type": "ListItem", "position": 3, "name": "超級聯盟排名", "item": URL}]},
+            {"@type": "ListItem", "position": 2, "name": "PvP IV 排名", "item": BASE},
+            {"@type": "ListItem", "position": 3, "name": f"{name}排名", "item": url}]},
         {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
-            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ]},
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
     ]
     page = f'''<!doctype html>
 <html lang="zh-Hant">
@@ -153,12 +233,12 @@ def build():
 <link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
 <title>{e(title)}｜Pokémon Go 工具箱</title>
 <meta name="description" content="{e(desc)}">
-<link rel="canonical" href="{URL}">
+<link rel="canonical" href="{url}">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
-<meta property="og:url" content="{URL}">
+<meta property="og:url" content="{url}">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 <style>{CSS}</style>
 </head>
@@ -170,13 +250,14 @@ def build():
 </header>
 
 <main>
-  <nav class="crumb" aria-label="導覽路徑"><a href="../../">Pokémon Go 工具箱</a> › <a href="../">PvP IV 排名</a> › <span>超級聯盟排名</span></nav>
+  <nav class="crumb" aria-label="導覽路徑"><a href="../../">Pokémon Go 工具箱</a> › <a href="../">PvP IV 排名</a> › <span>{e(name)}排名</span></nav>
+  <nav class="lgs" aria-label="切換聯盟">{tabs}</nav>
   <section class="hero">
-    <p class="eyebrow">GO 對戰聯盟 · CP 1500</p>
-    <h1>Pokémon GO 超級聯盟排名 Top {TOP}</h1>
-    <p class="lede">超級聯盟限制 CP 1500，比的不是誰 CP 高，而是屬性、招式和耐久的組合。這份榜單依 PvPoke 對戰模擬的分數排序，
+    <p class="eyebrow">{e(lg["eyebrow"])}</p>
+    <h1>Pokémon GO {e(name)}排名 Top {TOP}</h1>
+    <p class="lede">{e(lg["lede"])}這份榜單依 PvPoke 對戰模擬的分數排序，
     列出前 {TOP} 名寶可夢與推薦招式；想知道你手上那隻的 IV 排第幾，點右邊的「查 IV」直接帶入。</p>
-    <ul class="chips"><li>資料更新 <b>{today}</b></li><li>收錄 <b>{len(ranks)}</b> 隻・顯示前 <b>{TOP}</b> 名</li><li><b>★</b> 傳說招式</li></ul>
+    <ul class="chips"><li>資料更新 <b>{date}</b></li><li>收錄 <b>{len(ranks)}</b> 隻・顯示前 <b>{TOP}</b> 名</li><li><b>★</b> 傳說招式</li></ul>
   </section>
 
   <section class="board">
@@ -187,16 +268,16 @@ def build():
     <ol class="list" id="list">
 {rows}
     </ol>
-    <p class="more">完整排名（{len(ranks)} 隻）與自己的 IV 名次，請用 <a href="../">PvP IV 排名查詢工具</a>。</p>
+    <p class="more">完整排名（{len(ranks)} 隻）與自己的 IV 名次，請用 <a href="../">PvP IV 排名查詢工具</a>。也可以看{others}。</p>
   </section>
 
   <section class="faq">
-    <h2>超級聯盟常見問題</h2>
+    <h2>{e(name)}常見問題</h2>
 {faq_html}
   </section>
 
   <section class="next">
-    <div><h2>找到想練的寶可夢了？</h2><p>用 PvP IV 排名工具查你手上那隻的 IV 在超級聯盟排第幾，以及要升到幾級、CP 多少。</p></div>
+    <div><h2>找到想練的寶可夢了？</h2><p>用 PvP IV 排名工具查你手上那隻的 IV 在{e(name)}排第幾，以及要升到幾級、CP 多少。</p></div>
     <a class="bigcta" href="../">查我的 PvP IV 排名 →</a>
   </section>
 </main>
@@ -212,13 +293,32 @@ def build():
 </body>
 </html>
 '''
-    os.makedirs(OUT_DIR, exist_ok=True)
-    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
+    out_dir = os.path.join(ROOT, "pvp-ranker", lg["slug"])
+    out = os.path.join(out_dir, "index.html")
+    os.makedirs(out_dir, exist_ok=True)
+    with open(out, "w", encoding="utf-8", newline="\n") as f:
         f.write(page)
     unmapped = [r["name"] for r in top if not resolve(r, dex)[1]]
-    print(f"已寫出 pvp-ranker/great-league/index.html（{os.path.getsize(OUT):,} bytes），前 {TOP} 名，第 1 名 {resolve(top[0], dex)[0]}")
+    print(f"已寫出 pvp-ranker/{lg['slug']}/index.html（{os.path.getsize(out):,} bytes），資料日期 {date}，第 1 名 {resolve(top[0], dex)[0]}")
     if unmapped:
         print("  ⚠ 對不到 POKEDEX（沒有圖、連到工具首頁）：", unmapped)
+
+
+def build():
+    src = open(os.path.join(ROOT, "data", "pokemon_data_and_rankings.js"), encoding="utf-8").read()
+    dex = js_array(src, "POKEDEX")
+    img_src = open(os.path.join(ROOT, "data", "pokemon_images.js"), encoding="utf-8").read()
+    imgs = json.loads(img_src[img_src.index("{"):img_src.rindex("}") + 1])
+    state, today, dates = load_state(), today_tw(), {}
+    for lg in LEAGUES:
+        fp = fingerprint(js_array(src, f"POKEMON_RANKINGS_{lg['cp']}"))
+        st = state.get(lg["slug"])
+        if not st or st.get("hash") != fp:
+            st = state[lg["slug"]] = {"hash": fp, "date": today}
+        build_league(lg, src, dex, imgs, st["date"])
+        dates[league_url(lg)] = st["date"]
+    save_state(state)
+    update_sitemap(dates)
 
 
 JS = r"""
@@ -241,6 +341,8 @@ a{color:#5b3fd6}
 .topbar .cta{padding:8px 16px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:14px;white-space:nowrap}
 main{max-width:1000px;margin:0 auto;padding:14px 16px 64px}
 .crumb{font-size:13px;color:var(--muted);margin:0 0 12px}.crumb a{color:var(--muted)}
+.lgs{display:flex;gap:6px;margin:0 0 12px;overflow-x:auto;scrollbar-width:none}.lgs::-webkit-scrollbar{display:none}
+.lgs a{flex:none;padding:7px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--ink-2);text-decoration:none;font-weight:750;font-size:.9rem}.lgs a[aria-current]{background:var(--ink);border-color:var(--ink);color:#fff}
 .hero{position:relative;overflow:hidden;padding:40px 44px;border-radius:28px;color:#d9d4ea;background:radial-gradient(50% 80% at 100% 0%,rgba(123,92,255,.55),transparent 70%),radial-gradient(45% 70% at 0% 100%,rgba(224,39,108,.45),transparent 70%),#0d0a1a}
 .eyebrow{margin:0 0 12px;color:#f9a8d4;font-size:13px;font-weight:750;letter-spacing:.16em}
 .hero h1{margin:0 0 12px;color:#fff;font-size:clamp(1.9rem,4.6vw,3rem);line-height:1.12;letter-spacing:-.03em;font-weight:900;text-wrap:balance}

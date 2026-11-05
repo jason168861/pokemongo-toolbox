@@ -70,6 +70,10 @@ jobs:
           # 要放在 build_cp_sitemap 之前 —— sitemap 的 ?mon= 網址是拿名稱組的。
           python scripts/refresh_cp_data.py
           python scripts/build_cp_sitemap.py   # 產生每隻寶可夢的 CP 深連結 sitemap
+          # 三個聯盟的排名 Top 100 靜態頁（/pvp-ranker/*-league/）。要在 generate_pokemon_data /
+          # refresh_cp_data 之後，用的是剛更新的排名與名稱。排名沒變就不改日期（data/pvp_league_state.json）。
+          # 這頁壞掉不該擋住整個部署與資料更新，所以失敗只留警告。
+          python scripts/build_pvp_league.py || echo "::warning::build_pvp_league.py 失敗，聯盟排名頁維持上一版"
       # ================================================================
 
       # 步驟 4: 從 Secret 建立 config.js 檔案
@@ -124,19 +128,28 @@ jobs:
           # sitemap-cp.xml 也要一起回寫：它的 <lastmod> 現在依賴
           # data/sitemap_cp_lastmod.json 的狀態，兩者不同步的話 repo 裡會出現
           # 「狀態說沒變、sitemap 卻是舊日期」這種對不上的情況，很難查。
-          git add data/ sitemap-cp.xml
+          # 聯盟排名頁（pvp-ranker/*-league/）與 sitemap.xml（只有那三個網址的 lastmod 會被改）也一起回寫。
+          # （git add 的路徑不存在會整個失敗，所以用一定存在的 pvp-ranker/。）
+          git add data/ sitemap-cp.xml sitemap.xml pvp-ranker/
           # 沒有變更就直接結束
           if git diff --staged --quiet; then
             echo "No data changes to commit."
             exit 0
           fi
+          # 記下這次 CI 真的改到的檔案；之後每次重試只 add 這些，
+          # 沒改到的檔案（例如有人剛 push 的 sitemap.xml）就維持遠端版本。
+          CHANGED=$(git diff --staged --name-only)
+          echo "$CHANGED"
           # 遠端可能在這期間已被更新（你自己 push 或上一個排程 run），
           # 所以每次都把「最新遠端」當基底，再把這次產生的資料疊上去 → 一定能快轉 push。
           # 這次爬到的資料是最新的，讓它覆蓋遠端同名檔即可，不會有衝突。
           for i in 1 2 3; do
             git fetch origin main
-            git reset --soft origin/main        # HEAD 移到最新遠端，保留已 add 的資料變更
-            git add data/ sitemap-cp.xml
+            # --mixed：HEAD 與 index 都對齊最新遠端，再只 add 這次改到的檔案。
+            # （--soft 會保留這次 checkout 的整個 index，期間若有人 push 了其他檔案，
+            #   這個 commit 會把那些變更悄悄改回去。）
+            git reset --mixed -q origin/main
+            git add -- $CHANGED
             if git diff --staged --quiet; then
               echo "與最新遠端相比沒有差異，無需 push。"; exit 0
             fi
