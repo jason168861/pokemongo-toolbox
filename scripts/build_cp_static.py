@@ -22,6 +22,7 @@ data/pokemon_data_and_rankings.js 的 POKEDEX / rankings 自動生成（烈空�
 """
 import os, re, math, html, json
 from urllib.parse import quote
+from i18n_header import site_header   # 與 /<lang>/cp/ 同一個表頭（css/site-i18n.css）
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORIGIN = "https://pogokit.com"
@@ -661,8 +662,10 @@ def build(name):
 <meta property="og:locale" content="zh_TW">
 <script type="application/ld+json">{ld}</script>
 <link rel="stylesheet" href="../../css/cp-static.css">
+<link rel="stylesheet" href="../../css/site-i18n.css">
 </head>
 <body style="--accent:{c1};--accent2:{c2}">
+{site_header("zh", "../../", "c", dict([("zh", "../../cp/" + slug + "/")] + [(l, "../../" + l + "/cp/" + slug + "/") for l in I18N_LANGS]))}
 <div class="wrap">
   <nav class="crumb" aria-label="麵包屑">
     <a href="../../">工具箱首頁</a> ›
