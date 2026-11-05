@@ -372,7 +372,7 @@ main{max-width:1000px;margin:0 auto;padding:14px 16px 64px}
 .chips li{padding:5px 13px;border-radius:999px;font-size:.86rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}.chips b{color:#fff}
 .board{margin-top:22px}
 .tools{position:sticky;top:var(--head-h);z-index:20;margin:0 -16px;padding:10px 16px;background:var(--bg);box-shadow:0 6px 10px -10px rgba(20,17,31,.35)}
-.tfs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.tfs::-webkit-scrollbar{display:none}
+.tfs{display:flex;flex-wrap:wrap;gap:6px}
 .tf{flex:none;padding:6px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink-2);font:inherit;font-size:.86rem;font-weight:700;cursor:pointer}
 .tf[style]{border-color:color-mix(in srgb,var(--c) 35%,#fff);color:var(--c)}
 .tf.on{background:var(--ink);border-color:var(--ink);color:#fff}.tf[style].on{background:var(--c);border-color:var(--c);color:#fff}
@@ -416,7 +416,7 @@ main{max-width:1000px;margin:0 auto;padding:14px 16px 64px}
  :root{--head-h:54px}.tnav{display:none}main{padding:10px 12px 56px}
  .topbar .home{font-size:14.5px}.logo{width:28px;height:28px;font-size:14px}.topbar .cta{padding:7px 13px;font-size:13px}
  .hero{padding:26px 20px;border-radius:22px}.lede{font-size:.94rem}
- .tools{margin:0 -12px;padding:8px 12px}
+ .tools{position:static;box-shadow:none;margin:0;padding:4px 0}.tfs{gap:5px}.tf,.sf{padding:4px 10px;font-size:.8rem}
  .r{grid-template-columns:76px minmax(0,1fr) auto;grid-template-areas:"pic who sc" "pic who go" "mv mv mv";gap:6px 12px;padding:12px}
  .pic{align-self:start}.sc{text-align:right;min-width:64px}.go{align-self:end;min-height:36px;padding:0 13px;font-size:.8rem}
  .mvs{padding-top:9px;border-top:1px solid #f0eef5}
