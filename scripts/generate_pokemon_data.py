@@ -3,6 +3,28 @@ import json
 import os
 import math
 
+TYPE_ZH = {
+    "normal": "一般", "fighting": "格鬥", "flying": "飛行", "poison": "毒",
+    "ground": "地面", "rock": "岩石", "bug": "蟲", "ghost": "幽靈",
+    "steel": "鋼", "fire": "火", "water": "水", "grass": "草",
+    "electric": "電", "psychic": "超能力", "ice": "冰", "dragon": "龍",
+    "dark": "惡", "fairy": "妖精", "none": ""
+}
+
+
+def write_move_types(gm_data, path=os.path.join("data", "pvp_move_types.json")):
+    """招式中文名 → 屬性（中文），給 scripts/build_pvp_league.py 的排名頁替招式上色。
+    另存一個小檔，而不是塞進 pokemon_data_and_rankings.js —— 那支 PvP 工具每次都要整包下載。"""
+    types = {}
+    for m in gm_data.get('moves', []):
+        name, t = m.get('name'), TYPE_ZH.get(m.get('type', 'none'), '')
+        if name and t:
+            types.setdefault(name, t)
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        json.dump(types, f, ensure_ascii=False, indent=0, sort_keys=True)
+        f.write('\n')
+
+
 def get_pokemon_family_info(pokemon_id, pokemon_map, family_map, stage_memo):
     """確定寶可夢的家族ID和進化階段"""
     pokemon_data = pokemon_map.get(pokemon_id)
@@ -81,13 +103,7 @@ def process_rankings(rankings_data, gm_data):
     """處理特定聯盟的排名數據"""
     pokemon_lookup = {p['speciesId']: p for p in gm_data['pokemon']}
     move_lookup = {m['moveId']: m for m in gm_data['moves']}
-    type_translate_map = {
-        "normal": "一般", "fighting": "格鬥", "flying": "飛行", "poison": "毒",
-        "ground": "地面", "rock": "岩石", "bug": "蟲", "ghost": "幽靈",
-        "steel": "鋼", "fire": "火", "water": "水", "grass": "草",
-        "electric": "電", "psychic": "超能力", "ice": "冰", "dragon": "龍",
-        "dark": "惡", "fairy": "妖精", "none": ""
-    }
+    type_translate_map = TYPE_ZH
 
     processed_rankings = []
     for p_rank in rankings_data:
@@ -198,6 +214,7 @@ def fetch_and_generate_data():
                 f.write(";\n\n")
         
         print(f"成功！數據文件已建立於: {OUTPUT_PATH} 🎉")
+        write_move_types(game_master)
 
     except IOError as e:
         print(f"錯誤：無法寫入文件。 {e}")

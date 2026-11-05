@@ -295,6 +295,13 @@ export function initializePvpRanker() {
         renderQuickSummary(quickRanks);   // 沒寫到的聯盟（allRankedSpreads 為空而提早 return）顯示「—」
     }
 
+// 中文頁的聯盟卡片底下連到該聯盟的強度排名頁（/pvp-ranker/*-league/ 只有中文，其他語言版不顯示）
+const LEAGUE_TOP_PAGE = { 1500: 'great-league/', 2500: 'ultra-league/', 10000: 'master-league/' };
+function leagueTopLink(league) {
+    if ((typeof window !== 'undefined' && window.PVP_I18N) || !LEAGUE_TOP_PAGE[league.cp]) return '';
+    return `<a class="league-top-link" href="${LEAGUE_TOP_PAGE[league.cp]}">${league.name}排名 Top 100 →</a>`;
+}
+
 function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, warningText, rankingInfoFromDataFile) { 
         let movesetHTML = '';
         if (rankingInfoFromDataFile && !isOverLimit) {
@@ -380,6 +387,7 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
                 ${userResultHTML}
                 ${movesetHTML}
                 ${rankOneResultHTML}
+                ${leagueTopLink(league)}
             </div>
         </div>
     `;
