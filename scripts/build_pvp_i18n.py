@@ -159,6 +159,7 @@ def page_html(lang, T, lang_nav_html):
     zh = open(os.path.join(ROOT, "pvp-ranker", "index.html"), encoding="utf-8").read()
     seg = zh[zh.index('<div class="main-container">'):zh.index('<footer')]
     seg = re.sub(r"<!--.*?-->", "", seg, flags=re.S)
+    seg = re.sub(r'<nav class="pvp-league-links".*?</nav>\s*', "", seg, flags=re.S)   # 聯盟排名頁只有中文
     seg, n = re.subn(r'<section class="tool-guide">.*?</section>', '<section class="tool-guide">' + S["guide"] + '</section>', seg, flags=re.S)
     assert n == 1
     L = T["league"]

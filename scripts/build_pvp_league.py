@@ -29,7 +29,7 @@ e = lambda s: html.escape(str(s), quote=True)
 
 FAQ_SCORE = ("這份排名的分數怎麼來的？", "分數來自 PvPoke 的對戰模擬：讓每隻寶可夢用推薦招式，和整個聯盟的常見對手以各種護盾數對打，"
              "綜合勝率與表現算成 0～100 的分數。分數越高，代表在目前環境越全面，但實戰仍要看隊伍搭配與對手。")
-FAQ_ELITE = ("★ 招式是什麼意思？", "標 ★ 的是「傳說招式」：目前只能在特定活動或用厲害招式學習器學到。如果你的寶可夢沒有這個招式，強度會比排名低。")
+FAQ_ELITE = ("「限定」招式是什麼意思？", "標「限定」的是限定招式：平常進化或用招式學習器學不到，只能在社群日等特定活動，或用厲害招式學習器學到。如果你的寶可夢沒有這個招式，強度會比排名低。")
 FAQ_UPDATE = ("排名多久更新？", "本站每天會多次檢查 PvPoke 的最新排名，前 100 名有變動就自動重新產生這頁，頁首的「資料更新」就是最近一次變動的日期。"
               "賽季更換或招式平衡調整後，排名通常會明顯變動。")
 
@@ -160,10 +160,27 @@ def local_img(remote, dexno):
     return remote if remote.startswith("https://raw.githubusercontent.com/") else ""
 
 
-def move(name, elite):
-    if elite:
-        return '<span class="mv elite" title="需要厲害招式學習器">' + e(name) + '<sup>★</sup></span>'
-    return '<span class="mv">' + e(name) + '</span>'
+MOVE_TYPES = None
+TYPE_ICON = {t: ("超" if t == "超能力" else t[0]) for t in TYPE_COLOR}   # 圓點裡的一個字：火、水、超…
+
+
+def move_type(name):
+    """data/pvp_move_types.json（generate_pokemon_data.py 產生）：招式中文名 → 屬性。"""
+    global MOVE_TYPES
+    if MOVE_TYPES is None:
+        try:
+            with open(os.path.join(ROOT, "data", "pvp_move_types.json"), encoding="utf-8") as f:
+                MOVE_TYPES = json.load(f)
+        except (OSError, ValueError):
+            MOVE_TYPES = {}
+    return MOVE_TYPES.get(name, "")
+
+
+def move(name, elite, kind):
+    t = move_type(name)
+    attrs = f' style="--c:{TYPE_COLOR[t]}" data-ti="{e(TYPE_ICON[t])}" title="{e(t)}屬性"' if t in TYPE_COLOR else ' data-ti="?"'
+    tag = '<em>限定</em>' if elite else ''
+    return f'<span class="mv {kind}{" elite" if elite else ""}"{attrs}>{e(name)}{tag}</span>'
 
 
 def row(i, r, dex, imgs):
@@ -171,23 +188,24 @@ def row(i, r, dex, imgs):
     img = local_img(imgs.get(pid, "") if pid else "", r["dex"])
     types = [t for t in (r["type1"], r["type2"]) if t]
     tchips = "".join(f'<span class="ty" style="--c:{TYPE_COLOR.get(t, "#777")}">{e(t)}</span>' for t in types)
-    charged = move(r["chargedMove1"], r["isEliteCharged1"])
+    charged = move(r["chargedMove1"], r["isEliteCharged1"], "cg")
     if r.get("chargedMove2"):
-        charged += "、" + move(r["chargedMove2"], r["isEliteCharged2"])
+        charged += move(r["chargedMove2"], r["isEliteCharged2"], "cg")
     link = f'../?p={e(pid)}' if pid else "../"
     pic = ""
     if img:
         lazy = "eager" if i <= 6 else "lazy"
-        pic = (f'<img src="{e(img)}" alt="{e(disp)}" width="64" height="64" loading="{lazy}" '
+        pic = (f'<img src="{e(img)}" alt="{e(disp)}{"（暗影）" if shadow else ""}" width="76" height="76" loading="{lazy}" '
                f'decoding="async" referrerpolicy="no-referrer">')
     sd = '<span class="sd">暗影</span>' if shadow else ""
     medal = ' m1' if i == 1 else ' m2' if i == 2 else ' m3' if i == 3 else ''
-    return (f'<li class="r{medal}" data-t="{e(" ".join(types))}">'
-            f'<span class="no">{i}</span>'
-            f'<span class="pic">{pic}</span>'
-            f'<span class="who"><b class="nm">{e(disp)}{sd}</b><span class="tys">{tchips}</span></span>'
-            f'<span class="sc"><b>{r["score"]:.1f}</b><i style="width:{max(0, min(100, r["score"])):.1f}%"></i></span>'
-            f'<span class="mvs"><span class="k">一般</span>{move(r["fastMove"], r["isEliteFast"])}<span class="k">特殊</span>{charged}</span>'
+    sh = ' is-sh' if shadow else ''
+    return (f'<li class="r{medal}{sh}" data-t="{e(" ".join(types))}"{" data-s" if shadow else ""}>'
+            f'<span class="pic{" sh" if shadow else ""}">{pic}<b class="no" aria-label="第 {i} 名">{i}</b></span>'
+            f'<span class="who"><b class="nm">{e(disp)}</b>{sd}<span class="tys">{tchips}</span></span>'
+            f'<span class="sc"><b>{r["score"]:.1f}</b><i><i style="width:{max(0, min(100, r["score"])):.1f}%"></i></i></span>'
+            f'<span class="mvs"><span class="ml"><span class="k">一般</span>{move(r["fastMove"], r["isEliteFast"], "fm")}</span>'
+            f'<span class="ml"><span class="k">特殊</span>{charged}</span></span>'
             f'<a class="go" href="{link}" aria-label="查{e(disp)}的 PvP IV 排名">查 IV</a>'
             f'</li>')
 
@@ -204,7 +222,7 @@ def build_league(lg, src, dex, imgs, date):
     cap = "無 CP 上限" if lg["cp"] == 10000 else f"CP {lg['cp']}"
     title = f"Pokémon GO {name}排名 Top {TOP}｜PvP 強度排行與推薦招式（{month}）"
     desc = (f"Pokémon GO {name}（{cap}）寶可夢強度排名前 {TOP} 名：目前前三名是 {top3}。"
-            f"列出每隻的屬性、推薦一般與特殊招式（★ 為傳說招式），點一下就能查自己那隻的 PvP IV 排名。")
+            f"列出每隻的屬性、推薦一般與特殊招式（含限定招式標示），點一下就能查自己那隻的 PvP IV 排名。")
     faq = lg["faq"]
     faq_html = "\n".join(f'<details class="qa"><summary>{e(q)}</summary><p>{e(a)}</p></details>' for q, a in faq)
     tabs = "".join(
@@ -257,12 +275,12 @@ def build_league(lg, src, dex, imgs, date):
     <h1>Pokémon GO {e(name)}排名 Top {TOP}</h1>
     <p class="lede">{e(lg["lede"])}這份榜單依 PvPoke 對戰模擬的分數排序，
     列出前 {TOP} 名寶可夢與推薦招式；想知道你手上那隻的 IV 排第幾，點右邊的「查 IV」直接帶入。</p>
-    <ul class="chips"><li>資料更新 <b>{date}</b></li><li>收錄 <b>{len(ranks)}</b> 隻・顯示前 <b>{TOP}</b> 名</li><li><b>★</b> 傳說招式</li></ul>
+    <ul class="chips"><li>資料更新 <b>{date}</b></li><li>收錄 <b>{len(ranks)}</b> 隻・顯示前 <b>{TOP}</b> 名</li><li><b class="lt">限定</b> 限定招式</li></ul>
   </section>
 
   <section class="board">
     <div class="tools">
-      <div class="tfs" role="group" aria-label="依屬性篩選"><button class="tf on" data-t="">全部</button>{tbtns}</div>
+      <div class="tfs" role="group" aria-label="篩選"><button class="sf" type="button" aria-pressed="false">只看暗影</button><button class="tf on" data-t="">全部屬性</button>{tbtns}</div>
       <p class="cnt" id="cnt" aria-live="polite"></p>
     </div>
     <ol class="list" id="list">
@@ -322,11 +340,14 @@ def build():
 
 
 JS = r"""
-(function(){var b=[].slice.call(document.querySelectorAll('.tf')),li=[].slice.call(document.querySelectorAll('#list .r')),c=document.getElementById('cnt');
-function go(t){var n=0;li.forEach(function(x){var s=!t||(' '+x.dataset.t+' ').indexOf(' '+t+' ')>-1;x.hidden=!s;if(s)n++;});
-c.textContent=t?t+'屬性 '+n+' 隻':'共 '+li.length+' 隻';}
-b.forEach(function(x){x.addEventListener('click',function(){b.forEach(function(y){y.classList.toggle('on',y===x);});go(x.dataset.t);
-if(window.track)track('league_filter',{type:x.dataset.t||'all'});});});go('');})();
+(function(){var b=[].slice.call(document.querySelectorAll('.tf')),li=[].slice.call(document.querySelectorAll('#list .r')),
+c=document.getElementById('cnt'),sf=document.querySelector('.sf'),t='',so=false;
+function go(){var n=0;li.forEach(function(x){var s=(!t||(' '+x.dataset.t+' ').indexOf(' '+t+' ')>-1)&&(!so||x.hasAttribute('data-s'));
+x.hidden=!s;if(s)n++;});c.textContent=(so?'暗影・':'')+(t?t+'屬性 ':'')+(t||so?n+' 隻':'共 '+li.length+' 隻');}
+b.forEach(function(x){x.addEventListener('click',function(){t=x.dataset.t;b.forEach(function(y){y.classList.toggle('on',y===x);});go();
+if(window.track)track('league_filter',{type:t||'all'});});});
+sf.addEventListener('click',function(){so=!so;sf.setAttribute('aria-pressed',so);sf.classList.toggle('on',so);go();
+if(window.track)track('league_filter',{type:so?'shadow_on':'shadow_off'});});go();})();
 """
 
 CSS = r"""
@@ -350,28 +371,39 @@ main{max-width:1000px;margin:0 auto;padding:14px 16px 64px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;padding:0;list-style:none}
 .chips li{padding:5px 13px;border-radius:999px;font-size:.86rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}.chips b{color:#fff}
 .board{margin-top:22px}
-.tools{position:sticky;top:var(--head-h);z-index:20;margin:0 -16px;padding:10px 16px;background:rgba(246,244,250,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.tools{position:sticky;top:var(--head-h);z-index:20;margin:0 -16px;padding:10px 16px;background:var(--bg);box-shadow:0 6px 10px -10px rgba(20,17,31,.35)}
 .tfs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.tfs::-webkit-scrollbar{display:none}
 .tf{flex:none;padding:6px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink-2);font:inherit;font-size:.86rem;font-weight:700;cursor:pointer}
 .tf[style]{border-color:color-mix(in srgb,var(--c) 35%,#fff);color:var(--c)}
 .tf.on{background:var(--ink);border-color:var(--ink);color:#fff}.tf[style].on{background:var(--c);border-color:var(--c);color:#fff}
+.sf{flex:none;padding:6px 13px;border:1px solid #c9b5f5;border-radius:999px;background:#f3edff;color:#6d28d9;font:inherit;font-size:.86rem;font-weight:800;cursor:pointer;margin-right:4px}.sf.on{background:#6d28d9;border-color:#6d28d9;color:#fff}
 .cnt{margin:8px 0 0;color:var(--muted);font-size:.84rem}
 .list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px}
-.r{display:grid;grid-template-columns:44px 64px minmax(0,1.1fr) 120px minmax(0,1.5fr) auto;align-items:center;gap:12px;padding:10px 14px;background:#fff;border-radius:18px;box-shadow:0 1px 2px rgba(20,17,31,.06),0 8px 22px -14px rgba(20,17,31,.25)}
-.no{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:#f1eff7;color:var(--ink-2);font-weight:900;font-variant-numeric:tabular-nums}
-.m1 .no{background:linear-gradient(135deg,#f7c948,#e8a317);color:#fff}.m2 .no{background:linear-gradient(135deg,#cfd6e0,#9aa6b8);color:#fff}.m3 .no{background:linear-gradient(135deg,#e6a26c,#b86b34);color:#fff}
+.r{display:grid;grid-template-columns:76px minmax(0,1fr) 96px minmax(0,1.55fr) auto;grid-template-areas:"pic who sc mv go";align-items:center;gap:8px 16px;padding:12px 16px 12px 12px;background:#fff;border-radius:18px;box-shadow:0 1px 2px rgba(20,17,31,.06),0 6px 18px -14px rgba(20,17,31,.25)}
 .m1,.m2,.m3{box-shadow:0 0 0 2px #f3e3a8,0 10px 26px -12px rgba(232,163,23,.45)}
-.pic{width:64px;height:64px;border-radius:16px;overflow:hidden;background:radial-gradient(70% 70% at 50% 40%,#fff,#ece8f6)}
+.r.is-sh{background:linear-gradient(90deg,#f4edff,#fff 45%);box-shadow:inset 4px 0 0 #8b5cf6,0 1px 2px rgba(20,17,31,.06),0 6px 18px -14px rgba(76,29,149,.4)}
+.r.is-sh.m1,.r.is-sh.m2,.r.is-sh.m3{box-shadow:inset 4px 0 0 #8b5cf6,0 0 0 2px #f3e3a8,0 10px 26px -12px rgba(232,163,23,.45)}
+.pic{grid-area:pic;position:relative;display:block;width:76px;height:76px;border-radius:18px;overflow:hidden;background:radial-gradient(70% 70% at 50% 40%,#fff,#ece8f6)}
 .pic img{width:100%;height:100%;object-fit:contain;transform:scale(1.18)}
-.who{min-width:0}.nm{display:block;font-size:1rem;font-weight:850;line-height:1.35}
-.sd{margin-left:6px;padding:1px 7px;border-radius:999px;background:#2b1747;color:#d8b4fe;font-size:.68rem;font-weight:800;vertical-align:2px}
-.tys{display:flex;gap:4px;margin-top:4px}.ty{padding:1px 8px;border-radius:999px;background:var(--c);color:#fff;font-size:.7rem;font-weight:800}
-.sc{position:relative;display:block;height:28px;border-radius:9px;background:#f1eff7;overflow:hidden}
-.sc i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#c4b5fd,#7b5cff);opacity:.35}
-.sc b{position:relative;display:block;padding:0 10px;line-height:28px;font-size:.9rem;font-weight:900;font-variant-numeric:tabular-nums}
-.mvs{font-size:.84rem;line-height:1.6;color:var(--ink-2)}.mvs .k{display:inline-block;margin:0 6px 0 0;padding:0 6px;border-radius:6px;background:#f1eff7;color:var(--muted);font-size:.7rem;font-weight:800}
-.mvs .k~.k{margin-left:8px}.mv sup{color:#e8a317;font-weight:900}.mv.elite{color:#9a5b00;font-weight:700}
-.go{padding:8px 14px;border-radius:999px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:.84rem;white-space:nowrap}
+.pic.sh{background:radial-gradient(75% 75% at 50% 45%,#7c4ddb,#2e1458 68%,#160a2c)}
+.pic.sh img{filter:drop-shadow(0 0 4px rgba(214,180,255,.95)) drop-shadow(0 0 10px rgba(167,110,255,.7))}
+.pic.sh::after{content:"暗影";position:absolute;right:0;bottom:0;padding:0 7px;border-radius:9px 0 0 0;background:#7c3aed;color:#fff;font-size:.66rem;font-weight:900;line-height:1.7}
+.no{position:absolute;left:0;top:0;min-width:28px;height:24px;padding:0 6px;border-radius:0 0 10px 0;background:rgba(20,17,31,.72);color:#fff;font-size:.78rem;font-weight:900;line-height:24px;text-align:center;font-variant-numeric:tabular-nums}
+.m1 .no{background:linear-gradient(135deg,#f7c948,#e8a317)}.m2 .no{background:linear-gradient(135deg,#cfd6e0,#8e9aae)}.m3 .no{background:linear-gradient(135deg,#e6a26c,#b86b34)}
+.who{grid-area:who;min-width:0}.nm{font-size:1.05rem;font-weight:850;line-height:1.35}
+.sd{display:inline-block;margin-left:6px;padding:0 8px;border-radius:999px;background:#6d28d9;color:#fff;font-size:.72rem;font-weight:800;line-height:1.6;vertical-align:2px}
+.tys{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.ty{padding:1px 9px;border-radius:999px;background:var(--c);color:#fff;font-size:.74rem;font-weight:800;line-height:1.55}
+.sc{grid-area:sc;display:block}.sc b{display:block;font-size:1.35rem;font-weight:900;line-height:1.1;color:#5b3fd6;font-variant-numeric:tabular-nums}
+.sc>i{display:block;height:4px;margin-top:6px;border-radius:4px;background:#ece8f6;overflow:hidden}.sc>i>i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#a78bfa,#6d4aff)}
+.mvs{grid-area:mv;display:grid;gap:6px;min-width:0}
+.ml{display:flex;flex-wrap:wrap;align-items:center;gap:5px 6px}
+.ml .k{flex:none;width:2.4em;color:var(--muted);font-size:.72rem;font-weight:800}
+.mv{--c:#8a8a9a;display:inline-flex;align-items:center;gap:5px;padding:2px 10px 2px 3px;border-radius:999px;font-size:.86rem;font-weight:750;line-height:1.5;color:color-mix(in srgb,var(--c) 55%,#000);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 35%,#fff)}
+.mv::before{content:attr(data-ti);flex:none;display:grid;place-items:center;width:19px;height:19px;border-radius:50%;background:var(--c);color:#fff;font-size:.66rem;font-weight:900;line-height:1}
+.mv.cg{border-radius:8px}.mv.cg::before{border-radius:6px}
+.mv em,.lt{font-style:normal;margin-left:2px;padding:0 5px;border-radius:5px;background:linear-gradient(135deg,#f7c948,#e8a317);color:#fff;font-size:.68rem;font-weight:900;line-height:1.6}
+.mv.elite{border-color:#e8b93a;box-shadow:0 0 0 1px rgba(232,185,58,.35)}
+.go{grid-area:go;display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:999px;background:var(--grad);color:#fff;text-decoration:none;font-weight:800;font-size:.84rem;white-space:nowrap}
 .more{margin:18px 0 0;color:var(--muted);font-size:.92rem;text-align:center}
 .faq{margin-top:56px}.faq h2{font-size:1.5rem;letter-spacing:-.02em;margin:0 0 12px}
 .qa{background:#fff;border-radius:16px;padding:4px 18px;margin:0 0 10px;box-shadow:0 1px 2px rgba(20,17,31,.06)}
@@ -385,10 +417,9 @@ main{max-width:1000px;margin:0 auto;padding:14px 16px 64px}
  .topbar .home{font-size:14.5px}.logo{width:28px;height:28px;font-size:14px}.topbar .cta{padding:7px 13px;font-size:13px}
  .hero{padding:26px 20px;border-radius:22px}.lede{font-size:.94rem}
  .tools{margin:0 -12px;padding:8px 12px}
- .r{grid-template-columns:34px 56px minmax(0,1fr) auto;grid-template-areas:"no pic who go" "no pic sc sc" "mv mv mv mv";gap:6px 10px;padding:10px 12px}
- .no{grid-area:no;width:30px;height:30px;font-size:.86rem;border-radius:10px;align-self:start}.pic{grid-area:pic;width:56px;height:56px;align-self:start}
- .who{grid-area:who}.sc{grid-area:sc;height:22px}.sc b{line-height:22px;font-size:.8rem}.go{grid-area:go;padding:6px 11px;font-size:.78rem;align-self:start}
- .mvs{grid-area:mv;font-size:.8rem;padding-top:4px;border-top:1px solid #f0eef5}
+ .r{grid-template-columns:76px minmax(0,1fr) auto;grid-template-areas:"pic who sc" "pic who go" "mv mv mv";gap:6px 12px;padding:12px}
+ .pic{align-self:start}.sc{text-align:right;min-width:64px}.go{align-self:end;min-height:36px;padding:0 13px;font-size:.8rem}
+ .mvs{padding-top:9px;border-top:1px solid #f0eef5}
  .next{flex-direction:column;align-items:flex-start;padding:24px 20px}
 }
 """
