@@ -605,7 +605,11 @@ function generateLeagueCardHTML(league, userRankInfo, rankOneInfo, isOverLimit, 
 
     // 預設帶入妙蛙種子並直接計算：讓新用戶一進來就看到結果長什麼樣子，
     // 而不是面對一片空白不知道要做什麼
-    const defaultPokemon = POKEDEX.find(p => p.name === T.defaultMon) || POKEDEX.find(p => p.dexNumber === 1);
+    // ?p=<POKEDEX id>：從超級聯盟排名頁（/pvp-ranker/great-league/）點「查 IV」時直接帶入那一隻。
+    // 只接受 POKEDEX 裡真的有的 id，其他值一律忽略、退回預設（不把網址內容寫進頁面）。
+    let wanted = null;
+    try { const id = new URLSearchParams(location.search).get('p'); if (id) wanted = POKEDEX.find(p => p.id === id) || null; } catch (e) { /* 舊瀏覽器：用預設 */ }
+    const defaultPokemon = wanted || POKEDEX.find(p => p.name === T.defaultMon) || POKEDEX.find(p => p.dexNumber === 1);
     // HTML 先以 .is-loading 預留預設結果的高度（避免 CLS），算完就解除（計算出錯也要解除）；
     // 萬一找不到預設寶可夢，回到原本「隱藏、空白」的狀態。
     try {
