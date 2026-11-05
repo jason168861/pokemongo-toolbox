@@ -2226,7 +2226,9 @@ function setMode(m){
   syncTools();   // 「字體/底色」「顏色」的可用狀態跟著 SEL 走,進出模式都要對得上
   if(PTIP) closeTip(false);   // 換畫面:指著的東西不見了,提示先收起來(不算看過)
   scheduleTip(900);           // 製圖畫面有自己的新功能提示;回到清單則補出還沒看過的
-  requestAnimationFrame(()=>{ renderBase();     // 版面寬度變了,重新排版
+  // 版面寬度變了,重新排版。放在繪製之後(afterPaint)而不是 rAF:rAF 仍在這一幀繪製之前,
+  // 整張圖畫完才看得到畫面切換,手機上這一下就是 300ms 的卡頓。
+  afterPaint(()=>{ renderBase();
     if(m==='select') $('#listPanel').scrollIntoView({behavior:'smooth',block:'start'}); });   // 完成編輯 → 回到清單(編輯面板已收起)
 }
 // 手機右滑/瀏覽器返回:若在編輯中,先回到清單(消耗掉進編輯時 push 的那一步)
@@ -3890,10 +3892,11 @@ function showTip(t,spec){
   const place=()=>{
     if(!PTIP) return;
     if(!isVis(t)){ closeTip(false); scheduleTip(); return; }   // 節點被換掉、或畫面切走(例如進了製圖)
+    // 先把要量的都量完再寫樣式:讀寫交錯會讓每一幀強制排版兩次
     const r=t.getBoundingClientRect(), pad=6, vw=innerWidth, vh=innerHeight;
+    const bw=bub.offsetWidth, bh=bub.offsetHeight, gap=18;
     Object.assign(spot.style,{left:(r.left-pad)+'px',top:(r.top-pad)+'px',width:(r.width+pad*2)+'px',height:(r.height+pad*2)+'px'});
     burst.style.left=(r.left+r.width/2)+'px'; burst.style.top=(r.top+r.height/2)+'px';
-    const bw=bub.offsetWidth, bh=bub.offsetHeight, gap=18;
     const below=r.bottom+gap+bh<=vh-12 || r.top-gap-bh<12;   // 下面放得下就放下面,不然放上面
     const left=Math.max(16,Math.min(vw-16-bw, r.left+r.width/2-bw/2));
     bub.style.left=left+'px'; bub.style.top=Math.max(12, below?r.bottom+gap:r.top-gap-bh)+'px';
@@ -4073,7 +4076,12 @@ function openPicker(t){ setTarget(t);
   const pt=$('#pickTitle'); if(pt)pt.textContent=tr('pick_title')+'：'+(t==='want'?tr('want'):tr('have'));
   document.body.classList.add('picking'); const g=$('#gridWrap'); if(g)g.scrollTop=0;
   pumpBatches(); }   // 面板剛顯示才量得到高度,這時才知道要預先鋪幾螢幕
-function closePicker(){ document.body.classList.remove('picking'); flushToggleSync(); }
+function closePicker(){ document.body.classList.remove('picking');
+  // 清單重畫 + 匯出預覽（drawLists/renderBase）很重；放在點擊當下會讓「✓ 完成」卡一下（手機 INP）。
+  // 先讓面板收起來畫出去，下一個 frame 之後再重畫 —— 結果完全一樣，只是不擋住這次點擊的回饋。
+  clearTimeout(_toggleSyncTimer); _toggleSyncTimer=null; afterPaint(flushToggleSync); }
+// 等瀏覽器把這一幀畫出去之後再執行（rAF 在繪製前，裡面再排 setTimeout 才會落在繪製後）
+function afterPaint(fn){ requestAnimationFrame(()=>setTimeout(fn,0)); }
 
 /* ===== 自由搭配 =====
    BGCOMBOS 只包含 wiki 有明確記載的「背卡 × 寶可夢」配對,資料不齊時使用者就找不到想要的組合。
@@ -4364,7 +4372,8 @@ function render(){
       if(q&&!hitMon(t,q))return false; return true;});
     $('#gcount').textContent=`${FILTERED.length} ${tr('combos_unit')}`;
   }
-  appendBatch(); pumpBatches(); const sc=$('#gridWrap'); sc.onscroll=pumpBatches;
+  // 首批只鋪約一屏;其餘等這一幀畫出去之後才開始補(pumpBatches 用 rAF,直接呼叫會擠進同一幀),切分頁/篩選才不會卡
+  appendBatch(FIRST_BATCH); afterPaint(pumpBatches); const sc=$('#gridWrap'); sc.onscroll=pumpBatches;
   // 打了字卻找不到東西 → 回報,拿來補 data/aliases.json。只送搜尋詞,不碰其他欄位
   if(window.trackNoResult) trackNoResult(TAB==='bg'?'bg':'mon', q, FILTERED.length);
 }
@@ -4404,9 +4413,10 @@ function preloadAhead(){
   }
   pump();
 }
-const BATCH=120;                            // 一批的格數:配合 pumpBatches 一 frame 一批,單次工作量有上限
-function appendBatch(){
-  const g=$('#grid');const end=Math.min(shown+BATCH,FILTERED.length);
+const BATCH=60;                             // 一批的格數:配合 pumpBatches 一 frame 一批,單次工作量有上限(120 在中階手機一幀要 80ms 以上)
+const FIRST_BATCH=40;                       // render() 當下同步鋪的格數:手機約一屏多,其餘下一幀起再補
+function appendBatch(n){
+  const g=$('#grid');const end=Math.min(shown+(n||BATCH),FILTERED.length);
   const frag=document.createDocumentFragment(), made=[];
   for(let i=shown;i<end;i++){
     const it=FILTERED[i];const on=inTarget(it);const d=document.createElement('div');d.className=(on?'cell added':'cell')+(it.untr?' untr':'');
