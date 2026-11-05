@@ -117,9 +117,29 @@ def display_name(bg):
     return re.sub(r"[_\s]+", " ", n).strip() or bg["image_name"]
 
 
+def small(url, sub, dst):
+    """原圖換成 fetch_assets.py 產生的縮圖（webp）。背卡原圖 512px PNG 平均 150KB，
+    263 張全載是 40MB；縮圖只有幾 KB。沒有縮圖就用原圖。"""
+    if not url:
+        return None
+    if url.startswith(sub):
+        name = os.path.splitext(os.path.basename(url))[0] + ".webp"
+        if os.path.exists(os.path.join(TL, dst, name)):
+            return dst + "/" + name
+    return url
+
+
+def bg_img(bg, size="bgexp"):
+    return small(bg.get("image_url"), "assets/bg/", "assets/" + size)
+
+
+STRIP = 6   # 卡片上直接露出的寶可夢頭像數
+
+
 def card_html(bg, mons, labels, alias):
-    """一張背卡：背景圖 + 上面看得到的寶可夢（含有沒有異色）。"""
-    rows = []
+    """一張背卡：背景圖、名稱、頭像列；完整寶可夢清單收在 <details>。
+    有 JS 時點卡片會改用對話框顯示同一份清單（filter.js），沒有 JS 時 <details> 照樣能展開。"""
+    rows, faces, names = [], [], []
     shiny_n = 0
     for p in bg["pokemon"]:
         zh, url = sprite(mons, p)
@@ -129,45 +149,46 @@ def card_html(bg, mons, labels, alias):
         # 不標出來的話會變成兩筆看起來一模一樣的東西
         vlab = variant_label(labels, p)
         disp = f"{zh}（{vlab}）" if vlab else zh
+        names.append(disp)
         tags = []
         if p.get("shiny"):
             shiny_n += 1
             tags.append('<span class="tag tag-shiny">異色</span>')
+        else:
+            tags.append('<span class="tag tag-none">尚無異色</span>')
         if p.get("dynamax"):
             tags.append('<span class="tag">極巨化</span>')
         if p.get("gmax"):
             tags.append('<span class="tag">超極巨化</span>')
         if p.get("shadow"):
             tags.append('<span class="tag">暗影</span>')
-        img = (f'<img src="{e(ASSET_PREFIX + url)}" alt="{e(disp)}" width="48" height="48" loading="lazy" decoding="async">'
-               if url else '<span class="noimg">—</span>')
+        src = small(url, "assets/img/", "assets/thumb")
+        img = (f'<img src="{e(ASSET_PREFIX + src)}" alt="{e(disp)}" width="56" height="56" loading="lazy" decoding="async">'
+               if src else '<span class="noimg">—</span>')
         rows.append(f'<li>{img}<span class="mon-name">{e(disp)}</span>'
                     f'<span class="tags">{"".join(tags)}</span></li>')
+        if len(faces) < STRIP:
+            faces.append(f'<span class="av" title="{e(disp)}"><img src="{e(ASSET_PREFIX + src)}" alt="" width="40" height="40" loading="lazy" decoding="async"></span>'
+                         if src else '<span class="noimg">—</span>')
 
-    # 隊伍主題那幾張有 120 隻以上,全部攤開會把整個 grid 列撐到六千多 px。
-    # 收進 <details> 而不是砍掉 —— 內容留在 HTML 裡,搜尋引擎和頁內搜尋都還讀得到。
-    SHOW = 8
-    if len(rows) > SHOW:
-        head, tail = rows[:SHOW], rows[SHOW:]
-        mon_html = (f'<ul class="mons">{"".join(head)}</ul>'
-                    f'<details class="more"><summary>還有 {len(tail)} 隻</summary>'
-                    f'<ul class="mons">{"".join(tail)}</ul></details>')
-    else:
-        mon_html = f'<ul class="mons">{"".join(rows)}</ul>' 
-
+    n = len(rows)
+    extra = f'<span class="plus">+{n - STRIP}</span>' if n > STRIP else ""
     kind = "特殊背卡" if bg["type"] == "special" else "地區背卡"
     title = display_name(bg)
+    noshiny = n - shiny_n
+    src = bg_img(bg)
+    shot = (f'<img src="{e(ASSET_PREFIX + src)}" alt="{e(title)}背卡" width="384" height="384" loading="lazy" decoding="async">'
+            if src else "")
     # 搜尋用的字串:名稱 + 全部寶可夢中文名,一次比對就好
-    hay = " ".join([title, kind, alias.get(bg["image_name"], "")] + re.findall(r'class="mon-name">([^<]+)<', "".join(rows)))
-    return f'''      <article class="bgcard" data-kind="{bg['type']}" data-noshiny="{1 if shiny_n < len(rows) else 0}" data-q="{e(hay.lower())}">
-        <div class="bgshot">
-          <img src="{e(ASSET_PREFIX + bg['image_url'])}" alt="{e(title)}背卡" loading="lazy" decoding="async">
-        </div>
+    hay = " ".join([title, kind, alias.get(bg["image_name"], "")] + names)
+    return f'''      <article class="bgcard" data-kind="{bg['type']}" data-noshiny="{1 if noshiny else 0}" data-q="{e(hay.lower())}">
+        <div class="bgshot">{shot}<span class="kind kind-{bg['type']}">{kind}</span></div>
         <div class="bgbody">
           <h3>{e(title)}</h3>
-          <p class="meta"><span class="kind kind-{bg['type']}">{kind}</span>
-             共 {len(rows)} 隻{f'・{len(rows) - shiny_n} 隻尚無異色' if shiny_n < len(rows) else ''}</p>
-          {mon_html}
+          <p class="meta">{n} 隻寶可夢{f'<span class="ns">・{noshiny} 隻尚無異色</span>' if noshiny else ''}</p>
+          <p class="who">{e("、".join(names))}</p>
+          <div class="strip" aria-hidden="true">{"".join(faces)}{extra}</div>
+          <details class="more"><summary>全部 {n} 隻</summary><ul class="mons">{"".join(rows)}</ul></details>
         </div>
       </article>'''
 
@@ -180,12 +201,14 @@ def card_html(bg, mons, labels, alias):
 #               交換時大家最在意哪幾張、哪些背卡的異色值得追。
 #   PROSE_NOTES 補上實際遇過的錯誤案例,或某張背卡為什麼特別難確認。
 # ---------------------------------------------------------------------------
-PROSE_TOP = """
+PROSE_LEDE = """
       <p class="lede">在 Pokémon GO 的特定活動或特定地點抓到的寶可夢，卡片背景會帶有專屬圖案，
       玩家習慣叫它「背卡」。背景會跟著這隻寶可夢一起保留，交換之後也還在 ——
       所以對收藏的人來說，同一隻寶可夢配上不同背卡，是完全不同的東西。</p>
+"""
 
-      <p>這一頁整理了目前已知的 <strong>{total} 張背卡</strong>（{loc} 張地區背卡、{spe} 張特殊背卡），
+PROSE_TOP = """
+      <p class="intro">這一頁整理了目前已知的 <strong>{total} 張背卡</strong>（{loc} 張地區背卡、{spe} 張特殊背卡），
       以及每張背卡上會出現哪些寶可夢、其中哪些有異色。
       資料跟<a href="../trade-list/">交易清單產生器</a>共用同一份，
       在這裡看到的組合都可以直接拿去做成交換清單圖片。</p>
@@ -226,7 +249,12 @@ def build():
     n_noshiny = sum(1 for b in bgs for p in b["pokemon"] if not p.get("shiny"))
 
     cards = "\n".join(card_html(b, mons, labels, alias) for b in bgs)
-    desc = (f"Pokémon GO 活動背卡完整一覽:{len(bgs)} 張背卡（{n_loc} 張地區、{n_spe} 張特殊），"
+    # 主視覺的背卡拼貼：寶可夢最多的幾張特殊背卡（活動主題，畫面最豐富），用 220px 縮圖
+    pick = sorted((b for b in bgs if b["type"] == "special" and bg_img(b, "bgthumb")),
+                  key=lambda b: -len(b["pokemon"]))[:6]
+    mosaic = "".join(f'<img src="{e(ASSET_PREFIX + bg_img(b, "bgthumb"))}" alt="" width="220" height="220" decoding="async">'
+                     for b in pick)
+    desc =(f"Pokémon GO 活動背卡完整一覽:{len(bgs)} 張背卡（{n_loc} 張地區、{n_spe} 張特殊），"
             f"列出每張背卡會出現哪些寶可夢、哪些有異色，並可直接做成交換清單。")
 
     ld = json.dumps({
@@ -262,14 +290,28 @@ def build():
 </head>
 <body>
 <header class="topbar">
-  <a class="home" href="../">← Pokémon Go 工具箱</a>
-  <a class="cta" href="../trade-list/">🔴 做交換清單</a>
+  <a class="home" href="../"><span class="logo" aria-hidden="true">🧰</span><span>Pokémon Go 工具箱</span></a>
+  <nav class="tnav" aria-label="相關工具">
+    <a href="../tradable/">不可交換清單</a>
+    <a href="../stardust/">星沙攻略</a>
+  </nav>
+  <a class="cta" href="../trade-list/">做交換清單</a>
 </header>
 
 <main>
   <article class="page">
-    <h1>Pokémon GO 活動背卡一覽</h1>
-{PROSE_TOP.format(total=len(bgs), loc=n_loc, spe=n_spe)}
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">背卡圖鑑 · 持續更新</p>
+        <h1>Pokémon GO 活動背卡一覽</h1>
+{PROSE_LEDE}
+        <div class="hero-cta">
+          <a class="btn btn-light" href="#all">瀏覽全部 {len(bgs)} 張背卡</a>
+          <a class="btn btn-ghost" href="../trade-list/">做成交換清單 →</a>
+        </div>
+      </div>
+      <div class="mosaic" aria-hidden="true">{mosaic}</div>
+    </section>
 
     <div class="stats">
       <div><b>{len(bgs)}</b><span>張背卡</span></div>
@@ -277,36 +319,57 @@ def build():
       <div><b>{n_spe}</b><span>特殊背卡</span></div>
       <div><b>{n_combo:,}</b><span>寶可夢組合</span></div>
     </div>
+{PROSE_TOP.format(total=len(bgs), loc=n_loc, spe=n_spe)}
 
-    <section class="listing">
-      <h2>全部背卡</h2>
+    <section class="listing" id="all">
+      <div class="listing-head">
+        <h2>全部背卡</h2>
+        <p class="count" id="count" aria-live="polite"></p>
+      </div>
       <div class="controls">
-        <input id="q" type="search" placeholder="搜尋背卡名稱或寶可夢…（簡體也可以）" autocomplete="off">
-        <div class="filters">
-          <button class="f on" data-f="all">全部</button>
-          <button class="f" data-f="special">特殊背卡</button>
-          <button class="f" data-f="location">地區背卡</button>
-          <button class="f" data-f="noshiny">尚無異色（{n_noshiny}）</button>
+        <label class="search">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="q" type="search" placeholder="搜尋背卡名稱或寶可夢（簡體也可以）" autocomplete="off" aria-label="搜尋背卡名稱或寶可夢">
+        </label>
+        <div class="filters" role="group" aria-label="篩選">
+          <button class="f on" data-f="all" aria-pressed="true">全部</button>
+          <button class="f" data-f="special" aria-pressed="false">特殊背卡</button>
+          <button class="f" data-f="location" aria-pressed="false">地區背卡</button>
+          <button class="f" data-f="noshiny" aria-pressed="false">尚無異色 <span>{n_noshiny}</span></button>
         </div>
       </div>
-      <p class="count" id="count"></p>
       <div class="grid" id="grid">
 {cards}
       </div>
-      <p class="empty" id="empty" hidden>找不到符合的背卡。</p>
+      <p class="empty" id="empty" hidden>找不到符合的背卡。換個關鍵字，或改用簡短的寶可夢名稱試試。</p>
     </section>
 
+    <section class="notes-sec">
 {PROSE_NOTES}
+    </section>
 
     <section class="next">
-      <h2>把想要的背卡做成交換清單</h2>
-      <p>找到想收的組合之後，可以直接到<a href="../trade-list/">交易清單產生器</a>把它們挑起來，
-      分成「我想要的」和「我能提供的」，一鍵匯出成一張圖片貼給對方 ——
-      不用一隻一隻打字說明，對方也不會看錯。</p>
-      <p><a class="bigcta" href="../trade-list/">🔴 開始製作交換清單</a></p>
+      <div>
+        <h2>把想要的背卡做成交換清單</h2>
+        <p>找到想收的組合之後，可以直接到<a href="../trade-list/">交易清單產生器</a>把它們挑起來，
+        分成「我想要的」和「我能提供的」，一鍵匯出成一張圖片貼給對方 ——
+        不用一隻一隻打字說明，對方也不會看錯。</p>
+      </div>
+      <p><a class="bigcta" href="../trade-list/">開始製作交換清單 →</a></p>
     </section>
   </article>
 </main>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+  <div class="sheet-shot"><img id="sheet-img" alt="" width="384" height="384"><button class="sheet-x" type="button" aria-label="關閉">✕</button></div>
+  <div class="sheet-body">
+    <p class="sheet-kind" id="sheet-kind"></p>
+    <h3 id="sheet-title"></h3>
+    <p class="sheet-meta" id="sheet-meta"></p>
+    <ul class="mons" id="sheet-list"></ul>
+  </div>
+  <div class="sheet-foot"><a class="bigcta" href="../trade-list/">用這張背卡做交換清單 →</a></div>
+</dialog>
 
 <footer class="foot">
   <p>資料整理自社群維基並經人工核對，非官方資料，可能有誤或未即時更新。</p>
