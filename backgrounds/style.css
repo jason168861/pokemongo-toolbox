@@ -326,7 +326,8 @@ main { max-width: 1200px; margin: 0 auto; padding: 20px 16px 72px; }
 }
 .sheet-x:hover { background: rgba(13, 10, 26, .85); }
 .sheet-body:focus { outline: none; }
-.sheet-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 20px 28px 12px; }
+/* flex-basis 用 auto 不用 0：Safari 在高度不固定的直向 flex 容器裡會把 0% 當成 0，名單整塊被壓扁看不到 */
+.sheet-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 20px 28px 12px; }
 .sheet-kind { margin: 0; font-size: .74rem; font-weight: 800; letter-spacing: .14em; color: var(--brand2); }
 .sheet-body h3 { margin: 2px 0 4px; font-size: 1.55rem; line-height: 1.25; letter-spacing: -.02em; font-weight: 850; }
 .sheet-meta { margin: 0 0 16px; color: var(--muted); font-size: .9rem; font-weight: 600; }
@@ -440,11 +441,12 @@ html.sheet-lock { overflow: hidden; }
     .mgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .mcap { padding: 8px 11px 10px; }
     .sheet {
-        width: 100%; max-width: 100%; max-height: 92vh; margin: auto 0 0; border-radius: 24px 24px 0 0;
+        width: 100%; max-width: 100%; margin: auto 0 0; border-radius: 24px 24px 0 0;
+        height: 88vh; height: 88dvh; max-height: none;   /* 底部面板固定高度：名單一定有空間（dvh 扣掉 Safari 工具列） */
     }
     .sheet[open] { animation-name: sheet-up; }
     @keyframes sheet-up { from { transform: translateY(48px); opacity: 0; } to { transform: none; opacity: 1; } }
-    .sheet-stage { height: 230px; }
+    .sheet-stage { height: 180px; }
     .sheet-body { padding: 16px 16px 8px; }
     .sheet-body h3 { font-size: 1.3rem; }
     .sheet .mons { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
