@@ -268,6 +268,9 @@ main { max-width: 1200px; margin: 0 auto; padding: 20px 16px 72px; }
 .noimg { color: #cbc6da; }
 
 /* ================= 寶可夢檢視 ================= */
+/* Safari（WebKit）裡 <button> 當 flex 容器時，子元素不會自動撐滿寬度，
+   舞台只有絕對定位的內容 → 寬高都變 0、圖全部看不到。所以明確給 width:100%。 */
+.mtile > *, .bglist button > * { width: 100%; flex: none; }
 .mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
 .mtile {
     display: flex; flex-direction: column; padding: 0; border: 0; text-align: left;
