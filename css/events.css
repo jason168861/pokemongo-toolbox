@@ -602,3 +602,21 @@
 .ev-dot.is-live { background: #16a34a; box-shadow: 0 0 0 4px rgba(22, 163, 74, .18); }
 .ev-dot.is-ended { background: #b9b4c6; }
 [data-group] .ev-hub-h { margin-top: 26px; }
+/* 多場活動對照表 */
+.ev-cmp { display: grid; gap: 8px; }
+.ev-cmp-row { display: grid; grid-template-columns: 1fr; gap: 6px; }
+.ev-cmp-row.is-head { display: none; }
+.ev-cmp-k { font-weight: 800; font-size: .9rem; margin-top: 6px; display: flex; align-items: center; gap: 8px; }
+.ev-cmp-k::before { content: ""; width: 4px; height: 16px; border-radius: 2px; background: linear-gradient(var(--brand), var(--brand2)); }
+.ev-cmp-c { position: relative; padding: 9px 12px 9px 92px; border-radius: 12px; background: #faf9fd; border: 1px solid #f0edf6; font-size: .9rem; line-height: 1.55; }
+.ev-cmp-c::before { content: attr(data-col); position: absolute; left: 12px; top: 9px; font-size: .74rem; font-weight: 800; color: var(--brand2); }
+@media (min-width: 640px) {
+  .ev-cmp-row { grid-template-columns: 120px repeat(var(--n), 1fr); align-items: stretch; }
+  .ev-cmp-row.is-head { display: grid; }
+  .ev-cmp-h { --cc: #7b5cff; text-align: center; padding: 10px 6px; border-radius: 14px; color: #fff; background: linear-gradient(135deg, var(--cc), color-mix(in srgb, var(--cc) 60%, #000)); }
+  .ev-cmp-h b { display: block; font-size: 1rem; }
+  .ev-cmp-h small { font-size: .74rem; opacity: .9; }
+  .ev-cmp-k { margin-top: 0; }
+  .ev-cmp-c { padding: 10px 12px; text-align: center; display: flex; align-items: center; justify-content: center; }
+  .ev-cmp-c::before { display: none; }
+}

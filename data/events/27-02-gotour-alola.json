@@ -1,0 +1,724 @@
+{
+  "slug": "27-02-gotour-alola",
+  "kind": "GO Tour",
+  "title": "Pokémon GO Tour 2027：阿羅拉",
+  "subtitle": "高雄・洛杉磯現場活動 ＋ 全球活動",
+  "seo_title": "Pokémon GO Tour 2027 阿羅拉 高雄攻略｜日期、地點、入場券與阿羅拉寶可夢整理",
+  "description": "Pokémon GO Tour 2027 以阿羅拉地區為主題：高雄與洛杉磯現場活動 2027/2/19～2/21，全球活動 2/27～2/28。整理目前官方公布的日期、地點與入場券時程，三場活動對照、阿羅拉寶可夢圖鑑與準備攻略，官方公布細節後持續更新。",
+  "start": "2027-02-19T00:00",
+  "end": "2027-02-28T23:59",
+  "time_label": "現場 2/19–21・全球 2/27–28",
+  "tz_note": "高雄為台灣時間、全球活動為當地時間；每日時段尚未公布",
+  "banner": "27-02-gotour-alola",
+  "accent": "#f08b3e",
+  "types": [
+    "fire",
+    "water"
+  ],
+  "featured": {
+    "dex": 722
+  },
+  "updated": "2026-11-07",
+  "lede": "Pokémon GO Tour 2027 的舞台是《太陽／月亮》與《究極之日／究極之月》的阿羅拉地區。現場活動 2027 年 2 月 19～21 日在台灣高雄與美國洛杉磯同時舉辦，隔週 2 月 27～28 日是全世界都能參加的全球活動。官方目前只公布了日期與地點，入場券會在下個季節開賣，詳細內容（登場寶可夢、會場、時段、票價）公布後這頁會持續更新。",
+  "highlights": [
+    {
+      "icon": "mon:722",
+      "label": "主題",
+      "value": "阿羅拉地區",
+      "sub": "太陽／月亮、究極之日／究極之月"
+    },
+    {
+      "icon": "cal",
+      "label": "高雄現場",
+      "value": "2/19–2/21",
+      "sub": "與洛杉磯同時舉辦"
+    },
+    {
+      "icon": "spark",
+      "label": "全球活動",
+      "value": "2/27–2/28",
+      "sub": "在哪裡都能參加"
+    },
+    {
+      "icon": "ticket",
+      "label": "入場券",
+      "value": "下個季節開賣",
+      "sub": "票價尚未公布"
+    }
+  ],
+  "sections": [
+    {
+      "type": "compare",
+      "id": "compare",
+      "title": "三場活動對照",
+      "toc": "對照",
+      "cols": [
+        {
+          "name": "高雄",
+          "sub": "台灣・現場活動",
+          "color": "#e0276c"
+        },
+        {
+          "name": "洛杉磯",
+          "sub": "美國・現場活動",
+          "color": "#2563eb"
+        },
+        {
+          "name": "全球",
+          "sub": "遊戲內活動",
+          "color": "#7b5cff"
+        }
+      ],
+      "rows": [
+        {
+          "label": "日期",
+          "cells": [
+            "2027/2/19（五）～2/21（日）",
+            "2027/2/19（五）～2/21（日）",
+            "2027/2/27（六）～2/28（日）"
+          ]
+        },
+        {
+          "label": "時間",
+          "cells": [
+            "尚未公布（台灣時間）",
+            "尚未公布（當地時間）",
+            "尚未公布（當地時間）"
+          ]
+        },
+        {
+          "label": "地點",
+          "cells": [
+            "台灣高雄（會場尚未公布）",
+            "美國加州洛杉磯（會場尚未公布）",
+            "世界各地"
+          ]
+        },
+        {
+          "label": "入場券",
+          "cells": [
+            "下個季節開賣",
+            "下個季節開賣",
+            "下個季節開賣"
+          ]
+        },
+        {
+          "label": "適合",
+          "cells": [
+            "想體驗現場氣氛、和大家一起玩",
+            "人在美西的訓練家",
+            "不方便到現場的所有人"
+          ]
+        }
+      ],
+      "note": "官方 2026/9/24 公告的內容只有日期、地點與阿羅拉主題；會場、每日時段、票價與活動內容都還沒公布。"
+    },
+    {
+      "type": "schedule",
+      "id": "timeline",
+      "title": "時程",
+      "toc": "時程",
+      "items": [
+        {
+          "date": "2026/9/24",
+          "kind": "活動",
+          "title": "官方公布 GO Tour 2027 日期與地點",
+          "text": "主題阿羅拉；現場活動在高雄、洛杉磯，另有全球活動。",
+          "on": "2026-09-24"
+        },
+        {
+          "date": "下個季節",
+          "time": "日期尚未公布",
+          "kind": "活動",
+          "title": "入場券開賣、公布活動細節",
+          "text": "現場與全球活動的入場券預計在下個季節開放購買，同時公布更多內容。"
+        },
+        {
+          "date": "2027/2/19–2/21",
+          "time": "時段尚未公布",
+          "kind": "活動",
+          "title": "現場活動：高雄、洛杉磯",
+          "on": "2027-02-19/2027-02-21"
+        },
+        {
+          "date": "2027/2/27–2/28",
+          "time": "時段尚未公布",
+          "kind": "活動",
+          "title": "全球活動",
+          "text": "為 GO Tour 2027 畫下句點，世界各地都能參加。",
+          "on": "2027-02-27/2027-02-28"
+        }
+      ]
+    },
+    {
+      "type": "features",
+      "id": "about",
+      "title": "目前知道的事",
+      "toc": "重點",
+      "items": [
+        {
+          "mon": "索爾迦雷歐",
+          "tag": "主題",
+          "title": "阿羅拉地區",
+          "text": "以《精靈寶可夢 太陽／月亮》與《究極之日／究極之月》的舞台阿羅拉為主題；登場寶可夢與特別內容官方尚未公布。"
+        },
+        {
+          "mon": "木木梟",
+          "tag": "台灣",
+          "title": "高雄現場活動",
+          "text": "2027 年 2 月 19～21 日在高雄舉辦，與洛杉磯同一週末。去年的 GO Tour：卡洛斯在台南舉辦，今年換到高雄。"
+        },
+        {
+          "mon": "露奈雅拉",
+          "tag": "全球",
+          "title": "全球活動在隔週",
+          "text": "2 月 27～28 日的全球活動是 GO Tour 2027 的壓軸，不用到現場也能參加。"
+        },
+        {
+          "tag": "尚未公布",
+          "title": "還在等官方公布的",
+          "text": "會場位置、每日時段、入場券價格與開賣日、登場寶可夢、特殊調查與加成內容。公布後這頁會更新，也可以先把頁面加入書籤。"
+        }
+      ]
+    },
+    {
+      "type": "grid",
+      "id": "alola",
+      "title": "阿羅拉寶可夢圖鑑",
+      "toc": "阿羅拉圖鑑",
+      "shiny_toggle": true,
+      "lead": "阿羅拉地區的寶可夢（#722～#809）與阿羅拉的樣子，先認識一下。按「顯示異色」可以看異色長相；這只是圖鑑，不代表活動會出現、也不代表遊戲裡已經能抓到異色。",
+      "groups": [
+        {
+          "title": "御三家",
+          "mons": [
+            {
+              "name": "木木梟",
+              "shiny": false
+            },
+            {
+              "name": "投羽梟",
+              "shiny": false
+            },
+            {
+              "name": "狙射樹梟",
+              "shiny": false
+            },
+            {
+              "name": "火斑喵",
+              "shiny": false
+            },
+            {
+              "name": "炎熱喵",
+              "shiny": false
+            },
+            {
+              "name": "熾焰咆哮虎",
+              "shiny": false
+            },
+            {
+              "name": "球球海獅",
+              "shiny": false
+            },
+            {
+              "name": "花漾海獅",
+              "shiny": false
+            },
+            {
+              "name": "西獅海壬",
+              "shiny": false
+            }
+          ]
+        },
+        {
+          "title": "阿羅拉的樣子",
+          "sub": "關都寶可夢的地區形態",
+          "mons": [
+            {
+              "name": "阿羅拉小拉達",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉拉達",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉雷丘",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉穿山鼠",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉穿山王",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉六尾",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉九尾",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉地鼠",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉三地鼠",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉喵喵",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉貓老大",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉小拳石",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉隆隆石",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉隆隆岩",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉臭泥",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉臭臭泥",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉椰蛋樹",
+              "shiny": false
+            },
+            {
+              "name": "阿羅拉嘎啦嘎啦",
+              "shiny": false
+            }
+          ]
+        },
+        {
+          "title": "守護神",
+          "sub": "卡璞",
+          "mons": [
+            {
+              "name": "卡璞・鳴鳴",
+              "shiny": false
+            },
+            {
+              "name": "卡璞・蝶蝶",
+              "shiny": false
+            },
+            {
+              "name": "卡璞・哞哞",
+              "shiny": false
+            },
+            {
+              "name": "卡璞・鰭鰭",
+              "shiny": false
+            }
+          ]
+        },
+        {
+          "title": "傳說的寶可夢",
+          "mons": [
+            {
+              "name": "科斯莫古",
+              "shiny": false
+            },
+            {
+              "name": "科斯莫姆",
+              "shiny": false
+            },
+            {
+              "name": "索爾迦雷歐",
+              "shiny": false
+            },
+            {
+              "name": "露奈雅拉",
+              "shiny": false
+            },
+            {
+              "name": "奈克洛茲瑪",
+              "shiny": false
+            },
+            {
+              "name": "屬性：空",
+              "shiny": false,
+              "note": "GO 尚無圖示"
+            },
+            {
+              "name": "銀伴戰獸",
+              "shiny": false,
+              "note": "GO 尚無圖示"
+            }
+          ]
+        },
+        {
+          "title": "究極異獸",
+          "mons": [
+            {
+              "name": "虛吾伊德",
+              "shiny": false
+            },
+            {
+              "name": "爆肌蚊",
+              "shiny": false
+            },
+            {
+              "name": "費洛美螂",
+              "shiny": false
+            },
+            {
+              "name": "電束木",
+              "shiny": false
+            },
+            {
+              "name": "鐵火輝夜",
+              "shiny": false
+            },
+            {
+              "name": "紙御劍",
+              "shiny": false
+            },
+            {
+              "name": "惡食大王",
+              "shiny": false
+            },
+            {
+              "name": "毒貝比",
+              "shiny": false
+            },
+            {
+              "name": "四顎針龍",
+              "shiny": false
+            },
+            {
+              "name": "壘磊石",
+              "shiny": false
+            },
+            {
+              "name": "砰頭小丑",
+              "shiny": false
+            }
+          ]
+        },
+        {
+          "title": "幻之寶可夢",
+          "mons": [
+            {
+              "name": "瑪機雅娜",
+              "shiny": false,
+              "note": "GO 尚無圖示"
+            },
+            {
+              "name": "瑪夏多",
+              "shiny": false
+            },
+            {
+              "name": "捷拉奧拉",
+              "shiny": false
+            },
+            {
+              "name": "美錄坦",
+              "shiny": false
+            },
+            {
+              "name": "美錄梅塔",
+              "shiny": false
+            }
+          ]
+        },
+        {
+          "title": "其他阿羅拉寶可夢",
+          "mons": [
+            {
+              "name": "小篤兒",
+              "shiny": false
+            },
+            {
+              "name": "喇叭啄鳥",
+              "shiny": false
+            },
+            {
+              "name": "銃嘴大鳥",
+              "shiny": false
+            },
+            {
+              "name": "貓鼬少",
+              "shiny": false
+            },
+            {
+              "name": "貓鼬探長",
+              "shiny": false
+            },
+            {
+              "name": "強顎雞母蟲",
+              "shiny": false
+            },
+            {
+              "name": "蟲電寶",
+              "shiny": false
+            },
+            {
+              "name": "鍬農炮蟲",
+              "shiny": false
+            },
+            {
+              "name": "好勝蟹",
+              "shiny": false
+            },
+            {
+              "name": "好勝毛蟹",
+              "shiny": false
+            },
+            {
+              "name": "花舞鳥",
+              "shiny": false,
+              "dex": 741,
+              "form": "BAILE"
+            },
+            {
+              "name": "萌虻",
+              "shiny": false
+            },
+            {
+              "name": "蝶結萌虻",
+              "shiny": false
+            },
+            {
+              "name": "岩狗狗",
+              "shiny": false
+            },
+            {
+              "name": "鬃岩狼人",
+              "shiny": false,
+              "dex": 745,
+              "form": "MIDDAY"
+            },
+            {
+              "name": "弱丁魚",
+              "shiny": false,
+              "dex": 746,
+              "form": "SOLO"
+            },
+            {
+              "name": "好壞星",
+              "shiny": false
+            },
+            {
+              "name": "超壞星",
+              "shiny": false
+            },
+            {
+              "name": "泥驢仔",
+              "shiny": false
+            },
+            {
+              "name": "重泥挽馬",
+              "shiny": false
+            },
+            {
+              "name": "滴蛛",
+              "shiny": false
+            },
+            {
+              "name": "滴蛛霸",
+              "shiny": false
+            },
+            {
+              "name": "偽螳草",
+              "shiny": false
+            },
+            {
+              "name": "蘭螳花",
+              "shiny": false
+            },
+            {
+              "name": "睡睡菇",
+              "shiny": false
+            },
+            {
+              "name": "燈罩夜菇",
+              "shiny": false
+            },
+            {
+              "name": "夜盜火蜥",
+              "shiny": false
+            },
+            {
+              "name": "焰后蜥",
+              "shiny": false
+            },
+            {
+              "name": "童偶熊",
+              "shiny": false
+            },
+            {
+              "name": "穿著熊",
+              "shiny": false
+            },
+            {
+              "name": "甜竹竹",
+              "shiny": false
+            },
+            {
+              "name": "甜舞妮",
+              "shiny": false
+            },
+            {
+              "name": "甜冷美后",
+              "shiny": false
+            },
+            {
+              "name": "花療環環",
+              "shiny": false
+            },
+            {
+              "name": "智揮猩",
+              "shiny": false
+            },
+            {
+              "name": "投擲猴",
+              "shiny": false
+            },
+            {
+              "name": "膽小蟲",
+              "shiny": false
+            },
+            {
+              "name": "具甲武者",
+              "shiny": false
+            },
+            {
+              "name": "沙丘娃",
+              "shiny": false
+            },
+            {
+              "name": "噬沙堡爺",
+              "shiny": false
+            },
+            {
+              "name": "拳海參",
+              "shiny": false
+            },
+            {
+              "name": "小隕星",
+              "shiny": false,
+              "dex": 774,
+              "form": "METEOR"
+            },
+            {
+              "name": "樹枕尾熊",
+              "shiny": false
+            },
+            {
+              "name": "爆焰龜獸",
+              "shiny": false
+            },
+            {
+              "name": "托戈德瑪爾",
+              "shiny": false
+            },
+            {
+              "name": "謎擬Ｑ",
+              "shiny": false,
+              "dex": 778,
+              "form": "DISGUISED"
+            },
+            {
+              "name": "磨牙彩皮魚",
+              "shiny": false
+            },
+            {
+              "name": "老翁龍",
+              "shiny": false
+            },
+            {
+              "name": "破破舵輪",
+              "shiny": false
+            },
+            {
+              "name": "心鱗寶",
+              "shiny": false
+            },
+            {
+              "name": "鱗甲龍",
+              "shiny": false
+            },
+            {
+              "name": "杖尾鱗甲龍",
+              "shiny": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tips": [
+    {
+      "title": "先存星星沙子與糖果",
+      "text": "GO Tour 通常會有大量新寶可夢與強化需求，活動前幾個月就開始存星沙、留神奇糖果，到時候比較不會卡關。"
+    },
+    {
+      "title": "整理寶可夢盒與道具包",
+      "text": "活動期間抓得又多又快，提前清出寶可夢盒與道具包空間，必要時擴充。"
+    },
+    {
+      "title": "要去高雄的話先規劃交通住宿",
+      "text": "會場還沒公布，但 2 月是旅遊旺季，確定要去就先留意住宿與高鐵、機票；會場公布後再挑附近的住處。"
+    },
+    {
+      "title": "準備行動電源與防曬",
+      "text": "現場活動一走就是一整天，行動電源、補水與防曬都要備好。"
+    },
+    {
+      "title": "注意入場券開賣時間",
+      "text": "入場券預計在下個季節開賣；請只透過遊戲內或官方 Web Store 購買，小心來路不明的代購。"
+    }
+  ],
+  "faq": [
+    {
+      "q": "Pokémon GO Tour 2027 什麼時候？",
+      "a": "現場活動 2027 年 2 月 19～21 日（高雄、洛杉磯），全球活動 2 月 27～28 日。"
+    },
+    {
+      "q": "高雄的會場在哪裡？",
+      "a": "官方目前只公布在高雄舉辦，會場位置尚未公布。"
+    },
+    {
+      "q": "入場券多少錢？什麼時候開賣？",
+      "a": "官方表示現場與全球活動的入場券會在下個季節開賣，價格尚未公布。"
+    },
+    {
+      "q": "不去高雄也能參加嗎？",
+      "a": "可以。2 月 27～28 日的全球活動世界各地都能參加。"
+    },
+    {
+      "q": "會出現哪些寶可夢？",
+      "a": "主題是阿羅拉地區，但登場寶可夢與活動內容官方尚未公布，公布後會更新在這頁。"
+    }
+  ],
+  "sources": [
+    {
+      "label": "Pokémon GO 官方公告：記下「Pokémon GO Tour 2027」的日期吧！",
+      "url": "https://pokemongo.com/zh_Hant/news/save-the-date-go-tour-2027"
+    },
+    {
+      "label": "Shacknews：Pokémon GO Tour: Kalos 2026 舉辦地點（參考）",
+      "url": "https://www.shacknews.com/article/146971/pokemon-go-tour-kalos-2026-first-details"
+    }
+  ],
+  "source_note": "日期、地點與主題依官方公告；去年 GO Tour：卡洛斯的舉辦地參考新聞報導。阿羅拉寶可夢名稱為官方繁中譯名。活動細節公布後本頁會更新。"
+}
