@@ -36,6 +36,10 @@ SPRITE_DIR = "Images/Pokemon - 256x256/Addressable Assets"
 SPRITE_BASE = ("https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/"
                "Images/Pokemon%20-%20256x256/Addressable%20Assets/")
 MAX_LEVEL, BEST_BUDDY_LEVEL = 50, 51
+# 只拿來判斷「遊戲裡是否已推出」與 APK 還沒有的新物種中文名（generate_pokemon_data.py 也用同一份）
+PVP_GM_URL = "https://pvpoketw.com/data/gamemaster.json"
+# 地區形態一律用「XX形態」，與既有列（卡蒂狗 (洗翠形態)）一致。帕底亞肯泰羅三種流派數值相同，只會補一列。
+REGION_ZH = {"ALOLA": "阿羅拉", "GALARIAN": "伽勒爾", "HISUIAN": "洗翠", "PALDEA": "帕底亞"}
 
 # 遊戲 APK 自己就沒有中文的形態，只能自己補。
 # 這幾個是人工翻的，跟官方用語若有出入請直接改這裡（改完重跑就會生效）。
@@ -102,6 +106,61 @@ def sprite_filenames(token=None):
     if node.get("truncated"):
         raise RuntimeError("sprite 清單被 GitHub 截斷了，需要改用分頁抓取")
     return {x["path"] for x in node["tree"] if x["path"].endswith(".icon.png")}
+
+
+def auto_new_rows(rows, by_tid, i18n, has_han, cp_at, image_url):
+    """回傳要新增的列（還沒插進 rows）。條件：pvpoketw 標為已推出、且 (dex, 攻, 防, HP) 我們還沒有。"""
+    try:
+        pvp = get_json(PVP_GM_URL)["pokemon"]
+    except Exception as e:
+        print(f"⚠ 抓不到 pvpoketw gamemaster（{e}），這次不自動補新寶可夢")
+        return []
+    released = {}
+    for p in pvp:
+        sid = p.get("speciesId", "")
+        if not p.get("released") or "_shadow" in sid or "_mega" in sid or "_primal" in sid:
+            continue
+        b = p.get("baseStats") or {}
+        released.setdefault((p.get("dex"), b.get("atk"), b.get("def"), b.get("hp")), p.get("speciesName", ""))
+
+    have = {(p["id"], p["atk"], p["def"], p["sta"]) for p in rows}
+    names = {p["name"] for p in rows} | {p["alt"] for p in rows if p.get("alt")}
+    out = []
+    for tid, rec in by_tid.items():
+        key = (rec["dex"], rec["atk"], rec["def"], rec["sta"])
+        if key in have or key not in released:
+            continue
+        base = i18n.get("pokemon_name_%04d" % rec["dex"])
+        if not has_han(base):   # APK 文字檔還沒有這隻 → 用 pvpoketw 的繁中名（「索羅亞 洗翠」取第一段）
+            base = (released[key] or "").split(" ")[0]
+        if not has_han(base) or re.search(r"[A-Za-z]", base):
+            print(f"⚠ {tid} 找不到中文名，略過")
+            continue
+        code = rec["form"] if rec["form"] not in (None, "NORMAL") else None
+        label = None
+        if code:
+            region = next((zh for k, zh in REGION_ZH.items() if k in code), None)
+            if region:
+                label = region + "形態"
+            else:
+                lab = next((i18n[k] for k in (f"form_{rec['species'].lower()}_{code.lower()}",
+                                              f"form_{code.lower()}") if has_han(i18n.get(k))), None)
+                lab = lab or FORM_ZH_OVERRIDE.get(f"{rec['species']}_{code}")
+                if not lab:
+                    print(f"⚠ {tid} 找不到形態中文名，略過")
+                    continue
+                lab = lab.strip()
+                label = lab if lab.endswith(("形態", "模式", "尺寸", "臉", "樣子")) else lab + "形態"
+        name = f"{base} ({label})" if label else base
+        if name in names:   # 撞名會讓兩隻搶同一個 ?mon= 網址
+            print(f"⚠ {tid} 的名稱「{name}」已存在，略過")
+            continue
+        have.add(key)
+        names.add(name)
+        out.append({"id": rec["dex"], "name": name, "imageUrl": image_url(rec),
+                    "cp15": cp_at(rec, 15), "cp20": cp_at(rec, 20), "cp25": cp_at(rec, 25),
+                    "atk": rec["atk"], "def": rec["def"], "sta": rec["sta"], "gm": tid})
+    return out
 
 
 def main():
@@ -261,6 +320,17 @@ def main():
         last = max((i for i, p in enumerate(rows) if p["id"] == rec["dex"]), default=len(rows) - 1)
         rows.insert(last + 1, row)
         added.append(f"{name} (cp15={row['cp15']} cp20={row['cp20']} cp25={row['cp25']})")
+
+    # 自動補「遊戲已推出、但我們還沒有」的物種與形態（新世代、新的地區形態）。
+    # GAME_MASTER 不分是否已推出（帕底亞的悖謬寶可夢早就在裡面），所以拿 pvpoketw 的 released 旗標當依據，
+    # 用 dex + 三項基礎數值比對；數值與既有列相同的形態一律不補（理由見 EXTRA_FORMS 上方的說明）。
+    # pvpoketw 抓不到時整段略過，不影響上面的更新。
+    for row in auto_new_rows(rows, by_tid, i18n, has_han, cp_at, image_url):
+        last = max((i for i, p in enumerate(rows) if p["id"] == row["id"]), default=None)
+        if last is None:   # 新物種：插在第一個 dex 比牠大的列前面
+            last = next((i for i, p in enumerate(rows) if p["id"] > row["id"]), len(rows)) - 1
+        rows.insert(last + 1, row)
+        added.append(f"{row['name']} (cp15={row['cp15']} cp20={row['cp20']} cp25={row['cp25']})")
     if added:
         print(f"\n補上遺漏的形態:{len(added)}")
         for a in added:
