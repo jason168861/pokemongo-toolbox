@@ -295,7 +295,18 @@ def main():
             p["cp%d" % L] = cp_at(rec, L)
 
         nm = zh_name(p, rec)
+        if nm is None:
+            # 物種名跟 GO 官方譯名不同（原始名單來自 PokéAPI = 本傳遊戲譯名，例如本傳「仆刀將軍」、GO「仆斬將軍」）
+            # → 只換物種名，形態標籤不動。舊名放進 alt（已有 alt 就保留最早的那個）。
+            go = i18n.get("pokemon_name_%04d" % rec["dex"])
+            base = re.sub(r"\s*[(（].*", "", p["name"]).strip()
+            if has_han(go) and not re.search(r"[A-Za-z]", go) and go != base:
+                nm = go + p["name"][len(base):]
         if nm and nm != p["name"]:
+            if p.get("alt"):
+                name_chg.append((p["name"], nm))
+                p["name"] = nm
+                nm = None
             name_chg.append((p["name"], nm))
             p["alt"] = p["name"]      # 舊名留著,讓既有的 ?mon= 連結還能用
             p["name"] = nm
