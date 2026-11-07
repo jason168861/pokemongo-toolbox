@@ -588,3 +588,17 @@
 .ev-sch .ev-tiles { grid-template-columns: repeat(auto-fill, 84px); }
 .ev-sch-t a { color: var(--brand2); text-decoration: none; }
 .ev-sch-t a:hover { text-decoration: underline; }
+.ev-kind-chip { --kc: #7b5cff; display: inline-block; font-size: .68rem; font-weight: 800; color: #fff; background: var(--kc); padding: 2px 8px; border-radius: 99px; margin-bottom: 3px; }
+/* 總覽：本月行事曆置頂條、分組圓點 */
+.ev-calbar { display: flex; align-items: center; gap: 12px; text-decoration: none; margin: 0 0 14px; padding: 12px 14px; border-radius: 18px;
+  background: linear-gradient(135deg, var(--brand), var(--brand2)); color: #fff !important; box-shadow: 0 10px 24px -12px rgba(123, 92, 255, .7); }
+.ev-calbar-ic { flex: none; width: 42px; height: 42px; border-radius: 12px; background: rgba(255, 255, 255, .18); display: grid; place-items: center; }
+.ev-calbar-ic svg { width: 24px; height: 24px; }
+.ev-calbar b { display: block; font-size: 1.02rem; }
+.ev-calbar small { display: block; font-size: .78rem; opacity: .9; line-height: 1.45; }
+.ev-calbar-go { margin-left: auto; font-size: 1.3rem; font-weight: 800; }
+.ev-hub-h { display: flex; align-items: center; gap: 8px; }
+.ev-dot { width: 10px; height: 10px; border-radius: 50%; background: #7b5cff; }
+.ev-dot.is-live { background: #16a34a; box-shadow: 0 0 0 4px rgba(22, 163, 74, .18); }
+.ev-dot.is-ended { background: #b9b4c6; }
+[data-group] .ev-hub-h { margin-top: 26px; }
