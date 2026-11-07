@@ -24,6 +24,17 @@ export function initializeRaidsApp() {
             const dateElement = document.querySelector('#raids-app .page-date');
             if (dateElement) {
                 dateElement.textContent = `最後更新：${lastUpdatedDate}`;
+                // 爬蟲失敗時資料檔不會被覆蓋（scripts/scrape_boss.py），超過 2 天沒更新就提醒頭目可能已輪替
+                const m = /(\d{4})年(\d{1,2})月(\d{1,2})日(\d{1,2})時/.exec(lastUpdatedDate || '');
+                if (m) {
+                    const updatedAt = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4] - 8);  // lastUpdated 是台灣時間
+                    if (Date.now() - updatedAt > 48 * 3600 * 1000) {
+                        const warn = document.createElement('span');
+                        warn.textContent = '（資料可能已過期，頭目以遊戲內為準）';
+                        warn.style.cssText = 'color:#b45309;font-weight:600';
+                        dateElement.appendChild(warn);
+                    }
+                }
             }
 
             // ✨ 3. 從 data.bosses 取得頭目列表

@@ -10,10 +10,11 @@ from datetime import datetime
 # locale.setlocale(locale.LC_CTYPE, 'chinese')
 # ==================== 常數與設定區塊 START ====================
 
-# 目標網站與備份來源
+# 目標網站
+# 抓不到或解析失敗時不寫檔：data/raids*.json 保留上一版，頁面會依 lastUpdated 顯示「可能已過期」，
+# CI log 會出現 ::warning:: 提醒要修爬蟲（LeekDuck 改版時最常發生）。
 RAID_URL = "https://leekduck.com/raid-bosses/"
 BASE_URL = "https://leekduck.com/"
-FALLBACK_URL = "https://raw.githubusercontent.com/bigfoott/ScrapedDuck/data/raids.min.json"
 
 # 模擬瀏覽器標頭
 HEADERS = {
@@ -207,32 +208,13 @@ def scrape_raid_data():
                 bosses.append(boss_data)
 
     except (requests.exceptions.RequestException, ValueError) as e:
-        # --- 備份抓取邏輯 (Fallback) ---
-        print(f"\n❌ 主要抓取失敗 ({e})，嘗試從備份來源下載...")
-        try:
-            response = requests.get(FALLBACK_URL, timeout=15)
-            response.raise_for_status()
-            fallback_data = response.json()
-            print("✅ 成功從備份來源下載資料！")
-            
-            # 確保從 fallback_data 正確提取 bosses 列表
-            boss_list_from_fallback = fallback_data.get('bosses', []) if isinstance(fallback_data, dict) else fallback_data
-            
-            # 備份資料也需要翻譯
-            for boss in boss_list_from_fallback:
-                if 'name' in boss:
-                    original_name = boss['name']
-                    boss['englishName'] = original_name
-                    boss['name'] = translate_name(original_name, name_translation_map, FORM_TRANSLATIONS)
-            
-            bosses = boss_list_from_fallback
+        print(f"\n❌ 抓取失敗 ({e})，保留上一版資料。")
+        print(f"::warning::scrape_boss.py 抓取失敗（{e}），團體戰頭目維持上一版，請檢查 LeekDuck 是否改版")
+        return
 
-        except requests.exceptions.RequestException as fallback_e:
-            print(f"❌ 備份來源也抓取失敗: {fallback_e}")
-            return # 雙重失敗，直接結束程式
-    
     except Exception as e:
         print(f"❌ 處理資料時發生未知錯誤: {e}")
+        print(f"::warning::scrape_boss.py 發生未知錯誤（{e}），團體戰頭目維持上一版")
         return
 
     # --- 寫入檔案 ---
@@ -260,6 +242,7 @@ def scrape_raid_data():
             print(f"❌ 寫入檔案時發生錯誤: {e}")
     else:
         print("🤷‍♂️ 沒有抓取到任何資料，不寫入檔案。")
+        print("::warning::scrape_boss.py 沒有解析到任何頭目，團體戰頭目維持上一版，請檢查 LeekDuck 是否改版")
 
 
 if __name__ == "__main__":
