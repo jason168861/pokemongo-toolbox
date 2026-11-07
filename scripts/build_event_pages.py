@@ -175,7 +175,12 @@ def mon_img(dex, shiny=False, big=False, p="../../", form=None):
     if form:
         print(f"⚠ 找不到 {key} 的圖，改用基本型")
         return mon_img(dex, shiny, big, p)
-    return f"{p}trade-list/assets/thumb/{key}.icon.webp"
+    if os.path.exists(os.path.join(ROOT, "trade-list", "assets", "thumb", f"{key}.icon.webp")):
+        return f"{p}trade-list/assets/thumb/{key}.icon.webp"
+    if shiny:                         # 沒有異色圖（多半是 GO 還沒推出異色）→ 用一般圖
+        return mon_img(dex, False, big, p)
+    print(f"⚠ pm{dex} 沒有任何圖（GO 可能還沒有這隻），改用問號圖")
+    return f"{p}img/pokemon/unknown.svg"
 
 
 def cp_link(dex, prefix="../../"):
@@ -293,6 +298,8 @@ def render_hero(ev):
         else:
             big = f"{md(s)} {s:%H:%M} – {md(e)} {e:%H:%M}"
             sub = f'{b["y"]} 年 {md(s)}（週{b["w"]}）～{md(e)}（週{be["w"]}）'
+    if ev.get("time_label"):          # 時段未公布或多場活動時，直接指定大字
+        big = ev["time_label"]
     ext = f" · 部分加成至 {x:%H:%M}" if x and not multi else ""
     tz = ev.get("tz_note", "各地皆為當地時間")
     dattr = f' data-daily="{daily}"' if daily else ""
@@ -736,10 +743,23 @@ def g_schedule(ev, s):
     return f'<ol class="ev-sch">{rows}</ol>'
 
 
-G_RENDER = {"features": g_features, "bonus_groups": g_bonus_groups, "days": g_days, "habitats": g_habitats,
+def g_compare(ev, s):
+    """多場活動對照表：cols 每欄一場（name, sub, color），rows 每列一個項目（label, cells）。手機變成每場一張卡。"""
+    cols = s["cols"]
+    head = "".join(f'<div class="ev-cmp-h" style="--cc:{c.get("color", "#7b5cff")}"><b>{esc(c["name"])}</b><small>{esc(c.get("sub", ""))}</small></div>' for c in cols)
+    body = []
+    for r in s["rows"]:
+        cells = "".join(f'<div class="ev-cmp-c" data-col="{esc(cols[i]["name"])}">{esc(v)}</div>' for i, v in enumerate(r["cells"]))
+        body.append(f'<div class="ev-cmp-row"><div class="ev-cmp-k">{esc(r["label"])}</div>{cells}</div>')
+    note = f'<p class="ev-note">{esc(s["note"])}</p>' if s.get("note") else ""
+    return (f'<div class="ev-cmp" style="--n:{len(cols)}"><div class="ev-cmp-row is-head"><div></div>{head}</div>'
+            f'{"".join(body)}</div>{note}')
+
+
+G_RENDER = {"compare": g_compare, "features": g_features, "bonus_groups": g_bonus_groups, "days": g_days, "habitats": g_habitats,
             "grid": g_grid, "moves": g_moves, "research": g_research, "ticket": g_ticket, "go_pass": g_pass,
             "schedule": g_schedule}
-G_ICON = {"features": "spark", "bonus_groups": "candy", "days": "premium-pass", "habitats": "lure", "grid": "egg",
+G_ICON = {"compare": "ticket", "features": "spark", "bonus_groups": "candy", "days": "premium-pass", "habitats": "lure", "grid": "egg",
           "moves": "move", "research": "pinap", "ticket": "ticket", "go_pass": "star-piece", "schedule": "clock"}
 
 
