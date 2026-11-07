@@ -57,6 +57,13 @@
         li.classList.toggle('is-past', !!onDay && now.getHours() > h);
       });
     }
+    // 每日行程：data-on="2026-11-18"（或 "2026-11-16/2026-11-23"）→ 今天、已過
+    [].forEach.call(document.querySelectorAll('.ev-sch > li[data-on]'), function (li) {
+      var p = li.dataset.on.split('/'), a = local(p[0] + 'T00:00'), z = local((p[1] || p[0]) + 'T23:59');
+      if (!a || !z) return;
+      li.classList.toggle('is-today', now >= a && now <= z);
+      li.classList.toggle('is-past', now > z);
+    });
     var tl = document.querySelector('[data-tl]');
     if (tl) {
       var a = local(tl.dataset.start), b = local(tl.dataset.end), mark = tl.querySelector('[data-now]');
@@ -68,6 +75,23 @@
     }
   }
   if (evs.length) { tick(); setInterval(tick, 1000); }
+
+  // 總覽：卡片依「現在」重新分到 進行中／即將登場／已結束（頁面是預先產生的，分組可能已經過時）
+  var hub = document.querySelector('[data-hub-groups]');
+  if (hub) {
+    var box = {};
+    [].forEach.call(hub.querySelectorAll('[data-group]'), function (sec) { box[sec.dataset.group] = sec; });
+    var now0 = new Date(), cards = [].slice.call(hub.querySelectorAll('.ev-card'));
+    cards.sort(function (a, b) { return local(a.dataset.start) - local(b.dataset.start); });
+    var ended = [];
+    cards.forEach(function (c) {
+      var s = local(c.dataset.start), e = local(c.dataset.end);
+      var g = now0 > e ? 'ended' : (now0 >= s ? 'live' : 'soon');
+      if (g === 'ended') ended.unshift(c); else box[g].querySelector('.ev-cards').appendChild(c);
+    });
+    ended.forEach(function (c) { box.ended.querySelector('.ev-cards').appendChild(c); });
+    Object.keys(box).forEach(function (k) { box[k].hidden = !box[k].querySelector('.ev-card'); });
+  }
 
   // 表頭是 sticky（css/main.css），目錄要貼在它下面
   var hdr = document.querySelector('.site-header-main');

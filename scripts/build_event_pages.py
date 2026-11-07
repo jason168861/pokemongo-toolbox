@@ -131,11 +131,20 @@ POGO_ICONS = os.path.join(os.path.dirname(ROOT), "pogo_assets", "Images", "Pokem
 MON_PX = 160
 
 
+def form_suffix(form):
+    """形態 → 圖檔名片段：一般形態 .fALOLA；服裝（PokeMiners 用 c 開頭）寫 "cFALL_2022" → .cFALL_2022。"""
+    if not form:
+        return ""
+    if form[0] == "c" and form[1:2].isupper():
+        return "." + form
+    return ".f" + form
+
+
 def ensure_mon_img(dex, shiny, form=None):
     """img/pokemon/pm<dex>[.s].webp：裁掉官方圖示四周的留白再縮成 160px（原圖主體只佔 6 成，放在卡片裡會顯得很小）。
     來源優先用同層 ../pogo_assets 的 256px 圖示，沒有就用 trade-list 的 128px 縮圖。已存在就不重做。"""
     s = ".s" if shiny else ""
-    key = f"pm{dex}" + (f".f{form}" if form else "") + s
+    key = f"pm{dex}" + form_suffix(form) + s
     out = os.path.join(ROOT, "img", "pokemon", f"{key}.webp")
     if os.path.exists(out):
         return True
@@ -160,7 +169,7 @@ def ensure_mon_img(dex, shiny, form=None):
 
 def mon_img(dex, shiny=False, big=False, p="../../", form=None):
     s = ".s" if shiny else ""
-    key = f"pm{dex}" + (f".f{form}" if form else "") + s
+    key = f"pm{dex}" + form_suffix(form) + s
     if ensure_mon_img(dex, shiny, form):
         return f"{p}img/pokemon/{key}.webp"
     if form:
@@ -278,6 +287,9 @@ def render_hero(ev):
         if daily:
             big = "每天 " + daily.replace("-", " – ")
             sub = f'{b["y"]} 年 {md(s)}（週{b["w"]}）～{md(e)}（週{be["w"]}）'
+        elif s.year != e.year:
+            big = f"{md(s)} {s:%H:%M} – {e.year}/{md(e)} {e:%H:%M}"
+            sub = f'{b["y"]} 年 {md(s)}（週{b["w"]}）～{be["y"]} 年 {md(e)}（週{be["w"]}）'
         else:
             big = f"{md(s)} {s:%H:%M} – {md(e)} {e:%H:%M}"
             sub = f'{b["y"]} 年 {md(s)}（週{b["w"]}）～{md(e)}（週{be["w"]}）'
@@ -496,7 +508,9 @@ def render_faq(ev):
 
 
 def render_more(ev, all_events):
-    others = [o for o in all_events if o["slug"] != ev["slug"]][:3]
+    me = parse_dt(ev["start"])   # 日期最接近的 3 場（前後都算），比較可能是同時期玩家會想看的
+    others = sorted((o for o in all_events if o["slug"] != ev["slug"]),
+                    key=lambda o: abs((parse_dt(o["start"]) - me).total_seconds()))[:3]
     cards = "".join(mini_card(o, "../") for o in others)
     tools = [("../../?tab=cp-checker-app", "IV100 CP 查詢", "看任何寶可夢的滿 IV CP"),
              ("../../research/", "田野調查任務", "現在轉補給站會拿到什麼"),
@@ -705,10 +719,18 @@ def g_pass(ev, s):
             f'{"<ul class=ev-notes>" + notes + "</ul>" if notes else ""}')
 
 
+SCH_KIND = {"聚焦時刻": "#f59e0b", "團體戰時間": "#e0276c", "極巨星期一": "#9333ea", "五星團體戰": "#2563eb",
+            "超級團體戰": "#db2777", "暗影團體戰": "#4c1d95", "傳說極巨對戰": "#be123c", "社群日": "#16a34a",
+            "活動": "#7b5cff", "限時調查": "#0d9488", "對戰聯盟": "#0369a1"}
+
+
 def g_schedule(ev, s):
+    def kind(r):
+        k = r.get("kind")
+        return f'<span class="ev-kind-chip" style="--kc:{SCH_KIND.get(k, "#7b5cff")}">{esc(k)}</span>' if k else ""
     rows = "".join(
-        f'<li><span class="ev-sch-d"><b>{esc(r["date"])}</b><small>{esc(r.get("time", ""))}</small></span>'
-        f'<span class="ev-sch-t"><b>{(chr(60) + "a href=" + chr(34) + esc(r["href"]) + chr(34) + ">" + esc(r["title"]) + " →</a>") if r.get("href") else esc(r["title"])}</b>'
+        f'<li{" data-on=" + chr(34) + r["on"] + chr(34) if r.get("on") else ""}><span class="ev-sch-d"><b>{esc(r["date"])}</b><small>{esc(r.get("time", ""))}</small></span>'
+        f'<span class="ev-sch-t">{kind(r)}<b>{(chr(60) + "a href=" + chr(34) + esc(r["href"]) + chr(34) + ">" + esc(r["title"]) + " →</a>") if r.get("href") else esc(r["title"])}</b>'
         f'{"<small>" + esc(r["text"]) + "</small>" if r.get("text") else ""}</span>'
         f'{tiles(r["mons"]) if r.get("mons") else ""}</li>' for r in s["items"])
     return f'<ol class="ev-sch">{rows}</ol>'
@@ -757,7 +779,7 @@ def header_html(prefix, events_active=True):
             <a class="tab-button" href="{p}search-filters/">搜尋篩選指令</a>
           </div>
           <div class="mega-col"><div class="mega-heading">遊戲資訊</div>
-            <a class="tab-button{act}" href="{p}events/">社群日整理</a>
+            <a class="tab-button{act}" href="{p}events/">活動整理</a>
             <a class="tab-button" href="{p}raids/">團體戰列表</a>
             <a class="tab-button" href="{p}eggs/">孵蛋列表</a>
             <a class="tab-button" href="{p}research/">田野調查任務</a>
@@ -832,6 +854,14 @@ def jsonld_event(ev):
         "organizer": {"@type": "Organization", "name": "Niantic", "url": "https://pokemongo.com/"},
         "url": url,
     }
+    if ev.get("venue"):   # 實體活動（商場等）
+        v = ev["venue"]
+        event["eventAttendanceMode"] = "https://schema.org/MixedEventAttendanceMode"
+        event["location"] = [{"@type": "Place", "name": v["name"], "address": v.get("address", v["name"])},
+                             {"@type": "VirtualLocation", "url": "https://pokemongo.com/"}]
+    tz = ev.get("utc_offset", "+08:00")
+    event["startDate"] = event["startDate"][:-6] + tz
+    event["endDate"] = event["endDate"][:-6] + tz
     crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "首頁", "item": BASE + "/"},
         {"@type": "ListItem", "position": 2, "name": "活動整理", "item": BASE + "/events/"},
@@ -903,6 +933,12 @@ def card_info(ev):
     return f, ev["title"]
 
 
+def card_mon(f, root):
+    if not f.get("dex"):
+        return ""
+    return f'<img class="ev-card-mon" src="{mon_img(f["dex"], p=root, form=f.get("form"))}" alt="" width="56" height="56" loading="lazy">'
+
+
 def card_time(ev):
     s, e = parse_dt(ev["start"]), parse_dt(ev["end"])
     if s.date() == e.date():
@@ -923,7 +959,7 @@ def mini_card(ev, rel):
     banner = f"{root}img/events/{ev['banner']}.webp"
     return f'''<a class="ev-card" href="{rel}{esc(ev["slug"])}/" style="--t1:{t1};--t2:{t2}" data-ev data-start="{ev["start"]}" data-end="{ev.get("extended_until") or ev["end"]}">
   <span class="ev-card-pic"><img src="{banner}" alt="" width="400" height="225" loading="lazy"><span class="ev-pill" data-pill>{"已結束" if e < datetime.now() else "即將開始"}</span></span>
-  <span class="ev-card-body"><img class="ev-card-mon" src="{mon_img(dex["dex"], p=root, form=dex.get("form"))}" alt="" width="56" height="56" loading="lazy">
+  <span class="ev-card-body">{card_mon(dex, root)}
     <span><small>{esc(ev["kind"])} · {b["y"]}/{b["m"]:02d}/{b["d"]:02d} 週{b["w"]}</small><b>{esc(title)}</b><em>{card_time(ev)}</em></span></span>
 </a>'''
 
@@ -931,10 +967,14 @@ def mini_card(ev, rel):
 def build_index(all_events):
     p = "../"
     now = datetime.now()
-    upcoming = sorted([e for e in all_events if parse_dt(e.get("extended_until") or e["end"]) >= now],
+    cal = next((e for e in all_events if e.get("kind") == "行事曆" and parse_dt(e["end"]) >= now), None)
+    rest = [e for e in all_events if e is not cal]
+    upcoming = sorted([e for e in rest if parse_dt(e.get("extended_until") or e["end"]) >= now],
                       key=lambda e: e["start"])
-    ended = [e for e in all_events if e not in upcoming]
-    feature = upcoming[0] if upcoming else None
+    ended = [e for e in rest if e not in upcoming]
+    # 大圖放「最近要開始或正在進行」的重點活動；GO Pass、在地活動這類長期項目不搶大圖
+    minor = ("GO Pass", "台灣在地活動", "香港在地活動")
+    feature = next((e for e in upcoming if e.get("kind") not in minor), upcoming[0] if upcoming else None)
     feat_html = ""
     if feature:
         s, e = parse_dt(feature["start"]), parse_dt(feature["end"])
@@ -950,8 +990,14 @@ def build_index(all_events):
     <span class="ev-feature-go">看完整整理 →</span>
   </span>
 </a>'''
-    nxt = "".join(mini_card(e, "./") for e in upcoming[1:])
+    live = "".join(mini_card(e, "./") for e in upcoming if e is not feature and parse_dt(e["start"]) <= now)
+    nxt = "".join(mini_card(e, "./") for e in upcoming if e is not feature and parse_dt(e["start"]) > now)
     past = "".join(mini_card(e, "./") for e in ended)
+    cal_html = ""
+    if cal:
+        cal_html = (f'<a class="ev-calbar" href="./{esc(cal["slug"])}/"><span class="ev-calbar-ic">{ICON_SVG["cal"]}</span>'
+                    f'<span><b>{esc(cal["title"])}</b><small>聚焦時刻、團體戰時間、極巨星期一、頭目輪替，整個月一頁看完</small></span>'
+                    f'<span class="ev-calbar-go">→</span></a>')
     ld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Pokémon GO 活動整理",
            "url": BASE + "/events/", "inLanguage": "zh-Hant",
            "hasPart": [{"@type": "WebPage", "name": e["title"], "url": f"{BASE}/events/{e['slug']}/"} for e in all_events]},
@@ -971,9 +1017,13 @@ def build_index(all_events):
   <h1>社群日與活動整理</h1>
   <p>每場活動的時間、加成、特別招式、任務獎勵與 IV100 CP，整理成一頁。時間都是當地時間，倒數會依你的裝置時區計算。</p>
 </header>
+{cal_html}
 {feat_html}
-{f'<h2 class="ev-hub-h">接下來的活動</h2><div class="ev-cards">{nxt}</div>' if nxt else ""}
-{f'<h2 class="ev-hub-h">已結束的活動</h2><div class="ev-cards">{past}</div>' if past else ""}
+<div data-hub-groups>
+<section data-group="live"{"" if live else " hidden"}><h2 class="ev-hub-h"><i class="ev-dot is-live"></i>進行中</h2><div class="ev-cards">{live}</div></section>
+<section data-group="soon"{"" if nxt else " hidden"}><h2 class="ev-hub-h"><i class="ev-dot"></i>即將登場</h2><div class="ev-cards">{nxt}</div></section>
+<section data-group="ended"{"" if past else " hidden"}><h2 class="ev-hub-h"><i class="ev-dot is-ended"></i>已結束</h2><div class="ev-cards">{past}</div></section>
+</div>
 </div>
 {footer_html(p)}
 {tail_html(p)}'''
@@ -1004,7 +1054,29 @@ def update_sitemap(all_events):
     write(path, xml)
 
 
+def check(path):
+    """--check：只驗證一份 JSON（名稱、圖示、圖片），渲染到記憶體，不寫任何頁面。"""
+    ev = json.loads(read(path))
+    for k in ("slug", "kind", "title", "seo_title", "description", "start", "end", "banner", "types", "featured", "updated", "lede"):
+        if k not in ev:
+            raise SystemExit(f"缺少欄位 {k}")
+    for t in ev["types"]:
+        if t not in TYPES:
+            raise SystemExit(f"未知屬性 {t}")
+    if not os.path.exists(os.path.join(ROOT, "img", "events", ev["banner"] + ".webp")):
+        print(f"⚠ 找不到橫幅 img/events/{ev['banner']}.webp")
+    global write
+    real, write = write, (lambda p, t: print(f"（check）{os.path.relpath(p, ROOT)} {len(t)//1024} KB"))
+    try:
+        build_event(ev, [ev])
+    finally:
+        write = real
+    print("OK")
+
+
 def main():
+    if len(sys.argv) > 2 and sys.argv[1] == "--check":
+        return check(sys.argv[2])
     events = []
     for fn in sorted(os.listdir(DATA_DIR)):
         if fn.endswith(".json"):
