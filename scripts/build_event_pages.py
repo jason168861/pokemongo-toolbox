@@ -61,6 +61,9 @@ ITEMS = {  # key → (名稱, 圖檔；None 表示用文字徽章)
     "candy": ("糖果", "candy"), "candy-xl": ("糖果XL", "candy-xl"),
     "star-piece": ("星星碎片", "star-piece"), "lucky-egg": ("幸運蛋", "lucky-egg"),
     "xp": ("XP", None),
+    "safari-ball": ("GO狩獵球", "safari-ball"), "raid-pass": ("團體戰入場券", "raid-pass"),
+    "remote-pass": ("遠距團體戰入場券", "remote-pass"), "max-particle": ("極巨粒子", "max-particle"),
+    "egg-10km": ("10公里蛋", "egg-10km"),
 }
 
 # 等級 → 這個等級在遊戲裡代表什麼（CP 表用）
@@ -128,15 +131,16 @@ POGO_ICONS = os.path.join(os.path.dirname(ROOT), "pogo_assets", "Images", "Pokem
 MON_PX = 160
 
 
-def ensure_mon_img(dex, shiny):
+def ensure_mon_img(dex, shiny, form=None):
     """img/pokemon/pm<dex>[.s].webp：裁掉官方圖示四周的留白再縮成 160px（原圖主體只佔 6 成，放在卡片裡會顯得很小）。
     來源優先用同層 ../pogo_assets 的 256px 圖示，沒有就用 trade-list 的 128px 縮圖。已存在就不重做。"""
     s = ".s" if shiny else ""
-    out = os.path.join(ROOT, "img", "pokemon", f"pm{dex}{s}.webp")
+    key = f"pm{dex}" + (f".f{form}" if form else "") + s
+    out = os.path.join(ROOT, "img", "pokemon", f"{key}.webp")
     if os.path.exists(out):
         return True
-    srcs = [os.path.join(POGO_ICONS, f"pm{dex}{s}.icon.png"),
-            os.path.join(ROOT, "trade-list", "assets", "thumb", f"pm{dex}{s}.icon.webp")]
+    srcs = [os.path.join(POGO_ICONS, f"{key}.icon.png"),
+            os.path.join(ROOT, "trade-list", "assets", "thumb", f"{key}.icon.webp")]
     src = next((p for p in srcs if os.path.exists(p)), None)
     if not src:
         return False
@@ -154,11 +158,15 @@ def ensure_mon_img(dex, shiny):
     return True
 
 
-def mon_img(dex, shiny=False, big=False, p="../../"):
+def mon_img(dex, shiny=False, big=False, p="../../", form=None):
     s = ".s" if shiny else ""
-    if ensure_mon_img(dex, shiny):
-        return f"{p}img/pokemon/pm{dex}{s}.webp"
-    return f"{p}trade-list/assets/thumb/pm{dex}{s}.icon.webp"
+    key = f"pm{dex}" + (f".f{form}" if form else "") + s
+    if ensure_mon_img(dex, shiny, form):
+        return f"{p}img/pokemon/{key}.webp"
+    if form:
+        print(f"⚠ 找不到 {key} 的圖，改用基本型")
+        return mon_img(dex, shiny, big, p)
+    return f"{p}trade-list/assets/thumb/{key}.icon.webp"
 
 
 def cp_link(dex, prefix="../../"):
@@ -186,10 +194,11 @@ ICON_SVG = {
 def icon(key, ev=None):
     """bonus / highlight 圖示：道具圖、主角圖或內建 SVG。"""
     if key.startswith("mon:"):
-        d = int(key[4:])
-        return f'<img src="{mon_img(d)}" alt="" width="40" height="40" loading="lazy">'
+        d, _, form = key[4:].partition(".")
+        return f'<img src="{mon_img(int(d), form=form or None)}" alt="" width="40" height="40" loading="lazy">'
     if key == "spawn" and ev:
-        return f'<img src="{mon_img(ev["featured"])}" alt="" width="40" height="40" loading="lazy">'
+        f, _ = card_info(ev)
+        return f'<img src="{mon_img(f["dex"], form=f.get("form"))}" alt="" width="40" height="40" loading="lazy">'
     if key in ICON_SVG:
         return f'<span class="ev-svg">{ICON_SVG[key]}</span>'
     item = ITEMS.get(key)
@@ -204,11 +213,12 @@ def reward_chip(ev, r, with_name=True):
     """任務獎勵：寶可夢（附 Lv15 CP）或道具 ×數量。"""
     if "mon" in r and "item" not in r:
         d = r["mon"]
+        label = r.get("label") or mon_name(ev, d)
         bg = '<span class="ev-bgtag" title="附特別背卡">背卡</span>' if r.get("bg") else ""
-        cp = f'<small>CP {cp_at(d, 15)}</small>' if with_name else ""
-        nm = f'<b>{esc(mon_name(ev, d))}</b>' if with_name else ""
+        cp = f'<small>CP {cp_at(d, r.get("level", 15))}</small>' if with_name and r.get("cp", True) else ""
+        nm = f'<b>{esc(label)}</b>' if with_name else ""
         return (f'<span class="ev-rw ev-rw-mon{" has-bg" if r.get("bg") else ""}">'
-                f'<img src="{mon_img(d)}" alt="{esc(mon_name(ev, d))}" width="44" height="44" loading="lazy">'
+                f'<img src="{mon_img(d, form=r.get("form"))}" alt="{esc(label)}" width="44" height="44" loading="lazy">'
                 f'{bg}<span class="ev-rw-t">{nm}{cp}</span></span>')
     key = r["item"]
     name, img = ITEMS[key]
@@ -227,8 +237,15 @@ def gcal_link(ev):
     s, e = parse_dt(ev["start"]), parse_dt(ev["end"])
     text = f"Pokémon GO {ev['title']}"
     details = f"{ev['title']}：時間、加成與任務整理 {BASE}/events/{ev['slug']}/"
+    recur = ""
+    if ev.get("daily") and s.date() != e.date():   # 每天固定時段 → 第一天的時段＋每日重複
+        a, b = ev["daily"].split("-")
+        n = (e.date() - s.date()).days + 1
+        e = datetime.combine(s.date(), datetime.strptime(b, "%H:%M").time())
+        s = datetime.combine(s.date(), datetime.strptime(a, "%H:%M").time())
+        recur = "&recur=" + quote(f"RRULE:FREQ=DAILY;COUNT={n}")
     return ("https://calendar.google.com/calendar/render?action=TEMPLATE"
-            f"&text={quote(text)}&dates={s:%Y%m%dT%H%M%S}/{e:%Y%m%dT%H%M%S}&details={quote(details)}")
+            f"&text={quote(text)}&dates={s:%Y%m%dT%H%M%S}/{e:%Y%m%dT%H%M%S}&details={quote(details)}{recur}")
 
 
 def date_bits(dt):
@@ -241,11 +258,32 @@ def sec(id_, title, body, ic="", extra=""):
             f'<h2 id="{id_}-h"><span class="ev-h-ic">{ic}</span>{esc(title)}{extra}</h2>{body}</section>')
 
 
+def md(dt):
+    return f"{dt.month}/{dt.day}"
+
+
 def render_hero(ev):
     s, e = parse_dt(ev["start"]), parse_dt(ev["end"])
     x = parse_dt(ev["extended_until"]) if ev.get("extended_until") else None
-    b = date_bits(s)
-    ext = f" · 部分加成至 {x:%H:%M}" if x else ""
+    b, be = date_bits(s), date_bits(e)
+    multi = s.date() != e.date()
+    daily = ev.get("daily")          # "10:00-18:00"：多天活動、每天固定時段
+    if not multi:
+        cal = f'<span>{b["m"]} 月</span><b>{b["d"]}</b><span>週{b["w"]}</span>'
+        big = f"{s:%H:%M} – {e:%H:%M}"
+        sub = f'{b["y"]} 年 {b["m"]} 月 {b["d"]} 日（週{b["w"]}）'
+    else:
+        days = f'{b["d"]}–{be["d"]}' if s.month == e.month else f'{md(s)}–{md(e)}'
+        cal = f'<span>{b["m"]} 月</span><b class="is-range">{days}</b><span>週{b["w"]}–{be["w"]}</span>'
+        if daily:
+            big = "每天 " + daily.replace("-", " – ")
+            sub = f'{b["y"]} 年 {md(s)}（週{b["w"]}）～{md(e)}（週{be["w"]}）'
+        else:
+            big = f"{md(s)} {s:%H:%M} – {md(e)} {e:%H:%M}"
+            sub = f'{b["y"]} 年 {md(s)}（週{b["w"]}）～{md(e)}（週{be["w"]}）'
+    ext = f" · 部分加成至 {x:%H:%M}" if x and not multi else ""
+    tz = ev.get("tz_note", "各地皆為當地時間")
+    dattr = f' data-daily="{daily}"' if daily else ""
     return f'''
 <header class="ev-hero">
   <div class="ev-banner">
@@ -255,13 +293,13 @@ def render_hero(ev):
   <div class="ev-hero-body">
     <p class="ev-eyebrow">{esc(ev.get("subtitle", ""))}</p>
     <h1>{esc(ev["title"])}</h1>
-    <div class="ev-when" data-ev data-start="{ev["start"]}" data-end="{ev["end"]}"{f' data-ext="{ev["extended_until"]}"' if x else ""}>
-      <div class="ev-cal" aria-hidden="true"><span>{b["m"]} 月</span><b>{b["d"]}</b><span>週{b["w"]}</span></div>
+    <div class="ev-when" data-ev data-start="{ev["start"]}" data-end="{ev["end"]}"{f' data-ext="{ev["extended_until"]}"' if x else ""}{dattr}>
+      <div class="ev-cal" aria-hidden="true">{cal}</div>
       <div class="ev-time">
-        <b>{s:%H:%M} – {e:%H:%M}</b>
-        <span>{b["y"]} 年 {b["m"]} 月 {b["d"]} 日（週{b["w"]}）· 各地皆為當地時間{ext}</span>
+        <b{' class="is-long"' if len(big) > 14 else ""}>{esc(big)}</b>
+        <span>{esc(sub)} · {esc(tz)}{ext}</span>
       </div>
-      <div class="ev-status"><span class="ev-pill" data-pill>即將開始</span><span class="ev-count" data-count>{b["m"]}/{b["d"]} {s:%H:%M} 開始</span></div>
+      <div class="ev-status"><span class="ev-pill" data-pill>即將開始</span><span class="ev-count" data-count>{md(s)} {s:%H:%M} 開始</span></div>
     </div>
     <div class="ev-actions">
       <a class="ev-btn ev-btn-main" href="{esc(gcal_link(ev))}" target="_blank" rel="noopener" data-track="calendar">{ICON_SVG["cal"]}加入 Google 日曆</a>
@@ -476,6 +514,225 @@ def render_sources(ev):
             f'<p>最後更新：{esc(ev["updated"])}</p></aside>')
 
 
+# ---------------------------------------------------------------- 通用區塊（大型活動、活動週）
+# JSON 的 "sections": [{type, id, title, ...}]，依序輸出；有 sections 就不走社群日的固定版面。
+def load_dex_names():
+    t = read(os.path.join(ROOT, "data", "pokemon_names_from_api.js"))
+    names = re.findall(r'^\s*"([^"]+)",?\s*$', t, re.M)[:1025]
+    out = {}
+    for i, n in enumerate(names, 1):
+        out.setdefault(n, i)
+    for r in CP_ROWS.values():
+        out.setdefault(r["name"], r["id"])
+    return out
+
+
+DEX_BY_NAME = load_dex_names()
+REGION_PREFIX = {"阿羅拉": "ALOLA", "伽勒爾": "GALARIAN", "洗翠": "HISUIAN", "帕底亞": "PALDEA"}
+BADGES = {"dmax": "極巨化", "gmax": "超極巨化", "mighty": "強大", "costume": "服裝", "bg": "背卡"}
+
+
+def mon_ref(m):
+    """寶可夢參照 → dict(name, dex, form, shiny, badge, note)。
+    字串寫法：官方名稱，可帶「（阿羅拉的樣子）」或「阿羅拉」前綴；其他特殊形態在 JSON 寫 dict 指定 dex/form。"""
+    if isinstance(m, str):
+        m = {"name": m}
+    m = dict(m)
+    name = m["name"]
+    if "dex" not in m:
+        base, form = name, None
+        g = re.match(r"(.+?)（(阿羅拉|伽勒爾|洗翠|帕底亞)的樣子）$", name)
+        if g:
+            base, form = g.group(1), REGION_PREFIX[g.group(2)]
+        else:
+            for zh, code in REGION_PREFIX.items():
+                if name.startswith(zh) and name[len(zh):] in DEX_BY_NAME:
+                    base, form = name[len(zh):], code
+                    break
+        if base not in DEX_BY_NAME:
+            raise SystemExit(f"找不到寶可夢「{name}」的圖鑑編號，請在 JSON 寫 dex")
+        m["dex"] = DEX_BY_NAME[base]
+        m.setdefault("form", form)
+    m.setdefault("shiny", True)
+    return m
+
+
+def mon_tile(m, size=72):
+    m = mon_ref(m)
+    badge = f'<span class="ev-badge b-{m["badge"]}">{BADGES.get(m["badge"], m["badge"])}</span>' if m.get("badge") else ""
+    shiny = f'<i class="ev-shiny-dot" title="可遇見異色">{ICON_SVG["spark"]}</i>' if m.get("shiny") else ""
+    name, sub = m["name"], m.get("note")
+    g = re.match(r"(.+?)（(.+)）$", name)
+    if g:                             # 「穿山鼠（阿羅拉的樣子）」→ 名稱一行、形態一行
+        name, sub = g.group(1), g.group(2) + (f"・{sub}" if sub else "")
+    note = f'<small>{esc(sub)}</small>' if sub else ""
+    return (f'<li class="ev-tile">{badge}<span class="ev-tile-pic">'
+            f'<img class="n" src="{mon_img(m["dex"], form=m.get("form"))}" alt="{esc(m["name"])}" width="{size}" height="{size}" loading="lazy">'
+            f'<img class="s" src="{mon_img(m["dex"], True, form=m.get("form"))}" alt="異色{esc(m["name"])}" width="{size}" height="{size}" loading="lazy">'
+            f'{shiny}</span><b>{esc(name)}</b>{note}</li>')
+
+
+def tiles(mons):
+    return f'<ul class="ev-tiles">{"".join(mon_tile(m) for m in mons)}</ul>'
+
+
+def shiny_toggle():
+    return ('<button class="ev-shiny-toggle" type="button" aria-pressed="false" data-shiny>'
+            f'{ICON_SVG["spark"]}<span>顯示異色</span></button>')
+
+
+def g_features(ev, s):
+    cards = []
+    for c in s["items"]:
+        pic = ""
+        if c.get("mon"):
+            m = mon_ref(c["mon"])
+            pic = (f'<span class="ev-feat-pic"><img src="{mon_img(m["dex"], form=m.get("form"))}" alt="{esc(m["name"])}" '
+                   f'width="120" height="120" loading="lazy"></span>')
+        tag = f'<span class="ev-feat-tag{" is-ticket" if c.get("ticket") else ""}">{esc(c["tag"])}</span>' if c.get("tag") else ""
+        cards.append(f'<article class="ev-feat{" has-pic" if pic else ""}">{pic}<div>{tag}<h3>{esc(c["title"])}</h3>'
+                     f'<p>{esc(c["text"])}</p></div></article>')
+    return f'<div class="ev-feats">{"".join(cards)}</div>'
+
+
+def g_bonus_groups(ev, s):
+    out = []
+    for g in s["groups"]:
+        items = "".join(f'<li class="ev-bonus"><span class="ev-bonus-ic">{icon(b["icon"], ev)}</span>'
+                        f'<span class="ev-bonus-t">{esc(b["text"])}</span></li>' for b in g["items"])
+        aud = g.get("audience", "all")
+        chip = '<span class="ev-aud">持票限定</span>' if aud == "ticket" else ""
+        out.append(f'<div class="ev-bgroup aud-{aud}"><div class="ev-bgroup-h">{chip}'
+                   f'<b>{esc(g["title"])}</b><span class="ev-win">{esc(g.get("window", ""))}</span></div>'
+                   f'<ul class="ev-bonuses">{items}</ul></div>')
+    return "".join(out)
+
+
+def g_days(ev, s):
+    """依日期分組的團體戰／極巨對戰／強大的寶可夢：rows × days 的表格，手機自動變成上下排列。"""
+    days = s["days"]
+    head = "".join(f'<div class="ev-day-h"><b>{esc(d["label"])}</b><small>{esc(d.get("sub", ""))}</small></div>' for d in days)
+    rows = []
+    for r in s["rows"]:
+        cells = "".join(f'<div class="ev-day-c" data-day="{esc(days[i]["label"])}">{tiles(c) if c else "<span class=ev-none>—</span>"}</div>'
+                        for i, c in enumerate(r["cells"]))
+        rows.append(f'<div class="ev-day-row"><div class="ev-day-k">{esc(r["label"])}</div>{cells}</div>')
+    note = f'<p class="ev-note">{esc(s["note"])}</p>' if s.get("note") else ""
+    return (f'<div class="ev-days" style="--n:{len(days)}"><div class="ev-day-row is-head"><div></div>{head}</div>'
+            f'{"".join(rows)}</div>{note}')
+
+
+def g_habitats(ev, s):
+    hours = s["hours"]   # [["10:00","steel"], ...]
+    keys = {h["key"]: h for h in s["groups"]}
+    strip = "".join(f'<li style="--hc:{keys[k]["color"]}" data-hour="{t}"><b>{t[:2]}</b><span>{esc(keys[k]["short"])}</span></li>'
+                    for t, k in hours)
+    groups = "".join(
+        f'<div class="ev-hab" style="--hc:{h["color"]}"><h3><i></i>{esc(h["name"])}'
+        f'<small>{esc("、".join(t for t, k in hours if k == h["key"]))} 開始</small></h3>{tiles(h["mons"])}</div>'
+        for h in s["groups"])
+    return (f'<p class="ev-note ev-note-top">{esc(s.get("intro", ""))}</p>'
+            f'<ol class="ev-hours" data-hours>{strip}</ol>{groups}')
+
+
+def g_grid(ev, s):
+    out = []
+    for g in s["groups"]:
+        h = f'<h3>{esc(g["title"])}{"<small>" + esc(g["sub"]) + "</small>" if g.get("sub") else ""}</h3>' if g.get("title") else ""
+        out.append(f'<div class="ev-grid-g">{h}{tiles(g["mons"])}</div>')
+    note = f'<p class="ev-note">{esc(s["note"])}</p>' if s.get("note") else ""
+    return "".join(out) + note
+
+
+def g_moves(ev, s):
+    rows = []
+    for mv in s["items"]:
+        m = mon_ref(mv["mon"])
+        tc = TYPES[mv["type"]]
+        rows.append(f'<li class="ev-mv"><img src="{mon_img(m["dex"], form=m.get("form"))}" alt="" width="48" height="48" loading="lazy">'
+                    f'<span class="ev-mv-n"><b>{esc(m["name"])}</b><small>{esc(mv.get("how", ""))}</small></span>'
+                    f'<span class="ev-mv-m" style="--tc:{tc[1]}"><i>{tc[0]}</i>{esc(mv["move"])}<small>{esc(mv["kind"])}</small></span></li>')
+    note = f'<p class="ev-note">{esc(s["note"])}</p>' if s.get("note") else ""
+    return f'<ul class="ev-mvs">{"".join(rows)}</ul>{note}'
+
+
+def g_research(ev, s):
+    parts = []
+    if s.get("tag") or s.get("window"):
+        tcls = "ev-feat-tag is-ticket" if s.get("ticket") else "ev-feat-tag"
+        tag = f'<span class="{tcls}">{esc(s["tag"])}</span>' if s.get("tag") else ""
+        win = f'<span class="ev-win">{esc(s["window"])}</span>' if s.get("window") else ""
+        parts.append(f'<div class="ev-rs-meta">{tag}{win}</div>')
+    if s.get("image"):
+        parts.append(f'<img class="ev-rs-img" src="../../img/events/{esc(s["image"])}.webp" alt="" width="800" height="450" loading="lazy">')
+    for p in s.get("text", []):
+        parts.append(f"<p class=\"ev-p\">{esc(p)}</p>")
+    if s.get("tasks"):
+        rows = "".join(task_row(ev, t["task"], t["rewards"] if "rewards" in t else [t["reward"]]) for t in s["tasks"])
+        parts.append(f'<ul class="ev-tasks">{rows}</ul>')
+    if s.get("rewards"):
+        parts.append(f'<div class="ev-step-done"><span>完成全部課題</span><div>{"".join(reward_chip(ev, r) for r in s["rewards"])}</div></div>')
+    if s.get("paths"):
+        cards = "".join(f'<div class="ev-path" style="--pc:{TYPES[p["type"]][1]}"><span class="ev-type" style="--tc:{TYPES[p["type"]][1]}">{TYPES[p["type"]][0]}</span>'
+                        f'<b>{esc(p["name"])}</b><p>{esc(p["text"])}</p></div>' for p in s["paths"])
+        parts.append(f'<div class="ev-paths">{cards}</div>')
+    if s.get("notes"):
+        parts.append('<ul class="ev-notes">' + "".join(f"<li>{esc(n)}</li>" for n in s["notes"]) + "</ul>")
+    return "".join(parts)
+
+
+def g_ticket(ev, s):
+    inc = "".join(f"<li>{esc(x)}</li>" for x in s["includes"])
+    btn = (f'<a class="ev-btn ev-btn-main" href="{esc(s["url"])}" target="_blank" rel="noopener">官方活動頁（購買入場券）</a>'
+           if s.get("url") else "")
+    notes = "".join(f"<li>{esc(n)}</li>" for n in s.get("notes", []))
+    return (f'<div class="ev-ticket"><div class="ev-ticket-l"><small>{esc(s.get("label", "活動入場券"))}</small><b>{esc(s["price"])}</b>'
+            f'<em>{esc(s.get("price_note", ""))}</em></div><ul class="ev-ticket-r">{inc}</ul></div>{btn}'
+            f'{"<ul class=ev-notes>" + notes + "</ul>" if notes else ""}')
+
+
+def g_pass(ev, s):
+    def col(title, cls, items, price=""):
+        li = "".join(f"<li>{esc(x)}</li>" for x in items)
+        return (f'<div class="ev-pass {cls}"><div class="ev-pass-h"><b>{esc(title)}</b>{"<span>" + esc(price) + "</span>" if price else ""}</div>'
+                f'<ul>{li}</ul></div>')
+    cols = col("GO Pass（免費）", "is-free", s["free"]) + col("GO Pass 豪華版", "is-deluxe", s["deluxe"], s.get("deluxe_price", ""))
+    ms = "".join(f'<li class="{"is-deluxe" if m.get("deluxe") else "is-free"}"><b>{esc(m["level"])}</b><span>{esc(m["text"])}</span>'
+                 f'<em>{"豪華版" if m.get("deluxe") else "免費版"}</em></li>' for m in s.get("milestones", []))
+    notes = "".join(f"<li>{esc(n)}</li>" for n in s.get("notes", []))
+    return (f'<p class="ev-note ev-note-top">{esc(s.get("intro", ""))}</p><div class="ev-passes">{cols}</div>'
+            f'{"<h3 class=ev-sub>主里程碑獎勵加碼</h3><ol class=ev-milestones>" + ms + "</ol>" if ms else ""}'
+            f'{"<ul class=ev-notes>" + notes + "</ul>" if notes else ""}')
+
+
+def g_schedule(ev, s):
+    rows = "".join(
+        f'<li><span class="ev-sch-d"><b>{esc(r["date"])}</b><small>{esc(r.get("time", ""))}</small></span>'
+        f'<span class="ev-sch-t"><b>{(chr(60) + "a href=" + chr(34) + esc(r["href"]) + chr(34) + ">" + esc(r["title"]) + " →</a>") if r.get("href") else esc(r["title"])}</b>'
+        f'{"<small>" + esc(r["text"]) + "</small>" if r.get("text") else ""}</span>'
+        f'{tiles(r["mons"]) if r.get("mons") else ""}</li>' for r in s["items"])
+    return f'<ol class="ev-sch">{rows}</ol>'
+
+
+G_RENDER = {"features": g_features, "bonus_groups": g_bonus_groups, "days": g_days, "habitats": g_habitats,
+            "grid": g_grid, "moves": g_moves, "research": g_research, "ticket": g_ticket, "go_pass": g_pass,
+            "schedule": g_schedule}
+G_ICON = {"features": "spark", "bonus_groups": "candy", "days": "premium-pass", "habitats": "lure", "grid": "egg",
+          "moves": "move", "research": "pinap", "ticket": "ticket", "go_pass": "star-piece", "schedule": "clock"}
+
+
+def render_generic(ev):
+    out = []
+    for s in ev["sections"]:
+        body = G_RENDER[s["type"]](ev, s)
+        if s.get("lead"):
+            body = f'<p class="ev-note ev-note-top">{esc(s["lead"])}</p>' + body
+        extra = shiny_toggle() if s.get("shiny_toggle") else ""
+        ic = icon(s.get("icon") or G_ICON[s["type"]], ev)
+        out.append(sec(s["id"], s["title"], body, ic, extra))
+    return "".join(out)
+
+
 # ---------------------------------------------------------------- 頁面骨架
 def header_html(prefix, events_active=True):
     """與 events/26-09-communityday/ 相同的表頭（功能選單）。prefix 是到網站根目錄的相對路徑。"""
@@ -590,18 +847,26 @@ def jsonld_event(ev):
 def build_event(ev, all_events):
     p = "../../"
     url = f"{BASE}/events/{ev['slug']}/"
-    sections = [render_bonuses(ev), render_evolution(ev), render_spawns(ev), render_field(ev),
-                render_special(ev), render_tips(ev), render_cp(ev), render_faq(ev)]
-    toc = [("bonuses", "加成"), ("evolution", "進化與招式"), ("spawns", "野生與異色")]
-    if ev.get("field_research"):
-        toc.append(("field", "田野調查"))
-    if ev.get("special_research"):
-        toc.append(("special", "特殊調查"))
-    if ev.get("tips"):
-        toc.append(("tips", "攻略"))
-    toc.append(("cp", "IV100 CP"))
-    if ev.get("faq"):
-        toc.append(("faq", "FAQ"))
+    if ev.get("sections"):
+        sections = [render_generic(ev), render_tips(ev), render_faq(ev)]
+        toc = [(x["id"], x.get("toc", x["title"])) for x in ev["sections"]]
+        if ev.get("tips"):
+            toc.append(("tips", "攻略"))
+        if ev.get("faq"):
+            toc.append(("faq", "FAQ"))
+    else:
+        sections = [render_bonuses(ev), render_evolution(ev), render_spawns(ev), render_field(ev),
+                    render_special(ev), render_tips(ev), render_cp(ev), render_faq(ev)]
+        toc = [("bonuses", "加成"), ("evolution", "進化與招式"), ("spawns", "野生與異色")]
+        if ev.get("field_research"):
+            toc.append(("field", "田野調查"))
+        if ev.get("special_research"):
+            toc.append(("special", "特殊調查"))
+        if ev.get("tips"):
+            toc.append(("tips", "攻略"))
+        toc.append(("cp", "IV100 CP"))
+        if ev.get("faq"):
+            toc.append(("faq", "FAQ"))
     accent = ev.get("accent") or TYPES[ev["types"][0]][1]
     t1 = TYPES[ev["types"][0]][1]
     t2 = TYPES[ev["types"][-1]][1]
@@ -632,9 +897,19 @@ def build_event(ev, all_events):
 
 # ---------------------------------------------------------------- 總覽
 def card_info(ev):
-    dex = ev.get("dex") or ev.get("featured")
-    title = ev["title"]
-    return dex, title
+    f = ev.get("featured") or {"dex": ev.get("dex")}
+    if not isinstance(f, dict):
+        f = {"dex": f}
+    return f, ev["title"]
+
+
+def card_time(ev):
+    s, e = parse_dt(ev["start"]), parse_dt(ev["end"])
+    if s.date() == e.date():
+        return f"{s:%H:%M}–{e:%H:%M} 當地時間"
+    if ev.get("daily"):
+        return f"{md(s)}–{md(e)} 每天 {ev['daily'].replace('-', '–')}"
+    return f"{md(s)} {s:%H:%M} – {md(e)} {e:%H:%M}"
 
 
 def mini_card(ev, rel):
@@ -648,16 +923,18 @@ def mini_card(ev, rel):
     banner = f"{root}img/events/{ev['banner']}.webp"
     return f'''<a class="ev-card" href="{rel}{esc(ev["slug"])}/" style="--t1:{t1};--t2:{t2}" data-ev data-start="{ev["start"]}" data-end="{ev.get("extended_until") or ev["end"]}">
   <span class="ev-card-pic"><img src="{banner}" alt="" width="400" height="225" loading="lazy"><span class="ev-pill" data-pill>{"已結束" if e < datetime.now() else "即將開始"}</span></span>
-  <span class="ev-card-body"><img class="ev-card-mon" src="{mon_img(dex, p=root)}" alt="" width="56" height="56" loading="lazy">
-    <span><small>{esc(ev["kind"])} · {b["y"]}/{b["m"]:02d}/{b["d"]:02d} 週{b["w"]}</small><b>{esc(title)}</b><em>{s:%H:%M}–{e:%H:%M} 當地時間</em></span></span>
+  <span class="ev-card-body"><img class="ev-card-mon" src="{mon_img(dex["dex"], p=root, form=dex.get("form"))}" alt="" width="56" height="56" loading="lazy">
+    <span><small>{esc(ev["kind"])} · {b["y"]}/{b["m"]:02d}/{b["d"]:02d} 週{b["w"]}</small><b>{esc(title)}</b><em>{card_time(ev)}</em></span></span>
 </a>'''
 
 
 def build_index(all_events):
     p = "../"
     now = datetime.now()
-    upcoming = [e for e in all_events if parse_dt(e.get("extended_until") or e["end"]) >= now]
-    feature = sorted(upcoming, key=lambda e: e["start"])[0] if upcoming else None
+    upcoming = sorted([e for e in all_events if parse_dt(e.get("extended_until") or e["end"]) >= now],
+                      key=lambda e: e["start"])
+    ended = [e for e in all_events if e not in upcoming]
+    feature = upcoming[0] if upcoming else None
     feat_html = ""
     if feature:
         s, e = parse_dt(feature["start"]), parse_dt(feature["end"])
@@ -665,15 +942,16 @@ def build_index(all_events):
         feat_html = f'''
 <a class="ev-feature" href="./{esc(feature["slug"])}/" style="--t1:{TYPES[feature["types"][0]][1]};--t2:{TYPES[feature["types"][-1]][1]};--ac:{feature.get("accent") or TYPES[feature["types"][0]][1]}">
   <span class="ev-feature-pic"><img src="../img/events/{esc(feature["banner"])}.webp" alt="{esc(feature["title"])}" width="800" height="450" fetchpriority="high"></span>
-  <span class="ev-feature-body" data-ev data-start="{feature["start"]}" data-end="{feature["end"]}"{f' data-ext="{feature["extended_until"]}"' if feature.get("extended_until") else ""}>
+  <span class="ev-feature-body" data-ev data-start="{feature["start"]}" data-end="{feature["end"]}"{f' data-ext="{feature["extended_until"]}"' if feature.get("extended_until") else ""}{f' data-daily="{feature["daily"]}"' if feature.get("daily") else ""}>
     <span class="ev-feature-k">下一場活動 · {esc(feature["kind"])}</span>
     <b>{esc(feature["title"])}</b>
-    <span class="ev-feature-d">{b["y"]} 年 {b["m"]} 月 {b["d"]} 日（週{b["w"]}）{s:%H:%M}–{e:%H:%M}</span>
+    <span class="ev-feature-d">{b["y"]} 年 {md(s)}（週{b["w"]}）· {card_time(feature)}</span>
     <span class="ev-status"><span class="ev-pill" data-pill>即將開始</span><span class="ev-count" data-count></span></span>
     <span class="ev-feature-go">看完整整理 →</span>
   </span>
 </a>'''
-    cards = "".join(mini_card(e, "./") for e in all_events if e is not feature)
+    nxt = "".join(mini_card(e, "./") for e in upcoming[1:])
+    past = "".join(mini_card(e, "./") for e in ended)
     ld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Pokémon GO 活動整理",
            "url": BASE + "/events/", "inLanguage": "zh-Hant",
            "hasPart": [{"@type": "WebPage", "name": e["title"], "url": f"{BASE}/events/{e['slug']}/"} for e in all_events]},
@@ -694,8 +972,8 @@ def build_index(all_events):
   <p>每場活動的時間、加成、特別招式、任務獎勵與 IV100 CP，整理成一頁。時間都是當地時間，倒數會依你的裝置時區計算。</p>
 </header>
 {feat_html}
-<h2 class="ev-hub-h">{"其他活動" if feature else "所有活動"}</h2>
-<div class="ev-cards">{cards}</div>
+{f'<h2 class="ev-hub-h">接下來的活動</h2><div class="ev-cards">{nxt}</div>' if nxt else ""}
+{f'<h2 class="ev-hub-h">已結束的活動</h2><div class="ev-cards">{past}</div>' if past else ""}
 </div>
 {footer_html(p)}
 {tail_html(p)}'''
