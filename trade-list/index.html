@@ -2260,7 +2260,7 @@ function effCols(){ return Math.max(Math.min(3,COLS), Math.min(COLS, maxRowItems
    卡片多一個欄位 g = 'A'…'F'(沒有 = 未分組)。版型存在每組清單自己的資料裡
    (LIST.gstyle:'' 一般 / 'pair' 配對;LIST.gdir:'lr' 左右 / 'tb' 上下)→ 跟著雲端 / 分享連結走。
    一般版型:有分組的卡加同色外框 + 角標,標題下多一行圖例;沒分組的人外觀一模一樣。
-   配對版型:每組一塊面板「我想要 ⇄ 我提供」,沒分組的集中到最後一塊「其他」。
+   配對版型:每組一塊面板「我想要 ⇄ 我提供」,沒分組的集中到最後一塊（灰色色條，不另外標字）。
    顏色 + 字母一起用 → 色弱也分得出來;黃底配白字太淡,C 用深色字。 */
 const GROUPS=[{k:'A',c:'#f2545b'},{k:'B',c:'#3b82f6'},{k:'C',c:'#f5b700',ink:'#2a1f00'},
               {k:'D',c:'#22b573'},{k:'E',c:'#9b6bff'},{k:'F',c:'#ff8a3d'}];
@@ -2706,6 +2706,7 @@ function grpPanel(x,X,Y,w,h,col,T){
   x.save(); x.strokeStyle=rgba(col,.6); x.lineWidth=3; rrPath(x,X+1.5,Y+1.5,w-3,h-3,23); x.stroke(); x.restore();
 }
 function grpChip(x,g,cx,cy){
+  if(!g.k) return;   // 沒分組的那塊不標「其他」:面板的灰色色條已足以區分
   x.save(); x.shadowColor='rgba(0,0,0,.35)'; x.shadowBlur=6;
   if(g.k){ x.beginPath(); x.arc(cx,cy,24,0,7); x.fillStyle=g.c; x.fill(); x.shadowColor='transparent';
     x.fillStyle=g.ink||'#fff'; x.font='900 26px '+DEFONT; x.textAlign='center'; x.textBaseline='middle'; x.fillText(g.k,cx,cy+1); }
@@ -2767,9 +2768,9 @@ async function drawPairTo(x,lay,T,vT,vB){
       await grpSide(x,g.h,ox+SW+ARW,py+HDR,k,p.R,T,true,T.sec2,vT,vB);
       grpSwap(x,ox+SW+ARW/2,py+HDR+S/2+(p.R.rows.length>1?(p.R.h-GAP-S)/2:0),col,'h');
     }else{
-      const cx0=ox+GAP+(g.k?30:54), hy=py+HDR/2+4;
+      const cx0=ox+GAP+30, hy=py+HDR/2+4;
       grpChip(x,g,cx0,hy);
-      grpLabel(x,tr('g_want'),cx0+(g.k?40:64),hy,T.sec1,'left',cw/2-80);
+      grpLabel(x,tr('g_want'),g.k?cx0+40:ox+GAP+6,hy,T.sec1,'left',cw/2-80);   // 沒分組 = 沒有圓標，文字靠左（與「我提供」對齊）
       if(p.note) grpNotePill(x,p.note,ox+cw-GAP,hy,g,cw/2-40,'right');
       await grpSide(x,g.w,ox,py+HDR,k,p.Rw,T,false,T.sec1,vT,vB);
       const dy=py+HDR+p.Rw.h-GAP+DIV/2+GAP/2;
