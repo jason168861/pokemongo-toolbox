@@ -23,6 +23,7 @@ data/pokemon_data_and_rankings.js 的 POKEDEX / rankings 自動生成（烈空�
 import os, re, math, html, json
 from urllib.parse import quote
 from i18n_header import site_header   # 與 /<lang>/cp/ 同一個表頭（css/site-i18n.css）
+from pvpoke_credit import credit_html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORIGIN = "https://pogokit.com"
@@ -611,7 +612,7 @@ def build(name):
         f'<span class="lrk"><b>{esc(rk)}</b> / {tot} · {sc} 分</span></div>'
         for n, w, rk, tot, sc in e["leagues"])
     league_card = (f'<section class="card"><h2>{esc(name)} 對戰聯盟表現</h2><div class="league">{league_html}</div>'
-                   f'<p class="note">{e["league_note"]}</p></section>') if league_html else ""
+                   f'<p class="note">{e["league_note"]}</p><p class="foot-t">{credit_html("zh")}</p></section>') if league_html else ""
 
     # 圖鑑相鄰 + 同屬性的熱門寶可夢（都連到有靜態頁的優先，方便爬蟲與使用者在 /cp/ 之間移動）
     prev_n, next_n = dex_neighbor(pid, -1), dex_neighbor(pid, +1)

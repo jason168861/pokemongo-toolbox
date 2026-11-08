@@ -439,7 +439,8 @@ export function initializeCpChecker() {
             + '<p class="pvp-verdict">' + verdict + '</p>'
             + extra
             + '<p class="pvp-note">排名與評分依各聯盟的 CP 上限計算，會隨遊戲平衡調整而變動；'
-            + '標「傳授」的招式需要透過招式學習器取得。</p>'
+            + '標「傳授」的招式需要透過招式學習器取得。'
+            + 'PvP 排名資料：<a href="https://pvpoke.com/" target="_blank" rel="noopener">PvPoke</a> 對戰模擬（© PvPoke LLC，<a href="https://github.com/pvpoke/pvpoke/blob/master/LICENSE" target="_blank" rel="noopener">MIT License</a>），中文名稱取自 <a href="https://pvpoketw.com/" target="_blank" rel="noopener">PvPoke 繁中版</a>。</p>'
             + '</section>';
     }
 

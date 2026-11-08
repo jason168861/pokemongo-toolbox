@@ -22,6 +22,7 @@ from cp_i18n_strings import STR
 from i18n_home_strings import HOME, MORE_PATHS
 import build_pvp_i18n as PV
 from i18n_header import site_header
+from pvpoke_credit import credit_html
 
 ROOT, ORIGIN, esc = B.ROOT, B.ORIGIN, B.esc
 LANGS = B.I18N_LANGS
@@ -387,7 +388,7 @@ def build_page(t, lang, T, pool):
         f'<span class="lrk">{S["lg_row"].format(rank="#" + str(rk), total=tot, score=sc)}</span></div>'
         for n, w, rk, tot, sc in e["leagues"])
     league_card = (f'<section class="card"><h2>{esc(S["lg_h"].format(name=name))}</h2><div class="league">{league_html}</div>'
-                   f'<p class="note">{e["league_note"]}</p></section>') if league_html else ""
+                   f'<p class="note">{e["league_note"]}</p><p class="foot-t">{credit_html(lang)}</p></section>') if league_html else ""
     # 圖鑑相鄰（只在有靜態頁的寶可夢之間移動）與同屬性熱門
     by_dex = sorted(pool, key=lambda x: (x["dex"], x["rank"]))
     i = next(k for k, x in enumerate(by_dex) if x["slug"] == slug)
