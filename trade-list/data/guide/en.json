@@ -10,6 +10,22 @@
       "html": "<ol><li><strong>Add what you want.</strong> Under <em>Looking For</em>, tap <em>✏️ Add</em> and search by name or Pokédex number. Filters narrow the grid to Shiny, Form/Costume, Dynamax, Gigantamax or Legendary Pokémon, and you can swipe sideways to select many cards at once.</li><li><strong>Add what you can offer.</strong> Do the same under <em>For Trade</em>. The <em>Backgrounds</em> tab lists Pokémon that appeared with location or event backgrounds, and <em>Custom combo</em> lets you build a combination the catalogue does not cover: any Pokémon plus a marker and a background.</li><li><strong>Fine-tune each card.</strong> Use the small buttons on a card to mark its gender or the Poké Ball it was caught in, so trade partners know exactly which one you mean.</li><li><strong>Make the image.</strong> Tap <em>🎨 Make image</em> to choose a theme, fonts, colours and how many cards go in each row, add your Trainer Code if you want, then download or share the picture.</li></ol>"
     },
     {
+      "h": "What to put on your trade list",
+      "html": "<p>A good list shows the Pokémon other players cannot easily get themselves. Popular choices:</p><ul><li><strong>Shiny Pokémon</strong>, especially ones from past events and Community Days.</li><li><strong>Regional Pokémon</strong> that can only be caught in certain parts of the world.</li><li><strong>Costumes and event forms</strong> that are no longer available.</li><li>Pokémon with <strong>location or special backgrounds</strong> — the background stays after the trade.</li><li><strong>Legendary Pokémon</strong> from raids (a Special Trade, see the costs below).</li><li><strong>Trade evolutions</strong>: a traded Kadabra, Machoke, Graveler, Haunter, Boldore, Gurdurr, Karrablast, Shelmet, Phantump or Pumpkaboo evolves for 0 Candy, so many players look for them.</li></ul><p>Shadow Pokémon and most Mythical Pokémon cannot be traded, and a Pokémon you received in a trade cannot be traded again — leave those off your list.</p>"
+    },
+    {
+      "h": "How much Stardust does a trade cost?",
+      "html": "<p>Both players pay Stardust. A normal trade of a Pokémon already in the receiver's Pokédex costs 100 at any Friendship level. <strong>Special Trades</strong> — Legendary, Mythical, Ultra Beast, Purified and shiny Pokémon, or anything the receiver has not registered — cost much more, are limited to one per day, and need at least Good Friends.</p><div class=\"tw\"><table><thead><tr><th>Friendship</th><th>Normal, registered</th><th>Normal, new</th><th>Legendary/shiny, registered</th><th>Legendary/shiny, new</th></tr></thead><tbody><tr><td data-l=\"Friendship\">Good Friends</td><td data-l=\"Normal, registered\">100</td><td data-l=\"Normal, new\">20,000</td><td data-l=\"Legendary/shiny, registered\">20,000</td><td data-l=\"Legendary/shiny, new\">1,000,000</td></tr><tr><td data-l=\"Friendship\">Great Friends</td><td data-l=\"Normal, registered\">100</td><td data-l=\"Normal, new\">16,000</td><td data-l=\"Legendary/shiny, registered\">16,000</td><td data-l=\"Legendary/shiny, new\">800,000</td></tr><tr><td data-l=\"Friendship\">Ultra Friends</td><td data-l=\"Normal, registered\">100</td><td data-l=\"Normal, new\">1,600</td><td data-l=\"Legendary/shiny, registered\">1,600</td><td data-l=\"Legendary/shiny, new\">80,000</td></tr><tr><td data-l=\"Friendship\">Best Friends</td><td data-l=\"Normal, registered\">100</td><td data-l=\"Normal, new\">800</td><td data-l=\"Legendary/shiny, registered\">800</td><td data-l=\"Legendary/shiny, new\">40,000</td></tr></tbody></table></div><p>Forever Friends get the same Special Trade discount as Best Friends (96%). Events sometimes cut trade costs further.</p>"
+    },
+    {
+      "h": "Lucky Trades, IVs and Candy",
+      "html": "<ul><li>Trading re-rolls a Pokémon's IVs. Higher Friendship raises the minimum; community data puts it at 1, 2, 3 and 5 for Good, Great, Ultra and Best Friends.</li><li>A <strong>Lucky Trade</strong> turns both Pokémon into Lucky Pokémon, with IVs of at least 12/12/12 (community data). Lucky Pokémon cost 50% less Stardust to power up.</li><li>Best Friends who keep interacting can become <strong>Lucky Friends</strong>: the next trade between them is guaranteed to be Lucky. A Lucky Trinket does this instantly for Great Friends or higher.</li><li>You get bonus Candy when the two Pokémon were caught far apart — the farther (up to about 100 km), the more Candy.</li></ul>"
+    },
+    {
+      "h": "Trade list terms: LF, FT and more",
+      "html": "<ul><li><strong>LF</strong> — Looking For: the Pokémon you want (the <em>Looking For</em> side of this list).</li><li><strong>FT</strong> — For Trade: what you can give (the <em>For Trade</em> side).</li><li><strong>Hundo</strong> — a Pokémon with perfect 15/15/15 IVs; <strong>shundo</strong> is a shiny hundo.</li><li><strong>Background</strong> — a location or special card background shown behind the Pokémon.</li></ul>"
+    },
+    {
       "h": "Share a link and keep several lists",
       "html": "<p><em>Share link</em> creates a URL that opens your list for someone else; they can import it as a new list of their own. With <em>New list</em> you can keep separate lists side by side — for example one for Community Day and one for a regional swap. Lists are saved in your browser, and signing in with Google keeps the same lists on your phone and your computer.</p>"
     },
@@ -20,11 +36,45 @@
   ],
   "faqTitle": "Frequently asked questions",
   "faq": [
-    { "q": "Is the trade list generator free?", "a": "Yes. There is nothing to buy and no sign-up; ads on the page keep the site running." },
-    { "q": "Do I need to log in?", "a": "No. Your lists are stored in this browser. Logging in with Google is optional and only syncs your lists between devices." },
-    { "q": "Which Pokémon and backgrounds are included?", "a": "Pokémon released in Pokémon GO with their forms, costumes, shiny and Dynamax/Gigantamax variants, plus the location and special backgrounds that have appeared in events. If a combination is missing, build it yourself with Custom combo." },
-    { "q": "Will my Trainer Code be shown on the image?", "a": "Only if you type it in. The Trainer Code field is optional and empty by default." },
-    { "q": "Which languages are supported?", "a": "English, Traditional Chinese, Japanese, Korean, French, German and Spanish. Pokémon names follow the language you choose, and search understands names in all of them." },
-    { "q": "Can I use it on my phone?", "a": "Yes. On iPhone and Android the finished image can be saved to your photo album or shared directly to another app." }
+    {
+      "q": "Is the trade list generator free?",
+      "a": "Yes. There is nothing to buy and no sign-up; ads on the page keep the site running."
+    },
+    {
+      "q": "Do I need to log in?",
+      "a": "No. Your lists are stored in this browser. Logging in with Google is optional and only syncs your lists between devices."
+    },
+    {
+      "q": "Which Pokémon and backgrounds are included?",
+      "a": "Pokémon released in Pokémon GO with their forms, costumes, shiny and Dynamax/Gigantamax variants, plus the location and special backgrounds that have appeared in events. If a combination is missing, build it yourself with Custom combo."
+    },
+    {
+      "q": "How much Stardust does a Special Trade cost?",
+      "a": "Between 800 and 1,000,000 Stardust depending on your Friendship level and whether the receiver already has the Pokémon. A Legendary or shiny Pokémon the receiver has not registered costs 1,000,000 at Good Friends and 40,000 at Best Friends."
+    },
+    {
+      "q": "Which Pokémon cannot be traded?",
+      "a": "Shadow Pokémon, most Mythical Pokémon, and any Pokémon you already received in a trade. The catalogue marks untradeable Pokémon with 🚫."
+    },
+    {
+      "q": "Do IVs change after a trade?",
+      "a": "Yes. IVs are re-rolled when a Pokémon is traded; a higher Friendship level and Lucky Trades raise the minimum."
+    },
+    {
+      "q": "What do LF and FT mean?",
+      "a": "LF means Looking For (Pokémon you want) and FT means For Trade (Pokémon you can give). This generator puts them in two separate sections of the image."
+    },
+    {
+      "q": "Will my Trainer Code be shown on the image?",
+      "a": "Only if you type it in. The Trainer Code field is optional and empty by default."
+    },
+    {
+      "q": "Which languages are supported?",
+      "a": "English, Traditional Chinese, Japanese, Korean, French, German and Spanish. Pokémon names follow the language you choose, and search understands names in all of them."
+    },
+    {
+      "q": "Can I use it on my phone?",
+      "a": "Yes. On iPhone and Android the finished image can be saved to your photo album or shared directly to another app."
+    }
   ]
 }
