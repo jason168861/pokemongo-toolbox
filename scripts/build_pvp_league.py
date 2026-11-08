@@ -274,7 +274,7 @@ def render_page(o):
 
 <main>
   <nav class="crumb" aria-label="導覽路徑"><a href="../../">Pokémon Go 工具箱</a> › <a href="../">PvP IV 排名</a> › {o["crumb"]}</nav>
-  <nav class="lgs" aria-label="切換聯盟">{o["tabs"]}</nav>
+  <nav class="lgs" aria-label="切換聯盟與盃賽">{o["tabs"]}</nav>
   <section class="hero"{o.get("data_attrs", "")}>
     <p class="eyebrow">{e(o["eyebrow"])}</p>
     <h1>{e(o["h1"])}</h1>
@@ -323,6 +323,14 @@ def render_page(o):
         print("  ⚠ 對不到 POKEDEX（沒有圖、連到工具首頁）：", unmapped)
 
 
+def nav_tabs(current):
+    """聯盟頁、盃賽頁、賽程總覽共用的切換列：本季賽程、三個聯盟、所有盃賽（目前這頁標 aria-current）。"""
+    from build_pvp_cups import CUPS, HUB   # 盃賽清單在 build_pvp_cups.py（它也 import 本檔，所以放函式裡）
+    items = [(HUB, "本季賽程")] + [(o["slug"], o["name"]) for o in LEAGUES] + [(c["slug"], c["short"]) for c in CUPS]
+    return "".join(f'<a href="../{s}/" aria-current="page">{e(n)}</a>' if s == current else f'<a href="../{s}/">{e(n)}</a>'
+                   for s, n in items)
+
+
 def build_league(lg, src, dex, imgs, date):
     ranks = js_array(src, f"POKEMON_RANKINGS_{lg['cp']}")
     top = ranks[:TOP]
@@ -334,9 +342,7 @@ def build_league(lg, src, dex, imgs, date):
     desc = (f"Pokémon GO {name}（{cap}）寶可夢強度排名前 {TOP} 名：目前前三名是 {top3}。"
             f"列出每隻的屬性、推薦一般與特殊招式（含限定招式標示），點一下就能查自己那隻的 PvP IV 排名。")
     faq = lg["faq"]
-    tabs = "".join(
-        (f'<a href="../{o["slug"]}/" aria-current="page">{e(o["name"])}</a>' if o is lg
-         else f'<a href="../{o["slug"]}/">{e(o["name"])}</a>') for o in LEAGUES) + '<a href="../cups/">盃賽排名</a>'
+    tabs = nav_tabs(lg["slug"])
     others = "、".join(f'<a href="../{o["slug"]}/">{e(o["name"])}排名</a>' for o in LEAGUES if o is not lg)
     ld = [
         {"@context": "https://schema.org", "@type": "Article", "headline": f"Pokémon GO {name}排名 Top {TOP}",
@@ -388,7 +394,7 @@ x.hidden=!s;if(s)n++;});c.textContent=(so?'暗影・':'')+(t?t+'屬性 ':'')+(t|
 b.forEach(function(x){x.addEventListener('click',function(){t=x.dataset.t;b.forEach(function(y){y.classList.toggle('on',y===x);});go();
 if(window.track)track('league_filter',{type:t||'all'});});});
 if(sf)sf.addEventListener('click',function(){so=!so;sf.setAttribute('aria-pressed',so);sf.classList.toggle('on',so);go();
-if(window.track)track('league_filter',{type:so?'shadow_on':'shadow_off'});});go();})();
+if(window.track)track('league_filter',{type:so?'shadow_on':'shadow_off'});});go();var a=document.querySelector('.lgs [aria-current]');if(a){var n=a.parentNode;n.scrollLeft=a.offsetLeft-n.offsetLeft-(n.clientWidth-a.offsetWidth)/2;}})();
 """
 
 CSS = r"""

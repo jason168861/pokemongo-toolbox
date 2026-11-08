@@ -116,7 +116,7 @@ main{max-width:1000px;margin:0 auto;padding:14px 16px 64px}
 
 <main>
   <nav class="crumb" aria-label="導覽路徑"><a href="../../">Pokémon Go 工具箱</a> › <a href="../">PvP IV 排名</a> › <a href="../cups/">盃賽排名</a> › <span>超級四色盃：超級聯盟版</span></nav>
-  <nav class="lgs" aria-label="切換聯盟"><a href="../cups/">本季賽程</a><a href="../great-league-mega/">超級聯盟：超級版</a><a href="../ultra-league-mega/">高級聯盟：超級版</a><a href="../master-league-mega/">大師聯盟：超級版</a><a href="../willpower-cup/">意志力盃</a><a href="../retro-cup/">復古盃</a><a href="../color-cup/" aria-current="page">超級四色盃</a><a href="../little-cup/">小小盃</a><a href="../fantasy-cup/">奇幻盃</a><a href="../halloween-cup/">超級萬聖節盃</a><a href="../laic-cup/">拉丁美洲盃</a><a href="../catch-cup/">超級速成盃</a></nav>
+  <nav class="lgs" aria-label="切換聯盟與盃賽"><a href="../cups/">本季賽程</a><a href="../great-league/">超級聯盟</a><a href="../ultra-league/">高級聯盟</a><a href="../master-league/">大師聯盟</a><a href="../great-league-mega/">超級聯盟：超級版</a><a href="../ultra-league-mega/">高級聯盟：超級版</a><a href="../master-league-mega/">大師聯盟：超級版</a><a href="../willpower-cup/">意志力盃</a><a href="../retro-cup/">復古盃</a><a href="../color-cup/" aria-current="page">超級四色盃</a><a href="../little-cup/">小小盃</a><a href="../fantasy-cup/">奇幻盃</a><a href="../halloween-cup/">超級萬聖節盃</a><a href="../laic-cup/">拉丁美洲盃</a><a href="../catch-cup/">超級速成盃</a></nav>
   <section class="hero" data-wins="[[1790712000000, 1791316800000]]">
     <p class="eyebrow">GO 對戰聯盟盃賽 · CP 1,500</p>
     <h1>超級四色盃：超級聯盟版推薦排名</h1>
@@ -268,14 +268,14 @@ x.hidden=!s;if(s)n++;});c.textContent=(so?'暗影・':'')+(t?t+'屬性 ':'')+(t|
 b.forEach(function(x){x.addEventListener('click',function(){t=x.dataset.t;b.forEach(function(y){y.classList.toggle('on',y===x);});go();
 if(window.track)track('league_filter',{type:t||'all'});});});
 if(sf)sf.addEventListener('click',function(){so=!so;sf.setAttribute('aria-pressed',so);sf.classList.toggle('on',so);go();
-if(window.track)track('league_filter',{type:so?'shadow_on':'shadow_off'});});go();})();
+if(window.track)track('league_filter',{type:so?'shadow_on':'shadow_off'});});go();var a=document.querySelector('.lgs [aria-current]');if(a){var n=a.parentNode;n.scrollLeft=a.offsetLeft-n.offsetLeft-(n.clientWidth-a.offsetWidth)/2;}})();
 
 (function(){var now=Date.now();function lab(el){var s=JSON.parse(el.getAttribute('data-wins')||'[]'),k='',t='';
 for(var i=0;i<s.length;i++){if(now>=s[i][0]&&now<s[i][1]){k='on';t='開放中';break;}if(now<s[i][0]){k='next';t='即將開放';break;}}
 if(!k){k=s.length?'past':'none';t=s.length?'本季場次已結束':'本季未開放';}el.setAttribute('data-st',k);var x=el.querySelector('.st');if(x)x.textContent=t;}
 [].forEach.call(document.querySelectorAll('[data-wins]'),lab);
 [].forEach.call(document.querySelectorAll('.wins li[data-s]'),function(li){var a=+li.getAttribute('data-s'),b=+li.getAttribute('data-e');
-li.classList.toggle('past',now>=b);li.classList.toggle('now',now>=a&&now<b);});var a=document.querySelector('.lgs [aria-current]');if(a){var n=a.parentNode;n.scrollLeft=a.offsetLeft-n.offsetLeft-(n.clientWidth-a.offsetWidth)/2;}})();
+li.classList.toggle('past',now>=b);li.classList.toggle('now',now>=a&&now<b);});})();
 </script>
 <script src="../../js/ads.js" defer></script>
 </body>
