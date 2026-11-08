@@ -1,6 +1,6 @@
 [
   {
-    "category": "Pokémon GO Wild Area 2026: Sendai • Tohoku Tasks",
+    "category": "Pokémon GO Wild Area 2026: Mexico City Tasks",
     "tasks": [
       {
         "description": "捕捉 10 隻龍屬性的寶可夢",
@@ -35,6 +35,24 @@
       {
         "description": "強化龍屬性寶可夢 5 次",
         "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "黏黏寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm704.icon.png",
+            "isShiny": false,
+            "maxCp": "418",
+            "minCp": "385"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "心鱗寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm782.icon.png",
+            "isShiny": false,
+            "maxCp": "415",
+            "minCp": "382"
+          },
           {
             "isFeatured": true,
             "type": "encounter",
@@ -169,7 +187,7 @@
     ]
   },
   {
-    "category": "Pokémon GO Wild Area 2026: Mexico City Tasks",
+    "category": "Pokémon GO Wild Area 2026: Sendai • Tohoku Tasks",
     "tasks": [
       {
         "description": "捕捉 10 隻龍屬性的寶可夢",
@@ -204,24 +222,6 @@
       {
         "description": "強化龍屬性寶可夢 5 次",
         "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "黏黏寶",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm704.icon.png",
-            "isShiny": false,
-            "maxCp": "418",
-            "minCp": "385"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "心鱗寶",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm782.icon.png",
-            "isShiny": false,
-            "maxCp": "415",
-            "minCp": "382"
-          },
           {
             "isFeatured": true,
             "type": "encounter",
