@@ -7,7 +7,7 @@
     HP = floor((耐力種族值 + 耐力 IV) × CPM[等級])
 
 資料：data/precomputed_pokemon_cp.js（refresh_cp_data.py 從 GAME_MASTER 更新的種族值）＋ build_cp_static 的 CPM。
-傳說／幻之／究極異獸與「還能進化」的標籤取自 pvpoketw gamemaster（抓不到就不標，頁面照常產生）。
+傳說／幻獸／究極異獸與「還能進化」的標籤取自 pvpoketw gamemaster（抓不到就不標，頁面照常產生）。
 
     python scripts/build_fake_hundo.py      （CI 由 build_pvp_league.py 結束時呼叫；種族值或新寶可夢一變就自動更新）
 
@@ -115,7 +115,7 @@ def build():
         lvs = "".join(
             f'<span class="lv{" y" if f[k] else ""}"><b>Lv{k}</b>{"偽百" if f[k] else "－"}'
             f'<i>HP {hp(p, k, 15)}／{hp(p, k, 14)}</i></span>' for k in LEVELS)
-        badge = ('<span class="tg lg">傳說・幻之</span>' if r["legend"] else "") + ('<span class="tg ev">未進化</span>' if r["evolves"] else "")
+        badge = ('<span class="tg lg">傳說・幻獸</span>' if r["legend"] else "") + ('<span class="tg ev">未進化</span>' if r["evolves"] else "")
         grp = " ".join(g for g, ok in (("b", f[40] and f[50]), ("s40", f[40] and not f[50]), ("s50", f[50] and not f[40]),
                                         ("l51", f[51])) if ok)
         img = thumb(p)
@@ -206,7 +206,7 @@ def build():
         <button class="t on" data-g="">全部偽百</button><button class="t" data-g="b">40、50 都偽百</button>
         <button class="t" data-g="s40">單偽 40</button><button class="t" data-g="s50">單偽 50</button><button class="t" data-g="l51">Lv51（最佳夥伴）</button>
       </div>
-      <div class="opts"><label><input type="checkbox" id="lg"> 只看傳說・幻之</label><label><input type="checkbox" id="ev"> 顯示未進化型態</label></div>
+      <div class="opts"><label><input type="checkbox" id="lg"> 只看傳說・幻獸</label><label><input type="checkbox" id="ev"> 顯示未進化型態</label></div>
       <p class="cnt" id="cnt" aria-live="polite"></p>
       <p class="none" id="none" hidden></p>
     </div>
