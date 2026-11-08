@@ -608,13 +608,13 @@
   #cloudMsg{display:none}
   /* ===== 表頭(.tlHdr)=====
      一張卡片,寬度和下方 .wrap 的內容對齊;顏色全部取自主題變數(6 種風格都適用)。
-     <1000px 三列:品牌(☕ 疊在右上)／ 工具箱｜其他工具｜登入 ／ 語言｜風格(各半)
-     ≥1000px 兩列:品牌｜☕｜登入 ／ 工具箱｜其他工具｜語言｜風格
+     <1000px 三列:品牌(☕ 疊在右上)／ 工具箱選單｜登入 ／ 語言｜風格(各半)
+     ≥1000px 兩列:品牌｜☕｜登入 ／ 工具箱選單｜語言｜風格
      (.wrap 在 1000px 以下最寬只有 600px,兩列版放不下,所以斷點跟著 .wrap 走)
      下拉 = 自訂外觀(.hSel)+ 透明的原生 select 蓋在上面:點下去仍是系統選單;select 維持 16px(iOS 低於 16px 會自動放大) */
   .tlHdr{--h:40px;position:relative;display:grid;align-items:center;gap:10px;
     grid-template-columns:var(--h) minmax(0,1fr) auto;
-    grid-template-areas:"brand brand brand" "rule rule rule" "home tools auth" "prefs prefs prefs";
+    grid-template-areas:"brand brand brand" "rule rule rule" "tools tools auth" "prefs prefs prefs";
     width:calc(100% - 32px);max-width:568px;margin:14px auto 0;padding:14px;
     border:1px solid var(--line);border-radius:20px;overflow:hidden;
     background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 12%,var(--card)),color-mix(in srgb,var(--acc2) 10%,var(--card)) 75%);
@@ -634,15 +634,13 @@
   .hBtn:hover,.hSel:hover,.tlHdr #authBtn:hover{border-color:var(--acc2);box-shadow:0 4px 14px -6px color-mix(in srgb,var(--acc2) 70%,transparent)}
   .hBtn:focus-visible,.hSel:focus-within,.tlHdr #authBtn:focus-visible{outline:2px solid var(--acc2);outline-offset:1px}
   .hIco{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-  .hHome{grid-area:home;justify-content:center;padding:0}
-  .hHome .hIco{color:var(--acc)}
-  #homeTxt{display:none}
   .hSel{position:relative;padding:0 28px 0 11px;cursor:pointer}
   .hSel .hIco{color:var(--acc2)}
   .hSel::after{content:"";position:absolute;right:12px;top:50%;width:6px;height:6px;margin-top:-5px;border:solid var(--mut);border-width:0 2px 2px 0;transform:rotate(45deg);pointer-events:none}
   .tlHdr .hSel select{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;cursor:pointer;font-size:16px;-webkit-appearance:none;appearance:none}
   .hTxt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .hTools{grid-area:tools}
+  .hTools .hIco{color:var(--acc)}
   .hSw{flex:none;width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line)}
   .authBox{grid-area:auth;display:flex;min-width:0}
   .tlHdr #authBtn{padding:0 15px;border-radius:999px;font-family:inherit;font-size:13.5px;cursor:pointer}
@@ -657,18 +655,15 @@
     .tlHdr{gap:8px;padding:12px}
     .hRule{margin:0 -12px}
     .tlHdr h1{font-size:16px}
-    .hTools .hIco{display:none}
     .tlHdr #authBtn{padding:0 12px}
     .hPrefs{gap:8px}
   }
   @media(min-width:1000px){
     .tlHdr{max-width:888px;grid-template-columns:auto minmax(0,1fr) auto auto;
-      grid-template-areas:"brand brand sup auth" "rule rule rule rule" "home tools prefs prefs";padding:16px 18px;gap:12px}
+      grid-template-areas:"brand brand sup auth" "rule rule rule rule" "tools tools prefs prefs";padding:16px 18px;gap:12px}
     .hRule{margin:0 -18px}
     .hBrand{padding-right:0}
     .tlHdr h1{font-size:19px}
-    .hHome{padding:0 14px}
-    #homeTxt{display:inline}
     .tlSupport{grid-area:sup;width:auto;padding:0 14px;font-weight:700}
     #tlSupportTxt{display:inline}
     .hPrefs{grid-template-columns:repeat(2,minmax(130px,auto));gap:12px}
@@ -1022,7 +1017,7 @@
   </div>
 </noscript>
 <!-- 表頭:一張卡片,寬度與下方 .wrap 內容對齊。
-     版面(grid-template-areas)手機三列:品牌+☕ / 工具箱+其他工具+登入 / 語言+風格;寬螢幕兩列。
+     版面(grid-template-areas)手機三列:品牌+☕ / 工具箱選單+登入 / 語言+風格;寬螢幕兩列。
      三個下拉都是「自訂外觀 + 透明的原生 select 疊在上面」:點下去仍是系統原生選單,外觀則跨平台一致 -->
 <header class="tlHdr">
   <div class="hBrand">
@@ -1031,12 +1026,13 @@
   </div>
   <a class="tlSupport hBtn" id="tlSupport" href="https://buymeacoffee.com/pogokit" target="_blank" rel="noopener" aria-label="請我喝杯咖啡"><svg class="hIco" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h12v4.5A5.5 5.5 0 0 1 10.5 19h-1A5.5 5.5 0 0 1 4 13.5z"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5v2.5M12 3.5v2.5"/></svg><span id="tlSupportTxt">請我喝杯咖啡</span></a>
   <i class="hRule" aria-hidden="true"></i>
-  <a class="hBtn hHome" href="../" id="homeLink"><svg class="hIco" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><span id="homeTxt">工具箱</span></a>
-  <!-- value 直接放相對網址：這些工具已各自拆成獨立目錄，
+  <!-- 「工具箱」選單:第一項回工具箱首頁,其餘是各工具(原本的 🧰 按鈕與「前往其他工具」合併成這一個)。
+       value 直接放相對網址：這些工具已各自拆成獨立目錄，
        只有 cp-checker 還留在首頁走 ?tab=。地圖暫時下架，先不列。 -->
-  <label class="hSel hTools"><svg class="hIco" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.2 8.8-1.9 4.5-4.5 1.9 1.9-4.5z"/></svg><span class="hTxt" id="toolTxt">前往其他工具…</span>
+  <label class="hSel hTools"><svg class="hIco" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><span class="hTxt" id="toolTxt">工具箱</span>
   <select id="toolJump" onchange="if(this.value){location.href=this.value}">
-    <option value="">🔀 前往其他工具…</option>
+    <option value="">工具箱</option>
+    <option value="../" id="toolHome">🏠 工具箱首頁</option>
     <option value="../?tab=cp-checker-app">IV100 CP 查詢</option>
     <option value="../pvp-ranker/">PvP IV 排名查詢</option>
     <option value="../id-selector/">寶可夢編號篩選器</option>
@@ -1924,15 +1920,17 @@ function applyFootI18n(){
 }
 /* ===== 表頭:「前往其他工具」提示字 + 下拉選單的無障礙名稱(手機版不顯示 🌐 /「風格」字樣)=====
    選單裡的工具名稱維持中文:連過去的頁面目前只有繁中 */
-const HDR_I18N={
-  zh:['前往其他工具…','語言'], en:['Other tools…','Language'], ja:['ほかのツール…','言語'], ko:['다른 도구…','언어'],
-  fr:['Autres outils…','Langue'], de:['Weitere Tools…','Sprache'], es:['Otras herramientas…','Idioma']
+const HDR_I18N={   // [工具箱選單的無障礙名稱, 語言, 「回首頁」選項]
+  zh:['前往其他工具','語言','工具箱首頁'], en:['Go to another tool','Language','Toolbox home'],
+  ja:['ほかのツールへ','言語','ツールボックスのトップ'], ko:['다른 도구로 이동','언어','도구상자 홈'],
+  fr:['Aller à un autre outil','Langue','Accueil de la boîte à outils'], de:['Zu einem anderen Tool','Sprache','Werkzeugkasten-Startseite'],
+  es:['Ir a otra herramienta','Idioma','Inicio de Herramientas']
 };
 function applyHdrI18n(){
   const h=HDR_I18N[LANG]||HDR_I18N.en, tj=$('#toolJump');
-  if(tj&&tj.options[0]){ tj.options[0].textContent=h[0]; tj.setAttribute('aria-label',h[0]); }
-  if($('#toolTxt')) $('#toolTxt').textContent=h[0];
-  if($('#homeLink')) $('#homeLink').setAttribute('aria-label',tr('home'));   // 手機只顯示圖示
+  if(tj&&tj.options[0]){ tj.options[0].textContent=tr('home'); tj.setAttribute('aria-label',h[0]); }
+  if($('#toolHome')) $('#toolHome').textContent='🏠 '+h[2];
+  if($('#toolTxt')) $('#toolTxt').textContent=tr('home');
   if($('#langSel')) $('#langSel').setAttribute('aria-label',h[1]);
   if($('#themeSel')) $('#themeSel').setAttribute('aria-label',tr('theme'));
   syncHdrFaces();
@@ -2018,7 +2016,7 @@ function applyStaticI18n(){
   $('#txtAdd').textContent='＋ '+T('addtext'); $('#edStyle').textContent='🅰 '+T('t_style'); $('#edColorLabel').textContent=T('t_color');
   $('#q').placeholder=TAB==='mon'?T('search_mon'):T('search_bg');
   $('#stat').textContent=Object.keys(POKE).length+' '+T('mons');
-  $('#homeTxt').textContent=T('home'); updateAuthUI(AUTHUSER);
+  updateAuthUI(AUTHUSER);
   $('#setsTitle').textContent=T('sets_title'); $('#setsHint').textContent=T('set_hint');
   $('#setAdd').textContent='＋ '+T('set_add'); $('#setRename').textContent='✎ '+T('set_rename');
   $('#setDup').textContent='⧉ '+T('set_dup'); $('#setDel').textContent='🗑 '+T('set_del');
@@ -2113,6 +2111,8 @@ async function boot(){
   $('#trainerCode').oninput=()=>{ const el=$('#trainerCode'); const d=el.value.replace(/\D/g,'').slice(0,12);
     el.value=d.replace(/(\d{4})(?=\d)/g,'$1 '); LIST.trainer=el.value; scheduleBase(); persist(); };
   $('#themeSel').onchange=()=>applyTheme($('#themeSel').value);
+  // 從別的工具按「上一頁」回來(bfcache)時,工具箱選單會停在剛選的那一項;重設回第一項,再選同一項才會觸發 change
+  addEventListener('pageshow',()=>{ const t=$('#toolJump'); if(t) t.selectedIndex=0; });
   // IG 風格文字編輯器的按鈕
   $('#enterEdit').onclick=()=>setMode('edit');
   $('#edDone').onclick=()=>{ if(document.body.classList.contains('editmode')) history.back(); else setMode('select'); };
