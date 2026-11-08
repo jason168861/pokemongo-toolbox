@@ -193,7 +193,7 @@ for(var i=0;i<s.length;i++){if(now>=s[i][0]&&now<s[i][1]){k='on';t='開放中';b
 if(!k){k=s.length?'past':'none';t=s.length?'本季場次已結束':'本季未開放';}el.setAttribute('data-st',k);var x=el.querySelector('.st');if(x)x.textContent=t;}
 [].forEach.call(document.querySelectorAll('[data-wins]'),lab);
 [].forEach.call(document.querySelectorAll('.wins li[data-s]'),function(li){var a=+li.getAttribute('data-s'),b=+li.getAttribute('data-e');
-li.classList.toggle('past',now>=b);li.classList.toggle('now',now>=a&&now<b);});var a=document.querySelector('.lgs [aria-current]');if(a){var n=a.parentNode;n.scrollLeft=a.offsetLeft-n.offsetLeft-(n.clientWidth-a.offsetWidth)/2;}})();
+li.classList.toggle('past',now>=b);li.classList.toggle('now',now>=a&&now<b);});})();
 """
 
 EXTRA_CSS = r"""
@@ -309,9 +309,7 @@ def build_cup(c, ranks, date, ws, dex, imgs):
     ]
     if c.get("note"):
         faq.insert(3, ("這份排名跟官方規則完全一樣嗎？", c["note"]))
-    tabs = f'<a href="../{HUB}/">本季賽程</a>' + "".join(
-        (f'<a href="../{o["slug"]}/" aria-current="page">{e(o["short"])}</a>' if o is c else f'<a href="../{o["slug"]}/">{e(o["short"])}</a>')
-        for o in CUPS)
+    tabs = L.nav_tabs(slug)
     ld = [
         {"@context": "https://schema.org", "@type": "Article", "headline": f"Pokémon GO {name}推薦排名 Top {n}",
          "description": desc, "inLanguage": "zh-Hant", "dateModified": date, "mainEntityOfPage": url},
@@ -341,7 +339,7 @@ def build_cup(c, ranks, date, ws, dex, imgs):
     })
 
 
-def build_hub(data, dates, ws, dex, imgs):
+def build_hub(data, dates, ws, dex, imgs, leagues):
     url = cup_url(HUB)
     first, last = ws[0]["start"], ws[-1]["end"]
     sched = "".join(
@@ -350,8 +348,11 @@ def build_hub(data, dates, ws, dex, imgs):
         f'{"<span class=x4>星沙×4</span>" if w["x4"] else ""}<span class="nowtag">開放中</span></span>'
         f'<span class="pills">{"".join(item_link(k) for k in w["items"])}</span></li>' for w in ws)
     cards = []
-    for c in CUPS:
-        ranks = data.get(c["slug"])
+    plain = [{"slug": PLAIN[k][1], "key": k, "name": PLAIN[k][0], "cp": cp, "rules": [rule]}
+             for k, cp, rule in (("great", 1500, "寶可夢 CP 必須在 1,500 以下。"), ("ultra", 2500, "寶可夢 CP 必須在 2,500 以下。"),
+                                 ("master", 10000, "沒有 CP 上限。"))]
+    for c in plain + CUPS:
+        ranks = leagues.get(c["slug"]) if "key" in c else data.get(c["slug"])
         if not ranks:
             continue
         t3 = []
@@ -361,7 +362,7 @@ def build_hub(data, dates, ws, dex, imgs):
             t3.append(f'<span><img src="{e(img)}" alt="" width="56" height="56" loading="lazy" decoding="async">{e(disp)}{"（暗影）" if shadow else ""}</span>')
         cap = "無上限" if c["cp"] == 10000 else f"CP {c['cp']}"
         rl = "；".join(x.rstrip("。") for x in c["rules"][1:3]) or c["rules"][0].rstrip("。")
-        cards.append(f'<a class="cc" href="../{c["slug"]}/" data-wins="{wins_attr(ws, c["slug"])}">'
+        cards.append(f'<a class="cc" href="../{c["slug"]}/" data-wins="{wins_attr(ws, c.get("key", c["slug"]))}">'
                      f'<span class="hd"><h3>{e(c["name"])}</h3><span class="cap">{cap}</span></span>'
                      f'<p class="rl">{e(rl)}</p><span class="t3">{"".join(t3)}</span>'
                      f'<span class="ft"><span class="st2">本季</span><span>看排名 Top {min(TOP, len(ranks))} <b>→</b></span></span></a>')
@@ -386,8 +387,7 @@ def build_hub(data, dates, ws, dex, imgs):
     desc = (f"Pokémon GO 對戰聯盟第 {SEASON['no']} 季「{SEASON['name']}」完整賽程（台灣時間）與 {len(cards)} 個聯盟／盃賽的推薦排名："
             "意志力盃、復古盃、小小盃、奇幻盃、拉丁美洲盃、超級速成盃與各聯盟超級版，附參賽規則與推薦招式。")
     faq_html = "\n".join(f'<details class="qa"><summary>{e(q)}</summary><p>{e(a)}</p></details>' for q, a in faq)
-    tabs = (f'<a href="../{HUB}/" aria-current="page">本季賽程</a>'
-            + "".join(f'<a href="../{PLAIN[k][1]}/">{PLAIN[k][0]}</a>' for k in PLAIN))
+    tabs = L.nav_tabs(HUB)
     page = f'''<!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -418,13 +418,13 @@ def build_hub(data, dates, ws, dex, imgs):
 
 <main>
   <nav class="crumb" aria-label="導覽路徑"><a href="../../">Pokémon Go 工具箱</a> › <a href="../">PvP IV 排名</a> › <span>盃賽排名</span></nav>
-  <nav class="lgs" aria-label="切換聯盟">{tabs}</nav>
+  <nav class="lgs" aria-label="切換聯盟與盃賽">{tabs}</nav>
   <section class="hero">
     <p class="eyebrow">GO 對戰聯盟 · 第 {SEASON["no"]} 季 · {e(SEASON["name"])}</p>
     <h1><span class="nw">GO 對戰聯盟</span><span class="nw">賽程與盃賽排名</span></h1>
     <p class="lede">每一兩週換一次的盃賽，規則都不一樣：有的只開放特定屬性，有的禁用特定寶可夢，有的只能用沒進化過的寶可夢。
     這頁整理本季每個時段開放的聯盟與盃賽（已換算成台灣時間），每個盃賽都有依 PvPoke 對戰模擬排序的推薦排名。</p>
-    <ul class="chips"><li>本季 <b>{tw_label(first, True)}</b> ～ <b>{tw_label(last, True)}</b></li><li>盃賽 <b>{len(cards)}</b> 個</li><li><a href="{e(SEASON["url"])}" target="_blank" rel="noopener" style="color:#fff">官方公告 ↗</a></li></ul>
+    <ul class="chips"><li>本季 <b>{tw_label(first, True)}</b> ～ <b>{tw_label(last, True)}</b></li><li>聯盟與盃賽 <b>{len(cards)}</b> 個</li><li><a href="{e(SEASON["url"])}" target="_blank" rel="noopener" style="color:#fff">官方公告 ↗</a></li></ul>
   </section>
 
   <div class="nowbox" id="nowbox" aria-live="polite"></div>
@@ -436,8 +436,8 @@ def build_hub(data, dates, ws, dex, imgs):
   </section>
 
   <section class="sec">
-    <h2>各盃賽推薦排名</h2>
-    <p class="sub">點進去看參賽規則、開放時間與 Top 100 推薦寶可夢。</p>
+    <h2>各聯盟與盃賽推薦排名</h2>
+    <p class="sub">一般的超級、高級、大師聯盟，以及本季每個盃賽；點進去看參賽規則、開放時間與 Top 100 推薦寶可夢。</p>
     <div class="grid">{"".join(cards)}</div>
   </section>
 
@@ -467,7 +467,7 @@ def build_hub(data, dates, ws, dex, imgs):
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as f:
         f.write(page)
-    print(f"已寫出 pvp-ranker/{HUB}/index.html（{len(cards)} 個盃賽）")
+    print(f"已寫出 pvp-ranker/{HUB}/index.html（{len(cards)} 張卡片）")
 
 
 # ---- sitemap：整段重寫盃賽區塊 -----------------------------------------------------------------
@@ -531,7 +531,8 @@ def build():
         dates[c["slug"]] = st["date"]
         build_cup(c, ranks, st["date"], ws, dex, imgs)
     if data and not failed:   # 有盃賽抓不到時總覽維持上一版，免得卡片少一張
-        build_hub(data, dates, ws, dex, imgs)
+        leagues = {lg["slug"]: L.js_array(src, f"POKEMON_RANKINGS_{lg['cp']}") for lg in L.LEAGUES}
+        build_hub(data, dates, ws, dex, imgs, leagues)
         save_state(state)
         write_sitemap(dates)
     used = {c["cup"] for c in CUPS} | KNOWN_UNUSED
