@@ -14,6 +14,7 @@ import build_cp_static as B
 from cp_i18n_strings import STR
 from pvp_i18n_strings import P
 from i18n_header import site_header
+from pvpoke_credit import credit_html
 
 ROOT, ORIGIN, esc = B.ROOT, B.ORIGIN, B.esc
 LANGS = B.I18N_LANGS
@@ -226,6 +227,7 @@ def page_html(lang, T, lang_nav_html):
 {seg}
 <footer class="pk-foot">
   <p><a href="{R}trade-list/?lang={lang}">{esc(C['trade'])}</a> · <a href="../cp/">{esc(C['hub_name'])}</a> · <a href="{R}about/">{esc(C['about'])}</a> · <a href="{R}privacy/#en">{esc(C['privacy'])}</a> · <a href="{R}disclaimer/">{esc(C['disclaimer'])}</a></p>
+  <p>{credit_html(lang)}</p>
   <p>{lang_nav_html}</p>
 </footer>
 {scripts}

@@ -145,6 +145,68 @@
     <lastmod>2026-11-05</lastmod>
     <priority>0.7</priority>
   </url>
+  <!-- PvP 盃賽：由 scripts/build_pvp_cups.py 自動產生，勿手改此區塊 -->
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/cups/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/great-league-mega/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/ultra-league-mega/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/master-league-mega/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/willpower-cup/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/retro-cup/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/color-cup/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/little-cup/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/fantasy-cup/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/halloween-cup/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/laic-cup/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pogokit.com/pvp-ranker/catch-cup/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <!-- /PvP 盃賽 -->
   <url>
     <loc>https://pogokit.com/id-selector/</loc>
     <lastmod>2026-07-08</lastmod>
@@ -9495,47 +9557,47 @@
   <!-- CP 靜態頁：由 scripts/build_cp_static.py 自動產生，勿手改此區塊 -->
   <url>
     <loc>https://pogokit.com/cp/garchomp/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/mewtwo/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/uxie/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/zapdos/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/giratina_origin/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/lunala/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/yveltal/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/zacian/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/giratina/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9550,17 +9612,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/groudon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/latias/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/dragonite/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9570,7 +9632,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/rayquaza/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9580,22 +9642,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/charizard/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/meltan/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/thievul/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/greninja/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9610,42 +9672,42 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/kyurem/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/moltres_galarian/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/xerneas/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/dialga/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/blaziken/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/gyarados/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/delphox/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/cinderace/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9655,27 +9717,27 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/moltres/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/rhyhorn/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/palkia/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/zacian_crowned_sword/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/eevee/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9690,42 +9752,42 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/zapdos_galarian/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/articuno/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/articuno_galarian/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/zamazenta/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/chandelure/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/azelf/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/zamazenta_crowned_shield/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/gengar/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9735,17 +9797,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/snorlax/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/metagross/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/venusaur/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9755,22 +9817,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/elgyem/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/swampert/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/sableye/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/latios/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9780,22 +9842,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/staraptor/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/kyogre/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/kyurem_black/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/rhydon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9805,7 +9867,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/houndour/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9820,47 +9882,47 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/dialga_origin/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/beedrill/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/raichu/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/lickilicky/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/zygarde_complete/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/mesprit/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/magmar/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/sneasel/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/landorus/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9870,7 +9932,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/blastoise/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9880,7 +9942,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/landorus_therian/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9890,12 +9952,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/falinks/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/registeel/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9905,7 +9967,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/starmie/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -9915,82 +9977,82 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/blissey/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/haunter/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/munchlax/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/buzzwole/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/xurkitree/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/regirock/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/chespin/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/eternatus/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/thundurus_therian/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/melmetal/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/annihilape/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/stufful/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/lapras/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/skarmory/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/cramorant/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/necrozma/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10000,7 +10062,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/sneasler/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10010,37 +10072,37 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/zekrom/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/clefairy/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/zoroark/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/braixen/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/sylveon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/tyranitar/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/rhyperior/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10050,22 +10112,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/tinkaton/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/mankey/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/mimikyu/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/growlithe/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10080,17 +10142,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/weavile/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/malamar/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/corviknight/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10105,7 +10167,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/lampent/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10125,7 +10187,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/flamigo/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10135,17 +10197,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/kyurem_white/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/mew/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/quaquaval/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10155,12 +10217,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/zeraora/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/wailmer/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10175,7 +10237,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/golisopod/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10190,7 +10252,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/ivysaur/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10200,22 +10262,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/totodile/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/munna/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/lickitung/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/primeape/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10235,7 +10297,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/gabite/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10250,42 +10312,42 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/umbreon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/reshiram/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/manectric/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/feraligatr/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/chansey/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/regice/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/hitmontop/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/slaking/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10295,12 +10357,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/victreebel/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/ninetales/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10320,22 +10382,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/fuecoco/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/drifloon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/palkia_origin/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/frigibax/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10345,7 +10407,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/lucario/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10355,17 +10417,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/samurott/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/aerodactyl/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/axew/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10375,12 +10437,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/teddiursa/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/hydreigon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10390,12 +10452,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/pancham/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/sigilyph/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10405,17 +10467,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/togekiss/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/solgaleo/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/pumpkaboo_average/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10435,37 +10497,37 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/necrozma_dusk_mane/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/drilbur/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/kleavor/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/necrozma_dawn_wings/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/quagsire/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/ho_oh/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/larvesta/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10480,12 +10542,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/wigglytuff/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/frillish/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10500,22 +10562,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/lugia/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/diancie/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/excadrill/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/ninetales_alola/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10525,37 +10587,37 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/volcanion/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/thundurus/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/litleo/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/centiskorch/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/dragonair/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/rowlet/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/ponyta/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10565,27 +10627,27 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/meowscarada/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/roggenrola/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/deerling/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/espeon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/rillaboom/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10595,17 +10657,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/gourgeist_average/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/jellicent/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/wailord/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10615,12 +10677,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/togetic/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/sharpedo/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10630,17 +10692,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/azumarill/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/vivillon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/raticate/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10650,17 +10712,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/exeggcute/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/steelix/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/altaria/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10670,12 +10732,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/porygon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/honedge/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10690,7 +10752,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/regieleki/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10700,17 +10762,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/magmortar/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/piplup/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/doublade/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10725,17 +10787,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/kecleon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/snover/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/primarina/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10745,22 +10807,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/shiinotic/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/lunatone/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/machop/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/decidueye/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10770,12 +10832,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/bulbasaur/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/samurott_hisuian/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10790,7 +10852,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/dondozo/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10800,27 +10862,27 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/lileep/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/inteleon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/scizor/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/ursaluna/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/stunfisk/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10845,7 +10907,7 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/grimmsnarl/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10855,17 +10917,17 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/frogadier/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/oddish/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/drifblim/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10880,22 +10942,22 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/gligar/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/rapidash/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/poipole/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/typhlosion/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10905,62 +10967,62 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/tinkatuff/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/glaceon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/growlithe_hisuian/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/sceptile/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/kommo_o/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/duraludon/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/togedemaru/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/meloetta/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/toxtricity/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/houndoom/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/xatu/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/machamp/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10970,12 +11032,12 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/hoopa_unbound/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/arcanine/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -10985,32 +11047,32 @@
   </url>
   <url>
     <loc>https://pogokit.com/cp/sawk/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/incineroar/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/raikou/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/aggron/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/entei/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pogokit.com/cp/suicune/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-08</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>

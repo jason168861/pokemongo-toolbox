@@ -10,6 +10,7 @@
     python scripts/build_pvp_league.py
 
 CI 每次排程都會跑（在 generate_pokemon_data.py / refresh_cp_data.py 之後）。
+跑完三個聯盟後會接著跑 build_pvp_cups.py（盃賽排名頁與 /pvp-ranker/cups/ 賽程總覽），CI 不必另外加步驟。
 頁面上的「資料更新」日期 = 這個聯盟 Top 100 內容最後一次改變的日期（台灣時間），
 狀態存在 data/pvp_league_state.json；排名沒變就不改日期，也不會產生無意義的 commit。
 同時更新 sitemap.xml 裡這三個網址的 <lastmod>（只改日期，不動其他內容）。
@@ -17,7 +18,10 @@ CI 每次排程都會跑（在 generate_pokemon_data.py / refresh_cp_data.py 之
 為什麼要有這頁：/pvp-ranker/ 是「輸入 IV 查排名」的互動工具，但搜尋「超級聯盟排名」的人要的是
 一張看得到的強度榜。這頁是靜態榜單（Google 讀得到每一隻），每隻都連回工具（?p=<id> 直接帶入）。
 """
-import json, os, re, html, hashlib, datetime
+import json, os, re, html, hashlib, datetime, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pvpoke_credit import credit_html  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE = os.path.join(ROOT, "data", "pvp_league_state.json")
@@ -125,17 +129,24 @@ def js_array(src, name):
 
 def resolve(r, dex):
     """排名裡的名字（例：「九尾 阿羅拉 暗影」「代歐奇希斯 防禦」）→ (顯示名, POKEDEX id, 是否暗影)。
-    POKEDEX 不收暗影，暗影的 IV 排名與一般型相同，所以連到一般型。"""
+    POKEDEX 不收暗影，暗影的 IV 排名與一般型相同，所以連到一般型。
+    盃賽排名（build_pvp_cups.py）會多帶 PvPoke 的 speciesId（r["sid"]），有的話直接用它對 POKEDEX。
+    超級進化照官方中文寫成「超級大嘴娃」「超級噴火龍（X）」。"""
     parts = r["name"].split(" ")
     shadow = "暗影" in parts[1:]
-    tokens = [t for t in parts[1:] if t != "暗影"]
+    mega = "Mega" in parts[1:]
+    tokens = [t for t in parts[1:] if t not in ("暗影", "Mega")]
     cands = [p for p in dex if p["dexNumber"] == r["dex"]]
     pick = None
-    for t in tokens:
-        pick = next((p for p in cands if t in p["name"]), None) or pick
+    sid = (r.get("sid") or "").replace("_shadow", "")
+    if sid:
+        pick = next((p for p in cands if p["id"] == sid), None)
+    if not pick:
+        for t in tokens:
+            pick = next((p for p in cands if t in p["name"]), None) or pick
     if not pick:
         pick = next((p for p in cands if p["name"] == parts[0]), None) or (cands[0] if cands else None)
-    disp = parts[0] + (f"（{'・'.join(tokens)}）" if tokens else "")
+    disp = ("超級" if mega else "") + parts[0] + (f"（{'・'.join(tokens)}）" if tokens else "")
     return disp, (pick["id"] if pick else None), shadow
 
 
@@ -143,15 +154,18 @@ THUMB_DIR = os.path.join(ROOT, "trade-list", "assets", "thumb")
 _THUMBS = None
 
 
-def local_img(remote, dexno):
+def local_img(remote, dexno, sid=""):
     """站內交易清單的 128px webp 縮圖（同網域、檔案小）。data/pokemon_images.js 有些網址是壞的
     （例：謎擬Ｑ、古月鳥指向不存在的 imgur），所以優先用站內圖：
-    先找與 PokeMiners 檔名相同的縮圖，再找 pm<dex>.icon，最後用該編號第一個非異色型態。"""
+    先找與 PokeMiners 檔名相同的縮圖（超級進化先找 pm<dex>.fMEGA[_X/_Y]），再找 pm<dex>.icon，
+    最後用該編號第一個非異色型態。"""
     global _THUMBS
     if _THUMBS is None:
         _THUMBS = set(os.listdir(THUMB_DIR)) if os.path.isdir(THUMB_DIR) else set()
     base = os.path.splitext(remote.rsplit("/", 1)[-1])[0] if "pogo_assets" in remote else ""
-    for name in ([base + ".webp"] if base else []) + [f"pm{dexno}.icon.webp"]:
+    m = re.search(r"_mega(_[xy])?(?:_|$)", sid)
+    mega = [f"pm{dexno}.fMEGA{(m.group(1) or '').upper()}.icon.webp"] if m else []
+    for name in mega + ([base + ".webp"] if base else []) + [f"pm{dexno}.icon.webp"]:
         if name in _THUMBS:
             return "../../trade-list/assets/thumb/" + name
     forms = sorted(n for n in _THUMBS if n.startswith(f"pm{dexno}.f") and n.endswith(".icon.webp") and ".s.icon" not in n)
@@ -183,9 +197,9 @@ def move(name, elite, kind):
     return f'<span class="mv {kind}{" elite" if elite else ""}"{attrs}>{e(name)}{tag}</span>'
 
 
-def row(i, r, dex, imgs):
+def row(i, r, dex, imgs, ivlink=True):
     disp, pid, shadow = resolve(r, dex)
-    img = local_img(imgs.get(pid, "") if pid else "", r["dex"])
+    img = local_img(imgs.get(pid, "") if pid else "", r["dex"], r.get("sid", ""))
     types = [t for t in (r["type1"], r["type2"]) if t]
     tchips = "".join(f'<span class="ty" style="--c:{TYPE_COLOR.get(t, "#777")}">{e(t)}</span>' for t in types)
     charged = move(r["chargedMove1"], r["isEliteCharged1"], "cg")
@@ -206,17 +220,113 @@ def row(i, r, dex, imgs):
             f'<span class="sc"><b>{r["score"]:.1f}</b><i><i style="width:{max(0, min(100, r["score"])):.1f}%"></i></i></span>'
             f'<span class="mvs"><span class="ml"><span class="k">一般</span>{move(r["fastMove"], r["isEliteFast"], "fm")}</span>'
             f'<span class="ml"><span class="k">特殊</span>{charged}</span></span>'
-            f'<a class="go" href="{link}" aria-label="查{e(disp)}的 PvP IV 排名">查 IV</a>'
-            f'</li>')
+            + (f'<a class="go" href="{link}" aria-label="查{e(disp)}的 PvP IV 排名">查 IV</a>' if ivlink else '')
+            + '</li>')
+
+
+def render_page(o):
+    """聯盟頁與盃賽頁共用的版面。o 是 dict：
+    slug, url, title, desc, h1, eyebrow, lede（HTML）, chips（HTML）, tabs（HTML）, crumb（HTML，最後一層）,
+    ranks（全部）, top, faq [(q, a)], faq_h, more（HTML）, next_p（HTML）, ld（list）,
+    可選：extra（HTML，放在榜單前）, ivlink, extra_css, data_attrs（hero 上的 data-*）。"""
+    dex, imgs = o["dex"], o["imgs"]
+    top = o["top"]
+    ivlink = o.get("ivlink", True)
+    rows = "\n".join(row(i, r, dex, imgs, ivlink) for i, r in enumerate(top, 1))
+    types = sorted({t for r in top for t in (r["type1"], r["type2"]) if t}, key=lambda t: list(TYPE_COLOR).index(t) if t in TYPE_COLOR else 99)
+    tbtns = "".join(f'<button class="tf" data-t="{e(t)}" style="--c:{TYPE_COLOR.get(t, "#777")}">{e(t)}</button>' for t in types)
+    # 盃賽常常沒有暗影（或全部都是同一種屬性），沒有東西可篩的按鈕就不放
+    has_sh = any("暗影" in r["name"].split(" ")[1:] for r in top)
+    sf = '<button class="sf" type="button" aria-pressed="false">只看暗影</button>' if has_sh else ''
+    tbtns = f'<button class="tf on" data-t="">全部屬性</button>{tbtns}' if len(types) > 1 else ''
+    tools = (f'<div class="tools">\n      <div class="tfs" role="group" aria-label="篩選">{sf}{tbtns}</div>\n'
+             f'      <p class="cnt" id="cnt" aria-live="polite"></p>\n    </div>') if (sf or tbtns) else '<p class="cnt" id="cnt" aria-live="polite"></p>'
+    faq_html = "\n".join(f'<details class="qa"><summary>{e(q)}</summary><p>{e(a)}</p></details>' for q, a in o["faq"])
+    ld = json.dumps(o["ld"], ensure_ascii=False)
+    extra = o.get("extra", "")
+    page = f'''<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../../js/analytics.js"></script>
+<script src="../../config.js"></script>
+<script src="../../js/pageview-counter.js" defer></script>
+<link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
+<title>{e(o["title"])}｜Pokémon Go 工具箱</title>
+<meta name="description" content="{e(o["desc"])}">
+<link rel="canonical" href="{o["url"]}">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{e(o["title"])}">
+<meta property="og:description" content="{e(o["desc"])}">
+<meta property="og:url" content="{o["url"]}">
+<script type="application/ld+json">{ld}</script>
+<style>{CSS}{o.get("extra_css", "")}</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="home" href="../../"><span class="logo" aria-hidden="true">🧰</span><span>Pokémon Go 工具箱</span></a>
+  <nav class="tnav" aria-label="相關工具"><a href="../">PvP IV 排名查詢</a><a href="../cups/">盃賽排名</a><a href="../../backgrounds/">背卡一覽</a></nav>
+  <a class="cta" href="../../trade-list/">做交換清單</a>
+</header>
+
+<main>
+  <nav class="crumb" aria-label="導覽路徑"><a href="../../">Pokémon Go 工具箱</a> › <a href="../">PvP IV 排名</a> › {o["crumb"]}</nav>
+  <nav class="lgs" aria-label="切換聯盟">{o["tabs"]}</nav>
+  <section class="hero"{o.get("data_attrs", "")}>
+    <p class="eyebrow">{e(o["eyebrow"])}</p>
+    <h1>{e(o["h1"])}</h1>
+    <p class="lede">{o["lede"]}</p>
+    <ul class="chips">{o["chips"]}</ul>
+  </section>
+{extra}
+  <section class="board">
+    {tools}
+    <ol class="list" id="list">
+{rows}
+    </ol>
+    <p class="more">{o["more"]}</p>
+  </section>
+
+  <section class="faq">
+    <h2>{e(o["faq_h"])}</h2>
+{faq_html}
+  </section>
+
+  <section class="next">
+    <div><h2>找到想練的寶可夢了？</h2><p>{o["next_p"]}</p></div>
+    <a class="bigcta" href="../">查我的 PvP IV 排名 →</a>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>{credit_html("zh")}非官方資料，僅供參考。</p>
+  <p>本站為非官方同人工具，與 Pokémon GO／Niantic 無隸屬關係。Pokémon 及其商標為 &copy;1995-2026 Nintendo, Creatures, GAME FREAK 所有。</p>
+  <p><a href="../../about/">關於本站</a> · <a href="../../contact/">聯絡我們</a> · <a href="../../privacy/">隱私權政策</a> · <a href="../../disclaimer/">免責聲明</a> · <a href="../../">回工具箱</a></p>
+</footer>
+
+<script>{JS}{o.get("extra_js", "")}</script>
+<script src="../../js/ads.js" defer></script>
+</body>
+</html>
+'''
+    out_dir = os.path.join(ROOT, "pvp-ranker", o["slug"])
+    out = os.path.join(out_dir, "index.html")
+    os.makedirs(out_dir, exist_ok=True)
+    with open(out, "w", encoding="utf-8", newline="\n") as f:
+        f.write(page)
+    unmapped = [r["name"] for r in top if not resolve(r, dex)[1]]
+    print(f"已寫出 pvp-ranker/{o['slug']}/index.html（{os.path.getsize(out):,} bytes），第 1 名 {resolve(top[0], dex)[0]}")
+    if unmapped:
+        print("  ⚠ 對不到 POKEDEX（沒有圖、連到工具首頁）：", unmapped)
 
 
 def build_league(lg, src, dex, imgs, date):
     ranks = js_array(src, f"POKEMON_RANKINGS_{lg['cp']}")
     top = ranks[:TOP]
     name, url = lg["name"], league_url(lg)
-    rows = "\n".join(row(i, r, dex, imgs) for i, r in enumerate(top, 1))
-    types = sorted({t for r in top for t in (r["type1"], r["type2"]) if t}, key=lambda t: list(TYPE_COLOR).index(t) if t in TYPE_COLOR else 99)
-    tbtns = "".join(f'<button class="tf" data-t="{e(t)}" style="--c:{TYPE_COLOR.get(t, "#777")}">{e(t)}</button>' for t in types)
     top3 = "、".join(resolve(r, dex)[0] for r in top[:3])
     month = f"{int(date[:4])} 年 {int(date[5:7])} 月"
     cap = "無 CP 上限" if lg["cp"] == 10000 else f"CP {lg['cp']}"
@@ -224,10 +334,9 @@ def build_league(lg, src, dex, imgs, date):
     desc = (f"Pokémon GO {name}（{cap}）寶可夢強度排名前 {TOP} 名：目前前三名是 {top3}。"
             f"列出每隻的屬性、推薦一般與特殊招式（含限定招式標示），點一下就能查自己那隻的 PvP IV 排名。")
     faq = lg["faq"]
-    faq_html = "\n".join(f'<details class="qa"><summary>{e(q)}</summary><p>{e(a)}</p></details>' for q, a in faq)
     tabs = "".join(
         (f'<a href="../{o["slug"]}/" aria-current="page">{e(o["name"])}</a>' if o is lg
-         else f'<a href="../{o["slug"]}/">{e(o["name"])}</a>') for o in LEAGUES)
+         else f'<a href="../{o["slug"]}/">{e(o["name"])}</a>') for o in LEAGUES) + '<a href="../cups/">盃賽排名</a>'
     others = "、".join(f'<a href="../{o["slug"]}/">{e(o["name"])}排名</a>' for o in LEAGUES if o is not lg)
     ld = [
         {"@context": "https://schema.org", "@type": "Article", "headline": f"Pokémon GO {name}排名 Top {TOP}",
@@ -239,87 +348,19 @@ def build_league(lg, src, dex, imgs, date):
         {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]},
     ]
-    page = f'''<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
-<script src="../../js/analytics.js"></script>
-<script src="../../config.js"></script>
-<script src="../../js/pageview-counter.js" defer></script>
-<link rel="icon" type="image/png" sizes="192x192" href="../../img/masterball.png">
-<title>{e(title)}｜Pokémon Go 工具箱</title>
-<meta name="description" content="{e(desc)}">
-<link rel="canonical" href="{url}">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="article">
-<meta property="og:title" content="{e(title)}">
-<meta property="og:description" content="{e(desc)}">
-<meta property="og:url" content="{url}">
-<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
-<style>{CSS}</style>
-</head>
-<body>
-<header class="topbar">
-  <a class="home" href="../../"><span class="logo" aria-hidden="true">🧰</span><span>Pokémon Go 工具箱</span></a>
-  <nav class="tnav" aria-label="相關工具"><a href="../">PvP IV 排名查詢</a><a href="../../backgrounds/">背卡一覽</a></nav>
-  <a class="cta" href="../../trade-list/">做交換清單</a>
-</header>
-
-<main>
-  <nav class="crumb" aria-label="導覽路徑"><a href="../../">Pokémon Go 工具箱</a> › <a href="../">PvP IV 排名</a> › <span>{e(name)}排名</span></nav>
-  <nav class="lgs" aria-label="切換聯盟">{tabs}</nav>
-  <section class="hero">
-    <p class="eyebrow">{e(lg["eyebrow"])}</p>
-    <h1>Pokémon GO {e(name)}排名 Top {TOP}</h1>
-    <p class="lede">{e(lg["lede"])}這份榜單依 PvPoke 對戰模擬的分數排序，
-    列出前 {TOP} 名寶可夢與推薦招式；想知道你手上那隻的 IV 排第幾，點右邊的「查 IV」直接帶入。</p>
-    <ul class="chips"><li>資料更新 <b>{date}</b></li><li>收錄 <b>{len(ranks)}</b> 隻・顯示前 <b>{TOP}</b> 名</li><li><b class="lt">限定</b> 限定招式</li></ul>
-  </section>
-
-  <section class="board">
-    <div class="tools">
-      <div class="tfs" role="group" aria-label="篩選"><button class="sf" type="button" aria-pressed="false">只看暗影</button><button class="tf on" data-t="">全部屬性</button>{tbtns}</div>
-      <p class="cnt" id="cnt" aria-live="polite"></p>
-    </div>
-    <ol class="list" id="list">
-{rows}
-    </ol>
-    <p class="more">完整排名（{len(ranks)} 隻）與自己的 IV 名次，請用 <a href="../">PvP IV 排名查詢工具</a>。也可以看{others}。</p>
-  </section>
-
-  <section class="faq">
-    <h2>{e(name)}常見問題</h2>
-{faq_html}
-  </section>
-
-  <section class="next">
-    <div><h2>找到想練的寶可夢了？</h2><p>用 PvP IV 排名工具查你手上那隻的 IV 在{e(name)}排第幾，以及要升到幾級、CP 多少。</p></div>
-    <a class="bigcta" href="../">查我的 PvP IV 排名 →</a>
-  </section>
-</main>
-
-<footer class="foot">
-  <p>排名資料來自 PvPoke（pvpoketw）的對戰模擬，非官方資料，僅供參考。</p>
-  <p>本站為非官方同人工具，與 Pokémon GO／Niantic 無隸屬關係。Pokémon 及其商標為 &copy;1995-2026 Nintendo, Creatures, GAME FREAK 所有。</p>
-  <p><a href="../../about/">關於本站</a> · <a href="../../contact/">聯絡我們</a> · <a href="../../privacy/">隱私權政策</a> · <a href="../../disclaimer/">免責聲明</a> · <a href="../../">回工具箱</a></p>
-</footer>
-
-<script>{JS}</script>
-<script src="../../js/ads.js" defer></script>
-</body>
-</html>
-'''
-    out_dir = os.path.join(ROOT, "pvp-ranker", lg["slug"])
-    out = os.path.join(out_dir, "index.html")
-    os.makedirs(out_dir, exist_ok=True)
-    with open(out, "w", encoding="utf-8", newline="\n") as f:
-        f.write(page)
-    unmapped = [r["name"] for r in top if not resolve(r, dex)[1]]
-    print(f"已寫出 pvp-ranker/{lg['slug']}/index.html（{os.path.getsize(out):,} bytes），資料日期 {date}，第 1 名 {resolve(top[0], dex)[0]}")
-    if unmapped:
-        print("  ⚠ 對不到 POKEDEX（沒有圖、連到工具首頁）：", unmapped)
+    render_page({
+        "slug": lg["slug"], "url": url, "title": title, "desc": desc, "dex": dex, "imgs": imgs,
+        "h1": f"Pokémon GO {name}排名 Top {TOP}", "eyebrow": lg["eyebrow"],
+        "lede": (f'{e(lg["lede"])}這份榜單依 PvPoke 對戰模擬的分數排序，\n'
+                 f'    列出前 {TOP} 名寶可夢與推薦招式；想知道你手上那隻的 IV 排第幾，點右邊的「查 IV」直接帶入。'),
+        "chips": (f'<li>資料更新 <b>{date}</b></li><li>收錄 <b>{len(ranks)}</b> 隻・顯示前 <b>{TOP}</b> 名</li>'
+                  f'<li><b class="lt">限定</b> 限定招式</li>'),
+        "tabs": tabs, "crumb": f"<span>{e(name)}排名</span>",
+        "ranks": ranks, "top": top, "faq": faq, "faq_h": f"{name}常見問題", "ld": ld,
+        "more": (f'完整排名（{len(ranks)} 隻）與自己的 IV 名次，請用 <a href="../">PvP IV 排名查詢工具</a>。'
+                 f'也可以看{others}，或本季的<a href="../cups/">盃賽排名</a>。'),
+        "next_p": f"用 PvP IV 排名工具查你手上那隻的 IV 在{e(name)}排第幾，以及要升到幾級、CP 多少。",
+    })
 
 
 def build():
@@ -346,7 +387,7 @@ function go(){var n=0;li.forEach(function(x){var s=(!t||(' '+x.dataset.t+' ').in
 x.hidden=!s;if(s)n++;});c.textContent=(so?'暗影・':'')+(t?t+'屬性 ':'')+(t||so?n+' 隻':'共 '+li.length+' 隻');}
 b.forEach(function(x){x.addEventListener('click',function(){t=x.dataset.t;b.forEach(function(y){y.classList.toggle('on',y===x);});go();
 if(window.track)track('league_filter',{type:t||'all'});});});
-sf.addEventListener('click',function(){so=!so;sf.setAttribute('aria-pressed',so);sf.classList.toggle('on',so);go();
+if(sf)sf.addEventListener('click',function(){so=!so;sf.setAttribute('aria-pressed',so);sf.classList.toggle('on',so);go();
 if(window.track)track('league_filter',{type:so?'shadow_on':'shadow_off'});});go();})();
 """
 
@@ -426,3 +467,10 @@ main{max-width:1000px;margin:0 auto;padding:14px 16px 64px}
 
 if __name__ == "__main__":
     build()
+    # 盃賽排名頁（/pvp-ranker/cups/ 與各盃賽）。放在這裡跑，CI 不用另外加步驟；
+    # 盃賽抓不到或壞掉不影響上面三個聯盟頁，頁面維持上一版。
+    try:
+        import build_pvp_cups
+        build_pvp_cups.build()
+    except Exception as ex:  # noqa: BLE001
+        print(f"::warning::盃賽排名頁沒有更新（{type(ex).__name__}: {ex}），維持上一版")
