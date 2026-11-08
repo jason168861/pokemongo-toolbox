@@ -267,7 +267,8 @@ def build():
       <h2>做一張交換清單</h2>
       <p>確認想要的寶可夢換得到之後，可以用<a href="../trade-list/">交易清單產生器</a>
       把它們挑成一張圖片，分成「我想要的」和「我能提供的」貼給對方。
-      清單裡本來就過濾掉不可交換的寶可夢，不會做出換不到的清單。</p>
+      清單裡本來就過濾掉不可交換的寶可夢，不會做出換不到的清單。
+      交換要花多少星星沙子、特殊交換和亮晶晶交換的規則，可以看<a href="../trade-guide/">交換指南</a>。</p>
       <p><a class="bigcta" href="../trade-list/">🔴 開始製作交換清單</a></p>
     </section>
   </article>
@@ -277,7 +278,7 @@ def build():
   <p>交換限制依遊戲設定檔（GAME_MASTER）判定，非官方資料，可能與遊戲內當下狀態有落差。</p>
   <p>本站為非官方同人工具，與 Pokémon GO／Niantic 無隸屬關係。
      Pokémon 及其商標為 &copy;1995-2026 Nintendo, Creatures, GAME FREAK 所有。</p>
-  <p><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="../">回工具箱</a></p>
+  <p><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="https://buymeacoffee.com/pogokit" target="_blank" rel="noopener">☕ 請我喝杯咖啡</a> · <a href="../">回工具箱</a></p>
 </footer>
 <script src="../js/ads.js" defer></script>
 </body>
