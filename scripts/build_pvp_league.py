@@ -480,3 +480,9 @@ if __name__ == "__main__":
         build_pvp_cups.build()
     except Exception as ex:  # noqa: BLE001
         print(f"::warning::盃賽排名頁沒有更新（{type(ex).__name__}: {ex}），維持上一版")
+    # 偽百查詢頁（/fake-hundo/）：種族值由前面的 refresh_cp_data.py 更新，新寶可夢或平衡調整時要跟著重算。
+    try:
+        import build_fake_hundo
+        build_fake_hundo.build()
+    except Exception as ex:  # noqa: BLE001
+        print(f"::warning::偽百查詢頁沒有更新（{type(ex).__name__}: {ex}），維持上一版")
