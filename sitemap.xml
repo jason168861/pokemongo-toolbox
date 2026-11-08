@@ -253,6 +253,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://pogokit.com/trade-guide/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://pogokit.com/stardust/</loc>
     <lastmod>2026-08-24</lastmod>
     <priority>0.7</priority>
