@@ -602,14 +602,7 @@
   .themeSel{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
   /* 登入按鈕放在工具選單右側;隱藏「956 隻」統計文字 */
   #stat{display:none}
-  @media(max-width:700px){
-    /* 手機:讓 🧰 / 工具選單 / 登入 緊密塞在同一行,長語言的文字不會把登入擠到下一行 */
-    header{gap:6px 8px;padding:10px 12px}
-    .homelink{padding:5px 9px;font-size:12px}
-    #homeLink #homeTxt{display:none}          /* 只保留 🧰 圖示,省下空間 */
-    #toolJump{max-width:40vw;min-width:0}
-    #authBtn{padding:6px 14px}
-  }
+  /* 手機表頭的規則在 #cloudMsg 之後(要排在 .homelink / #authBtn 基本樣式後面才蓋得過) */
   .homelink{color:var(--fg);text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--cellbg)}
   .homelink:hover{border-color:var(--acc2)}
   .authBox{display:flex;align-items:center}
@@ -625,6 +618,26 @@
   #authBtn.signedin{font-weight:500;color:var(--mut)}
   #authBtn.signedin::before{content:"";width:8px;height:8px;flex:none;border-radius:50%;background:var(--want);box-shadow:0 0 0 3px color-mix(in srgb,var(--want) 30%,transparent)}
   #cloudMsg{display:none}
+  /* 手機表頭(≤700px):固定三列、左右對稱,任何語言都不會被擠到換行
+     第 1 列 🧰｜前往其他工具(吃掉剩餘寬度)｜登入
+     第 2 列 標題置中(text-wrap:balance:長語言折兩行時不會只剩一個字掉下去)
+     第 3 列 ☕｜語言｜風格(兩個下拉各佔一半;🌐、「風格」字樣與 ☕ 的文字改由 aria-label 提供)
+     控制項一律 38px 高;下拉維持 16px 字級(iOS 低於 16px 點開會自動放大畫面) */
+  @media(max-width:700px){
+    header{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;padding:10px 12px 12px}
+    header .homelink,#authBtn,.tlSupport,#langSel,#themeSel{height:38px;box-sizing:border-box}
+    #homeLink{display:inline-flex;align-items:center;justify-content:center;width:38px;padding:0;font-size:17px}
+    #homeLink #homeTxt{display:none}
+    #toolJump{width:100%;min-width:0;max-width:none;font-size:16px;padding:0 8px;text-overflow:ellipsis}
+    #authBtn{padding:0 14px}
+    header h1#appTitle{grid-column:1/-1;margin:2px 0 0;text-align:center;font-size:16px;line-height:1.35;text-wrap:balance}
+    .themeSel{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr);gap:8px;margin:0}
+    .themeSel > .sub{display:none}
+    #langSel,#themeSel{width:100%;min-width:0;padding:0 8px;text-overflow:ellipsis}
+    /* ☕ 只留圖示,做成和左上 🧰 同尺寸的方塊,上下兩列的左欄對齊 */
+    .tlSupport{width:38px;padding:0;justify-content:center;border-radius:8px;font-size:17px}
+    #tlSupportTxt{display:none}
+  }
   /* 匯出編輯器 */
   #editor{position:relative;user-select:none;margin-top:8px}
   #edStage{position:relative;width:100%}
@@ -1865,8 +1878,20 @@ function applyFootI18n(){
   // 廣告區的「廣告」標籤跟著介面語言(對照表在 js/ads.js;ads.js 還沒載入時由它自己依 <html lang> 決定)
   if(window.pkAdLabel) document.querySelectorAll('.site-ad-label').forEach(e=>{ const l=window.pkAdLabel(document.documentElement.lang); e.textContent=l; const box=e.closest('.site-ad'); if(box) box.setAttribute('aria-label',l); });
 }
+/* ===== 表頭:「前往其他工具」提示字 + 下拉選單的無障礙名稱(手機版不顯示 🌐 /「風格」字樣)=====
+   選單裡的工具名稱維持中文:連過去的頁面目前只有繁中 */
+const HDR_I18N={
+  zh:['前往其他工具…','語言'], en:['Other tools…','Language'], ja:['ほかのツール…','言語'], ko:['다른 도구…','언어'],
+  fr:['Autres outils…','Langue'], de:['Weitere Tools…','Sprache'], es:['Otras herramientas…','Idioma']
+};
+function applyHdrI18n(){
+  const h=HDR_I18N[LANG]||HDR_I18N.en, tj=$('#toolJump');
+  if(tj&&tj.options[0]){ tj.options[0].textContent='🔀 '+h[0]; tj.setAttribute('aria-label',h[0]); }
+  if($('#langSel')) $('#langSel').setAttribute('aria-label',h[1]);
+  if($('#themeSel')) $('#themeSel').setAttribute('aria-label',tr('theme'));
+}
 function applyStaticI18n(){
-  const T=tr;
+  const T=tr; applyHdrI18n();
   $('#appTitle').textContent='🔴 '+T('app'); applySeoMeta(); loadGuide(LANG); applyFootI18n(); $('#themeLabel').textContent=T('theme');
   $('#themeSel').innerHTML=THEME_LIST.map(([k,ik])=>`<option value="${k}">${T(ik)}</option>`).join(''); $('#themeSel').value=THEME;
   $('#zoomHint').textContent='↔ '+T('zoom_hint'); $('#edThemesLabel').textContent=T('skin'); buildThemeSwatches();
