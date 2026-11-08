@@ -10,6 +10,18 @@
       "html": "<ol><li><strong>Añade lo que buscas.</strong> En <em>Busco</em>, toca <em>✏️ Añadir</em> y busca por nombre o número de la Pokédex. Los filtros muestran solo Variocolor, Forma/Disfraz, Dinamax, Gigamax o Legendarios, y puedes deslizar hacia un lado para seleccionar muchas tarjetas a la vez.</li><li><strong>Añade lo que ofreces.</strong> Haz lo mismo en <em>Ofrezco</em>. La pestaña <em>Fondos</em> reúne los Pokémon que aparecieron con fondos de ubicación o de eventos, y <em>Combinación libre</em> te permite crear una combinación que no está en el catálogo: cualquier Pokémon con una marca y un fondo.</li><li><strong>Ajusta cada tarjeta.</strong> Con los botones pequeños de la tarjeta puedes indicar el sexo o la Poké Ball con la que lo atrapaste, para que tu compañero sepa exactamente cuál es.</li><li><strong>Crea la imagen.</strong> Toca <em>🎨 Crear imagen</em> para elegir tema, fuentes, colores y cuántas tarjetas van en cada fila, añade tu Código de Entrenador si quieres y descarga o comparte la imagen.</li></ol>"
     },
     {
+      "h": "¿Qué Pokémon poner en tu lista de intercambio?",
+      "html": "<p>Una buena lista muestra Pokémon que a los demás les cuesta conseguir. Lo más buscado:</p><ul><li><strong>Pokémon variocolor</strong> (brillantes), sobre todo de eventos y Días de la Comunidad pasados.</li><li><strong>Pokémon regionales</strong> que solo aparecen en ciertas partes del mundo.</li><li><strong>Disfraces y formas de eventos</strong> que ya no están disponibles.</li><li>Pokémon con <strong>fondo de ubicación o fondo especial</strong>: el fondo se conserva al intercambiarlos.</li><li><strong>Pokémon legendarios</strong> de incursiones (son intercambios especiales, mira los costes abajo).</li><li><strong>Evoluciones por intercambio</strong>: Kadabra, Machoke, Graveler, Haunter, Boldore, Gurdurr, Karrablast, Shelmet, Phantump o Pumpkaboo recibidos en un intercambio evolucionan con 0 caramelos, así que mucha gente los busca.</li></ul><p>Los Pokémon oscuros y la mayoría de los singulares (míticos) no se pueden intercambiar, y un Pokémon que ya recibiste en un intercambio no se puede volver a intercambiar: no los pongas en tu lista.</p>"
+    },
+    {
+      "h": "¿Cuántos Polvos Estelares cuesta un intercambio?",
+      "html": "<p>Pagan los dos jugadores. Un intercambio normal de un Pokémon que quien lo recibe ya tiene registrado cuesta 100 con cualquier nivel de amistad. Los <strong>intercambios especiales</strong> —Pokémon legendarios, singulares, ultraentes, purificados y variocolor, o cualquiera que quien lo recibe no tenga registrado— cuestan mucho más, solo se puede hacer uno al día y hace falta al menos Buena Amistad.</p><div class=\"tw\"><table><thead><tr><th>Amistad</th><th>Normal, registrado</th><th>Normal, nuevo</th><th>Legendario/variocolor, registrado</th><th>Legendario/variocolor, nuevo</th></tr></thead><tbody><tr><td data-l=\"Amistad\">Buena Amistad</td><td data-l=\"Normal, registrado\">100</td><td data-l=\"Normal, nuevo\">20.000</td><td data-l=\"Legendario/variocolor, registrado\">20.000</td><td data-l=\"Legendario/variocolor, nuevo\">1.000.000</td></tr><tr><td data-l=\"Amistad\">Gran Amistad</td><td data-l=\"Normal, registrado\">100</td><td data-l=\"Normal, nuevo\">16.000</td><td data-l=\"Legendario/variocolor, registrado\">16.000</td><td data-l=\"Legendario/variocolor, nuevo\">800.000</td></tr><tr><td data-l=\"Amistad\">Ultraamistad</td><td data-l=\"Normal, registrado\">100</td><td data-l=\"Normal, nuevo\">1.600</td><td data-l=\"Legendario/variocolor, registrado\">1.600</td><td data-l=\"Legendario/variocolor, nuevo\">80.000</td></tr><tr><td data-l=\"Amistad\">Amistad sin Igual</td><td data-l=\"Normal, registrado\">100</td><td data-l=\"Normal, nuevo\">800</td><td data-l=\"Legendario/variocolor, registrado\">800</td><td data-l=\"Legendario/variocolor, nuevo\">40.000</td></tr></tbody></table></div><p>Durante algunos eventos el coste de los intercambios baja aún más.</p>"
+    },
+    {
+      "h": "Intercambios con suerte, IV y caramelos",
+      "html": "<ul><li>Al intercambiar, los valores individuales (IV) se vuelven a sortear. Cuanto mayor es la amistad, mayor es el mínimo; según datos de la comunidad es 1, 2, 3 y 5 para Buena, Gran, Ultra y Amistad sin Igual.</li><li>En un <strong>intercambio con suerte</strong> los dos Pokémon pasan a ser Pokémon con suerte, con IV de al menos 12/12/12 (datos de la comunidad). Los Pokémon con suerte necesitan un 50% menos de Polvos Estelares para mejorarlos.</li><li>Con Amistad sin Igual, si siguen interactuando pueden convertirse en <strong>amistad con suerte</strong>: el siguiente intercambio será con suerte seguro. Con Gran Amistad o más, el Recuerdo Suerte lo consigue al instante.</li><li>Recibes caramelos extra si los dos Pokémon se capturaron lejos uno del otro: cuanto más lejos (hasta unos 100 km), más caramelos.</li></ul>"
+    },
+    {
       "h": "Comparte un enlace y guarda varias listas",
       "html": "<p><em>Enlace para compartir</em> crea una URL que abre tu lista para otra persona, que además puede importarla como una lista nueva propia. Con <em>Nueva lista</em> puedes tener varias listas a la vez, por ejemplo una para el Día de la Comunidad y otra para regionales. Las listas se guardan en tu navegador; si inicias sesión con Google, tendrás las mismas listas en el móvil y en el ordenador.</p>"
     },
@@ -20,11 +32,45 @@
   ],
   "faqTitle": "Preguntas frecuentes",
   "faq": [
-    { "q": "¿El generador es gratis?", "a": "Sí. No hay nada de pago ni registro; los anuncios de la página mantienen el sitio." },
-    { "q": "¿Tengo que iniciar sesión?", "a": "No. Tus listas se guardan en este navegador. Iniciar sesión con Google es opcional y solo sirve para sincronizar las listas entre dispositivos." },
-    { "q": "¿Qué Pokémon y fondos incluye?", "a": "Los Pokémon que han salido en Pokémon GO con sus formas, disfraces, variocolor y Dinamax/Gigamax, además de los fondos de ubicación y fondos especiales que han aparecido en eventos. Si falta una combinación, créala con Combinación libre." },
-    { "q": "¿Se verá mi Código de Entrenador en la imagen?", "a": "Solo si lo escribes. El campo del Código de Entrenador es opcional y está vacío por defecto." },
-    { "q": "¿En qué idiomas está?", "a": "Inglés, chino tradicional, japonés, coreano, francés, alemán y español. Los nombres de los Pokémon siguen el idioma que elijas y la búsqueda entiende los nombres en todos ellos." },
-    { "q": "¿Funciona en el móvil?", "a": "Sí. En iPhone y Android puedes guardar la imagen en tu galería o compartirla directamente con otra app." }
+    {
+      "q": "¿El generador es gratis?",
+      "a": "Sí. No hay nada de pago ni registro; los anuncios de la página mantienen el sitio."
+    },
+    {
+      "q": "¿Tengo que iniciar sesión?",
+      "a": "No. Tus listas se guardan en este navegador. Iniciar sesión con Google es opcional y solo sirve para sincronizar las listas entre dispositivos."
+    },
+    {
+      "q": "¿Qué Pokémon y fondos incluye?",
+      "a": "Los Pokémon que han salido en Pokémon GO con sus formas, disfraces, variocolor y Dinamax/Gigamax, además de los fondos de ubicación y fondos especiales que han aparecido en eventos. Si falta una combinación, créala con Combinación libre."
+    },
+    {
+      "q": "¿Cuántos Polvos Estelares cuesta un intercambio especial?",
+      "a": "Entre 800 y 1.000.000 según el nivel de amistad y si quien lo recibe ya lo tiene registrado. Un legendario o variocolor no registrado cuesta 1.000.000 con Buena Amistad y 40.000 con Amistad sin Igual."
+    },
+    {
+      "q": "¿Qué Pokémon no se pueden intercambiar?",
+      "a": "Los Pokémon oscuros, la mayoría de los singulares (míticos) y cualquier Pokémon que ya hayas recibido en un intercambio. El catálogo marca con 🚫 los que no se pueden intercambiar."
+    },
+    {
+      "q": "¿Cambian los IV al intercambiar?",
+      "a": "Sí. Los IV se vuelven a sortear en cada intercambio; un nivel de amistad más alto y los intercambios con suerte suben el mínimo."
+    },
+    {
+      "q": "¿Qué Pokémon pongo para intercambios?",
+      "a": "Los que otros no pueden conseguir fácilmente: variocolor de eventos pasados, regionales, disfraces, Pokémon con fondo y evoluciones por intercambio como Kadabra o Haunter."
+    },
+    {
+      "q": "¿Se verá mi Código de Entrenador en la imagen?",
+      "a": "Solo si lo escribes. El campo del Código de Entrenador es opcional y está vacío por defecto."
+    },
+    {
+      "q": "¿En qué idiomas está?",
+      "a": "Inglés, chino tradicional, japonés, coreano, francés, alemán y español. Los nombres de los Pokémon siguen el idioma que elijas y la búsqueda entiende los nombres en todos ellos."
+    },
+    {
+      "q": "¿Funciona en el móvil?",
+      "a": "Sí. En iPhone y Android puedes guardar la imagen en tu galería o compartirla directamente con otra app."
+    }
   ]
 }

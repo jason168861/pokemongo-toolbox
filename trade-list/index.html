@@ -1003,6 +1003,14 @@
   .tlGuide p,.tlGuide li{color:var(--fg);opacity:.88}
   .tlGuide ol,.tlGuide ul{padding-left:22px}
   .tlGuide li{margin:6px 0}
+  .tlGuide .tw{overflow-x:auto;margin:8px 0 12px}
+  .tlGuide table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+  .tlGuide th,.tlGuide td{padding:6px 8px;border:1px solid var(--line);text-align:right;color:var(--fg)}
+  .tlGuide th{font-size:12.5px;opacity:.8;font-weight:700}
+  .tlGuide th:first-child,.tlGuide td:first-child{text-align:left;white-space:nowrap}
+  @media(max-width:560px){.tlGuide .tw{overflow:visible}.tlGuide table,.tlGuide tbody,.tlGuide tr,.tlGuide td{display:block}.tlGuide thead{display:none}
+   .tlGuide tr{margin:0 0 8px;padding:6px 10px;border:1px solid var(--line);border-radius:12px}.tlGuide td{display:flex;justify-content:space-between;gap:10px;border:0;padding:3px 0;text-align:right}
+   .tlGuide td:first-child{font-weight:800;padding-bottom:5px}.tlGuide td:first-child::before{content:none}.tlGuide td::before{content:attr(data-l);opacity:.7;font-size:12.5px;text-align:left}}
   .tlFoot{text-align:center;font-size:13px;color:var(--mut);padding:8px 16px 48px;line-height:2}
   .tlFoot a{color:var(--mut)}
 </style>
@@ -1864,12 +1872,13 @@ const SEO_META={
   en:{t:'Pokémon GO Trade List Generator – Shiny, Forms & Backgrounds',
       d:'Free Pokémon GO trade list generator: pick shiny, forms, costumes, Dynamax and background Pokémon, sort them into Looking For and For Trade, and export a shareable image. No sign-up, 7 languages.'},
   zh:{d:'免費的寶可夢 GO 交換清單產生器：挑選異色、型態、服裝、極巨化與背卡寶可夢，分成「我想要的」和「我能提供的」，一鍵做成分享圖。不用註冊，支援 7 種語言。'},
-  ja:{t:'ポケモンGO 交換リスト（トレードリスト）作成ツール｜色違い・背景対応',
+  ja:{t:'ポケモンGO 交換リスト（トレードリスト）作成ツール｜作り方・色違い・背景対応',
       d:'無料のポケモンGO 交換リスト作成ツール。色違い・すがた・コスチューム・ダイマックス・背景つきポケモンを選んで「ほしいもの」「ゆずれるもの」に分け、共有用の画像を作れます。登録不要。'},
   ko:{d:'무료 포켓몬 GO 교환 목록 생성기: 색이 다른 포켓몬, 모습, 의상, 다이맥스, 배경 포켓몬을 골라 ‘원하는 것’과 ‘줄 수 있는 것’으로 나누고 공유용 이미지로 만드세요. 가입 필요 없음.'},
   fr:{d:'Générateur gratuit de liste d’échange Pokémon GO : choisissez Pokémon chromatiques, formes, costumes, Dynamax et fonds, classez-les en « Je recherche » / « Je propose » et exportez une image à partager. Sans inscription.'},
   de:{d:'Kostenloser Pokémon GO Tauschlisten-Generator: Schillernde Pokémon, Formen, Kostüme, Dynamax und Hintergründe auswählen, in „Gesucht“ und „Biete“ sortieren und als Bild teilen. Ohne Anmeldung.'},
-  es:{d:'Generador gratuito de listas de intercambio de Pokémon GO: elige Pokémon variocolor, formas, disfraces, Dinamax y fondos, sepáralos en «Busco» y «Ofrezco» y exporta una imagen para compartir. Sin registro.'}
+  es:{t:'Generador de listas de intercambio Pokémon GO – variocolor, formas y fondos',
+      d:'Generador gratuito de listas de intercambio de Pokémon GO: elige Pokémon variocolor, formas, disfraces, Dinamax y fondos, sepáralos en «Busco» y «Ofrezco» y exporta una imagen para compartir. Sin registro.'}
 };
 function applySeoMeta(){
   const m=SEO_META[LANG]||{}, t=m.t||tr('app'), d=m.d||SEO_META.en.d;
