@@ -584,6 +584,10 @@ def build(name):
     url = f"{ORIGIN}/cp/{slug}/"
     cp15, cp20, cp25 = cp_at(p, 15, 15), cp_at(p, 20, 15), cp_at(p, 25, 15)
     cp40, cp50, cp51 = cp_at(p, 40, 15), cp_at(p, 50, 15), cp_at(p, BB, 15)
+    # 偽百：練滿時 15/15/14 的 HP 與 15/15/15 相同（攻防本來就一樣）→ 數值完全相同。名單頁在 /fake-hundo/（build_fake_hundo.py）
+    fake_lv = [lv for lv in (40, 50, BB) if hp_iv(p, lv, 14) == hp_iv(p, lv, 15)]
+    fake_note = (f"偽百：練到 {'、'.join(f'Lv{lv}' for lv in fake_lv)} 時，15/15/14 的 HP 跟 100% 一樣，數值完全相同。" if fake_lv
+                 else "偽百：沒有。練到 Lv40、Lv50、Lv51 時，15/15/14 的 HP 都比 100% 少 1。")
     title = f"{name} IV100 CP 速查｜Lv1-50 全等級 CP 表｜Pokémon Go 工具箱"
     desc = (f"{name}（#{pid}，{e['type_line']}）IV 100% CP：田野調查 Lv15 {cp15}、團體戰 Lv20 {cp20}、"
             f"天氣加成 Lv25 {cp25}；含 CP 反查 IV、Lv1～50 全等級 CP 表、屬性剋制、推薦招式與 PvP 聯盟定位。")
@@ -692,6 +696,7 @@ def build(name):
       <div class="h-tile"><span class="h-lab">☀️ 天氣加成</span><b>{cp25}</b><span class="h-lv">Lv25</span></div>
     </div>
     <p class="hundo-note">以上是 <strong>IV 100%（15/15/15）</strong>時的 CP。在田野調查（Lv15）、團體戰或孵蛋（Lv20）、天氣加成團體戰（Lv25）抓到時，CP 正好是上面的數字，幾乎可以確定是 100% 個體；其他情況或想確認，請用下面的「CP 反查 IV」。</p>
+    <p class="hundo-note">{fake_note}<a href="../../fake-hundo/">什麼是偽百？</a></p>
     <div class="chips">
       <span class="pill">最大 CP <b>Lv40 {cp40}</b></span><span class="pill"><b>Lv50 {cp50}</b></span><span class="pill"><b>Lv51 {cp51}</b></span>
       <span class="pill">攻 <b>{p['atk']}</b> · 防 <b>{p['def']}</b> · 耐 <b>{p['sta']}</b></span>
