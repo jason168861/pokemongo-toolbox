@@ -37,8 +37,8 @@ FORM_KEY = {"zacian": "form_zacian_hero", "zamazenta": "form_zamazenta_hero", "g
             "landorus": "form_landorus_incarnate", "thundurus": "form_thundurus_incarnate",
             "tornadus": "form_tornadus_incarnate",
             "zygarde": "form_zygarde_fifty_percent", "meloetta": "form_meloetta_aria"}
-REGIONAL = [("_galarian", "galar"), ("_alola", "alola"), ("_hisuian", "hisui")]   # 用「…_pokedex_header」的地區名稱
-NO_FORM = {"slowbro"}   # 「2021形態」只是資料上的區分，遊戲裡就是一般的呆殼獸
+REGIONAL = [("_galarian", "galar"), ("_alola", "alola"), ("_alolan", "alola"), ("_hisuian", "hisui")]   # 用「…_pokedex_header」的地區名稱
+NO_FORM = {"slowbro", "slowking"}   # 「2021形態」只是資料上的區分，遊戲裡就是一般的呆殼獸
 MANUAL_NAME = {"mewtwo_a": {"en": "Armored Mewtwo", "ja": "アーマードミュウツー", "ko": "아머드 뮤츠",
                             "fr": "Mewtwo Armuré", "de": "Rüstungs-Mewtu", "es": "Mewtwo Acorazado"}}
 # pogo_assets 文字檔還沒收錄的寶可夢（圖鑑編號 → 各語言官方名稱，取自本傳遊戲；來源 Bulbapedia 各頁的

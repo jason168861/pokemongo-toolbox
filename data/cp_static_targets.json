@@ -1272,6 +1272,690 @@
   {
    "name": "妙喵",
    "slug": "espurr"
+  },
+  {
+   "name": "火恐龍",
+   "slug": "charmeleon"
+  },
+  {
+   "name": "卡咪龜",
+   "slug": "wartortle"
+  },
+  {
+   "name": "鐵殼蛹",
+   "slug": "kakuna"
+  },
+  {
+   "name": "比比鳥",
+   "slug": "pidgeotto"
+  },
+  {
+   "name": "大比鳥",
+   "slug": "pidgeot"
+  },
+  {
+   "name": "拉達 (阿羅拉形態)",
+   "slug": "raticate_alolan"
+  },
+  {
+   "name": "雷丘 (阿羅拉形態)",
+   "slug": "raichu_alolan"
+  },
+  {
+   "name": "六尾",
+   "slug": "vulpix"
+  },
+  {
+   "name": "大嘴蝠",
+   "slug": "golbat"
+  },
+  {
+   "name": "臭臭花",
+   "slug": "gloom"
+  },
+  {
+   "name": "霸王花",
+   "slug": "vileplume"
+  },
+  {
+   "name": "摩魯蛾",
+   "slug": "venomoth"
+  },
+  {
+   "name": "喵喵 (伽勒爾形態)",
+   "slug": "meowth_galarian"
+  },
+  {
+   "name": "喵喵 (阿羅拉形態)",
+   "slug": "meowth_alolan"
+  },
+  {
+   "name": "貓老大",
+   "slug": "persian"
+  },
+  {
+   "name": "貓老大 (阿羅拉形態)",
+   "slug": "persian_alolan"
+  },
+  {
+   "name": "哥達鴨",
+   "slug": "golduck"
+  },
+  {
+   "name": "風速狗 (洗翠形態)",
+   "slug": "arcanine_hisuian"
+  },
+  {
+   "name": "蚊香君",
+   "slug": "poliwhirl"
+  },
+  {
+   "name": "蚊香泳士",
+   "slug": "poliwrath"
+  },
+  {
+   "name": "勇基拉",
+   "slug": "kadabra"
+  },
+  {
+   "name": "胡地",
+   "slug": "alakazam"
+  },
+  {
+   "name": "豪力",
+   "slug": "machoke"
+  },
+  {
+   "name": "喇叭芽",
+   "slug": "bellsprout"
+  },
+  {
+   "name": "口呆花",
+   "slug": "weepinbell"
+  },
+  {
+   "name": "呆呆獸",
+   "slug": "slowpoke"
+  },
+  {
+   "name": "呆殼獸 (伽勒爾形態)",
+   "slug": "slowbro_galarian"
+  },
+  {
+   "name": "大岩蛇",
+   "slug": "onix"
+  },
+  {
+   "name": "椰蛋樹",
+   "slug": "exeggutor"
+  },
+  {
+   "name": "椰蛋樹 (阿羅拉形態)",
+   "slug": "exeggutor_alolan"
+  },
+  {
+   "name": "飛腿郎",
+   "slug": "hitmonlee"
+  },
+  {
+   "name": "快拳郎",
+   "slug": "hitmonchan"
+  },
+  {
+   "name": "飛天螳螂",
+   "slug": "scyther"
+  },
+  {
+   "name": "水伊布",
+   "slug": "vaporeon"
+  },
+  {
+   "name": "雷伊布",
+   "slug": "jolteon"
+  },
+  {
+   "name": "火伊布",
+   "slug": "flareon"
+  },
+  {
+   "name": "火球鼠",
+   "slug": "cyndaquil"
+  },
+  {
+   "name": "火岩鼠",
+   "slug": "quilava"
+  },
+  {
+   "name": "火爆獸 (洗翠形態)",
+   "slug": "typhlosion_hisuian"
+  },
+  {
+   "name": "藍鱷",
+   "slug": "croconaw"
+  },
+  {
+   "name": "貓頭夜鷹",
+   "slug": "noctowl"
+  },
+  {
+   "name": "叉字蝠",
+   "slug": "crobat"
+  },
+  {
+   "name": "皮寶寶",
+   "slug": "cleffa"
+  },
+  {
+   "name": "寶寶丁",
+   "slug": "igglybuff"
+  },
+  {
+   "name": "波克比",
+   "slug": "togepi"
+  },
+  {
+   "name": "天然雀",
+   "slug": "natu"
+  },
+  {
+   "name": "美麗花",
+   "slug": "bellossom"
+  },
+  {
+   "name": "瑪力露",
+   "slug": "marill"
+  },
+  {
+   "name": "蚊香蛙皇",
+   "slug": "politoed"
+  },
+  {
+   "name": "烏波",
+   "slug": "wooper"
+  },
+  {
+   "name": "呆呆王 (2022形態)",
+   "slug": "slowking"
+  },
+  {
+   "name": "呆呆王 (伽勒爾形態)",
+   "slug": "slowking_galarian"
+  },
+  {
+   "name": "圈圈熊",
+   "slug": "ursaring"
+  },
+  {
+   "name": "多邊獸Ⅱ",
+   "slug": "porygon2"
+  },
+  {
+   "name": "無畏小子",
+   "slug": "tyrogue"
+  },
+  {
+   "name": "鴨嘴寶寶",
+   "slug": "magby"
+  },
+  {
+   "name": "沙基拉斯",
+   "slug": "pupitar"
+  },
+  {
+   "name": "森林蜥蜴",
+   "slug": "grovyle"
+  },
+  {
+   "name": "力壯雞",
+   "slug": "combusken"
+  },
+  {
+   "name": "水躍魚",
+   "slug": "mudkip"
+  },
+  {
+   "name": "沼躍魚",
+   "slug": "marshtomp"
+  },
+  {
+   "name": "直衝熊",
+   "slug": "linoone"
+  },
+  {
+   "name": "長鼻葉",
+   "slug": "nuzleaf"
+  },
+  {
+   "name": "狡猾天狗",
+   "slug": "shiftry"
+  },
+  {
+   "name": "沙奈朵",
+   "slug": "gardevoir"
+  },
+  {
+   "name": "懶人獺",
+   "slug": "slakoth"
+  },
+  {
+   "name": "過動猿",
+   "slug": "vigoroth"
+  },
+  {
+   "name": "露力麗",
+   "slug": "azurill"
+  },
+  {
+   "name": "可可多拉",
+   "slug": "aron"
+  },
+  {
+   "name": "可多拉",
+   "slug": "lairon"
+  },
+  {
+   "name": "噴火駝",
+   "slug": "camerupt"
+  },
+  {
+   "name": "夢歌仙人掌",
+   "slug": "cacturne"
+  },
+  {
+   "name": "搖籃百合",
+   "slug": "cradily"
+  },
+  {
+   "name": "美納斯",
+   "slug": "milotic"
+  },
+  {
+   "name": "怨影娃娃",
+   "slug": "shuppet"
+  },
+  {
+   "name": "冰鬼護",
+   "slug": "glalie"
+  },
+  {
+   "name": "甲殼龍",
+   "slug": "shelgon"
+  },
+  {
+   "name": "暴飛龍",
+   "slug": "salamence"
+  },
+  {
+   "name": "金屬怪",
+   "slug": "metang"
+  },
+  {
+   "name": "波皇子",
+   "slug": "prinplup"
+  },
+  {
+   "name": "帝王拿波",
+   "slug": "empoleon"
+  },
+  {
+   "name": "姆克兒",
+   "slug": "starly"
+  },
+  {
+   "name": "姆克鳥",
+   "slug": "staravia"
+  },
+  {
+   "name": "櫻花兒",
+   "slug": "cherrim"
+  },
+  {
+   "name": "小福蛋",
+   "slug": "happiny"
+  },
+  {
+   "name": "暴雪王",
+   "slug": "abomasnow"
+  },
+  {
+   "name": "葉伊布",
+   "slug": "leafeon"
+  },
+  {
+   "name": "天蠍王",
+   "slug": "gliscor"
+  },
+  {
+   "name": "多邊獸Ｚ",
+   "slug": "porygon_z"
+  },
+  {
+   "name": "艾路雷朵",
+   "slug": "gallade"
+  },
+  {
+   "name": "雪妖女",
+   "slug": "froslass"
+  },
+  {
+   "name": "雙刃丸",
+   "slug": "dewott"
+  },
+  {
+   "name": "夢夢蝕",
+   "slug": "musharna"
+  },
+  {
+   "name": "地幔岩",
+   "slug": "boldore"
+  },
+  {
+   "name": "龐岩怪",
+   "slug": "gigalith"
+  },
+  {
+   "name": "索羅亞 (洗翠形態)",
+   "slug": "zorua_hisuian"
+  },
+  {
+   "name": "索羅亞克 (洗翠形態)",
+   "slug": "zoroark_hisuian"
+  },
+  {
+   "name": "萌芽鹿",
+   "slug": "sawsbuck"
+  },
+  {
+   "name": "大宇怪",
+   "slug": "beheeyem"
+  },
+  {
+   "name": "斧牙龍",
+   "slug": "fraxure"
+  },
+  {
+   "name": "雙斧戰龍",
+   "slug": "haxorus"
+  },
+  {
+   "name": "雙首暴龍",
+   "slug": "zweilous"
+  },
+  {
+   "name": "火神蛾",
+   "slug": "volcarona"
+  },
+  {
+   "name": "龍捲雲 (靈獸形態)",
+   "slug": "tornadus_therian"
+  },
+  {
+   "name": "美洛耶塔 (舞步形態)",
+   "slug": "meloetta_pirouette"
+  },
+  {
+   "name": "胖胖哈力",
+   "slug": "quilladin"
+  },
+  {
+   "name": "布里卡隆",
+   "slug": "chesnaught"
+  },
+  {
+   "name": "火箭雀",
+   "slug": "fletchinder"
+  },
+  {
+   "name": "烈箭鷹",
+   "slug": "talonflame"
+  },
+  {
+   "name": "粉蝶蟲",
+   "slug": "scatterbug"
+  },
+  {
+   "name": "粉蝶蛹",
+   "slug": "spewpa"
+  },
+  {
+   "name": "火炎獅",
+   "slug": "pyroar"
+  },
+  {
+   "name": "流氓熊貓",
+   "slug": "pangoro"
+  },
+  {
+   "name": "超能妙喵",
+   "slug": "meowstic"
+  },
+  {
+   "name": "朽木妖",
+   "slug": "trevenant"
+  },
+  {
+   "name": "南瓜精 (大尺寸)",
+   "slug": "pumpkaboo_large"
+  },
+  {
+   "name": "南瓜精 (小尺寸)",
+   "slug": "pumpkaboo_small"
+  },
+  {
+   "name": "南瓜精 (特大尺寸)",
+   "slug": "pumpkaboo_super"
+  },
+  {
+   "name": "南瓜怪人 (大尺寸)",
+   "slug": "gourgeist_large"
+  },
+  {
+   "name": "南瓜怪人 (小尺寸)",
+   "slug": "gourgeist_small"
+  },
+  {
+   "name": "南瓜怪人 (特大尺寸)",
+   "slug": "gourgeist_super"
+  },
+  {
+   "name": "音波龍",
+   "slug": "noivern"
+  },
+  {
+   "name": "胡帕 (懲戒形態)",
+   "slug": "hoopa_confined"
+  },
+  {
+   "name": "投羽梟",
+   "slug": "dartrix"
+  },
+  {
+   "name": "狙射樹梟 (洗翠形態)",
+   "slug": "decidueye_hisuian"
+  },
+  {
+   "name": "炎熱喵",
+   "slug": "torracat"
+  },
+  {
+   "name": "球球海獅",
+   "slug": "popplio"
+  },
+  {
+   "name": "花漾海獅",
+   "slug": "brionne"
+  },
+  {
+   "name": "鬃岩狼人 (白晝形態)",
+   "slug": "lycanroc_midday"
+  },
+  {
+   "name": "鬃岩狼人 (黃昏形態)",
+   "slug": "lycanroc_dusk"
+  },
+  {
+   "name": "鬃岩狼人 (黑夜形態)",
+   "slug": "lycanroc_midnight"
+  },
+  {
+   "name": "超壞星",
+   "slug": "toxapex"
+  },
+  {
+   "name": "滴蛛霸",
+   "slug": "araquanid"
+  },
+  {
+   "name": "穿著熊",
+   "slug": "bewear"
+  },
+  {
+   "name": "心鱗寶",
+   "slug": "jangmo_o"
+  },
+  {
+   "name": "鱗甲龍",
+   "slug": "hakamo_o"
+  },
+  {
+   "name": "科斯莫古",
+   "slug": "cosmog"
+  },
+  {
+   "name": "科斯莫姆",
+   "slug": "cosmoem"
+  },
+  {
+   "name": "四顎針龍",
+   "slug": "naganadel"
+  },
+  {
+   "name": "敲音猴",
+   "slug": "grookey"
+  },
+  {
+   "name": "啪咚猴",
+   "slug": "thwackey"
+  },
+  {
+   "name": "騰蹴小將",
+   "slug": "raboot"
+  },
+  {
+   "name": "變澀蜥",
+   "slug": "drizzile"
+  },
+  {
+   "name": "藍鴉",
+   "slug": "corvisquire"
+  },
+  {
+   "name": "蘋裹龍",
+   "slug": "flapple"
+  },
+  {
+   "name": "豐蜜龍",
+   "slug": "appletun"
+  },
+  {
+   "name": "戽斗尖梭",
+   "slug": "barraskewda"
+  },
+  {
+   "name": "毒電嬰",
+   "slug": "toxel"
+  },
+  {
+   "name": "提布莉姆",
+   "slug": "hattrem"
+  },
+  {
+   "name": "布莉姆溫",
+   "slug": "hatterene"
+  },
+  {
+   "name": "詐唬魔",
+   "slug": "morgrem"
+  },
+  {
+   "name": "堵攔熊",
+   "slug": "obstagoon"
+  },
+  {
+   "name": "喵頭目",
+   "slug": "perrserker"
+  },
+  {
+   "name": "雪絨蛾",
+   "slug": "frosmoth"
+  },
+  {
+   "name": "多龍奇",
+   "slug": "drakloak"
+  },
+  {
+   "name": "多龍巴魯托",
+   "slug": "dragapult"
+  },
+  {
+   "name": "蒂蕾喵",
+   "slug": "floragato"
+  },
+  {
+   "name": "炙燙鱷",
+   "slug": "crocalor"
+  },
+  {
+   "name": "骨紋巨聲鱷",
+   "slug": "skeledirge"
+  },
+  {
+   "name": "湧躍鴨",
+   "slug": "quaxwell"
+  },
+  {
+   "name": "麻花犬",
+   "slug": "dachsbun"
+  },
+  {
+   "name": "奧利紐",
+   "slug": "dolliv"
+  },
+  {
+   "name": "奧利瓦",
+   "slug": "arboliva"
+  },
+  {
+   "name": "紅蓮鎧騎",
+   "slug": "armarouge"
+  },
+  {
+   "name": "蒼炎刃鬼",
+   "slug": "ceruledge"
+  },
+  {
+   "name": "怖納噬草",
+   "slug": "brambleghast"
+  },
+  {
+   "name": "凍脊龍",
+   "slug": "arctibax"
+  },
+  {
+   "name": "戟脊龍",
+   "slug": "baxcalibur"
+  },
+  {
+   "name": "賽富豪",
+   "slug": "gholdengo"
+  },
+  {
+   "name": "裹蜜蟲",
+   "slug": "dipplin"
+  },
+  {
+   "name": "蜜集大蛇",
+   "slug": "hydrapple"
   }
  ]
 }
