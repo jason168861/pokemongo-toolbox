@@ -20,7 +20,8 @@
   三種操作:
     刪除  來源列錯的寶可夢
     改    欄位(異色/極巨化/淨化、型態、造型、指定圖片網址)
-    新增  來源漏掉的組合(用下方「自由搭配」挑)
+    新增  來源漏掉的組合(用下方「自由搭配」挑,可多選、可從其他背卡整批帶入)
+  「新增卡片」可以直接拖曳 / 貼上圖片,經 preview.py 的 /__upload 存進 assets/bg/。
 -->
 <style>
 :root{
@@ -59,6 +60,7 @@ main{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;padding:14p
 .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
 .side{position:sticky;top:62px;max-height:calc(100vh - 76px);display:flex;flex-direction:column}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row>.sp{flex:1}
 .sub{color:var(--mut);font-size:12px}
 .hr{height:1px;background:var(--line);margin:10px 0}
 
@@ -148,6 +150,33 @@ main{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;padding:14p
 .mixCell.on{border-color:var(--acc2);box-shadow:0 0 0 1px var(--acc2) inset}
 .mixCell img{width:100%;height:52px;object-fit:contain}
 .mixCell .l{font-size:9px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mixCell{position:relative}
+.mixCell .ck{position:absolute;top:2px;right:3px;font-size:11px;color:#fff;background:var(--acc2);border-radius:20px;
+  width:16px;height:16px;line-height:16px;display:none}
+.mixCell.on .ck{display:block}
+/* 已選清單:每隻可以各自切旗標(例如同一張卡上只有某幾隻是極巨化) */
+#mixTray{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:6px;overflow:auto;max-height:24vh;margin-top:6px}
+#mixTray:empty::before{content:'點上面的格子加進來(可以連點好幾隻);也可以用「從其他背卡帶入」一次帶一整張卡的寶可夢';
+  color:var(--mut);font-size:12px;grid-column:1/-1}
+.ti{position:relative;background:var(--cell);border:1px solid var(--line);border-radius:8px;padding:4px;text-align:center}
+.ti.dup{opacity:.45;border-style:dashed}
+.ti img{width:100%;height:48px;object-fit:contain}
+.ti .l{font-size:10px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ti .l b{color:var(--fg);font-weight:600}
+.ti .fl{display:flex;gap:3px;justify-content:center;margin-top:3px}
+.ti .fl button{font-size:10px;padding:0 5px;border-radius:20px;line-height:17px}
+.ti .x{position:absolute;top:1px;right:2px;padding:0 6px;font-size:11px;border:0;background:transparent;color:var(--mut)}
+#mixFrom{max-width:210px}
+/* 新增卡片 */
+#ncMask{position:fixed;inset:0;background:#000b;z-index:45;display:none;align-items:center;justify-content:center;padding:14px}
+#ncMask.on{display:flex}
+#ncDrop{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;margin-top:10px;min-height:170px;
+  border:2px dashed var(--line);border-radius:12px;cursor:pointer;text-align:center;padding:10px;overflow:hidden}
+#ncDrop:hover,#ncDrop.over{border-color:var(--acc);background:rgba(123,92,255,.08)}
+#ncDrop img{max-width:100%;max-height:220px;border-radius:8px;display:none}
+#ncDrop.has img{display:block}
+#ncDrop.has #ncHint{display:none}
+.ncT.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
 
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#000c;color:#fff;
   padding:9px 16px;border-radius:20px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:60;
@@ -210,23 +239,52 @@ kbd{background:var(--cell);border:1px solid var(--line);border-bottom-width:2px;
 
 <div id="mixMask">
   <div class="mixBox">
-    <div class="row"><b>自由搭配 — 挑一隻加進這張卡</b><span class="sp"></span><button id="mixClose">✕</button></div>
+    <div class="row"><b>自由搭配 — 挑寶可夢加進這張卡</b>
+      <span class="sub">點格子多選,再點一次取消 · 搜尋框按 <kbd>Enter</kbd> = 選第一個並清空</span>
+      <span class="sp"></span><button id="mixClose">✕</button></div>
     <div class="row" style="margin-top:8px">
-      <input id="mixQ" placeholder="搜尋…名稱、編號、型態代碼" style="flex:1">
+      <input id="mixQ" placeholder="搜尋…名稱、編號、型態代碼" style="flex:1;min-width:160px">
+      <select id="mixFrom" title="把另一張卡上的寶可夢全部帶進已選清單,再把不要的取消"></select>
       <span class="sub" id="mixCount"></span>
     </div>
     <div class="mixGrid" id="mixGrid"></div>
     <div class="hr"></div>
     <div class="row">
-      <span class="sub">旗標:</span>
+      <span class="sub">已選 <b id="mixN" style="color:var(--fg)">0</b> 隻</span>
+      <span class="sub" id="mixDupN"></span>
+      <span class="sp"></span>
+      <button id="mixClear" style="font-size:12px;padding:3px 10px">清空</button>
+    </div>
+    <div id="mixTray"></div>
+    <div class="row" style="margin-top:8px">
+      <span class="sub" title="按下去會套用到全部已選,之後新選的也沿用(會記住)">旗標(全部):</span>
       <button class="mixF" data-f="shiny">✨ 異色</button>
       <button class="mixF" data-f="dynamax">極巨化</button>
       <button class="mixF" data-f="gmax">超極巨化</button>
       <button class="mixF" data-f="shadow">淨化</button>
       <span class="sp"></span>
-      <span class="sub" id="mixPick">尚未選取</span>
       <button class="pri" id="mixAdd" disabled>加入</button>
     </div>
+  </div>
+</div>
+
+<div id="ncMask">
+  <div class="mixBox" style="width:min(560px,96vw)">
+    <div class="row"><b>新增卡片</b><span class="sub">來源還沒收錄的卡</span><span class="sp"></span><button id="ncClose">✕</button></div>
+    <label id="ncDrop">
+      <input type="file" id="ncFile" accept="image/png,image/jpeg,image/webp" hidden>
+      <img id="ncImg" alt="">
+      <span id="ncHint">把背卡圖片拖到這裡,或點一下選檔<br><span class="sub">也可以直接 <kbd>Ctrl</kbd>+<kbd>V</kbd> 貼上 · 會存進 assets/bg/</span></span>
+    </label>
+    <details style="margin-top:8px"><summary class="sub" style="cursor:pointer">沒有圖檔?改填 Wiki 檔名(重建時去 Fandom 抓圖)</summary>
+      <input id="ncWiki" placeholder="Location Background San Francisco.png" style="width:100%;margin-top:6px"></details>
+    <div class="fgrid">
+      <div><label>顯示名稱(網站上看到的卡名)</label><input id="ncName" placeholder="例:GO Wild Area 2026"></div>
+      <div><label>類型</label><div class="row">
+        <button class="ncT" data-t="special">特殊背卡</button><button class="ncT" data-t="location">地區背卡</button></div></div>
+    </div>
+    <div class="row" style="margin-top:10px"><span class="sub" id="ncMsg"></span><span class="sp"></span>
+      <button class="pri" id="ncOk" disabled>建立,接著挑寶可夢 →</button></div>
   </div>
 </div>
 
@@ -238,7 +296,8 @@ const FILE='data/bg_overrides.json';
 let BG=[], POKE={}, NAMES={}, ALLNAMES={}, BGALIAS={};   // BGALIAS:沿用 aliases.json,這裡也能用「首爾」搜
 let DUPES={};   // image_name → 同一張卡的其他檔名(由 fetch_assets.py 比對圖片產生)
 let OPS=[], META={version:1,note:''}, DIRTY=false, HIST=[], CUR=null, EDIT=null;
-let MIX={mon:null,flags:{}};
+let MIX={sel:[], hit:[], flags:{shiny:true,dynamax:false,gmax:false,shadow:false}};
+try{ Object.assign(MIX.flags, JSON.parse(localStorage.getItem('bgMixFlags')||'{}')); }catch(e){}
 const LANGS=['zh','en','ja','ko','fr','de','es'];
 
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -254,6 +313,8 @@ function thumb(u){ if(!u)return '';
   if(u.startsWith('assets/img/'))return 'assets/thumb/'+u.slice(11).replace(/\.png$/i,'.webp');
   if(u.startsWith('assets/bg/'))return 'assets/bgthumb/'+u.slice(10).replace(/\.(png|jpe?g|webp)$/i,'.webp');
   return u; }
+// 背卡圖:先用縮圖,縮圖還沒產生(剛上傳、還沒跑 fetch_assets)就退回原圖
+const bgSrc=u=>`src="${esc(thumb(u))}" onerror="this.onerror=null;this.src='${esc(u)}'"`;
 
 /* ===== 條目識別碼:必須與 build_data.py 的 bg_key() 完全一致 =====
    ⚠ sprite 一定要正規化:這一頁讀的是 backgrounds.local.json(本機檔名 wiki_GO0133Explorer.png),
@@ -383,7 +444,7 @@ function drawCards(){
   box.innerHTML=list.map(b=>{
     const n=opsOf(b.image_name).length, sm=sameImgCount(b.image_name);
     return `<div class="cardItem${CUR===b.image_name?' on':''}" data-c="${esc(b.image_name)}">
-      <img loading="lazy" src="${thumb(b.image_url)}" alt="">
+      <img loading="lazy" ${bgSrc(b.image_url)} alt="">
       <div class="t"><b>${esc(b.name||b.image_name)}</b>
         <span class="sub">${esc(b.image_name.replace(/\.(png|jpe?g|webp)$/i,''))}</span></div>
       <span class="n" title="條目數${n?' · 已修正 '+n+' 筆':''}${sm?' · 異色圖與一般圖相同 '+sm+' 筆':''}">${b.pokemon.length}${
@@ -412,7 +473,7 @@ function drawMons(){
              :m._st==='patched'?'<span class="tag w">已改</span>'
              :m._st==='added'?'<span class="tag g">新增</span>':'';
     const sameImg=m.shiny&&monUrl(m,true)===monUrl(m,false);
-    const slot=(sh,lbl)=>`<div class="slot"><img class="bgimg" src="${thumb(b.image_url)}" alt="">
+    const slot=(sh,lbl)=>`<div class="slot"><img class="bgimg" ${bgSrc(b.image_url)} alt="">
         <img class="m" loading="lazy" src="${thumb(monUrl(m,sh))}" onerror="this.style.visibility='hidden'">
         ${lbl?`<span class="lbl">${lbl}</span>`:''}</div>`;
     return `<div class="mon ${m._st}" data-i="${i}">${tag}
@@ -494,31 +555,117 @@ function syncNewCards(){
              name:o.name||'', image_url:o.image_url||'', pokemon:[], _new:true});
   }
 }
+/* 新增卡片的對話框。兩種來源:
+     1) 圖檔(拖曳 / 選檔 / 貼上)→ 經 preview.py 的 /__upload 存進 assets/bg/,重建時原樣保留、不下載
+     2) Wiki 檔名(Location Background San Francisco.png)→ 重建時去 Fandom 解析網址
+   卡片的識別碼一律用檔名本身(底線換成空白,與舊版 prompt 流程相同);本機路徑另外存進 image_url。 */
+const NC={file:null, type:'special', nameTouched:false};
+// 檔名 → 預設卡名:去副檔名、底線連字號換空白、拿掉 Special/Location Background、sb/lb 前綴
+function prettyName(fn){
+  let s=String(fn||'').replace(/\.(png|jpe?g|webp)$/i,'').replace(/[_-]+/g,' ').trim();
+  s=s.replace(/^(special|location)\s+background\s*/i,'').replace(/^(sb|lb)\s+/i,'').replace(/\s+background$/i,'');
+  return s.replace(/\b[a-z]/g,c=>c.toUpperCase()).replace(/\bGo\b/g,'GO');
+}
+const guessType=fn=>/location|^lb[\s_-]/i.test(fn||'')?'location':'special';
+const ncSetType=t=>{ NC.type=t; $$('.ncT').forEach(b=>b.classList.toggle('on',b.dataset.t===t)); };
+function ncCheck(){
+  const ok=(NC.file||$('#ncWiki').value.trim()) && $('#ncName').value.trim();
+  $('#ncOk').disabled=!ok;
+  if(!NC.file&&!$('#ncWiki').value.trim()) $('#ncMsg').textContent='先放一張圖';
+  else if(!$('#ncName').value.trim()) $('#ncMsg').textContent='填一下顯示名稱';
+  else $('#ncMsg').textContent='';
+}
+function ncSuggest(fn){
+  if(!NC.nameTouched) $('#ncName').value=prettyName(fn);
+  ncSetType(guessType(fn)); ncCheck();
+}
+function ncTakeFile(f){
+  if(!f) return;
+  if(!/^image\/(png|jpeg|webp)$/.test(f.type)){ toast('只收 png / jpg / webp'); return; }
+  NC.file=f;
+  const img=$('#ncImg'); if(img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+  img.src=URL.createObjectURL(f); $('#ncDrop').classList.add('has');
+  // 貼上的截圖檔名是 image.png 之類,不能拿來當卡名
+  if(f.name && !/^image\.(png|jpe?g)$/i.test(f.name)) ncSuggest(f.name); else ncCheck();
+}
 function newCard(){
-  // 兩種來源都收：
-  //   1) Wiki 檔名（Location Background San Francisco.png）→ 重建時去 Fandom 解析網址
-  //   2) 本機路徑（assets/bg/xxx.png）→ 圖自己複製進去，重建時原樣保留、不下載
-  const raw=(prompt('Wiki 檔名，或已放好的本機路徑：\n' +
-                    '  Location Background San Francisco.png\n' +
-                    '  assets/bg/My_Card.png')||'').trim();
-  if(!raw) return;
-  const local=/^assets\//i.test(raw);
-  if(!/\.(png|jpe?g|webp)$/i.test(raw)) return alert('要包含副檔名，例如 .png');
-  // 卡片的識別碼一律用檔名本身；本機路徑另外存進 image_url
-  const file=local ? raw.split('/').pop().replace(/_/g,' ')
-                   : raw.replace(/^File:/i,'').replace(/_/g,' ');
-  if(BG.some(b=>b.image_name===file)) return alert('這張卡已經在清單裡了');
-  const name=(prompt('顯示名稱（例：San Francisco, California, USA）')||'').trim();
-  const type=confirm('這是「地區背卡」嗎？\n確定＝地區、取消＝特殊')?'location':'special';
-  const op={card:file, op:'addCard', type, name};
-  if(local) op.image_url=raw;
+  NC.file=null; NC.nameTouched=false;
+  $('#ncFile').value=''; $('#ncWiki').value=''; $('#ncName').value='';
+  $('#ncDrop').classList.remove('has'); $('#ncImg').removeAttribute('src');
+  ncSetType('special'); ncCheck();
+  $('#ncMask').classList.add('on');
+}
+// 卡名 → 檔名(貼上的圖沒有檔名時用)。非英數一律去掉,全是中文就用日期
+const slugOf=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')
+  || 'bg-'+new Date().toISOString().slice(0,16).replace(/\D/g,'');
+async function uploadBg(file, name, overwrite){
+  const r=await fetch('/__upload?name='+encodeURIComponent(name)+(overwrite?'&overwrite=1':''),
+    {method:'POST',headers:{'Content-Type':'application/octet-stream'},body:file});
+  const j=await r.json().catch(()=>({}));
+  return {status:r.status, ...j};
+}
+async function ncCreate(){
+  const name=$('#ncName').value.trim(), type=NC.type;
+  let card, image_url='';
+  if(NC.file){
+    const ext=(NC.file.type==='image/jpeg'?'.jpg':NC.file.type==='image/webp'?'.webp':'.png');
+    let fn=(NC.file.name&&!/^image\.(png|jpe?g)$/i.test(NC.file.name))
+      ? NC.file.name.replace(/\.[^.]+$/,'') : slugOf(name);
+    fn=fn.replace(/[^A-Za-z0-9._-]+/g,'_').replace(/^[._]+|[._]+$/g,'') || slugOf(name);
+    fn+=ext;
+    // 先擋「同名卡已存在」,免得白傳一次
+    if(BG.some(b=>b.image_name===fn.replace(/_/g,' '))){ $('#ncMsg').textContent='已經有同檔名的卡了,換個檔名再試'; return; }
+    $('#ncOk').disabled=true; $('#ncMsg').textContent='上傳中…';
+    let res;
+    try{ res=await uploadBg(NC.file, fn, false);
+      if(res.status===409&&res.exists){
+        if(!confirm(res.path+' 已經存在。\n要用這張圖覆蓋它嗎?')){ ncCheck(); return; }
+        res=await uploadBg(NC.file, fn, true);
+      }
+    }catch(e){ res={ok:false,error:e.message}; }
+    if(!res.ok){
+      ncCheck();
+      $('#ncMsg').innerHTML='<span style="color:var(--warn)">存不了圖('+esc(res.error||('HTTP '+res.status))
+        +')—— 請用 <code>python preview.py</code> 開這一頁</span>';
+      return;
+    }
+    image_url=res.path; card=res.path.split('/').pop().replace(/_/g,' ');
+  }else{
+    const raw=$('#ncWiki').value.trim().replace(/^File:/i,'');
+    if(!/\.(png|jpe?g|webp)$/i.test(raw)){ $('#ncMsg').textContent='Wiki 檔名要包含副檔名,例如 .png'; return; }
+    card=raw.replace(/_/g,' ');
+  }
+  if(BG.some(b=>b.image_name===card)){ $('#ncMsg').textContent='這張卡已經在清單裡了'; ncCheck(); return; }
+  const op={card, op:'addCard', type, name};
+  if(image_url) op.image_url=image_url;
   snapshot();
   OPS.push(op);
-  BG.push({type, source:'manual', image_name:file, name,
-           image_url:local?raw:'', pokemon:[], _new:true});
-  CUR=file; EDIT=null; after();
-  toast(local ? '已建立，接著用「＋ 自由搭配加入」放寶可夢進去'
-              : '已建立，圖片網址會在下次重建時去 Fandom 解析');
+  BG.push({type, source:'manual', image_name:card, name, image_url, pokemon:[], _new:true});
+  CUR=card; EDIT=null; after();
+  $('#ncMask').classList.remove('on');
+  openMix();
+  toast(image_url ? '已建立 —— 挑好寶可夢按「加入」,最後記得儲存'
+                  : '已建立 —— 圖片網址會在下次重建時去 Fandom 解析');
+}
+function bindNewCard(){
+  $('#ncClose').onclick=()=>$('#ncMask').classList.remove('on');
+  $('#ncMask').addEventListener('click',e=>{ if(e.target===$('#ncMask'))$('#ncMask').classList.remove('on'); });
+  $('#ncFile').onchange=e=>ncTakeFile(e.target.files[0]);
+  const drop=$('#ncDrop');
+  drop.addEventListener('dragover',e=>{ e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave',()=>drop.classList.remove('over'));
+  drop.addEventListener('drop',e=>{ e.preventDefault(); drop.classList.remove('over');
+    ncTakeFile(e.dataTransfer.files&&e.dataTransfer.files[0]); });
+  addEventListener('paste',e=>{
+    if(!$('#ncMask').classList.contains('on')) return;
+    const it=[...(e.clipboardData&&e.clipboardData.items||[])].find(i=>i.type.startsWith('image/'));
+    if(it){ e.preventDefault(); ncTakeFile(it.getAsFile()); }
+  });
+  $('#ncName').oninput=()=>{ NC.nameTouched=true; ncCheck(); };
+  $('#ncWiki').oninput=()=>{ const v=$('#ncWiki').value.trim(); if(v&&!NC.file) ncSuggest(v); else ncCheck(); };
+  $$('.ncT').forEach(b=>b.onclick=()=>ncSetType(b.dataset.t));
+  $('#ncOk').onclick=ncCreate;
+  $('#ncName').addEventListener('keydown',e=>{ if(e.key==='Enter'&&!$('#ncOk').disabled) ncCreate(); });
 }
 
 /* ===== 欄位編輯 ===== */
@@ -633,7 +780,7 @@ function edPreview(flags){
   if(shiny&&vn&&vs&&((vn.costume||null)!==(vs.costume||null)||(vn.form||null)!==(vs.form||null)
       ||(vn.gender||null)!==(vs.gender||null)))
     warn.push('一般與異色解析到<b>不同版本</b>,兩張圖會對不起來');
-  const pv=(u,cap)=>`<div class="pv"><img class="bgi" src="${thumb(b.image_url)}" alt="">
+  const pv=(u,cap)=>`<div class="pv"><img class="bgi" ${bgSrc(b.image_url)} alt="">
     <img class="mm" src="${thumb(u)}" onerror="this.style.visibility='hidden'"><span class="cap">${cap}</span></div>`;
   box.innerHTML=pv(un,'一般')+(shiny?pv(us,'✨'):'')
     +`<div class="info"><div>一般:<b>${desc(un,vn)}</b></div>`
@@ -654,22 +801,104 @@ function buildMixList(){
     }
   return MIXLIST;
 }
+/* 多選:MIX.sel 是「已選清單」,每一隻帶自己的旗標。
+   下面的旗標鈕是「全部」:按下去套用到全部已選,之後新選的也沿用(存 localStorage,
+   因為同一張卡上多半整批都是同一組旗標,例如全部可異色)。 */
+const FLAGS=['shiny','dynamax','gmax','shadow'];
+const FLAG_LBL={shiny:'✨',dynamax:'極',gmax:'超',shadow:'淨'};
+const selKey=m=>[m.dex,m.form||'',m.costume||'',sprKey(m.sprite)].join('|');
+const monOf=s=>{ const mon={dex:s.dex}; for(const f of FLAGS) mon[f]=!!s[f];
+  for(const k of ['form','costume','sprite','sprite_shiny']) if(s[k]) mon[k]=s[k];
+  return mon; };
+// 這張卡上已經有一樣的組合(含旗標)→ 加入時會略過
+const onCard=s=>resolved(CUR).some(x=>x._st!=='removed'&&bgKey(x)===bgKey(monOf(s)));
 function drawMix(){
   const q=$('#mixQ').value.trim().toLowerCase();
-  const hit=buildMixList().filter(m=>!q||m.hay.includes(q));
+  // 排序:名字完全相符的物種在前;同一隻裡「基本型態」排第一,其次型態、最後造型
+  // —— 這樣 Enter 選到的會是一般版,不是某個活動造型
+  const rank=m=>(q&&(NAMES[m.dex]||'').toLowerCase()===q?0:4)+(m.costume?2:(m.form&&m.form!=='NORMAL'?1:0));
+  const hit=buildMixList().filter(m=>!q||m.hay.includes(q))
+    .map((m,i)=>[m,i]).sort((a,b)=>rank(a[0])-rank(b[0])||a[1]-b[1]).map(x=>x[0]);
+  const picked=new Set(MIX.sel.map(selKey));
   $('#mixCount').textContent=hit.length+' 個';
   $('#mixGrid').innerHTML=hit.slice(0,240).map((m,i)=>`
-    <div class="mixCell${MIX.mon&&MIX.mon.url===m.url?' on':''}" data-i="${i}">
+    <div class="mixCell${picked.has(selKey(m))?' on':''}" data-i="${i}" title="${esc(nameOf(m.dex)+' '+(m.form||m.costume||''))}">
+      <span class="ck">✓</span>
       <img loading="lazy" src="${thumb(m.url)}" alt="">
       <div class="l">${esc(nameOf(m.dex))}</div>
       <div class="l">${esc(m.form||m.costume||'')}</div></div>`).join('');
-  $$('#mixGrid .mixCell').forEach(d=>d.onclick=()=>{ MIX.mon=hit[+d.dataset.i]; drawMix(); syncMix(); });
-  syncMix();
+  $$('#mixGrid .mixCell').forEach(d=>d.onclick=()=>{ toggleSel(hit[+d.dataset.i]); drawMix(); });
+  MIX.hit=hit;
+  drawTray();
 }
-function syncMix(){
-  $('#mixPick').textContent=MIX.mon?nameOf(MIX.mon.dex)+(MIX.mon.form?' ['+MIX.mon.form+']':'')
-    +(MIX.mon.costume?' ['+MIX.mon.costume+']':''):'尚未選取';
-  $('#mixAdd').disabled=!MIX.mon;
+function toggleSel(m){
+  const k=selKey(m), i=MIX.sel.findIndex(s=>selKey(s)===k);
+  if(i>=0) MIX.sel.splice(i,1);
+  else MIX.sel.push({dex:m.dex, form:m.form||null, costume:m.costume||null, url:m.url, ...MIX.flags});
+}
+function drawTray(){
+  const dup=MIX.sel.filter(onCard).length;
+  $('#mixN').textContent=MIX.sel.length;
+  $('#mixDupN').textContent=dup?'(其中 '+dup+' 隻卡上已經有,會略過)':'';
+  const n=MIX.sel.length-dup;
+  $('#mixAdd').disabled=!n; $('#mixAdd').textContent=n?'加入 '+n+' 隻':'加入';
+  $('#mixTray').innerHTML=MIX.sel.map((s,i)=>`
+    <div class="ti${onCard(s)?' dup':''}" data-i="${i}" title="${onCard(s)?'這張卡已經有一樣的組合':''}">
+      <button class="x" data-a="x" title="取消">✕</button>
+      <img loading="lazy" src="${thumb(monUrl(s,false)||s.url)}" alt="" onerror="this.style.visibility='hidden'">
+      <div class="l"><b>${esc(nameOf(s.dex))}</b></div>
+      <div class="l">${esc(s.form||s.costume||(s.sprite?'wiki圖':'')||'—')}</div>
+      <div class="fl">${FLAGS.map(f=>`<button data-a="${f}" class="${s[f]?'on':''}">${FLAG_LBL[f]}</button>`).join('')}</div>
+    </div>`).join('');
+  $$('#mixTray .ti button').forEach(b=>b.onclick=()=>{
+    const i=+b.closest('.ti').dataset.i, a=b.dataset.a;
+    if(a==='x') MIX.sel.splice(i,1); else MIX.sel[i][a]=!MIX.sel[i][a];
+    drawMix();
+  });
+}
+function fillMixFrom(){
+  const others=BG.filter(b=>b.image_name!==CUR)
+    .map(b=>({n:b.image_name, t:(b.name||b.image_name), c:resolved(b.image_name).filter(m=>m._st!=='removed').length}))
+    .filter(o=>o.c).sort((a,b)=>a.t.localeCompare(b.t));
+  $('#mixFrom').innerHTML='<option value="">從其他背卡帶入…</option>'
+    +others.map(o=>`<option value="${esc(o.n)}">${esc(o.t)}(${o.c})</option>`).join('');
+}
+// 把另一張卡的寶可夢(連同各自的型態/造型/旗標)整批放進已選清單
+function pullFrom(card){
+  let n=0;
+  for(const m of resolved(card)){
+    if(m._st==='removed') continue;
+    const s={dex:m.dex, form:m.form||null, costume:m.costume||null, url:monUrl(m,false)};
+    if(m.sprite) s.sprite=m.sprite; if(m.sprite_shiny) s.sprite_shiny=m.sprite_shiny;
+    for(const f of FLAGS) s[f]=!!m[f];
+    if(MIX.sel.some(x=>selKey(x)===selKey(s)&&FLAGS.every(f=>!!x[f]===s[f]))) continue;
+    MIX.sel.push(s); n++;
+  }
+  toast('帶入 '+n+' 隻 —— 不要的按 ✕ 取消');
+  drawMix();
+}
+function setMixFlagBtns(){ $$('.mixF').forEach(b=>b.classList.toggle('on',!!MIX.flags[b.dataset.f])); }
+function openMix(){
+  if(!CUR) return;
+  MIX.sel=[]; $('#mixQ').value=''; setMixFlagBtns(); fillMixFrom();
+  $('#mixMask').classList.add('on'); drawMix();
+  setTimeout(()=>$('#mixQ').focus(),0);
+}
+function addMix(){
+  if(!CUR) return;
+  const seen=new Set(resolved(CUR).filter(x=>x._st!=='removed').map(bgKey));
+  const add=[];
+  for(const s of MIX.sel){
+    const mon=monOf(s), k=bgKey(mon);
+    if(seen.has(k)) continue;
+    seen.add(k); add.push(mon);
+  }
+  if(!add.length){ toast('這些組合卡上都已經有了'); return; }
+  snapshot();
+  for(const mon of add) OPS.push({card:CUR,op:'add',mon});
+  const skip=MIX.sel.length-add.length;
+  $('#mixMask').classList.remove('on'); after();
+  toast('已加入 '+add.length+' 隻'+(skip?'(略過 '+skip+' 隻重複)':'')+' —— 記得儲存');
 }
 
 /* ===== 存檔 ===== */
@@ -738,28 +967,37 @@ function bindUI(){
     OPS=OPS.filter(o=>o.card!==CUR);
     if(isNew){ BG=BG.filter(b=>b.image_name!==CUR); CUR=null; EDIT=null; }
     after(); toast(isNew?'已刪掉這張手動新增的卡':'已還原這張卡'); };
-  $('#btnAdd').onclick=()=>{ MIX={mon:null,flags:{}}; $$('.mixF').forEach(b=>b.classList.remove('on'));
-    $('#mixQ').value=''; $('#mixMask').classList.add('on'); drawMix(); };
-  $('#mixClose').onclick=()=>$('#mixMask').classList.remove('on');
-  $('#mixMask').addEventListener('click',e=>{ if(e.target===$('#mixMask'))$('#mixMask').classList.remove('on'); });
+  $('#btnAdd').onclick=openMix;
+  bindNewCard();
+  // 已選了東西卻點到外面 → 先確認,免得一整批白挑
+  const closeMix=()=>{ if(MIX.sel.length&&!confirm('已選 '+MIX.sel.length+' 隻還沒加入,確定要關掉?')) return;
+    $('#mixMask').classList.remove('on'); };
+  $('#mixClose').onclick=closeMix;
+  $('#mixMask').addEventListener('click',e=>{ if(e.target===$('#mixMask'))closeMix(); });
   $('#mixQ').oninput=drawMix;
-  $$('.mixF').forEach(b=>b.onclick=()=>{ MIX.flags[b.dataset.f]=!MIX.flags[b.dataset.f];
-    b.classList.toggle('on',!!MIX.flags[b.dataset.f]); });
-  $('#mixAdd').onclick=()=>{
-    if(!MIX.mon||!CUR)return;
-    const mon={dex:MIX.mon.dex, shiny:!!MIX.flags.shiny, dynamax:!!MIX.flags.dynamax,
-               gmax:!!MIX.flags.gmax, shadow:!!MIX.flags.shadow};
-    if(MIX.mon.form)mon.form=MIX.mon.form; if(MIX.mon.costume)mon.costume=MIX.mon.costume;
-    if(resolved(CUR).some(x=>x._st!=='removed'&&bgKey(x)===bgKey(mon))){ toast('這張卡已經有一樣的組合了'); return; }
-    snapshot(); OPS.push({card:CUR,op:'add',mon}); $('#mixMask').classList.remove('on'); after(); toast('已加入');
-  };
+  // Enter = 選第一個結果並清空搜尋框 → 可以「打名字、Enter、打下一個名字」連續加
+  $('#mixQ').addEventListener('keydown',e=>{
+    if(e.key!=='Enter') return; e.preventDefault();
+    const first=(MIX.hit||[])[0]; if(!first||!$('#mixQ').value.trim()) return;
+    if(!MIX.sel.some(s=>selKey(s)===selKey(first))) toggleSel(first);
+    $('#mixQ').value=''; drawMix();
+  });
+  $('#mixFrom').onchange=e=>{ const v=e.target.value; e.target.value=''; if(v) pullFrom(v); };
+  $('#mixClear').onclick=()=>{ MIX.sel=[]; drawMix(); };
+  $$('.mixF').forEach(b=>b.onclick=()=>{
+    const f=b.dataset.f; MIX.flags[f]=!MIX.flags[f];
+    for(const s of MIX.sel) s[f]=MIX.flags[f];
+    try{ localStorage.setItem('bgMixFlags',JSON.stringify(MIX.flags)); }catch(e){}
+    setMixFlagBtns(); drawTray();
+  });
+  $('#mixAdd').onclick=addMix;
   $('#btnSave').onclick=save;
   $('#btnExport').onclick=()=>download(serialize());
   $('#btnUndo').onclick=undo;
   addEventListener('keydown',e=>{
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!/^(INPUT|SELECT)$/.test(e.target.tagName)){ e.preventDefault(); undo(); }
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){ e.preventDefault(); save(); }
-    if(e.key==='Escape')$('#mixMask').classList.remove('on');
+    if(e.key==='Escape'){ $('#mixMask').classList.remove('on'); $('#ncMask').classList.remove('on'); }
   });
   addEventListener('beforeunload',e=>{ if(DIRTY){ e.preventDefault(); e.returnValue=''; } });
 }
