@@ -24,7 +24,7 @@ RANK_VARS = ("POKEMON_RANKINGS_1500", "POKEMON_RANKINGS_2500", "POKEMON_RANKINGS
 # 排名資料有、但目前 pogo_assets 文字檔還沒收錄的寶可夢（第九世代）。
 # 英文、日文用官方名稱；其他語言還沒有可靠的官方對照前先用英文官方名稱，不自行翻譯。
 PVP_MANUAL = {
-    "來悲粗茶": ("Poltchageist", "チャデス"), "斯魔茶": ("Sinistcha", "ヤバソチャ"), "厄鬼椪": ("Ogerpon", "オーガポン"),
+    "斯魔茶": ("Poltchageist", "チャデス"), "來悲粗茶": ("Sinistcha", "ヤバソチャ"), "厄鬼椪": ("Ogerpon", "オーガポン"),
     "吉雉雞": ("Fezandipiti", "キチキギス"), "夠讚狗": ("Okidogi", "イイネイヌ"), "願增猿": ("Munkidori", "マシマシラ"),
     "桃歹郎": ("Pecharunt", "モモワロウ"), "太樂巴戈斯": ("Terapagos", "テラパゴス"), "蜜集大蛇": ("Hydrapple", "カミツオロチ"),
     "裹蜜蟲": ("Dipplin", "カミッチュ"), "鋁鋼橋龍": ("Archaludon", "ブリジュラス"), "波盪水": ("Walking Wake", "ウネルミナモ"),

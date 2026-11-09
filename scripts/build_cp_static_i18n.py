@@ -35,11 +35,27 @@ TERMS_EN_ALL = {}
 # 官方文字的對照補充
 FORM_KEY = {"zacian": "form_zacian_hero", "zamazenta": "form_zamazenta_hero", "giratina": "form_giratina_altered",
             "landorus": "form_landorus_incarnate", "thundurus": "form_thundurus_incarnate",
+            "tornadus": "form_tornadus_incarnate",
             "zygarde": "form_zygarde_fifty_percent", "meloetta": "form_meloetta_aria"}
 REGIONAL = [("_galarian", "galar"), ("_alola", "alola"), ("_hisuian", "hisui")]   # 用「…_pokedex_header」的地區名稱
 NO_FORM = {"slowbro"}   # 「2021形態」只是資料上的區分，遊戲裡就是一般的呆殼獸
 MANUAL_NAME = {"mewtwo_a": {"en": "Armored Mewtwo", "ja": "アーマードミュウツー", "ko": "아머드 뮤츠",
                             "fr": "Mewtwo Armuré", "de": "Rüstungs-Mewtu", "es": "Mewtwo Acorazado"}}
+# pogo_assets 文字檔還沒收錄的寶可夢（圖鑑編號 → 各語言官方名稱，取自本傳遊戲；來源 Bulbapedia 各頁的
+# "In other languages"）。官方文字有了之後會優先用官方文字。
+MANUAL_SPECIES = {
+    1011: {"en": "Dipplin", "ja": "カミッチュ", "ko": "과미르", "fr": "Pomdramour", "de": "Sirapfel", "es": "Dipplin"},
+    1012: {"en": "Poltchageist", "ja": "チャデス", "ko": "차데스", "fr": "Poltchageist", "de": "Mortcha", "es": "Poltchageist"},
+    1013: {"en": "Sinistcha", "ja": "ヤバソチャ", "ko": "그우린차", "fr": "Théffroyable", "de": "Fatalitcha", "es": "Sinistcha"},
+    1019: {"en": "Hydrapple", "ja": "カミツオロチ", "ko": "과미드라", "fr": "Pomdorochi", "de": "Hydrapfel", "es": "Hydrapple"},
+}
+# 遊戲文字檔裡沒翻譯、直接是英文的型態名稱（韓文、法文的代歐奇希斯）。改用本傳遊戲的官方譯名
+# （來源 Bulbapedia「Deoxys (Pokémon)」的 In other languages）。只在官方文字仍等於英文時才覆蓋。
+MANUAL_FORM = {
+    "form_deoxys_attack": {"ko": "어택폼", "fr": "Forme Attaque"},
+    "form_deoxys_defense": {"ko": "디펜스폼", "fr": "Forme Défense"},
+    "form_deoxys_speed": {"ko": "스피드폼", "fr": "Forme Vitesse"},
+}
 # 排名資料（台灣社群譯名）和官方中文不同的招式：對到官方英文名稱再查各語言
 MOVE_FIX = {"加農水砲": "Hydro Cannon", "巨力錘": "Gigaton Hammer", "氣象球 冰": ("Weather Ball", "ice"),
             "氣象球 火": ("Weather Ball", "fire"), "泡影詠歎調": "Sparkling Aria", "潑冷水": "Chilling Water",
@@ -117,6 +133,10 @@ def _used_moves(targets):
 def extract_terms(targets):
     tx = {l: _load_txt(l) for l in LANGS + ["zh"]}
     en = tx["en"]
+    for k, by_lang in MANUAL_FORM.items():
+        for l, v in by_lang.items():
+            if tx[l].get(k) in (None, "", en.get(k)):
+                tx[l][k] = v
     zh_move, en_move = {}, {}
     for k, v in tx["zh"].items():
         if k.startswith("move_name_"):
@@ -144,7 +164,7 @@ def extract_terms(targets):
             if slug in MANUAL_NAME:
                 terms[l]["names"][slug] = MANUAL_NAME[slug][l]
                 continue
-            base = tx[l].get(f"pokemon_name_{p['id']:04d}")
+            base = tx[l].get(f"pokemon_name_{p['id']:04d}") or MANUAL_SPECIES.get(p["id"], {}).get(l)
             if not base:
                 missing.append(f"name:{slug}:{l}")
                 base = en.get(f"pokemon_name_{p['id']:04d}", slug)
@@ -226,7 +246,8 @@ def names_all(tx, targets, terms):
         for l in LANGS:
             if slug in MANUAL_NAME:
                 terms[l]["all"][nm] = MANUAL_NAME[slug][l]; continue
-            base_n = tx[l].get(f"pokemon_name_{p['id']:04d}") or en.get(f"pokemon_name_{p['id']:04d}", nm)
+            base_n = (tx[l].get(f"pokemon_name_{p['id']:04d}") or MANUAL_SPECIES.get(p["id"], {}).get(l)
+                      or en.get(f"pokemon_name_{p['id']:04d}", nm))
             form = form_text(l, tx[l].get(fk)) if fk else None
             terms[l]["all"][nm] = STR[l]["paren"].format(a=base_n, b=form) if form else base_n
     # 同一語言裡名稱重複（型態對不到官方文字）→ 用遊戲代號的型態部分區分，避免搜尋結果分不出來

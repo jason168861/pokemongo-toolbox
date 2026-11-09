@@ -1216,6 +1216,62 @@
   {
    "name": "水君",
    "slug": "suicune"
+  },
+  {
+   "name": "雷吉鐸拉戈",
+   "slug": "regidrago"
+  },
+  {
+   "name": "達克萊伊",
+   "slug": "darkrai"
+  },
+  {
+   "name": "克雷色利亞",
+   "slug": "cresselia"
+  },
+  {
+   "name": "代歐奇希斯",
+   "slug": "deoxys"
+  },
+  {
+   "name": "代歐奇希斯 (攻擊形態)",
+   "slug": "deoxys_attack"
+  },
+  {
+   "name": "代歐奇希斯 (防禦形態)",
+   "slug": "deoxys_defense"
+  },
+  {
+   "name": "代歐奇希斯 (速度形態)",
+   "slug": "deoxys_speed"
+  },
+  {
+   "name": "龍捲雲 (化身形態)",
+   "slug": "tornadus"
+  },
+  {
+   "name": "皮可西",
+   "slug": "clefable"
+  },
+  {
+   "name": "詛咒娃娃",
+   "slug": "banette"
+  },
+  {
+   "name": "幾何雪花",
+   "slug": "cryogonal"
+  },
+  {
+   "name": "赤面龍",
+   "slug": "druddigon"
+  },
+  {
+   "name": "拖拖蚓",
+   "slug": "orthworm"
+  },
+  {
+   "name": "妙喵",
+   "slug": "espurr"
   }
  ]
 }

@@ -304,5 +304,19 @@ export const CP_STATIC = new Map([
   ["雷公", "raikou"],
   ["波士可多拉", "aggron"],
   ["炎帝", "entei"],
-  ["水君", "suicune"]
+  ["水君", "suicune"],
+  ["雷吉鐸拉戈", "regidrago"],
+  ["達克萊伊", "darkrai"],
+  ["克雷色利亞", "cresselia"],
+  ["代歐奇希斯", "deoxys"],
+  ["代歐奇希斯 (攻擊形態)", "deoxys_attack"],
+  ["代歐奇希斯 (防禦形態)", "deoxys_defense"],
+  ["代歐奇希斯 (速度形態)", "deoxys_speed"],
+  ["龍捲雲 (化身形態)", "tornadus"],
+  ["皮可西", "clefable"],
+  ["詛咒娃娃", "banette"],
+  ["幾何雪花", "cryogonal"],
+  ["赤面龍", "druddigon"],
+  ["拖拖蚓", "orthworm"],
+  ["妙喵", "espurr"]
 ]);
