@@ -98,7 +98,11 @@ def load_cp():
         cur = by_dex.get(r["id"])
         if cur is None or ("(" in cur["name"] and "(" not in r["name"]):
             by_dex[r["id"]] = r
+        ALL_ROWS.setdefault(r["id"], {})[r["gm"].split("_POKEMON_", 1)[1]] = r
     return by_dex, cpm
+
+
+ALL_ROWS = {}   # dex → {遊戲代號（MEOWTH_ALOLA…）: CP 資料}，含所有形態
 
 
 def load_cp_static():
@@ -116,6 +120,32 @@ def cp_at(dex, level):
     r = CP_ROWS[dex]
     return max(10, int((r["atk"] + 15) * math.sqrt(r["def"] + 15) * math.sqrt(r["sta"] + 15)
                        * CPM[level - 1] ** 2 / 10))
+
+
+def cp_row(dex, form=None):
+    """寶可夢＋形態 → CP 資料那一筆。形態對得到遊戲代號（DEOXYS_ATTACK、MEOWTH_ALOLA…）就用那筆；
+    超級進化、極巨化、服裝、未知圖騰字母等數值跟基本型一樣（超級團體戰抓到的也是基本型），用基本型。
+    基本型＝代號最短的那筆（鬃岩狼人是白晝、龍捲雲是化身、騎拉帝納是別種）。"""
+    rows = ALL_ROWS.get(dex)
+    if not rows:
+        return None
+    base = min(rows, key=len)
+    if form and f"{base}_{form}" in rows:
+        return rows[f"{base}_{form}"]
+    if form in ("ALOLA", "GALARIAN", "HISUIAN", "PALDEA") and form not in base:
+        print(f"⚠ #{dex} 沒有 {form} 形態的 CP 資料，用 {rows[base]['name']} 的數值")
+    return rows[base]
+
+
+def row_cp(r, level):
+    return max(10, int((r["atk"] + 15) * math.sqrt(r["def"] + 15) * math.sqrt(r["sta"] + 15)
+                       * CPM[level - 1] ** 2 / 10))
+
+
+def row_href(r, prefix="../../"):
+    """有 /cp/<slug>/ 靜態頁就連過去，沒有就連 CP 查詢並帶入名稱（?mon=，編碼與 build_cp_sitemap.py 一致）。"""
+    s = CP_STATIC.get(r["name"])
+    return f"{prefix}cp/{s}/" if s else f"{prefix}?tab=cp-checker-app&mon=" + quote(r["name"], safe="")
 
 
 def parse_dt(s):
@@ -229,11 +259,14 @@ def reward_chip(ev, r, with_name=True):
         d = r["mon"]
         label = r.get("label") or mon_name(ev, d)
         bg = '<span class="ev-bgtag" title="附特別背卡">背卡</span>' if r.get("bg") else ""
-        cp = f'<small>CP {cp_at(d, r.get("level", 15))}</small>' if with_name and r.get("cp", True) else ""
+        row = cp_row(d, r.get("form"))
+        cp = f'<small>CP {row_cp(row, r.get("level", 15))}</small>' if with_name and r.get("cp", True) else ""
         nm = f'<b>{esc(label)}</b>' if with_name else ""
-        return (f'<span class="ev-rw ev-rw-mon{" has-bg" if r.get("bg") else ""}">'
+        # 有名稱的獎勵可以點進 CP 頁；只放圖的（特殊調查摺疊列的預覽，在 <summary> 裡）維持不能點，免得點了就跳走
+        tag, attr = (("a", f' href="{esc(row_href(row))}" title="{esc(label)} 的 IV100 CP 表"') if with_name else ("span", ""))
+        return (f'<{tag} class="ev-rw ev-rw-mon{" has-bg" if r.get("bg") else ""}"{attr}>'
                 f'<img src="{mon_img(d, form=r.get("form"))}" alt="{esc(label)}" width="44" height="44" loading="lazy">'
-                f'{bg}<span class="ev-rw-t">{nm}{cp}</span></span>')
+                f'{bg}<span class="ev-rw-t">{nm}{cp}</span></{tag}>')
     key = r["item"]
     name, img = ITEMS[key]
     if key in ("candy", "candy-xl") and r.get("mon"):
@@ -421,16 +454,28 @@ def render_evolution(ev):
     return sec("evolution", "進化與特別招式", body, icon("move"), toggle)
 
 
+NO_CATCH = ("_ETERNAMAX",)   # 只會當頭目、抓不到的形態（遊戲代號結尾）
+
+
+def cp_tag(row, level=20):
+    """寶可夢卡片下方的 IV100 CP（預設 Lv20：團體戰、孵蛋、極巨對戰抓到時的等級）。
+    無極巨化無極汰那打倒後不能捕捉，不顯示 CP。"""
+    if row["gm"].endswith(NO_CATCH):
+        return ""
+    return f'<span class="ev-cp" title="IV 15/15/15 在 Lv{level} 的 CP">IV100 CP {row_cp(row, level)}</span>'
+
+
 def render_spawns(ev):
     sp = "".join(
-        f'<li class="ev-spawn"><span class="ev-spawn-pic"><img src="{mon_img(s["dex"], big=True)}" alt="{esc(mon_name(ev, s["dex"]))}" width="88" height="88" loading="lazy">'
+        f'<li class="ev-spawn"><a href="{esc(row_href(cp_row(s["dex"])))}">'
+        f'<span class="ev-spawn-pic"><img src="{mon_img(s["dex"], big=True)}" alt="{esc(mon_name(ev, s["dex"]))}" width="88" height="88" loading="lazy">'
         f'{"<i class=ev-shiny-dot title=可遇見異色>" + ICON_SVG["spark"] + "</i>" if s.get("shiny") else ""}</span>'
-        f'<b>{esc(mon_name(ev, s["dex"]))}</b><small>{"可能附特別背卡" if s.get("bg") else ""}</small></li>'
+        f'<b>{esc(mon_name(ev, s["dex"]))}</b>{cp_tag(cp_row(s["dex"]))}</a><small>{"可能附特別背卡" if s.get("bg") else ""}</small></li>'
         for s in ev.get("spawns", []))
     sh = "".join(
-        f'<li><span class="ev-pair"><img src="{mon_img(d, big=True)}" alt="{esc(mon_name(ev, d))}" width="72" height="72" loading="lazy">'
+        f'<li><a href="{esc(row_href(cp_row(d)))}"><span class="ev-pair"><img src="{mon_img(d, big=True)}" alt="{esc(mon_name(ev, d))}" width="72" height="72" loading="lazy">'
         f'<img src="{mon_img(d, True, big=True)}" alt="異色{esc(mon_name(ev, d))}" width="72" height="72" loading="lazy"></span>'
-        f'<b>{esc(mon_name(ev, d))}</b></li>' for d in ev.get("shinies", []))
+        f'<b>{esc(mon_name(ev, d))}</b>{cp_tag(cp_row(d))}</a></li>' for d in ev.get("shinies", []))
     lure = (f'<div class="ev-callout"><span class="ev-callout-ic">{icon("lure")}</span><p>{esc(ev["lure"])}</p></div>'
             if ev.get("lure") else "")
     body = f'''
@@ -578,8 +623,9 @@ def mon_ref(m):
     return m
 
 
-def mon_tile(m, size=72):
+def mon_tile(m, size=72, lv=20):
     m = mon_ref(m)
+    row = cp_row(m["dex"], m.get("form"))
     badge = f'<span class="ev-badge b-{m["badge"]}">{BADGES.get(m["badge"], m["badge"])}</span>' if m.get("badge") else ""
     shiny = f'<i class="ev-shiny-dot" title="可遇見異色">{ICON_SVG["spark"]}</i>' if m.get("shiny") else ""
     name, sub = m["name"], m.get("note")
@@ -587,14 +633,19 @@ def mon_tile(m, size=72):
     if g:                             # 「穿山鼠（阿羅拉的樣子）」→ 名稱一行、形態一行
         name, sub = g.group(1), g.group(2) + (f"・{sub}" if sub else "")
     note = f'<small>{esc(sub)}</small>' if sub else ""
-    return (f'<li class="ev-tile">{badge}<span class="ev-tile-pic">'
+    pics = (f'<span class="ev-tile-pic">'
             f'<img class="n" src="{mon_img(m["dex"], form=m.get("form"))}" alt="{esc(m["name"])}" width="{size}" height="{size}" loading="lazy">'
             f'<img class="s" src="{mon_img(m["dex"], True, form=m.get("form"))}" alt="異色{esc(m["name"])}" width="{size}" height="{size}" loading="lazy">'
-            f'{shiny}</span><b>{esc(name)}</b>{note}</li>')
+            f'{shiny}</span><b>{esc(name)}</b>{note}')
+    if not row:
+        return f'<li class="ev-tile">{badge}{pics}</li>'
+    # 整張卡片連到 CP 頁（有靜態頁的連靜態頁，沒有的連 CP 查詢並帶入名稱）
+    return (f'<li class="ev-tile">{badge}<a class="ev-tile-a" href="{esc(row_href(row))}" title="{esc(m["name"])} 的 IV100 CP 表">'
+            f'{pics}{cp_tag(row, lv)}</a></li>')
 
 
-def tiles(mons):
-    return f'<ul class="ev-tiles">{"".join(mon_tile(m) for m in mons)}</ul>'
+def tiles(mons, lv=20):
+    return f'<ul class="ev-tiles">{"".join(mon_tile(m, lv=lv) for m in mons)}</ul>'
 
 
 def shiny_toggle():
@@ -608,8 +659,10 @@ def g_features(ev, s):
         pic = ""
         if c.get("mon"):
             m = mon_ref(c["mon"])
-            pic = (f'<span class="ev-feat-pic"><img src="{mon_img(m["dex"], form=m.get("form"))}" alt="{esc(m["name"])}" '
-                   f'width="120" height="120" loading="lazy"></span>')
+            row = cp_row(m["dex"], m.get("form"))
+            pic = (f'<a class="ev-feat-pic" href="{esc(row_href(row))}" title="{esc(m["name"])} 的 IV100 CP 表">'
+                   f'<img src="{mon_img(m["dex"], form=m.get("form"))}" alt="{esc(m["name"])}" '
+                   f'width="120" height="120" loading="lazy">{cp_tag(row, c.get("cp_level", 20))}</a>')
         tag = f'<span class="ev-feat-tag{" is-ticket" if c.get("ticket") else ""}">{esc(c["tag"])}</span>' if c.get("tag") else ""
         cards.append(f'<article class="ev-feat{" has-pic" if pic else ""}">{pic}<div>{tag}<h3>{esc(c["title"])}</h3>'
                      f'<p>{esc(c["text"])}</p></div></article>')
@@ -635,7 +688,7 @@ def g_days(ev, s):
     head = "".join(f'<div class="ev-day-h"><b>{esc(d["label"])}</b><small>{esc(d.get("sub", ""))}</small></div>' for d in days)
     rows = []
     for r in s["rows"]:
-        cells = "".join(f'<div class="ev-day-c" data-day="{esc(days[i]["label"])}">{tiles(c) if c else "<span class=ev-none>—</span>"}</div>'
+        cells = "".join(f'<div class="ev-day-c" data-day="{esc(days[i]["label"])}">{tiles(c, s.get("cp_level", 20)) if c else "<span class=ev-none>—</span>"}</div>'
                         for i, c in enumerate(r["cells"]))
         rows.append(f'<div class="ev-day-row"><div class="ev-day-k">{esc(r["label"])}</div>{cells}</div>')
     note = f'<p class="ev-note">{esc(s["note"])}</p>' if s.get("note") else ""
@@ -650,7 +703,7 @@ def g_habitats(ev, s):
                     for t, k in hours)
     groups = "".join(
         f'<div class="ev-hab" style="--hc:{h["color"]}"><h3><i></i>{esc(h["name"])}'
-        f'<small>{esc("、".join(t for t, k in hours if k == h["key"]))} 開始</small></h3>{tiles(h["mons"])}</div>'
+        f'<small>{esc("、".join(t for t, k in hours if k == h["key"]))} 開始</small></h3>{tiles(h["mons"], s.get("cp_level", 20))}</div>'
         for h in s["groups"])
     return (f'<p class="ev-note ev-note-top">{esc(s.get("intro", ""))}</p>'
             f'<ol class="ev-hours" data-hours>{strip}</ol>{groups}')
@@ -660,7 +713,7 @@ def g_grid(ev, s):
     out = []
     for g in s["groups"]:
         h = f'<h3>{esc(g["title"])}{"<small>" + esc(g["sub"]) + "</small>" if g.get("sub") else ""}</h3>' if g.get("title") else ""
-        out.append(f'<div class="ev-grid-g">{h}{tiles(g["mons"])}</div>')
+        out.append(f'<div class="ev-grid-g">{h}{tiles(g["mons"], g.get("cp_level", s.get("cp_level", 20)))}</div>')
     note = f'<p class="ev-note">{esc(s["note"])}</p>' if s.get("note") else ""
     return "".join(out) + note
 
@@ -670,8 +723,9 @@ def g_moves(ev, s):
     for mv in s["items"]:
         m = mon_ref(mv["mon"])
         tc = TYPES[mv["type"]]
-        rows.append(f'<li class="ev-mv"><img src="{mon_img(m["dex"], form=m.get("form"))}" alt="" width="48" height="48" loading="lazy">'
-                    f'<span class="ev-mv-n"><b>{esc(m["name"])}</b><small>{esc(mv.get("how", ""))}</small></span>'
+        row = cp_row(m["dex"], m.get("form"))
+        rows.append(f'<li class="ev-mv"><a href="{esc(row_href(row))}"><img src="{mon_img(m["dex"], form=m.get("form"))}" alt="" width="48" height="48" loading="lazy"></a>'
+                    f'<span class="ev-mv-n"><b><a href="{esc(row_href(row))}">{esc(m["name"])}</a></b>{cp_tag(row, mv.get("cp_level", 20))}<small>{esc(mv.get("how", ""))}</small></span>'
                     f'<span class="ev-mv-m" style="--tc:{tc[1]}"><i>{tc[0]}</i>{esc(mv["move"])}<small>{esc(mv["kind"])}</small></span></li>')
     note = f'<p class="ev-note">{esc(s["note"])}</p>' if s.get("note") else ""
     return f'<ul class="ev-mvs">{"".join(rows)}</ul>{note}'
@@ -739,7 +793,7 @@ def g_schedule(ev, s):
         f'<li{" data-on=" + chr(34) + r["on"] + chr(34) if r.get("on") else ""}><span class="ev-sch-d"><b>{esc(r["date"])}</b><small>{esc(r.get("time", ""))}</small></span>'
         f'<span class="ev-sch-t">{kind(r)}<b>{(chr(60) + "a href=" + chr(34) + esc(r["href"]) + chr(34) + ">" + esc(r["title"]) + " →</a>") if r.get("href") else esc(r["title"])}</b>'
         f'{"<small>" + esc(r["text"]) + "</small>" if r.get("text") else ""}</span>'
-        f'{tiles(r["mons"]) if r.get("mons") else ""}</li>' for r in s["items"])
+        f'{tiles(r["mons"], s.get("cp_level", 20)) if r.get("mons") else ""}</li>' for r in s["items"])
     return f'<ol class="ev-sch">{rows}</ol>'
 
 
