@@ -578,7 +578,7 @@
   {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":646,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"NORMAL"}},
   {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":646,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"BLACK"}},
   {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":646,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"WHITE"}},
-  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":884,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":884,"shiny":true,"dynamax":false,"gmax":true,"shadow":false}},
   {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":381,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
   {"card":"GO Wild Area 2026 background.png","op":"hideCard"},
   {"card":"Location Background Pokelid Yamaguchi.png","op":"setCard","fields":{"name":"Yamaguchi, Japan"}}
