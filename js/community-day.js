@@ -220,11 +220,11 @@
       var note = has(p.note) ? '<p class="cd-evo-note">' + p.note + '</p>' : '';
       return arrow +
         '<div class="cd-evo-card">' +
-          // href / cp20：連到該寶可夢的 CP 頁、顯示 Lv20 的 100% CP（舊頁資料才有，沒有就跟以前一樣）
+          // href / cp20 / cp25：連到該寶可夢的 CP 頁、顯示 Lv20／Lv25 的 100% IV CP（舊頁資料才有，沒有就跟以前一樣）
           (has(p.href) ? '<a class="cd-evo-pic" href="' + esc(p.href) + '">' + imgTag(p.img, p.name, '') + '</a>'
                        : '<div class="cd-evo-pic">' + imgTag(p.img, p.name, '') + '</div>') +
           '<div class="cd-evo-name">' + (has(p.href) ? '<a href="' + esc(p.href) + '">' + esc(p.name || '') + '</a>' : esc(p.name || '')) + '</div>' +
-          cpBadge(p.cp20, 20) +
+          (has(p.cp20) ? '<em class="cd-cp">Lv20 ' + esc(p.cp20) + (has(p.cp25) ? ' · Lv25 ' + esc(p.cp25) : '') + '</em>' : '') +
           note + moves +
         '</div>';
     }).join('');
