@@ -1,5 +1,495 @@
 [
   {
+    "category": "Into the Wild 2026 Tasks",
+    "tasks": [
+      {
+        "description": "強化鋼屬性的寶可夢5次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "伽勒爾 喵喵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm52.fGALARIAN.icon.png",
+            "isShiny": false,
+            "maxCp": "443",
+            "minCp": "409"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
+            "isShiny": false,
+            "maxCp": "583",
+            "minCp": "544"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "可可多拉",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm304.icon.png",
+            "isShiny": false,
+            "maxCp": "560",
+            "minCp": "522"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "托戈德瑪爾",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm777.icon.png",
+            "isShiny": false,
+            "maxCp": "926",
+            "minCp": "876"
+          }
+        ]
+      },
+      {
+        "description": "強化龍屬性寶可夢 5 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "墨海馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm116.icon.png",
+            "isShiny": false,
+            "maxCp": "452",
+            "minCp": "418"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm147.icon.png",
+            "isShiny": false,
+            "maxCp": "430",
+            "minCp": "397"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "寶貝龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+            "isShiny": false,
+            "maxCp": "495",
+            "minCp": "459"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "垃垃藻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm690.icon.png",
+            "isShiny": false,
+            "maxCp": "455",
+            "minCp": "421"
+          }
+        ]
+      },
+      {
+        "description": "在團體戰中獲勝1次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "飛天螳螂",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm123.icon.png",
+            "isShiny": false,
+            "maxCp": "1160",
+            "minCp": "1104"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm147.icon.png",
+            "isShiny": false,
+            "maxCp": "430",
+            "minCp": "397"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy.png",
+            "name": "神奇糖果 ×2",
+            "quantity": "×2"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 10 隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
+            "isShiny": false,
+            "maxCp": "583",
+            "minCp": "544"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "墨海馬",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm116.icon.png",
+            "isShiny": false,
+            "maxCp": "452",
+            "minCp": "418"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "可可多拉",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm304.icon.png",
+            "isShiny": false,
+            "maxCp": "560",
+            "minCp": "522"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "垃垃藻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm690.icon.png",
+            "isShiny": false,
+            "maxCp": "455",
+            "minCp": "421"
+          }
+        ]
+      },
+      {
+        "description": "在極巨對戰中獲勝1次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大嘴娃",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm303.icon.png",
+            "isShiny": false,
+            "maxCp": "700",
+            "minCp": "658"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "寶貝龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm371.icon.png",
+            "isShiny": false,
+            "maxCp": "495",
+            "minCp": "459"
+          }
+        ]
+      },
+      {
+        "description": "捕捉極巨化腕力",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm66.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/66.png",
+            "name": "Machop Candy ×25",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×5000",
+            "quantity": "×5000"
+          }
+        ]
+      },
+      {
+        "description": "捕捉極巨化拉魯拉絲",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm280.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/280.png",
+            "name": "Ralts Candy ×25",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×5000",
+            "quantity": "×5000"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Wild Area 2026: Sendai • Tohoku Tasks",
+    "tasks": [
+      {
+        "description": "捕捉 10 隻龍屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大顎蟻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm328.icon.png",
+            "isShiny": false,
+            "maxCp": "546",
+            "minCp": "507"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×2000",
+            "quantity": "×2000"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
+            "name": "銀色凰梨果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "強化龍屬性寶可夢 5 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "涼脊龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
+            "isShiny": false,
+            "maxCp": "534",
+            "minCp": "496"
+          }
+        ]
+      },
+      {
+        "description": "在團體戰中獲勝 2 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Modern Jacket Machamp",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm68.fWILDAREA_2026_01.icon.png",
+            "isShiny": false,
+            "maxCp": "1310",
+            "minCp": "1250"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Azumarill",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm184.icon.png",
+            "isShiny": false,
+            "maxCp": "680",
+            "minCp": "637"
+          }
+        ]
+      },
+      {
+        "description": "在極巨對戰中獲勝1次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Bastiodon",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm411.icon.png",
+            "isShiny": false,
+            "maxCp": "660",
+            "minCp": "615"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Kommo-o",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm784.icon.png",
+            "isShiny": false,
+            "maxCp": "1418",
+            "minCp": "1357"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 10 隻鋼屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "稚山雀",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm821.icon.png",
+            "isShiny": false,
+            "maxCp": "285",
+            "minCp": "258"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金色蔓莓果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×2000",
+            "quantity": "×2000"
+          }
+        ]
+      },
+      {
+        "description": "捕捉洗翠黏美兒",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 黏美兒",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm705.fHISUIAN.icon.png",
+            "isShiny": false,
+            "maxCp": "829",
+            "minCp": "782"
+          }
+        ]
+      },
+      {
+        "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "獨劍鞘",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm679.icon.png",
+            "isShiny": false,
+            "maxCp": "595",
+            "minCp": "556"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "老翁龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm780.icon.png",
+            "isShiny": false,
+            "maxCp": "1249",
+            "minCp": "1191"
+          }
+        ]
+      },
+      {
+        "description": "強化鋼屬性的寶可夢5次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大岩蛇",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm95.icon.png",
+            "isShiny": false,
+            "maxCp": "472",
+            "minCp": "435"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盔甲鳥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm227.icon.png",
+            "isShiny": false,
+            "maxCp": "903",
+            "minCp": "854"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "銅鏡怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm436.icon.png",
+            "isShiny": false,
+            "maxCp": "258",
+            "minCp": "229"
+          }
+        ]
+      },
+      {
+        "description": "在1場對戰中使出鋼屬性的特殊招式",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盾甲龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
+            "isShiny": false,
+            "maxCp": "381",
+            "minCp": "348"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Bastiodon",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm411.icon.png",
+            "isShiny": false,
+            "maxCp": "660",
+            "minCp": "615"
+          }
+        ]
+      },
+      {
+        "description": "探索 2 公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Modern Jacket Machamp",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm68.fWILDAREA_2026_01.icon.png",
+            "isShiny": false,
+            "maxCp": "1310",
+            "minCp": "1250"
+          }
+        ]
+      },
+      {
+        "description": "在1場對戰中使出龍屬性的特殊招式",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Kommo-o",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm784.icon.png",
+            "isShiny": false,
+            "maxCp": "1418",
+            "minCp": "1357"
+          }
+        ]
+      },
+      {
+        "description": "投出1次Excellent Throw",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
+            "name": "銀色凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金色蔓莓果 ×2",
+            "quantity": "×2"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Pokémon GO Wild Area 2026: Mexico City Tasks",
     "tasks": [
       {
@@ -65,6 +555,70 @@
         ]
       },
       {
+        "description": "在團體戰中獲勝 2 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Modern Jacket Machamp",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm68.fWILDAREA_2026_01.icon.png",
+            "isShiny": false,
+            "maxCp": "1310",
+            "minCp": "1250"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Azumarill",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm184.icon.png",
+            "isShiny": false,
+            "maxCp": "680",
+            "minCp": "637"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Conkeldurr",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm534.icon.png",
+            "isShiny": false,
+            "maxCp": "1430",
+            "minCp": "1368"
+          }
+        ]
+      },
+      {
+        "description": "在極巨對戰中獲勝1次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Modern Jacket Machamp",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm68.fWILDAREA_2026_01.icon.png",
+            "isShiny": false,
+            "maxCp": "1310",
+            "minCp": "1250"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Bastiodon",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm411.icon.png",
+            "isShiny": false,
+            "maxCp": "660",
+            "minCp": "615"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Kommo-o",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm784.icon.png",
+            "isShiny": false,
+            "maxCp": "1418",
+            "minCp": "1357"
+          }
+        ]
+      },
+      {
         "description": "捕捉 10 隻鋼屬性的寶可夢",
         "rewards": [
           {
@@ -91,6 +645,20 @@
             "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
             "name": "星星沙子 ×2000",
             "quantity": "×2000"
+          }
+        ]
+      },
+      {
+        "description": "捕捉洗翠黏美兒",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "洗翠 黏美兒",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm705.fHISUIAN.icon.png",
+            "isShiny": false,
+            "maxCp": "829",
+            "minCp": "782"
           }
         ]
       },
@@ -160,6 +728,43 @@
             "isShiny": false,
             "maxCp": "381",
             "minCp": "348"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Bastiodon",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm411.icon.png",
+            "isShiny": false,
+            "maxCp": "660",
+            "minCp": "615"
+          }
+        ]
+      },
+      {
+        "description": "探索 2 公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Modern Jacket Machamp",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm68.fWILDAREA_2026_01.icon.png",
+            "isShiny": false,
+            "maxCp": "1310",
+            "minCp": "1250"
+          }
+        ]
+      },
+      {
+        "description": "在1場對戰中使出龍屬性的特殊招式",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Kommo-o",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm784.icon.png",
+            "isShiny": false,
+            "maxCp": "1418",
+            "minCp": "1357"
           }
         ]
       },
@@ -167,174 +772,14 @@
         "description": "投出1次Excellent Throw",
         "rewards": [
           {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
-            "name": "銀色凰梨果 ×2",
-            "quantity": "×2"
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Modern Jacket Machamp",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm68.fWILDAREA_2026_01.icon.png",
+            "isShiny": false,
+            "maxCp": "1310",
+            "minCp": "1250"
           },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金色蔓莓果 ×2",
-            "quantity": "×2"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "Pokémon GO Wild Area 2026: Sendai • Tohoku Tasks",
-    "tasks": [
-      {
-        "description": "捕捉 10 隻龍屬性的寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "大顎蟻",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm328.icon.png",
-            "isShiny": false,
-            "maxCp": "546",
-            "minCp": "507"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×2000",
-            "quantity": "×2000"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
-            "name": "銀色凰梨果 ×1",
-            "quantity": "×1"
-          }
-        ]
-      },
-      {
-        "description": "強化龍屬性寶可夢 5 次",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "涼脊龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
-            "isShiny": false,
-            "maxCp": "534",
-            "minCp": "496"
-          }
-        ]
-      },
-      {
-        "description": "捕捉 10 隻鋼屬性的寶可夢",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "稚山雀",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm821.icon.png",
-            "isShiny": false,
-            "maxCp": "285",
-            "minCp": "258"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金色蔓莓果 ×1",
-            "quantity": "×1"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×2000",
-            "quantity": "×2000"
-          }
-        ]
-      },
-      {
-        "description": "孵化1顆蛋",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "獨劍鞘",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm679.icon.png",
-            "isShiny": false,
-            "maxCp": "595",
-            "minCp": "556"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "老翁龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm780.icon.png",
-            "isShiny": false,
-            "maxCp": "1249",
-            "minCp": "1191"
-          }
-        ]
-      },
-      {
-        "description": "強化鋼屬性的寶可夢5次",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "大岩蛇",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm95.icon.png",
-            "isShiny": false,
-            "maxCp": "472",
-            "minCp": "435"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "盔甲鳥",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm227.icon.png",
-            "isShiny": false,
-            "maxCp": "903",
-            "minCp": "854"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "銅鏡怪",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm436.icon.png",
-            "isShiny": false,
-            "maxCp": "258",
-            "minCp": "229"
-          }
-        ]
-      },
-      {
-        "description": "在1場對戰中使出鋼屬性的特殊招式",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "盾甲龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
-            "isShiny": false,
-            "maxCp": "381",
-            "minCp": "348"
-          }
-        ]
-      },
-      {
-        "description": "投出1次Excellent Throw",
-        "rewards": [
           {
             "isFeatured": false,
             "type": "item",
