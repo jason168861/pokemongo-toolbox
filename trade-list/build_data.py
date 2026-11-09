@@ -471,6 +471,39 @@ def flatten_nested(body):
 
 RS_MON = re.compile(r'rowspan\s*=\s*"?\d+"?\s*\|\s*\{\{I\|')   # 寶可夢那一格標了 rowspan
 
+def _cells(block):
+    """一列 wikitext → [(起點, 終點, 內容)]。以「行首 |」或「||」分格,[[…]]、{{…}} 裡的 | 不算。"""
+    out, depth, start, i, n = [], 0, 0, 0, len(block)
+    while i < n:
+        two = block[i:i+2]
+        if two in ("[[", "{{"): depth += 1; i += 2; continue
+        if two in ("]]", "}}"): depth = max(depth - 1, 0); i += 2; continue
+        if depth == 0 and (two == "||" or (block[i] == "|" and (i == 0 or block[i-1] == "\n"))):
+            out.append((start, i, block[start:i]))
+            i += 2 if two == "||" else 1
+            start = i; continue
+        i += 1
+    out.append((start, n, block[start:]))
+    return out
+
+def _fandom_name(block, cells, im):
+    """卡名 = 圖片那一格的「下一格」(2026-11 起 Fandom 改成這種排法;
+    舊版寫在同一格的 <br> 後面)。下一格裡 <br> 之後是附註(Requires Fusion…),不算卡名。
+    圖片那格本身若有 <br>(派昌舊版圖、(old background - unused) 這種)也不採用。"""
+    for k, (s, e, own) in enumerate(cells):
+        if s <= im.start() < e:
+            txt = cells[k + 1][2] if k + 1 < len(cells) else ""
+            txt = re.split(r'\n\s*\|\}|\n==', txt)[0]                   # 表格結尾之後不是卡名
+            txt = re.sub(r'^\s*[a-z\-]+\s*=\s*"[^"]*"\s*\|', '', txt)   # 去掉 style="…"| 之類的屬性
+            txt = re.split(r'<br\s*/?>', txt)[0]
+            if "[[File:" in txt or "{{I|" in txt: txt = ""             # 下一格是圖或寶可夢 → 沒有卡名
+            name = clean_cell(txt)
+            if not name:                                               # 舊排法:同一格 [[File:…]]<br>卡名
+                m = re.search(r'<br\s*/?>\s*([^\n<|\[]+)', block[im.end(): e])
+                name = m.group(1).strip() if m else ""
+            return name
+    return ""
+
 def fandom_rows(body, kind):
     """一個章節 body → 背卡列表,每隻帶 dex(+form/costume/ci)。
     一列可能有多張圖(見 flatten_nested),此時整列的寶可夢由這幾張圖共用。
@@ -486,12 +519,10 @@ def fandom_rows(body, kind):
             span_mons = list(mons) if RS_MON.search(block) else []
         elif ims and span_mons:
             mons = list(span_mons)      # 這列只有圖:寶可夢在上一列被 rowspan 攤開(里約、巴黎二號卡)
+        cells = _cells(block)
         for im in ims:
-            eol = block.find("\n", im.end())                                # 地名在同一行的 <br> 後面;
-            tail = block[im.end(): eol if eol >= 0 else len(block)]          # 跨行找會撈到活動日期
-            nm = re.search(r'<br\s*/?>\s*([^\n<|\[]+)', tail)
             raw.append({"image_name": im.group(1).strip().replace("_", " "),
-                        "name": nm.group(1).strip() if nm else "", "mons": list(mons)})
+                        "name": _fandom_name(block, cells, im), "mons": list(mons)})
         if not ims and raw and mons:
             raw[-1]["mons"] += mons
     out = []
@@ -516,7 +547,15 @@ def fandom_rows(body, kind):
         if entries:
             out.append({"type": kind, "source": "fandom", "image_name": r["image_name"],
                         "name": r["name"], "pokemon": tidy_mons(entries)})
-    return out
+    # 同一張圖可能分好幾列(2026-11 起 Fandom 一個活動一列:社群日卡 12 列、Mega 卡 3 列…),
+    # 合併成一張卡;不合併的話後面以圖名去重,只會留下第一列的寶可夢。
+    merged = {}
+    for r in out:
+        m = merged.get(r["image_name"])
+        if m is None: merged[r["image_name"]] = r; continue
+        m["pokemon"] = tidy_mons(m["pokemon"] + r["pokemon"])
+        if not m["name"]: m["name"] = r["name"]
+    return list(merged.values())
 
 try:
     fwt = get_json("https://pokemongo.fandom.com/api.php?action=parse&page=Backgrounds&prop=wikitext&format=json")["parse"]["wikitext"]["*"]
