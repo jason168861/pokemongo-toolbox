@@ -620,9 +620,12 @@
   .ev-cmp-c { padding: 10px 12px; text-align: center; display: flex; align-items: center; justify-content: center; }
   .ev-cmp-c::before { display: none; }
 }
-/* IV100 CP（build_event_pages.py 的 cp_tag）：寶可夢卡片連到 CP 頁，下方顯示 Lv20 的 100% CP */
-.ev-cp { display: inline-block; margin-top: 3px; font-size: .64rem; font-weight: 800; line-height: 1.3; color: #3d3950;
-  background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 1px 5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+/* 100% IV CP（build_event_pages.py 的 cp_tag）：寶可夢卡片連到 CP 頁，下方顯示 Lv20／Lv25 的 CP */
+.ev-cp { display: inline-flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 3px; font-size: .62rem; font-weight: 600; line-height: 1.35;
+  color: var(--muted); background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 1px 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ev-cp > span { display: flex; justify-content: space-between; gap: 6px; }
+.ev-cp b { color: var(--ink); font-weight: 800; }
+.ev-mon .ev-cp, .ev-spawn .ev-cp, .ev-shinies .ev-cp { display: flex; width: min(100%, 104px); margin: 4px auto 0; }
 .ev-tile-a { display: block; color: inherit; text-decoration: none; border-radius: 12px; }
 .ev-tile:has(.ev-tile-a:hover) { border-color: color-mix(in srgb, var(--brand) 45%, #fff); }
 .ev-tile-a:hover b { color: var(--brand); }
