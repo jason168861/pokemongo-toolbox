@@ -1,6 +1,10 @@
 {
+ "abomasnow": {
+  "fp": "d3def2db81338b7c",
+  "lastmod": "2026-11-10"
+ },
  "abra": {
-  "fp": "437f8c9485524b44",
+  "fp": "f80c20abe524539a",
   "lastmod": "2026-11-10"
  },
  "aegislash": {
@@ -12,7 +16,11 @@
   "lastmod": "2026-11-09"
  },
  "aggron": {
-  "fp": "8139352ec5f42ac7",
+  "fp": "542a1e4b44fd485c",
+  "lastmod": "2026-11-10"
+ },
+ "alakazam": {
+  "fp": "821216fae6ab902d",
   "lastmod": "2026-11-10"
  },
  "altaria": {
@@ -23,16 +31,44 @@
   "fp": "d3f7fd37f99f6cc6",
   "lastmod": "2026-11-10"
  },
+ "appletun": {
+  "fp": "d99298d56aa52263",
+  "lastmod": "2026-11-10"
+ },
  "applin": {
-  "fp": "80c8052f46a819c0",
+  "fp": "6cd64b21b8d44db5",
+  "lastmod": "2026-11-10"
+ },
+ "araquanid": {
+  "fp": "9243a3c06dd1a360",
+  "lastmod": "2026-11-10"
+ },
+ "arboliva": {
+  "fp": "31b1db8416174ff8",
   "lastmod": "2026-11-10"
  },
  "arcanine": {
-  "fp": "33cbc6005d8739e0",
+  "fp": "227b753ed060f915",
+  "lastmod": "2026-11-10"
+ },
+ "arcanine_hisuian": {
+  "fp": "e6ba80609b40d4e6",
+  "lastmod": "2026-11-10"
+ },
+ "arctibax": {
+  "fp": "679b00e0db4c581e",
+  "lastmod": "2026-11-10"
+ },
+ "armarouge": {
+  "fp": "b256c6086f2e33c8",
+  "lastmod": "2026-11-10"
+ },
+ "aron": {
+  "fp": "7189427d089f2dcf",
   "lastmod": "2026-11-10"
  },
  "arrokuda": {
-  "fp": "ca8876dd36194832",
+  "fp": "7ed9384763af9be1",
   "lastmod": "2026-11-10"
  },
  "articuno": {
@@ -44,7 +80,7 @@
   "lastmod": "2026-11-10"
  },
  "axew": {
-  "fp": "5ed019c3c17769e5",
+  "fp": "8808ba6a70c95bd2",
   "lastmod": "2026-11-10"
  },
  "azelf": {
@@ -52,43 +88,83 @@
   "lastmod": "2026-11-09"
  },
  "azumarill": {
-  "fp": "c62b823142bea3f5",
+  "fp": "02fa6c88d4983922",
+  "lastmod": "2026-11-10"
+ },
+ "azurill": {
+  "fp": "829e46c586a1815b",
   "lastmod": "2026-11-10"
  },
  "bagon": {
-  "fp": "51d2bb0d42b9e1bb",
+  "fp": "692a013e9dc82806",
   "lastmod": "2026-11-10"
  },
  "banette": {
-  "fp": "3e61cf45e1b4fd97",
+  "fp": "4ecfa2f3ec593766",
+  "lastmod": "2026-11-10"
+ },
+ "barraskewda": {
+  "fp": "fd76023e9979aa6a",
+  "lastmod": "2026-11-10"
+ },
+ "baxcalibur": {
+  "fp": "153afe30d4f5d811",
   "lastmod": "2026-11-10"
  },
  "beedrill": {
-  "fp": "6b097bf39c0a3d59",
+  "fp": "47ae9fccd0ac2adb",
+  "lastmod": "2026-11-10"
+ },
+ "beheeyem": {
+  "fp": "507766299bba2e8f",
   "lastmod": "2026-11-10"
  },
  "beldum": {
-  "fp": "64afbac07993e763",
+  "fp": "93fa64fbaf015d9e",
+  "lastmod": "2026-11-10"
+ },
+ "bellossom": {
+  "fp": "8ea5a4ffc5971100",
+  "lastmod": "2026-11-10"
+ },
+ "bellsprout": {
+  "fp": "34b2b6189c51eef3",
+  "lastmod": "2026-11-10"
+ },
+ "bewear": {
+  "fp": "8b040ee6244b78c6",
   "lastmod": "2026-11-10"
  },
  "blastoise": {
-  "fp": "785b8bbba91a990a",
+  "fp": "ebbf6549b034245e",
   "lastmod": "2026-11-10"
  },
  "blaziken": {
-  "fp": "0d8ab9eeb53f45a8",
+  "fp": "c8ccf1e45d488a3d",
   "lastmod": "2026-11-10"
  },
  "blissey": {
-  "fp": "251ad674d127c827",
+  "fp": "803b3fa99b0a5cac",
+  "lastmod": "2026-11-10"
+ },
+ "boldore": {
+  "fp": "c3a8eb17788eb48c",
   "lastmod": "2026-11-10"
  },
  "braixen": {
   "fp": "84a049e743580aa1",
   "lastmod": "2026-11-10"
  },
+ "brambleghast": {
+  "fp": "c72c701ae6dfc5a7",
+  "lastmod": "2026-11-10"
+ },
  "bramblin": {
-  "fp": "d17dd49cc05eac45",
+  "fp": "b333584873305424",
+  "lastmod": "2026-11-10"
+ },
+ "brionne": {
+  "fp": "383e488b93be5f5e",
   "lastmod": "2026-11-10"
  },
  "bulbasaur": {
@@ -100,7 +176,15 @@
   "lastmod": "2026-11-09"
  },
  "cacnea": {
-  "fp": "00aec291f3156bd2",
+  "fp": "779d50065e901308",
+  "lastmod": "2026-11-10"
+ },
+ "cacturne": {
+  "fp": "0edb3aded9154152",
+  "lastmod": "2026-11-10"
+ },
+ "camerupt": {
+  "fp": "7d618f9c9c52bc59",
   "lastmod": "2026-11-10"
  },
  "carvanha": {
@@ -111,48 +195,88 @@
   "fp": "cd3802dbc295ade2",
   "lastmod": "2026-11-10"
  },
+ "ceruledge": {
+  "fp": "d63ec48768474bfa",
+  "lastmod": "2026-11-10"
+ },
  "chandelure": {
   "fp": "dc9d3c68eaf0c206",
   "lastmod": "2026-11-10"
  },
  "chansey": {
-  "fp": "da7ac80faa4737e5",
+  "fp": "d8f484569d6cb170",
   "lastmod": "2026-11-10"
  },
  "charcadet": {
-  "fp": "9d98e35550d816b6",
+  "fp": "577aed983c8a2e26",
   "lastmod": "2026-11-10"
  },
  "charizard": {
-  "fp": "7bf0407f630f37cb",
+  "fp": "199401a41a970eb4",
   "lastmod": "2026-11-10"
  },
  "charmander": {
-  "fp": "babf2f2235f66084",
+  "fp": "b40230de17bc9e94",
+  "lastmod": "2026-11-10"
+ },
+ "charmeleon": {
+  "fp": "4fd2f126dd3a9498",
+  "lastmod": "2026-11-10"
+ },
+ "cherrim": {
+  "fp": "6a6f6f43de91fc0e",
   "lastmod": "2026-11-10"
  },
  "cherubi": {
-  "fp": "2fb83db7bd627d5d",
+  "fp": "635297a7c2b37199",
+  "lastmod": "2026-11-10"
+ },
+ "chesnaught": {
+  "fp": "6d566569b856b9ef",
   "lastmod": "2026-11-10"
  },
  "chespin": {
-  "fp": "3615b917e8b764a2",
+  "fp": "2fb826e2b7026b4d",
   "lastmod": "2026-11-10"
  },
  "cinderace": {
-  "fp": "6f9041ed7a20ea34",
+  "fp": "ddbc3c5f84bef2b4",
   "lastmod": "2026-11-10"
  },
  "clefable": {
-  "fp": "cbfa9d8b7412096a",
+  "fp": "7961c0fbc161b9b5",
   "lastmod": "2026-11-10"
  },
  "clefairy": {
-  "fp": "3089facd18f308ab",
+  "fp": "fe76fd4a5101f9db",
+  "lastmod": "2026-11-10"
+ },
+ "cleffa": {
+  "fp": "33a91f79c6d9a5bf",
+  "lastmod": "2026-11-10"
+ },
+ "combusken": {
+  "fp": "5bba4b1f03eae71f",
   "lastmod": "2026-11-10"
  },
  "corviknight": {
-  "fp": "5d2c0eb912d87df0",
+  "fp": "df9443144ada1001",
+  "lastmod": "2026-11-10"
+ },
+ "corvisquire": {
+  "fp": "0453776d9baafb03",
+  "lastmod": "2026-11-10"
+ },
+ "cosmoem": {
+  "fp": "e1b690df42feb9a2",
+  "lastmod": "2026-11-10"
+ },
+ "cosmog": {
+  "fp": "bd036f4975b7db00",
+  "lastmod": "2026-11-10"
+ },
+ "cradily": {
+  "fp": "6c12811fc198bffd",
   "lastmod": "2026-11-10"
  },
  "cramorant": {
@@ -163,24 +287,52 @@
   "fp": "72d808b92da83b5e",
   "lastmod": "2026-11-10"
  },
+ "crobat": {
+  "fp": "15516b75112e2ada",
+  "lastmod": "2026-11-10"
+ },
+ "crocalor": {
+  "fp": "01d8238cd63202b1",
+  "lastmod": "2026-11-10"
+ },
+ "croconaw": {
+  "fp": "9699d376b2015e9b",
+  "lastmod": "2026-11-10"
+ },
  "cryogonal": {
-  "fp": "98ab3c8d97e0595e",
+  "fp": "fda6e9a22537819e",
+  "lastmod": "2026-11-10"
+ },
+ "cyndaquil": {
+  "fp": "a7cdbc3c6dee5844",
+  "lastmod": "2026-11-10"
+ },
+ "dachsbun": {
+  "fp": "5d6db6509c73ab1d",
   "lastmod": "2026-11-10"
  },
  "darkrai": {
   "fp": "d929ba61f5472ae9",
   "lastmod": "2026-11-10"
  },
+ "dartrix": {
+  "fp": "917deb6717d4f731",
+  "lastmod": "2026-11-10"
+ },
  "decidueye": {
-  "fp": "02f0942e7b8716af",
+  "fp": "d532efa0cca34bc8",
+  "lastmod": "2026-11-10"
+ },
+ "decidueye_hisuian": {
+  "fp": "d86e80fbb23ae228",
   "lastmod": "2026-11-10"
  },
  "deerling": {
-  "fp": "4d5e2fda1392685c",
+  "fp": "a97ec32d2306efd2",
   "lastmod": "2026-11-10"
  },
  "deino": {
-  "fp": "572a01ca17a2bb49",
+  "fp": "86d397238424069d",
   "lastmod": "2026-11-10"
  },
  "delibird": {
@@ -207,8 +359,12 @@
   "fp": "316a8e64696ddbca",
   "lastmod": "2026-11-10"
  },
+ "dewott": {
+  "fp": "e05905ea0de589fc",
+  "lastmod": "2026-11-10"
+ },
  "dewpider": {
-  "fp": "9f84ff31840d13e9",
+  "fp": "f264f42f8b68ac6c",
   "lastmod": "2026-11-10"
  },
  "dialga": {
@@ -220,12 +376,20 @@
   "lastmod": "2026-11-10"
  },
  "diancie": {
-  "fp": "e564db695a379b2b",
-  "lastmod": "2026-11-09"
+  "fp": "320de4becbc3d3e9",
+  "lastmod": "2026-11-10"
+ },
+ "dipplin": {
+  "fp": "368c7d736d34c51a",
+  "lastmod": "2026-11-10"
  },
  "ditto": {
   "fp": "827af61af8340f7f",
   "lastmod": "2026-11-09"
+ },
+ "dolliv": {
+  "fp": "dd7c897334757c0f",
+  "lastmod": "2026-11-10"
  },
  "dondozo": {
   "fp": "00e851147fff3466",
@@ -233,6 +397,10 @@
  },
  "doublade": {
   "fp": "5e4d51eeb242b0ef",
+  "lastmod": "2026-11-10"
+ },
+ "dragapult": {
+  "fp": "cd1e0331a8dd6684",
   "lastmod": "2026-11-10"
  },
  "dragonair": {
@@ -243,12 +411,16 @@
   "fp": "8d504bc6fbc18269",
   "lastmod": "2026-11-10"
  },
+ "drakloak": {
+  "fp": "1911207ff92e9ec2",
+  "lastmod": "2026-11-10"
+ },
  "dratini": {
   "fp": "2664077fceb8feb3",
   "lastmod": "2026-11-10"
  },
  "dreepy": {
-  "fp": "1dd5590130d8f8e2",
+  "fp": "e2be861dfb919a74",
   "lastmod": "2026-11-10"
  },
  "drifblim": {
@@ -263,6 +435,10 @@
   "fp": "e95cc30bee8812bd",
   "lastmod": "2026-11-10"
  },
+ "drizzile": {
+  "fp": "3fd2957b6d74d66a",
+  "lastmod": "2026-11-10"
+ },
  "druddigon": {
   "fp": "f284bc85bb832279",
   "lastmod": "2026-11-10"
@@ -272,7 +448,7 @@
   "lastmod": "2026-11-09"
  },
  "eevee": {
-  "fp": "4c9fd996905a1c78",
+  "fp": "782271242f1292cb",
   "lastmod": "2026-11-10"
  },
  "electrike": {
@@ -280,7 +456,11 @@
   "lastmod": "2026-11-10"
  },
  "elgyem": {
-  "fp": "1fdfa65211ee467f",
+  "fp": "40db66c8a1e6ea32",
+  "lastmod": "2026-11-10"
+ },
+ "empoleon": {
+  "fp": "87eb2f4ad46a056f",
   "lastmod": "2026-11-10"
  },
  "entei": {
@@ -288,11 +468,11 @@
   "lastmod": "2026-11-09"
  },
  "espeon": {
-  "fp": "6350d848f383d246",
+  "fp": "106e6754459ddabf",
   "lastmod": "2026-11-10"
  },
  "espurr": {
-  "fp": "01e3523433ab02a9",
+  "fp": "82c9fd459f9e7497",
   "lastmod": "2026-11-10"
  },
  "eternatus": {
@@ -308,7 +488,15 @@
   "lastmod": "2026-11-10"
  },
  "exeggcute": {
-  "fp": "01aa38de3fc67a69",
+  "fp": "58888d6beac4f8ee",
+  "lastmod": "2026-11-10"
+ },
+ "exeggutor": {
+  "fp": "da43081b8d2e6570",
+  "lastmod": "2026-11-10"
+ },
+ "exeggutor_alolan": {
+  "fp": "ebeb2c48df8ed2a2",
   "lastmod": "2026-11-10"
  },
  "falinks": {
@@ -316,31 +504,51 @@
   "lastmod": "2026-11-09"
  },
  "feebas": {
-  "fp": "4571da40e4422447",
+  "fp": "713f4e699d0b8a50",
   "lastmod": "2026-11-10"
  },
  "fennekin": {
-  "fp": "a9bef1daefe01930",
+  "fp": "1d788071a763878a",
   "lastmod": "2026-11-10"
  },
  "feraligatr": {
-  "fp": "7288be529da4fb1d",
+  "fp": "7ed49270760bd1c1",
   "lastmod": "2026-11-10"
  },
  "fidough": {
-  "fp": "3235fbcbe197f563",
+  "fp": "14b0305b8d202a0c",
   "lastmod": "2026-11-10"
  },
  "flamigo": {
   "fp": "03add885d9c835e7",
   "lastmod": "2026-11-09"
  },
+ "flapple": {
+  "fp": "255a40f78b0ce4e0",
+  "lastmod": "2026-11-10"
+ },
+ "flareon": {
+  "fp": "148702e5cd606a16",
+  "lastmod": "2026-11-10"
+ },
+ "fletchinder": {
+  "fp": "e273eb49b8519d4c",
+  "lastmod": "2026-11-10"
+ },
  "fletchling": {
-  "fp": "4f8907db222a1c7f",
+  "fp": "14379dae325e5421",
+  "lastmod": "2026-11-10"
+ },
+ "floragato": {
+  "fp": "1156d5e300099dd5",
+  "lastmod": "2026-11-10"
+ },
+ "fraxure": {
+  "fp": "852a53db97a2cd21",
   "lastmod": "2026-11-10"
  },
  "frigibax": {
-  "fp": "e857d9640cc66255",
+  "fp": "1553f7c3fb474e12",
   "lastmod": "2026-11-10"
  },
  "frillish": {
@@ -355,16 +563,32 @@
   "fp": "79bcba9e117b3ef6",
   "lastmod": "2026-11-10"
  },
+ "froslass": {
+  "fp": "524f59bb860c6d71",
+  "lastmod": "2026-11-10"
+ },
+ "frosmoth": {
+  "fp": "c5f366740e3ad358",
+  "lastmod": "2026-11-10"
+ },
  "fuecoco": {
-  "fp": "f0d9c7342f76d490",
+  "fp": "aa1b9ea23229978f",
   "lastmod": "2026-11-10"
  },
  "gabite": {
   "fp": "348db50689bbc97a",
   "lastmod": "2026-11-10"
  },
+ "gallade": {
+  "fp": "66d24fd60cd1f9bb",
+  "lastmod": "2026-11-10"
+ },
  "garchomp": {
   "fp": "598f5b29f1734e49",
+  "lastmod": "2026-11-10"
+ },
+ "gardevoir": {
+  "fp": "2643d25b7bd34a74",
   "lastmod": "2026-11-10"
  },
  "gastly": {
@@ -372,15 +596,23 @@
   "lastmod": "2026-11-10"
  },
  "gengar": {
-  "fp": "06360ddb23db24dd",
+  "fp": "f6e9bebf23d547a4",
+  "lastmod": "2026-11-10"
+ },
+ "gholdengo": {
+  "fp": "80f7659995c4d80e",
   "lastmod": "2026-11-10"
  },
  "gible": {
   "fp": "8a46cbbbf2dc0e92",
   "lastmod": "2026-11-10"
  },
+ "gigalith": {
+  "fp": "3ab554ea2d974c48",
+  "lastmod": "2026-11-10"
+ },
  "gimmighoul": {
-  "fp": "3040be36203ceb28",
+  "fp": "0faa7d9df19a62e7",
   "lastmod": "2026-11-10"
  },
  "giratina": {
@@ -392,11 +624,31 @@
   "lastmod": "2026-11-10"
  },
  "glaceon": {
-  "fp": "54df0a4305014cc5",
+  "fp": "9b6e4da747800fc1",
+  "lastmod": "2026-11-10"
+ },
+ "glalie": {
+  "fp": "167ec7540b2794e2",
   "lastmod": "2026-11-10"
  },
  "gligar": {
-  "fp": "49b3b682b30b7b14",
+  "fp": "6c8c29aee1bd1f89",
+  "lastmod": "2026-11-10"
+ },
+ "gliscor": {
+  "fp": "95942e58278f7def",
+  "lastmod": "2026-11-10"
+ },
+ "gloom": {
+  "fp": "6718880c00998914",
+  "lastmod": "2026-11-10"
+ },
+ "golbat": {
+  "fp": "402ac15a865918a8",
+  "lastmod": "2026-11-10"
+ },
+ "golduck": {
+  "fp": "b7d2c1a950c9780a",
   "lastmod": "2026-11-10"
  },
  "golisopod": {
@@ -404,7 +656,19 @@
   "lastmod": "2026-11-10"
  },
  "gourgeist_average": {
-  "fp": "ce61cb44c73a159e",
+  "fp": "fa4eddd973bc5d8f",
+  "lastmod": "2026-11-10"
+ },
+ "gourgeist_large": {
+  "fp": "bd58451de7c6de11",
+  "lastmod": "2026-11-10"
+ },
+ "gourgeist_small": {
+  "fp": "6263bee534e38926",
+  "lastmod": "2026-11-10"
+ },
+ "gourgeist_super": {
+  "fp": "2d94eccb6c5d4f85",
   "lastmod": "2026-11-10"
  },
  "greninja": {
@@ -412,35 +676,71 @@
   "lastmod": "2026-11-10"
  },
  "grimmsnarl": {
-  "fp": "8c6849bf4b5827bb",
+  "fp": "97afeffc15921e4c",
+  "lastmod": "2026-11-10"
+ },
+ "grookey": {
+  "fp": "eb7b7dd079cdcd01",
   "lastmod": "2026-11-10"
  },
  "groudon": {
   "fp": "e4f8587298c60ab1",
   "lastmod": "2026-11-09"
  },
+ "grovyle": {
+  "fp": "0d0008df506cf4c5",
+  "lastmod": "2026-11-10"
+ },
  "growlithe": {
-  "fp": "6b45e380757996e7",
+  "fp": "8dbf6b0e5cedaab9",
   "lastmod": "2026-11-10"
  },
  "growlithe_hisuian": {
-  "fp": "f3f36435a2503540",
+  "fp": "02200bc5196f55bb",
   "lastmod": "2026-11-10"
  },
  "gyarados": {
   "fp": "cf05e1047d443640",
   "lastmod": "2026-11-10"
  },
+ "hakamo_o": {
+  "fp": "2fccd3b74cc277c5",
+  "lastmod": "2026-11-10"
+ },
+ "happiny": {
+  "fp": "09c0f0e2184e4948",
+  "lastmod": "2026-11-10"
+ },
  "hatenna": {
-  "fp": "38b011369d4eddc2",
+  "fp": "609180178702a59a",
+  "lastmod": "2026-11-10"
+ },
+ "hatterene": {
+  "fp": "ad93295f763a3241",
+  "lastmod": "2026-11-10"
+ },
+ "hattrem": {
+  "fp": "56af692a5b65a02f",
   "lastmod": "2026-11-10"
  },
  "haunter": {
   "fp": "ae614d55a2d23296",
   "lastmod": "2026-11-10"
  },
+ "haxorus": {
+  "fp": "281c09b9f80705e9",
+  "lastmod": "2026-11-10"
+ },
+ "hitmonchan": {
+  "fp": "504dd4b27195ced4",
+  "lastmod": "2026-11-10"
+ },
+ "hitmonlee": {
+  "fp": "32a885fee3e767ab",
+  "lastmod": "2026-11-10"
+ },
  "hitmontop": {
-  "fp": "3435fae6ae4fc080",
+  "fp": "c3f8a4efd0dccecd",
   "lastmod": "2026-11-10"
  },
  "ho_oh": {
@@ -448,15 +748,19 @@
   "lastmod": "2026-11-09"
  },
  "honedge": {
-  "fp": "4f35f01f2380bd09",
+  "fp": "c13520c5e15da05b",
+  "lastmod": "2026-11-10"
+ },
+ "hoopa_confined": {
+  "fp": "3dd29824f127b690",
   "lastmod": "2026-11-10"
  },
  "hoopa_unbound": {
-  "fp": "d8f0af694998a3a8",
+  "fp": "2d63bcdc191d3f9b",
   "lastmod": "2026-11-10"
  },
  "hoothoot": {
-  "fp": "e8d63028e42135d8",
+  "fp": "7cf573363c4b61d3",
   "lastmod": "2026-11-10"
  },
  "houndoom": {
@@ -467,16 +771,24 @@
   "fp": "76b40aa3e36de3f3",
   "lastmod": "2026-11-10"
  },
+ "hydrapple": {
+  "fp": "db4642221235a7ba",
+  "lastmod": "2026-11-10"
+ },
  "hydreigon": {
-  "fp": "d17c522e13f7e90e",
+  "fp": "47cd1b797afc64df",
+  "lastmod": "2026-11-10"
+ },
+ "igglybuff": {
+  "fp": "30761cfe897acfcc",
   "lastmod": "2026-11-10"
  },
  "impidimp": {
-  "fp": "18427383ded7fc13",
+  "fp": "d784d8e5e0eb86fc",
   "lastmod": "2026-11-10"
  },
  "incineroar": {
-  "fp": "87c0812beb634fec",
+  "fp": "d88c2aa5d1dd27db",
   "lastmod": "2026-11-10"
  },
  "inkay": {
@@ -484,11 +796,15 @@
   "lastmod": "2026-11-10"
  },
  "inteleon": {
-  "fp": "db33c4954e47cf29",
+  "fp": "e6bb90e336c22b09",
   "lastmod": "2026-11-10"
  },
  "ivysaur": {
   "fp": "ad504972878d8166",
+  "lastmod": "2026-11-10"
+ },
+ "jangmo_o": {
+  "fp": "922d3e1bba69bda8",
   "lastmod": "2026-11-10"
  },
  "jellicent": {
@@ -496,27 +812,39 @@
   "lastmod": "2026-11-10"
  },
  "jigglypuff": {
-  "fp": "1da050614fc9f19f",
+  "fp": "ff7d435a3a74534e",
+  "lastmod": "2026-11-10"
+ },
+ "jolteon": {
+  "fp": "2814729ef12e80cd",
+  "lastmod": "2026-11-10"
+ },
+ "kadabra": {
+  "fp": "20036b97390bf349",
+  "lastmod": "2026-11-10"
+ },
+ "kakuna": {
+  "fp": "6f77ee27a1f68f64",
   "lastmod": "2026-11-10"
  },
  "kecleon": {
-  "fp": "49d10c858d82cd65",
-  "lastmod": "2026-11-09"
+  "fp": "1da779ef0b7ad08e",
+  "lastmod": "2026-11-10"
  },
  "keldeo": {
   "fp": "a818b3367b32878a",
   "lastmod": "2026-11-09"
  },
  "kirlia": {
-  "fp": "1a8f2cd904e34168",
+  "fp": "fb40da2f079b0782",
   "lastmod": "2026-11-10"
  },
  "kleavor": {
-  "fp": "43489bc7631ea08f",
+  "fp": "073efaf931f47232",
   "lastmod": "2026-11-10"
  },
  "kommo_o": {
-  "fp": "59c64a37a83254f9",
+  "fp": "776c2ff213c3a893",
   "lastmod": "2026-11-10"
  },
  "kyogre": {
@@ -533,6 +861,10 @@
  },
  "kyurem_white": {
   "fp": "86a96bc5fea7a6d4",
+  "lastmod": "2026-11-10"
+ },
+ "lairon": {
+  "fp": "82ad1e4ae9cd1cbf",
   "lastmod": "2026-11-10"
  },
  "lampent": {
@@ -552,11 +884,11 @@
   "lastmod": "2026-11-09"
  },
  "larvesta": {
-  "fp": "5c9add5473dc9618",
+  "fp": "507f5203b764153e",
   "lastmod": "2026-11-10"
  },
  "larvitar": {
-  "fp": "5babfce63f0e8182",
+  "fp": "707b9029b8a8c7de",
   "lastmod": "2026-11-10"
  },
  "latias": {
@@ -567,28 +899,36 @@
   "fp": "deeb30d1fe50d46b",
   "lastmod": "2026-11-09"
  },
+ "leafeon": {
+  "fp": "dfa8335f0d0cf623",
+  "lastmod": "2026-11-10"
+ },
  "lickilicky": {
   "fp": "dcf3445212bded3c",
   "lastmod": "2026-11-10"
  },
  "lickitung": {
-  "fp": "8de04ee02f0c003f",
+  "fp": "bec00eb6e4e3dad3",
   "lastmod": "2026-11-10"
  },
  "lileep": {
-  "fp": "dc82076ce87de85f",
+  "fp": "d091407f673b07ba",
+  "lastmod": "2026-11-10"
+ },
+ "linoone": {
+  "fp": "2692f7c9f60a09d3",
   "lastmod": "2026-11-10"
  },
  "litleo": {
-  "fp": "dee23925bcc64998",
+  "fp": "5c7828fed2966bb2",
   "lastmod": "2026-11-10"
  },
  "litten": {
-  "fp": "7bf0c8e9f5b69e6e",
+  "fp": "4ea5cbf60b4c2224",
   "lastmod": "2026-11-10"
  },
  "litwick": {
-  "fp": "ab044483cc5b7724",
+  "fp": "4e070748d98f86ea",
   "lastmod": "2026-11-10"
  },
  "lucario": {
@@ -600,19 +940,39 @@
   "lastmod": "2026-11-09"
  },
  "lunala": {
-  "fp": "890af9365c79cb63",
+  "fp": "d9ca152ac6b1a93f",
   "lastmod": "2026-11-10"
  },
  "lunatone": {
   "fp": "1a3d68de8e1affe1",
   "lastmod": "2026-11-09"
  },
+ "lycanroc_dusk": {
+  "fp": "d7f2b78ef06085be",
+  "lastmod": "2026-11-10"
+ },
+ "lycanroc_midday": {
+  "fp": "5998e0a1fccc2aae",
+  "lastmod": "2026-11-10"
+ },
+ "lycanroc_midnight": {
+  "fp": "ae759c9d384b7aea",
+  "lastmod": "2026-11-10"
+ },
  "machamp": {
-  "fp": "2f34fb4e600fefd8",
+  "fp": "81f6cb6a9e4ec981",
+  "lastmod": "2026-11-10"
+ },
+ "machoke": {
+  "fp": "e9402f1a69d9efab",
   "lastmod": "2026-11-10"
  },
  "machop": {
-  "fp": "d97db0a79ceeaa11",
+  "fp": "574e17158e82c00f",
+  "lastmod": "2026-11-10"
+ },
+ "magby": {
+  "fp": "39c7416088e03be3",
   "lastmod": "2026-11-10"
  },
  "magikarp": {
@@ -620,11 +980,11 @@
   "lastmod": "2026-11-10"
  },
  "magmar": {
-  "fp": "65384a1b93ffd0cf",
+  "fp": "2c55cb4324a6385d",
   "lastmod": "2026-11-10"
  },
  "magmortar": {
-  "fp": "5e6c304da7457ce7",
+  "fp": "768cbfe79f84fd5b",
   "lastmod": "2026-11-10"
  },
  "malamar": {
@@ -636,19 +996,31 @@
   "lastmod": "2026-11-10"
  },
  "mankey": {
-  "fp": "e8a196705a2192cd",
+  "fp": "e7ce195ebdeeb7e0",
   "lastmod": "2026-11-10"
  },
  "mareanie": {
-  "fp": "6adcf91872947f0d",
+  "fp": "dd1c8ceb21237da4",
+  "lastmod": "2026-11-10"
+ },
+ "marill": {
+  "fp": "e7daad35a79203ad",
+  "lastmod": "2026-11-10"
+ },
+ "marshtomp": {
+  "fp": "daedd1244c61d8dc",
   "lastmod": "2026-11-10"
  },
  "melmetal": {
-  "fp": "f97b8a41c858abda",
+  "fp": "7c7c817354a4a2e4",
   "lastmod": "2026-11-10"
  },
  "meloetta": {
-  "fp": "df87cf9d24c4a6a2",
+  "fp": "4574b89b6711c0fd",
+  "lastmod": "2026-11-10"
+ },
+ "meloetta_pirouette": {
+  "fp": "9eec5c31ba2d784a",
   "lastmod": "2026-11-10"
  },
  "meltan": {
@@ -656,11 +1028,23 @@
   "lastmod": "2026-11-10"
  },
  "meowscarada": {
-  "fp": "34bfcdafd71034b6",
+  "fp": "30dd5cb4fd9a479b",
+  "lastmod": "2026-11-10"
+ },
+ "meowstic": {
+  "fp": "84feee166ea844a1",
   "lastmod": "2026-11-10"
  },
  "meowth": {
-  "fp": "5fc77c613c7a7739",
+  "fp": "79ebeda18e95f7e5",
+  "lastmod": "2026-11-10"
+ },
+ "meowth_alolan": {
+  "fp": "b21694b2150fc85a",
+  "lastmod": "2026-11-10"
+ },
+ "meowth_galarian": {
+  "fp": "7b16b8d7e6fc378b",
   "lastmod": "2026-11-10"
  },
  "mesprit": {
@@ -668,7 +1052,11 @@
   "lastmod": "2026-11-09"
  },
  "metagross": {
-  "fp": "8f83212971ba2fbd",
+  "fp": "092d74523a3fb421",
+  "lastmod": "2026-11-10"
+ },
+ "metang": {
+  "fp": "906caefc894f7846",
   "lastmod": "2026-11-10"
  },
  "mew": {
@@ -681,6 +1069,10 @@
  },
  "mewtwo_a": {
   "fp": "219fae8c5264b86b",
+  "lastmod": "2026-11-10"
+ },
+ "milotic": {
+  "fp": "7d09fa32b23bf706",
   "lastmod": "2026-11-10"
  },
  "mimikyu": {
@@ -703,12 +1095,32 @@
   "fp": "d6aac1bfbe7d2210",
   "lastmod": "2026-11-10"
  },
+ "morgrem": {
+  "fp": "702bef80a4f06cd8",
+  "lastmod": "2026-11-10"
+ },
+ "mudkip": {
+  "fp": "e37b62d3802784c7",
+  "lastmod": "2026-11-10"
+ },
  "munchlax": {
   "fp": "151672db3424e71f",
   "lastmod": "2026-11-10"
  },
  "munna": {
-  "fp": "1d3d78d40f7c3ad0",
+  "fp": "044c9b4668491730",
+  "lastmod": "2026-11-10"
+ },
+ "musharna": {
+  "fp": "67052439257735a5",
+  "lastmod": "2026-11-10"
+ },
+ "naganadel": {
+  "fp": "3c6661cbbf17aa9b",
+  "lastmod": "2026-11-10"
+ },
+ "natu": {
+  "fp": "c405c31ea04e7ae0",
   "lastmod": "2026-11-10"
  },
  "necrozma": {
@@ -732,23 +1144,43 @@
   "lastmod": "2026-11-10"
  },
  "ninetales": {
-  "fp": "6b0ebcfb071a7eba",
+  "fp": "148418e10cfcfbe6",
   "lastmod": "2026-11-10"
  },
  "ninetales_alola": {
-  "fp": "59e05efe9b2c43a1",
+  "fp": "83fa28307653c2e8",
+  "lastmod": "2026-11-10"
+ },
+ "noctowl": {
+  "fp": "3f2a978d445e6cc1",
   "lastmod": "2026-11-10"
  },
  "noibat": {
-  "fp": "2352564d90fb04b2",
+  "fp": "04907d375f759651",
+  "lastmod": "2026-11-10"
+ },
+ "noivern": {
+  "fp": "73747ba7c0be7270",
   "lastmod": "2026-11-10"
  },
  "numel": {
-  "fp": "25295441bc75ac97",
+  "fp": "d334be3da614ae57",
+  "lastmod": "2026-11-10"
+ },
+ "nuzleaf": {
+  "fp": "6909517d862e9414",
+  "lastmod": "2026-11-10"
+ },
+ "obstagoon": {
+  "fp": "f295d869658f8bb1",
   "lastmod": "2026-11-10"
  },
  "oddish": {
-  "fp": "013b82c4a492b82e",
+  "fp": "20b8569e5168f66b",
+  "lastmod": "2026-11-10"
+ },
+ "onix": {
+  "fp": "fc11f1ae6816e10e",
   "lastmod": "2026-11-10"
  },
  "orthworm": {
@@ -756,7 +1188,7 @@
   "lastmod": "2026-11-10"
  },
  "oshawott": {
-  "fp": "3414208a6d652b79",
+  "fp": "9a5760279675ccc5",
   "lastmod": "2026-11-10"
  },
  "palkia": {
@@ -768,11 +1200,27 @@
   "lastmod": "2026-11-10"
  },
  "pancham": {
-  "fp": "fa93fb81f707bcc6",
+  "fp": "0b37642c991def2e",
+  "lastmod": "2026-11-10"
+ },
+ "pangoro": {
+  "fp": "9a9d5871eb6e5bd8",
+  "lastmod": "2026-11-10"
+ },
+ "perrserker": {
+  "fp": "beec62b733fd24b8",
+  "lastmod": "2026-11-10"
+ },
+ "persian": {
+  "fp": "2a8879a63bc90e94",
+  "lastmod": "2026-11-10"
+ },
+ "persian_alolan": {
+  "fp": "839eff848e194b4d",
   "lastmod": "2026-11-10"
  },
  "phantump": {
-  "fp": "84d84aba64bb5cd0",
+  "fp": "b14daef40194cf07",
   "lastmod": "2026-11-10"
  },
  "pheromosa": {
@@ -780,67 +1228,143 @@
   "lastmod": "2026-11-09"
  },
  "pichu": {
-  "fp": "297034fcb86e8c9b",
+  "fp": "0ec3a62414fbd27f",
+  "lastmod": "2026-11-10"
+ },
+ "pidgeot": {
+  "fp": "c51ef0081d18b022",
+  "lastmod": "2026-11-10"
+ },
+ "pidgeotto": {
+  "fp": "23c45bebff1758b6",
   "lastmod": "2026-11-10"
  },
  "pidgey": {
-  "fp": "4d058085a2903237",
+  "fp": "5aec4deace4c5535",
   "lastmod": "2026-11-10"
  },
  "pikachu": {
-  "fp": "ec9ff3a19645fb1a",
+  "fp": "ddef14ef92ff0d42",
   "lastmod": "2026-11-10"
  },
  "piplup": {
-  "fp": "63baff7896652e87",
+  "fp": "532340272c8bc6b9",
   "lastmod": "2026-11-10"
  },
  "poipole": {
-  "fp": "e4d430853eec4918",
+  "fp": "847bab73ab7ea8b6",
+  "lastmod": "2026-11-10"
+ },
+ "politoed": {
+  "fp": "914b1bd04f867ac2",
   "lastmod": "2026-11-10"
  },
  "poliwag": {
-  "fp": "6047858b173948b7",
+  "fp": "ad10c4d90bf88fed",
+  "lastmod": "2026-11-10"
+ },
+ "poliwhirl": {
+  "fp": "1b9de8e8a7788872",
+  "lastmod": "2026-11-10"
+ },
+ "poliwrath": {
+  "fp": "b77cefa1a30d30c8",
   "lastmod": "2026-11-10"
  },
  "ponyta": {
   "fp": "47b40a267bb29ae6",
   "lastmod": "2026-11-10"
  },
+ "popplio": {
+  "fp": "a7f7e1094337f334",
+  "lastmod": "2026-11-10"
+ },
  "porygon": {
-  "fp": "91718007f147d77a",
+  "fp": "a5a1b1c3ae5ac1fd",
+  "lastmod": "2026-11-10"
+ },
+ "porygon2": {
+  "fp": "423c1841ccb2ac92",
+  "lastmod": "2026-11-10"
+ },
+ "porygon_z": {
+  "fp": "7b11f8c119517641",
   "lastmod": "2026-11-10"
  },
  "primarina": {
-  "fp": "254e38577bc96ee8",
+  "fp": "a7ed1a3ce2beef82",
   "lastmod": "2026-11-10"
  },
  "primeape": {
   "fp": "6c3b4e27e83cb4aa",
   "lastmod": "2026-11-10"
  },
+ "prinplup": {
+  "fp": "86108310a6b81911",
+  "lastmod": "2026-11-10"
+ },
  "psyduck": {
-  "fp": "b7ebcd3f7069d02c",
+  "fp": "9b44a474514c3966",
   "lastmod": "2026-11-10"
  },
  "pumpkaboo_average": {
-  "fp": "4c02b4ea3ad4616b",
+  "fp": "51f882d5a949814d",
+  "lastmod": "2026-11-10"
+ },
+ "pumpkaboo_large": {
+  "fp": "d548a036573281ec",
+  "lastmod": "2026-11-10"
+ },
+ "pumpkaboo_small": {
+  "fp": "9d8ce2090af78d56",
+  "lastmod": "2026-11-10"
+ },
+ "pumpkaboo_super": {
+  "fp": "1e7f1c60b3fc831e",
+  "lastmod": "2026-11-10"
+ },
+ "pupitar": {
+  "fp": "667f268b5897b6fc",
+  "lastmod": "2026-11-10"
+ },
+ "pyroar": {
+  "fp": "196962c536e24f84",
   "lastmod": "2026-11-10"
  },
  "quagsire": {
-  "fp": "4162a088e59b068a",
+  "fp": "de80e33f9287bdae",
   "lastmod": "2026-11-10"
  },
  "quaquaval": {
-  "fp": "83ff3fef2c1b5ffa",
+  "fp": "7bee6c2e150dec51",
   "lastmod": "2026-11-10"
  },
  "quaxly": {
-  "fp": "d563cbee6da12e03",
+  "fp": "10c7c631db757bb6",
+  "lastmod": "2026-11-10"
+ },
+ "quaxwell": {
+  "fp": "e1cd3173f9af21ef",
+  "lastmod": "2026-11-10"
+ },
+ "quilava": {
+  "fp": "6620d0a5a16b3de6",
+  "lastmod": "2026-11-10"
+ },
+ "quilladin": {
+  "fp": "cea221974c00ad52",
+  "lastmod": "2026-11-10"
+ },
+ "raboot": {
+  "fp": "b554dc280c4a5e88",
   "lastmod": "2026-11-10"
  },
  "raichu": {
-  "fp": "f9c09a15e90fc98b",
+  "fp": "e0e3e96db5fae933",
+  "lastmod": "2026-11-10"
+ },
+ "raichu_alolan": {
+  "fp": "414f05f1f17ebd3f",
   "lastmod": "2026-11-10"
  },
  "raikou": {
@@ -848,19 +1372,23 @@
   "lastmod": "2026-11-09"
  },
  "ralts": {
-  "fp": "f870b7a5b7649114",
+  "fp": "3051f27a9f296f30",
   "lastmod": "2026-11-10"
  },
  "rapidash": {
-  "fp": "5fed5a2b97d82d10",
+  "fp": "70f22052cc2c73f9",
   "lastmod": "2026-11-10"
  },
  "raticate": {
-  "fp": "920dcb86fa0334e5",
+  "fp": "e947b6495fbeb9bd",
+  "lastmod": "2026-11-10"
+ },
+ "raticate_alolan": {
+  "fp": "0383b30408544a26",
   "lastmod": "2026-11-10"
  },
  "rattata": {
-  "fp": "ec0aceea096ff583",
+  "fp": "4eca10297d3833df",
   "lastmod": "2026-11-10"
  },
  "rayquaza": {
@@ -868,7 +1396,7 @@
   "lastmod": "2026-11-09"
  },
  "regice": {
-  "fp": "95f0db07a4323b22",
+  "fp": "a4541850268791c2",
   "lastmod": "2026-11-10"
  },
  "regidrago": {
@@ -904,7 +1432,7 @@
   "lastmod": "2026-11-10"
  },
  "rillaboom": {
-  "fp": "3700cc3ffed215e6",
+  "fp": "d9f08ee7123e19c0",
   "lastmod": "2026-11-10"
  },
  "riolu": {
@@ -912,59 +1440,87 @@
   "lastmod": "2026-11-10"
  },
  "rockruff": {
-  "fp": "0db7150d5667766c",
+  "fp": "08db357c4a6b177a",
   "lastmod": "2026-11-10"
  },
  "roggenrola": {
-  "fp": "992bc37bed6b6778",
+  "fp": "d6e35678f7547461",
   "lastmod": "2026-11-10"
  },
  "rookidee": {
-  "fp": "ccf8082b3089709a",
+  "fp": "07955bbc61b12ad3",
   "lastmod": "2026-11-10"
  },
  "rowlet": {
-  "fp": "0ac8484a1adb5e33",
+  "fp": "66a83d7ddf25978d",
   "lastmod": "2026-11-10"
  },
  "sableye": {
   "fp": "7ffbff732f32fa92",
   "lastmod": "2026-11-09"
  },
+ "salamence": {
+  "fp": "4710125130a97116",
+  "lastmod": "2026-11-10"
+ },
  "samurott": {
-  "fp": "252fdcfb1ce889df",
+  "fp": "1925783ef6ba176a",
   "lastmod": "2026-11-10"
  },
  "samurott_hisuian": {
-  "fp": "79eea689f02a5608",
+  "fp": "0fa05633af45c3f3",
   "lastmod": "2026-11-10"
  },
  "sawk": {
   "fp": "81c43c0f8e61b9dd",
   "lastmod": "2026-11-09"
  },
+ "sawsbuck": {
+  "fp": "714e57e198729607",
+  "lastmod": "2026-11-10"
+ },
+ "scatterbug": {
+  "fp": "02e6a229189e319d",
+  "lastmod": "2026-11-10"
+ },
  "sceptile": {
-  "fp": "5602dc61014cf981",
+  "fp": "eda450387b69aa22",
   "lastmod": "2026-11-10"
  },
  "scizor": {
-  "fp": "99752dcb20b67866",
+  "fp": "d048fcd789302a8a",
   "lastmod": "2026-11-10"
  },
  "scorbunny": {
-  "fp": "4f1641c8a48f43fb",
+  "fp": "5dd3901f5c0a79d8",
+  "lastmod": "2026-11-10"
+ },
+ "scyther": {
+  "fp": "8c6bbeb9a2be60ee",
   "lastmod": "2026-11-10"
  },
  "seedot": {
-  "fp": "e64ee4b3dc7b6e6d",
+  "fp": "af697e05fa2f0ddc",
   "lastmod": "2026-11-10"
  },
  "sharpedo": {
   "fp": "9addbf2024a820e8",
   "lastmod": "2026-11-10"
  },
+ "shelgon": {
+  "fp": "8c7490502586fc64",
+  "lastmod": "2026-11-10"
+ },
+ "shiftry": {
+  "fp": "489eaa00026bbbbe",
+  "lastmod": "2026-11-10"
+ },
  "shiinotic": {
   "fp": "fd5dbdd89a8ad550",
+  "lastmod": "2026-11-10"
+ },
+ "shuppet": {
+  "fp": "823e5249a86a2206",
   "lastmod": "2026-11-10"
  },
  "sigilyph": {
@@ -979,16 +1535,40 @@
   "fp": "5a230c9eeeb8d81f",
   "lastmod": "2026-11-09"
  },
+ "skeledirge": {
+  "fp": "84d10217ab8c6a2b",
+  "lastmod": "2026-11-10"
+ },
  "slaking": {
-  "fp": "9a1f69826f31355f",
+  "fp": "6db8a594336e046f",
+  "lastmod": "2026-11-10"
+ },
+ "slakoth": {
+  "fp": "7960c7c914c453e4",
   "lastmod": "2026-11-10"
  },
  "slowbro": {
-  "fp": "330ae28893dbaa4a",
+  "fp": "e95085b1a22949a7",
+  "lastmod": "2026-11-10"
+ },
+ "slowbro_galarian": {
+  "fp": "a6ef0b2469847989",
+  "lastmod": "2026-11-10"
+ },
+ "slowking": {
+  "fp": "489b237d8860bd17",
+  "lastmod": "2026-11-10"
+ },
+ "slowking_galarian": {
+  "fp": "a4639b40b39e2b25",
+  "lastmod": "2026-11-10"
+ },
+ "slowpoke": {
+  "fp": "78be72e2d30bc606",
   "lastmod": "2026-11-10"
  },
  "smoliv": {
-  "fp": "989a0bc855bb1d65",
+  "fp": "f0bb4acfcff02e22",
   "lastmod": "2026-11-10"
  },
  "sneasel": {
@@ -1000,7 +1580,7 @@
   "lastmod": "2026-11-10"
  },
  "snom": {
-  "fp": "b2be8986fa062c52",
+  "fp": "a643b8fdc66c6826",
   "lastmod": "2026-11-10"
  },
  "snorlax": {
@@ -1008,31 +1588,43 @@
   "lastmod": "2026-11-10"
  },
  "snorunt": {
-  "fp": "4c5f19b39ee586b1",
+  "fp": "c3f29d5c4c360c95",
   "lastmod": "2026-11-10"
  },
  "snover": {
-  "fp": "6033934954339fca",
+  "fp": "48cb6aeb6f88a607",
   "lastmod": "2026-11-10"
  },
  "sobble": {
-  "fp": "77cb9a4c1a1a4258",
+  "fp": "31989ff2bd8b639f",
   "lastmod": "2026-11-10"
  },
  "solgaleo": {
-  "fp": "6288588eb916a499",
+  "fp": "7250dd93fc605722",
+  "lastmod": "2026-11-10"
+ },
+ "spewpa": {
+  "fp": "1eb8348658282b02",
   "lastmod": "2026-11-10"
  },
  "sprigatito": {
-  "fp": "9125e1ab89c6c213",
+  "fp": "4df9682b59afab8e",
   "lastmod": "2026-11-10"
  },
  "squirtle": {
-  "fp": "ed0819c69e77f594",
+  "fp": "bd0d1a68bd3a7304",
   "lastmod": "2026-11-10"
  },
  "staraptor": {
-  "fp": "a68d732feda7f79a",
+  "fp": "571e11e50a41185b",
+  "lastmod": "2026-11-10"
+ },
+ "staravia": {
+  "fp": "3a35be145f2df4ee",
+  "lastmod": "2026-11-10"
+ },
+ "starly": {
+  "fp": "59abc8899575b648",
   "lastmod": "2026-11-10"
  },
  "starmie": {
@@ -1044,11 +1636,11 @@
   "lastmod": "2026-11-10"
  },
  "steelix": {
-  "fp": "3a88362c1529f190",
+  "fp": "af701fb32f62c718",
   "lastmod": "2026-11-10"
  },
  "stufful": {
-  "fp": "4e1a0ef6f4ff29ef",
+  "fp": "944b477b280d3f30",
   "lastmod": "2026-11-10"
  },
  "stunfisk": {
@@ -1060,19 +1652,23 @@
   "lastmod": "2026-11-09"
  },
  "swablu": {
-  "fp": "730c42e690d98f5b",
+  "fp": "639f2a0ad8486e8a",
   "lastmod": "2026-11-10"
  },
  "swampert": {
-  "fp": "5fe77e7ee5453e7e",
+  "fp": "1994b820e6fdaf9e",
   "lastmod": "2026-11-10"
  },
  "sylveon": {
-  "fp": "fcb0d82db31f3bed",
+  "fp": "9a22317c89dd9090",
+  "lastmod": "2026-11-10"
+ },
+ "talonflame": {
+  "fp": "6ed2eeab69ca4c71",
   "lastmod": "2026-11-10"
  },
  "teddiursa": {
-  "fp": "824451eae7dcdfc9",
+  "fp": "4e3050fdfb6df8ab",
   "lastmod": "2026-11-10"
  },
  "thievul": {
@@ -1085,6 +1681,10 @@
  },
  "thundurus_therian": {
   "fp": "a375b01dae5f0dec",
+  "lastmod": "2026-11-10"
+ },
+ "thwackey": {
+  "fp": "885847be92fd10ae",
   "lastmod": "2026-11-10"
  },
  "tinkatink": {
@@ -1104,55 +1704,99 @@
   "lastmod": "2026-11-09"
  },
  "togekiss": {
-  "fp": "a5e689a5be1aee51",
+  "fp": "dc5f49fd73dbdf66",
+  "lastmod": "2026-11-10"
+ },
+ "togepi": {
+  "fp": "2cc9667f30774298",
   "lastmod": "2026-11-10"
  },
  "togetic": {
-  "fp": "55d41d3453bc7a16",
+  "fp": "aaa8ae5e0509f20e",
   "lastmod": "2026-11-10"
  },
  "torchic": {
-  "fp": "7694d07a36ae851d",
+  "fp": "ef44b1f23a69c3db",
   "lastmod": "2026-11-10"
  },
  "tornadus": {
-  "fp": "1cbb240961087eb6",
+  "fp": "56de5573b34c5ea6",
+  "lastmod": "2026-11-10"
+ },
+ "tornadus_therian": {
+  "fp": "c9244908df327500",
+  "lastmod": "2026-11-10"
+ },
+ "torracat": {
+  "fp": "ae61f2c411df1815",
   "lastmod": "2026-11-10"
  },
  "totodile": {
-  "fp": "5cd289f2d03662ef",
+  "fp": "96e2502cdf27df5e",
+  "lastmod": "2026-11-10"
+ },
+ "toxapex": {
+  "fp": "0f81fc47a98b0c0e",
+  "lastmod": "2026-11-10"
+ },
+ "toxel": {
+  "fp": "54356dc9da7e46f2",
   "lastmod": "2026-11-10"
  },
  "toxtricity": {
-  "fp": "f824cf46fca7790b",
+  "fp": "0b98e76d26349994",
   "lastmod": "2026-11-10"
  },
  "treecko": {
-  "fp": "9732b2b7cbcbaa1f",
+  "fp": "384aa620438a0424",
+  "lastmod": "2026-11-10"
+ },
+ "trevenant": {
+  "fp": "40a3502d18c33a59",
   "lastmod": "2026-11-10"
  },
  "typhlosion": {
-  "fp": "77a14dafc5062a1b",
+  "fp": "3e306c85fe6a3778",
+  "lastmod": "2026-11-10"
+ },
+ "typhlosion_hisuian": {
+  "fp": "a4bcc1b5c8e285b2",
   "lastmod": "2026-11-10"
  },
  "tyranitar": {
-  "fp": "83678f30faa9b667",
+  "fp": "7286393332dc60f3",
+  "lastmod": "2026-11-10"
+ },
+ "tyrogue": {
+  "fp": "830b8f1c21266156",
   "lastmod": "2026-11-10"
  },
  "umbreon": {
-  "fp": "12e27446719a79e0",
+  "fp": "e0b2a7cd2ef484fa",
   "lastmod": "2026-11-10"
  },
  "ursaluna": {
-  "fp": "f24e9bd718933220",
+  "fp": "004ca1a1da32e144",
+  "lastmod": "2026-11-10"
+ },
+ "ursaring": {
+  "fp": "25b5063d5b6b724c",
   "lastmod": "2026-11-10"
  },
  "uxie": {
   "fp": "64229fe239856233",
   "lastmod": "2026-11-09"
  },
+ "vaporeon": {
+  "fp": "5dc6a45f52a9d609",
+  "lastmod": "2026-11-10"
+ },
+ "venomoth": {
+  "fp": "8d420405b2fa3e07",
+  "lastmod": "2026-11-10"
+ },
  "venonat": {
-  "fp": "08498922f24d7207",
+  "fp": "f9fc201cac9f933c",
   "lastmod": "2026-11-10"
  },
  "venusaur": {
@@ -1160,16 +1804,32 @@
   "lastmod": "2026-11-10"
  },
  "victreebel": {
-  "fp": "1a91835faddebfc3",
+  "fp": "cec04217bb20f2cf",
+  "lastmod": "2026-11-10"
+ },
+ "vigoroth": {
+  "fp": "3f6743612a2147f5",
+  "lastmod": "2026-11-10"
+ },
+ "vileplume": {
+  "fp": "d24f92e1d967c30a",
   "lastmod": "2026-11-10"
  },
  "vivillon": {
-  "fp": "a671cf12ced55616",
+  "fp": "bb19e2825ba5ed6a",
   "lastmod": "2026-11-10"
  },
  "volcanion": {
-  "fp": "b7ff01b0f381907c",
-  "lastmod": "2026-11-09"
+  "fp": "dd761e2fe4c3df2e",
+  "lastmod": "2026-11-10"
+ },
+ "volcarona": {
+  "fp": "b39a8efd587d76ea",
+  "lastmod": "2026-11-10"
+ },
+ "vulpix": {
+  "fp": "ad9aa60be31a86eb",
+  "lastmod": "2026-11-10"
  },
  "wailmer": {
   "fp": "83ce436ba12ed779",
@@ -1179,29 +1839,41 @@
   "fp": "af83f74a20ae0fec",
   "lastmod": "2026-11-10"
  },
+ "wartortle": {
+  "fp": "7bc87d3ff8fe1e53",
+  "lastmod": "2026-11-10"
+ },
  "weavile": {
-  "fp": "d8f3fef67ee1ef1e",
+  "fp": "88f760f953ae74bf",
   "lastmod": "2026-11-10"
  },
  "weedle": {
-  "fp": "4f50c6066ac8203f",
+  "fp": "17ac9bfcf26a29a2",
+  "lastmod": "2026-11-10"
+ },
+ "weepinbell": {
+  "fp": "e64e241ed74ab731",
   "lastmod": "2026-11-10"
  },
  "wigglytuff": {
-  "fp": "d3e47b5015d52048",
+  "fp": "d124c82c6905b67d",
   "lastmod": "2026-11-10"
  },
  "wimpod": {
   "fp": "2b6145b8c40f891b",
   "lastmod": "2026-11-10"
  },
+ "wooper": {
+  "fp": "fbaa8068d4caff8a",
+  "lastmod": "2026-11-10"
+ },
  "xatu": {
-  "fp": "9f0a1440c414b1bc",
+  "fp": "3122ce7414577725",
   "lastmod": "2026-11-10"
  },
  "xerneas": {
-  "fp": "14c273551eeddfec",
-  "lastmod": "2026-11-09"
+  "fp": "a0df17cc7bd028f8",
+  "lastmod": "2026-11-10"
  },
  "xurkitree": {
   "fp": "a3db9279bfcfeb23",
@@ -1212,11 +1884,11 @@
   "lastmod": "2026-11-09"
  },
  "zacian": {
-  "fp": "7e15b6ab436ae726",
+  "fp": "8e2c504a39987d9c",
   "lastmod": "2026-11-10"
  },
  "zacian_crowned_sword": {
-  "fp": "bd7926152965eb50",
+  "fp": "150bd29493514bed",
   "lastmod": "2026-11-10"
  },
  "zamazenta": {
@@ -1244,19 +1916,31 @@
   "lastmod": "2026-11-09"
  },
  "zigzagoon": {
-  "fp": "bc5429a0ac602b22",
+  "fp": "820886122f1c53a2",
   "lastmod": "2026-11-10"
  },
  "zoroark": {
-  "fp": "411da36cf13cc892",
+  "fp": "27118a6506417e52",
+  "lastmod": "2026-11-10"
+ },
+ "zoroark_hisuian": {
+  "fp": "48909041f6796217",
   "lastmod": "2026-11-10"
  },
  "zorua": {
-  "fp": "d5bdf2bace00df2a",
+  "fp": "d6911b3e7e292a63",
+  "lastmod": "2026-11-10"
+ },
+ "zorua_hisuian": {
+  "fp": "0c8a78df94c07662",
   "lastmod": "2026-11-10"
  },
  "zubat": {
-  "fp": "a6f0f7462574958a",
+  "fp": "b18ae1a26d8952c9",
+  "lastmod": "2026-11-10"
+ },
+ "zweilous": {
+  "fp": "45672db187ac3db7",
   "lastmod": "2026-11-10"
  },
  "zygarde": {
