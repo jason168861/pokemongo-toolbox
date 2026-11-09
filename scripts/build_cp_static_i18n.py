@@ -426,6 +426,9 @@ def build_page(t, lang, T, pool):
     grid = "".join(f'<a href="../{x["slug"]}/"><img src="{esc(x["img"])}" alt="" width="56" height="56" loading="lazy">'
                    f'{esc(T["names"][x["slug"]])}</a>' for x in same[:8])
     grid_html = f'<p class="sub" style="margin:0 0 10px">{esc(S["same"])}</p><div class="grid">{grid}</div>' if grid else ""
+    # 頁首的同系列切換：有這個語言靜態頁的連過去，沒有的只顯示名稱與 CP
+    fam_html = B.family_strip(t["name"], S["fam_h"], lambda n: T["all"][n],
+                              lambda n: f"../{B.SLUG_OF[n]}/" if n in B.SLUG_OF else None, S["lv"])
     rv_data = B.rv_data_json(p, slug, lang, S["rv"])
     ld = json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": S["site"], "item": f"{ORIGIN}/{lang}/"},
@@ -476,7 +479,7 @@ def build_page(t, lang, T, pool):
         <h1>{esc(S['h1'].format(name=name))}</h1>
         <div class="types">{types_html}</div>
       </div>
-    </div>
+    </div>{fam_html}
     <div class="h-grid">
       <div class="h-tile"><span class="h-lab">{esc(S['t15'])}</span><b>{cp15}</b><span class="h-lv">{S['lv']}15</span></div>
       <div class="h-tile main"><span class="h-lab">{esc(S['t20'])}</span><b>{cp20}</b><span class="h-lv">{S['lv']}20</span></div>

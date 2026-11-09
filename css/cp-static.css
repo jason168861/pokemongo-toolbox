@@ -44,6 +44,18 @@ h1{font-size:27px;line-height:1.25;margin:2px 0 8px;font-weight:800;letter-spaci
 .chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 22px 0}
 .pill{font-size:12.5px;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--ink2);font-variant-numeric:tabular-nums}
 .pill b{color:var(--ink)}
+/* 同系列切換（其他形態・進化） */
+.fam{margin:14px 22px 0;padding:10px 12px 12px;background:var(--soft);border:1px solid var(--line);border-radius:14px}
+.fam-h{margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.fam-l{display:flex;flex-wrap:wrap;gap:8px}
+.fam-l>*{display:flex;align-items:center;gap:6px;min-width:0;max-width:100%;padding:4px 10px 4px 4px;border-radius:12px;
+ background:#fff;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:13px;font-weight:600;line-height:1.3}
+.fam-l img{width:36px;height:36px;flex:none;object-fit:contain}
+.fam-l small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;font-variant-numeric:tabular-nums}
+.fam-l a{border-color:#cfe0fb}
+.fam-l a:hover{border-color:var(--blue);background:#f1f6ff}
+.fam-l .cur{border:2px solid var(--accent);padding:3px 9px 3px 3px;box-shadow:0 1px 4px rgba(16,24,40,.08)}
+.fam-l .na{opacity:.75}
 .lead{font-size:15px;color:var(--ink2);margin:0;padding:14px 22px 22px}
 .lead strong,.note strong,.role strong{color:var(--ink)}
 @media (max-width:480px){
@@ -53,6 +65,7 @@ h1{font-size:27px;line-height:1.25;margin:2px 0 8px;font-weight:800;letter-spaci
  .h-grid{gap:8px;padding:16px 16px 0}.h-tile{padding:10px 4px 8px}.h-tile b{font-size:23px}
  .h-tile .h-lab{font-size:11.5px}
  .hero-main,.chips{padding-left:16px;padding-right:16px}.hundo-note{margin:10px 16px 0}.lead{padding:14px 16px 18px}
+ .fam{margin:12px 16px 0;padding:9px 10px 10px}.fam-l{gap:6px}
  .card{padding:18px 16px}
 }
 /* CP 反查 IV */
