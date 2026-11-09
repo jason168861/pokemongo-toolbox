@@ -12,8 +12,9 @@
   * 啟動時先檢查 data/ 與 assets/ 是否齊全,缺什麼直接講
   * 多一個 POST /__save 讓 alias-editor.html 直接寫回 data/aliases.json
     (只接受本機來的請求、只准寫白名單裡的檔、覆蓋前先備份)
+  * POST /__upload 讓 bg-editor.html 的「新增卡片」把背卡圖存進 assets/bg/
 """
-import argparse, http.server, json, os, shutil, socket, socketserver, sys, threading, webbrowser
+import argparse, http.server, json, os, re, shutil, socket, socketserver, sys, threading, urllib.parse, webbrowser
 
 try:
     sys.stdout.reconfigure(encoding="utf-8"); sys.stderr.reconfigure(encoding="utf-8")
@@ -28,6 +29,10 @@ C = lambda s, c: f"\033[{c}m{s}\033[0m"
 # alias-editor / bg-editor / price-editor 可以寫回的檔。白名單寫死,避免這支預覽伺服器變成任意寫檔的洞
 SAVABLE = {"data/aliases.json", "data/bg_overrides.json", "data/price_search.json"}
 MAX_SAVE = 4 * 1024 * 1024
+# bg-editor「新增卡片」上傳背卡圖的位置(只准這一個目錄)
+UPLOAD_DIR = "assets/bg"
+UPLOAD_EXT = {".png", ".jpg", ".jpeg", ".webp"}
+MAX_UPLOAD = 15 * 1024 * 1024
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -58,9 +63,41 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _upload(self, qs):
+        """POST /__upload?name=xxx.png —— bg-editor 的「新增卡片」把背卡圖存進 assets/bg/。
+        只收圖片(看副檔名也看檔頭)、檔名只留英數與 ._-,同名檔要帶 overwrite=1 才會覆蓋。"""
+        if self.client_address[0] not in ("127.0.0.1", "::1"):
+            return self._json(403, {"ok": False, "error": "只接受本機的上傳請求"})
+        q = urllib.parse.parse_qs(qs)
+        stem, ext = os.path.splitext(os.path.basename(q.get("name", [""])[0]))
+        ext = ext.lower()
+        if ext not in UPLOAD_EXT:
+            return self._json(400, {"ok": False, "error": "只收 png / jpg / webp"})
+        stem = re.sub(r"[^A-Za-z0-9._-]+", "_", stem).strip("._")
+        if not stem:
+            return self._json(400, {"ok": False, "error": "檔名要有英數字"})
+        n = int(self.headers.get("Content-Length") or 0)
+        if not 0 < n <= MAX_UPLOAD:
+            return self._json(400, {"ok": False, "error": "圖片是空的或超過 15MB"})
+        raw = self.rfile.read(n)
+        if not (raw.startswith(b"\x89PNG") or raw.startswith(b"\xff\xd8")
+                or (raw[:4] == b"RIFF" and raw[8:12] == b"WEBP")):
+            return self._json(400, {"ok": False, "error": "內容不是 png / jpg / webp 圖片"})
+        rel = f"{UPLOAD_DIR}/{stem}{ext}"
+        dst = os.path.join(HERE, rel.replace("/", os.sep))
+        if os.path.exists(dst) and q.get("overwrite") != ["1"]:
+            return self._json(409, {"ok": False, "exists": True, "path": rel, "error": f"{rel} 已經存在"})
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        with open(dst, "wb") as f:
+            f.write(raw)
+        print(C(f"  ✔ 已存入 {rel}({n:,} bytes)", "32"))
+        return self._json(200, {"ok": True, "path": rel})
+
     def do_POST(self):
         """POST /__save?f=data/aliases.json  —— body 就是要寫進去的檔案內容。"""
         path, _, qs = self.path.partition("?")
+        if path == "/__upload":
+            return self._upload(qs)
         if path != "/__save":
             return self._json(404, {"ok": False, "error": "not found"})
         # --lan 會綁 0.0.0.0,同網段的手機也連得到 → 寫檔只允許本機發動
