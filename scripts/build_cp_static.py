@@ -291,6 +291,62 @@ MANUAL_ENRICH = {
 def get_enrich(name, p):
     return MANUAL_ENRICH.get(name) or auto_enrich(name, p)
 
+
+# ---- 同系列（其他形態＋進化）：頁首「切換形態・進化」那一排 ----
+def _build_families():
+    """把 CP 資料分成「同系列」：同圖鑑編號（各種形態、地區形態）或同進化家族（POKEDEX 的 family.id）
+    的都算同一組，兩種關係都會往下串（喵喵→伽勒爾喵喵→喵頭目）。回傳 {名稱: 依進化順序排好的同組名稱}。"""
+    par = {}
+    def root(x):
+        while par.setdefault(x, x) != x:
+            par[x] = par[par[x]]; x = par[x]
+        return x
+    info = {}
+    for n, p in CP_DATA.items():
+        d = pdx_of(n, p["id"])
+        fam = (d or {}).get("family") or {}
+        info[n] = (fam.get("id") or f"dex{p['id']}", fam.get("stage") or 1, p["id"])
+        par[root(f"d{p['id']}")] = root("f" + info[n][0])
+    groups = {}
+    for n, (_, _, dex) in info.items():
+        groups.setdefault(root(f"d{dex}"), []).append(n)
+    def k(n):   # 一般型態排在地區／特殊型態前面
+        return (info[n][1], info[n][2], "(" in n, n)
+    out = {}
+    for g in groups.values():
+        if len(g) < 2:
+            continue
+        fams = {}
+        for n in g:
+            fams.setdefault(info[n][0], []).append(n)
+        order = sorted(fams.values(), key=lambda m: min(map(k, m)))   # 一條進化線排完再換下一條（一般→阿羅拉→伽勒爾）
+        seq = [n for m in order for n in sorted(m, key=k)]
+        for n in g:
+            out[n] = seq
+    return out
+FAMILY = _build_families()
+
+
+def family_strip(name, head, label_of, href_of, lv_lab):
+    """頁首的同系列切換列。label_of(名稱)→顯示名稱；href_of(名稱)→連結（None＝這個語言沒有頁面，只顯示 CP）。"""
+    seq = FAMILY.get(name)
+    if not seq:
+        return ""
+    items = []
+    for n in seq:
+        p = CP_DATA[n]
+        inner = (f'<img src="{esc(p["imageUrl"])}" alt="" width="36" height="36" loading="lazy">'
+                 f'<span>{esc(label_of(n))}<small>{esc(lv_lab)}20 {cp_at(p, 20, 15)}</small></span>')
+        h = None if n == name else href_of(n)
+        if n == name:
+            items.append(f'<span class="cur" aria-current="page">{inner}</span>')
+        elif h:
+            items.append(f'<a href="{esc(h)}">{inner}</a>')
+        else:
+            items.append(f'<span class="na">{inner}</span>')
+    # 前面帶換行：沒有同系列的頁面輸出跟以前一字不差（不會無故更新 lastmod）
+    return f'\n    <nav class="fam" aria-label="{esc(head)}"><p class="fam-h">{esc(head)}</p><div class="fam-l">{"".join(items)}</div></nav>'
+
 # 要產生靜態頁的清單：data/cp_static_targets.json（[{name, slug}]，依搜尋需求排序）
 with open(os.path.join(ROOT, "data", "cp_static_targets.json"), encoding="utf-8") as _f:
     TARGET_LIST = json.load(_f)["targets"]
@@ -343,6 +399,18 @@ h1{font-size:27px;line-height:1.25;margin:2px 0 8px;font-weight:800;letter-spaci
 .chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 22px 0}
 .pill{font-size:12.5px;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--ink2);font-variant-numeric:tabular-nums}
 .pill b{color:var(--ink)}
+/* 同系列切換（其他形態・進化） */
+.fam{margin:14px 22px 0;padding:10px 12px 12px;background:var(--soft);border:1px solid var(--line);border-radius:14px}
+.fam-h{margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.fam-l{display:flex;flex-wrap:wrap;gap:8px}
+.fam-l>*{display:flex;align-items:center;gap:6px;min-width:0;max-width:100%;padding:4px 10px 4px 4px;border-radius:12px;
+ background:#fff;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:13px;font-weight:600;line-height:1.3}
+.fam-l img{width:36px;height:36px;flex:none;object-fit:contain}
+.fam-l small{display:block;color:var(--muted);font-weight:600;font-size:11.5px;font-variant-numeric:tabular-nums}
+.fam-l a{border-color:#cfe0fb}
+.fam-l a:hover{border-color:var(--blue);background:#f1f6ff}
+.fam-l .cur{border:2px solid var(--accent);padding:3px 9px 3px 3px;box-shadow:0 1px 4px rgba(16,24,40,.08)}
+.fam-l .na{opacity:.75}
 .lead{font-size:15px;color:var(--ink2);margin:0;padding:14px 22px 22px}
 .lead strong,.note strong,.role strong{color:var(--ink)}
 @media (max-width:480px){
@@ -352,6 +420,7 @@ h1{font-size:27px;line-height:1.25;margin:2px 0 8px;font-weight:800;letter-spaci
  .h-grid{gap:8px;padding:16px 16px 0}.h-tile{padding:10px 4px 8px}.h-tile b{font-size:23px}
  .h-tile .h-lab{font-size:11.5px}
  .hero-main,.chips{padding-left:16px;padding-right:16px}.hundo-note{margin:10px 16px 0}.lead{padding:14px 16px 18px}
+ .fam{margin:12px 16px 0;padding:9px 10px 10px}.fam-l{gap:6px}
  .card{padding:18px 16px}
 }
 /* CP 反查 IV */
@@ -689,7 +758,7 @@ def build(name):
         <h1>{esc(name)} IV100 CP</h1>
         <div class="types">{types_html}</div>
       </div>
-    </div>
+    </div>{family_strip(name, "切換形態・進化", lambda n: n, mon_url, "Lv")}
     <div class="h-grid">
       <div class="h-tile"><span class="h-lab">🔬 田野調查</span><b>{cp15}</b><span class="h-lv">Lv15</span></div>
       <div class="h-tile main"><span class="h-lab">⚔️ 團體戰・孵蛋</span><b>{cp20}</b><span class="h-lv">Lv20</span></div>
