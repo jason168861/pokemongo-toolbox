@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-02",
+ "updated": "2026-11-09",
  "note": "背卡資料的人工修正。build_data.py 每次都把 backgrounds.json 整份重寫,所以修正要放在這裡才不會被 update.py 蓋掉。請用 bg-editor.html 編輯。op: remove=刪掉這筆 / set=改欄位(值給 null 代表刪掉該欄位) / add=補一筆來源沒有的 / setCard=改卡片自己的欄位(例如卡名)。key 由 dex|form|costume|gmax|dynamax|shadow|sprite檔名 組成。",
  "ops": [
   {"card":"GO Tainan background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"sprite":"assets/img/pm134.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm134.cMAY_2023.s.icon.png","shiny":true}},
@@ -561,6 +561,26 @@
   {"card":"Location Background Wild Area Sendai.png","op":"set","key":"889||||||","fields":{"form":"HERO","shiny":true}},
   {"card":"Location Background Wild Area Sendai.png","op":"add","mon":{"dex":888,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"CROWNED_SWORD"}},
   {"card":"Location Background Wild Area Sendai.png","op":"add","mon":{"dex":889,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"CROWNED_SHIELD"}},
-  {"card":"Location Background Night Out 2026 London.png","op":"set","key":"849||||||","fields":{"shiny":true}}
+  {"card":"Location Background Night Out 2026 London.png","op":"set","key":"849||||||","fields":{"shiny":true}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"addCard","type":"special","name":"GO Wild Area 2026","image_url":"assets/bg/sb-wild-area-global-2026.jpg"},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":888,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"CROWNED_SWORD"}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":888,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HERO"}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":889,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"CROWNED_SHIELD"}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":889,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HERO"}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":379,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":380,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":895,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":68,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"WILDAREA_2026_01"}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":483,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":484,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":643,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":644,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":646,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"NORMAL"}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":646,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"BLACK"}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":646,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"WHITE"}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":884,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
+  {"card":"sb-wild-area-global-2026.jpg","op":"add","mon":{"dex":381,"shiny":true,"dynamax":true,"gmax":false,"shadow":false}},
+  {"card":"GO Wild Area 2026 background.png","op":"hideCard"},
+  {"card":"Location Background Pokelid Yamaguchi.png","op":"setCard","fields":{"name":"Yamaguchi, Japan"}}
  ]
 }
