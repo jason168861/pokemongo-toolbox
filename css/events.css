@@ -620,3 +620,20 @@
   .ev-cmp-c { padding: 10px 12px; text-align: center; display: flex; align-items: center; justify-content: center; }
   .ev-cmp-c::before { display: none; }
 }
+/* IV100 CP（build_event_pages.py 的 cp_tag）：寶可夢卡片連到 CP 頁，下方顯示 Lv20 的 100% CP */
+.ev-cp { display: inline-block; margin-top: 3px; font-size: .64rem; font-weight: 800; line-height: 1.3; color: #3d3950;
+  background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 1px 5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ev-tile-a { display: block; color: inherit; text-decoration: none; border-radius: 12px; }
+.ev-tile:has(.ev-tile-a:hover) { border-color: color-mix(in srgb, var(--brand) 45%, #fff); }
+.ev-tile-a:hover b { color: var(--brand); }
+.ev-tile-a:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; }
+.ev-spawn a, .ev-shinies a { display: block; color: inherit; text-decoration: none; }
+.ev-spawn a:hover b, .ev-shinies a:hover b { color: var(--brand); }
+.ev-shinies .ev-cp { margin-top: 4px; }
+a.ev-rw { color: inherit; text-decoration: none; }
+a.ev-rw:hover { box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--brand) 55%, #fff); }
+a.ev-feat-pic { position: relative; text-decoration: none; }
+.ev-feat-pic .ev-cp { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); }
+.ev-mv a { color: inherit; text-decoration: none; }
+.ev-mv-n a:hover { color: var(--brand); }
+.ev-mv-n .ev-cp { margin: 0 0 2px; }
