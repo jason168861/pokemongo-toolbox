@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年11月9日13時",
+  "lastUpdated": "2026年11月10日01時",
   "pokemon": [
     {
       "eggDistance": 1,
@@ -599,7 +599,7 @@
       "name": "滋汁鼴",
       "cpRange": "531",
       "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm944.icon.png",
-      "isShiny": false
+      "isShiny": true
     },
     {
       "eggDistance": 12,
