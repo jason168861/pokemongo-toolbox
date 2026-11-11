@@ -330,7 +330,7 @@
         '<details class="fold" id="oppset"><summary><span>⚙ 對手設定</span><small id="oppsum"></small></summary>' +
           '<div class="habit"><span class="lbl">對手開盾習慣</span><div class="hab" id="hab" role="group" aria-label="對手開盾習慣"></div><small class="habnote" id="habnote" hidden>對手沒有護盾，開盾習慣不影響結果</small></div>' +
           '<div class="habit" id="reactbar" hidden><span class="lbl">我換人後，對手</span><div class="hab" id="react" role="group" aria-label="對手會不會跟著換"></div></div></details>' +
-        '<details class="fold" id="chartbox"' + (stored("chart") === "1" ? " open" : "") + '><summary><span>📈 逐回合曲線圖</span><small>雙方 HP、能量與每一發特殊招式；點圓圈也能修改</small></summary>' +
+        '<details class="fold" id="chartbox"' + (stored("chart") === "0" ? "" : " open") + '><summary><span>📈 逐回合曲線圖</span><small>雙方 HP、能量與每一發特殊招式；點圓圈也能修改</small></summary>' +
           '<div class="layers" id="lines" role="group" aria-label="圖上要顯示的線"><span class="lbl">圖上顯示（點一下開／關）</span>' + LINES.map(function (x) {
             return '<button type="button" class="lt lt-' + x[0] + '" data-line="' + x[0] + '" aria-pressed="' + lines[x[0]] + '"><span class="cb" aria-hidden="true"></span><i></i>' + x[1] + "</button>";
           }).join("") + "</div>" +
