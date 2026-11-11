@@ -109,9 +109,13 @@
     return b;
   }
 
-  function maxLevel(p, a, d, s, cfg) {
-    var cap = Math.min(cfg.levelCap || 50, p.baseLevelCap || 50);
-    for (var l = cap; l >= 1; l -= 0.5) {
+  /** 這隻寶可夢能用的最高等級：聯盟設定的上限（Lv40／Lv50），最佳夥伴再 +1（Lv41／Lv51）。 */
+  function capOf(p, cfg, buddy) {
+    return Math.min(cfg.levelCap || 50, p.baseLevelCap || 50) + (buddy ? 1 : 0);
+  }
+
+  function maxLevel(p, a, d, s, cfg, buddy) {
+    for (var l = capOf(p, cfg, buddy); l >= 1; l -= 0.5) {
       if (p.calculateCP(p.getCPMByLevel(l), a, d, s) <= cfg.cp) return l;
     }
     return 1;
@@ -124,23 +128,29 @@
     p.initialize(false);
   }
 
-  /** IV 模式：def＝PvPoke 預設、best＝PvP 排名第 1、hundo＝15/15/15、custom＝自訂（等級可指定）。 */
-  function applyIV(p, iv, cfg) {
+  /** IV 模式：def＝PvPoke 預設、best＝PvP 排名第 1、hundo＝15/15/15、custom＝自訂（等級可指定）。
+   *  buddy＝最佳夥伴：等級上限 +1（CP 上限照算，所以只有原本到不了上限的寶可夢會變強）。 */
+  function applyIV(p, iv, cfg, buddy) {
     iv = iv || { mode: "def" };
     if (iv.mode === "best") {
-      var key = p.speciesId + "|" + cfg.cp + "|" + (cfg.levelCap || 50), c = bestCache[key];
+      var cap = capOf(p, cfg, buddy);
+      var key = p.speciesId + "|" + cfg.cp + "|" + cap, c = bestCache[key];
       if (!c) {
+        p.levelCap = cap;
         p.maximizeStat("overall");
         c = bestCache[key] = { a: p.ivs.atk, d: p.ivs.def, s: p.ivs.hp, l: p.level };
       }
       setIVs(p, c.a, c.d, c.s, c.l);
     } else if (iv.mode === "hundo") {
-      setIVs(p, 15, 15, 15, maxLevel(p, 15, 15, 15, cfg));
+      setIVs(p, 15, 15, 15, maxLevel(p, 15, 15, 15, cfg, buddy));
     } else if (iv.mode === "custom") {
       var a = clampInt(iv.atk, 0, 15), d = clampInt(iv.def, 0, 15), s = clampInt(iv.hp, 0, 15);
-      var top = maxLevel(p, a, d, s, cfg);
+      var top = maxLevel(p, a, d, s, cfg, buddy);
       var l = iv.level ? Math.min(Number(iv.level), top) : top;
       setIVs(p, a, d, s, l);
+    } else if (buddy) {
+      // PvPoke 預設 IV 不變，只把等級拉到最佳夥伴可以到的最高等級
+      setIVs(p, p.ivs.atk, p.ivs.def, p.ivs.hp, Math.max(p.level, maxLevel(p, p.ivs.atk, p.ivs.def, p.ivs.hp, cfg, true)));
     }
   }
 
@@ -149,7 +159,7 @@
   function makePokemon(b, side, index, cfg) {
     var p = new E.Pokemon(side.id, index, b);
     p.initialize(cfg.cp);
-    applyIV(p, side.iv, cfg);
+    applyIV(p, side.iv, cfg, side.buddy);
     if (side.fast) p.selectMove("fast", side.fast);
     if (side.c1) p.selectMove("charged", side.c1, 0);
     if (side.c2 && side.c2 !== side.c1) p.selectMove("charged", side.c2, 1);
@@ -157,6 +167,8 @@
     return p;
   }
 
+  /** side 可帶的開場狀態：shields、energy、hpPct（百分比）或 startHp（實際 HP，3 對 3 接續用）、
+   *  buffs（攻防增減階段）、form（已經變身的型態，例如謎擬Ｑ現形）、bait（騙盾）。 */
   function prepare(cfg, A, B) {
     var b = newBattle(cfg);
     var p = makePokemon(b, A, 0, cfg), q = makePokemon(b, B, 1, cfg);
@@ -167,7 +179,10 @@
       poke.reset();
       poke.setShields(s.shields == null ? 1 : s.shields);
       poke.setStartEnergy(s.energy || 0);
-      poke.setStartHp(s.hpPct && s.hpPct < 100 ? Math.max(1, Math.floor(poke.stats.hp * s.hpPct / 100)) : 0);
+      if (s.startHp != null) poke.setStartHp(Math.max(1, Math.min(poke.stats.hp, s.startHp)));
+      else poke.setStartHp(s.hpPct && s.hpPct < 100 ? Math.max(1, Math.floor(poke.stats.hp * s.hpPct / 100)) : 0);
+      if (s.buffs && (s.buffs[0] || s.buffs[1])) poke.setStartBuffs([s.buffs[0], s.buffs[1]]);
+      if (s.form && byId[s.form]) poke.startFormId = s.form;
       poke.baitShields = s.bait === false ? 0 : 1;
       poke.reset();
     });
@@ -295,6 +310,9 @@
       hp: [Math.max(0, p.hp), Math.max(0, q.hp)], maxHp: [p.stats.hp, q.stats.hp],
       shieldsLeft: [p.shields, q.shields], energyLeft: [p.energy, q.energy],
       durationMs: b.getDuration ? b.getDuration() : null,
+      end: [p, q].map(function (x) {
+        return { hp: Math.max(0, x.hp), energy: x.energy, shields: x.shields, buffs: x.statBuffs.slice(), form: x.activeFormId };
+      }),
       replayOk: series[series.length - 1].hp[0] === Math.max(0, p.hp) && series[series.length - 1].hp[1] === Math.max(0, q.hp)
     };
   }
@@ -429,14 +447,138 @@
     return out;
   }
 
+  // ---------- 3 對 3 ----------
+
+  /** team = { mons: [slot, slot, slot], shields: 0～2 }；slot 和 1 對 1 的 side 一樣（id、招式、iv、buddy、bait）。
+   *  規則（簡化，畫面上有寫）：
+   *   - 不主動換寶可夢，一直打到有一方倒下；倒下的換下一隻上場（2026 新規則：倒下後換人不花回合）。
+   *   - 場上存活的那隻保留 HP、能量、攻防增減與型態；護盾是整隊共用。
+   *   - order：fixed＝依隊伍順序上場；best＝從還沒上場的寶可夢中，挑對目前對手評分最高的那隻。
+   *  plan：護盾分配。PvPoke 的 1 對 1 邏輯會把護盾當成最後一隻在用（常常第一隻就開完），
+   *   spread＝每一隻最多只能用「剩餘護盾 ÷ 還活著的隻數（無條件進位）」面，比較接近實戰；free＝需要就開。
+   *  每一段對戰都是 PvPoke 引擎的 1 對 1 模擬，接續時把上一段結束的狀態當作開場狀態。 */
+  function runTeam(cfg, TA, TB, order, plan) {
+    var teams = [TA, TB];
+    var st = teams.map(function (t) {
+      return { alive: t.mons.map(function () { return true; }), cur: 0, carry: null, shields: t.shields == null ? 2 : t.shields };
+    });
+    function slotSide(t, k, carry, shields) {
+      var s = {}, src = teams[t].mons[k];
+      for (var x in src) s[x] = src[x];
+      s.shields = shields; s.hpPct = 100;
+      s.energy = carry ? carry.energy : 0; s.startHp = carry ? carry.hp : null;
+      s.buffs = carry ? carry.buffs : null; s.form = carry ? carry.form : null;
+      return s;
+    }
+    function ratingFor(t, me, op) {
+      var s = t === 0 ? prepare(cfg, me, op) : prepare(cfg, op, me);
+      s.b.simulate();
+      return t === 0 ? ratingOf(s.p, s.q) : ratingOf(s.q, s.p);
+    }
+    function allow(t) {
+      var n = st[t].alive.filter(Boolean).length;
+      return plan === "free" || n <= 1 ? st[t].shields : Math.min(st[t].shields, Math.ceil(st[t].shields / n));
+    }
+    function pickNext(t, opp) {
+      var cands = [];
+      st[t].alive.forEach(function (a, k) { if (a) cands.push(k); });
+      if (!cands.length) return -1;
+      if (order !== "best" || cands.length === 1 || !opp) return cands[0];
+      var best = cands[0], br = -1;
+      cands.forEach(function (k) {
+        var r = ratingFor(t, slotSide(t, k, null, allow(t)), opp);
+        if (r > br) { br = r; best = k; }
+      });
+      return best;
+    }
+    var segs = [], offset = 0, ko = [[], []];
+    for (var guard = 0; guard < 8; guard++) {
+      var al = [allow(0), allow(1)];
+      var A = slotSide(0, st[0].cur, st[0].carry, al[0]), B = slotSide(1, st[1].cur, st[1].carry, al[1]);
+      var res = run(cfg, A, B);
+      segs.push({ a: st[0].cur, b: st[1].cur, res: res, offset: offset, teamShields: [st[0].shields, st[1].shields], allowed: al });
+      offset += res.lastTurn;
+      var fa = res.end[0].hp <= 0, fb = res.end[1].hp <= 0;
+      st[0].shields -= al[0] - res.end[0].shields; st[1].shields -= al[1] - res.end[1].shields;
+      st[0].carry = fa ? null : res.end[0]; st[1].carry = fb ? null : res.end[1];
+      if (fb) ko[0].push({ by: st[0].cur, victim: st[1].cur });
+      if (fa) ko[1].push({ by: st[1].cur, victim: st[0].cur });
+      if (fa) st[0].alive[st[0].cur] = false;
+      if (fb) st[1].alive[st[1].cur] = false;
+      if (!fa && !fb) break;
+      var nA = st[0].cur, nB = st[1].cur;
+      if (fa) nA = pickNext(0, fb ? null : slotSide(1, st[1].cur, st[1].carry, allow(1)));
+      if (fb) nB = pickNext(1, fa ? null : slotSide(0, st[0].cur, st[0].carry, allow(0)));
+      if (nA < 0 || nB < 0) break;
+      st[0].cur = nA; st[1].cur = nB;
+    }
+    // 每隻的最大 HP 與剩餘 HP（沒上場的是滿血）
+    var maxHp = [0, 1].map(function (t) {
+      return teams[t].mons.map(function (m) {
+        var b = newBattle(cfg), p = makePokemon(b, m, 0, cfg);
+        return p.stats.hp;
+      });
+    });
+    var hpLeft = [0, 1].map(function (t) {
+      return teams[t].mons.map(function (m, k) {
+        if (!st[t].alive[k]) return 0;
+        if (k === st[t].cur && st[t].carry) return st[t].carry.hp;
+        return maxHp[t][k];
+      });
+    });
+    var left = st.map(function (x) { return x.alive.filter(Boolean).length; });
+    var winner = left[0] && !left[1] ? 0 : (left[1] && !left[0] ? 1 : -1);
+    var score = function (t) { return hpLeft[t].reduce(function (s, h, k) { return s + h / maxHp[t][k]; }, 0); };
+    return {
+      segments: segs, winner: winner, left: left, alive: st.map(function (x) { return x.alive.slice(); }),
+      hpLeft: hpLeft, maxHp: maxHp, ko: ko, totalTurns: offset,
+      shieldsUsed: [teams[0].shields - st[0].shields, teams[1].shields - st[1].shields], shieldsLeft: [st[0].shields, st[1].shields],
+      margin: Math.round((score(0) - score(1)) * 100) / 100
+    };
+  }
+
+  /** 3×3 整隊護盾矩陣：m[我方盾][對手盾] = { winner, left:[我方剩幾隻, 對手剩幾隻], margin }。 */
+  function teamMatrix(cfg, TA, TB, order, plan) {
+    var m = [];
+    for (var i = 0; i <= 2; i++) {
+      m.push([]);
+      for (var j = 0; j <= 2; j++) {
+        var r = runTeam(cfg, { mons: TA.mons, shields: i }, { mons: TB.mons, shields: j }, order, plan);
+        m[i].push({ winner: r.winner, left: r.left, margin: r.margin });
+      }
+    }
+    return m;
+  }
+
+  function teamInsights(tr, names, teamNames) {
+    var out = [], w = tr.winner;
+    var alive = function (t) {
+      return names[t].map(function (n, k) { return tr.alive[t][k] ? n + "（" + Math.round(tr.hpLeft[t][k] / tr.maxHp[t][k] * 100) + "%）" : null; }).filter(Boolean);
+    };
+    if (w === -1) out.push("雙方最後一隻同時倒下，這場是<b>平手</b>。");
+    else out.push(teamNames[w] + " <b>獲勝</b>，還剩 <b>" + tr.left[w] + " 隻</b>：" + alive(w).join("、") + "。共 " + tr.totalTurns + " 回合（約 " + Math.round(tr.totalTurns / 2) + " 秒）。");
+    [0, 1].forEach(function (t) {
+      var cnt = {};
+      tr.ko[t].forEach(function (k) { cnt[k.by] = (cnt[k.by] || 0) + 1; });
+      var top = Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a]; })[0];
+      if (top != null && cnt[top] >= 2) out.push(teamNames[t] + " 的 <b>" + names[t][top] + "</b> 一隻打倒了 " + cnt[top] + " 隻。");
+    });
+    var s0 = tr.segments[0], lead = s0.res.winner;
+    out.push("先發對位：" + names[0][s0.a] + " 對 " + names[1][s0.b] + "，" + (lead === -1 ? "同歸於盡" : (lead === 0 ? names[0][s0.a] : names[1][s0.b]) + " 贏") + "。");
+    out.push("護盾：" + teamNames[0] + " 用了 " + tr.shieldsUsed[0] + " 面、" + teamNames[1] + " 用了 " + tr.shieldsUsed[1] + " 面。");
+    return out;
+  }
+
   var api = {
+    runTeam: runTeam, teamMatrix: teamMatrix, teamInsights: teamInsights,
     init: init, mon: mon, move: move, typeZh: typeZh, rankOf: rankOf, topList: topList, search: search,
     shadowOf: shadowOf, defaultMoves: defaultMoves, movePools: movePools, run: run, quick: quick,
     matrix: matrix, movesetCompare: movesetCompare, sweep: sweep, insights: insights, effWord: effWord,
-    ivPreview: function (id, iv, cfg) {
+    ivPreview: function (id, iv, cfg, buddy) {
       var b = newBattle(cfg), p = new E.Pokemon(id, 0, b);
-      p.initialize(cfg.cp); applyIV(p, iv, cfg);
-      return { atk: p.ivs.atk, def: p.ivs.def, hp: p.ivs.hp, level: p.level, cp: p.cp, maxLevel: maxLevel(p, p.ivs.atk, p.ivs.def, p.ivs.hp, cfg) };
+      p.initialize(cfg.cp); applyIV(p, iv, cfg, buddy);
+      return { atk: p.ivs.atk, def: p.ivs.def, hp: p.ivs.hp, level: p.level, cp: p.cp,
+        maxLevel: maxLevel(p, p.ivs.atk, p.ivs.def, p.ivs.hp, cfg, buddy), cap: capOf(p, cfg, buddy) };
     },
     data: function () { return D; }
   };
