@@ -457,6 +457,29 @@ details.edit summary{cursor:pointer;min-height:36px;display:flex;align-items:cen
 .chart.off-hp0 .ln-hp0,.chart.off-hp1 .ln-hp1,.chart.off-en0 .ln-en0,.chart.off-en1 .ln-en1,.chart.off-ghost .ln-ghost,.chart.off-fast .ln-fast{display:none}
 .lg-sw{display:inline-grid;place-items:center;width:18px;height:18px;margin-right:4px;border-radius:5px;background:#f59e0b;color:#fff;font-size:.68rem}
 
+
+/* 對戰畫面可以直接點來修改 */
+.stage button{font:inherit;color:inherit}
+.sg-mon{width:100%;border:0;padding:0;background:none;cursor:pointer;border-radius:18px}
+.sg-mon:hover .sg-ground{background:radial-gradient(closest-side,rgba(251,191,36,.45),transparent)}
+.sg-mon:focus-visible,.sg-sh:focus-visible,.sg-mv:focus-visible,.sg-banner:focus-visible{outline:2px solid #fbbf24;outline-offset:2px}
+.sg-sh{border:0;padding:3px 6px;margin:-3px 0;border-radius:999px;background:rgba(255,255,255,.08);cursor:pointer}
+.sg-sh:hover{background:rgba(251,191,36,.25)}
+button.sg-mv{cursor:pointer}
+button.sg-mv:hover{opacity:1;border-color:#fff}
+.sg-banner{cursor:pointer;text-align:left;color:#fff}
+.sg-banner::after{content:"✎ 修改";margin-left:4px;padding:1px 8px;border-radius:999px;background:rgba(255,255,255,.16);font-size:.7rem;font-weight:800}
+.sg-hint{margin:8px 2px 0;color:var(--muted);font-size:.8rem;line-height:1.6}
+.sg-hint b{color:var(--ink-2)}
+.stact{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.stact:empty{display:none}
+.sa{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:5px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:.8rem;font-weight:800;color:var(--ink-2);cursor:pointer}
+.sa svg{width:14px;height:14px}
+.sa:hover{border-color:#bdb3e0}
+.sa.hot{background:#fff7ed;border-color:#fdba74;color:#9a3412}
+.sa.s0{border-left:4px solid var(--a)}.sa.s1{border-left:4px solid var(--b)}
+.sa.sw{background:#fff7ed;border-color:#fdba74;color:#9a3412}
+
 @media(max-width:820px){
  :root{--head-h:54px}.tnav{display:none}main{padding:10px 12px 56px}
  .topbar .home{font-size:14.5px}.logo{width:28px;height:28px;font-size:14px}.topbar .cta{padding:7px 13px;font-size:13px}
