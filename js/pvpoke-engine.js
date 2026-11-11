@@ -8602,6 +8602,8 @@ class Player {
 			return GameMaster.getInstance();
 		},
 		GameMaster: GameMaster, Battle: Battle, Pokemon: Pokemon, DamageCalculator: DamageCalculator,
-		DamageMultiplier: typeof DamageMultiplier !== "undefined" ? DamageMultiplier : null
+		DamageMultiplier: typeof DamageMultiplier !== "undefined" ? DamageMultiplier : null,
+		// 沙盒模式（使用者改開盾、延後放招、換人擋招）要用到：
+		ActionLogic: ActionLogic, Player: Player, TimelineAction: TimelineAction
 	};
 })();
