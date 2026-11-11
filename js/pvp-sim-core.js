@@ -59,10 +59,11 @@
     if (!q) {
       return topList(cp, limit || 60).map(function (r) { return r[0]; });
     }
+    var num = /^#?0*(\d{1,4})$/.exec(q), dexQ = num ? Number(num[1]) : -1;   // 圖鑑編號：完全相同的排最前面
     searchList.forEach(function (s) {
       var name = byId[s.id].speciesName.toLowerCase(), en = byId[s.id].en.toLowerCase();
       var lvl = -1;
-      if (name === q || en === q || s.id === q) lvl = 0;
+      if (name === q || en === q || s.id === q || byId[s.id].dex === dexQ) lvl = 0;
       else if (name.indexOf(q) === 0 || en.indexOf(q) === 0) lvl = 1;
       else if (s.key.indexOf(q) > -1) lvl = 2;
       if (lvl < 0) return;
@@ -763,6 +764,18 @@
       var ce = edit(edits, "charge", e.actor, e.n);
       if (ce) e.charge = ce.v;
     });
+    // 指到沒有發生的那一發（網址手改、或前面的修改讓對戰提早結束）也要標出來
+    edits.forEach(function (e, i) {
+      if (status[i]) return;
+      var ev = null;
+      res.events.forEach(function (x) {
+        if (ev || x.kind !== "charged") return;
+        if (e.k === "shield" ? (x.actor === 1 - e.side && x.m === e.n) : (x.actor === e.side && x.n === e.n)) ev = x;
+      });
+      if (e.k === "shield") { if (!ev) status[i] = "missing"; else if (e.v && !ev.shielded) status[i] = "noshield"; }
+      else if (e.k === "hold" || e.k === "use" || e.k === "charge") { if (!ev) status[i] = "nofire"; }
+      else if (e.k === "swapT" && e.t > res.lastTurn) status[i] = "late";
+    });
     res.editStatus = edits.map(function (e, i) { return status[i] || "ok"; });
     // 1 對 1 的評分（與 PvPoke 相同算法）
     if (sides[0].mons.length === 1 && sides[1].mons.length === 1) {
@@ -776,10 +789,13 @@
   }
 
   /** 兩隻之間的招式數據與能力值（給招式表、能量條刻度用）。 */
-  var pairCache = {};
+  var pairCache = {}, pairN = 0;
   function pair(cfg, A, B) {
-    var key = JSON.stringify([cfg, A.id, A.fast, A.c1, A.c2, A.iv, A.buddy, B.id, B.fast, B.c1, B.c2, B.iv, B.buddy]);
+    // 起始護盾、能量、HP、騙盾也會進到 summary()，所以都要算進快取的 key
+    var key = JSON.stringify([cfg, A.id, A.fast, A.c1, A.c2, A.iv, A.buddy, A.shields, A.energy, A.hpPct, A.bait,
+      B.id, B.fast, B.c1, B.c2, B.iv, B.buddy, B.shields, B.energy, B.hpPct, B.bait]);
     if (pairCache[key]) return pairCache[key];
+    if (++pairN > 400) { pairCache = {}; pairN = 1; }      // 不讓快取無限長大
     var s = prepare(cfg, A, B);
     var out = { moves: [moveStats(s.p, s.q), moveStats(s.q, s.p)], info: [summary(s.p), summary(s.q)] };
     pairCache[key] = out;

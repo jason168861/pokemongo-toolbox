@@ -25,6 +25,9 @@ OUT_DATA = os.path.join(ROOT, "data", "pvp_sim.json")
 OUT_ENGINE = os.path.join(ROOT, "js", "pvpoke-engine.js")
 THUMB_DIR = os.path.join(ROOT, "trade-list", "assets", "thumb")
 IMAGES_JS = os.path.join(ROOT, "data", "pokemon_images.js")
+POGO_ASSETS = os.environ.get("POGO_ASSETS", os.path.join(os.path.dirname(ROOT), "pogo_assets"))
+POGO_ICONS = os.path.join(POGO_ASSETS, "Images", "Pokemon - 256x256", "Addressable Assets")
+PVP_IMG_DIR = os.path.join(ROOT, "img", "pvp")      # 交易清單還沒有的型態圖（例：新的 Mega），模擬器自己的縮圖
 
 ENGINE_COMMIT = "a9dfd500421cacf2842d54d8adcb15830c1eef2b"   # 2026-11-09，已在本機用排名資料驗證 1,800 場結果一致
 RAW = "https://raw.githubusercontent.com/pvpoke/pvpoke/{ref}/{path}"
@@ -121,6 +124,35 @@ def thumb(sid, dex, images, thumbs):
         return old
     ft = form_thumb(sid, dex, thumbs, exact=False)  # 退回一般型態圖時，再試部分字詞相符（例：aqua → PALDEA_AQUA）
     return "trade-list/assets/thumb/" + ft if ft else old
+
+
+def extra_thumb(sid, dex, pogo_files):
+    """交易清單縮圖裡沒有、但素材庫有的型態圖（例：新推出的 Mega）：產生 128px WebP 到 img/pvp/，
+    回傳（相對網站根目錄的路徑, 去邊範圍）。已經產生過的檔案直接沿用，所以之後沒有 pogo_assets 也能重跑。"""
+    base_id = re.sub(r"_(shadow|xs|xl)$", "", sid)
+    m = re.search(r"_mega(_[xy])?$", base_id)
+    if m:
+        want = f"pm{dex}.fMEGA{(m.group(1) or '').upper()}.icon"
+    else:
+        ft = form_thumb(sid, dex, {f[:-4] + ".webp" for f in pogo_files if f.startswith(f"pm{dex}.") and f.endswith(".icon.png")})
+        want = ft[:-5] if ft else None
+    if not want:
+        return None, None
+    out = os.path.join(PVP_IMG_DIR, want + ".webp")
+    src = os.path.join(POGO_ICONS, want + ".png")
+    if not os.path.exists(out) and want + ".png" not in pogo_files:
+        return None, None
+    from PIL import Image
+    if not os.path.exists(out):
+        os.makedirs(PVP_IMG_DIR, exist_ok=True)
+        im = Image.open(src).convert("RGBA")
+        im.thumbnail((128, 128), Image.LANCZOS)
+        im.save(out, "WEBP", quality=82, method=4)       # 與交易清單 fetch_assets.py 的縮圖相同設定
+    im = Image.open(out).convert("RGBA")
+    w, h = im.size
+    box = im.getchannel("A").point(lambda a: 255 if a > 16 else 0).getbbox()
+    tb = [round(box[0] / w, 3), round(box[1] / h, 3), round((box[2] - box[0]) / w, 3), round((box[3] - box[1]) / h, 3)] if box else None
+    return "/img/pvp/" + want + ".webp", tb
 
 
 def thumb_by_images(sid, dex, images, thumbs):
@@ -304,6 +336,8 @@ def build_data():
     tw_move = {m["moveId"]: m["name"] for m in tw["moves"]}
     images = load_images()
     thumbs = set(os.listdir(THUMB_DIR)) if os.path.isdir(THUMB_DIR) else set()
+    pogo_files = set(os.listdir(POGO_ICONS)) if os.path.isdir(POGO_ICONS) else set()
+    extra = []
     # 縮圖裡寶可夢實際的範圍（交易清單 fetch_assets.py 產生的 data/trim.json：[x, y, 寬, 高] 比例），
     # 頁面用它把每隻置中、放大到差不多大小（有的圖很寬、有的很小）
     trim_path = os.path.join(ROOT, "trade-list", "data", "trim.json")
@@ -335,6 +369,11 @@ def build_data():
         if not o["img"]:
             no_img.append(sid)
         tb = trim.get(o["img"].replace(".webp", ""))
+        if o["img"] == f"pm{p['dex']}.icon.webp":       # 只找到一般型態的圖：看素材庫有沒有這個型態
+            ei, etb = extra_thumb(sid, p["dex"], pogo_files)
+            if ei:
+                o["img"], tb = ei, etb
+                extra.append(sid)
         if tb:
             o["tb"] = [round(v, 3) for v in tb]
         pokemon.append(o)
@@ -379,6 +418,8 @@ def build_data():
           f"排名 " + "、".join(f"{k}:{len(v)}" for k, v in ranks.items()) + f"；gamemaster {data['gm']}")
     if no_zh:
         print(f"  ⚠ {len(no_zh)} 隻沒有中文名稱（用英文）：{', '.join(no_zh[:12])}")
+    if extra:
+        print(f"  型態圖改用 img/pvp/（交易清單還沒有）：{', '.join(extra)}")
     if no_img:
         print(f"  ⚠ {len(no_img)} 隻沒有站內縮圖：{', '.join(no_img[:12])}")
 
