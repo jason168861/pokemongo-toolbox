@@ -87,10 +87,12 @@
     if (r < 500) return { bg: "hsl(352 82% " + (95 - k * 20) + "%)", fg: "hsl(352 65% " + (42 - k * 10) + "%)" };
     return { bg: "#eceaf3", fg: "#3b3650" };
   }
-  function toast(t) {
+  function toast(t, ms) {
     var d = document.createElement("div"); d.className = "toast"; d.textContent = t; document.body.appendChild(d);
-    setTimeout(function () { d.remove(); }, 1800);
+    setTimeout(function () { d.remove(); }, ms || 1800);
   }
+  // 出錯時直接顯示在畫面上（手機沒有開發者工具，使用者截圖就能知道是哪裡壞了）
+  window.addEventListener("error", function (ev) { toast("程式錯誤：" + (ev.message || "未知") + (ev.lineno ? "（第 " + ev.lineno + " 行）" : ""), 6000); });
   function pools(id) {
     var k = id + "|" + state.cp;
     if (!poolCache[k]) poolCache[k] = C.movePools(id, cfg());
@@ -1325,9 +1327,11 @@
       teamDlg.className = "pick teams-dlg"; teamDlg.setAttribute("aria-label", "選隊伍");
       document.body.appendChild(teamDlg);
       teamDlg.addEventListener("click", function (ev) {
-        var b, t2 = ev.target;
-        if ((b = t2.closest("button[data-team]"))) { applyPreset(Number(b.getAttribute("data-team"))); return; }
-        if ((b = t2.closest("button[data-rkap]"))) { applyRank(b.getAttribute("data-rkap").split(",").map(Number)); return; }
+        var b, t2 = ev.target && ev.target.nodeType === 3 ? ev.target.parentNode : ev.target;   // 舊版 Safari 的 target 可能是文字節點
+        try {
+          if ((b = t2.closest("button[data-team]"))) { applyPreset(Number(b.getAttribute("data-team"))); return; }
+          if ((b = t2.closest("button[data-rkap]"))) { applyRank(b.getAttribute("data-rkap").split(",").map(Number)); return; }
+        } catch (err) { closeTeams(); toast("套用失敗：" + (err && err.message), 6000); return; }
         if ((b = t2.closest("[data-tdtab]"))) { RK.tab = b.getAttribute("data-tdtab"); store("tdtab", RK.tab); renderTeamDlg(); return; }
         if ((b = t2.closest("[data-rkv]"))) { RK.view = b.getAttribute("data-rkv"); RK.n = 30; renderTeamDlg(); return; }
         if ((b = t2.closest("[data-rkopen]"))) { var k = b.getAttribute("data-rkopen"); RK.open[k] = !RK.open[k]; RK.keepTop = true; renderTeamDlg(); return; }

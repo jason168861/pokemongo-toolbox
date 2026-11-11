@@ -585,12 +585,11 @@ button.sg-mv:hover{opacity:1;border-color:#fff}
 .pane-n{margin:0 0 10px;color:var(--muted);font-size:.8rem;line-height:1.6}
 /* ---------- 選隊伍視窗 ---------- */
 dialog.teams-dlg{width:min(720px,calc(100% - 20px))}
-dialog.teams-dlg[open]{display:flex;flex-direction:column}
 .teams-dlg .td-t{flex:1;font-size:1.02rem}
 .teams-dlg .td-t small{display:block;font-size:.74rem;color:var(--muted);font-weight:700}
-.td-tabs{flex:none;margin:0;padding:10px 14px 4px}
-.teams-dlg .pk-h{flex:none}
-.td-body{flex:1;min-height:0;overflow:auto;padding:4px 0 10px}
+.td-tabs{margin:0;padding:10px 14px 4px}
+/* 和「選寶可夢」視窗同一種結構（iPhone Safari 上已確認可以點）：視窗本身不用 flex，由清單這一層捲動 */
+.td-body{max-height:calc(min(86vh,760px) - 126px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:4px 0 10px}
 .td-body .pk-l{max-height:none;overflow:visible}
 .td-body>.pk-n{padding-top:8px}
 .tf{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 14px 2px}
