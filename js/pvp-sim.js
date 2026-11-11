@@ -39,6 +39,10 @@
     edits: { 1: [], 3: [] }, habit: "ai", react: "none", sel: null, ghost: null,
     turn: 0, sweepN: 30, sweepS: 1, sweepSort: "rank", cmpWho: 0, cmpAll: false
   };
+  // 重播圖要顯示哪些線（每位使用者自己的偏好，存在瀏覽器；讀不到就用預設）
+  var LINES = [["hp0", "我方 HP"], ["hp1", "對手 HP"], ["en0", "我方能量"], ["en1", "對手能量"], ["ghost", "修改前的 HP"], ["fast", "一般招式刻度"]];
+  var lines = { hp0: true, hp1: true, en0: false, en1: false, ghost: true, fast: true };
+  try { var saved = JSON.parse(localStorage.getItem("pvpsim.lines") || "null"); if (saved) for (var lk in lines) if (typeof saved[lk] === "boolean") lines[lk] = saved[lk]; } catch (e) { /* 無痕或封鎖儲存時用預設 */ }
   var res = null, mx = null, playTimer = null, pickFor = null, poolCache = {}, sweepJob = 0, keyJob = 0, tracked = false, openSlots = {};
   var app = document.getElementById("app");
 
@@ -260,10 +264,9 @@
         '<div class="habit" id="reactbar" hidden><span class="lbl">我換人後，對手</span><div class="hab" id="react" role="group" aria-label="對手會不會跟著換"></div></div>' +
         '<div class="edits" id="edits"></div>' +
         '<div class="chart" id="chart"></div>' +
-        '<div class="legend"><span><i style="background:var(--a)"></i>我方 HP</span><span><i style="background:var(--b)"></i>對手 HP</span>' +
-        '<span style="color:var(--a)"><i class="d"></i>我方能量</span><span style="color:var(--b)"><i class="d"></i>對手能量</span>' +
-        '<span id="ghostlg" hidden><i class="d" style="border-color:#9a95ad"></i>修改前的 HP</span>' +
-        '<span class="lg-sh">' + SHIELD_SVG + '被護盾擋下</span><span class="lg-key">!</span><span>關鍵決策</span></div>' +
+        '<div class="legend" id="lines" role="group" aria-label="要顯示的線">' + LINES.map(function (x) {
+          return '<button type="button" class="lt lt-' + x[0] + '" data-line="' + x[0] + '" aria-pressed="' + lines[x[0]] + '"><i></i>' + x[1] + "</button>";
+        }).join("") + '<span class="lg-sh">' + SHIELD_SVG + '被護盾擋下</span><span class="lg-key">!</span><span>關鍵決策</span></div>' +
         '<div class="keys" id="keys"></div>' +
         '<div class="act" id="act" hidden></div>' +
         '<div class="player"><button type="button" id="play" aria-label="播放">▶</button><input type="range" id="scrub" min="0" max="1" value="0" aria-label="回合"><span class="tn" id="tn"></span></div>' +
@@ -502,7 +505,7 @@
     }).join("") + '<button type="button" class="chip reset" data-act="reset">↺ 全部復原</button>'
       : '<p class="hint">👆 點圖上的特殊招式，可以改<b>開不開盾</b>、<b>晚幾回合放</b>、<b>放哪一招</b>、<b>蓄力多少（發招不發滿）</b>' +
         (state.mode === 3 ? "、<b>換人擋招</b>；拖到任一回合按 <b>⇄ 這回合換人</b> 可以安排雙方換人" : "") + "。每個選項都會先算好結果。</p>";
-    $("#ghostlg").hidden = !state.ghost;
+    var gb = $('[data-line="ghost"]'); if (gb) gb.hidden = !state.ghost;
     $("#turnbar").hidden = state.mode !== 3;
   }
 
@@ -695,16 +698,20 @@
     };
     if (state.ghost) {
       var gs = state.ghost.filter(function (x, i) { return i <= T; });
+      h.push('<g class="ln-ghost">');
       [0, 1].forEach(function (i) { h.push(line(gs, function (x) { return x.hp[i] / x.max[i]; }, "#9a95ad", "3 4", 2.2, ".9")); });
+      h.push("</g>");
     }
-    [0, 1].forEach(function (i) { h.push(line(s, function (x) { return x.en[i] / 100; }, i ? "#6d4aff" : "#e0276c", "5 5", 2, ".5")); });
-    [0, 1].forEach(function (i) { h.push(line(s, function (x) { return x.hp[i] / x.max[i]; }, i ? "#6d4aff" : "#e0276c", "", 3.2)); });
+    [0, 1].forEach(function (i) { h.push('<g class="ln-en' + i + '">' + line(s, function (x) { return x.en[i] / 100; }, i ? "#6d4aff" : "#e0276c", "5 5", 2, ".5") + "</g>"); });
+    [0, 1].forEach(function (i) { h.push('<g class="ln-hp' + i + '">' + line(s, function (x) { return x.hp[i] / x.max[i]; }, i ? "#6d4aff" : "#e0276c", "", 3.2) + "</g>"); });
     // 一般招式：排底部的小刻度
+    h.push('<g class="ln-fast">');
     res.events.forEach(function (e) {
       if (e.kind !== "fast") return;
       var y = (e.actor ? CH.laneB : CH.laneA) + CH.lane / 2 - 5;
       h.push('<rect x="' + (cx(e.turn) - 1) + '" y="' + (y - 3) + '" width="2.4" height="6" rx="1" fill="' + (TYPE_COLOR[e.type] || "#888") + '" opacity=".8"/>');
     });
+    h.push("</g>");
     // 換人、倒下、特殊招式
     res.events.forEach(function (e, idx) {
       var y = e.actor ? CH.laneB : CH.laneA, x = cx(e.turn), c = TYPE_COLOR[e.type] || "#888";
@@ -734,11 +741,18 @@
     });
     // 游標不接收點擊，才不會擋住底下的特殊招式圓圈
     h.push('<g pointer-events="none"><line id="cur" x1="0" x2="0" y1="2" y2="' + (CH.H - 2) + '" stroke="#14111f" stroke-width="1.5" opacity=".6"/>');
-    h.push('<circle id="cur0" r="5" fill="#e0276c" stroke="#fff" stroke-width="2"/><circle id="cur1" r="5" fill="#6d4aff" stroke="#fff" stroke-width="2"/></g>');
+    h.push('<circle id="cur0" class="ln-hp0" r="5" fill="#e0276c" stroke="#fff" stroke-width="2"/><circle id="cur1" class="ln-hp1" r="5" fill="#6d4aff" stroke="#fff" stroke-width="2"/></g>');
     h.push("</svg>");
     $("#chart").innerHTML = h.join("");
+    applyLines();
     $("#scrub").max = T;
     $("#rp-sub").textContent = "共 " + T + " 回合 · 約 " + (Math.round(T / 2 * 10) / 10) + " 秒";
+  }
+
+  function applyLines() {
+    var c = $("#chart"); if (!c) return;
+    LINES.forEach(function (x) { c.classList.toggle("off-" + x[0], !lines[x[0]]); });
+    $$("#lines [data-line]").forEach(function (b) { b.setAttribute("aria-pressed", String(!!lines[b.getAttribute("data-line")])); });
   }
 
   // ---------- 對戰紀錄 ----------
@@ -1043,6 +1057,11 @@
         var url = location.href;
         (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () { toast("已複製連結（含沙盒修改）"); }, function () { window.prompt("複製這個連結：", url); });
         track("pvp_sim_share", { league: String(state.cp), mode: String(state.mode) });
+        return;
+      }
+      if ((b = t.closest("[data-line]"))) {
+        var lk2 = b.getAttribute("data-line"); lines[lk2] = !lines[lk2]; applyLines();
+        try { localStorage.setItem("pvpsim.lines", JSON.stringify(lines)); } catch (e) { /* 存不了就只在這次有效 */ }
         return;
       }
       if ((b = t.closest("[data-hab]"))) { var hv = b.getAttribute("data-hab"); if (hv !== state.habit) applyEdits(edits(), hv); return; }
