@@ -37,7 +37,7 @@
   var state = {
     mode: 1, cp: 1500, cap: 50, sides: [null, null], teams: [null, null], order: "best", plan: "spread",
     edits: { 1: [], 3: [] }, habit: "ai", react: "none", sel: null, ghost: null,
-    turn: 0, speed: 2, sweepN: 30, sweepS: 1, sweepSort: "rank", cmpWho: 0, cmpAll: false
+    turn: 0, speed: 2, sweepN: 30, sweepS: 1, sweepSort: "rank", cmpWho: 0, cmpAll: false, tab: "log"
   };
   // 重播圖要顯示哪些線（每位使用者自己的偏好，存在瀏覽器；讀不到就用預設）
   var LINES = [["hp0", "我方 HP"], ["hp1", "對手 HP"], ["en0", "我方能量"], ["en1", "對手能量"], ["ghost", "修改前的 HP"], ["fast", "一般招式刻度"]];
@@ -272,8 +272,17 @@
   }
 
   // ---------- 骨架 ----------
+  var MORE_TABS = [["log", "📜 對戰紀錄"], ["mx", "🛡 盾數組合"], ["mv", "⚔️ 招式數據"], ["cmp", "🔁 換招比較"], ["sw", "📊 對上熱門"]];
+  function store(k, v) { try { localStorage.setItem("pvpsim." + k, v); } catch (e) { /* 無痕模式：只在這次有效 */ } }
+  function stored(k) { try { return localStorage.getItem("pvpsim." + k); } catch (e) { return null; } }
   function renderShell() {
     app.innerHTML =
+      // 第一次來的人：三步驟（按「知道了」之後不再出現）
+      '<div class="intro" id="intro"' + (stored("intro") === "0" ? " hidden" : "") + '><b class="in-t">👋 三步驟上手</b><ol>' +
+        "<li><b>選寶可夢</b>：選 1 對 1 或 3 對 3、聯盟，點寶可夢就能換（3 對 3 可以按「📋 選隊伍」直接挑整隊）</li>" +
+        "<li><b>看勝負</b>：下面馬上算出誰會贏、剩多少血</li>" +
+        "<li><b>練決策</b>：按 ▶ 看重播，在對戰畫面上點<b>招式、護盾、寶可夢</b>，就能改開盾、蓄力、換人，看勝負怎麼變</li></ol>" +
+        '<button type="button" class="in-x" data-act="nointro">知道了</button></div>' +
       '<section class="setup" aria-label="對戰設定">' +
         '<div class="bar"><div class="seg mode" id="mode" role="group" aria-label="對戰模式"><button type="button" data-m="1">1 對 1</button><button type="button" data-m="3">3 對 3 隊伍</button></div>' +
           '<div class="seg" id="lg" role="group" aria-label="聯盟">' +
@@ -291,14 +300,12 @@
           '<div class="duel teams"><div class="team" data-t="0" id="t0"></div>' +
           '<div class="vs"><b>VS</b><button type="button" class="swap" data-act="swap" aria-label="交換兩隊">⇄ 交換</button></div>' +
           '<div class="team" data-t="1" id="t1"></div></div>' +
-          '<p class="rulenote">AI 不會主動換寶可夢（倒下才換）。要練換人，在下方重播圖點對手的特殊招式「換人擋招」，或拖到任一回合按「⇄ 這回合換人」，' +
-          '也可以讓對手「跟著換」。護盾整隊共用，「平均分配」讓每隻最多用掉「剩餘護盾 ÷ 剩下隻數」面，「需要就用」則照 PvPoke 的 1 對 1 判斷。</p>' +
+          '<details class="fold sm"><summary>ⓘ 3 對 3 規則說明</summary><p class="rulenote">AI 不會主動換寶可夢（倒下才換）。要練換人，在對戰畫面點寶可夢、或點對手的特殊招式選「換人擋招」，' +
+          '也可以讓對手「跟著換」。護盾整隊共用：「平均分配」讓每隻最多用掉「剩餘護盾 ÷ 剩下隻數」面，「需要就用」照 PvPoke 的 1 對 1 判斷。</p></details>' +
         "</div>" +
       "</section>" +
       '<section class="card verdict" id="verdict" aria-live="polite"></section>' +
       '<section class="card" id="replay"><h2 class="sec-h"><span class="ic">▶</span>重播與沙盒<small id="rp-sub"></small></h2>' +
-        '<div class="habit"><span class="lbl">對手開盾習慣</span><div class="hab" id="hab" role="group" aria-label="對手開盾習慣"></div><small class="habnote" id="habnote" hidden>對手沒有護盾，開盾習慣不影響結果</small></div>' +
-        '<div class="habit" id="reactbar" hidden><span class="lbl">我換人後，對手</span><div class="hab" id="react" role="group" aria-label="對手會不會跟著換"></div></div>' +
         '<div class="edits" id="edits"></div>' +
         // 對戰畫面：播放時看得到現在打到哪裡
         '<div class="stage" id="stage" aria-live="polite">' + [0, 1].map(function (i) {
@@ -308,7 +315,6 @@
             '<div class="sg-en"><div class="sg-bar en"><i></i><b></b></div><div class="sg-cm"></div></div></div>';
         }).join("") +
           '<div class="sg-mid"><span class="sg-turn" id="sgturn"></span></div><button type="button" class="sg-banner" id="banner" data-stage="banner" hidden></button></div>' +
-        '<p class="sg-hint" id="sghint"></p>' +
         '<div class="player"><div class="pbtn">' +
           '<button type="button" data-act="first" aria-label="回到開頭">⏮</button><button type="button" data-act="prev" aria-label="上一回合">◀</button>' +
           '<button type="button" id="play" class="pp" aria-label="播放">▶</button>' +
@@ -318,29 +324,54 @@
         '<p class="now" id="now"></p>' +
         '<div class="stact" id="stact"></div>' +
         '<div class="act" id="act" hidden></div>' +
-        '<h3 class="sub-h">逐回合曲線圖<small>點特殊招式的圓圈，可以修改那一發</small></h3>' +
-        '<div class="layers" id="lines" role="group" aria-label="圖上要顯示的線"><span class="lbl">圖上顯示（點一下開／關）</span>' + LINES.map(function (x) {
-          return '<button type="button" class="lt lt-' + x[0] + '" data-line="' + x[0] + '" aria-pressed="' + lines[x[0]] + '"><span class="cb" aria-hidden="true"></span><i></i>' + x[1] + "</button>";
+        '<div class="keys" id="keys"></div>' +
+        '<p class="sg-hint" id="sghint"></p>' +
+        // 進階：對手習慣、曲線圖（預設收起來）
+        '<details class="fold" id="oppset"><summary><span>⚙ 對手設定</span><small id="oppsum"></small></summary>' +
+          '<div class="habit"><span class="lbl">對手開盾習慣</span><div class="hab" id="hab" role="group" aria-label="對手開盾習慣"></div><small class="habnote" id="habnote" hidden>對手沒有護盾，開盾習慣不影響結果</small></div>' +
+          '<div class="habit" id="reactbar" hidden><span class="lbl">我換人後，對手</span><div class="hab" id="react" role="group" aria-label="對手會不會跟著換"></div></div></details>' +
+        '<details class="fold" id="chartbox"' + (stored("chart") === "1" ? " open" : "") + '><summary><span>📈 逐回合曲線圖</span><small>雙方 HP、能量與每一發特殊招式；點圓圈也能修改</small></summary>' +
+          '<div class="layers" id="lines" role="group" aria-label="圖上要顯示的線"><span class="lbl">圖上顯示（點一下開／關）</span>' + LINES.map(function (x) {
+            return '<button type="button" class="lt lt-' + x[0] + '" data-line="' + x[0] + '" aria-pressed="' + lines[x[0]] + '"><span class="cb" aria-hidden="true"></span><i></i>' + x[1] + "</button>";
+          }).join("") + "</div>" +
+          '<div class="chart" id="chart"></div>' +
+          '<div class="legend"><span class="lg-sh">' + SHIELD_SVG + '被護盾擋下</span><span><span class="lg-key">!</span>關鍵決策（改了會影響勝負）</span><span><b class="lg-sw">⇄</b>換人</span></div></details>' +
+      "</section>" +
+      // 其他分析：分頁，一次只看一個（沒打開的不計算）
+      '<section class="card" id="more"><h2 class="sec-h"><span class="ic">🔎</span>更多分析</h2>' +
+        '<div class="tabs" id="tabs" role="tablist">' + MORE_TABS.map(function (x) {
+          return '<button type="button" role="tab" data-tab="' + x[0] + '" aria-selected="false">' + x[1] + "</button>";
         }).join("") + "</div>" +
-        '<div class="chart" id="chart"></div>' +
-        '<div class="legend"><span class="lg-sh">' + SHIELD_SVG + '被護盾擋下</span><span><span class="lg-key">!</span>關鍵決策（改了會影響勝負）</span><span><b class="lg-sw">⇄</b>換人</span></div>' +
-        '<div class="keys" id="keys"></div></section>' +
-      '<section class="card" id="logc"><h2 class="sec-h"><span class="ic">📜</span>對戰紀錄<small>點 ✎ 可以修改那一發</small></h2><ol class="log" id="log"></ol></section>' +
-      '<section class="card" id="mxc"><h2 class="sec-h"><span class="ic">🛡</span>9 種盾數組合<small>不含沙盒修改，點格子切換</small></h2><div class="mxwrap" id="mx"></div>' +
-        '<p class="mxnote" id="mxnote"></p></section>' +
-      '<section class="card" id="movec"><h2 class="sec-h"><span class="ic">⚔️</span>招式與能力值<small id="mv-sub">傷害是打在對方身上的實際數值</small></h2><div class="mtab" id="mtab"></div></section>' +
-      '<section class="card" id="cmpc"><h2 class="sec-h"><span class="ic">🔁</span>換招比較<small>同一個對手、同樣盾數</small></h2>' +
-        '<div class="bar"><div class="seg sm" id="cmpwho" role="group" aria-label="比較哪一方"><button type="button" data-w="0">我方換招</button><button type="button" data-w="1">對手換招</button></div></div>' +
-        '<ul class="cmp" id="cmp"></ul><button type="button" class="more" id="cmpmore">顯示全部組合</button></section>' +
-      '<section class="card" id="swc"><h2 class="sec-h"><span class="ic">📊</span>我方對上熱門寶可夢<small id="sw-sub"></small></h2>' +
-        '<div class="swtools"><div class="seg sm" id="swn" role="group" aria-label="對手數量"><button type="button" data-n="30">前 30 名</button><button type="button" data-n="50">前 50 名</button><button type="button" data-n="100">前 100 名</button></div>' +
-        '<div class="seg sm" id="sws" role="group" aria-label="護盾"><button type="button" data-s="0">雙方 0 盾</button><button type="button" data-s="1">雙方 1 盾</button><button type="button" data-s="2">雙方 2 盾</button></div>' +
-        '<div class="seg sm" id="swo" role="group" aria-label="排序"><button type="button" data-o="rank">依排名</button><button type="button" data-o="rating">依評分</button></div></div>' +
-        '<div class="prog" id="swprog"><i></i></div><div class="swsum" id="swsum"></div><ul class="swgrid" id="swgrid"></ul>' +
-        '<p class="mxnote">對手都用 PvPoke 推薦招式與預設 IV；我方沿用上面的設定（包含進階設定的起始 HP、起始能量與騙盾）。點任一隻就會換成牠當對手。</p></section>' +
-      '<section class="card" id="rkc"><h2 class="sec-h"><span class="ic">🏆</span>隊伍跑分表<small>每種三隻組合、每種上場順序，對上常用隊伍的分數</small></h2>' +
-        '<div id="rk"><p class="mxnote">捲到這裡時載入跑分資料…</p></div></section>';
+        '<div class="tpane" data-pane="log"><p class="pane-n">點 ✎ 可以修改那一發，點一列跳到那一回合。</p><ol class="log" id="log"></ol></div>' +
+        '<div class="tpane" data-pane="mx" hidden><div class="mxwrap" id="mx"></div><p class="mxnote" id="mxnote"></p></div>' +
+        '<div class="tpane" data-pane="mv" hidden><p class="pane-n" id="mv-sub">傷害是打在對方身上的實際數值</p><div class="mtab" id="mtab"></div></div>' +
+        '<div class="tpane" data-pane="cmp" hidden><p class="pane-n">同一個對手、同樣盾數，換一組招式會怎樣；點一列就換成那組。</p>' +
+          '<div class="bar"><div class="seg sm" id="cmpwho" role="group" aria-label="比較哪一方"><button type="button" data-w="0">我方換招</button><button type="button" data-w="1">對手換招</button></div></div>' +
+          '<ul class="cmp" id="cmp"></ul><button type="button" class="more" id="cmpmore">顯示全部組合</button></div>' +
+        '<div class="tpane" data-pane="sw" hidden><p class="pane-n">我方對上<span id="sw-sub"></span>的勝負。對手用 PvPoke 推薦招式與預設 IV；我方沿用上面的設定（含起始 HP、能量與騙盾）。點任一隻就改成和牠對戰。</p>' +
+          '<div class="swtools"><div class="seg sm" id="swn" role="group" aria-label="對手數量"><button type="button" data-n="30">前 30 名</button><button type="button" data-n="50">前 50 名</button><button type="button" data-n="100">前 100 名</button></div>' +
+          '<div class="seg sm" id="sws" role="group" aria-label="護盾"><button type="button" data-s="0">雙方 0 盾</button><button type="button" data-s="1">雙方 1 盾</button><button type="button" data-s="2">雙方 2 盾</button></div>' +
+          '<div class="seg sm" id="swo" role="group" aria-label="排序"><button type="button" data-o="rank">依排名</button><button type="button" data-o="rating">依評分</button></div></div>' +
+          '<div class="prog" id="swprog"><i></i></div><div class="swsum" id="swsum"></div><ul class="swgrid" id="swgrid"></ul></div>' +
+      "</section>";
+    var cb = $("#chartbox");
+    cb.addEventListener("toggle", function () {
+      store("chart", cb.open ? "1" : "0");
+      if (cb.open && res) { renderChart(); setTurn(state.turn); markKeyDecisions(); }
+    });
   }
+  /** 「更多分析」分頁；換招比較、對上熱門比較花時間，打開那一頁才算。 */
+  var dirtyTab = { cmp: true, sw: true };
+  function tabOk(k) { return state.mode === 1 || (k !== "cmp" && k !== "sw"); }
+  function showTab(k) {
+    if (!tabOk(k)) k = "log";
+    state.tab = k;
+    $$("#tabs [data-tab]").forEach(function (b) { var x = b.getAttribute("data-tab"); b.hidden = !tabOk(x); b.setAttribute("aria-selected", String(x === k)); });
+    $$("#more [data-pane]").forEach(function (p) { p.hidden = p.getAttribute("data-pane") !== k; });
+    if (k === "cmp" && dirtyTab.cmp) { dirtyTab.cmp = false; renderCompare(); }
+    if (k === "sw" && dirtyTab.sw) { dirtyTab.sw = false; renderSweep(); }
+  }
+
 
   // ---------- 設定卡（1 對 1 的一方與 3 對 3 的一隻共用） ----------
   function moveOptions(list, cur, withNone) {
@@ -407,9 +438,8 @@
 
   function renderTeam(t) {
     var T = state.teams[t];
-    var hasPresets = ((C.data().teams || {})[String(state.cp)] || []).length > 0;
     var h = '<div class="side-h"><span class="tag">' + TEAM_NAME[t] + "</span>" +
-      (hasPresets ? '<button type="button" class="tpick" data-act="teams" data-t="' + t + '">📋 常用隊伍</button>' : "") +
+      '<button type="button" class="tpick" data-act="teams" data-t="' + t + '">📋 選隊伍</button>' +
       '<div class="shd" role="group" aria-label="整隊護盾數"><span class="lbl" style="margin-right:4px">護盾</span>' +
       [0, 1, 2].map(function (n) { return '<button type="button" data-tsh="' + n + '" aria-pressed="' + (T.shields === n) + '">' + SHIELD_SVG + n + "</button>"; }).join("") + "</div></div>";
     T.mons.forEach(function (s, k) {
@@ -443,6 +473,13 @@
     return '<span class="ob" style="--cbg:' + c.bg + ";--cfg:" + c.fg + '">' + o.text + "</span>";
   }
 
+  /** 分析重點：先列 2 條，其他收起來（一次全部攤開太多字）。 */
+  function insList(ins) {
+    var li = function (x) { return "<li>" + x + "</li>"; };
+    var h = '<ul class="ins">' + ins.slice(0, 2).map(li).join("") + "</ul>";
+    if (ins.length > 2) h += '<details class="insmore"><summary>再看 ' + (ins.length - 2) + " 條分析 ▾</summary><ul class=\"ins\">" + ins.slice(2).map(li).join("") + "</ul></details>";
+    return h;
+  }
   function renderVerdict() {
     var w = res.winner, el = $("#verdict"), n = edits().length + (state.habit !== "ai" ? 1 : 0) + (state.mode === 3 && state.react !== "none" ? 1 : 0);
     el.className = "card verdict" + (w === 0 ? " w0" : w === 1 ? " w1" : "");
@@ -467,7 +504,7 @@
       };
       var ins = C.insights(r1, names.map(esc), n ? null : mx);
       el.innerHTML = tag + '<div class="vd-top">' + mon(0) + '<div class="vd-res"><span class="big">' + big + '</span><span class="score">評分 ' + res.ratings[0] + " : " + res.ratings[1] + "</span></div>" + mon(1) + "</div>" +
-        '<div class="hpbars">' + hpb(0) + hpb(1) + "</div>" + '<ul class="ins">' + ins.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ul>" + act;
+        '<div class="hpbars">' + hpb(0) + hpb(1) + "</div>" + insList(ins) + act;
       return;
     }
     var row = function (t) {
@@ -487,7 +524,7 @@
     el.innerHTML = tag + '<div class="tv"><div><span class="vd-sub">' + TEAM_NAME[0] + " · " + state.teams[0].shields + " 盾</span>" + row(0) + "</div>" +
       '<div class="vd-res"><span class="big">' + big + '</span><span class="score">剩下 ' + res.left[0] + " : " + res.left[1] + " 隻</span></div>" +
       '<div class="tvr"><span class="vd-sub">' + TEAM_NAME[1] + " · " + state.teams[1].shields + " 盾</span>" + row(1) + "</div></div>" +
-      '<ul class="ins">' + ins3.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ul>" +
+      insList(ins3) +
       (flow ? '<div class="flow"><span class="vd-sub">對戰經過（點一下跳到那一回合）</span><div>' + flow + "</div></div>" : "") + act;
   }
 
@@ -566,10 +603,12 @@
       return '<span class="chip' + (st !== "ok" ? " warn" : "") + '">' + esc(editText(e)) + (st !== "ok" ? "<small>⚠ " + esc(FAIL_TEXT[st] || "沒有套用") + "</small>" : "") +
         '<button type="button" data-unedit="' + i + '" aria-label="移除這個修改">×</button></span>';
     }).join("") + '<button type="button" class="chip reset" data-act="reset">↺ 全部復原</button>'
-      : '<p class="hint">👆 點圖上的特殊招式，可以改<b>開不開盾</b>、<b>晚幾回合放</b>、<b>放哪一招</b>、<b>蓄力多少（發招不發滿）</b>' +
-        (state.mode === 3 ? "、<b>換人擋招</b>；拖到任一回合按 <b>⇄ 這回合換人</b> 可以安排雙方換人" : "") + "。每個選項都會先算好結果。</p>";
+      : "";
     var gb = $('[data-line="ghost"]'); if (gb) gb.hidden = !state.ghost;
-    $("#sghint").innerHTML = "💡 對戰畫面可以直接點：中間的<b>招式橫幅</b>、<b>護盾</b>、下方的<b>特殊招式</b>" + (state.mode === 3 ? "、<b>寶可夢本身（換人）</b>" : "") + "，或用下面的按鈕，馬上打開修改面板。";
+    $("#sghint").innerHTML = "💡 對戰畫面上的<b>招式</b>、<b>護盾</b>" + (state.mode === 3 ? "、<b>寶可夢（換人）</b>" : "") + "都可以點，會打開修改面板；每個選項旁邊都先算好選了之後的勝負。";
+    var hName = HABITS.filter(function (h) { return h[0] === state.habit; })[0][1];
+    $("#oppsum").textContent = "開盾：" + hName + (state.mode === 3 ? "・我換人後：" + (state.react === "counter" ? "跟著換" : "不換") : "");
+    $("#oppset").classList.toggle("on", state.habit !== "ai" || (state.mode === 3 && state.react !== "none"));
   }
 
   /** 選項按鈕：預先算好選了之後的結果；label 可以是函式（拿到那個結果再決定要顯示什麼）。 */
@@ -1099,7 +1138,6 @@
     stageIds = ["", ""];
     var three = state.mode === 3;
     $("#one").hidden = three; $("#three").hidden = !three;
-    $("#cmpc").hidden = three; $("#swc").hidden = three;
     if (three) { pressed("#order", "data-o", state.order); pressed("#plan", "data-p", state.plan); renderTeam(0); renderTeam(1); }
     else { renderSide(0); renderSide(1); }
     ++keyJob; ++sweepJob; fillQ = [];               // 舊的背景計算全部作廢
@@ -1118,7 +1156,7 @@
         ++mxJob;
         mx = C.matrix(cfg(), state.sides[0], state.sides[1]);
         renderMatrix();
-        setTimeout(function () { renderCompare(); renderSweep(); }, 0);
+        dirtyTab.cmp = dirtyTab.sw = true;
       }
     } else if (mx) renderMatrix();
     if (typeof state.sel === "number" && (!res.events[state.sel] || res.events[state.sel].kind !== "charged")) state.sel = null;
@@ -1126,6 +1164,7 @@
     movesKey = "";
     setTurn(o.keepTurn ? Math.min(state.turn, res.lastTurn) : (typeof state.sel === "object" && state.sel ? state.sel.turn : res.lastTurn));
     setTimeout(markKeyDecisions, 30);
+    setTimeout(function () { showTab(state.tab); }, 0);
     writeURL();
     if (o.user && !tracked) { tracked = true; track("pvp_sim_use", { league: String(state.cp), mode: String(state.mode) }); }
   }
@@ -1175,100 +1214,155 @@
     var a = $("#act"); if (a && a.getBoundingClientRect().top > innerHeight - 120) a.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
-  // ---------- 隊伍跑分表（data/pvp_team_scores.json，由 scripts/score_pvp_teams.js 產生） ----------
-  var RK = { data: null, loading: false, cp: null, view: "combo", who: "", n: 20, open: {} };
+  // ---------- 選隊伍視窗：跑分排行（data/pvp_team_scores.json，scripts/score_pvp_teams.js 產生）＋常用隊伍 ----------
+  var RK = { data: null, loading: false, err: "", tab: stored("tdtab") === "common" ? "common" : "rank", view: "combo", noShadow: false, inc: [], exc: [], n: 30, open: {} };
   function loadRanks() {
     if (RK.data || RK.loading) return;
-    RK.loading = true;
+    RK.loading = true; RK.err = "";
     fetch("../data/pvp_team_scores.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function (d) { RK.data = d; renderRanks(); })
-      .catch(function (err) {
-        RK.loading = false;
-        $("#rk").innerHTML = '<p class="mxnote">跑分資料載入失敗（' + esc(err && err.message) + "），請重新整理頁面。</p>";
-      });
-  }
-  function initRanks() {
-    var el = $("#rkc"); if (!el) return;
-    if (!("IntersectionObserver" in window)) { loadRanks(); return; }
-    var io = new IntersectionObserver(function (es) {
-      if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); loadRanks(); }
-    }, { rootMargin: "600px 0px" });
-    io.observe(el);
+      .then(function (d) { RK.data = d; RK.loading = false; if (teamDlg && teamDlg.open) renderTeamDlg(); })
+      .catch(function (err) { RK.loading = false; RK.err = String(err && err.message); if (teamDlg && teamDlg.open) renderTeamDlg(); });
   }
   function fullName(id) { var m = C.mon(id); return nm(id) + (m && m.sh ? "（暗影）" : ""); }
-  function rkLeague() { return RK.data && RK.data.leagues[String(RK.cp)]; }
+  function rkLeague() { return RK.data && RK.data.leagues[String(state.cp)]; }
   /** o = [先發, 2 號, 3 號（pool 的索引）, 分數, 勝, 敗, 平] */
-  function rkScore(o, L) {
+  function rkScore(o) {
     var c = rc(o[3]);
     return '<span class="rk-s" style="--cbg:' + c.bg + ";--cfg:" + c.fg + '"><b>' + o[3].toFixed(1) + "</b><small>" + o[4] + " 勝 " + o[5] + " 敗" + (o[6] ? " " + o[6] + " 平" : "") + "</small></span>";
   }
   function rkMoves(p) {
-    return [p[1], p[2], p[3]].filter(Boolean).map(function (id) { var m = C.move(id); return m ? esc(m.name) : esc(id); });
+    return [p[1], p[2], p[3]].filter(Boolean).map(function (id) { var m = C.move(id); return m ? esc(m.name) : esc(id); }).join("／");
   }
-  function renderRanks() {
-    var box = $("#rk"); if (!box || !RK.data) return;
-    if (RK.cp == null) RK.cp = state.cp;
-    var L = rkLeague(), lg = LEAGUES.filter(function (l) { return l.cp === RK.cp; })[0];
-    var h = '<div class="rk-tools"><div class="seg sm" id="rklg" role="group" aria-label="跑分表的聯盟">' +
-      LEAGUES.map(function (l) { return '<button type="button" data-rkcp="' + l.cp + '" aria-pressed="' + (l.cp === RK.cp) + '">' + l.name + "</button>"; }).join("") + "</div>" +
-      '<div class="seg sm" id="rkview" role="group" aria-label="排列方式"><button type="button" data-rkv="combo" aria-pressed="' + (RK.view === "combo") + '">依組合</button>' +
-      '<button type="button" data-rkv="order" aria-pressed="' + (RK.view === "order") + '">依上場順序</button></div>';
-    if (!L) { box.innerHTML = h + '</div><p class="mxnote">這個聯盟還沒有跑分資料。</p>'; return; }
-    h += '<select id="rkwho" aria-label="只看含某隻寶可夢的隊伍"><option value="">全部隊伍</option>' + L.pool.map(function (p, i) {
-      return '<option value="' + i + '"' + (String(i) === RK.who ? " selected" : "") + ">含 " + esc(fullName(p[0])) + "</option>";
-    }).join("") + "</select></div>";
-    h += '<p class="rk-note">' + lg.name + "：PvPoke 排名前 " + L.pool.length + " 名（推薦招式、預設 IV）的 <b>" + fmt(L.combos) + "</b> 種三隻組合 × 6 種上場順序，" +
-      "每隊對上 " + L.opponents + " 支「常用隊伍」，共 " + fmt(L.battles) + " 場。雙方 2 盾、護盾平均分配、倒下後依隊伍順序上場。" +
-      "分數是每場「剩餘 HP 比例」換算的 100～900 分取平均，<b>500 ＝ 打平</b>，越高越好。資料 " + esc(RK.data.generated) + "。</p>";
-    var who = RK.who === "" ? -1 : Number(RK.who), rows = [];
+  /** 篩選用的是「種類」（不分暗影）：排除卡比獸就是一般和暗影都不要。 */
+  function rkPass(L, o) {
+    var names = [0, 1, 2].map(function (k) { return nm(L.pool[o[k]][0]); });
+    if (RK.noShadow && [0, 1, 2].some(function (k) { var m = C.mon(L.pool[o[k]][0]); return m && m.sh; })) return false;
+    if (RK.exc.some(function (x) { return names.indexOf(x) > -1; })) return false;
+    return RK.inc.every(function (x) { return names.indexOf(x) > -1; });
+  }
+  function rkRows(L) {
+    var rows = [];
     if (RK.view === "combo") {
-      L.list.forEach(function (x) { if (who < 0 || x[1][0].slice(0, 3).indexOf(who) > -1) rows.push({ rank: x[0], o: x[1][0], all: x[1] }); });
+      L.list.forEach(function (x) { if (rkPass(L, x[1][0])) rows.push({ rank: x[0], o: x[1][0], all: x[1] }); });
     } else {
-      L.list.forEach(function (x) { x[1].forEach(function (o) { if (who < 0 || o.slice(0, 3).indexOf(who) > -1) rows.push({ o: o }); }); });
+      L.list.forEach(function (x) { if (rkPass(L, x[1][0])) x[1].forEach(function (o) { rows.push({ o: o }); }); });
       rows.sort(function (a, b) { return b.o[3] - a.o[3] || b.o[4] - a.o[4]; });
       rows.forEach(function (r, i) { r.rank = i + 1; });
     }
-    var shown = rows.slice(0, RK.n);
-    h += '<ol class="rk-l">' + shown.map(function (r) {
+    return rows;
+  }
+  function rankBody() {
+    if (RK.err) return '<p class="pk-n">跑分資料載入失敗（' + esc(RK.err) + "），請重新整理頁面。</p>";
+    if (!RK.data) { loadRanks(); return '<p class="pk-n">正在載入跑分資料…</p>'; }
+    var L = rkLeague();
+    if (!L) return '<p class="pk-n">' + lgName() + "還沒有跑分資料。</p>";
+    var species = [];
+    L.pool.forEach(function (p) { var n = nm(p[0]); if (species.indexOf(n) < 0) species.push(n); });
+    var opt = function (ph, kind) {
+      return '<select data-rf="' + kind + '" aria-label="' + ph + '"><option value="">' + ph + "</option>" + species.filter(function (n) { return RK.inc.indexOf(n) < 0 && RK.exc.indexOf(n) < 0; })
+        .map(function (n) { return '<option value="' + esc(n) + '">' + esc(n) + "</option>"; }).join("") + "</select>";
+    };
+    var h = '<div class="tf"><div class="seg sm" role="group" aria-label="排列方式"><button type="button" data-rkv="combo" aria-pressed="' + (RK.view === "combo") + '">每組最佳順序</button>' +
+      '<button type="button" data-rkv="order" aria-pressed="' + (RK.view === "order") + '">所有順序</button></div>' +
+      '<button type="button" class="tfc" data-rf="noshadow" aria-pressed="' + RK.noShadow + '"><span class="cb" aria-hidden="true"></span>不要暗影</button>' +
+      opt("＋ 一定要有…", "inc") + opt("－ 不要…", "exc") + "</div>";
+    var chips = RK.inc.map(function (n) { return '<button type="button" class="fc in" data-rfx="inc" data-v="' + esc(n) + '">要有 ' + esc(n) + " ×</button>"; })
+      .concat(RK.exc.map(function (n) { return '<button type="button" class="fc ex" data-rfx="exc" data-v="' + esc(n) + '">不要 ' + esc(n) + " ×</button>"; }));
+    var filtered = chips.length || RK.noShadow;
+    if (filtered) h += '<div class="fcs">' + chips.join("") + '<button type="button" class="fc clr" data-rfx="all">清除篩選</button></div>';
+    var rows = rkRows(L), shown = rows.slice(0, RK.n);
+    h += '<p class="pk-n">本站模擬：' + lgName() + " PvPoke 排名前 " + L.pool.length + " 名的三隻組合 × 6 種順序，各對上 " + L.opponents + " 支常用隊伍（雙方 2 盾）。分數 <b>500 ＝ 打平</b>，越高越好。" +
+      "點一列就套用到" + TEAM_NAME[teamFor] + "。</p>";
+    h += '<ol class="pk-l rk-l">' + shown.map(function (r) {
       var o = r.o, key = o.slice(0, 3).join("-"), open = RK.view === "combo" && RK.open[key];
-      var row = '<li class="rk-r"><div class="rk-main"><span class="rk-no">#' + r.rank + "</span>" +
-        '<span class="rk-p">' + [0, 1, 2].map(function (k) { return '<span class="rk-m"><small>' + SLOT_NAME[k] + "</small>" + pic(L.pool[o[k]][0]) + "</span>"; }).join("") + "</span>" +
-        '<span class="rk-b"><span class="rk-n">' + [0, 1, 2].map(function (k) { return esc(fullName(L.pool[o[k]][0])); }).join("・") + "</span>" +
-        '<span class="rk-mvs">' + [0, 1, 2].map(function (k) { return "<span>" + rkMoves(L.pool[o[k]]).join("／") + "</span>"; }).join("") + "</span></span>" +
-        rkScore(o, L) + "</div>" +
-        '<div class="rk-act"><button type="button" class="ap" data-rkap="' + o.slice(0, 3).join(",") + '" data-t="0">套用到我方</button>' +
-        '<button type="button" data-rkap="' + o.slice(0, 3).join(",") + '" data-t="1">套用到對手</button>' +
-        (RK.view === "combo" ? '<button type="button" data-rkopen="' + key + '" aria-expanded="' + !!open + '">6 種上場順序 ' + (open ? "▴" : "▾") + "</button>" : "") + "</div>";
+      var li = '<li class="rk-r' + (open ? " open" : "") + '"><button type="button" class="rk-go" data-rkap="' + o.slice(0, 3).join(",") + '">' +
+        '<span class="rk-no">' + r.rank + "</span>" +
+        '<span class="td-p rk-p">' + [0, 1, 2].map(function (k) { return '<span class="rk-m">' + pic(L.pool[o[k]][0]) + "<small>" + (k + 1) + "</small></span>"; }).join("") + "</span>" +
+        '<span class="rk-b"><span class="rk-n">' + [0, 1, 2].map(function (k) { return esc(fullName(L.pool[o[k]][0])); }).join(" → ") + "</span>" +
+        '<span class="rk-mvs">' + [0, 1, 2].map(function (k) { return "<span>" + rkMoves(L.pool[o[k]]) + "</span>"; }).join("") + "</span></span>" +
+        rkScore(o) + "</button>";
+      if (RK.view === "combo") li += '<button type="button" class="rk-ord" data-rkopen="' + key + '" aria-expanded="' + !!open + '">換個順序 ' + (open ? "▴" : "▾") + "</button>";
       if (open) {
-        row += '<ol class="rk-o">' + r.all.map(function (q, i) {
-          return '<li' + (i === 0 ? ' class="best"' : "") + '><span class="rk-op">' + [0, 1, 2].map(function (k) { return pic(L.pool[q[k]][0]); }).join("") + "</span>" +
-            '<span class="rk-on">' + [0, 1, 2].map(function (k) { return esc(nm(L.pool[q[k]][0])); }).join(" → ") + "</span>" + rkScore(q, L) +
-            '<button type="button" data-rkap="' + q.slice(0, 3).join(",") + '" data-t="0">套用</button></li>';
+        li += '<ol class="rk-o">' + r.all.map(function (q, i) {
+          return '<li><button type="button" data-rkap="' + q.slice(0, 3).join(",") + '"' + (i === 0 ? ' class="best"' : "") + ">" +
+            '<span class="rk-op">' + [0, 1, 2].map(function (k) { return pic(L.pool[q[k]][0]); }).join("") + "</span>" +
+            '<span class="rk-on">' + [0, 1, 2].map(function (k) { return esc(nm(L.pool[q[k]][0])); }).join(" → ") + "</span>" + rkScore(q) + "</button></li>";
         }).join("") + "</ol>";
       }
-      return row + "</li>";
-    }).join("") + "</ol>";
-    if (!rows.length) h += '<p class="mxnote">沒有符合的隊伍。</p>';
-    if (rows.length > RK.n) h += '<button type="button" class="more" data-act="rkmore">再顯示 20 隊（共 ' + fmt(rows.length) + " 隊）</button>";
-    if (who >= 0) {
-      var head = 0; while (head < L.list.length && L.list[head][0] === head + 1) head++;
-      h += '<p class="mxnote">檔案只收錄總排名前 ' + fmt(head) + " 名的組合，以及每隻寶可夢分數最高的 3 組，所以篩選結果不是這隻的全部組合。</p>";
-    }
-    box.innerHTML = h;
+      return li + "</li>";
+    }).join("") + (rows.length ? "" : '<li class="pk-n">沒有符合的隊伍，放寬一些篩選試試。</li>') +
+      (rows.length > RK.n ? '<li><button type="button" class="more" data-act="rkmore">再顯示 30 隊（符合的共 ' + fmt(rows.length) + " 隊）</button></li>" : "") +
+      (filtered ? '<li class="pk-n">篩選範圍：總排名前 400 名，以及每隻寶可夢分數最高的 3 組。</li>' : "") + "</ol>";
+    return h;
   }
-  function applyRank(idx, t) {
+  function commonBody() {
+    var list = (C.data().teams || {})[String(state.cp)] || [], upd = (C.data().teamsUpdated || {})[String(state.cp)];
+    if (!list.length) return '<p class="pk-n">' + lgName() + "沒有常用隊伍資料。</p>";
+    return '<p class="pk-n">取自 PvPoke 訓練模式（玩家對戰 AI）的隊伍統計，依使用場數排序' + (upd ? "，資料日期 " + esc(isoDate(upd)) : "") + "。不是遊戲內的使用率。點一列就套用到" + TEAM_NAME[teamFor] + "。</p>" +
+      '<ul class="pk-l td-l">' + list.map(function (tm, i) {
+        return '<li><button type="button" data-team="' + i + '"><span class="td-p">' + tm.mons.map(function (m) { return pic(m[0]); }).join("") + "</span>" +
+          '<span class="td-b"><span class="td-n">' + tm.mons.map(function (m) { return esc(fullName(m[0])); }).join("・") + "</span>" +
+          '<span class="td-m">' + tm.mons.map(function (m) { return mvChip(m[1]); }).join("") + "</span>" +
+          '<span class="td-s">使用 <b>' + fmt(tm.games) + "</b> 場・隊伍分數 <b>" + tm.score + "</b></span></span></button></li>";
+      }).join("") + "</ul>";
+  }
+  function renderTeamDlg() {
+    var keepScroll = teamDlg.querySelector(".td-body"), top = keepScroll ? keepScroll.scrollTop : 0;
+    teamDlg.innerHTML = '<div class="pk-h"><b class="td-t">選隊伍・' + lgName() + '<small>套用到' + TEAM_NAME[teamFor] + "</small></b>" +
+      '<button class="pk-x" type="button" data-act="closeteams" aria-label="關閉">×</button></div>' +
+      '<div class="tabs td-tabs" role="tablist"><button type="button" role="tab" data-tdtab="rank" aria-selected="' + (RK.tab === "rank") + '">🏆 跑分排行</button>' +
+      '<button type="button" role="tab" data-tdtab="common" aria-selected="' + (RK.tab === "common") + '">📋 常用隊伍</button></div>' +
+      '<div class="td-body">' + (RK.tab === "rank" ? rankBody() : commonBody()) + "</div>";
+    if (RK.keepTop) teamDlg.querySelector(".td-body").scrollTop = top;
+    RK.keepTop = false;
+  }
+  var teamDlg = null, teamFor = 0;
+  function openTeams(t) {
+    teamFor = t;
+    if (!teamDlg) {
+      teamDlg = document.createElement("dialog");
+      teamDlg.className = "pick teams-dlg"; teamDlg.setAttribute("aria-label", "選隊伍");
+      document.body.appendChild(teamDlg);
+      teamDlg.addEventListener("click", function (ev) {
+        var b, t2 = ev.target;
+        if ((b = t2.closest("button[data-team]"))) { applyPreset(Number(b.getAttribute("data-team"))); return; }
+        if ((b = t2.closest("button[data-rkap]"))) { applyRank(b.getAttribute("data-rkap").split(",").map(Number)); return; }
+        if ((b = t2.closest("[data-tdtab]"))) { RK.tab = b.getAttribute("data-tdtab"); store("tdtab", RK.tab); renderTeamDlg(); return; }
+        if ((b = t2.closest("[data-rkv]"))) { RK.view = b.getAttribute("data-rkv"); RK.n = 30; renderTeamDlg(); return; }
+        if ((b = t2.closest("[data-rkopen]"))) { var k = b.getAttribute("data-rkopen"); RK.open[k] = !RK.open[k]; RK.keepTop = true; renderTeamDlg(); return; }
+        if ((b = t2.closest("[data-act=rkmore]"))) { RK.n += 30; RK.keepTop = true; renderTeamDlg(); return; }
+        if ((b = t2.closest("[data-rf=noshadow]"))) { RK.noShadow = !RK.noShadow; RK.n = 30; renderTeamDlg(); return; }
+        if ((b = t2.closest("[data-rfx]"))) {
+          var w = b.getAttribute("data-rfx"), v = b.getAttribute("data-v");
+          if (w === "all") { RK.inc = []; RK.exc = []; RK.noShadow = false; }
+          else RK[w] = RK[w].filter(function (x) { return x !== v; });
+          RK.n = 30; renderTeamDlg(); return;
+        }
+        if (t2.closest("[data-act=closeteams]") || t2 === teamDlg) closeTeams();
+      });
+      teamDlg.addEventListener("change", function (ev) {
+        var sel = ev.target.closest("select[data-rf]"); if (!sel || !sel.value) return;
+        var w = sel.getAttribute("data-rf");
+        if (RK[w].indexOf(sel.value) < 0) RK[w].push(sel.value);
+        RK.n = 30; renderTeamDlg();
+      });
+    }
+    renderTeamDlg();
+    if (teamDlg.showModal) teamDlg.showModal(); else teamDlg.setAttribute("open", "");
+    track("pvp_sim_team_dialog", { league: String(state.cp) });
+  }
+  function closeTeams() { if (!teamDlg) return; if (teamDlg.close) teamDlg.close(); else teamDlg.removeAttribute("open"); }
+  function applyRank(idx) {
     var L = rkLeague(); if (!L) return;
-    var changed = RK.cp !== state.cp;
-    state.mode = 3; state.cp = RK.cp; state.order = "fixed"; state.plan = "spread";
-    if (changed) { poolCache = {}; state.teams[1 - t] = defaultTeam(t === 0 ? 3 : 0); }
+    var t = teamFor;
+    state.order = "fixed"; state.plan = "spread";
     state.teams[t] = { mons: idx.map(function (i) {
       var p = L.pool[i], m = newMon(p[0]);
       m.fast = p[1]; m.c1 = p[2]; m.c2 = p[3] || null;
       return fixMoves(m);
     }), shields: 2 };
     state.teams[1 - t].shields = 2;
-    clearSandbox(); update({ user: true });
-    $("#three").scrollIntoView({ behavior: "smooth", block: "start" });
+    closeTeams(); clearSandbox(); update({ user: true });
     toast("已套用到" + TEAM_NAME[t] + "（依隊伍順序上場、雙方 2 盾，和跑分條件相同）");
     track("pvp_sim_team_rank", { league: String(state.cp) });
   }
@@ -1280,31 +1374,6 @@
     if (!m || !MONTHS[m[1]]) return str || "";
     return m[3] + "-" + ("0" + MONTHS[m[1]]).slice(-2) + "-" + ("0" + m[2]).slice(-2);
   }
-  var teamDlg = null, teamFor = 0;
-  function openTeams(t) {
-    teamFor = t;
-    if (!teamDlg) {
-      teamDlg = document.createElement("dialog");
-      teamDlg.className = "pick teams-dlg"; teamDlg.setAttribute("aria-label", "常用隊伍");
-      document.body.appendChild(teamDlg);
-      teamDlg.addEventListener("click", function (ev) {
-        var b = ev.target.closest("button[data-team]");
-        if (b) { applyPreset(Number(b.getAttribute("data-team"))); return; }
-        if (ev.target.closest("[data-act=closeteams]") || ev.target === teamDlg) closeTeams();
-      });
-    }
-    var list = (C.data().teams || {})[String(state.cp)] || [], upd = (C.data().teamsUpdated || {})[String(state.cp)];
-    teamDlg.innerHTML = '<div class="pk-h"><b class="td-t">常用隊伍・' + lgName() + "（套用到" + TEAM_NAME[t] + '）</b><button class="pk-x" type="button" data-act="closeteams" aria-label="關閉">×</button></div>' +
-      '<p class="pk-n">取自 PvPoke 訓練模式（玩家對戰 AI）的隊伍統計，依使用場數排序' + (upd ? "，資料日期 " + esc(isoDate(upd)) : "") + "。這不是遊戲內 GO 對戰聯盟的使用率。</p>" +
-      '<ul class="pk-l td-l">' + list.map(function (tm, i) {
-        return '<li><button type="button" data-team="' + i + '"><span class="td-p">' + tm.mons.map(function (m) { return pic(m[0]); }).join("") + "</span>" +
-          '<span class="td-b"><span class="td-n">' + tm.mons.map(function (m) { return esc(nm(m[0])); }).join("・") + "</span>" +
-          '<span class="td-m">' + tm.mons.map(function (m) { return mvChip(m[1]); }).join("") + "</span>" +
-          '<span class="td-s">使用 <b>' + fmt(tm.games) + "</b> 場・隊伍分數 <b>" + tm.score + "</b></span></span></button></li>";
-      }).join("") + "</ul>";
-    if (teamDlg.showModal) teamDlg.showModal(); else teamDlg.setAttribute("open", "");
-  }
-  function closeTeams() { if (!teamDlg) return; if (teamDlg.close) teamDlg.close(); else teamDlg.removeAttribute("open"); }
   function applyPreset(i) {
     var tm = ((C.data().teams || {})[String(state.cp)] || [])[i]; if (!tm) return;
     var T = state.teams[teamFor];
@@ -1366,7 +1435,9 @@
     app.addEventListener("click", function (ev) {
       var t = ev.target, b;
       if ((b = t.closest("#mode button"))) { state.mode = Number(b.getAttribute("data-m")); state.sel = null; state.ghost = null; update({ user: true }); return; }
-      if ((b = t.closest("#lg button"))) { state.cp = Number(b.getAttribute("data-cp")); poolCache = {}; setup(); RK.cp = state.cp; RK.who = ""; RK.n = 20; renderRanks(); return; }
+      if ((b = t.closest("#lg button"))) { state.cp = Number(b.getAttribute("data-cp")); poolCache = {}; setup(); return; }
+      if ((b = t.closest("[data-tab]"))) { showTab(b.getAttribute("data-tab")); return; }
+      if ((b = t.closest("[data-act=nointro]"))) { $("#intro").hidden = true; store("intro", "0"); return; }
       if ((b = t.closest("#cap button"))) { state.cap = Number(b.getAttribute("data-cap")); setup(); return; }
       if ((b = t.closest("#order button"))) { state.order = b.getAttribute("data-o"); setup(); return; }
       if ((b = t.closest("#plan button"))) { state.plan = b.getAttribute("data-p"); setup(); return; }
@@ -1393,11 +1464,6 @@
         return;
       }
       if ((b = t.closest(".sa[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); scrollToAct(); return; }
-      if ((b = t.closest("[data-rkcp]"))) { RK.cp = Number(b.getAttribute("data-rkcp")); RK.who = ""; RK.n = 20; RK.open = {}; renderRanks(); return; }
-      if ((b = t.closest("[data-rkv]"))) { RK.view = b.getAttribute("data-rkv"); RK.n = 20; renderRanks(); return; }
-      if ((b = t.closest("[data-rkopen]"))) { var ok = b.getAttribute("data-rkopen"); RK.open[ok] = !RK.open[ok]; renderRanks(); return; }
-      if ((b = t.closest("[data-act=rkmore]"))) { RK.n += 20; renderRanks(); return; }
-      if ((b = t.closest("[data-rkap]"))) { applyRank(b.getAttribute("data-rkap").split(",").map(Number), Number(b.getAttribute("data-t"))); return; }
       if ((b = t.closest("[data-act=teams]"))) { openTeams(Number(b.getAttribute("data-t"))); return; }
       if ((b = t.closest("[data-speed]"))) { state.speed = Number(b.getAttribute("data-speed")); pressed("#speed", "data-speed", state.speed); return; }
       if ((b = t.closest("[data-act=first]"))) { stepTo(0); return; }
@@ -1418,7 +1484,7 @@
       if ((b = t.closest("button[data-edits]"))) { if (!b.disabled && !b.classList.contains("on")) applyEdits(decEdits(b.getAttribute("data-edits"))); return; }
       if ((b = t.closest(".kd[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); scrollToAct(); return; }
       if ((b = t.closest(".ed[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); scrollToAct(); return; }
-      if ((b = t.closest("[data-jump]"))) { stop(); setTurn(Number(b.getAttribute("data-jump"))); $("#replay").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+      if ((b = t.closest("[data-jump]"))) { stop(); setTurn(Number(b.getAttribute("data-jump"))); $("#stage").scrollIntoView({ behavior: "smooth", block: "center" }); return; }
       if ((b = t.closest("[data-mx]"))) {
         var v = b.getAttribute("data-mx").split(",").map(Number);
         if (state.mode === 3) { state.teams[0].shields = v[0]; state.teams[1].shields = v[1]; }
@@ -1441,7 +1507,7 @@
       if ((b = t.closest("#swn button"))) { state.sweepN = Number(b.getAttribute("data-n")); renderSweep(); return; }
       if ((b = t.closest("#sws button"))) { state.sweepS = Number(b.getAttribute("data-s")); renderSweep(); return; }
       if ((b = t.closest("#swo button"))) { state.sweepSort = b.getAttribute("data-o"); renderSweep(); return; }
-      if ((b = t.closest("#log li[data-turn]"))) { stop(); setTurn(Number(b.getAttribute("data-turn"))); return; }
+      if ((b = t.closest("#log li[data-turn]"))) { stop(); setTurn(Number(b.getAttribute("data-turn"))); $("#stage").scrollIntoView({ behavior: "smooth", block: "center" }); return; }
       if (t.closest("#play")) { play(); return; }
       var tg = targetOf(t); if (!tg) return;
       var sd = tg.obj;
@@ -1465,7 +1531,6 @@
       }
     });
     app.addEventListener("change", function (ev) {
-      if (ev.target.id === "rkwho") { RK.who = ev.target.value; RK.n = 20; renderRanks(); return; }
       var t = ev.target, tg = targetOf(t); if (!tg || tg.kind === "team") return;
       var sd = tg.obj, k = t.getAttribute("data-k"), ivk = t.getAttribute("data-ivk");
       if (k === "fast") sd.fast = t.value;
@@ -1541,7 +1606,7 @@
     state.sides[1] = u.b || newMon(top[1][0]);
     state.teams[0] = u.ta || defaultTeam(0);
     state.teams[1] = u.tb || defaultTeam(3);
-    renderShell(); bindEvents(); update(); initRanks();
+    renderShell(); bindEvents(); update();
   }
 
   if (!C || !E) { app.innerHTML = '<p class="loading">對戰引擎載入失敗，請重新整理頁面。</p>'; return; }
