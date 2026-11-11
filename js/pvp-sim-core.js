@@ -447,104 +447,306 @@
     return out;
   }
 
-  // ---------- 3 對 3 ----------
+  // ---------- 沙盒對戰（1 對 1、3 對 3 共用） ----------
+  //
+  // 對戰仍由 PvPoke 引擎逐回合計算（Battle.start + step，與 simulate() 相同），只在兩個地方插手：
+  //   getTurnAction：使用者指定「延後放招／改放另一招／換人擋招」時，改用使用者的動作。
+  //   useMove：使用者指定某一次「開盾／不開盾」，或對手的開盾習慣、護盾分配時，改變開盾決定。
+  // 沒有任何指定時，結果與 PvPoke 的 simulate() 完全一樣（測試用排名資料驗證）。
+  //
+  // edits（都用「第幾發」定位，前面改了、後面的回合往後移也不會錯位）：
+  //   {k:"shield", side, n, v}   side 這邊第 n 次被特殊招式打到：v=true 開盾、false 不開
+  //   {k:"hold",   side, n, d}   side 的第 n 發特殊招式延後 d 回合
+  //   {k:"use",    side, n, v}   side 的第 n 發特殊招式改放第 v 招（能量不夠就累積到夠再放）
+  //   {k:"swap",   side, n, to}  對手第 n 發特殊招式出手的那一回合，side 換成第 to 隻上場擋招（切角擋招）
+  // habits[side]：開盾習慣 ai（PvPoke 判斷）| always（每發都開）| never（不開）| lethal（只擋會被打倒的）| first（只開第一發）
+  // plan：spread（3 對 3 每隻最多用「剩餘護盾 ÷ 剩下隻數」面）| free（需要就用）
 
-  /** team = { mons: [slot, slot, slot], shields: 0～2 }；slot 和 1 對 1 的 side 一樣（id、招式、iv、buddy、bait）。
-   *  規則（簡化，畫面上有寫）：
-   *   - 不主動換寶可夢，一直打到有一方倒下；倒下的換下一隻上場（2026 新規則：倒下後換人不花回合）。
-   *   - 場上存活的那隻保留 HP、能量、攻防增減與型態；護盾是整隊共用。
-   *   - order：fixed＝依隊伍順序上場；best＝從還沒上場的寶可夢中，挑對目前對手評分最高的那隻。
-   *  plan：護盾分配。PvPoke 的 1 對 1 邏輯會把護盾當成最後一隻在用（常常第一隻就開完），
-   *   spread＝每一隻最多只能用「剩餘護盾 ÷ 還活著的隻數（無條件進位）」面，比較接近實戰；free＝需要就開。
-   *  每一段對戰都是 PvPoke 引擎的 1 對 1 模擬，接續時把上一段結束的狀態當作開場狀態。 */
-  function runTeam(cfg, TA, TB, order, plan) {
-    var teams = [TA, TB];
-    var st = teams.map(function (t) {
-      return { alive: t.mons.map(function () { return true; }), cur: 0, carry: null, shields: t.shields == null ? 2 : t.shields };
-    });
-    function slotSide(t, k, carry, shields) {
-      var s = {}, src = teams[t].mons[k];
-      for (var x in src) s[x] = src[x];
-      s.shields = shields; s.hpPct = 100;
-      s.energy = carry ? carry.energy : 0; s.startHp = carry ? carry.hp : null;
-      s.buffs = carry ? carry.buffs : null; s.form = carry ? carry.form : null;
-      return s;
-    }
-    function ratingFor(t, me, op) {
-      var s = t === 0 ? prepare(cfg, me, op) : prepare(cfg, op, me);
-      s.b.simulate();
-      return t === 0 ? ratingOf(s.p, s.q) : ratingOf(s.q, s.p);
-    }
-    function allow(t) {
-      var n = st[t].alive.filter(Boolean).length;
-      return plan === "free" || n <= 1 ? st[t].shields : Math.min(st[t].shields, Math.ceil(st[t].shields / n));
-    }
-    function pickNext(t, opp) {
-      var cands = [];
-      st[t].alive.forEach(function (a, k) { if (a) cands.push(k); });
-      if (!cands.length) return -1;
-      if (order !== "best" || cands.length === 1 || !opp) return cands[0];
-      var best = cands[0], br = -1;
-      cands.forEach(function (k) {
-        var r = ratingFor(t, slotSide(t, k, null, allow(t)), opp);
-        if (r > br) { br = r; best = k; }
-      });
-      return best;
-    }
-    var segs = [], offset = 0, ko = [[], []];
-    for (var guard = 0; guard < 8; guard++) {
-      var al = [allow(0), allow(1)];
-      var A = slotSide(0, st[0].cur, st[0].carry, al[0]), B = slotSide(1, st[1].cur, st[1].carry, al[1]);
-      var res = run(cfg, A, B);
-      segs.push({ a: st[0].cur, b: st[1].cur, res: res, offset: offset, teamShields: [st[0].shields, st[1].shields], allowed: al });
-      offset += res.lastTurn;
-      var fa = res.end[0].hp <= 0, fb = res.end[1].hp <= 0;
-      st[0].shields -= al[0] - res.end[0].shields; st[1].shields -= al[1] - res.end[1].shields;
-      st[0].carry = fa ? null : res.end[0]; st[1].carry = fb ? null : res.end[1];
-      if (fb) ko[0].push({ by: st[0].cur, victim: st[1].cur });
-      if (fa) ko[1].push({ by: st[1].cur, victim: st[0].cur });
-      if (fa) st[0].alive[st[0].cur] = false;
-      if (fb) st[1].alive[st[1].cur] = false;
-      if (!fa && !fb) break;
-      var nA = st[0].cur, nB = st[1].cur;
-      if (fa) nA = pickNext(0, fb ? null : slotSide(1, st[1].cur, st[1].carry, allow(1)));
-      if (fb) nB = pickNext(1, fa ? null : slotSide(0, st[0].cur, st[0].carry, allow(0)));
-      if (nA < 0 || nB < 0) break;
-      st[0].cur = nA; st[1].cur = nB;
-    }
-    // 每隻的最大 HP 與剩餘 HP（沒上場的是滿血）
+  function edit(edits, k, side, n) {
+    for (var i = 0; i < edits.length; i++) { var e = edits[i]; if (e.k === k && e.side === side && e.n === n) return e; }
+    return null;
+  }
+
+  function matchOnce(cfg, sides, opts, swapAt) {
+    var edits = opts.edits || [], habits = opts.habits || ["ai", "ai"], plan = opts.plan || "free";
+    var nMon = [sides[0].mons.length, sides[1].mons.length];
     var maxHp = [0, 1].map(function (t) {
-      return teams[t].mons.map(function (m) {
-        var b = newBattle(cfg), p = makePokemon(b, m, 0, cfg);
-        return p.stats.hp;
+      return sides[t].mons.map(function (m) { var b = newBattle(cfg); return makePokemon(b, m, t, cfg).stats.hp; });
+    });
+    // 每隻寶可夢跨段落保留的狀態
+    var ms = [0, 1].map(function (t) {
+      return sides[t].mons.map(function (m, k) {
+        var hp = maxHp[t][k];
+        if (nMon[t] === 1 && m.hpPct && m.hpPct < 100) hp = Math.max(1, Math.floor(hp * m.hpPct / 100));
+        return { hp: hp, en: nMon[t] === 1 ? (m.energy || 0) : 0, alive: true, buffs: null, form: null };
       });
     });
-    var hpLeft = [0, 1].map(function (t) {
-      return teams[t].mons.map(function (m, k) {
-        if (!st[t].alive[k]) return 0;
-        if (k === st[t].cur && st[t].carry) return st[t].carry.hp;
-        return maxHp[t][k];
+    var start = { hp: [ms[0].map(function (x) { return x.hp; }), ms[1].map(function (x) { return x.hp; })],
+      en: [ms[0].map(function (x) { return x.en; }), ms[1].map(function (x) { return x.en; })] };
+    var cur = [0, 0], shields = [sides[0].shields == null ? 1 : sides[0].shields, sides[1].shields == null ? 1 : sides[1].shields];
+    var startShields = shields.slice();
+    var cnt = { thrown: [0, 0], hit: [0, 0], want: {} }, timer = [0, 0];
+    var stint = [{ used: 0, allow: 2 }, { used: 0, allow: 2 }];
+    var events = [], switches = [], swapOk = [{}, {}], swapFail = {}, offset = 0, ko = [[], []];
+    function aliveCount(t) { return ms[t].filter(function (x) { return x.alive; }).length; }
+    function newStint(t) {
+      var n = aliveCount(t);
+      stint[t] = { used: 0, allow: plan === "spread" && n > 1 ? Math.ceil(shields[t] / n) : 99 };
+    }
+    newStint(0); newStint(1);
+
+    for (var guard = 0; guard < 12; guard++) {
+      var b = newBattle(cfg);
+      var objs = [0, 1].map(function (t) {
+        return sides[t].mons.map(function (m, k) {
+          var p = makePokemon(b, m, t, cfg), st = ms[t][k];
+          p.setShields(shields[t]);
+          p.setStartEnergy(st.en || 0);
+          p.setStartHp(Math.max(1, st.hp));
+          if (k === cur[t] && st.buffs && (st.buffs[0] || st.buffs[1])) p.setStartBuffs([st.buffs[0], st.buffs[1]]);
+          if (k === cur[t] && st.form && byId[st.form]) p.startFormId = st.form;
+          p.baitShields = m.bait === false ? 0 : 1;
+          p.reset();
+          return p;
+        });
       });
-    });
-    var left = st.map(function (x) { return x.alive.filter(Boolean).length; });
+      var players = [0, 1].map(function (t) {
+        var P = new E.Player(t, false, b);
+        P.ai = { evaluateMatchup: function () {} };   // 引擎在換人冷卻結束時會呼叫 AI；我們沒有 AI，給一個空的
+        P.setTeam(objs[t]);
+        P.switchTimer = timer[t];
+        return P;
+      });
+      b.setPlayers(players);
+      b.setNewPokemon(objs[0][cur[0]], 0, false);
+      b.setNewPokemon(objs[1][cur[1]], 1, false);
+      var segCur = [cur[0], cur[1]], segSw = [];
+      var origTA = b.getTurnAction, origUM = b.useMove;
+
+      b.getTurnAction = function (poke, opp) {
+        var side = poke.index, g = offset + b.getTurns();
+        if (!poke.hasActed && poke.hp > 0 && opp.hp > 0) {
+          var ok = poke.cooldown === 0 && players[side].getSwitchTimer() === 0;
+          if (ok) swapOk[side][g] = true;
+          var sw = null;
+          for (var i = 0; i < swapAt.length; i++) if (swapAt[i].side === side && swapAt[i].turn === g) sw = swapAt[i];
+          if (sw) {
+            var to = sw.to;
+            if (!ok) swapFail[sw.id] = poke.cooldown > 0 ? "busy" : "timer";
+            else if (to === segCur[side] || !ms[side][to] || !ms[side][to].alive) swapFail[sw.id] = "target";
+            else {
+              poke.hasActed = true;
+              objs[side][to].setShields(poke.shields);      // 護盾整隊共用
+              segSw.push({ turn: g, side: side, from: segCur[side], to: to });
+              switches.push({ turn: g, side: side, from: segCur[side], to: to, kind: "manual" });
+              segCur[side] = to;
+              stint[side] = { used: 0, allow: plan === "spread" && aliveCount(side) > 1 ? Math.ceil(poke.shields / aliveCount(side)) : 99 };
+              return new E.TimelineAction("switch", side, b.getTurns(), to, { priority: poke.priority + 20 });
+            }
+          }
+        }
+        var a = origTA.call(b, poke, opp);
+        if (a && a.type === "charged") {
+          var n = cnt.thrown[side] + 1, key = side + ":" + n;
+          if (cnt.want[key] == null) cnt.want[key] = g;
+          var hold = edit(edits, "hold", side, n), use = edit(edits, "use", side, n);
+          var wait = hold && g < cnt.want[key] + hold.d;
+          if (!wait && use && poke.chargedMoves[use.v]) {
+            if (poke.energy >= poke.chargedMoves[use.v].energy) a.value = use.v;
+            else wait = true;
+          }
+          if (wait) a = new E.TimelineAction("fast", side, b.getTurns(), 0, { priority: poke.priority });
+        }
+        return a;
+      };
+
+      b.useMove = function (att, def, move) {
+        if (!(move.energy > 0)) return origUM.apply(b, arguments);
+        cnt.thrown[att.index]++;
+        var side = def.index, m = ++cnt.hit[side];
+        if (def.shields <= 0 || (move.hasTag && move.hasTag("instant"))) return origUM.apply(b, arguments);
+        var d = null, e = edit(edits, "shield", side, m), h = habits[side];
+        if (e) d = !!e.v;
+        else if (h === "always") d = true;
+        else if (h === "never") d = false;
+        else if (h === "lethal") d = E.DamageCalculator.damage(att, def, move) >= def.hp;
+        else if (h === "first") d = startShields[side] - def.shields === 0;
+        else if (stint[side].used >= stint[side].allow) d = false;
+        var before = def.shields, r, args = arguments;
+        if (d === false) {
+          def.shields = 0;
+          try { r = origUM.apply(b, args); } finally { def.shields = before; }
+        } else if (d === true) {
+          var w = E.ActionLogic.wouldShield;
+          E.ActionLogic.wouldShield = function () { return { value: true, shieldWeight: 1, noShieldWeight: 0 }; };
+          try { r = origUM.apply(b, args); } finally { E.ActionLogic.wouldShield = w; }
+        } else {
+          r = origUM.apply(b, args);
+        }
+        if (def.shields < before) stint[side].used++;
+        return r;
+      };
+
+      b.start();
+      var steps = 0;
+      while (steps++ < 2000) {
+        b.step();
+        var pk = b.getPokemon();
+        if (pk[0].hp <= 0 || pk[1].hp <= 0 || b.getDuration() > 240000) break;
+      }
+      var lastLocal = b.getTurns() - 1;
+      // 時間軸：換成整場的回合數，並記下每個事件是哪一隻
+      var curAt = function (side, lt) {
+        var k = cur[side];
+        segSw.forEach(function (s) { if (s.side === side && s.turn - offset <= lt) k = s.to; });
+        return k;
+      };
+      normalizeTimeline(b.getTimeline()).forEach(function (e) {
+        if (e.kind === "faint") e.turn = Math.min(e.turn, lastLocal);   // 引擎記在下一回合，改成倒下的那一回合
+        e.mon = curAt(e.actor, e.turn);
+        e.opMon = curAt(1 - e.actor, e.turn);
+        e.turn += offset;
+        events.push(e);
+      });
+      segSw.forEach(function (s) { events.push({ kind: "switch", turn: s.turn, actor: s.side, from: s.from, to: s.to, mon: s.to, manual: true, time: -1 }); });
+      // 更新每隻的狀態
+      var onField = b.getPokemon();
+      [0, 1].forEach(function (t) {
+        objs[t].forEach(function (p, k) {
+          var st = ms[t][k];
+          if (p === onField[t]) {
+            st.hp = Math.max(0, p.hp); st.en = p.energy; st.buffs = p.statBuffs.slice(); st.form = p.activeFormId;
+          } else if (st.alive) {
+            st.hp = p.startHp; st.en = p.startEnergy; st.buffs = null;
+            st.form = p.formChange && p.formChange.resetOnSwitch ? null : (p.activeFormId !== p.speciesId ? p.activeFormId : st.form);
+          }
+        });
+        shields[t] = onField[t].shields;
+        timer[t] = players[t].getSwitchTimer();
+        cur[t] = segCur[t];
+      });
+      offset += lastLocal;
+      var fa = onField[0].hp <= 0, fb = onField[1].hp <= 0;
+      if (fb) ko[0].push({ by: cur[0], victim: cur[1], turn: offset });
+      if (fa) ko[1].push({ by: cur[1], victim: cur[0], turn: offset });
+      if (fa) ms[0][cur[0]].alive = false;
+      if (fb) ms[1][cur[1]].alive = false;
+      if (!fa && !fb) break;
+      var nxt = [cur[0], cur[1]];
+      [0, 1].forEach(function (t) {
+        if (!(t === 0 ? fa : fb)) return;
+        var cands = [];
+        ms[t].forEach(function (x, k) { if (x.alive) cands.push(k); });
+        if (!cands.length) { nxt[t] = -1; return; }
+        nxt[t] = cands[0];
+        var oppAlive = !(t === 0 ? fb : fa);
+        if (opts.order === "best" && cands.length > 1 && oppAlive) {
+          var o = 1 - t, oppSide = {}, src = sides[o].mons[cur[o]], so = ms[o][cur[o]], br = -1;
+          for (var x in src) oppSide[x] = src[x];
+          oppSide.startHp = so.hp; oppSide.energy = so.en; oppSide.buffs = so.buffs; oppSide.form = so.form; oppSide.shields = shields[o];
+          cands.forEach(function (k) {
+            var me = {}; for (var y in sides[t].mons[k]) me[y] = sides[t].mons[k][y];
+            me.shields = shields[t]; me.startHp = ms[t][k].hp; me.energy = ms[t][k].en;
+            var s2 = t === 0 ? prepare(cfg, me, oppSide) : prepare(cfg, oppSide, me);
+            s2.b.simulate();
+            var r = t === 0 ? ratingOf(s2.p, s2.q) : ratingOf(s2.q, s2.p);
+            if (r > br) { br = r; nxt[t] = k; }
+          });
+        }
+      });
+      if (nxt[0] < 0 || nxt[1] < 0) break;
+      [0, 1].forEach(function (t) {
+        if (nxt[t] !== cur[t]) {
+          switches.push({ turn: offset + 1, side: t, from: cur[t], to: nxt[t], kind: "faint" });
+          events.push({ kind: "switch", turn: offset + 1, actor: t, from: cur[t], to: nxt[t], mon: nxt[t], manual: false, time: -1 });
+          cur[t] = nxt[t];
+          newStint(t);
+        }
+      });
+    }
+    // 事件排序：同一回合先換人，再特殊招式、護盾、一般招式
+    var rank = { "switch": -1, charged: 0, shield: 1, fast: 2, form: 3, faint: 4 };
+    events.sort(function (a, b) { return a.turn - b.turn || rank[a.kind] - rank[b.kind] || a.time - b.time || (a.seq || 0) - (b.seq || 0); });
+    // 第幾發（攻擊方）／第幾次被打（防守方）
+    var c1 = [0, 0], c2 = [0, 0];
+    events.forEach(function (e) { if (e.kind === "charged") { e.n = ++c1[e.actor]; e.m = ++c2[1 - e.actor]; } });
+    // 逐回合狀態
+    var st = { hp: [start.hp[0].slice(), start.hp[1].slice()], en: [start.en[0].slice(), start.en[1].slice()], sh: startShields.slice(), cur: [0, 0] };
+    var snap = function () {
+      return { hp: [st.hp[0][st.cur[0]], st.hp[1][st.cur[1]]], en: [st.en[0][st.cur[0]], st.en[1][st.cur[1]]], sh: st.sh.slice(), cur: st.cur.slice(),
+        max: [maxHp[0][st.cur[0]], maxHp[1][st.cur[1]]], all: [st.hp[0].slice(), st.hp[1].slice()] };
+    };
+    var series = [snap()], i = 0;
+    for (var t = 1; t <= offset; t++) {
+      while (i < events.length && events[i].turn <= t) {
+        var e = events[i++];
+        if (e.kind === "switch") st.cur[e.actor] = e.to;
+        else if (e.kind === "fast" || e.kind === "charged") {
+          var dd = 1 - e.actor;
+          st.hp[dd][st.cur[dd]] = Math.max(0, st.hp[dd][st.cur[dd]] - e.dmg);
+          st.en[e.actor][st.cur[e.actor]] = Math.max(0, Math.min(100, st.en[e.actor][st.cur[e.actor]] + e.energy));
+        } else if (e.kind === "shield") st.sh[e.actor] = Math.max(0, st.sh[e.actor] - 1);
+      }
+      series.push(snap());
+    }
+    var left = [aliveCount(0), aliveCount(1)];
+    var hpLeft = [0, 1].map(function (t) { return ms[t].map(function (x) { return x.alive ? x.hp : 0; }); });
+    var replayOk = [0, 1].every(function (t) { return st.hp[t].every(function (h, k) { return h === hpLeft[t][k]; }); });
     var winner = left[0] && !left[1] ? 0 : (left[1] && !left[0] ? 1 : -1);
-    var score = function (t) { return hpLeft[t].reduce(function (s, h, k) { return s + h / maxHp[t][k]; }, 0); };
     return {
-      segments: segs, winner: winner, left: left, alive: st.map(function (x) { return x.alive.slice(); }),
-      hpLeft: hpLeft, maxHp: maxHp, ko: ko, totalTurns: offset,
-      shieldsUsed: [teams[0].shields - st[0].shields, teams[1].shields - st[1].shields], shieldsLeft: [st[0].shields, st[1].shields],
-      margin: Math.round((score(0) - score(1)) * 100) / 100
+      events: events, series: series, lastTurn: offset, switches: switches, swapOk: swapOk, swapFail: swapFail, ko: ko,
+      left: left, hpLeft: hpLeft, maxHp: maxHp, winner: winner, alive: ms.map(function (a) { return a.map(function (x) { return x.alive; }); }),
+      shieldsLeft: shields.slice(), shieldsUsed: [startShields[0] - shields[0], startShields[1] - shields[1]], startShields: startShields,
+      energyLeft: [ms[0].map(function (x) { return x.en; }), ms[1].map(function (x) { return x.en; })], replayOk: replayOk
     };
   }
 
-  /** 3×3 整隊護盾矩陣：m[我方盾][對手盾] = { winner, left:[我方剩幾隻, 對手剩幾隻], margin }。 */
-  function teamMatrix(cfg, TA, TB, order, plan) {
+  /** 沙盒對戰：先處理「換人擋招」（要知道對手第 n 發在哪一回合才能換），再跑完整場。 */
+  function match(cfg, sides, opts) {
+    opts = opts || {};
+    var edits = opts.edits || [], swapAt = [], status = {};
+    var swaps = edits.map(function (e, i) { return { e: e, i: i }; }).filter(function (x) { return x.e.k === "swap"; })
+      .sort(function (a, b) { return a.e.n - b.e.n; });
+    swaps.forEach(function (x) {
+      var r = matchOnce(cfg, sides, opts, swapAt), opp = 1 - x.e.side, T = null;
+      r.events.forEach(function (ev) { if (T === null && ev.kind === "charged" && ev.actor === opp && ev.n === x.e.n) T = ev.turn; });
+      if (T === null) status[x.i] = "missing";
+      else swapAt.push({ side: x.e.side, turn: T, to: x.e.to, id: x.i });
+    });
+    var res = matchOnce(cfg, sides, opts, swapAt);
+    Object.keys(res.swapFail).forEach(function (id) { status[id] = res.swapFail[id]; });
+    res.editStatus = edits.map(function (e, i) { return status[i] || "ok"; });
+    // 1 對 1 的評分（與 PvPoke 相同算法）
+    if (sides[0].mons.length === 1 && sides[1].mons.length === 1) {
+      var last = res.series[res.series.length - 1], m0 = res.maxHp[0][0], m1 = res.maxHp[1][0];
+      var hp0 = last.hp[0], hp1 = last.hp[1];
+      res.ratings = [Math.floor(((hp0 / m0) + ((m1 - hp1) / m1)) * 500), Math.floor(((hp1 / m1) + ((m0 - hp0) / m0)) * 500)];
+      if (hp0 > 0 && hp1 > 0) res.winner = res.ratings[0] > 500 ? 0 : (res.ratings[0] < 500 ? 1 : -1);
+      res.hp = [hp0, hp1];
+    }
+    return res;
+  }
+
+  /** 兩隻之間的招式數據與能力值（給招式表、能量條刻度用）。 */
+  var pairCache = {};
+  function pair(cfg, A, B) {
+    var key = JSON.stringify([cfg, A.id, A.fast, A.c1, A.c2, A.iv, A.buddy, B.id, B.fast, B.c1, B.c2, B.iv, B.buddy]);
+    if (pairCache[key]) return pairCache[key];
+    var s = prepare(cfg, A, B);
+    var out = { moves: [moveStats(s.p, s.q), moveStats(s.q, s.p)], info: [summary(s.p), summary(s.q)] };
+    pairCache[key] = out;
+    return out;
+  }
+
+  /** 3×3 整隊護盾矩陣（不含使用者指定的動作）。 */
+  function teamMatrix(cfg, TA, TB, order, plan, habits) {
     var m = [];
     for (var i = 0; i <= 2; i++) {
       m.push([]);
       for (var j = 0; j <= 2; j++) {
-        var r = runTeam(cfg, { mons: TA.mons, shields: i }, { mons: TB.mons, shields: j }, order, plan);
-        m[i].push({ winner: r.winner, left: r.left, margin: r.margin });
+        var r = match(cfg, [{ mons: TA.mons, shields: i }, { mons: TB.mons, shields: j }], { order: order, plan: plan, habits: habits });
+        var sc = function (t) { return r.hpLeft[t].reduce(function (s, h, k) { return s + h / r.maxHp[t][k]; }, 0); };
+        m[i].push({ winner: r.winner, left: r.left, margin: Math.round((sc(0) - sc(1)) * 100) / 100 });
       }
     }
     return m;
@@ -556,21 +758,21 @@
       return names[t].map(function (n, k) { return tr.alive[t][k] ? n + "（" + Math.round(tr.hpLeft[t][k] / tr.maxHp[t][k] * 100) + "%）" : null; }).filter(Boolean);
     };
     if (w === -1) out.push("雙方最後一隻同時倒下，這場是<b>平手</b>。");
-    else out.push(teamNames[w] + " <b>獲勝</b>，還剩 <b>" + tr.left[w] + " 隻</b>：" + alive(w).join("、") + "。共 " + tr.totalTurns + " 回合（約 " + Math.round(tr.totalTurns / 2) + " 秒）。");
+    else out.push(teamNames[w] + " <b>獲勝</b>，還剩 <b>" + tr.left[w] + " 隻</b>：" + alive(w).join("、") + "。共 " + tr.lastTurn + " 回合（約 " + Math.round(tr.lastTurn / 2) + " 秒）。");
     [0, 1].forEach(function (t) {
       var cnt = {};
       tr.ko[t].forEach(function (k) { cnt[k.by] = (cnt[k.by] || 0) + 1; });
       var top = Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a]; })[0];
       if (top != null && cnt[top] >= 2) out.push(teamNames[t] + " 的 <b>" + names[t][top] + "</b> 一隻打倒了 " + cnt[top] + " 隻。");
     });
-    var s0 = tr.segments[0], lead = s0.res.winner;
-    out.push("先發對位：" + names[0][s0.a] + " 對 " + names[1][s0.b] + "，" + (lead === -1 ? "同歸於盡" : (lead === 0 ? names[0][s0.a] : names[1][s0.b]) + " 贏") + "。");
+    var manual = tr.switches.filter(function (s) { return s.kind === "manual"; });
+    if (manual.length) out.push("切角擋招：" + manual.map(function (s) { return "第 " + s.turn + " 回合" + teamNames[s.side] + "換上 " + names[s.side][s.to]; }).join("；") + "。");
     out.push("護盾：" + teamNames[0] + " 用了 " + tr.shieldsUsed[0] + " 面、" + teamNames[1] + " 用了 " + tr.shieldsUsed[1] + " 面。");
     return out;
   }
 
   var api = {
-    runTeam: runTeam, teamMatrix: teamMatrix, teamInsights: teamInsights,
+    match: match, pair: pair, teamMatrix: teamMatrix, teamInsights: teamInsights,
     init: init, mon: mon, move: move, typeZh: typeZh, rankOf: rankOf, topList: topList, search: search,
     shadowOf: shadowOf, defaultMoves: defaultMoves, movePools: movePools, run: run, quick: quick,
     matrix: matrix, movesetCompare: movesetCompare, sweep: sweep, insights: insights, effWord: effWord,
