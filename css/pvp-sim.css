@@ -505,6 +505,12 @@ button.sg-mv:hover{opacity:1;border-color:#fff}
 .td-m{display:flex;flex-wrap:wrap;gap:3px}.td-m .mv{font-size:.72rem}
 .td-s{color:var(--muted);font-size:.74rem}.td-s b{color:var(--ink-2)}
 
+
+/* 小頭像（40px 以下）放不下「暗影」兩個字，會把整隻蓋住：改成右下角的紫色小圓點 */
+.fl .pic.sh::after,.lg-s .pic.sh::after,.lg-k .pic.sh::after,.bn-m .pic.sh::after,.mt h3 .pic.sh::after,
+.opt[data-sw] .pic.sh::after,.td-p .pic.sh::after,.lg-c>.pic.sh::after,.act-h .pic.sh::after{
+  content:"影";right:1px;bottom:1px;width:14px;height:14px;padding:0;border-radius:50%;display:grid;place-items:center;font-size:.56rem;line-height:1;box-shadow:0 0 0 1.5px #fff}
+
 @media(max-width:820px){
  :root{--head-h:54px}.tnav{display:none}main{padding:10px 12px 56px}
  .topbar .home{font-size:14.5px}.logo{width:28px;height:28px;font-size:14px}.topbar .cta{padding:7px 13px;font-size:13px}
