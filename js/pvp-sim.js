@@ -56,10 +56,16 @@
   function fmt(n) { return Number(n).toLocaleString("zh-Hant"); }
   function lvTxt(l) { return "Lv" + (l % 1 ? l.toFixed(1) : l); }
   function imgOf(id) { var m = C.mon(id); return m && m.img ? IMG + m.img : ""; }
+  /** 依縮圖裡寶可夢實際的範圍置中縮放（tb＝[x, y, 寬, 高]），讓很寬或很小的圖都差不多大、不會被切掉。 */
+  function fitStyle(m, fill) {
+    if (!m || !m.tb) return "";
+    var x = m.tb[0], y = m.tb[1], w = m.tb[2], h = m.tb[3], k = Math.min(2.2, (fill || 0.86) / Math.max(w, h, 0.05));
+    return ' style="width:' + (k * 100).toFixed(1) + "%;height:" + (k * 100).toFixed(1) + "%;left:" + (50 - (x + w / 2) * k * 100).toFixed(1) + "%;top:" + (52 - (y + h / 2) * k * 100).toFixed(1) + '%"';
+  }
   function pic(id, cls) {
     var m = C.mon(id);
     return '<span class="pic' + (m && m.sh ? " sh" : "") + (cls ? " " + cls : "") + '">' +
-      (m && m.img ? '<img src="' + esc(imgOf(id)) + '" alt="" loading="lazy" decoding="async" width="128" height="128">' : "") + "</span>";
+      (m && m.img ? '<img class="fit" src="' + esc(imgOf(id)) + '" alt="" loading="lazy" decoding="async" width="128" height="128"' + fitStyle(m) + ">" : "") + "</span>";
   }
   function tIcon(type, size) {
     if (!TYPE_COLOR[type]) return "";
@@ -885,6 +891,11 @@
       var hp = st.hp[i], mh = st.max[i], en = st.en[i], img = side.querySelector("img");
       if (stageIds[i] !== id) {
         stageIds[i] = id; img.src = imgOf(id); img.alt = nm(id);
+        // 依縮圖裡寶可夢實際的範圍放大、置中（--k 倍率、--dx／--dy 位移，以 CSS 裡的基準尺寸計算）
+        var mm = C.mon(id), tb = mm && mm.tb, kk = tb ? Math.min(1.35, 0.9 / Math.max(tb[2], tb[3], 0.05)) : 1;
+        img.style.setProperty("--k", kk.toFixed(3));
+        img.style.setProperty("--dx", tb ? ((0.5 - (tb[0] + tb[2] / 2)) * kk).toFixed(3) : "0");
+        img.style.setProperty("--dy", tb ? ((0.5 - (tb[1] + tb[3] / 2)) * kk).toFixed(3) : "0");
         side.querySelector(".sg-mon").classList.toggle("sh", !!(C.mon(id) && C.mon(id).sh));
         if (anim) replay(side.querySelector(".sg-mon"), "swin");
       }

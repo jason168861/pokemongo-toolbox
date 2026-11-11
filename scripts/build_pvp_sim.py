@@ -159,6 +159,10 @@ def build_data():
     tw_move = {m["moveId"]: m["name"] for m in tw["moves"]}
     images = load_images()
     thumbs = set(os.listdir(THUMB_DIR)) if os.path.isdir(THUMB_DIR) else set()
+    # 縮圖裡寶可夢實際的範圍（交易清單 fetch_assets.py 產生的 data/trim.json：[x, y, 寬, 高] 比例），
+    # 頁面用它把每隻置中、放大到差不多大小（有的圖很寬、有的很小）
+    trim_path = os.path.join(ROOT, "trade-list", "data", "trim.json")
+    trim = json.load(open(trim_path, encoding="utf-8")) if os.path.exists(trim_path) else {}
 
     # 對戰中會變身的型態（謎擬Ｑ現形、堅盾劍怪刀劍形態、莫魯貝可空腹…）在 gamemaster 標成未推出，
     # 但引擎變身時要讀它們的資料，所以要留下；只是不放進選單（hide）。
@@ -185,6 +189,9 @@ def build_data():
         o["img"] = thumb(sid, p["dex"], images, thumbs).replace("trade-list/assets/thumb/", "")
         if not o["img"]:
             no_img.append(sid)
+        tb = trim.get(o["img"].replace(".webp", ""))
+        if tb:
+            o["tb"] = [round(v, 3) for v in tb]
         pokemon.append(o)
 
     moves = []
