@@ -8,7 +8,7 @@
  *
  * 網址參數（可分享）：
  *   共同：l=1500|2500|10000、cap=40、oh=對手開盾習慣、rx=1（對手跟著換）、e=沙盒修改（~ 分隔）
- *   1 對 1：a=<一方>&b=<另一方>
+ *   預設 3 對 3；1 對 1：a=<一方>&b=<另一方>（有 a／b 就是 1 對 1）
  *     一方 = speciesId.一般招式.特殊招式1.特殊招式2(或 -).IV.護盾.起始能量.起始HP%.騙盾(1/0).最佳夥伴(1/0)
  *   3 對 3：m=3&ta=<隊伍>&tb=<隊伍>&ts=我方盾-對手盾&o=b|f&p=s|f
  *     隊伍 = 三隻用 ~ 分隔，每隻 = speciesId.一般招式.特殊招式1.特殊招式2.IV.最佳夥伴
@@ -35,7 +35,7 @@
   var FAIL_TEXT = { missing: "對手沒有放到這一發", nofire: "沒有放到這一發", noshield: "那時已經沒有護盾", late: "對戰在那之前就結束了", busy: "那一回合還在出一般招式，來不及換", timer: "換人冷卻中（45 秒內只能換一次）", target: "那隻已經倒下或已經在場上" };
 
   var state = {
-    mode: 1, cp: 1500, cap: 50, sides: [null, null], teams: [null, null], order: "best", plan: "spread",
+    mode: 3, cp: 1500, cap: 50, sides: [null, null], teams: [null, null], order: "best", plan: "spread",
     edits: { 1: [], 3: [] }, habit: "ai", react: "none", sel: null, ghost: null,
     turn: 0, speed: 2, sweepN: 30, sweepS: 1, sweepSort: "rank", cmpWho: 0, cmpAll: false, tab: "log"
   };
@@ -248,7 +248,8 @@
     var l = parseInt(q.l, 10);
     if ([1500, 2500, 10000].indexOf(l) > -1) state.cp = l;
     if (q.cap === "40") state.cap = 40;
-    if (q.m === "3") state.mode = 3;
+    // 預設 3 對 3；網址有 a／b（1 對 1 的雙方）就是 1 對 1，舊的分享連結沒有 m 也能正確打開
+    state.mode = q.m === "1" || ((q.a || q.b) && q.m !== "3") ? 1 : 3;
     if (q.o === "f") state.order = "fixed";
     if (q.p === "f") state.plan = "free";
     if (q.rx === "1") state.react = "counter";
