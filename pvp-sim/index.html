@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8866689605007086" crossorigin="anonymous"></script>
+<script src="../js/analytics.js"></script>
+<script src="../config.js"></script>
+<script src="../js/pageview-counter.js" defer></script>
+<link rel="icon" type="image/png" sizes="192x192" href="../img/masterball.png">
+<title>PvP 對戰模擬器｜寶可夢 GO 對戰聯盟 1 對 1 勝負、盾數與逐回合重播｜Pokémon Go 工具箱</title>
+<meta name="description" content="Pokémon GO 對戰聯盟（超級、高級、大師聯盟）1 對 1 對戰模擬：選兩隻寶可夢、招式、IV 與護盾數，馬上看到誰會贏、9 種盾數組合的勝負、逐回合 HP 與能量重播、換招比較，以及對上聯盟熱門寶可夢的勝率。">
+<link rel="canonical" href="https://pogokit.com/pvp-sim/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PvP 對戰模擬器｜寶可夢 GO 對戰聯盟 1 對 1 勝負模擬">
+<meta property="og:description" content="選兩隻寶可夢，看誰會贏、盾數怎麼影響勝負，逐回合重播整場對戰。">
+<meta property="og:url" content="https://pogokit.com/pvp-sim/">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebApplication","name":"PvP 對戰模擬器","url":"https://pogokit.com/pvp-sim/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":"zh-Hant","description":"Pokémon GO 對戰聯盟 1 對 1 對戰模擬：勝負、9 種盾數組合、逐回合重播、換招比較與對上熱門寶可夢的勝率。","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Pokémon Go 工具箱","item":"https://pogokit.com/"},{"@type":"ListItem","position":2,"name":"PvP 對戰模擬器","item":"https://pogokit.com/pvp-sim/"}]},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"模擬結果準嗎？","acceptedAnswer":{"@type":"Answer","text":"本站直接使用 PvPoke 公開的對戰模擬引擎與遊戲資料，同樣的設定會得到和 PvPoke 相同的結果。模擬假設雙方都在最好的時機出招、開盾，所以它代表「兩邊都不失誤」時的勝負；實戰還會受到操作、連線與對手判斷影響。"}},{"@type":"Question","name":"對戰評分（0～1000）是什麼？","acceptedAnswer":{"@type":"Answer","text":"對戰評分是 PvPoke 用來表示勝負程度的分數：自己剩下的 HP 比例與打掉對手的 HP 比例各占 500 分。超過 500 是贏，越高贏得越輕鬆；低於 500 是輸，500 左右代表勢均力敵。"}},{"@type":"Question","name":"開盾和騙盾是怎麼決定的？","acceptedAnswer":{"@type":"Answer","text":"出招與開盾使用 PvPoke 的判斷邏輯：會評估這發特殊招式打下去的傷害、會不會被擊倒，再決定要不要開盾；有兩招特殊招式時，也會先用便宜的招式誘使對手開盾。進階設定可以關掉騙盾，看「直接放大招」的結果。"}},{"@type":"Question","name":"官方 2026 年的對戰系統更新有反映嗎？","acceptedAnswer":{"@type":"Answer","text":"回合怎麼結算、交換怎麼算，以本站使用的 PvPoke 引擎版本為準（頁面下方標示版本與資料日期）。PvPoke 會跟著官方規則更新；官方剛調整規則時，要等 PvPoke 更新、本站同步之後才會反映。"}},{"@type":"Question","name":"預設的 IV 是怎麼來的？","acceptedAnswer":{"@type":"Answer","text":"預設 IV 是 PvPoke 在排名裡使用的典型個體值，代表一般玩家常見、練到接近 CP 上限的那一隻。也可以改成 PvP 排名第 1 的 IV、100%，或輸入自己那隻的 IV，系統會自動算出不超過 CP 上限的最高等級。"}},{"@type":"Question","name":"可以模擬三對三或換寶可夢嗎？","acceptedAnswer":{"@type":"Answer","text":"目前只做 1 對 1：兩隻寶可夢從開場打到其中一隻倒下。實際對戰的換寶可夢、能量保留等隊伍策略，可以用「起始能量」「起始 HP」與護盾數模擬場上的局面。"}}]}]</script>
+<link rel="stylesheet" href="../css/pvp-sim.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="home" href="../"><span class="logo" aria-hidden="true">🧰</span><span>Pokémon Go 工具箱</span></a>
+  <nav class="tnav" aria-label="相關工具"><a href="../pvp-ranker/">PvP IV 排名</a><a href="../pvp-ranker/great-league/">聯盟排名</a><a href="../?tab=cp-checker-app">IV100 CP 查詢</a></nav>
+  <a class="cta" href="../trade-list/">做交換清單</a>
+</header>
+
+<main>
+  <nav class="crumb" aria-label="導覽路徑"><a href="../">Pokémon Go 工具箱</a> › <a href="../pvp-ranker/">PvP</a> › <span>對戰模擬器</span></nav>
+  <section class="hero">
+    <p class="eyebrow">GO 對戰聯盟 · 1 對 1 模擬</p>
+    <h1>PvP 對戰模擬器</h1>
+    <p class="lede">選兩隻寶可夢和牠們的招式、IV、護盾數，馬上算出誰會贏。除了單場勝負，也一次列出 9 種盾數組合的結果、逐回合重播 HP 與能量，
+    還能比較換招之後會不會逆轉，或看看你的寶可夢對上聯盟熱門寶可夢的勝負。</p>
+    <ul class="chips"><li>寶可夢 <b data-n-mon>1,619</b> 隻</li><li>招式 <b data-n-move>355</b> 招</li><li>9 種盾數組合</li><li>資料 <b data-gm>2026-11-09</b></li></ul>
+  </section>
+
+  <div id="app">
+    <noscript><p>這個工具需要開啟 JavaScript 才能計算對戰。</p></noscript>
+    <p class="loading" id="loading">正在載入對戰資料…</p>
+  </div>
+
+  <section class="how">
+    <h2>怎麼用</h2>
+    <ol class="steps">
+      <li><b>選聯盟和兩隻寶可夢</b>：點寶可夢可以搜尋中文、英文名稱或圖鑑編號；招式會先帶入目前聯盟的推薦招式。</li>
+      <li><b>設定護盾和 IV</b>：預設是 PvPoke 的典型 IV，也可以改成排名第 1、100% 或自己那隻的 IV。</li>
+      <li><b>看結果</b>：勝負與分析之後，點盾數矩陣的格子就能切換情境，拖曳重播軸可以看每一回合的 HP、能量和護盾。</li>
+      <li><b>找對策</b>：用「換招比較」看哪組招式最好打，「對上熱門寶可夢」看牠在整個聯盟的表現，點任一隻就能直接對戰。</li>
+    </ol>
+  </section>
+
+  <section class="faq">
+    <h2>常見問題</h2>
+    <details class="qa"><summary>模擬結果準嗎？</summary><p>本站直接使用 PvPoke 公開的對戰模擬引擎與遊戲資料，同樣的設定會得到和 PvPoke 相同的結果。模擬假設雙方都在最好的時機出招、開盾，所以它代表「兩邊都不失誤」時的勝負；實戰還會受到操作、連線與對手判斷影響。</p></details>
+    <details class="qa"><summary>對戰評分（0～1000）是什麼？</summary><p>對戰評分是 PvPoke 用來表示勝負程度的分數：自己剩下的 HP 比例與打掉對手的 HP 比例各占 500 分。超過 500 是贏，越高贏得越輕鬆；低於 500 是輸，500 左右代表勢均力敵。</p></details>
+    <details class="qa"><summary>開盾和騙盾是怎麼決定的？</summary><p>出招與開盾使用 PvPoke 的判斷邏輯：會評估這發特殊招式打下去的傷害、會不會被擊倒，再決定要不要開盾；有兩招特殊招式時，也會先用便宜的招式誘使對手開盾。進階設定可以關掉騙盾，看「直接放大招」的結果。</p></details>
+    <details class="qa"><summary>官方 2026 年的對戰系統更新有反映嗎？</summary><p>回合怎麼結算、交換怎麼算，以本站使用的 PvPoke 引擎版本為準（頁面下方標示版本與資料日期）。PvPoke 會跟著官方規則更新；官方剛調整規則時，要等 PvPoke 更新、本站同步之後才會反映。</p></details>
+    <details class="qa"><summary>預設的 IV 是怎麼來的？</summary><p>預設 IV 是 PvPoke 在排名裡使用的典型個體值，代表一般玩家常見、練到接近 CP 上限的那一隻。也可以改成 PvP 排名第 1 的 IV、100%，或輸入自己那隻的 IV，系統會自動算出不超過 CP 上限的最高等級。</p></details>
+    <details class="qa"><summary>可以模擬三對三或換寶可夢嗎？</summary><p>目前只做 1 對 1：兩隻寶可夢從開場打到其中一隻倒下。實際對戰的換寶可夢、能量保留等隊伍策略，可以用「起始能量」「起始 HP」與護盾數模擬場上的局面。</p></details>
+  </section>
+
+  <p class="src">對戰模擬：<a href="https://pvpoke.com/" target="_blank" rel="noopener">PvPoke</a> 對戰引擎與遊戲資料（© PvPoke LLC，<a href="https://github.com/pvpoke/pvpoke/blob/master/LICENSE" target="_blank" rel="noopener">MIT License</a>，引擎版本 <span data-engine>a9dfd50</span>），中文名稱取自 <a href="https://pvpoketw.com/" target="_blank" rel="noopener">PvPoke 繁中版</a>。推薦招式與熱門寶可夢依 PvPoke 的聯盟排名。</p>
+
+  <section class="next">
+    <div><h2>想知道手上那隻的 IV 排第幾？</h2><p>用 PvP IV 排名輸入 IV，就能看到牠在超級、高級聯盟的名次與要練到幾級。</p></div>
+    <a class="bigcta" href="../pvp-ranker/">PvP IV 排名 →</a>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>本站為非官方同人工具，與 Pokémon GO／Niantic 無隸屬關係。Pokémon 及其商標為 &copy;1995-2026 Nintendo, Creatures, GAME FREAK 所有。</p>
+  <p><a href="../about/">關於本站</a> · <a href="../contact/">聯絡我們</a> · <a href="../privacy/">隱私權政策</a> · <a href="../disclaimer/">免責聲明</a> · <a href="../">回工具箱</a></p>
+</footer>
+
+<dialog class="pick" id="picker" aria-label="選擇寶可夢">
+  <div class="pk-h"><input id="pk-q" type="search" placeholder="搜尋寶可夢：中文、英文或編號" autocomplete="off" enterkeyhint="search"><button class="pk-x" type="button" id="pk-x" aria-label="關閉">×</button></div>
+  <p class="pk-n" id="pk-n"></p>
+  <ul class="pk-l" id="pk-l"></ul>
+</dialog>
+
+<script src="../js/pvpoke-engine.js" defer></script>
+<script src="../js/pvp-sim-core.js" defer></script>
+<script src="../js/pvp-sim.js" defer></script>
+<script src="../js/ads.js" defer></script>
+</body>
+</html>
