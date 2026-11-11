@@ -2,22 +2,25 @@
  * 計算全部在 js/pvp-sim-core.js（PvPoke 引擎），這裡只負責設定、繪製、沙盒操作與網址同步。
  *
  * 兩種模式：1 對 1、3 對 3 隊伍。兩者都用 core 的 match()：AI 依 PvPoke 邏輯對打，
- * 使用者可以在重播圖上點任一發特殊招式，改「開盾／不開盾、延後放招、改放另一招、換人擋招（切角）」，
- * 也可以設定對手的開盾習慣；每個選項都會先算好結果讓使用者比較。
+ * 使用者可以在重播圖上點任一發特殊招式，改「開盾／不開盾、延後放招、改放另一招、蓄力比例（發招不發滿）、
+ * 換人擋招」，或在任一回合讓任一方換人；也可以設定對手的開盾習慣、對手會不會跟著換人。
+ * 每個選項都會先算好結果讓使用者比較。
  *
  * 網址參數（可分享）：
- *   共同：l=1500|2500|10000、cap=40、oh=對手開盾習慣、e=沙盒修改（~ 分隔）
+ *   共同：l=1500|2500|10000、cap=40、oh=對手開盾習慣、rx=1（對手跟著換）、e=沙盒修改（~ 分隔）
  *   1 對 1：a=<一方>&b=<另一方>
  *     一方 = speciesId.一般招式.特殊招式1.特殊招式2(或 -).IV.護盾.起始能量.起始HP%.騙盾(1/0).最佳夥伴(1/0)
  *   3 對 3：m=3&ta=<隊伍>&tb=<隊伍>&ts=我方盾-對手盾&o=b|f&p=s|f
  *     隊伍 = 三隻用 ~ 分隔，每隻 = speciesId.一般招式.特殊招式1.特殊招式2.IV.最佳夥伴
- *   IV = d | b | h | c攻-防-HP-等級；沙盒修改 = s|h|u|w + 方.第幾發.值（例：s0.2.0 = 我方第 2 次被打不開盾）
+ *   IV = d | b | h | c攻-防-HP-等級
+ *   沙盒修改 = 種類 + 方 + "." + 第幾發或回合 + "." + 值
+ *     s 開盾(1/0)、h 延後回合、u 改放第幾招(0/1)、w 換人擋招(第幾隻)、c 蓄力(1～3 ＝ 25～75%)、t 第幾回合換人(第幾隻)
  * 只用英數、底線、點、減號與 ~，history.replaceState 前不經過 URLSearchParams（見 CLAUDE.md §4）。
  */
 (function () {
   "use strict";
   var C = window.PvPSimCore, E = window.PvPokeEngine;
-  var IMG = "../trade-list/assets/thumb/";
+  var IMG = "../trade-list/assets/thumb/", TIMG = "../img/types/";
   var TYPE_COLOR = {
     normal: "#8a8a6e", fire: "#e2662a", water: "#3d7fe0", grass: "#4fa83d", electric: "#d4a90f", ice: "#4cb5c4",
     fighting: "#b8352c", poison: "#9a4aa8", ground: "#c79b45", flying: "#7f8fe0", psychic: "#e2557d", bug: "#8a9a1c",
@@ -27,13 +30,14 @@
   var IVMODES = [["def", "PvPoke 預設"], ["best", "PvP 排名 #1"], ["hundo", "100%"], ["custom", "自訂"]];
   var SIDE_NAME = ["我方", "對手"], TEAM_NAME = ["我方隊伍", "對手隊伍"], SLOT_NAME = ["先發", "2 號", "3 號"];
   var HABITS = [["ai", "AI 判斷"], ["always", "每發都開"], ["lethal", "只擋致命"], ["first", "只開第一發"], ["never", "完全不開"]];
-  var SHIELD_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1 2 3.2v4.3c0 3.4 2.6 6.3 6 7.5 3.4-1.2 6-4.1 6-7.5V3.2z" fill="currentColor"/></svg>';
+  var SHIELD_PATH = "M8 1 2 3.2v4.3c0 3.4 2.6 6.3 6 7.5 3.4-1.2 6-4.1 6-7.5V3.2z";
+  var SHIELD_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + SHIELD_PATH + '" fill="currentColor"/></svg>';
   var FAIL_TEXT = { missing: "對手沒有放到這一發", busy: "那一回合還在出一般招式，來不及換", timer: "換人冷卻中（45 秒內只能換一次）", target: "那隻已經倒下或已經在場上" };
 
   var state = {
     mode: 1, cp: 1500, cap: 50, sides: [null, null], teams: [null, null], order: "best", plan: "spread",
-    edits: { 1: [], 3: [] }, habit: "ai", sel: null, ghost: null,
-    turn: 0, sweepN: 30, sweepS: 1, sweepSort: "rank", cmpWho: 0, cmpAll: false, logAll: false
+    edits: { 1: [], 3: [] }, habit: "ai", react: "none", sel: null, ghost: null,
+    turn: 0, sweepN: 30, sweepS: 1, sweepSort: "rank", cmpWho: 0, cmpAll: false
   };
   var res = null, mx = null, playTimer = null, pickFor = null, poolCache = {}, sweepJob = 0, keyJob = 0, tracked = false, openSlots = {};
   var app = document.getElementById("app");
@@ -44,24 +48,27 @@
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   function cfg() { return { cp: state.cp, levelCap: state.cap }; }
   function lgName() { return LEAGUES.filter(function (l) { return l.cp === state.cp; })[0].name; }
-  function tch(t) { var z = C.typeZh(t); return z === "超能力" ? "超" : z.charAt(0); }
   function nm(id) { return C.mon(id) ? C.mon(id).speciesName : id; }
   function fmt(n) { return Number(n).toLocaleString("zh-Hant"); }
   function lvTxt(l) { return "Lv" + (l % 1 ? l.toFixed(1) : l); }
+  function imgOf(id) { var m = C.mon(id); return m && m.img ? IMG + m.img : ""; }
   function pic(id, cls) {
     var m = C.mon(id);
     return '<span class="pic' + (m && m.sh ? " sh" : "") + (cls ? " " + cls : "") + '">' +
-      (m && m.img ? '<img src="' + IMG + esc(m.img) + '" alt="" loading="lazy" decoding="async" width="128" height="128">' : "") + "</span>";
+      (m && m.img ? '<img src="' + esc(imgOf(id)) + '" alt="" loading="lazy" decoding="async" width="128" height="128">' : "") + "</span>";
+  }
+  function tIcon(type, size) {
+    if (!TYPE_COLOR[type]) return "";
+    return '<img class="ti" src="' + TIMG + type + '.webp" alt="' + esc(C.typeZh(type)) + '屬性" width="' + (size || 18) + '" height="' + (size || 18) + '" loading="lazy">';
   }
   function types(id) {
     return '<span class="tys">' + C.mon(id).types.filter(function (t) { return t && t !== "none"; }).map(function (t) {
-      return '<span class="ty" style="--c:' + TYPE_COLOR[t] + '">' + esc(C.typeZh(t)) + "</span>";
+      return '<span class="ty" style="--c:' + TYPE_COLOR[t] + '">' + tIcon(t, 14) + esc(C.typeZh(t)) + "</span>";
     }).join("") + "</span>";
   }
   function mvChip(id, elite) {
     var m = C.move(id); if (!m) return "";
-    var cg = m.energyGain > 0 ? "" : " cg";
-    return '<span class="mv' + cg + '" style="--c:' + (TYPE_COLOR[m.type] || "#888") + '" data-ti="' + esc(tch(m.type)) + '">' + esc(m.name) + (elite ? "<em>限定</em>" : "") + "</span>";
+    return '<span class="mv i' + (m.energyGain > 0 ? "" : " cg") + '" style="--c:' + (TYPE_COLOR[m.type] || "#888") + '">' + tIcon(m.type) + esc(m.name) + (elite ? "<em>限定</em>" : "") + "</span>";
   }
   function rc(r) {
     var k = Math.min(1, Math.abs(r - 500) / 320);
@@ -107,21 +114,21 @@
     var top = C.topList(state.cp, 6);
     return { mons: [0, 1, 2].map(function (k) { return newMon(top[from + k][0]); }), shields: 2 };
   }
-  /** 目前模式下的兩方（1 對 1 也包成一隊一隻）。 */
   function sides() {
     if (state.mode === 3) return state.teams;
     return [{ mons: [state.sides[0]], shields: state.sides[0].shields }, { mons: [state.sides[1]], shields: state.sides[1].shields }];
   }
   function slotOf(side, k) { return sides()[side].mons[k]; }
+  function idAt(side, k) { return slotOf(side, k).id; }
   function edits() { return state.edits[state.mode]; }
-  function opts(extraEdits, habit) {
-    return { order: state.order, plan: state.mode === 3 ? state.plan : "free", habits: ["ai", habit || state.habit], edits: extraEdits || edits() };
+  function opts(extraEdits, habit, react) {
+    return { order: state.order, plan: state.mode === 3 ? state.plan : "free", habits: ["ai", habit || state.habit],
+      react: state.mode === 3 ? (react || state.react) : "none", edits: extraEdits || edits() };
   }
   function sideLabel(t) { return state.mode === 3 ? TEAM_NAME[t] : SIDE_NAME[t]; }
-  /** 設定改變時清除沙盒修改（第幾發的定位已經不適用）。 */
   function clearSandbox() {
-    if (edits().length || state.habit !== "ai") toast("已清除沙盒修改");
-    state.edits[state.mode] = []; state.habit = "ai"; state.sel = null; state.ghost = null;
+    if (edits().length || state.habit !== "ai" || state.react !== "none") toast("已清除沙盒修改");
+    state.edits[state.mode] = []; state.habit = "ai"; state.react = "none"; state.sel = null; state.ghost = null;
   }
 
   // ---------- 網址 ----------
@@ -169,18 +176,26 @@
     mons.forEach(function (m) { if (m.buddy) { if (seen) m.buddy = false; seen = true; } });   // 一隊只能有一隻最佳夥伴
     return { mons: mons, shields: shields };
   }
-  var EK = { s: "shield", h: "hold", u: "use", w: "swap" }, KE = { shield: "s", hold: "h", use: "u", swap: "w" };
+  var EK = { s: "shield", h: "hold", u: "use", w: "swap", c: "charge", t: "swapT" };
+  var KE = { shield: "s", hold: "h", use: "u", swap: "w", charge: "c", swapT: "t" };
   function encEdits(list) {
     return list.map(function (e) {
-      var v = e.k === "shield" ? (e.v ? 1 : 0) : e.k === "hold" ? e.d : e.k === "use" ? e.v : e.to;
-      return KE[e.k] + e.side + "." + e.n + "." + v;
+      var pos = e.k === "swapT" ? e.t : e.n;
+      var v = e.k === "shield" ? (e.v ? 1 : 0) : e.k === "hold" ? e.d : e.k === "use" ? e.v : e.k === "charge" ? Math.round(e.v * 4) : e.to;
+      return KE[e.k] + e.side + "." + pos + "." + v;
     }).join("~");
   }
   function decEdits(str) {
-    if (!str || !/^[shuw][01]\.\d{1,2}\.\d(~[shuw][01]\.\d{1,2}\.\d)*$/.test(str)) return [];
-    return str.split("~").slice(0, 20).map(function (x) {
-      var k = EK[x.charAt(0)], side = Number(x.charAt(1)), p = x.slice(3).split(".").map(Number), e = { k: k, side: side, n: p[0] };
-      if (k === "shield") e.v = p[1] === 1; else if (k === "hold") e.d = Math.min(3, Math.max(1, p[1])); else if (k === "use") e.v = p[1] ? 1 : 0; else e.to = Math.min(2, p[1]);
+    if (!str || !/^[shuwct][01]\.\d{1,3}\.\d(~[shuwct][01]\.\d{1,3}\.\d)*$/.test(str)) return [];
+    return str.split("~").slice(0, 30).map(function (x) {
+      var k = EK[x.charAt(0)], side = Number(x.charAt(1)), p = x.slice(3).split(".").map(Number), e = { k: k, side: side };
+      if (k === "swapT") { e.t = p[0]; e.to = Math.min(2, p[1]); return e; }
+      e.n = p[0];
+      if (k === "shield") e.v = p[1] === 1;
+      else if (k === "hold") e.d = Math.min(3, Math.max(1, p[1]));
+      else if (k === "use") e.v = p[1] ? 1 : 0;
+      else if (k === "charge") e.v = Math.min(3, Math.max(1, p[1])) / 4;
+      else e.to = Math.min(2, p[1]);
       return e;
     });
   }
@@ -195,8 +210,9 @@
     if (q.m === "3") state.mode = 3;
     if (q.o === "f") state.order = "fixed";
     if (q.p === "f") state.plan = "free";
+    if (q.rx === "1") state.react = "counter";
     if (HABITS.some(function (h) { return h[0] === q.oh; })) state.habit = q.oh;
-    state.edits[state.mode] = decEdits(q.e).filter(function (e) { return state.mode === 3 || e.k !== "swap"; });
+    state.edits[state.mode] = decEdits(q.e).filter(function (e) { return state.mode === 3 || (e.k !== "swap" && e.k !== "swapT"); });
     var ts = (q.ts || "2-2").split("-").map(function (x) { var n = parseInt(x, 10); return isNaN(n) ? 2 : Math.max(0, Math.min(2, n)); });
     return { a: decSide(q.a), b: decSide(q.b), ta: decTeam(q.ta, ts[0]), tb: decTeam(q.tb, ts[1] == null ? 2 : ts[1]) };
   }
@@ -205,6 +221,7 @@
     if (state.mode === 3) {
       u += "&m=3&ta=" + state.teams[0].mons.map(encSlot).join("~") + "&tb=" + state.teams[1].mons.map(encSlot).join("~") +
         "&ts=" + state.teams[0].shields + "-" + state.teams[1].shields + "&o=" + (state.order === "best" ? "b" : "f") + "&p=" + (state.plan === "free" ? "f" : "s");
+      if (state.react === "counter") u += "&rx=1";
     } else {
       u += "&a=" + encSide(state.sides[0]) + "&b=" + encSide(state.sides[1]);
     }
@@ -233,25 +250,28 @@
           '<div class="duel teams"><div class="team" data-t="0" id="t0"></div>' +
           '<div class="vs"><b>VS</b><button type="button" class="swap" data-act="swap" aria-label="交換兩隊">⇄ 交換</button></div>' +
           '<div class="team" data-t="1" id="t1"></div></div>' +
-          '<p class="rulenote">AI 不會主動換寶可夢（倒下才換）；要練「切角擋招」，在下方重播圖點對手的特殊招式，選一隻替補換上來擋。護盾整隊共用，' +
-          '「平均分配」讓每隻最多用掉「剩餘護盾 ÷ 剩下隻數」面，「需要就用」則照 PvPoke 的 1 對 1 判斷。</p>' +
+          '<p class="rulenote">AI 不會主動換寶可夢（倒下才換）。要練換人，在下方重播圖點對手的特殊招式「換人擋招」，或拖到任一回合按「⇄ 這回合換人」，' +
+          '也可以讓對手「跟著換」。護盾整隊共用，「平均分配」讓每隻最多用掉「剩餘護盾 ÷ 剩下隻數」面，「需要就用」則照 PvPoke 的 1 對 1 判斷。</p>' +
         "</div>" +
       "</section>" +
       '<section class="card verdict" id="verdict" aria-live="polite"></section>' +
       '<section class="card" id="replay"><h2 class="sec-h"><span class="ic">▶</span>重播與沙盒<small id="rp-sub"></small></h2>' +
         '<div class="habit"><span class="lbl">對手開盾習慣</span><div class="hab" id="hab" role="group" aria-label="對手開盾習慣"></div></div>' +
+        '<div class="habit" id="reactbar" hidden><span class="lbl">我換人後，對手</span><div class="hab" id="react" role="group" aria-label="對手會不會跟著換"></div></div>' +
         '<div class="edits" id="edits"></div>' +
         '<div class="chart" id="chart"></div>' +
         '<div class="legend"><span><i style="background:var(--a)"></i>我方 HP</span><span><i style="background:var(--b)"></i>對手 HP</span>' +
         '<span style="color:var(--a)"><i class="d"></i>我方能量</span><span style="color:var(--b)"><i class="d"></i>對手能量</span>' +
-        '<span id="ghostlg" hidden><i class="d" style="border-color:#9a95ad"></i>修改前的 HP</span><span>● 特殊招式（空心＝被擋）</span><span class="keylg">◎ 關鍵決策</span></div>' +
-        '<div class="act" id="act"></div>' +
+        '<span id="ghostlg" hidden><i class="d" style="border-color:#9a95ad"></i>修改前的 HP</span>' +
+        '<span class="lg-sh">' + SHIELD_SVG + '被護盾擋下</span><span class="lg-key">!</span><span>關鍵決策</span></div>' +
+        '<div class="keys" id="keys"></div>' +
+        '<div class="act" id="act" hidden></div>' +
         '<div class="player"><button type="button" id="play" aria-label="播放">▶</button><input type="range" id="scrub" min="0" max="1" value="0" aria-label="回合"><span class="tn" id="tn"></span></div>' +
+        '<div class="turnbar" id="turnbar" hidden><button type="button" class="opt tsw" data-act="turnsw">⇄ 這回合換人</button><span class="mvinfo">拖到想換人的回合再按，雙方都可以換</span></div>' +
         '<div class="states" id="states"></div><p class="now" id="now"></p></section>' +
+      '<section class="card" id="logc"><h2 class="sec-h"><span class="ic">📜</span>對戰紀錄<small>點 ✎ 可以修改那一發</small></h2><ol class="log" id="log"></ol></section>' +
       '<section class="card" id="mxc"><h2 class="sec-h"><span class="ic">🛡</span>9 種盾數組合<small>不含沙盒修改，點格子切換</small></h2><div class="mxwrap" id="mx"></div>' +
         '<p class="mxnote" id="mxnote"></p></section>' +
-      '<section class="card" id="logc"><h2 class="sec-h"><span class="ic">📜</span>對戰紀錄<small>點 ✎ 可以修改那一發</small></h2>' +
-        '<div class="logtools"><label class="tgl"><input type="checkbox" id="logall"> 顯示每一次一般招式</label></div><ol class="log" id="log"></ol></section>' +
       '<section class="card" id="movec"><h2 class="sec-h"><span class="ic">⚔️</span>招式與能力值<small id="mv-sub">傷害是打在對方身上的實際數值</small></h2><div class="mtab" id="mtab"></div></section>' +
       '<section class="card" id="cmpc"><h2 class="sec-h"><span class="ic">🔁</span>換招比較<small>同一個對手、同樣盾數</small></h2>' +
         '<div class="bar"><div class="seg sm" id="cmpwho" role="group" aria-label="比較哪一方"><button type="button" data-w="0">我方換招</button><button type="button" data-w="1">對手換招</button></div></div>' +
@@ -276,7 +296,7 @@
   }
   function selWrap(k, id, inner, fast) {
     var m = C.move(id);
-    return '<div class="sel' + (fast ? " f" : "") + '" style="--c:' + (m ? TYPE_COLOR[m.type] : "#bbb") + '" data-ti="' + (m ? esc(tch(m.type)) : "－") + '">' +
+    return '<div class="sel' + (fast ? " f" : "") + '" style="--c:' + (m ? TYPE_COLOR[m.type] : "#bbb") + (m ? ";--ti:url(" + TIMG + m.type + ".webp)" : "") + '">' +
       '<select data-k="' + k + '" aria-label="' + (k === "fast" ? "一般招式" : k === "c1" ? "特殊招式 1" : "特殊招式 2") + '">' + inner + "</select></div>";
   }
   function whoButton(s, label, pv) {
@@ -346,7 +366,6 @@
   }
 
   // ---------- 結果摘要 ----------
-  /** 一場結果的分數（給顏色與比較用）：1 對 1 用我方評分，3 對 3 用雙方剩餘 HP 比例換算。 */
   function outcome(r) {
     if (state.mode === 1) {
       var s = r.ratings[0];
@@ -358,13 +377,13 @@
     if (r.winner === 1 && score >= 500) score = 499;
     return { score: score, text: (r.winner === 0 ? "勝" : r.winner === 1 ? "敗" : "平") + " " + r.left[0] + ":" + r.left[1] };
   }
-  function badge(r, cur) {
+  function badge(r) {
     var o = outcome(r), c = rc(o.score);
-    return '<span class="ob" style="--cbg:' + c.bg + ";--cfg:" + c.fg + '">' + o.text + (cur ? "" : "") + "</span>";
+    return '<span class="ob" style="--cbg:' + c.bg + ";--cfg:" + c.fg + '">' + o.text + "</span>";
   }
 
   function renderVerdict() {
-    var w = res.winner, el = $("#verdict"), n = edits().length + (state.habit !== "ai" ? 1 : 0);
+    var w = res.winner, el = $("#verdict"), n = edits().length + (state.habit !== "ai" ? 1 : 0) + (state.mode === 3 && state.react !== "none" ? 1 : 0);
     el.className = "card verdict" + (w === 0 ? " w0" : w === 1 ? " w1" : "");
     var big = w === -1 ? "平手" : (w === 0 ? "勝 ─ 敗" : "敗 ─ 勝");
     var tag = n ? '<span class="sbx">沙盒：已修改 ' + n + " 處</span>" : "";
@@ -399,9 +418,10 @@
     };
     var names3 = [state.teams[0].mons.map(function (m) { return esc(nm(m.id)); }), state.teams[1].mons.map(function (m) { return esc(nm(m.id)); })];
     var ins3 = C.teamInsights(res, names3, TEAM_NAME);
+    var KIND = { manual: "主動換人", react: "跟著換", faint: "倒下後上場" };
     var flow = res.switches.map(function (s) {
-      return '<button type="button" class="fl" data-jump="' + s.turn + '">第 ' + s.turn + " 回合 " + (s.side ? "對手" : "我方") + "換上 " + esc(nm(state.teams[s.side].mons[s.to].id)) +
-        '<small>' + (s.kind === "manual" ? "切角擋招" : "倒下後上場") + "</small></button>";
+      return '<button type="button" class="fl" data-jump="' + s.turn + '">' + pic(idAt(s.side, s.to)) + "<span>第 " + s.turn + " 回合 · " + (s.side ? "對手" : "我方") + "換上 " + esc(nm(idAt(s.side, s.to))) +
+        "<small>" + KIND[s.kind] + "</small></span></button>";
     }).join("");
     el.innerHTML = tag + '<div class="tv"><div><span class="vd-sub">' + TEAM_NAME[0] + " · " + state.teams[0].shields + " 盾</span>" + row(0) + "</div>" +
       '<div class="vd-res"><span class="big">' + big + '</span><span class="score">剩下 ' + res.left[0] + " : " + res.left[1] + " 隻</span></div>" +
@@ -442,19 +462,25 @@
     }
   }
 
-  // ---------- 沙盒：對手開盾習慣、修改清單、選項面板 ----------
+  // ---------- 沙盒：對手習慣、修改清單、選項面板 ----------
+  function sameSlot(x, e) {
+    if (x.k !== e.k || x.side !== e.side) return false;
+    return e.k === "swapT" ? x.t === e.t : x.n === e.n;
+  }
   function withEdit(list, e) {
-    // 同一個位置（種類、哪一方、第幾發）只保留一個修改；換人擋招同時會改那一發的開盾
-    var out = list.filter(function (x) { return !(x.k === e.k && x.side === e.side && x.n === e.n); });
+    var out = list.filter(function (x) { return !sameSlot(x, e); });
     out.push(e);
     return out;
   }
+  function without(list, pred) { return list.filter(function (x) { return !pred(x); }); }
   function editText(e) {
     var who = sideLabel(e.side);
     if (e.k === "shield") return who + "第 " + e.n + " 次被打：" + (e.v ? "開盾" : "不開盾");
     if (e.k === "hold") return who + "第 " + e.n + " 發：晚 " + e.d + " 回合放";
     if (e.k === "use") return who + "第 " + e.n + " 發：改放第 " + (e.v + 1) + " 招";
-    return "換上 " + nm(slotOf(e.side, e.to).id) + " 擋對手第 " + e.n + " 發";
+    if (e.k === "charge") return who + "第 " + e.n + " 發：只蓄力 " + Math.round(e.v * 100) + "%";
+    if (e.k === "swapT") return "第 " + e.t + " 回合" + who + "換上 " + nm(idAt(e.side, e.to));
+    return "換上 " + nm(idAt(e.side, e.to)) + " 擋對手第 " + e.n + " 發";
   }
   function renderSandboxBar() {
     var list = edits();
@@ -462,123 +488,206 @@
       var r = h[0] === state.habit ? res : C.match(cfg(), sides(), opts(null, h[0]));
       return '<button type="button" data-hab="' + h[0] + '" aria-pressed="' + (state.habit === h[0]) + '"><span>' + h[1] + "</span>" + badge(r) + "</button>";
     }).join("");
+    $("#reactbar").hidden = state.mode !== 3;
+    if (state.mode === 3) {
+      $("#react").innerHTML = [["none", "不換"], ["counter", "會跟著換（挑剋制的）"]].map(function (x) {
+        var r = x[0] === state.react ? res : C.match(cfg(), sides(), opts(null, null, x[0]));
+        return '<button type="button" data-react="' + x[0] + '" aria-pressed="' + (state.react === x[0]) + '"><span>' + x[1] + "</span>" + badge(r) + "</button>";
+      }).join("");
+    }
     $("#edits").innerHTML = list.length ? list.map(function (e, i) {
       var st = res.editStatus[i];
-      return '<span class="chip' + (st !== "ok" ? " warn" : "") + '">' + esc(editText(e)) + (st !== "ok" ? '<small>⚠ ' + esc(FAIL_TEXT[st] || "沒有套用") + "</small>" : "") +
+      return '<span class="chip' + (st !== "ok" ? " warn" : "") + '">' + esc(editText(e)) + (st !== "ok" ? "<small>⚠ " + esc(FAIL_TEXT[st] || "沒有套用") + "</small>" : "") +
         '<button type="button" data-unedit="' + i + '" aria-label="移除這個修改">×</button></span>';
     }).join("") + '<button type="button" class="chip reset" data-act="reset">↺ 全部復原</button>'
-      : '<p class="hint">👆 點圖上的特殊招式圓圈（或對戰紀錄的 ✎），就能改<b>開不開盾</b>、<b>延後放招</b>、<b>改放另一招</b>' + (state.mode === 3 ? "，或<b>換人擋招</b>" : "") + "，每個選項都會先算好結果。</p>";
+      : '<p class="hint">👆 點圖上的特殊招式，可以改<b>開不開盾</b>、<b>晚幾回合放</b>、<b>放哪一招</b>、<b>蓄力多少（發招不發滿）</b>' +
+        (state.mode === 3 ? "、<b>換人擋招</b>；拖到任一回合按 <b>⇄ 這回合換人</b> 可以安排雙方換人" : "") + "。每個選項都會先算好結果。</p>";
     $("#ghostlg").hidden = !state.ghost;
+    $("#turnbar").hidden = state.mode !== 3;
   }
 
+  /** 選項按鈕：預先算好選了之後的結果；label 可以是函式（拿到那個結果再決定要顯示什麼）。 */
   function optButton(label, list, current, extra) {
     var r = C.match(cfg(), sides(), opts(list));
-    return '<button type="button" class="opt' + (current ? " on" : "") + '" data-edits="' + esc(encEdits(list)) + '"' + (extra || "") + ">" + label + badge(r) + "</button>";
+    var lab = typeof label === "function" ? label(r) : label;
+    return '<button type="button" class="opt' + (current ? " on" : "") + '" data-edits="' + esc(encEdits(list)) + '"' + (extra || "") + ">" + lab + badge(r) + "</button>";
   }
+  function findCharged(r, actor, n) {
+    for (var i = 0; i < r.events.length; i++) { var x = r.events[i]; if (x.kind === "charged" && x.actor === actor && x.n === n) return x; }
+    return null;
+  }
+  function benchCard(side, k, note, extra) {
+    var sl = slotOf(side, k);
+    return pic(sl.id) + '<span class="sw-t"><b>' + esc(nm(sl.id)) + (note ? "<em>" + note + "</em>" : "") + "</b>" + (extra || "") + "</span>";
+  }
+
   function renderAct() {
-    var el = $("#act");
-    if (state.sel == null || !res.events[state.sel] || res.events[state.sel].kind !== "charged") { el.innerHTML = ""; el.hidden = true; return; }
+    var el = $("#act"), sel = state.sel;
+    if (sel == null) { el.innerHTML = ""; el.hidden = true; return; }
+    if (typeof sel === "object") { renderTurnPanel(el, sel.turn); return; }
+    if (!res.events[sel] || res.events[sel].kind !== "charged") { el.innerHTML = ""; el.hidden = true; return; }
     el.hidden = false;
-    var e = res.events[state.sel], a = e.actor, d = 1 - a, list = edits();
-    var att = slotOf(a, e.mon), def = slotOf(d, e.opMon);
+    var e = res.events[sel], a = e.actor, d = 1 - a, list = edits();
+    var att = slotOf(a, e.mon), def = slotOf(d, e.opMon), before = res.series[Math.max(0, e.turn - 1)];
     var cur = function (k, side, n) { return list.filter(function (x) { return x.k === k && x.side === side && x.n === n; })[0]; };
-    var h = '<div class="act-h">' + pic(att.id) + "<div><b>第 " + e.turn + " 回合</b> · " + esc(nm(att.id)) + "（" + sideLabel(a) + "第 " + e.n + " 發）使出 " + mvChip(e.moveId) +
+    var h = '<div class="act-h">' + pic(att.id) + "<div><b>第 " + e.turn + " 回合</b> · " + esc(nm(att.id)) + "（" + sideLabel(a) + "第 " + e.n + " 發）" + mvChip(e.moveId) +
       " → " + esc(nm(def.id)) + (e.shielded ? '<span class="tagx sh">被擋</span>' : "，" + e.dmg + " 傷害") + '</div><button type="button" class="x" data-act="unsel" aria-label="關閉">×</button></div>';
     // 1. 防守方開不開盾
-    var shBefore = res.series[Math.max(0, e.turn - 1)].sh[d];
-    if (shBefore > 0 || e.shielded) {
+    if (before.sh[d] > 0 || e.shielded) {
       h += '<div class="act-r"><span class="lbl">' + esc(nm(def.id)) + " 要不要開盾</span><div class=\"opts\">" +
         optButton(SHIELD_SVG + "開盾", withEdit(list, { k: "shield", side: d, n: e.m, v: true }), e.shielded) +
         optButton("✕ 不開盾", withEdit(list, { k: "shield", side: d, n: e.m, v: false }), !e.shielded) + "</div></div>";
     }
-    // 2. 攻擊方放招時機
+    // 2. 蓄力（發招不發滿：留對手一點血，再用一般招式點掉）
+    var co = cur("charge", a, e.n), cv = co ? co.v : 1;
+    var chargeLabel = function (v) {
+      return function (r) {
+        var x = findCharged(r, a, e.n);
+        var sub = !x ? "" : (x.shielded ? "被擋" : "打 " + x.dmg + "・剩 " + r.series[x.turn].hp[d]);
+        return "<span class=\"cl\"><b>" + (v === 1 ? "滿蓄力" : Math.round(v * 100) + "%") + "</b><small>" + sub + "</small></span>";
+      };
+    };
+    h += '<div class="act-r"><span class="lbl">蓄力多少（發招不發滿，留對手一點血）</span><div class="opts">' +
+      [1, 0.75, 0.5, 0.25].map(function (v) {
+        var l = v === 1 ? without(list, function (x) { return x.k === "charge" && x.side === a && x.n === e.n; }) : withEdit(list, { k: "charge", side: a, n: e.n, v: v });
+        return optButton(chargeLabel(v), l, cv === v);
+      }).join("") + "</div></div>";
+    // 3. 放招時機
     var ho = cur("hold", a, e.n), hv = ho ? ho.d : 0;
-    var hl = function (dd) { return dd ? withEdit(list, { k: "hold", side: a, n: e.n, d: dd }) : list.filter(function (x) { return !(x.k === "hold" && x.side === a && x.n === e.n); }); };
-    h += '<div class="act-r"><span class="lbl">' + esc(nm(att.id)) + " 放招時機</span><div class=\"opts\">" +
+    var hl = function (dd) { return dd ? withEdit(list, { k: "hold", side: a, n: e.n, d: dd }) : without(list, function (x) { return x.k === "hold" && x.side === a && x.n === e.n; }); };
+    h += '<div class="act-r"><span class="lbl">' + esc(nm(att.id)) + " 什麼時候放（晚放＝多農一些能量）</span><div class=\"opts\">" +
       optButton("照原本", hl(0), hv === 0) + optButton("晚 1 回合", hl(1), hv === 1) + optButton("晚 2 回合", hl(2), hv === 2) + optButton("晚 3 回合", hl(3), hv === 3) + "</div></div>";
-    // 3. 改放另一招
+    // 4. 放哪一招
     if (att.c2) {
       var uo = cur("use", a, e.n);
       h += '<div class="act-r"><span class="lbl">放哪一招</span><div class="opts">' + [att.c1, att.c2].map(function (mid, v) {
-        var l = withEdit(list, { k: "use", side: a, n: e.n, v: v });
-        return optButton(mvChip(mid), l, uo ? uo.v === v : e.moveId === mid);
+        return optButton(mvChip(mid), withEdit(list, { k: "use", side: a, n: e.n, v: v }), uo ? uo.v === v : e.moveId === mid);
       }).join("") + "</div></div>";
     }
-    // 4. 切角擋招（3 對 3）：防守方換一隻有抗性的上來吃這招
+    // 5. 切角擋招（3 對 3）
     if (state.mode === 3) {
-      var so = cur("swap", d, e.n), before = res.series[Math.max(0, e.turn - 1)], orig = before.cur[d], bench = [];
+      var so = cur("swap", d, e.n), orig = before.cur[d], bench = [];
       sides()[d].mons.forEach(function (m, k) { if (k !== orig && before.all[d][k] > 0) bench.push(k); });
       if (bench.length) {
         var ok = res.swapOk[d][e.turn] || (so && res.editStatus[list.indexOf(so)] === "ok");
-        var card = function (k, note) {
-          var sl = slotOf(d, k), mv = C.pair(cfg(), att, sl).moves[0].filter(function (x) { return x.id === e.moveId; })[0];
-          var ef = mv ? C.effWord(mv.eff) : "";
-          return pic(sl.id) + '<span class="sw-t"><b>' + esc(nm(sl.id)) + (note ? "<em>" + note + "</em>" : "") + "</b><small>" + (mv ? "約吃 " + mv.damage + "（" + mv.pct + "%）" : "") + "</small>" +
-            (ef ? '<span class="efx ' + (mv.eff > 1 ? "dn" : "up") + '">' + (mv.eff > 1 ? "被剋" : "抗性") + "</span>" : "") + "</span>";
+        var dmgInfo = function (k) {
+          var mv = C.pair(cfg(), att, slotOf(d, k)).moves[0].filter(function (x) { return x.id === e.moveId; })[0];
+          if (!mv) return "";
+          var ef = C.effWord(mv.eff);
+          return "<small>約吃 " + mv.damage + "（" + mv.pct + "%）</small>" + (ef ? '<span class="efx ' + (mv.eff > 1 ? "dn" : "up") + '">' + (mv.eff > 1 ? "被剋" : "抗性") + "</span>" : "");
         };
-        h += '<div class="act-r"><span class="lbl">切角擋招：' + sideLabel(d) + "換一隻上來吃這招</span>" +
+        h += '<div class="act-r"><span class="lbl">切角擋招：' + sideLabel(d) + "換一隻有抗性的上來吃這招</span>" +
           (ok ? "" : '<p class="warn">⚠ 這一回合' + esc(nm(slotOf(d, orig).id)) + "還在出一般招式或換人冷卻中，引擎判定來不及換。</p>") + '<div class="opts">';
-        h += optButton(card(orig, "不換"), list.filter(function (x) { return x !== so; }), !so, ' data-sw="1"');
+        h += optButton(benchCard(d, orig, "不換", dmgInfo(orig)), without(list, function (x) { return x === so; }), !so, ' data-sw="1"');
         bench.forEach(function (k) {
           var l = withEdit(withEdit(list, { k: "swap", side: d, n: e.n, to: k }), { k: "shield", side: d, n: e.m, v: false });
-          h += optButton(card(k, ""), l, !!(so && so.to === k), ' data-sw="1"' + (ok ? "" : " disabled"));
+          h += optButton(benchCard(d, k, "", dmgInfo(k)), l, !!(so && so.to === k), ' data-sw="1"' + (ok ? "" : " disabled"));
         });
-        h += "</div><p class=\"mvinfo\">換上去的那隻預設不開盾（擋招通常是為了省盾），換完可以再點這一發改成開盾。</p></div>";
+        h += '</div><p class="mvinfo">換上去的那隻預設不開盾（擋招通常是為了省盾），換完可以再點這一發改成開盾。</p></div>';
       }
     }
+    el.innerHTML = h; el.hidden = false;
+  }
+
+  /** 在某一回合安排換人（3 對 3）：雙方都可以換；正在出招的話，引擎會在最早可以換的回合換。 */
+  function renderTurnPanel(el, t) {
+    el.hidden = false;
+    var list = edits(), st = res.series[Math.max(0, Math.min(t, res.lastTurn))];
+    var h = '<div class="act-h"><span class="tsw-ic">⇄</span><div><b>第 ' + t + " 回合換人</b> · 場上：" + esc(nm(idAt(0, st.cur[0]))) + " 對 " + esc(nm(idAt(1, st.cur[1]))) +
+      '</div><button type="button" class="x" data-act="unsel" aria-label="關閉">×</button></div>';
+    [0, 1].forEach(function (side) {
+      var curE = list.filter(function (x) { return x.k === "swapT" && x.side === side && x.t === t; })[0];
+      var bench = [];
+      sides()[side].mons.forEach(function (m, k) { if (k !== st.cur[side] && st.all[side][k] > 0) bench.push(k); });
+      if (!bench.length) return;
+      var opp = slotOf(1 - side, st.cur[1 - side]);
+      var vs = function (k) {
+        var pr = C.pair(cfg(), slotOf(side, k), opp), mine = pr.moves[0], theirs = pr.moves[1];
+        var best = Math.max.apply(null, mine.map(function (m) { return m.eff; })), worst = Math.max.apply(null, theirs.map(function (m) { return m.eff; }));
+        return "<small>對 " + esc(nm(opp.id)) + "：" + (best > 1.5 ? "我剋牠" : worst > 1.5 ? "被牠剋" : "互不相剋") + "</small>";
+      };
+      h += '<div class="act-r"><span class="lbl">' + sideLabel(side) + "</span><div class=\"opts\">" +
+        optButton(benchCard(side, st.cur[side], "不換", ""), without(list, function (x) { return x === curE; }), !curE, ' data-sw="1"');
+      bench.forEach(function (k) {
+        h += optButton(benchCard(side, k, "", vs(k)), withEdit(list, { k: "swapT", side: side, t: t, to: k }), !!(curE && curE.to === k), ' data-sw="1"');
+      });
+      h += "</div></div>";
+    });
+    h += '<p class="mvinfo">換人有 45 秒冷卻；那一回合正在出一般招式的話，會在最早可以換的回合換。想看對手的反應，可以開上方的「對手會跟著換」。</p>';
     el.innerHTML = h;
   }
 
-  /** 關鍵決策：把某一發的開盾決定反過來，勝負就會改變的，在圖上加外框。 */
+  /** 關鍵決策：把某一發的開盾決定反過來，勝負就會改變（或差距很大）的，在圖上加「!」並列在圖下方。 */
   function markKeyDecisions() {
-    var job = ++keyJob, list = edits(), evs = [];
+    var job = ++keyJob, list = edits(), evs = [], found = [];
     res.events.forEach(function (e, i) {
       if (e.kind !== "charged") return;
-      var d = 1 - e.actor;
-      if (res.series[Math.max(0, e.turn - 1)].sh[d] > 0 || e.shielded) evs.push(i);
+      if (res.series[Math.max(0, e.turn - 1)].sh[1 - e.actor] > 0 || e.shielded) evs.push(i);
     });
     var base = outcome(res), k = 0;
+    $("#keys").innerHTML = "";
     (function next() {
-      if (job !== keyJob || k >= evs.length) return;
+      if (job !== keyJob) return;
+      if (k >= evs.length) {
+        $("#keys").innerHTML = found.length ? '<span class="lbl">關鍵決策</span>' + found.map(function (f) {
+          var e = res.events[f.i];
+          return '<button type="button" class="kd" data-ei="' + f.i + '"><span class="lg-key">!</span>第 ' + e.turn + " 回合 " + esc(nm(idAt(1 - e.actor, e.opMon))) +
+            (e.shielded ? "開了盾" : "沒開盾") + "，改成" + (e.shielded ? "不開" : "開盾") + badge(f.r) + "</button>";
+        }).join("") : "";
+        return;
+      }
       var i = evs[k++], e = res.events[i];
       var r = C.match(cfg(), sides(), opts(withEdit(list, { k: "shield", side: 1 - e.actor, n: e.m, v: !e.shielded })));
       var o = outcome(r);
       if ((o.score > 500) !== (base.score > 500) || Math.abs(o.score - base.score) >= 150) {
+        found.push({ i: i, r: r });
         var g = $('#chart [data-ei="' + i + '"]'); if (g) g.classList.add("key");
       }
       setTimeout(next, 0);
     })();
   }
 
-  // ---------- 重播 ----------
-  var CH = { W: 1000, H: 286, L: 40, R: 14, laneA: 20, top: 44, bot: 236, laneB: 264 };
+  // ---------- 重播圖 ----------
+  var CH = {};
   function sizeChart() {
     var w = Math.round(($("#chart") && $("#chart").clientWidth) || 1000);
-    CH.W = Math.max(300, w);
-    var small = CH.W < 640;
-    CH.L = small ? 34 : 40; CH.R = small ? 10 : 14;
-    CH.H = small ? 250 : 286; CH.laneA = 18; CH.top = 40; CH.bot = CH.H - 50; CH.laneB = CH.H - 22;
+    CH.small = w < 640;
+    // 回合很多時（3 對 3 常常超過 100 回合）每回合至少留 7px／4.5px，超出的部分可以左右滑動
+    CH.W = Math.max(300, w, Math.round(res.lastTurn * (CH.small ? 7 : 4.5)) + 60);
+    CH.L = CH.small ? 30 : 40; CH.R = CH.small ? 12 : 16;
+    CH.lane = CH.small ? 40 : 46;                  // 上下兩排（招式與場上寶可夢）的高度
+    CH.H = CH.small ? 320 : 360;
+    CH.laneA = 4 + CH.lane / 2; CH.top = CH.lane + 18; CH.bot = CH.H - CH.lane - 26; CH.laneB = CH.H - 4 - CH.lane / 2;
   }
   function cx(t) { return CH.L + (t / Math.max(1, res.lastTurn)) * (CH.W - CH.L - CH.R); }
   function cy(p) { return CH.bot - p * (CH.bot - CH.top); }
-  function idAt(side, k) { return slotOf(side, k).id; }
   function renderChart() {
     sizeChart();
-    var T = res.lastTurn, s = res.series, h = [], t, small = CH.W < 640;
-    h.push('<svg viewBox="0 0 ' + CH.W + " " + CH.H + '" role="img" aria-label="雙方 HP 與能量隨回合變化，點特殊招式可以修改">');
-    [0, 0.5, 1].forEach(function (p) {
-      h.push('<line x1="' + CH.L + '" x2="' + (CH.W - CH.R) + '" y1="' + cy(p) + '" y2="' + cy(p) + '" stroke="#ece8f6" stroke-width="1"/>');
-      h.push('<text x="' + (CH.L - 6) + '" y="' + (cy(p) + 4) + '" font-size="12" text-anchor="end" fill="#9a95ad">' + (p * 100) + "%</text>");
+    var T = res.lastTurn, s = res.series, h = [], t, sm = CH.small, R = sm ? 12 : 14;
+    h.push('<svg viewBox="0 0 ' + CH.W + " " + CH.H + '" style="width:' + CH.W + 'px" role="img" aria-label="雙方 HP 與能量隨回合變化，點特殊招式可以修改">');
+    // 兩排的底色與場上寶可夢（每次換人換一段顏色、放頭像）
+    [0, 1].forEach(function (side) {
+      var y = side ? CH.laneB : CH.laneA, start = 0, k = s[0].cur[side], segs = [];
+      for (t = 1; t <= T; t++) { if (s[t].cur[side] !== k) { segs.push([start, t, k]); start = t; k = s[t].cur[side]; } }
+      segs.push([start, T, k]);
+      segs.forEach(function (sg, i) {
+        var x1 = cx(sg[0]), x2 = cx(sg[1]);
+        h.push('<rect x="' + x1 + '" y="' + (y - CH.lane / 2) + '" width="' + Math.max(2, x2 - x1) + '" height="' + CH.lane + '" fill="' + (side ? (i % 2 ? "#ebe5ff" : "#f4f1ff") : (i % 2 ? "#ffe4ee" : "#fff3f7")) + '"/>');
+        var img = imgOf(idAt(side, sg[2]));
+        if (img && x2 - x1 > 34) h.push('<image href="' + esc(img) + '" x="' + (x1 + 2) + '" y="' + (y - CH.lane / 2 + 2) + '" width="' + (CH.lane - 4) + '" height="' + (CH.lane - 4) + '" opacity=".9"><title>' + esc(nm(idAt(side, sg[2]))) + "</title></image>");
+      });
+      h.push('<text x="' + (CH.L - 5) + '" y="' + (y + 4) + '" font-size="11" text-anchor="end" fill="' + (side ? "#6d4aff" : "#e0276c") + '" font-weight="800">' + (side ? "對手" : "我方") + "</text>");
     });
-    var step = T > 160 ? 40 : T > 120 ? 20 : T > 60 ? 10 : (small && T > 30 ? 10 : 5);
+    // HP 區格線
+    [0, 0.5, 1].forEach(function (p) {
+      h.push('<line x1="' + CH.L + '" x2="' + (CH.W - CH.R) + '" y1="' + cy(p) + '" y2="' + cy(p) + '" stroke="#ece8f6"/>');
+      h.push('<text x="' + (CH.L - 5) + '" y="' + (cy(p) + 4) + '" font-size="11" text-anchor="end" fill="#9a95ad">' + (p * 100) + "%</text>");
+    });
+    var step = T > 160 ? 40 : T > 120 ? 20 : T > 60 ? 10 : (sm && T > 30 ? 10 : 5);
     for (t = step; t < T; t += step) {
       h.push('<line x1="' + cx(t) + '" x2="' + cx(t) + '" y1="' + CH.top + '" y2="' + CH.bot + '" stroke="#f3f1f8"/>');
       h.push('<text x="' + cx(t) + '" y="' + (CH.bot + 14) + '" font-size="11" text-anchor="middle" fill="#9a95ad">' + t + "</text>");
     }
-    h.push('<rect x="' + CH.L + '" y="' + (CH.laneA - 12) + '" width="' + (CH.W - CH.L - CH.R) + '" height="24" rx="12" fill="#fff4f8"/>');
-    h.push('<rect x="' + CH.L + '" y="' + (CH.laneB - 12) + '" width="' + (CH.W - CH.L - CH.R) + '" height="24" rx="12" fill="#f5f2ff"/>');
-    h.push('<text x="' + (CH.L - 6) + '" y="' + (CH.laneA + 4) + '" font-size="11" text-anchor="end" fill="#e0276c" font-weight="800">我方</text>');
-    h.push('<text x="' + (CH.L - 6) + '" y="' + (CH.laneB + 4) + '" font-size="11" text-anchor="end" fill="#6d4aff" font-weight="800">對手</text>');
     var line = function (ser, fn, color, dash, width, op) {
       var pts = [cx(0) + "," + cy(fn(ser[0]))];
       for (t = 1; t < ser.length; t++) { pts.push(cx(t) + "," + cy(fn(ser[t - 1]))); pts.push(cx(t) + "," + cy(fn(ser[t]))); }
@@ -588,31 +697,43 @@
       var gs = state.ghost.filter(function (x, i) { return i <= T; });
       [0, 1].forEach(function (i) { h.push(line(gs, function (x) { return x.hp[i] / x.max[i]; }, "#9a95ad", "3 4", 2.2, ".9")); });
     }
-    [0, 1].forEach(function (i) { h.push(line(s, function (x) { return x.en[i] / 100; }, i ? "#6d4aff" : "#e0276c", "5 5", 2, ".55")); });
+    [0, 1].forEach(function (i) { h.push(line(s, function (x) { return x.en[i] / 100; }, i ? "#6d4aff" : "#e0276c", "5 5", 2, ".5")); });
     [0, 1].forEach(function (i) { h.push(line(s, function (x) { return x.hp[i] / x.max[i]; }, i ? "#6d4aff" : "#e0276c", "", 3.2)); });
+    // 一般招式：排底部的小刻度
+    res.events.forEach(function (e) {
+      if (e.kind !== "fast") return;
+      var y = (e.actor ? CH.laneB : CH.laneA) + CH.lane / 2 - 5;
+      h.push('<rect x="' + (cx(e.turn) - 1) + '" y="' + (y - 3) + '" width="2.4" height="6" rx="1" fill="' + (TYPE_COLOR[e.type] || "#888") + '" opacity=".8"/>');
+    });
+    // 換人、倒下、特殊招式
     res.events.forEach(function (e, idx) {
       var y = e.actor ? CH.laneB : CH.laneA, x = cx(e.turn), c = TYPE_COLOR[e.type] || "#888";
-      if (e.kind === "fast") {
-        h.push('<circle cx="' + x + '" cy="' + y + '" r="' + (small ? 2.2 : 2.8) + '" fill="' + c + '" opacity=".75"/>');
-      } else if (e.kind === "charged") {
-        var r = small ? 9 : 11;
-        h.push('<line x1="' + x + '" x2="' + x + '" y1="' + (e.actor ? CH.top : y + 12) + '" y2="' + (e.actor ? y - 12 : CH.bot) + '" stroke="' + c + '" stroke-width="1" stroke-dasharray="2 4" opacity=".6"/>');
-        h.push('<g class="cm' + (state.sel === idx ? " sel" : "") + '" data-ei="' + idx + '" tabindex="0" role="button" aria-label="第 ' + e.turn + " 回合 " + esc(e.name) + '，點一下修改">' +
-          '<title>第 ' + e.turn + " 回合：" + esc(e.name) + (e.shielded ? "（被護盾擋下）" : "，" + e.dmg + " 傷害") + "｜點一下修改</title>" +
-          '<circle class="ring" cx="' + x + '" cy="' + y + '" r="' + (r + 5) + '" fill="none" stroke-width="3"/>' +
-          '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + (e.shielded ? "#fff" : c) + '" stroke="' + c + '" stroke-width="2.5"/>' +
-          '<text x="' + x + '" y="' + (y + 4) + '" font-size="' + (small ? 10 : 11) + '" font-weight="900" text-anchor="middle" fill="' + (e.shielded ? c : "#fff") + '">' + esc(tch(e.type)) + "</text>" +
-          '<circle cx="' + x + '" cy="' + y + '" r="' + (r + 9) + '" fill="transparent"/></g>');
+      if (e.kind === "switch") {
+        var col = e.react ? "#3b82f6" : e.manual ? "#f59e0b" : "#14111f";
+        h.push('<g><title>第 ' + e.turn + " 回合：換上 " + esc(nm(idAt(e.actor, e.to))) + (e.react ? "（跟著換）" : e.manual ? "（主動換人）" : "（倒下後上場）") + "</title>" +
+          '<rect x="' + (x - 3) + '" y="' + (y - CH.lane / 2) + '" width="6" height="' + CH.lane + '" fill="' + col + '"/>' +
+          '<circle cx="' + x + '" cy="' + (y - CH.lane / 2 + 1) + '" r="8" fill="' + col + '"/><text x="' + x + '" y="' + (y - CH.lane / 2 + 5) + '" font-size="10" font-weight="900" text-anchor="middle" fill="#fff">⇄</text></g>');
       } else if (e.kind === "faint") {
-        h.push('<text x="' + x + '" y="' + (y + 5) + '" font-size="15" font-weight="900" text-anchor="middle" fill="#d6334a">✕</text>');
-      } else if (e.kind === "switch") {
-        h.push('<g><title>第 ' + e.turn + " 回合：換上 " + esc(nm(idAt(e.actor, e.to))) + (e.manual ? "（切角擋招）" : "") + "</title>" +
-          '<rect x="' + (x - 11) + '" y="' + (y - 9) + '" width="22" height="18" rx="6" fill="' + (e.manual ? "#f59e0b" : "#14111f") + '"/>' +
-          '<text x="' + x + '" y="' + (y + 4) + '" font-size="11" font-weight="900" text-anchor="middle" fill="#fff">⇄</text></g>');
+        h.push('<g><title>第 ' + e.turn + " 回合：" + esc(nm(idAt(e.actor, e.mon))) + ' 倒下</title><circle cx="' + x + '" cy="' + y + '" r="9" fill="#d6334a"/>' +
+          '<text x="' + x + '" y="' + (y + 4) + '" font-size="12" font-weight="900" text-anchor="middle" fill="#fff">✕</text></g>');
+      } else if (e.kind === "charged") {
+        h.push('<line x1="' + x + '" x2="' + x + '" y1="' + (e.actor ? CH.top : y + R) + '" y2="' + (e.actor ? y - R : CH.bot) + '" stroke="' + c + '" stroke-width="1.2" stroke-dasharray="2 3" opacity=".7"/>');
+        var sx = x + R * 0.72, sy = y - R * 0.72;
+        h.push('<g class="cm' + (state.sel === idx ? " sel" : "") + (e.shielded ? " blk" : "") + '" data-ei="' + idx + '" tabindex="0" role="button" aria-label="第 ' + e.turn + " 回合 " + esc(e.name) + (e.shielded ? "（被擋）" : "") + '，點一下修改">' +
+          '<title>第 ' + e.turn + " 回合：" + esc(nm(idAt(e.actor, e.mon))) + " 的 " + esc(e.name) + (e.shielded ? "（被護盾擋下）" : "，" + e.dmg + " 傷害") + "｜點一下修改</title>" +
+          '<circle class="halo" cx="' + x + '" cy="' + y + '" r="' + (R + 6) + '"/>' +
+          '<circle class="ring" cx="' + x + '" cy="' + y + '" r="' + (R + 3) + '"/>' +
+          '<circle cx="' + x + '" cy="' + y + '" r="' + R + '" fill="#fff" stroke="' + c + '" stroke-width="3"/>' +
+          '<image href="' + TIMG + e.type + '.webp" x="' + (x - R + 3) + '" y="' + (y - R + 3) + '" width="' + (2 * R - 6) + '" height="' + (2 * R - 6) + '"' + (e.shielded ? ' opacity=".35"' : "") + "/>" +
+          (e.shielded ? '<circle cx="' + sx + '" cy="' + sy + '" r="8" fill="#312e81" stroke="#fff" stroke-width="1.5"/>' +
+            '<path d="' + SHIELD_PATH + '" fill="#fff" transform="translate(' + (sx - 5) + "," + (sy - 5.2) + ') scale(.64)"/>' : "") +
+          (e.charge ? '<rect x="' + (x - 14) + '" y="' + (y + R - 2) + '" width="28" height="12" rx="6" fill="#14111f"/><text x="' + x + '" y="' + (y + R + 7) + '" font-size="9" font-weight="900" text-anchor="middle" fill="#fff">' + Math.round(e.charge * 100) + "%</text>" : "") +
+          '<g class="kmark"><circle cx="' + (x - R * 0.75) + '" cy="' + (y - R * 0.75) + '" r="7.5" fill="#f59e0b" stroke="#fff" stroke-width="1.5"/><text x="' + (x - R * 0.75) + '" y="' + (y - R * 0.75 + 3.6) + '" font-size="10" font-weight="900" text-anchor="middle" fill="#fff">!</text></g>' +
+          '<circle cx="' + x + '" cy="' + y + '" r="' + (R + 10) + '" fill="transparent"/></g>');
       }
     });
     // 游標不接收點擊，才不會擋住底下的特殊招式圓圈
-    h.push('<g pointer-events="none"><line id="cur" x1="0" x2="0" y1="' + (CH.laneA - 14) + '" y2="' + (CH.laneB + 14) + '" stroke="#14111f" stroke-width="1.5" opacity=".7"/>');
+    h.push('<g pointer-events="none"><line id="cur" x1="0" x2="0" y1="2" y2="' + (CH.H - 2) + '" stroke="#14111f" stroke-width="1.5" opacity=".6"/>');
     h.push('<circle id="cur0" r="5" fill="#e0276c" stroke="#fff" stroke-width="2"/><circle id="cur1" r="5" fill="#6d4aff" stroke="#fff" stroke-width="2"/></g>');
     h.push("</svg>");
     $("#chart").innerHTML = h.join("");
@@ -620,6 +741,7 @@
     $("#rp-sub").textContent = "共 " + T + " 回合 · 約 " + (Math.round(T / 2 * 10) / 10) + " 秒";
   }
 
+  // ---------- 對戰紀錄 ----------
   function buffText(e) {
     var m = C.move(e.moveId); if (!m || !m.buffs) return "";
     var desc = function (arr) {
@@ -632,20 +754,74 @@
     if (m.buffTarget === "both") return me + " " + desc(m.buffsSelf) + "；" + op + " " + desc(m.buffsOpponent);
     return (m.buffTarget === "self" ? me : op) + " " + desc(m.buffs);
   }
-  function evText(e, rich) {
-    if (e.kind === "switch") return "<b>" + sideLabel(e.actor) + "換上 " + esc(nm(idAt(e.actor, e.to))) + "</b>" + '<span class="tagx ' + (e.manual ? "bf" : "sh") + '">' + (e.manual ? "切角擋招" : "倒下後上場") + "</span>";
+  function evText(e) {
+    if (e.kind === "switch") return sideLabel(e.actor) + "換上 " + esc(nm(idAt(e.actor, e.to))) + (e.react ? "（跟著換）" : e.manual ? "（主動換人）" : "");
     var who = esc(nm(idAt(e.actor, e.mon))), op = esc(nm(idAt(1 - e.actor, e.opMon)));
-    if (e.kind === "charged") {
-      return '<span class="mvn">' + who + "</span> 使出 " + (rich ? mvChip(e.moveId) : "「" + esc(e.name) + "」") +
-        (e.shielded ? '<span class="tagx sh">被護盾擋下</span>' : "，對 " + op + " 造成 <b>" + e.dmg + "</b> 傷害（" + e.pct + "%）") +
-        (e.buff ? '<span class="tagx bf">' + esc(buffText(e)) + "</span>" : "");
-    }
-    if (e.kind === "fast") return who + " 用「" + esc(e.name) + "」打出 " + e.dmg + "（+" + e.energy + " 能量）";
-    if (e.kind === "faint") return "<b>" + who + ' 倒下</b><span class="tagx ko">' + (state.mode === 3 ? "換下一隻" : "戰鬥結束") + "</span>";
+    if (e.kind === "charged") return who + " 使出「" + esc(e.name) + "」" + (e.shielded ? "，被護盾擋下" : "，對 " + op + " 造成 " + e.dmg + " 傷害") + (e.charge ? "（蓄力 " + Math.round(e.charge * 100) + "%）" : "");
+    if (e.kind === "fast") return who + " 用「" + esc(e.name) + "」打出 " + e.dmg;
+    if (e.kind === "faint") return who + " 倒下";
     if (e.kind === "form") return who + " 變身：" + e.text;
     return "";
   }
 
+  /** 左右兩邊的對話式紀錄：特殊招式一列一張卡（頭像、屬性圖示、HP 條），中間的一般招式合併成一列。 */
+  function renderLog() {
+    var S = sides(), hp = [S[0].mons.map(function (m, k) { return res.series[0].all[0][k]; }), S[1].mons.map(function (m, k) { return res.series[0].all[1][k]; })];
+    var cur = [0, 0], acc = [null, null], out = [];
+    var maxOf = function (side, k) { return res.maxHp[side][k]; };
+    var flush = function () {
+      if (!acc[0] && !acc[1]) return;
+      var cell = function (x, side) {
+        if (!x) return '<div class="lf-c"></div>';
+        return '<div class="lf-c" data-i="' + side + '">' + tIcon(x.type, 16) + "<b>" + esc(x.name) + "</b> ×" + x.n + "<small>" + x.dmg + " 傷害 · +" + x.en + " 能量</small></div>";
+      };
+      out.push('<li class="lg-f" data-turn="' + Math.min(acc[0] ? acc[0].from : 1e9, acc[1] ? acc[1].from : 1e9) + '">' + cell(acc[0], 0) + cell(acc[1], 1) + "</li>");
+      acc = [null, null];
+    };
+    var shieldBlocked = {};
+    res.events.forEach(function (e) { if (e.kind === "shield") shieldBlocked[e.turn + ":" + e.actor] = e.blocked; });
+    res.events.forEach(function (e, idx) {
+      if (e.kind === "switch") {
+        flush();
+        cur[e.actor] = e.to;
+        out.push('<li class="lg-s" data-turn="' + e.turn + '"><span class="tt">第 ' + e.turn + " 回合</span>" + pic(idAt(e.actor, e.from)) + '<span class="arr">⇄</span>' + pic(idAt(e.actor, e.to)) +
+          "<span>" + sideLabel(e.actor) + "換上 <b>" + esc(nm(idAt(e.actor, e.to))) + "</b>" + '<span class="tagx ' + (e.react ? "rx" : e.manual ? "bf" : "sh") + '">' + (e.react ? "跟著換" : e.manual ? "主動換人" : "倒下後上場") + "</span></span></li>");
+        return;
+      }
+      if (e.kind === "fast") {
+        var d = 1 - e.actor; hp[d][cur[d]] = Math.max(0, hp[d][cur[d]] - e.dmg);
+        var a = acc[e.actor];
+        if (a && a.name === e.name) { a.n++; a.dmg += e.dmg; a.en += e.energy; }
+        else { if (a) flush(); acc[e.actor] = { name: e.name, type: e.type, n: 1, dmg: e.dmg, en: e.energy, from: e.turn }; }
+        return;
+      }
+      if (e.kind === "charged") {
+        flush();
+        var dd = 1 - e.actor, k = cur[dd], before = hp[dd][k];
+        hp[dd][k] = Math.max(0, before - e.dmg);
+        var mh = maxOf(dd, k), after = hp[dd][k];
+        var res2 = e.shielded
+          ? '<span class="blk">' + SHIELD_SVG + "被 " + esc(nm(idAt(dd, k))) + " 擋下" + (shieldBlocked[e.turn + ":" + dd] ? "（少吃 " + shieldBlocked[e.turn + ":" + dd] + "）" : "") + "</span>"
+          : '<span class="hpbar" title="' + esc(nm(idAt(dd, k))) + " HP " + before + " → " + after + '"><i class="hp-was" style="width:' + (before / mh * 100).toFixed(1) + '%"></i><i class="hp-now" style="width:' + (after / mh * 100).toFixed(1) + '%"></i></span>' +
+            "<small>" + esc(nm(idAt(dd, k))) + " " + before + " → <b>" + after + "</b>（−" + e.dmg + "）</small>";
+        out.push('<li class="lg-c" data-i="' + e.actor + '" data-turn="' + e.turn + '">' + pic(idAt(e.actor, e.mon)) +
+          '<div class="lc-b"><div class="lc-h"><span class="tt">第 ' + e.turn + " 回合</span>" + mvChip(e.moveId) +
+          (e.charge ? '<span class="tagx bf">蓄力 ' + Math.round(e.charge * 100) + "%</span>" : "") + (e.buff ? '<span class="tagx bf">' + esc(buffText(e)) + "</span>" : "") +
+          '<button type="button" class="ed" data-ei="' + idx + '" aria-label="修改這一發">✎</button></div>' + '<div class="lc-r">' + res2 + "</div></div></li>");
+        return;
+      }
+      if (e.kind === "faint") {
+        flush();
+        out.push('<li class="lg-k" data-i="' + e.actor + '" data-turn="' + e.turn + '">' + pic(idAt(e.actor, e.mon), "ko") + "<span><b>" + esc(nm(idAt(e.actor, e.mon))) + "</b> 倒下</span></li>");
+        return;
+      }
+      if (e.kind === "form") { flush(); out.push('<li class="lg-s" data-turn="' + e.turn + '"><span>' + evText(e) + "</span></li>"); }
+    });
+    flush();
+    $("#log").innerHTML = out.join("") || "<li>沒有特殊招式。</li>";
+  }
+
+  // ---------- 逐回合狀態 ----------
   var movesKey = "";
   function setTurn(t) {
     t = Math.max(0, Math.min(res.lastTurn, Math.round(t)));
@@ -653,7 +829,8 @@
     var st = res.series[t];
     $("#scrub").value = t;
     $("#tn").textContent = "第 " + t + " / " + res.lastTurn + " 回合";
-    var x = cx(t), cur = $("#cur");
+    var x = cx(t), cur = $("#cur"), box = $("#chart");
+    if (box && box.scrollWidth > box.clientWidth + 4 && (x < box.scrollLeft + 30 || x > box.scrollLeft + box.clientWidth - 30)) box.scrollLeft = Math.max(0, x - box.clientWidth / 2);
     if (cur) {
       cur.setAttribute("x1", x); cur.setAttribute("x2", x);
       for (var i = 0; i < 2; i++) { var d = $("#cur" + i); d.setAttribute("cx", x); d.setAttribute("cy", cy(st.hp[i] / st.max[i])); }
@@ -665,26 +842,20 @@
         return '<span class="tick' + (en >= m.energy ? " ready" : "") + '" style="left:calc(' + m.energy + '% - 1px)" title="' + esc(m.name) + " 需要 " + m.energy + ' 能量"></span>';
       }).join("");
       var shields = ""; for (var k = 0; k < res.startShields[i]; k++) shields += '<span style="color:' + (k < st.sh[i] ? (i ? "#6d4aff" : "#e0276c") : "#d6d2e0") + '">' + SHIELD_SVG + "</span>";
-      return '<div class="st" data-i="' + i + '"><div class="h"><span>' + esc(nm(idAt(i, st.cur[i]))) + '</span><span class="sh-ic" aria-label="剩 ' + st.sh[i] + ' 面護盾">' + shields + "</span></div>" +
+      var bench = state.mode === 3 ? '<span class="bn">' + sides()[i].mons.map(function (m, k) {
+        if (k === st.cur[i]) return "";
+        return '<span class="bn-m' + (st.all[i][k] <= 0 ? " ko" : "") + '" title="' + esc(nm(m.id)) + " HP " + st.all[i][k] + '">' + pic(m.id) + "</span>";
+      }).join("") + "</span>" : "";
+      return '<div class="st" data-i="' + i + '"><div class="h">' + pic(idAt(i, st.cur[i])) + "<span>" + esc(nm(idAt(i, st.cur[i]))) + '</span><span class="sh-ic" aria-label="剩 ' + st.sh[i] + ' 面護盾">' + shields + "</span></div>" +
         '<div class="meter hp' + (hp / mh < 0.3 ? " low" : "") + '">HP ' + hp + "／" + mh + '<div class="t"><i style="width:' + (hp / mh * 100).toFixed(1) + '%"></i></div></div>' +
-        '<div class="meter en">能量 ' + en + "／100" + '<div class="t"><i style="width:' + en + '%"></i>' + ticks + "</div></div></div>";
+        '<div class="meter en">能量 ' + en + "／100" + '<div class="t"><i style="width:' + en + '%"></i>' + ticks + "</div></div>" + bench + "</div>";
     }).join("");
     var evs = res.events.filter(function (e) { return e.turn === t && e.kind !== "shield"; });
     $("#now").innerHTML = t === 0 ? "開場：拖曳上方的軸或按 ▶ 播放；點特殊招式圓圈可以修改那一發。"
-      : ("<b>第 " + t + " 回合</b>：" + (evs.length ? evs.map(function (e) { return evText(e, false); }).join("；") : "雙方都還在出一般招式的動作中。"));
+      : ("<b>第 " + t + " 回合</b>：" + (evs.length ? evs.map(evText).join("；") : "雙方都還在出一般招式的動作中。"));
     $$("#log li").forEach(function (li) { li.classList.toggle("cur", Number(li.getAttribute("data-turn")) === t); });
     var key = st.cur.join(",");
     if (key !== movesKey) { movesKey = key; renderMoves(pr, A, B); }
-  }
-
-  function renderLog() {
-    var list = [];
-    res.events.forEach(function (e, i) { if (e.kind !== "shield" && (state.logAll || e.kind !== "fast")) list.push([e, i]); });
-    $("#log").innerHTML = list.map(function (x) {
-      var e = x[0];
-      return '<li class="' + e.kind + '" data-i="' + e.actor + '" data-turn="' + e.turn + '"><span class="tt">第 ' + e.turn + ' 回合</span><span>' + evText(e, true) +
-        (e.kind === "charged" ? '<button type="button" class="ed" data-ei="' + x[1] + '" aria-label="修改這一發">✎</button>' : "") + "</span></li>";
-    }).join("") || "<li>沒有特殊招式。</li>";
   }
 
   function renderMoves(pr, A, B) {
@@ -698,7 +869,7 @@
         return "<tr><td>" + mvChip(m.id, m.elite) + (m.stab ? '<span class="k">同屬性加成 ×1.2</span>' : "") + "</td>" +
           '<td class="n">' + m.damage + '<span class="k">' + m.pct + "% HP</span>" + ef + "</td><td>" + en + "</td></tr>";
       }).join("");
-      return '<div class="mt" data-i="' + i + '"><h3><i></i>' + esc(nm(i ? B.id : A.id)) + "</h3>" +
+      return '<div class="mt" data-i="' + i + '"><h3>' + pic(i ? B.id : A.id) + esc(nm(i ? B.id : A.id)) + "</h3>" +
         '<p class="mvinfo" style="margin:0 0 6px">CP ' + fmt(inf.cp) + " · " + lvTxt(inf.level) + " · IV " + inf.ivs.atk + "/" + inf.ivs.def + "/" + inf.ivs.hp +
         " · 攻擊 " + inf.atk + "・防禦 " + inf.def + "・HP " + inf.hp + (inf.shadow ? " · 暗影（攻擊 ×1.2、防禦 ×0.83）" : "") + "</p>" +
         "<table><thead><tr><th>招式</th><th>傷害</th><th>能量</th></tr></thead><tbody>" + rows + "</tbody></table></div>";
@@ -754,7 +925,6 @@
   }
 
   // ---------- 主流程 ----------
-  /** setup：設定區有沒有變（變了要重算矩陣、換招比較、熱門對手）；keepTurn：保留重播位置。 */
   function update(o) {
     o = o || {};
     stop();
@@ -770,23 +940,26 @@
       renderMatrix();
       if (!three) setTimeout(function () { renderCompare(); renderSweep(); }, 0);
     }
-    if (state.sel != null && (!res.events[state.sel] || res.events[state.sel].kind !== "charged")) state.sel = null;
+    if (typeof state.sel === "number" && (!res.events[state.sel] || res.events[state.sel].kind !== "charged")) state.sel = null;
     renderVerdict(); renderSandboxBar(); renderChart(); renderLog(); renderAct();
     movesKey = "";
-    setTurn(o.keepTurn ? Math.min(state.turn, res.lastTurn) : res.lastTurn);
+    setTurn(o.keepTurn ? Math.min(state.turn, res.lastTurn) : (typeof state.sel === "object" && state.sel ? state.sel.turn : res.lastTurn));
     setTimeout(markKeyDecisions, 30);
     writeURL();
     if (o.user && !tracked) { tracked = true; track("pvp_sim_use", { league: String(state.cp), mode: String(state.mode) }); }
   }
   /** 套用沙盒修改：保留修改前的 HP 曲線當對照，選中的那一發依「第幾發」重新找到。 */
-  function applyEdits(list, habit) {
-    var prev = res, sel = state.sel != null ? res.events[state.sel] : null;
+  function applyEdits(list, habit, react) {
+    var prev = res, sel = typeof state.sel === "number" ? res.events[state.sel] : null;
     state.ghost = prev.series.map(function (x) { return { hp: x.hp.slice(), max: x.max.slice() }; });
     state.edits[state.mode] = list;
     if (habit) state.habit = habit;
-    res = C.match(cfg(), sides(), opts());
-    state.sel = null;
-    if (sel) res.events.forEach(function (e, i) { if (state.sel == null && e.kind === "charged" && e.actor === sel.actor && e.n === sel.n) state.sel = i; });
+    if (react) state.react = react;
+    if (sel) {
+      var r = C.match(cfg(), sides(), opts());
+      state.sel = null;
+      r.events.forEach(function (e, i) { if (state.sel == null && e.kind === "charged" && e.actor === sel.actor && e.n === sel.n) state.sel = i; });
+    }
     update({ setup: false, keepTurn: true });
     track("pvp_sim_sandbox", { mode: String(state.mode) });
   }
@@ -863,8 +1036,9 @@
       if ((b = t.closest("#order button"))) { state.order = b.getAttribute("data-o"); setup(); return; }
       if ((b = t.closest("#plan button"))) { state.plan = b.getAttribute("data-p"); setup(); return; }
       if ((b = t.closest("[data-act=swap]"))) { if (state.mode === 3) state.teams.reverse(); else state.sides.reverse(); setup(); return; }
-      if ((b = t.closest("[data-act=reset]"))) { state.edits[state.mode] = []; state.habit = "ai"; state.sel = null; state.ghost = null; update({ setup: false }); return; }
+      if ((b = t.closest("[data-act=reset]"))) { state.edits[state.mode] = []; state.habit = "ai"; state.react = "none"; state.sel = null; state.ghost = null; update({ setup: false }); return; }
       if ((b = t.closest("[data-act=unsel]"))) { state.sel = null; renderAct(); $$("#chart .cm.sel").forEach(function (g) { g.classList.remove("sel"); }); return; }
+      if ((b = t.closest("[data-act=turnsw]"))) { stop(); state.sel = { turn: Math.max(1, state.turn) }; renderAct(); return; }
       if ((b = t.closest("[data-act=share]"))) {
         var url = location.href;
         (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () { toast("已複製連結（含沙盒修改）"); }, function () { window.prompt("複製這個連結：", url); });
@@ -872,8 +1046,10 @@
         return;
       }
       if ((b = t.closest("[data-hab]"))) { var hv = b.getAttribute("data-hab"); if (hv !== state.habit) applyEdits(edits(), hv); return; }
+      if ((b = t.closest("[data-react]"))) { var rv = b.getAttribute("data-react"); if (rv !== state.react) applyEdits(edits(), null, rv); return; }
       if ((b = t.closest("[data-unedit]"))) { var l = edits().slice(); l.splice(Number(b.getAttribute("data-unedit")), 1); applyEdits(l); return; }
       if ((b = t.closest("button[data-edits]"))) { if (!b.disabled && !b.classList.contains("on")) applyEdits(decEdits(b.getAttribute("data-edits"))); return; }
+      if ((b = t.closest(".kd[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); return; }
       if ((b = t.closest(".ed[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); $("#replay").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
       if ((b = t.closest("[data-jump]"))) { stop(); setTurn(Number(b.getAttribute("data-jump"))); $("#replay").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
       if ((b = t.closest("[data-mx]"))) {
@@ -898,7 +1074,7 @@
       if ((b = t.closest("#swn button"))) { state.sweepN = Number(b.getAttribute("data-n")); renderSweep(); return; }
       if ((b = t.closest("#sws button"))) { state.sweepS = Number(b.getAttribute("data-s")); renderSweep(); return; }
       if ((b = t.closest("#swo button"))) { state.sweepSort = b.getAttribute("data-o"); renderSweep(); return; }
-      if ((b = t.closest("#log li[data-turn]"))) { setTurn(Number(b.getAttribute("data-turn"))); return; }
+      if ((b = t.closest("#log li[data-turn]"))) { stop(); setTurn(Number(b.getAttribute("data-turn"))); return; }
       if (t.closest("#play")) { play(); return; }
       var tg = targetOf(t); if (!tg) return;
       var sd = tg.obj;
@@ -940,11 +1116,10 @@
     });
     app.addEventListener("input", function (ev) {
       var t = ev.target;
-      if (t.id === "scrub") { stop(); setTurn(Number(t.value)); return; }
+      if (t.id === "scrub") { stop(); setTurn(Number(t.value)); if (typeof state.sel === "object" && state.sel) { state.sel = { turn: Math.max(1, state.turn) }; renderAct(); } return; }
       var k = t.getAttribute && t.getAttribute("data-k");
       if (k === "energy" || k === "hpPct") { var v = t.nextElementSibling; if (v) v.textContent = t.value + (k === "hpPct" ? "%" : ""); }
     });
-    $("#logall").addEventListener("change", function (ev) { state.logAll = ev.target.checked; renderLog(); setTurn(state.turn); });
     app.addEventListener("toggle", function (ev) {
       var d = ev.target; if (d.getAttribute && d.getAttribute("data-open")) openSlots[d.getAttribute("data-open")] = d.open;
     }, true);
@@ -954,11 +1129,17 @@
       var svg = chart.querySelector("svg"); if (!svg) return;
       var r = svg.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width * CH.W;
       stop(); setTurn((x - CH.L) / (CH.W - CH.L - CH.R) * res.lastTurn);
+      if (typeof state.sel === "object" && state.sel) { state.sel = { turn: Math.max(1, state.turn) }; renderAct(); }
     };
     chart.addEventListener("pointerdown", function (ev) {
       var g = ev.target.closest && ev.target.closest("[data-ei]");
       if (g) { selectEvent(Number(g.getAttribute("data-ei"))); return; }
+      if (ev.pointerType === "touch") return;      // 手指在圖上滑是捲動；點一下才跳回合（見下方 click）
       dragging = true; at(ev);
+    });
+    chart.addEventListener("click", function (ev) {
+      if (ev.target.closest && ev.target.closest("[data-ei]")) return;
+      if (!dragging) at(ev);
     });
     chart.addEventListener("keydown", function (ev) {
       var g = ev.target.closest && ev.target.closest("[data-ei]");

@@ -459,6 +459,9 @@
   //   {k:"hold",   side, n, d}   side 的第 n 發特殊招式延後 d 回合
   //   {k:"use",    side, n, v}   side 的第 n 發特殊招式改放第 v 招（能量不夠就累積到夠再放）
   //   {k:"swap",   side, n, to}  對手第 n 發特殊招式出手的那一回合，side 換成第 to 隻上場擋招（切角擋招）
+  //   {k:"swapT",  side, t, to}  第 t 回合（正在出招就等到最早可以換的回合）side 換成第 to 隻
+  //   {k:"charge", side, n, v}   side 的第 n 發特殊招式只蓄力 v（0.25～0.75），傷害按比例縮小（與 PvPoke 相同算法）
+  // opts.react = "counter"：我方主動換人後，對手若有明顯更好的對位（評分高 60 以上），下一回合起換上來克制
   // habits[side]：開盾習慣 ai（PvPoke 判斷）| always（每發都開）| never（不開）| lethal（只擋會被打倒的）| first（只開第一發）
   // plan：spread（3 對 3 每隻最多用「剩餘護盾 ÷ 剩下隻數」面）| free（需要就用）
 
@@ -487,7 +490,9 @@
     var startShields = shields.slice();
     var cnt = { thrown: [0, 0], hit: [0, 0], want: {} }, timer = [0, 0];
     var stint = [{ used: 0, allow: 2 }, { used: 0, allow: 2 }];
-    var events = [], switches = [], swapOk = [{}, {}], swapFail = {}, offset = 0, ko = [[], []];
+    var events = [], switches = [], swapOk = [{}, {}], swapFail = {}, offset = 0, ko = [[], []], reactN = 0;
+    var pend = swapAt.map(function (x) { var o = {}; for (var k in x) o[k] = x[k]; o.done = false; return o; });
+    function clone(o) { var c = {}; for (var k in o) c[k] = o[k]; return c; }
     function aliveCount(t) { return ms[t].filter(function (x) { return x.alive; }).length; }
     function newStint(t) {
       var n = aliveCount(t);
@@ -522,6 +527,28 @@
       b.setNewPokemon(objs[1][cur[1]], 1, false);
       var segCur = [cur[0], cur[1]], segSw = [];
       var origTA = b.getTurnAction, origUM = b.useMove;
+      // 對手跟著換：用目前雙方的 HP、能量評估，有明顯更好的對位才換
+      var liveState = function (t, k) {
+        var p = objs[t][k], on = b.getPokemon()[t] === p;
+        return { hp: on ? p.hp : p.startHp, en: on ? p.energy : p.startEnergy };
+      };
+      var scheduleReact = function (g, mine, myShields) {
+        var o = 1, curO = segCur[o];
+        if (players[o].getSwitchTimer() > 0) return;
+        var me = clone(sides[0].mons[mine]), ls0 = liveState(0, mine);
+        me.shields = myShields; me.startHp = Math.max(1, ls0.hp); me.energy = ls0.en;
+        var rate = function (k) {
+          var op = clone(sides[o].mons[k]), ls = liveState(o, k);
+          op.startHp = Math.max(1, ls.hp); op.energy = ls.en; op.shields = b.getPokemon()[o].shields;
+          var s2 = prepare(cfg, me, op); s2.b.simulate(); return ratingOf(s2.q, s2.p);
+        };
+        var best = -1, br = rate(curO) + 60;
+        ms[o].forEach(function (x, k) {
+          if (k === curO || !x.alive || liveState(o, k).hp <= 0) return;
+          var r = rate(k); if (r > br) { br = r; best = k; }
+        });
+        if (best >= 0) pend.push({ side: o, turn: g + 1, to: best, from: true, auto: true, id: "react" + (reactN++) });
+      };
 
       b.getTurnAction = function (poke, opp) {
         var side = poke.index, g = offset + b.getTurns();
@@ -529,16 +556,25 @@
           var ok = poke.cooldown === 0 && players[side].getSwitchTimer() === 0;
           if (ok) swapOk[side][g] = true;
           var sw = null;
-          for (var i = 0; i < swapAt.length; i++) if (swapAt[i].side === side && swapAt[i].turn === g) sw = swapAt[i];
+          for (var i = 0; i < pend.length; i++) {
+            var x = pend[i];
+            if (x.done || x.side !== side) continue;
+            if (x.from ? x.turn <= g : x.turn === g) { sw = x; break; }
+          }
           if (sw) {
             var to = sw.to;
-            if (!ok) swapFail[sw.id] = poke.cooldown > 0 ? "busy" : "timer";
-            else if (to === segCur[side] || !ms[side][to] || !ms[side][to].alive) swapFail[sw.id] = "target";
-            else {
+            if (to === segCur[side] || !ms[side][to] || !ms[side][to].alive) { sw.done = true; swapFail[sw.id] = "target"; }
+            else if (!ok) {
+              // 指定回合換人：正在出招就等到最早可以換的回合；擋招（對手出招那一回合）錯過就算了
+              if (!sw.from) { sw.done = true; swapFail[sw.id] = poke.cooldown > 0 ? "busy" : "timer"; }
+              else if (g - sw.turn > 120) { sw.done = true; swapFail[sw.id] = "timer"; }
+            } else {
+              sw.done = true;
               poke.hasActed = true;
+              if (side === 0 && opts.react === "counter" && !sw.auto) scheduleReact(g, to, poke.shields);
               objs[side][to].setShields(poke.shields);      // 護盾整隊共用
-              segSw.push({ turn: g, side: side, from: segCur[side], to: to });
-              switches.push({ turn: g, side: side, from: segCur[side], to: to, kind: "manual" });
+              segSw.push({ turn: g, side: side, from: segCur[side], to: to, auto: !!sw.auto });
+              switches.push({ turn: g, side: side, from: segCur[side], to: to, kind: sw.auto ? "react" : "manual" });
               segCur[side] = to;
               stint[side] = { used: 0, allow: plan === "spread" && aliveCount(side) > 1 ? Math.ceil(poke.shields / aliveCount(side)) : 99 };
               return new E.TimelineAction("switch", side, b.getTurns(), to, { priority: poke.priority + 20 });
@@ -556,6 +592,10 @@
             else wait = true;
           }
           if (wait) a = new E.TimelineAction("fast", side, b.getTurns(), 0, { priority: poke.priority });
+          else {
+            var ce = edit(edits, "charge", side, n);
+            if (ce) a.settings.charge = ce.v;
+          }
         }
         return a;
       };
@@ -608,7 +648,7 @@
         e.turn += offset;
         events.push(e);
       });
-      segSw.forEach(function (s) { events.push({ kind: "switch", turn: s.turn, actor: s.side, from: s.from, to: s.to, mon: s.to, manual: true, time: -1 }); });
+      segSw.forEach(function (s) { events.push({ kind: "switch", turn: s.turn, actor: s.side, from: s.from, to: s.to, mon: s.to, manual: true, react: s.auto, time: -1 }); });
       // 更新每隻的狀態
       var onField = b.getPokemon();
       [0, 1].forEach(function (t) {
@@ -705,6 +745,7 @@
   function match(cfg, sides, opts) {
     opts = opts || {};
     var edits = opts.edits || [], swapAt = [], status = {};
+    edits.forEach(function (e, i) { if (e.k === "swapT") swapAt.push({ side: e.side, turn: e.t, to: e.to, id: i, from: true }); });
     var swaps = edits.map(function (e, i) { return { e: e, i: i }; }).filter(function (x) { return x.e.k === "swap"; })
       .sort(function (a, b) { return a.e.n - b.e.n; });
     swaps.forEach(function (x) {
@@ -714,7 +755,12 @@
       else swapAt.push({ side: x.e.side, turn: T, to: x.e.to, id: x.i });
     });
     var res = matchOnce(cfg, sides, opts, swapAt);
-    Object.keys(res.swapFail).forEach(function (id) { status[id] = res.swapFail[id]; });
+    Object.keys(res.swapFail).forEach(function (id) { if (!/^react/.test(id)) status[id] = res.swapFail[id]; });
+    res.events.forEach(function (e) {
+      if (e.kind !== "charged") return;
+      var ce = edit(edits, "charge", e.actor, e.n);
+      if (ce) e.charge = ce.v;
+    });
     res.editStatus = edits.map(function (e, i) { return status[i] || "ok"; });
     // 1 對 1 的評分（與 PvPoke 相同算法）
     if (sides[0].mons.length === 1 && sides[1].mons.length === 1) {
