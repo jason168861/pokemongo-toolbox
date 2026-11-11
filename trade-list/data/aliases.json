@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-02",
+ "updated": "2026-11-11",
  "note": "交易清單搜尋用的別名表。請用 alias-editor.html 編輯(手改也可以,格式很單純)。 kind=mon → targets 是圖鑑編號;kind=form → 型態/造型代碼;kind=bg → 背卡的 image_name。",
  "entries": [
   {"kind":"mon","terms":["奇異種子"],"targets":["1"],"note":"舊譯名"},
@@ -147,9 +147,9 @@
   {"kind":"bg","terms":["西班牙","馬拉加"],"targets":["lc 2026 ComicCon Malaga.png"]},
   {"kind":"bg","terms":["墨西哥","亡靈節"],"targets":["Special Background Dia de Muertos 2026.png"]},
   {"kind":"bg","terms":["倫敦","英國"],"targets":["Location Background Night Out 2026 London.png"]},
-  {"kind":"bg","terms":["墨西哥"],"targets":["Location Background Wild Area Mexico City.png"]},
+  {"kind":"bg","terms":["墨西哥","曠野地帶","2026"],"targets":["Location Background Wild Area Mexico City.png"]},
   {"kind":"bg","terms":["洛杉磯","美國"],"targets":["Location Background Night Out 2026 LA.png"]},
-  {"kind":"bg","terms":["日本","曠野地帶","仙台"],"targets":["Location Background Wild Area Sendai.png"]},
+  {"kind":"bg","terms":["日本","曠野地帶","仙台","2026"],"targets":["Location Background Wild Area Sendai.png"]},
   {"kind":"bg","terms":["中秋節"],"targets":["moonlight.jpg"]},
   {"kind":"bg","terms":["西班牙","馬拉加"],"targets":["Location Background 2026 Comic Con Malaga.png"]},
   {"kind":"bg","terms":["美國","波士頓"],"targets":["Location Background City Safari Boston.png"]},
@@ -158,16 +158,17 @@
   {"kind":"bg","terms":["馬賽","法國"],"targets":["Location Background City Safari Marseille.png"]},
   {"kind":"bg","terms":["慕尼黑","德國"],"targets":["Location Background City Safari Munich.png"]},
   {"kind":"bg","terms":["里斯本","葡萄牙"],"targets":["Location Background City Safari Lisbon.png"]},
-  {"kind":"bg","terms":["倫敦","英國"],"targets":["Location Background ESA Science Museum London.png"]},
-  {"kind":"bg","terms":["圖盧茲","法國"],"targets":["Location Background ESA Cite De Espace.png"]},
-  {"kind":"bg","terms":["紐倫堡","德國"],"targets":["Location Background ESA Space Center Germany.png"]},
-  {"kind":"bg","terms":["瓦倫西亞","西班牙"],"targets":["Location Background ESA Ciudad De Las Artes.png"]},
-  {"kind":"bg","terms":["諾德韋克","荷蘭"],"targets":["Location Background ESA Space Expo NL.png"]},
-  {"kind":"bg","terms":["比利時"],"targets":["Location Background ESA Euro Space Center.png"]},
+  {"kind":"bg","terms":["倫敦","英國","倫敦科學博物館"],"targets":["Location Background ESA Science Museum London.png"]},
+  {"kind":"bg","terms":["圖盧茲","法國","法國太空城"],"targets":["Location Background ESA Cite De Espace.png"]},
+  {"kind":"bg","terms":["紐倫堡","德國","德國紐倫堡德意志博物館"],"targets":["Location Background ESA Space Center Germany.png"]},
+  {"kind":"bg","terms":["瓦倫西亞","西班牙","瓦倫西亞科學博物館"],"targets":["Location Background ESA Ciudad De Las Artes.png"]},
+  {"kind":"bg","terms":["諾德韋克","荷蘭","荷蘭太空博覽館"],"targets":["Location Background ESA Space Expo NL.png"]},
+  {"kind":"bg","terms":["比利時","比利時歐洲太空中心"],"targets":["Location Background ESA Euro Space Center.png"]},
   {"kind":"bg","terms":["美國"],"targets":["Location Background NFL Arizona Cardinals 2026.png"]},
   {"kind":"bg","terms":["韓國","首爾"],"targets":["Location Background FC2026 Seoul.png"]},
   {"kind":"bg","terms":["日本","東京","npb"],"targets":["Location Background NPB 2026 Tokyo Swallows.png"]},
   {"kind":"bg","terms":["日本","npb"],"targets":["Location Background NPB 2026 Mynavi AllStar.png"]},
-  {"kind":"bg","terms":["亡靈節"],"targets":["sb-dia-de-muertos-2026.jpg"]}
+  {"kind":"bg","terms":["亡靈節"],"targets":["sb-dia-de-muertos-2026.jpg"]},
+  {"kind":"bg","terms":["曠野地帶","全球","2026"],"targets":["sb-wild-area-global-2026.jpg"]}
  ]
 }

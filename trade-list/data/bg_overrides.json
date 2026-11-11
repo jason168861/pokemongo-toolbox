@@ -618,6 +618,12 @@
   {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":705,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":706,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
   {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":784,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
-  {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":959,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}}
+  {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":959,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"Special Background Festival of Lights 2026.png","op":"set","key":"25||||||Pikachu_female_saree.png","fields":{"costume":"DIWALI_2024","sprite":null,"sprite_shiny":null}},
+  {"card":"Location Background Wild Area Sendai.png","op":"add","mon":{"dex":705,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HISUIAN"}},
+  {"card":"Location Background Wild Area Sendai.png","op":"add","mon":{"dex":706,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HISUIAN"}},
+  {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":705,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HISUIAN"}},
+  {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":706,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HISUIAN"}},
+  {"card":"Special Background Wild Area Global 2026.png","op":"hideCard"}
  ]
 }
