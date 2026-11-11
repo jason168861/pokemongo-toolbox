@@ -364,7 +364,8 @@ def build_league(lg, src, dex, imgs, date):
         "tabs": tabs, "crumb": f"<span>{e(name)}排名</span>",
         "ranks": ranks, "top": top, "faq": faq, "faq_h": f"{name}常見問題", "ld": ld,
         "more": (f'完整排名（{len(ranks)} 隻）與自己的 IV 名次，請用 <a href="../">PvP IV 排名查詢工具</a>。'
-                 f'也可以看{others}，或本季的<a href="../cups/">盃賽排名</a>。'),
+                 f'也可以看{others}，或本季的<a href="../cups/">盃賽排名</a>。'
+                 f'想知道兩隻寶可夢對上誰會贏，可以用 <a href="../../pvp-sim/?l={lg["cp"]}">PvP 對戰模擬器</a>。'),
         "next_p": f"用 PvP IV 排名工具查你手上那隻的 IV 在{e(name)}排第幾，以及要升到幾級、CP 多少。",
     })
 
