@@ -32,7 +32,7 @@
   var HABITS = [["ai", "AI 判斷"], ["always", "每發都開"], ["lethal", "只擋致命"], ["first", "只開第一發"], ["never", "完全不開"]];
   var SHIELD_PATH = "M8 1 2 3.2v4.3c0 3.4 2.6 6.3 6 7.5 3.4-1.2 6-4.1 6-7.5V3.2z";
   var SHIELD_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + SHIELD_PATH + '" fill="currentColor"/></svg>';
-  var FAIL_TEXT = { missing: "對手沒有放到這一發", busy: "那一回合還在出一般招式，來不及換", timer: "換人冷卻中（45 秒內只能換一次）", target: "那隻已經倒下或已經在場上" };
+  var FAIL_TEXT = { missing: "對手沒有放到這一發", nofire: "沒有放到這一發", noshield: "那時已經沒有護盾", late: "對戰在那之前就結束了", busy: "那一回合還在出一般招式，來不及換", timer: "換人冷卻中（45 秒內只能換一次）", target: "那隻已經倒下或已經在場上" };
 
   var state = {
     mode: 1, cp: 1500, cap: 50, sides: [null, null], teams: [null, null], order: "best", plan: "spread",
@@ -43,7 +43,7 @@
   var LINES = [["hp0", "我方 HP"], ["hp1", "對手 HP"], ["en0", "我方能量"], ["en1", "對手能量"], ["ghost", "修改前的 HP"], ["fast", "一般招式刻度"]];
   var lines = { hp0: true, hp1: true, en0: false, en1: false, ghost: true, fast: true };
   try { var saved = JSON.parse(localStorage.getItem("pvpsim.lines") || "null"); if (saved) for (var lk in lines) if (typeof saved[lk] === "boolean") lines[lk] = saved[lk]; } catch (e) { /* 無痕或封鎖儲存時用預設 */ }
-  var res = null, mx = null, playTimer = null, pickFor = null, poolCache = {}, sweepJob = 0, keyJob = 0, tracked = false, openSlots = {};
+  var mxJob = 0, res = null, mx = null, playTimer = null, pickFor = null, poolCache = {}, sweepJob = 0, keyJob = 0, tracked = false, openSlots = {};
   var app = document.getElementById("app");
 
   // ---------- 小工具 ----------
@@ -55,7 +55,8 @@
   function nm(id) { return C.mon(id) ? C.mon(id).speciesName : id; }
   function fmt(n) { return Number(n).toLocaleString("zh-Hant"); }
   function lvTxt(l) { return "Lv" + (l % 1 ? l.toFixed(1) : l); }
-  function imgOf(id) { var m = C.mon(id); return m && m.img ? IMG + m.img : ""; }
+  // img 一般是交易清單縮圖的檔名；「/」開頭的是相對網站根目錄的路徑（img/pvp/ 的型態圖）
+  function imgOf(id) { var m = C.mon(id); return m && m.img ? (m.img.charAt(0) === "/" ? ".." + m.img : IMG + m.img) : ""; }
   /** 依縮圖裡寶可夢實際的範圍置中縮放（tb＝[x, y, 寬, 高]），讓很寬或很小的圖都差不多大、不會被切掉。 */
   function fitStyle(m, fill) {
     if (!m || !m.tb) return "";
@@ -136,6 +137,35 @@
       react: state.mode === 3 ? (react || state.react) : "none", edits: extraEdits || edits() };
   }
   function sideLabel(t) { return state.mode === 3 ? TEAM_NAME[t] : SIDE_NAME[t]; }
+  /** 同一組設定＋同一組沙盒修改只算一次（選項按鈕先算過的，按下去就不用再算）。 */
+  var mcache = {}, mcacheN = 0;
+  function runMatch(o) {
+    var key = JSON.stringify([cfg(), sides(), o.order, o.plan, o.habits, o.react, encEdits(o.edits)]);
+    if (mcache[key]) return mcache[key];
+    if (++mcacheN > 300) { mcache = {}; mcacheN = 1; }
+    return (mcache[key] = C.match(cfg(), sides(), o));
+  }
+  /** 選項按鈕上的「選了之後的勝負」：先畫出按鈕，再分批算（手機上一次算十幾場會卡住畫面）。 */
+  var fillQ = [], fillTimer = 0, fillId = 0;
+  function pendBadge(o, label) {
+    var id = "pb" + (++fillId);
+    fillQ.push({ id: id, o: o, label: label });
+    if (!fillTimer) fillTimer = setTimeout(runFill, 0);
+    return id;
+  }
+  function runFill() {
+    fillTimer = 0;
+    var t0 = Date.now();
+    while (fillQ.length && Date.now() - t0 < 12) {
+      var j = fillQ.shift(), el = document.getElementById(j.id);
+      if (!el) continue;                                  // 面板已經換掉了
+      var r = runMatch(j.o);
+      el.innerHTML = (typeof j.label === "function" ? j.label(r) : j.label) + badge(r);
+      el.removeAttribute("aria-busy");
+    }
+    if (fillQ.length) fillTimer = setTimeout(runFill, 0);
+  }
+  var PEND = '<span class="ob pend" aria-hidden="true">…</span>';
   function clearSandbox() {
     if (edits().length || state.habit !== "ai" || state.react !== "none") toast("已清除沙盒修改");
     state.edits[state.mode] = []; state.habit = "ai"; state.react = "none"; state.sel = null; state.ghost = null;
@@ -212,7 +242,8 @@
   function readURL() {
     var q = {};
     location.search.replace(/^\?/, "").split("&").forEach(function (kv) {
-      var i = kv.indexOf("="); if (i > 0) q[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1));
+      var i = kv.indexOf("="); if (i <= 0) return;
+      try { q[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); } catch (e) { /* 被截斷的 % 編碼：忽略這個參數 */ }
     });
     var l = parseInt(q.l, 10);
     if ([1500, 2500, 10000].indexOf(l) > -1) state.cp = l;
@@ -253,10 +284,10 @@
           '<div class="vs"><b>VS</b><button type="button" class="swap" data-act="swap" aria-label="交換雙方">⇄ 交換</button></div>' +
           '<div class="side" data-i="1" id="s1"></div></div></div>' +
         '<div id="three" hidden>' +
-          '<div class="bar rules"><span class="lbl">倒下後派誰上場</span><div class="seg sm" id="order" role="group" aria-label="倒下後派誰上場">' +
-            '<button type="button" data-o="best">挑最有利的</button><button type="button" data-o="fixed">依隊伍順序</button></div>' +
-            '<span class="lbl">護盾分配</span><div class="seg sm" id="plan" role="group" aria-label="護盾分配">' +
-            '<button type="button" data-p="spread">平均分配</button><button type="button" data-p="free">需要就用</button></div></div>' +
+          '<div class="bar rules"><span class="rgrp"><span class="lbl">倒下後派誰上場</span><div class="seg sm" id="order" role="group" aria-label="倒下後派誰上場">' +
+            '<button type="button" data-o="best">挑最有利的</button><button type="button" data-o="fixed">依隊伍順序</button></div></span>' +
+            '<span class="rgrp"><span class="lbl">護盾分配</span><div class="seg sm" id="plan" role="group" aria-label="護盾分配">' +
+            '<button type="button" data-p="spread">平均分配</button><button type="button" data-p="free">需要就用</button></div></span></div>' +
           '<div class="duel teams"><div class="team" data-t="0" id="t0"></div>' +
           '<div class="vs"><b>VS</b><button type="button" class="swap" data-act="swap" aria-label="交換兩隊">⇄ 交換</button></div>' +
           '<div class="team" data-t="1" id="t1"></div></div>' +
@@ -266,7 +297,7 @@
       "</section>" +
       '<section class="card verdict" id="verdict" aria-live="polite"></section>' +
       '<section class="card" id="replay"><h2 class="sec-h"><span class="ic">▶</span>重播與沙盒<small id="rp-sub"></small></h2>' +
-        '<div class="habit"><span class="lbl">對手開盾習慣</span><div class="hab" id="hab" role="group" aria-label="對手開盾習慣"></div></div>' +
+        '<div class="habit"><span class="lbl">對手開盾習慣</span><div class="hab" id="hab" role="group" aria-label="對手開盾習慣"></div><small class="habnote" id="habnote" hidden>對手沒有護盾，開盾習慣不影響結果</small></div>' +
         '<div class="habit" id="reactbar" hidden><span class="lbl">我換人後，對手</span><div class="hab" id="react" role="group" aria-label="對手會不會跟著換"></div></div>' +
         '<div class="edits" id="edits"></div>' +
         // 對戰畫面：播放時看得到現在打到哪裡
@@ -306,7 +337,7 @@
         '<div class="seg sm" id="sws" role="group" aria-label="護盾"><button type="button" data-s="0">雙方 0 盾</button><button type="button" data-s="1">雙方 1 盾</button><button type="button" data-s="2">雙方 2 盾</button></div>' +
         '<div class="seg sm" id="swo" role="group" aria-label="排序"><button type="button" data-o="rank">依排名</button><button type="button" data-o="rating">依評分</button></div></div>' +
         '<div class="prog" id="swprog"><i></i></div><div class="swsum" id="swsum"></div><ul class="swgrid" id="swgrid"></ul>' +
-        '<p class="mxnote">對手都用 PvPoke 推薦招式與預設 IV；點任一隻就會換成牠當對手。</p></section>' +
+        '<p class="mxnote">對手都用 PvPoke 推薦招式與預設 IV；我方沿用上面的設定（包含進階設定的起始 HP、起始能量與騙盾）。點任一隻就會換成牠當對手。</p></section>' +
       '<section class="card" id="rkc"><h2 class="sec-h"><span class="ic">🏆</span>隊伍跑分表<small>每種三隻組合、每種上場順序，對上常用隊伍的分數</small></h2>' +
         '<div id="rk"><p class="mxnote">捲到這裡時載入跑分資料…</p></div></section>';
   }
@@ -514,15 +545,20 @@
   }
   function renderSandboxBar() {
     var list = edits();
+    var noShield = sides()[1].shields === 0;      // 對手沒有盾時，開盾習慣不會有差別
     $("#hab").innerHTML = HABITS.map(function (h) {
-      var r = h[0] === state.habit ? res : C.match(cfg(), sides(), opts(null, h[0]));
-      return '<button type="button" data-hab="' + h[0] + '" aria-pressed="' + (state.habit === h[0]) + '"><span>' + h[1] + "</span>" + badge(r) + "</button>";
+      var on = h[0] === state.habit, lab = "<span>" + h[1] + "</span>";
+      if (on) return '<button type="button" data-hab="' + h[0] + '" aria-pressed="true">' + lab + badge(res) + "</button>";
+      if (noShield) return '<button type="button" data-hab="' + h[0] + '" aria-pressed="false" disabled title="對手沒有護盾">' + lab + "</button>";
+      return '<button type="button" id="' + pendBadge(opts(null, h[0]), lab) + '" data-hab="' + h[0] + '" aria-pressed="false">' + lab + PEND + "</button>";
     }).join("");
+    $("#habnote").hidden = !noShield;
     $("#reactbar").hidden = state.mode !== 3;
     if (state.mode === 3) {
       $("#react").innerHTML = [["none", "不換"], ["counter", "會跟著換（挑剋制的）"]].map(function (x) {
-        var r = x[0] === state.react ? res : C.match(cfg(), sides(), opts(null, null, x[0]));
-        return '<button type="button" data-react="' + x[0] + '" aria-pressed="' + (state.react === x[0]) + '"><span>' + x[1] + "</span>" + badge(r) + "</button>";
+        var lab = "<span>" + x[1] + "</span>";
+        if (x[0] === state.react) return '<button type="button" data-react="' + x[0] + '" aria-pressed="true">' + lab + badge(res) + "</button>";
+        return '<button type="button" id="' + pendBadge(opts(null, null, x[0]), lab) + '" data-react="' + x[0] + '" aria-pressed="false">' + lab + PEND + "</button>";
       }).join("");
     }
     $("#edits").innerHTML = list.length ? list.map(function (e, i) {
@@ -538,9 +574,8 @@
 
   /** 選項按鈕：預先算好選了之後的結果；label 可以是函式（拿到那個結果再決定要顯示什麼）。 */
   function optButton(label, list, current, extra) {
-    var r = C.match(cfg(), sides(), opts(list));
-    var lab = typeof label === "function" ? label(r) : label;
-    return '<button type="button" class="opt' + (current ? " on" : "") + '" data-edits="' + esc(encEdits(list)) + '"' + (extra || "") + ">" + lab + badge(r) + "</button>";
+    var id = pendBadge(opts(list), label), lab = typeof label === "function" ? label(null) : label;
+    return '<button type="button" id="' + id + '" aria-busy="true" class="opt' + (current ? " on" : "") + '" data-edits="' + esc(encEdits(list)) + '"' + (extra || "") + ">" + lab + PEND + "</button>";
   }
   function findCharged(r, actor, n) {
     for (var i = 0; i < r.events.length; i++) { var x = r.events[i]; if (x.kind === "charged" && x.actor === actor && x.n === n) return x; }
@@ -572,7 +607,7 @@
     var co = cur("charge", a, e.n), cv = co ? co.v : 1;
     var chargeLabel = function (v) {
       return function (r) {
-        var x = findCharged(r, a, e.n);
+        var x = r && findCharged(r, a, e.n);
         var sub = !x ? "" : (x.shielded ? "被擋" : "打 " + x.dmg + "・剩 " + r.series[x.turn].hp[d]);
         return "<span class=\"cl\"><b>" + (v === 1 ? "滿蓄力" : Math.round(v * 100) + "%") + "</b><small>" + sub + "</small></span>";
       };
@@ -643,13 +678,13 @@
       });
       h += "</div></div>";
     });
-    h += '<p class="mvinfo">換人有 45 秒冷卻；那一回合正在出一般招式的話，會在最早可以換的回合換。想看對手的反應，可以開上方的「對手會跟著換」。</p>';
+    h += '<p class="mvinfo">換人有 45 秒冷卻；那一回合正在出一般招式的話，會在最早可以換的回合換。想看對手的反應，可以把上方「我換人後，對手」設成「會跟著換」。</p>';
     el.innerHTML = h;
   }
 
   /** 關鍵決策：把某一發的開盾決定反過來，勝負就會改變（或差距很大）的，在圖上加「!」並列在圖下方。 */
   function markKeyDecisions() {
-    var job = ++keyJob, list = edits(), evs = [], found = [];
+    var job = ++keyJob, list = edits(), evs = [], found = [], mine = res;
     res.events.forEach(function (e, i) {
       if (e.kind !== "charged") return;
       if (res.series[Math.max(0, e.turn - 1)].sh[1 - e.actor] > 0 || e.shielded) evs.push(i);
@@ -657,7 +692,7 @@
     var base = outcome(res), k = 0;
     $("#keys").innerHTML = "";
     (function next() {
-      if (job !== keyJob) return;
+      if (job !== keyJob || mine !== res) return;
       if (k >= evs.length) {
         $("#keys").innerHTML = found.length ? '<span class="lbl">關鍵決策</span>' + found.map(function (f) {
           var e = res.events[f.i];
@@ -667,7 +702,8 @@
         return;
       }
       var i = evs[k++], e = res.events[i];
-      var r = C.match(cfg(), sides(), opts(withEdit(list, { k: "shield", side: 1 - e.actor, n: e.m, v: !e.shielded })));
+      if (!e) return;
+      var r = runMatch(opts(withEdit(list, { k: "shield", side: 1 - e.actor, n: e.m, v: !e.shielded })));
       var o = outcome(r);
       if ((o.score > 500) !== (base.score > 500) || Math.abs(o.score - base.score) >= 150) {
         found.push({ i: i, r: r });
@@ -970,7 +1006,10 @@
         out.push('<button type="button" class="sa s' + side + '" data-ei="' + ci + '">⏱ ' + sideLabel(side) + "下一發（第 " + res.events[ci].turn + " 回合）的時機／蓄力</button>");
       }
     });
-    if (state.mode === 3) out.push('<button type="button" class="sa sw" data-act="turnsw">⇄ 在第 ' + Math.max(1, t) + " 回合換人</button>");
+    var canSw = state.mode === 3 && t < res.lastTurn && [0, 1].some(function (side) {
+      return st.all[side].some(function (hp, k) { return k !== st.cur[side] && hp > 0; });
+    });
+    if (canSw) out.push('<button type="button" class="sa sw" data-act="turnsw">⇄ 這回合換人（第 ' + Math.max(1, t) + " 回合）</button>");
     $("#stact").innerHTML = out.join("");
   }
   function replay(el, cls) { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
@@ -1063,12 +1102,25 @@
     $("#cmpc").hidden = three; $("#swc").hidden = three;
     if (three) { pressed("#order", "data-o", state.order); pressed("#plan", "data-p", state.plan); renderTeam(0); renderTeam(1); }
     else { renderSide(0); renderSide(1); }
-    res = C.match(cfg(), sides(), opts());
+    ++keyJob; ++sweepJob; fillQ = [];               // 舊的背景計算全部作廢
+    res = runMatch(opts());
     if (o.setup !== false) {
-      mx = three ? C.teamMatrix(cfg(), state.teams[0], state.teams[1], state.order, state.plan, ["ai", "ai"]) : C.matrix(cfg(), state.sides[0], state.sides[1]);
-      renderMatrix();
-      if (!three) setTimeout(function () { renderCompare(); renderSweep(); }, 0);
-    }
+      if (three) {
+        // 9 場整隊對戰比較慢：先畫主要結果，再補盾數矩陣
+        mx = null; $("#mx").innerHTML = '<p class="mxnote">計算中…</p>';
+        var mj = ++mxJob;
+        setTimeout(function () {
+          if (mj !== mxJob) return;
+          mx = C.teamMatrix(cfg(), state.teams[0], state.teams[1], state.order, state.plan, ["ai", "ai"]);
+          renderMatrix();
+        }, 50);
+      } else {
+        ++mxJob;
+        mx = C.matrix(cfg(), state.sides[0], state.sides[1]);
+        renderMatrix();
+        setTimeout(function () { renderCompare(); renderSweep(); }, 0);
+      }
+    } else if (mx) renderMatrix();
     if (typeof state.sel === "number" && (!res.events[state.sel] || res.events[state.sel].kind !== "charged")) state.sel = null;
     renderVerdict(); renderSandboxBar(); renderChart(); renderLog(); renderAct();
     movesKey = "";
@@ -1085,7 +1137,7 @@
     if (habit) state.habit = habit;
     if (react) state.react = react;
     if (sel) {
-      var r = C.match(cfg(), sides(), opts());
+      var r = runMatch(opts());
       state.sel = null;
       r.events.forEach(function (e, i) { if (state.sel == null && e.kind === "charged" && e.actor === sel.actor && e.n === sel.n) state.sel = i; });
     }
