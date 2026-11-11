@@ -549,3 +549,45 @@ button.sg-mv:hover{opacity:1;border-color:#fff}
  .sg-n{grid-area:n}.sg-m{grid-area:a}.sg-m.r{grid-area:b}.sg-vs{grid-area:v}.sg-out{grid-area:o;text-align:left}
  .sg-n small{display:inline;margin-left:6px}.sg-out small{display:inline;margin-left:6px}
 }
+
+/* ---------- 隊伍跑分表 ---------- */
+.rk-tools{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:0 0 8px}
+.rk-tools select{min-height:36px;max-width:100%;padding:4px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;font:inherit;font-size:.84rem;font-weight:700;color:var(--ink)}
+.rk-note{margin:0 0 12px;font-size:.8rem;line-height:1.6;color:var(--muted)}.rk-note b{color:var(--ink-2)}
+.rk-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.rk-r{border:1px solid var(--line);border-radius:16px;padding:10px 12px;background:#fff}
+.rk-main{display:flex;align-items:center;gap:10px}
+.rk-no{flex:none;width:40px;font-weight:900;color:var(--muted);font-variant-numeric:tabular-nums}
+.rk-p{display:flex;flex:none;gap:4px}
+.rk-m{display:flex;flex-direction:column;align-items:center;gap:1px}
+.rk-m small{font-size:.62rem;font-weight:800;color:var(--muted)}
+.rk-m .pic{width:48px;height:48px}
+.rk-b{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.rk-n{font-weight:850;font-size:.9rem;line-height:1.35}
+.rk-mvs{font-size:.72rem;line-height:1.45;color:var(--muted);font-weight:700}
+.rk-mvs span+span::before{content:"｜";margin:0 6px;color:#cfcade}
+.rk-s{flex:none;display:flex;flex-direction:column;align-items:center;min-width:76px;padding:4px 8px;border-radius:12px;background:var(--cbg);color:var(--cfg)}
+.rk-s b{font-size:1.1rem;font-weight:900;font-variant-numeric:tabular-nums}
+.rk-s small{font-size:.66rem;font-weight:800;white-space:nowrap}
+.rk-act{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;padding-left:50px}
+.rk-act button,.rk-o button{min-height:34px;padding:4px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:.78rem;font-weight:800;color:var(--ink-2);cursor:pointer}
+.rk-act .ap{border-color:#c9b5f5;background:#f3edff;color:#6d28d9}
+.rk-act button:hover,.rk-o button:hover{box-shadow:0 2px 8px -4px rgba(20,17,31,.4)}
+.rk-o{list-style:none;margin:10px 0 0;padding:10px 0 0 50px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:6px}
+.rk-o li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:4px 8px;border-radius:12px}
+.rk-o li.best{background:#faf7ff}
+.rk-op{display:flex;gap:2px}.rk-op .pic{width:32px;height:32px}
+.rk-op .pic.sh::after{content:"影";right:1px;bottom:1px;width:13px;height:13px;padding:0;border-radius:50%;display:grid;place-items:center;font-size:.52rem;line-height:1;box-shadow:0 0 0 1.5px #fff}
+.rk-on{flex:1;min-width:140px;font-size:.82rem;font-weight:800}
+.rk-o .rk-s{flex-direction:row;gap:6px;align-items:baseline;min-width:0;padding:2px 8px}.rk-o .rk-s b{font-size:.92rem}
+@media(max-width:560px){
+ .rk-main{flex-wrap:wrap;gap:8px}
+ .rk-no{width:auto;min-width:30px}
+ .rk-b{order:3;flex-basis:100%}
+ .rk-mvs span{display:block}.rk-mvs span+span::before{content:none}
+ .rk-s{margin-left:auto}
+ .rk-m .pic{width:42px;height:42px}
+ .rk-act,.rk-o{padding-left:0}
+}
+.chips a{color:#fff;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+#rkc{scroll-margin-top:70px}

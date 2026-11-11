@@ -306,7 +306,9 @@
         '<div class="seg sm" id="sws" role="group" aria-label="護盾"><button type="button" data-s="0">雙方 0 盾</button><button type="button" data-s="1">雙方 1 盾</button><button type="button" data-s="2">雙方 2 盾</button></div>' +
         '<div class="seg sm" id="swo" role="group" aria-label="排序"><button type="button" data-o="rank">依排名</button><button type="button" data-o="rating">依評分</button></div></div>' +
         '<div class="prog" id="swprog"><i></i></div><div class="swsum" id="swsum"></div><ul class="swgrid" id="swgrid"></ul>' +
-        '<p class="mxnote">對手都用 PvPoke 推薦招式與預設 IV；點任一隻就會換成牠當對手。</p></section>';
+        '<p class="mxnote">對手都用 PvPoke 推薦招式與預設 IV；點任一隻就會換成牠當對手。</p></section>' +
+      '<section class="card" id="rkc"><h2 class="sec-h"><span class="ic">🏆</span>隊伍跑分表<small>每種三隻組合、每種上場順序，對上常用隊伍的分數</small></h2>' +
+        '<div id="rk"><p class="mxnote">捲到這裡時載入跑分資料…</p></div></section>';
   }
 
   // ---------- 設定卡（1 對 1 的一方與 3 對 3 的一隻共用） ----------
@@ -1121,6 +1123,104 @@
     var a = $("#act"); if (a && a.getBoundingClientRect().top > innerHeight - 120) a.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
+  // ---------- 隊伍跑分表（data/pvp_team_scores.json，由 scripts/score_pvp_teams.js 產生） ----------
+  var RK = { data: null, loading: false, cp: null, view: "combo", who: "", n: 20, open: {} };
+  function loadRanks() {
+    if (RK.data || RK.loading) return;
+    RK.loading = true;
+    fetch("../data/pvp_team_scores.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) { RK.data = d; renderRanks(); })
+      .catch(function (err) {
+        RK.loading = false;
+        $("#rk").innerHTML = '<p class="mxnote">跑分資料載入失敗（' + esc(err && err.message) + "），請重新整理頁面。</p>";
+      });
+  }
+  function initRanks() {
+    var el = $("#rkc"); if (!el) return;
+    if (!("IntersectionObserver" in window)) { loadRanks(); return; }
+    var io = new IntersectionObserver(function (es) {
+      if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); loadRanks(); }
+    }, { rootMargin: "600px 0px" });
+    io.observe(el);
+  }
+  function fullName(id) { var m = C.mon(id); return nm(id) + (m && m.sh ? "（暗影）" : ""); }
+  function rkLeague() { return RK.data && RK.data.leagues[String(RK.cp)]; }
+  /** o = [先發, 2 號, 3 號（pool 的索引）, 分數, 勝, 敗, 平] */
+  function rkScore(o, L) {
+    var c = rc(o[3]);
+    return '<span class="rk-s" style="--cbg:' + c.bg + ";--cfg:" + c.fg + '"><b>' + o[3].toFixed(1) + "</b><small>" + o[4] + " 勝 " + o[5] + " 敗" + (o[6] ? " " + o[6] + " 平" : "") + "</small></span>";
+  }
+  function rkMoves(p) {
+    return [p[1], p[2], p[3]].filter(Boolean).map(function (id) { var m = C.move(id); return m ? esc(m.name) : esc(id); });
+  }
+  function renderRanks() {
+    var box = $("#rk"); if (!box || !RK.data) return;
+    if (RK.cp == null) RK.cp = state.cp;
+    var L = rkLeague(), lg = LEAGUES.filter(function (l) { return l.cp === RK.cp; })[0];
+    var h = '<div class="rk-tools"><div class="seg sm" id="rklg" role="group" aria-label="跑分表的聯盟">' +
+      LEAGUES.map(function (l) { return '<button type="button" data-rkcp="' + l.cp + '" aria-pressed="' + (l.cp === RK.cp) + '">' + l.name + "</button>"; }).join("") + "</div>" +
+      '<div class="seg sm" id="rkview" role="group" aria-label="排列方式"><button type="button" data-rkv="combo" aria-pressed="' + (RK.view === "combo") + '">依組合</button>' +
+      '<button type="button" data-rkv="order" aria-pressed="' + (RK.view === "order") + '">依上場順序</button></div>';
+    if (!L) { box.innerHTML = h + '</div><p class="mxnote">這個聯盟還沒有跑分資料。</p>'; return; }
+    h += '<select id="rkwho" aria-label="只看含某隻寶可夢的隊伍"><option value="">全部隊伍</option>' + L.pool.map(function (p, i) {
+      return '<option value="' + i + '"' + (String(i) === RK.who ? " selected" : "") + ">含 " + esc(fullName(p[0])) + "</option>";
+    }).join("") + "</select></div>";
+    h += '<p class="rk-note">' + lg.name + "：PvPoke 排名前 " + L.pool.length + " 名（推薦招式、預設 IV）的 <b>" + fmt(L.combos) + "</b> 種三隻組合 × 6 種上場順序，" +
+      "每隊對上 " + L.opponents + " 支「常用隊伍」，共 " + fmt(L.battles) + " 場。雙方 2 盾、護盾平均分配、倒下後依隊伍順序上場。" +
+      "分數是每場「剩餘 HP 比例」換算的 100～900 分取平均，<b>500 ＝ 打平</b>，越高越好。資料 " + esc(RK.data.generated) + "。</p>";
+    var who = RK.who === "" ? -1 : Number(RK.who), rows = [];
+    if (RK.view === "combo") {
+      L.list.forEach(function (x) { if (who < 0 || x[1][0].slice(0, 3).indexOf(who) > -1) rows.push({ rank: x[0], o: x[1][0], all: x[1] }); });
+    } else {
+      L.list.forEach(function (x) { x[1].forEach(function (o) { if (who < 0 || o.slice(0, 3).indexOf(who) > -1) rows.push({ o: o }); }); });
+      rows.sort(function (a, b) { return b.o[3] - a.o[3] || b.o[4] - a.o[4]; });
+      rows.forEach(function (r, i) { r.rank = i + 1; });
+    }
+    var shown = rows.slice(0, RK.n);
+    h += '<ol class="rk-l">' + shown.map(function (r) {
+      var o = r.o, key = o.slice(0, 3).join("-"), open = RK.view === "combo" && RK.open[key];
+      var row = '<li class="rk-r"><div class="rk-main"><span class="rk-no">#' + r.rank + "</span>" +
+        '<span class="rk-p">' + [0, 1, 2].map(function (k) { return '<span class="rk-m"><small>' + SLOT_NAME[k] + "</small>" + pic(L.pool[o[k]][0]) + "</span>"; }).join("") + "</span>" +
+        '<span class="rk-b"><span class="rk-n">' + [0, 1, 2].map(function (k) { return esc(fullName(L.pool[o[k]][0])); }).join("・") + "</span>" +
+        '<span class="rk-mvs">' + [0, 1, 2].map(function (k) { return "<span>" + rkMoves(L.pool[o[k]]).join("／") + "</span>"; }).join("") + "</span></span>" +
+        rkScore(o, L) + "</div>" +
+        '<div class="rk-act"><button type="button" class="ap" data-rkap="' + o.slice(0, 3).join(",") + '" data-t="0">套用到我方</button>' +
+        '<button type="button" data-rkap="' + o.slice(0, 3).join(",") + '" data-t="1">套用到對手</button>' +
+        (RK.view === "combo" ? '<button type="button" data-rkopen="' + key + '" aria-expanded="' + !!open + '">6 種上場順序 ' + (open ? "▴" : "▾") + "</button>" : "") + "</div>";
+      if (open) {
+        row += '<ol class="rk-o">' + r.all.map(function (q, i) {
+          return '<li' + (i === 0 ? ' class="best"' : "") + '><span class="rk-op">' + [0, 1, 2].map(function (k) { return pic(L.pool[q[k]][0]); }).join("") + "</span>" +
+            '<span class="rk-on">' + [0, 1, 2].map(function (k) { return esc(nm(L.pool[q[k]][0])); }).join(" → ") + "</span>" + rkScore(q, L) +
+            '<button type="button" data-rkap="' + q.slice(0, 3).join(",") + '" data-t="0">套用</button></li>';
+        }).join("") + "</ol>";
+      }
+      return row + "</li>";
+    }).join("") + "</ol>";
+    if (!rows.length) h += '<p class="mxnote">沒有符合的隊伍。</p>';
+    if (rows.length > RK.n) h += '<button type="button" class="more" data-act="rkmore">再顯示 20 隊（共 ' + fmt(rows.length) + " 隊）</button>";
+    if (who >= 0) {
+      var head = 0; while (head < L.list.length && L.list[head][0] === head + 1) head++;
+      h += '<p class="mxnote">檔案只收錄總排名前 ' + fmt(head) + " 名的組合，以及每隻寶可夢分數最高的 3 組，所以篩選結果不是這隻的全部組合。</p>";
+    }
+    box.innerHTML = h;
+  }
+  function applyRank(idx, t) {
+    var L = rkLeague(); if (!L) return;
+    var changed = RK.cp !== state.cp;
+    state.mode = 3; state.cp = RK.cp; state.order = "fixed"; state.plan = "spread";
+    if (changed) { poolCache = {}; state.teams[1 - t] = defaultTeam(t === 0 ? 3 : 0); }
+    state.teams[t] = { mons: idx.map(function (i) {
+      var p = L.pool[i], m = newMon(p[0]);
+      m.fast = p[1]; m.c1 = p[2]; m.c2 = p[3] || null;
+      return fixMoves(m);
+    }), shields: 2 };
+    state.teams[1 - t].shields = 2;
+    clearSandbox(); update({ user: true });
+    $("#three").scrollIntoView({ behavior: "smooth", block: "start" });
+    toast("已套用到" + TEAM_NAME[t] + "（依隊伍順序上場、雙方 2 盾，和跑分條件相同）");
+    track("pvp_sim_team_rank", { league: String(state.cp) });
+  }
+
   // ---------- 常用隊伍 ----------
   var MONTHS = { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 };
   function isoDate(str) {
@@ -1214,7 +1314,7 @@
     app.addEventListener("click", function (ev) {
       var t = ev.target, b;
       if ((b = t.closest("#mode button"))) { state.mode = Number(b.getAttribute("data-m")); state.sel = null; state.ghost = null; update({ user: true }); return; }
-      if ((b = t.closest("#lg button"))) { state.cp = Number(b.getAttribute("data-cp")); poolCache = {}; setup(); return; }
+      if ((b = t.closest("#lg button"))) { state.cp = Number(b.getAttribute("data-cp")); poolCache = {}; setup(); RK.cp = state.cp; RK.who = ""; RK.n = 20; renderRanks(); return; }
       if ((b = t.closest("#cap button"))) { state.cap = Number(b.getAttribute("data-cap")); setup(); return; }
       if ((b = t.closest("#order button"))) { state.order = b.getAttribute("data-o"); setup(); return; }
       if ((b = t.closest("#plan button"))) { state.plan = b.getAttribute("data-p"); setup(); return; }
@@ -1241,6 +1341,11 @@
         return;
       }
       if ((b = t.closest(".sa[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); scrollToAct(); return; }
+      if ((b = t.closest("[data-rkcp]"))) { RK.cp = Number(b.getAttribute("data-rkcp")); RK.who = ""; RK.n = 20; RK.open = {}; renderRanks(); return; }
+      if ((b = t.closest("[data-rkv]"))) { RK.view = b.getAttribute("data-rkv"); RK.n = 20; renderRanks(); return; }
+      if ((b = t.closest("[data-rkopen]"))) { var ok = b.getAttribute("data-rkopen"); RK.open[ok] = !RK.open[ok]; renderRanks(); return; }
+      if ((b = t.closest("[data-act=rkmore]"))) { RK.n += 20; renderRanks(); return; }
+      if ((b = t.closest("[data-rkap]"))) { applyRank(b.getAttribute("data-rkap").split(",").map(Number), Number(b.getAttribute("data-t"))); return; }
       if ((b = t.closest("[data-act=teams]"))) { openTeams(Number(b.getAttribute("data-t"))); return; }
       if ((b = t.closest("[data-speed]"))) { state.speed = Number(b.getAttribute("data-speed")); pressed("#speed", "data-speed", state.speed); return; }
       if ((b = t.closest("[data-act=first]"))) { stepTo(0); return; }
@@ -1308,6 +1413,7 @@
       }
     });
     app.addEventListener("change", function (ev) {
+      if (ev.target.id === "rkwho") { RK.who = ev.target.value; RK.n = 20; renderRanks(); return; }
       var t = ev.target, tg = targetOf(t); if (!tg || tg.kind === "team") return;
       var sd = tg.obj, k = t.getAttribute("data-k"), ivk = t.getAttribute("data-ivk");
       if (k === "fast") sd.fast = t.value;
@@ -1383,7 +1489,7 @@
     state.sides[1] = u.b || newMon(top[1][0]);
     state.teams[0] = u.ta || defaultTeam(0);
     state.teams[1] = u.tb || defaultTeam(3);
-    renderShell(); bindEvents(); update();
+    renderShell(); bindEvents(); update(); initRanks();
   }
 
   if (!C || !E) { app.innerHTML = '<p class="loading">對戰引擎載入失敗，請重新整理頁面。</p>'; return; }
