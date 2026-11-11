@@ -227,6 +227,29 @@ def build_data():
         print(f"  ⚠ {len(no_img)} 隻沒有站內縮圖：{', '.join(no_img[:12])}")
 
 
+TYPES = ["normal", "fire", "water", "grass", "electric", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug",
+         "rock", "ghost", "dragon", "dark", "steel", "fairy"]
+
+
+def build_type_icons():
+    """屬性圖示：PokeMiners pogo_assets 的 Images/Types/POKEMON_TYPE_*.png（64px）→ img/types/<屬性>.webp。
+    沒有 POGO_ASSETS 就略過（圖示已提交，平常不必重產）。"""
+    src = os.path.join(os.environ.get("POGO_ASSETS", os.path.join(os.path.dirname(ROOT), "pogo_assets")), "Images", "Types")
+    if not os.path.isdir(src):
+        print("（略過屬性圖示：找不到 pogo_assets/Images/Types）")
+        return
+    from PIL import Image
+    out = os.path.join(ROOT, "img", "types")
+    os.makedirs(out, exist_ok=True)
+    total = 0
+    for t in TYPES:
+        im = Image.open(os.path.join(src, f"POKEMON_TYPE_{t.upper()}.png")).convert("RGBA").resize((48, 48), Image.LANCZOS)
+        path = os.path.join(out, f"{t}.webp")
+        im.save(path, "WEBP", quality=88, method=6)
+        total += os.path.getsize(path)
+    print(f"已寫出 img/types/*.webp（18 個，共 {total:,} bytes）")
+
+
 if __name__ == "__main__":
     try:
         sys.stdout.reconfigure(encoding="utf-8")
@@ -234,3 +257,4 @@ if __name__ == "__main__":
         pass
     build_engine()
     build_data()
+    build_type_icons()
