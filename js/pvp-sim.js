@@ -265,28 +265,29 @@
         '<div class="edits" id="edits"></div>' +
         // 對戰畫面：播放時看得到現在打到哪裡
         '<div class="stage" id="stage" aria-live="polite">' + [0, 1].map(function (i) {
-          return '<div class="sg-side" data-i="' + i + '"><div class="sg-hud"><span class="sg-nm"></span><span class="sg-sh"></span>' +
+          return '<div class="sg-side" data-i="' + i + '"><div class="sg-hud"><span class="sg-nm"></span><button type="button" class="sg-sh" data-stage="shield" data-side="' + i + '" aria-label="修改這一方下一次被打要不要開盾"></button>' +
             '<div class="sg-bar hp"><i></i><b></b></div></div>' +
-            '<div class="sg-mon"><span class="sg-ground"></span><img alt="" width="128" height="128"><span class="sg-fx"></span></div>' +
+            '<button type="button" class="sg-mon" data-stage="mon" data-side="' + i + '"><span class="sg-ground"></span><img alt="" width="128" height="128"><span class="sg-fx"></span></button>' +
             '<div class="sg-en"><div class="sg-bar en"><i></i><b></b></div><div class="sg-cm"></div></div></div>';
         }).join("") +
-          '<div class="sg-mid"><span class="sg-turn" id="sgturn"></span></div><div class="sg-banner" id="banner" hidden></div></div>' +
+          '<div class="sg-mid"><span class="sg-turn" id="sgturn"></span></div><button type="button" class="sg-banner" id="banner" data-stage="banner" hidden></button></div>' +
+        '<p class="sg-hint" id="sghint"></p>' +
         '<div class="player"><div class="pbtn">' +
           '<button type="button" data-act="first" aria-label="回到開頭">⏮</button><button type="button" data-act="prev" aria-label="上一回合">◀</button>' +
           '<button type="button" id="play" class="pp" aria-label="播放">▶</button>' +
           '<button type="button" data-act="next" aria-label="下一回合">▶︎</button><button type="button" data-act="nextc" aria-label="跳到下一發特殊招式">⏭</button></div>' +
-          '<div class="seg sm" id="speed" role="group" aria-label="播放速度"><button type="button" data-speed="1">1×</button><button type="button" data-speed="2">2×</button><button type="button" data-speed="4">4×</button></div>' +
+          '<div class="seg sm" id="speed" role="group" aria-label="播放速度"><button type="button" data-speed="0.5">0.5×</button><button type="button" data-speed="1">1×</button><button type="button" data-speed="2">2×</button><button type="button" data-speed="4">4×</button></div>' +
           '<input type="range" id="scrub" min="0" max="1" value="0" aria-label="回合"><span class="tn" id="tn"></span></div>' +
         '<p class="now" id="now"></p>' +
-        '<div class="turnbar" id="turnbar" hidden><button type="button" class="opt tsw" data-act="turnsw">⇄ 這回合換人</button><span class="mvinfo">停在想換人的回合再按，雙方都可以換</span></div>' +
+        '<div class="stact" id="stact"></div>' +
+        '<div class="act" id="act" hidden></div>' +
         '<h3 class="sub-h">逐回合曲線圖<small>點特殊招式的圓圈，可以修改那一發</small></h3>' +
         '<div class="layers" id="lines" role="group" aria-label="圖上要顯示的線"><span class="lbl">圖上顯示（點一下開／關）</span>' + LINES.map(function (x) {
           return '<button type="button" class="lt lt-' + x[0] + '" data-line="' + x[0] + '" aria-pressed="' + lines[x[0]] + '"><span class="cb" aria-hidden="true"></span><i></i>' + x[1] + "</button>";
         }).join("") + "</div>" +
         '<div class="chart" id="chart"></div>' +
         '<div class="legend"><span class="lg-sh">' + SHIELD_SVG + '被護盾擋下</span><span><span class="lg-key">!</span>關鍵決策（改了會影響勝負）</span><span><b class="lg-sw">⇄</b>換人</span></div>' +
-        '<div class="keys" id="keys"></div>' +
-        '<div class="act" id="act" hidden></div></section>' +
+        '<div class="keys" id="keys"></div></section>' +
       '<section class="card" id="logc"><h2 class="sec-h"><span class="ic">📜</span>對戰紀錄<small>點 ✎ 可以修改那一發</small></h2><ol class="log" id="log"></ol></section>' +
       '<section class="card" id="mxc"><h2 class="sec-h"><span class="ic">🛡</span>9 種盾數組合<small>不含沙盒修改，點格子切換</small></h2><div class="mxwrap" id="mx"></div>' +
         '<p class="mxnote" id="mxnote"></p></section>' +
@@ -521,7 +522,7 @@
       : '<p class="hint">👆 點圖上的特殊招式，可以改<b>開不開盾</b>、<b>晚幾回合放</b>、<b>放哪一招</b>、<b>蓄力多少（發招不發滿）</b>' +
         (state.mode === 3 ? "、<b>換人擋招</b>；拖到任一回合按 <b>⇄ 這回合換人</b> 可以安排雙方換人" : "") + "。每個選項都會先算好結果。</p>";
     var gb = $('[data-line="ghost"]'); if (gb) gb.hidden = !state.ghost;
-    $("#turnbar").hidden = state.mode !== 3;
+    $("#sghint").innerHTML = "💡 對戰畫面可以直接點：中間的<b>招式橫幅</b>、<b>護盾</b>、下方的<b>特殊招式</b>" + (state.mode === 3 ? "、<b>寶可夢本身（換人）</b>" : "") + "，或用下面的按鈕，馬上打開修改面板。";
   }
 
   /** 選項按鈕：預先算好選了之後的結果；label 可以是函式（拿到那個結果再決定要顯示什麼）。 */
@@ -898,10 +899,11 @@
       eb.querySelector("i").style.width = en + "%";
       eb.querySelector("b").textContent = "能量 " + en;
       side.querySelector(".sg-cm").innerHTML = pr.moves[i].filter(function (m) { return m.kind === "charged"; }).map(function (m) {
-        return '<span class="sg-mv' + (en >= m.energy ? " ready" : "") + '" title="' + esc(m.name) + " 需要 " + m.energy + ' 能量">' + tIcon(m.type, 16) + "<b>" + esc(m.name) + "</b><small>" + m.energy + "</small></span>";
+        return '<button type="button" class="sg-mv' + (en >= m.energy ? " ready" : "") + '" data-stage="move" data-side="' + i + '" title="' + esc(m.name) + " 需要 " + m.energy + ' 能量｜點一下修改這一方下一發特殊招式">' + tIcon(m.type, 16) + "<b>" + esc(m.name) + "</b><small>" + m.energy + "</small></button>";
       }).join("");
       side.querySelector(".sg-mon").classList.toggle("down", hp <= 0);
     });
+    renderStageActions(t, st);
     if (!anim || t === 0) { $("#banner").hidden = true; return; }
     var evs = res.events.filter(function (e) { return e.turn === t; });
     evs.forEach(function (e) {
@@ -911,6 +913,8 @@
       } else if (e.kind === "charged") {
         var who = nm(idAt(e.actor, e.mon)), bn = $("#banner");
         bn.className = "sg-banner s" + e.actor;
+        bn.setAttribute("data-ei", res.events.indexOf(e));
+        bn.setAttribute("aria-label", who + " 使出 " + e.name + "，點一下修改這一發");
         bn.innerHTML = tIcon(e.type, 26) + "<span><small>" + esc(who) + " 使出</small>" + esc(e.name) + (e.charge ? "（蓄力 " + Math.round(e.charge * 100) + "%）" : "") + "</span>";
         bn.hidden = false; replay(bn, "pop");
         replay(stage.querySelector('.sg-side[data-i="' + e.actor + '"] .sg-mon'), "atk");
@@ -923,6 +927,35 @@
       }
     });
     if (!evs.some(function (e) { return e.kind === "charged"; })) $("#banner").hidden = true;
+  }
+  /** 依目前回合找要修改的那一發：side 的下一發特殊招式、side 下一次被打。 */
+  function nextCharged(side, from) {
+    var hit = -1, last = -1;
+    res.events.forEach(function (e, i) { if (e.kind === "charged" && e.actor === side) { last = i; if (hit < 0 && e.turn >= from) hit = i; } });
+    return hit >= 0 ? hit : last;
+  }
+  function nextHitOn(side, from) { return nextCharged(1 - side, from); }
+  /** 對戰畫面下方的快捷按鈕：依目前回合列出可以改的東西。 */
+  function renderStageActions(t, st) {
+    var out = [], here = -1;
+    res.events.forEach(function (e, i) { if (here < 0 && e.kind === "charged" && e.turn === t) here = i; });
+    if (here >= 0) {
+      var e = res.events[here];
+      out.push('<button type="button" class="sa hot" data-ei="' + here + '">✎ 修改這一發：' + esc(nm(idAt(e.actor, e.mon))) + "「" + esc(e.name) + "」</button>");
+    }
+    [0, 1].forEach(function (side) {
+      var hi = nextHitOn(side, Math.max(1, t));
+      if (hi >= 0 && (st.sh[side] > 0 || res.events[hi].shielded) && hi !== here) {
+        var h = res.events[hi];
+        out.push('<button type="button" class="sa s' + side + '" data-ei="' + hi + '">' + SHIELD_SVG + sideLabel(side) + "下一次被打（第 " + h.turn + " 回合）要不要開盾</button>");
+      }
+      var ci = nextCharged(side, Math.max(1, t + 1));
+      if (ci >= 0 && ci !== here && res.events[ci].turn > t) {
+        out.push('<button type="button" class="sa s' + side + '" data-ei="' + ci + '">⏱ ' + sideLabel(side) + "下一發（第 " + res.events[ci].turn + " 回合）的時機／蓄力</button>");
+      }
+    });
+    if (state.mode === 3) out.push('<button type="button" class="sa sw" data-act="turnsw">⇄ 在第 ' + Math.max(1, t) + " 回合換人</button>");
+    $("#stact").innerHTML = out.join("");
   }
   function replay(el, cls) { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
   function floatNum(side, text, kind) {
@@ -1060,6 +1093,11 @@
     playTimer = setTimeout(tick, 60);
   }
   function stepTo(t, anim) { stop(); setTurn(t, anim); }
+  function scrollToAct() {
+    var a = $("#act"); if (!a || a.hidden) return;
+    var r = a.getBoundingClientRect();
+    if (r.top < 70 || r.top > innerHeight - 160) a.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
   function selectEvent(i) {
     stop();
     state.sel = i;
@@ -1124,13 +1162,26 @@
       if ((b = t.closest("[data-act=swap]"))) { if (state.mode === 3) state.teams.reverse(); else state.sides.reverse(); setup(); return; }
       if ((b = t.closest("[data-act=reset]"))) { state.edits[state.mode] = []; state.habit = "ai"; state.react = "none"; state.sel = null; state.ghost = null; update({ setup: false }); return; }
       if ((b = t.closest("[data-act=unsel]"))) { state.sel = null; renderAct(); $$("#chart .cm.sel").forEach(function (g) { g.classList.remove("sel"); }); return; }
-      if ((b = t.closest("[data-act=turnsw]"))) { stop(); state.sel = { turn: Math.max(1, state.turn) }; renderAct(); return; }
+      if ((b = t.closest("[data-act=turnsw]"))) { stop(); state.sel = { turn: Math.max(1, state.turn) }; renderAct(); scrollToAct(); return; }
       if ((b = t.closest("[data-act=share]"))) {
         var url = location.href;
         (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () { toast("已複製連結（含沙盒修改）"); }, function () { window.prompt("複製這個連結：", url); });
         track("pvp_sim_share", { league: String(state.cp), mode: String(state.mode) });
         return;
       }
+      if ((b = t.closest("[data-stage]"))) {
+        var sd0 = Number(b.getAttribute("data-side")), kind = b.getAttribute("data-stage"), target = -1;
+        if (kind === "banner") target = Number(b.getAttribute("data-ei"));
+        else if (kind === "shield") target = nextHitOn(sd0, Math.max(1, state.turn));
+        else if (kind === "move") target = nextCharged(sd0, Math.max(1, state.turn));
+        else if (kind === "mon") {
+          if (state.mode === 3) { stop(); state.sel = { turn: Math.max(1, state.turn) }; renderAct(); scrollToAct(); return; }
+          target = nextCharged(sd0, Math.max(1, state.turn));
+        }
+        if (target >= 0 && res.events[target]) { selectEvent(target); scrollToAct(); }
+        return;
+      }
+      if ((b = t.closest(".sa[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); scrollToAct(); return; }
       if ((b = t.closest("[data-speed]"))) { state.speed = Number(b.getAttribute("data-speed")); pressed("#speed", "data-speed", state.speed); return; }
       if ((b = t.closest("[data-act=first]"))) { stepTo(0); return; }
       if ((b = t.closest("[data-act=prev]"))) { stepTo(state.turn - 1); return; }
@@ -1148,8 +1199,8 @@
       if ((b = t.closest("[data-react]"))) { var rv = b.getAttribute("data-react"); if (rv !== state.react) applyEdits(edits(), null, rv); return; }
       if ((b = t.closest("[data-unedit]"))) { var l = edits().slice(); l.splice(Number(b.getAttribute("data-unedit")), 1); applyEdits(l); return; }
       if ((b = t.closest("button[data-edits]"))) { if (!b.disabled && !b.classList.contains("on")) applyEdits(decEdits(b.getAttribute("data-edits"))); return; }
-      if ((b = t.closest(".kd[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); return; }
-      if ((b = t.closest(".ed[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); $("#replay").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+      if ((b = t.closest(".kd[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); scrollToAct(); return; }
+      if ((b = t.closest(".ed[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); scrollToAct(); return; }
       if ((b = t.closest("[data-jump]"))) { stop(); setTurn(Number(b.getAttribute("data-jump"))); $("#replay").scrollIntoView({ behavior: "smooth", block: "start" }); return; }
       if ((b = t.closest("[data-mx]"))) {
         var v = b.getAttribute("data-mx").split(",").map(Number);
@@ -1232,7 +1283,7 @@
     };
     chart.addEventListener("pointerdown", function (ev) {
       var g = ev.target.closest && ev.target.closest("[data-ei]");
-      if (g) { selectEvent(Number(g.getAttribute("data-ei"))); return; }
+      if (g) { selectEvent(Number(g.getAttribute("data-ei"))); scrollToAct(); return; }
       if (ev.pointerType === "touch") return;      // 手指在圖上滑是捲動；點一下才跳回合（見下方 click）
       dragging = true; at(ev);
     });
