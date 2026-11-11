@@ -82,8 +82,48 @@ def load_images():
     return dict(re.findall(r'"([a-z0-9_]+)":\s*"([^"]+)"', src))
 
 
+REGION = {"alolan": "ALOLA", "galarian": "GALARIAN", "hisuian": "HISUIAN", "paldean": "PALDEA"}
+
+
+def form_thumb(sid, dex, thumbs, exact=True):
+    """依 speciesId 的型態字尾直接找素材庫的型態圖（pm<dex>.f<型態>.icon.webp）。
+    站上的 pokemon_images.js 缺不少型態（劍之王、洛托姆、南瓜精尺寸…），沒有這一步會退回一般型態的圖。
+    依序試「完整字尾」與「包含所有字尾字詞的唯一型態」，例：crowned_sword → CROWNED_SWORD、aqua → PALDEA_AQUA。"""
+    forms = {}
+    for f in thumbs:
+        if f.startswith(f"pm{dex}.f") and f.endswith(".icon.webp") and ".s.icon" not in f:
+            forms[f[len(f"pm{dex}.f"):-len(".icon.webp")]] = f
+    if not forms:
+        return None
+    toks = re.sub(r"_(shadow|xs|xl)$", "", sid).split("_")
+    for i in range(1, len(toks)):
+        suf = [REGION.get(t, t.upper()) for t in toks[i:]]
+        if "MEGA" in suf:
+            return None
+        key = "_".join(suf)
+        if key in forms:
+            return forms[key]
+        if exact:
+            continue
+        cands = sorted((k for k in forms if all(x in k.split("_") for x in suf)), key=len)
+        if len(cands) == 1 or (cands and len(cands[0]) < len(cands[1])):
+            return forms[cands[0]]
+    return None
+
+
 def thumb(sid, dex, images, thumbs):
     """speciesId → 站內縮圖（相對網站根目錄）。找不到對應型態就用同編號的一般型態。"""
+    ft = form_thumb(sid, dex, thumbs)               # 型態名稱完全相符的專屬圖優先
+    if ft:
+        return "trade-list/assets/thumb/" + ft
+    old = thumb_by_images(sid, dex, images, thumbs)
+    if not old.endswith(f"/pm{dex}.icon.webp"):    # 原本的對照已經是專屬型態圖就用它
+        return old
+    ft = form_thumb(sid, dex, thumbs, exact=False)  # 退回一般型態圖時，再試部分字詞相符（例：aqua → PALDEA_AQUA）
+    return "trade-list/assets/thumb/" + ft if ft else old
+
+
+def thumb_by_images(sid, dex, images, thumbs):
     base_id = re.sub(r"_(shadow|xs|xl)$", "", sid)
     remote = images.get(base_id) or images.get(base_id.split("_")[0]) or ""
     cands = []
@@ -198,6 +238,65 @@ def build_teams(gm, released):
     return out, meta
 
 
+# 至尊（Apex）洛奇亞／鳳王：PvPoke 沒有收錄。中文名稱依官方文本（「至尊暗影洛奇亞」「至尊暗影鳳王」，長期調查「至尊」）。GAME_MASTER 的 V0249_POKEMON_LUGIA_S、V0250_POKEMON_HO_OH_S：
+# 暗影時的招式是 AEROBLAST_PLUS／SACRED_FIRE_PLUS，淨化後是 AEROBLAST_PLUS_PLUS／SACRED_FIRE_PLUS_PLUS。
+# 這四招在 PvP（combatMove）的威力、能量、增減益與普通版完全相同（2026-11-12 對 GAME_MASTER 確認），
+# 只有團體戰／道館（moveSettings）比較強，所以直接複製普通版的 PvP 數值、換名稱。種族值也與一般型態相同。
+APEX = [
+    # (新 speciesId, 複製自, 加入的招式, 原招式, 中文名稱, 英文名稱)
+    ("lugia_apex_shadow", "lugia_shadow", "AEROBLAST_PLUS", "AEROBLAST", "至尊洛奇亞", "Lugia (Apex) (Shadow)"),
+    ("lugia_apex", "lugia", "AEROBLAST_PLUS_PLUS", "AEROBLAST", "至尊洛奇亞（淨化）", "Lugia (Apex) (Purified)"),
+    ("ho_oh_apex_shadow", "ho_oh_shadow", "SACRED_FIRE_PLUS", "SACRED_FIRE", "至尊鳳王", "Ho-Oh (Apex) (Shadow)"),
+    ("ho_oh_apex", "ho_oh", "SACRED_FIRE_PLUS_PLUS", "SACRED_FIRE", "至尊鳳王（淨化）", "Ho-Oh (Apex) (Purified)"),
+]
+APEX_MOVE_ZH = {"AEROBLAST_PLUS": "氣旋攻擊+", "AEROBLAST_PLUS_PLUS": "氣旋攻擊++",          # 官方繁中（data/cd-names.js）
+                "SACRED_FIRE_PLUS": "神聖之火+", "SACRED_FIRE_PLUS_PLUS": "神聖之火++"}
+
+
+def add_apex(pokemon, moves, trim):
+    by_id = {p["speciesId"]: p for p in pokemon}
+    mv = {m["moveId"]: m for m in moves}
+    for new_id, src, move_id, base_move, zh, en in APEX:
+        if src not in by_id or base_move not in mv or new_id in by_id:
+            print(f"  ⚠ 至尊型態 {new_id} 略過（找不到 {src} 或 {base_move}）")
+            continue
+        if move_id not in mv:
+            m = dict(mv[base_move]); m["moveId"] = move_id; m["name"] = APEX_MOVE_ZH[move_id]
+            m["en"] = mv[base_move]["en"] + ("++" if move_id.endswith("PLUS_PLUS") else "+")
+            m["abbreviation"] = (mv[base_move].get("abbreviation") or "".join(w[:1] for w in base_move.split("_"))) + ("++" if move_id.endswith("PLUS_PLUS") else "+")
+            moves.append(m); mv[move_id] = m
+        o = json.loads(json.dumps(by_id[src]))
+        o["speciesId"] = new_id; o["speciesName"] = zh; o["en"] = en
+        o["chargedMoves"] = [move_id if c == base_move else c for c in o["chargedMoves"]]
+        o["eliteMoves"] = [move_id if c == base_move else c for c in o.get("eliteMoves", [])] or [move_id]
+        o["tags"] = [t for t in o.get("tags", []) if t != "shadoweligible"]   # 淨化後不會有報恩
+        dex = o["dex"]
+        o["img"] = f"pm{dex}.fS.icon.webp" if os.path.exists(os.path.join(THUMB_DIR, f"pm{dex}.fS.icon.webp")) else o["img"]
+        tb = trim.get(o["img"].replace(".webp", ""))
+        if tb:
+            o["tb"] = [round(v, 3) for v in tb]
+        o["apexOf"] = (src, base_move, move_id)
+        pokemon.append(o)
+    print("  至尊型態：" + "、".join(a[0] for a in APEX if a[0] in {p["speciesId"] for p in pokemon}))
+
+
+def apex_default_moves(pokemon, ranks):
+    """至尊型態沒有 PvPoke 排名：用原型態在各聯盟的推薦招式，把普通版招式換成＋／＋＋；
+    推薦招式裡沒有這招時，第二個特殊招式換成它（＋／＋＋是牠的招牌招式，不放的話就跟一般型態一樣）。"""
+    for p in pokemon:
+        if "apexOf" not in p:
+            continue
+        src, base_move, move_id = p.pop("apexOf")
+        for cp in ("1500", "2500", "10000"):
+            r = next((x for x in ranks.get(cp, []) if x[0] == src), None)
+            if r:
+                dm = [move_id if m == base_move else m for m in r[1:4]]
+                if move_id not in dm:
+                    dm = [dm[0], dm[1], move_id]
+                p["dm"] = dm
+                break
+
+
 def build_data():
     gm = json.loads(fetch("src/data/gamemaster.min.json"))
     tw = json.loads(fetch_url(TW_GM))
@@ -251,11 +350,13 @@ def build_data():
 
     released = {p["speciesId"] for p in pokemon}
     ranks = {}
+    add_apex(pokemon, moves, trim)
     for cp in LEAGUES:
         r = json.loads(fetch(f"src/data/rankings/all/overall/rankings-{cp}.json"))
         ranks[str(cp)] = [[x["speciesId"]] + x["moveset"][:3] + [round(x.get("score", 0), 1)]
                           for x in r if x["speciesId"] in released and x.get("moveset")]
 
+    apex_default_moves(pokemon, ranks)
     teams, teams_meta = build_teams(gm, released)
     data = {
         "v": 1,
