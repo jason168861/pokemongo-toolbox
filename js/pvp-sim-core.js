@@ -80,7 +80,9 @@
       var r = rankOf(id, leagues[i]);
       if (r) return r.moves.slice();
     }
-    var p = byId[id], stab = function (m) { return p.types.indexOf(m.type) > -1 ? 1.2 : 1; };
+    var p = byId[id];
+    if (p.dm) return p.dm.slice();      // 沒有排名但資料有指定的（至尊洛奇亞／鳳王）
+    var stab = function (m) { return p.types.indexOf(m.type) > -1 ? 1.2 : 1; };
     var fast = p.fastMoves.map(move).filter(Boolean).sort(function (a, b) {
       return (b.power * stab(b) + b.energyGain * 1.5) / b.turns - (a.power * stab(a) + a.energyGain * 1.5) / a.turns;
     })[0];
