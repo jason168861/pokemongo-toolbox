@@ -152,6 +152,52 @@ def build_engine():
 
 # ---------- 資料 ----------
 
+def abbr(m):
+    """招式縮寫（與 PvPoke GameMaster.getMoveById 相同：有 abbreviation 用它，沒有就取 moveId 每個字的第一個字母）。"""
+    return m.get("abbreviation") or "".join(w[:1] for w in m["moveId"].split("_"))
+
+
+def build_teams(gm, released):
+    """常用隊伍：PvPoke 訓練模式（玩家對戰 AI）的隊伍統計 src/data/training/analysis/all/<cp>.json。
+    招式是縮寫（例：jellicent H/S/SB），對照各寶可夢的招式池換回完整招式；有任何一隻對不上就略過那一隊，不猜。"""
+    moves = {m["moveId"]: m for m in gm["moves"]}
+    mons = {p["speciesId"]: p for p in gm["pokemon"]}
+    out, meta = {}, {}
+    for cp in LEAGUES:
+        try:
+            d = json.loads(fetch(f"src/data/training/analysis/all/{cp}.json"))
+        except Exception as ex:  # noqa: BLE001
+            print(f"  ⚠ 抓不到 {cp} 的隊伍統計（{ex}），略過")
+            continue
+        meta[str(cp)] = d.get("properties", {}).get("lastUpdated", "")
+        teams, skipped = [], 0
+        for t in d.get("teams", []):
+            team = []
+            for part in t["team"].split("|"):
+                sid, _, mv = part.strip().partition(" ")
+                p = mons.get(sid)
+                ab = mv.split("/")
+                if not p or sid not in released or len(ab) < 2:
+                    team = None; break
+                pool_f = [x for x in p["fastMoves"] if x in moves]
+                pool_c = [x for x in p["chargedMoves"] + p.get("extraChargedMoves", []) + (["RETURN"] if "shadoweligible" in p.get("tags", []) else [])
+                          + (["FRUSTRATION"] if "shadow" in p.get("tags", []) else []) if x in moves]
+                pick = lambda pool, a: [x for x in pool if abbr(moves[x]) == a]
+                f = pick(pool_f, ab[0])
+                cs = [pick(pool_c, a) for a in ab[1:3]]
+                if len(f) != 1 or any(len(c) != 1 for c in cs):
+                    team = None; break
+                team.append([sid, f[0]] + [c[0] for c in cs] + ([None] if len(cs) == 1 else []))
+            if not team or len(team) != 3:
+                skipped += 1
+                continue
+            teams.append({"mons": team, "score": round(t.get("teamScore", 0), 1), "games": t.get("games", 0)})
+        teams.sort(key=lambda x: (-x["games"], -x["score"]))
+        out[str(cp)] = teams
+        print(f"  常用隊伍 {cp}：{len(teams)} 隊" + (f"（略過 {skipped} 隊：招式縮寫對不上）" if skipped else ""))
+    return out, meta
+
+
 def build_data():
     gm = json.loads(fetch("src/data/gamemaster.min.json"))
     tw = json.loads(fetch_url(TW_GM))
@@ -210,6 +256,7 @@ def build_data():
         ranks[str(cp)] = [[x["speciesId"]] + x["moveset"][:3] + [round(x.get("score", 0), 1)]
                           for x in r if x["speciesId"] in released and x.get("moveset")]
 
+    teams, teams_meta = build_teams(gm, released)
     data = {
         "v": 1,
         "gm": gm.get("timestamp", ""),
@@ -220,6 +267,7 @@ def build_data():
         "pokemon": pokemon,
         "moves": moves,
         "ranks": ranks,
+        "teams": teams, "teamsUpdated": teams_meta,
     }
     # 引擎載入 gamemaster 時會讀到的其他欄位，給空值就好
     for k in ("rankingScenarios", "pokemonTags", "pokemonTraits", "shadowPokemon", "greatLeagueIneligible"):

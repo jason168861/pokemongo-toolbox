@@ -374,7 +374,10 @@
 
   function renderTeam(t) {
     var T = state.teams[t];
-    var h = '<div class="side-h"><span class="tag">' + TEAM_NAME[t] + '</span><div class="shd" role="group" aria-label="整隊護盾數"><span class="lbl" style="margin-right:4px">護盾</span>' +
+    var hasPresets = ((C.data().teams || {})[String(state.cp)] || []).length > 0;
+    var h = '<div class="side-h"><span class="tag">' + TEAM_NAME[t] + "</span>" +
+      (hasPresets ? '<button type="button" class="tpick" data-act="teams" data-t="' + t + '">📋 常用隊伍</button>' : "") +
+      '<div class="shd" role="group" aria-label="整隊護盾數"><span class="lbl" style="margin-right:4px">護盾</span>' +
       [0, 1, 2].map(function (n) { return '<button type="button" data-tsh="' + n + '" aria-pressed="' + (T.shields === n) + '">' + SHIELD_SVG + n + "</button>"; }).join("") + "</div></div>";
     T.mons.forEach(function (s, k) {
       var pv = C.ivPreview(s.id, s.iv, cfg(), s.buddy), m = C.mon(s.id), sh = C.shadowOf(s.id);
@@ -1118,6 +1121,51 @@
     var a = $("#act"); if (a && a.getBoundingClientRect().top > innerHeight - 120) a.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
+  // ---------- 常用隊伍 ----------
+  var MONTHS = { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 };
+  function isoDate(str) {
+    var m = /([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})/.exec(str || "");
+    if (!m || !MONTHS[m[1]]) return str || "";
+    return m[3] + "-" + ("0" + MONTHS[m[1]]).slice(-2) + "-" + ("0" + m[2]).slice(-2);
+  }
+  var teamDlg = null, teamFor = 0;
+  function openTeams(t) {
+    teamFor = t;
+    if (!teamDlg) {
+      teamDlg = document.createElement("dialog");
+      teamDlg.className = "pick teams-dlg"; teamDlg.setAttribute("aria-label", "常用隊伍");
+      document.body.appendChild(teamDlg);
+      teamDlg.addEventListener("click", function (ev) {
+        var b = ev.target.closest("button[data-team]");
+        if (b) { applyPreset(Number(b.getAttribute("data-team"))); return; }
+        if (ev.target.closest("[data-act=closeteams]") || ev.target === teamDlg) closeTeams();
+      });
+    }
+    var list = (C.data().teams || {})[String(state.cp)] || [], upd = (C.data().teamsUpdated || {})[String(state.cp)];
+    teamDlg.innerHTML = '<div class="pk-h"><b class="td-t">常用隊伍・' + lgName() + "（套用到" + TEAM_NAME[t] + '）</b><button class="pk-x" type="button" data-act="closeteams" aria-label="關閉">×</button></div>' +
+      '<p class="pk-n">取自 PvPoke 訓練模式（玩家對戰 AI）的隊伍統計，依使用場數排序' + (upd ? "，資料日期 " + esc(isoDate(upd)) : "") + "。這不是遊戲內 GO 對戰聯盟的使用率。</p>" +
+      '<ul class="pk-l td-l">' + list.map(function (tm, i) {
+        return '<li><button type="button" data-team="' + i + '"><span class="td-p">' + tm.mons.map(function (m) { return pic(m[0]); }).join("") + "</span>" +
+          '<span class="td-b"><span class="td-n">' + tm.mons.map(function (m) { return esc(nm(m[0])); }).join("・") + "</span>" +
+          '<span class="td-m">' + tm.mons.map(function (m) { return mvChip(m[1]); }).join("") + "</span>" +
+          '<span class="td-s">使用 <b>' + fmt(tm.games) + "</b> 場・隊伍分數 <b>" + tm.score + "</b></span></span></button></li>";
+      }).join("") + "</ul>";
+    if (teamDlg.showModal) teamDlg.showModal(); else teamDlg.setAttribute("open", "");
+  }
+  function closeTeams() { if (!teamDlg) return; if (teamDlg.close) teamDlg.close(); else teamDlg.removeAttribute("open"); }
+  function applyPreset(i) {
+    var tm = ((C.data().teams || {})[String(state.cp)] || [])[i]; if (!tm) return;
+    var T = state.teams[teamFor];
+    T.mons = tm.mons.map(function (m, k) {
+      var s = newMon(m[0], T.mons[k]);
+      s.fast = m[1]; s.c1 = m[2]; s.c2 = m[3] || null; s.buddy = false;
+      return fixMoves(s);
+    });
+    closeTeams(); clearSandbox(); update({ user: true });
+    toast("已套用常用隊伍");
+    track("pvp_sim_team_preset", { league: String(state.cp) });
+  }
+
   // ---------- 搜尋視窗 ----------
   var dlg = document.getElementById("picker"), pq = document.getElementById("pk-q");
   function openPicker(target) {
@@ -1193,6 +1241,7 @@
         return;
       }
       if ((b = t.closest(".sa[data-ei]"))) { selectEvent(Number(b.getAttribute("data-ei"))); scrollToAct(); return; }
+      if ((b = t.closest("[data-act=teams]"))) { openTeams(Number(b.getAttribute("data-t"))); return; }
       if ((b = t.closest("[data-speed]"))) { state.speed = Number(b.getAttribute("data-speed")); pressed("#speed", "data-speed", state.speed); return; }
       if ((b = t.closest("[data-act=first]"))) { stepTo(0); return; }
       if ((b = t.closest("[data-act=prev]"))) { stepTo(state.turn - 1); return; }
