@@ -994,6 +994,23 @@ const POKEDEX = [
     }
   },
   {
+    "id": "clefable_mega",
+    "dexNumber": 36,
+    "name": "皮可西 (Mega)",
+    "stats": {
+      "atk": 253,
+      "def": 205,
+      "sta": 216
+    },
+    "types": [
+      "fairy"
+    ],
+    "family": {
+      "id": "cleffa",
+      "stage": 3
+    }
+  },
+  {
     "id": "vulpix",
     "dexNumber": 37,
     "name": "六尾",
