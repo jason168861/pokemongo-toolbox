@@ -1,137 +1,182 @@
 {
-    "lastUpdated": "2026年11月14日10時",
+    "lastUpdated": "2026年11月14日13時",
     "bosses": [
         {
-            "name": "赤面龍",
-            "englishName": "Druddigon",
+            "name": "Modern Jacket Machamp",
+            "englishName": "Modern Jacket Machamp",
             "tier": "3-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "fighting",
+                    "image": "https://leekduck.com/assets/img/types/fighting.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1667,
+                    "max": 1746
+                },
+                "boosted": {
+                    "min": 2084,
+                    "max": 2183
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "cloudy",
+                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm68.fWILDAREA_2026_01.icon.png"
+        },
+        {
+            "name": "捷克羅姆",
+            "englishName": "Zekrom",
+            "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
                     "name": "dragon",
                     "image": "https://leekduck.com/assets/img/types/dragon.png"
+                },
+                {
+                    "name": "electric",
+                    "image": "https://leekduck.com/assets/img/types/electric.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 1487,
-                    "max": 1561
+                    "min": 2217,
+                    "max": 2307
                 },
                 "boosted": {
-                    "min": 1859,
-                    "max": 1951
+                    "min": 2771,
+                    "max": 2884
                 }
             },
             "boostedWeather": [
                 {
                     "name": "windy",
                     "image": "https://leekduck.com/assets/img/weather/windy.png"
-                }
-            ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm621.icon.png"
-        },
-        {
-            "name": "拖拖蚓",
-            "englishName": "Orthworm",
-            "tier": "3-Star Raids",
-            "canBeShiny": false,
-            "types": [
-                {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
-                }
-            ],
-            "combatPower": {
-                "normal": {
-                    "min": 1245,
-                    "max": 1313
                 },
-                "boosted": {
-                    "min": 1557,
-                    "max": 1642
-                }
-            },
-            "boostedWeather": [
                 {
-                    "name": "snow",
-                    "image": "https://leekduck.com/assets/img/weather/snowy.png"
+                    "name": "rainy",
+                    "image": "https://leekduck.com/assets/img/weather/rainy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm968.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm644.icon.png"
         },
         {
-            "name": "Zacian (Crowned Sword)",
-            "englishName": "Zacian (Crowned Sword)",
+            "name": "酋雷姆 (焰白)",
+            "englishName": "Kyurem (White)",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "fairy",
-                    "image": "https://leekduck.com/assets/img/types/fairy.png"
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
                 },
                 {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                    "name": "ice",
+                    "image": "https://leekduck.com/assets/img/types/ice.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2100,
-                    "max": 2188
+                    "min": 1957,
+                    "max": 2042
                 },
                 "boosted": {
-                    "min": 2625,
-                    "max": 2735
+                    "min": 2446,
+                    "max": 2553
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 },
                 {
                     "name": "snow",
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm888.fCROWNED_SWORD.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm646.fWHITE.icon.png"
         },
         {
-            "name": "Zamazenta (Crowned Shield)",
-            "englishName": "Zamazenta (Crowned Shield)",
+            "name": "萊希拉姆",
+            "englishName": "Reshiram",
             "tier": "5-Star Raids",
             "canBeShiny": true,
             "types": [
                 {
-                    "name": "fighting",
-                    "image": "https://leekduck.com/assets/img/types/fighting.png"
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
                 },
                 {
-                    "name": "steel",
-                    "image": "https://leekduck.com/assets/img/types/steel.png"
+                    "name": "fire",
+                    "image": "https://leekduck.com/assets/img/types/fire.png"
                 }
             ],
             "combatPower": {
                 "normal": {
-                    "min": 2100,
-                    "max": 2188
+                    "min": 2217,
+                    "max": 2307
                 },
                 "boosted": {
-                    "min": 2625,
-                    "max": 2735
+                    "min": 2771,
+                    "max": 2884
                 }
             },
             "boostedWeather": [
                 {
-                    "name": "cloudy",
-                    "image": "https://leekduck.com/assets/img/weather/cloudy.png"
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
+                },
+                {
+                    "name": "sunny",
+                    "image": "https://leekduck.com/assets/img/weather/sunny.png"
+                }
+            ],
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm643.icon.png"
+        },
+        {
+            "name": "酋雷姆 (闇黑)",
+            "englishName": "Kyurem (Black)",
+            "tier": "5-Star Raids",
+            "canBeShiny": true,
+            "types": [
+                {
+                    "name": "dragon",
+                    "image": "https://leekduck.com/assets/img/types/dragon.png"
+                },
+                {
+                    "name": "ice",
+                    "image": "https://leekduck.com/assets/img/types/ice.png"
+                }
+            ],
+            "combatPower": {
+                "normal": {
+                    "min": 1957,
+                    "max": 2042
+                },
+                "boosted": {
+                    "min": 2446,
+                    "max": 2553
+                }
+            },
+            "boostedWeather": [
+                {
+                    "name": "windy",
+                    "image": "https://leekduck.com/assets/img/weather/windy.png"
                 },
                 {
                     "name": "snow",
                     "image": "https://leekduck.com/assets/img/weather/snowy.png"
                 }
             ],
-            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm889.fCROWNED_SHIELD.icon.png"
+            "image": "https://cdn.leekduck.com/assets/img/pokemon_icons/pm646.fBLACK.icon.png"
         },
         {
             "name": "暗影 幼基拉斯",
