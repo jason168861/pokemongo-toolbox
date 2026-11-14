@@ -224,6 +224,580 @@
     ]
   },
   {
+    "category": "Pokémon GO Wild Area 2026: Global - Steel hour Tasks",
+    "tasks": [
+      {
+        "description": "捕捉2隻強大的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Scizor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm212.icon.png",
+            "isShiny": false,
+            "maxCp": "1286",
+            "minCp": "1227"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Aggron",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm306.icon.png",
+            "isShiny": false,
+            "maxCp": "1285",
+            "minCp": "1227"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Magnezone",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm462.icon.png",
+            "isShiny": false,
+            "maxCp": "1373",
+            "minCp": "1313"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Ferrothorn",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm598.icon.png",
+            "isShiny": false,
+            "maxCp": "995",
+            "minCp": "943"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 10 隻鋼屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小磁怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm81.icon.png",
+            "isShiny": false,
+            "maxCp": "583",
+            "minCp": "544"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "波加曼",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm393.icon.png",
+            "isShiny": false,
+            "maxCp": "460",
+            "minCp": "426"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盾甲龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm410.icon.png",
+            "isShiny": false,
+            "maxCp": "381",
+            "minCp": "348"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "種子鐵球",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm597.icon.png",
+            "isShiny": false,
+            "maxCp": "403",
+            "minCp": "370"
+          }
+        ]
+      },
+      {
+        "description": "捕捉 4 種鋼屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "路卡利歐",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm448.icon.png",
+            "isShiny": false,
+            "maxCp": "1158",
+            "minCp": "1102"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鋁鋼龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm884.icon.png",
+            "isShiny": false,
+            "maxCp": "1314",
+            "minCp": "1255"
+          }
+        ]
+      },
+      {
+        "description": "投出1次Excellent Throw",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金色蔓莓果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
+            "name": "銀色凰梨果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "在1場對戰中使出鋼屬性的特殊招式",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大岩蛇",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm95.icon.png",
+            "isShiny": false,
+            "maxCp": "472",
+            "minCp": "435"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "盔甲鳥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm227.icon.png",
+            "isShiny": false,
+            "maxCp": "903",
+            "minCp": "854"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "銅鏡怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm436.icon.png",
+            "isShiny": false,
+            "maxCp": "258",
+            "minCp": "229"
+          }
+        ]
+      },
+      {
+        "description": "在極巨對戰中獲勝2次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Metagross",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm376.icon.png",
+            "isShiny": false,
+            "maxCp": "1625",
+            "minCp": "1559"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Tinkaton",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm959.icon.png",
+            "isShiny": false,
+            "maxCp": "964",
+            "minCp": "914"
+          }
+        ]
+      },
+      {
+        "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鐵啞鈴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm374.icon.png",
+            "isShiny": false,
+            "maxCp": "418",
+            "minCp": "385"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "銅鏡怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm436.icon.png",
+            "isShiny": false,
+            "maxCp": "258",
+            "minCp": "229"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "螺釘地鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm529.icon.png",
+            "isShiny": false,
+            "maxCp": "589",
+            "minCp": "549"
+          }
+        ]
+      },
+      {
+        "description": "拜訪 5 個寶可補給站",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "球球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          }
+        ]
+      },
+      {
+        "description": "強化鋼屬性的寶可夢5次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 穿山鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm27.fALOLA.icon.png",
+            "isShiny": false,
+            "maxCp": "554",
+            "minCp": "516"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "阿羅拉 地鼠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm50.fALOLA.icon.png",
+            "isShiny": false,
+            "maxCp": "292",
+            "minCp": "264"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "泥巴魚（伽勒爾的樣子）",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm618.fGALARIAN.icon.png",
+            "isShiny": false,
+            "maxCp": "926",
+            "minCp": "876"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pokémon GO Wild Area 2026: Global - Dragon hour Tasks",
+    "tasks": [
+      {
+        "description": "捕捉 10 隻龍屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小火龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.icon.png",
+            "isShiny": false,
+            "maxCp": "420",
+            "minCp": "387"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "大顎蟻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm328.icon.png",
+            "isShiny": false,
+            "maxCp": "546",
+            "minCp": "507"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "青綿鳥",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm333.icon.png",
+            "isShiny": false,
+            "maxCp": "353",
+            "minCp": "322"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "垃垃藻",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm690.icon.png",
+            "isShiny": false,
+            "maxCp": "455",
+            "minCp": "421"
+          }
+        ]
+      },
+      {
+        "description": "捕捉4種龍屬性的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "爆焰龜獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm776.icon.png",
+            "isShiny": false,
+            "maxCp": "952",
+            "minCp": "902"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "鋁鋼龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm884.icon.png",
+            "isShiny": false,
+            "maxCp": "1314",
+            "minCp": "1255"
+          }
+        ]
+      },
+      {
+        "description": "捕捉2隻強大的寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Alolan Exeggutor",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm103.fALOLA.icon.png",
+            "isShiny": false,
+            "maxCp": "1292",
+            "minCp": "1233"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Kingdra",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm230.icon.png",
+            "isShiny": false,
+            "maxCp": "1132",
+            "minCp": "1077"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Haxorus",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm612.icon.png",
+            "isShiny": false,
+            "maxCp": "1540",
+            "minCp": "1475"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Noivern",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm715.icon.png",
+            "isShiny": false,
+            "maxCp": "1184",
+            "minCp": "1129"
+          }
+        ]
+      },
+      {
+        "description": "投出1次Excellent Throw",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
+            "name": "金色蔓莓果 ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
+            "name": "銀色凰梨果 ×1",
+            "quantity": "×1"
+          }
+        ]
+      },
+      {
+        "description": "在1場對戰中使出龍屬性的特殊招式",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "黏黏寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm704.icon.png",
+            "isShiny": false,
+            "maxCp": "418",
+            "minCp": "385"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "心鱗寶",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm782.icon.png",
+            "isShiny": false,
+            "maxCp": "415",
+            "minCp": "382"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "涼脊龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm996.icon.png",
+            "isShiny": false,
+            "maxCp": "534",
+            "minCp": "496"
+          }
+        ]
+      },
+      {
+        "description": "在團體戰中獲勝 2 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Flygon",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm330.icon.png",
+            "isShiny": false,
+            "maxCp": "1140",
+            "minCp": "1085"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Mighty Goodra",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm706.icon.png",
+            "isShiny": false,
+            "maxCp": "1502",
+            "minCp": "1439"
+          }
+        ]
+      },
+      {
+        "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "牙牙",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm610.icon.png",
+            "isShiny": false,
+            "maxCp": "586",
+            "minCp": "547"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "寶寶暴龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm696.icon.png",
+            "isShiny": false,
+            "maxCp": "700",
+            "minCp": "658"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "嗡蝠",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm714.icon.png",
+            "isShiny": false,
+            "maxCp": "285",
+            "minCp": "258"
+          }
+        ]
+      },
+      {
+        "description": "拜訪 5 個寶可補給站",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×3",
+            "quantity": "×3"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Poke Ball.png",
+            "name": "球球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          }
+        ]
+      },
+      {
+        "description": "強化龍屬性寶可夢 5 次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "迷你龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm147.icon.png",
+            "isShiny": false,
+            "maxCp": "430",
+            "minCp": "397"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "圓陸鯊",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm443.icon.png",
+            "isShiny": false,
+            "maxCp": "477",
+            "minCp": "441"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "單首龍",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm633.icon.png",
+            "isShiny": false,
+            "maxCp": "455",
+            "minCp": "420"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
