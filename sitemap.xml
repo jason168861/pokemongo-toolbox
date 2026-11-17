@@ -148,22 +148,22 @@
   <!-- PvP 盃賽：由 scripts/build_pvp_cups.py 自動產生，勿手改此區塊 -->
   <url>
     <loc>https://pogokit.com/pvp-ranker/cups/</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pogokit.com/pvp-ranker/great-league-mega/</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://pogokit.com/pvp-ranker/ultra-league-mega/</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://pogokit.com/pvp-ranker/master-league-mega/</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
