@@ -206,6 +206,90 @@
     ]
   },
   {
+    "category": "Pawniard Community Day Tasks",
+    "tasks": [
+      {
+        "description": "捕捉3隻駒刀小兵",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "駒刀小兵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm624.icon.png",
+            "isShiny": false,
+            "maxCp": "614",
+            "minCp": "574"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Great Ball.png",
+            "name": "超級球 ×5",
+            "quantity": "×5"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Ultra Ball.png",
+            "name": "高級球 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
+            "name": "凰梨果 ×2",
+            "quantity": "×2"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×500",
+            "quantity": "×500"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Pawniard Community Day - Special backgrounds Tasks",
+    "tasks": [
+      {
+        "description": "Catch 5 Pokemon while in a Party",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "駒刀小兵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm624.icon.png",
+            "isShiny": false,
+            "maxCp": "614",
+            "minCp": "574"
+          }
+        ]
+      },
+      {
+        "description": "Catch 50 Pokemon",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "駒刀小兵",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm624.icon.png",
+            "isShiny": false,
+            "maxCp": "614",
+            "minCp": "574"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "捕捉相關任務",
     "tasks": [
       {
