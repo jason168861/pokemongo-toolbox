@@ -1003,7 +1003,8 @@ const POKEDEX = [
       "sta": 216
     },
     "types": [
-      "fairy"
+      "fairy",
+      "flying"
     ],
     "family": {
       "id": "cleffa",

@@ -1,5 +1,160 @@
 [
   {
+    "category": "Twilight Wishes Tasks",
+    "tasks": [
+      {
+        "description": "捕捉 10 隻寶可夢",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "落雷獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm309.icon.png",
+            "isShiny": false,
+            "maxCp": "413",
+            "minCp": "380"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Cottonee wearing a flower crown",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm546.cSPRING_2024.icon.png",
+            "isShiny": false,
+            "maxCp": "300",
+            "minCp": "271"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "墓仔狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm971.icon.png",
+            "isShiny": false,
+            "maxCp": "435",
+            "minCp": "402"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "纏紅鶴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm973.icon.png",
+            "isShiny": false,
+            "maxCp": "1181",
+            "minCp": "1125"
+          }
+        ]
+      },
+      {
+        "description": "探索 1 公里",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "海星星",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm120.icon.png",
+            "isShiny": false,
+            "maxCp": "495",
+            "minCp": "459"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "小灰怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm605.icon.png",
+            "isShiny": false,
+            "maxCp": "593",
+            "minCp": "554"
+          }
+        ]
+      },
+      {
+        "description": "孵化1顆蛋",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "偶叫獒",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm942.icon.png",
+            "isShiny": false,
+            "maxCp": "600",
+            "minCp": "560"
+          }
+        ]
+      },
+      {
+        "description": "拜訪1個從未去過的寶可補給站",
+        "rewards": [
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy XL.png",
+            "name": "神奇糖果XL ×1",
+            "quantity": "×1"
+          },
+          {
+            "isFeatured": false,
+            "type": "item",
+            "pokemonIconUrl": null,
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×10000",
+            "quantity": "×10000"
+          }
+        ]
+      },
+      {
+        "description": "在寶可補給站使用1個誘餌模組",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "啃果蟲",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm840.icon.png",
+            "isShiny": false,
+            "maxCp": "306",
+            "minCp": "277"
+          }
+        ]
+      },
+      {
+        "description": "讓1隻寶可夢進行超級進化",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm15.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Beedrill Mega Energy.png",
+            "name": "大針蜂超級能量 ×25",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm229.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Houndoom Mega Energy.png",
+            "name": "黑魯加超級能量 ×25",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm310.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Manectric Mega Energy.png",
+            "name": "雷電獸超級能量 ×25",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm302.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Sableye Mega Energy.png",
+            "name": "勾魂眼超級能量 ×25",
+            "quantity": "×25"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "Dynamax Trails Tasks",
     "tasks": [
       {
