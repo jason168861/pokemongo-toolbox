@@ -181,10 +181,12 @@ def card_html(bg, mons, labels, alias):
         vlab = variant_label(labels, p)
         disp = f"{zh}（{vlab}）" if vlab else zh
         names.append(disp)
-        # 99% 的組合都有異色，所以只標例外（尚無異色）；其他特殊型態照標
+        # 名單裡每隻都標異色狀態：只標例外（尚無異色）的話，全部有異色的卡
+        # 看起來跟沒資料一樣，使用者反映看不出哪些有異色。其他特殊型態照標
         tags = []
         if p.get("shiny"):
             shiny_n += 1
+            tags.append('<span class="tag tag-shiny">✨ 異色</span>')
         else:
             tags.append('<span class="tag tag-none">尚無異色</span>')
         if p.get("dynamax"):
