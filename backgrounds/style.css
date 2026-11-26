@@ -265,6 +265,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 20px 16px 72px; }
 .tags { display: flex; gap: 4px; flex-wrap: wrap; }
 .tag { padding: 1px 8px; border-radius: 999px; background: #f1eff7; color: var(--ink-2); font-size: .7rem; font-weight: 750; line-height: 1.6; white-space: nowrap; }
 .tag-none { background: #fff4e0; color: #9a5b00; }
+.tag-shiny { background: #e4dafd; color: #4d33c4; }
 .noimg { color: #cbc6da; }
 
 /* ================= 寶可夢檢視 ================= */
