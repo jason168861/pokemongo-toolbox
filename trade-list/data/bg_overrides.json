@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-11",
+ "updated": "2026-11-26",
  "note": "背卡資料的人工修正。build_data.py 每次都把 backgrounds.json 整份重寫,所以修正要放在這裡才不會被 update.py 蓋掉。請用 bg-editor.html 編輯。op: remove=刪掉這筆 / set=改欄位(值給 null 代表刪掉該欄位) / add=補一筆來源沒有的 / setCard=改卡片自己的欄位(例如卡名)。key 由 dex|form|costume|gmax|dynamax|shadow|sprite檔名 組成。",
  "ops": [
   {"card":"GO Tainan background.png","op":"set","key":"134||||||GO0134Explorer.png","fields":{"sprite":"assets/img/pm134.cMAY_2023.icon.png","sprite_shiny":"assets/img/pm134.cMAY_2023.s.icon.png","shiny":true}},
@@ -624,6 +624,12 @@
   {"card":"Location Background Wild Area Sendai.png","op":"add","mon":{"dex":706,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HISUIAN"}},
   {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":705,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HISUIAN"}},
   {"card":"Location Background Wild Area Mexico City.png","op":"add","mon":{"dex":706,"shiny":true,"dynamax":false,"gmax":false,"shadow":false,"form":"HISUIAN"}},
-  {"card":"Special Background Wild Area Global 2026.png","op":"hideCard"}
+  {"card":"Special Background Wild Area Global 2026.png","op":"hideCard"},
+  {"card":"moonlight.jpg","op":"setCard","fields":{"name":"Dancing in the Moonlight 2026"}},
+  {"card":"Special Background Dancing in the Moonlight 2026.png","op":"remove","key":"35||||||"},
+  {"card":"Special Background Dancing in the Moonlight 2026.png","op":"remove","key":"36||||||"},
+  {"card":"moonlight.jpg","op":"add","mon":{"dex":36,"shiny":true,"dynamax":false,"gmax":false,"shadow":false}},
+  {"card":"GO Dancing in the Moonlight background.png","op":"hideCard"},
+  {"card":"Special Background Duolingo.png","op":"hideCard"}
  ]
 }
