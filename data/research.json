@@ -155,95 +155,46 @@
     ]
   },
   {
-    "category": "Dynamax Trails Tasks",
+    "category": "Twilight Wishes - November 26–30 Tasks",
     "tasks": [
       {
-        "description": "捕捉 8 隻寶可夢",
+        "description": "捕捉 10 隻寶可夢",
         "rewards": [
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "妙蛙種子",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm1.icon.png",
+            "name": "落雷獸",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm309.icon.png",
             "isShiny": false,
-            "maxCp": "477",
-            "minCp": "442"
+            "maxCp": "413",
+            "minCp": "380"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "小火龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm4.icon.png",
+            "name": "Cottonee wearing a flower crown",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm546.cSPRING_2024.icon.png",
             "isShiny": false,
-            "maxCp": "420",
-            "minCp": "387"
+            "maxCp": "300",
+            "minCp": "271"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "傑尼龜",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm7.icon.png",
+            "name": "墓仔狗",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm971.icon.png",
             "isShiny": false,
-            "maxCp": "405",
-            "minCp": "372"
+            "maxCp": "435",
+            "minCp": "402"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "敲音猴",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm810.icon.png",
+            "name": "纏紅鶴",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm973.icon.png",
             "isShiny": false,
-            "maxCp": "465",
-            "minCp": "430"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "炎兔兒",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm813.icon.png",
-            "isShiny": false,
-            "maxCp": "470",
-            "minCp": "434"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "淚眼蜥",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm816.icon.png",
-            "isShiny": false,
-            "maxCp": "470",
-            "minCp": "434"
-          }
-        ]
-      },
-      {
-        "description": "強化寶可夢 8 次",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "鯉魚王",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm129.icon.png",
-            "isShiny": false,
-            "maxCp": "117",
-            "minCp": "99"
-          },
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "醜醜魚",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm349.icon.png",
-            "isShiny": false,
-            "maxCp": "117",
-            "minCp": "99"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Pinap Berry.png",
-            "name": "凰梨果 ×3",
-            "quantity": "×3"
+            "maxCp": "1181",
+            "minCp": "1125"
           }
         ]
       },
@@ -253,108 +204,115 @@
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "伊布",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm133.icon.png",
+            "name": "海星星",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm120.icon.png",
             "isShiny": false,
-            "maxCp": "459",
-            "minCp": "424"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×2000",
-            "quantity": "×2000"
-          }
-        ]
-      },
-      {
-        "description": "在極巨對戰中獲勝1次",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "encounter",
-            "name": "老翁龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm780.icon.png",
-            "isShiny": false,
-            "maxCp": "1249",
-            "minCp": "1191"
+            "maxCp": "495",
+            "minCp": "459"
           },
           {
             "isFeatured": true,
             "type": "encounter",
-            "name": "鋁鋼龍",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm884.icon.png",
+            "name": "小灰怪",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm605.icon.png",
             "isShiny": false,
-            "maxCp": "1314",
-            "minCp": "1255"
-          },
-          {
-            "isFeatured": true,
-            "type": "item",
-            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm890.icon.png",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/890.png",
-            "name": "Eternatus Candy ×10",
-            "quantity": "×10"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×2000",
-            "quantity": "×2000"
+            "maxCp": "593",
+            "minCp": "554"
           }
         ]
       },
       {
-        "description": "解鎖1個極巨招式",
+        "description": "拜訪1個從未去過的寶可補給站",
         "rewards": [
-          {
-            "isFeatured": true,
-            "type": "item",
-            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm890.icon.png",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/890.png",
-            "name": "Eternatus Candy ×25",
-            "quantity": "×25"
-          },
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
-            "name": "星星沙子 ×5000",
-            "quantity": "×5000"
-          }
-        ]
-      },
-      {
-        "description": "投出1次Excellent Throw",
-        "rewards": [
-          {
-            "isFeatured": true,
-            "type": "item",
-            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm890.icon.png",
-            "imageUrl": "https://cdn.leekduck.com/assets/img/candy/regular/890.png",
-            "name": "Eternatus Candy ×25",
-            "quantity": "×25"
-          },
-          {
-            "isFeatured": false,
-            "type": "item",
-            "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Golden Razz Berry.png",
-            "name": "金色蔓莓果 ×1",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Rare Candy XL.png",
+            "name": "神奇糖果XL ×1",
             "quantity": "×1"
           },
           {
             "isFeatured": false,
             "type": "item",
             "pokemonIconUrl": null,
-            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Silver Pinap Berry.png",
-            "name": "銀色凰梨果 ×1",
-            "quantity": "×1"
+            "imageUrl": "https://cdn.leekduck.com/assets/img/items/Stardust.png",
+            "name": "星星沙子 ×10000",
+            "quantity": "×10000"
+          }
+        ]
+      },
+      {
+        "description": "使用薰香",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "納噬草",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm946.icon.png",
+            "isShiny": false,
+            "maxCp": "375",
+            "minCp": "343"
+          }
+        ]
+      },
+      {
+        "description": "在團體戰中獲勝1次",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Gengar wearing a Spooky Festival costume",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm94.cFALL_2022_NOEVOLVE.icon.png",
+            "isShiny": false,
+            "maxCp": "1233",
+            "minCp": "1175"
+          },
+          {
+            "isFeatured": true,
+            "type": "encounter",
+            "name": "Drifblim wearing a Halloween Mischief costume",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm426.cHALLOWEEN_2021_NOEVOLVE.icon.png",
+            "isShiny": false,
+            "maxCp": "1021",
+            "minCp": "965"
+          }
+        ]
+      },
+      {
+        "description": "讓1隻寶可夢進行超級進化",
+        "rewards": [
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm15.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Beedrill Mega Energy.png",
+            "name": "大針蜂超級能量 ×25",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm229.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Houndoom Mega Energy.png",
+            "name": "黑魯加超級能量 ×25",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm310.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Manectric Mega Energy.png",
+            "name": "雷電獸超級能量 ×25",
+            "quantity": "×25"
+          },
+          {
+            "isFeatured": true,
+            "type": "item",
+            "pokemonIconUrl": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm302.icon.png",
+            "imageUrl": "https://cdn.leekduck.com/assets/img/mega_energy/Sableye Mega Energy.png",
+            "name": "勾魂眼超級能量 ×25",
+            "quantity": "×25"
           }
         ]
       }
